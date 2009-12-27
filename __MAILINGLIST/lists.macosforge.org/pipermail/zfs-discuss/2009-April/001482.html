@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Zpool disaster
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Zpool%20disaster&In-Reply-To=%3C612FB580-7C76-4E42-9BF2-BB98C817218A%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001481.html">
+   <LINK REL="Next"  HREF="001483.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Zpool disaster</H1>
+    <B>Beier Andreas</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Zpool%20disaster&In-Reply-To=%3C612FB580-7C76-4E42-9BF2-BB98C817218A%40gmail.com%3E"
+       TITLE="[zfs-discuss] Zpool disaster">beier.andreas at gmail.com
+       </A><BR>
+    <I>Mon Apr  6 13:51:28 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001481.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+        <LI>Next message: <A HREF="001483.html">[zfs-discuss]  Zpool disaster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1482">[ date ]</a>
+              <a href="thread.html#1482">[ thread ]</a>
+              <a href="subject.html#1482">[ subject ]</a>
+              <a href="author.html#1482">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dear List,
+
+* Christian Kendi &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at ironsoftware.de</A>&gt; [090116 00:04]:
+&gt;<i> well, he already stated that he used the force &quot;-f&quot; flag.
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;&gt;&gt;<i> =&gt; zpool import -f 9004030332584099627
+</I>&gt;&gt;&gt;<i> cannot import 'ZFS': I/O error
+</I>
+I have the same Problem. My Harddisk was internal in my MacBookPro. I
+replaced it and put it into an usb enclosure. And now i get the same  
+error.
+(shows as faulted and -f gives I/O error)
+
+
+I ordered now a firewire enclosure to see if the problem still exists.  
+Even
+Nexenta couldn't use it in the usb- enclosure.
+
+My Backup is 3m old. So if this data is lost, that would be of course my
+fault. But it really sucks.
+
+I replaced the harddisk not because of problems, just because it was  
+getting
+to small...
+
+Andreas
+
+Am 05.01.2009 um 22:53 schrieb mathieu.email:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I have a big problem with my ZFS disk. After a kernel panic, I  
+</I>&gt;<i> cannot import the pool anymore :
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;<i> =&gt; zpool status
+</I>&gt;<i> no pools available
+</I>&gt;<i> =&gt; zpool list
+</I>&gt;<i> no pools available
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;<i> =&gt; zpool import
+</I>&gt;<i>
+</I>&gt;<i> pool: ZFS
+</I>&gt;<i>       id: 9004030332584099627
+</I>&gt;<i>  state: FAULTED
+</I>&gt;<i> status: The pool metadata is corrupted.
+</I>&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;<i>             The pool may be active on on another system, but can be  
+</I>&gt;<i> imported using
+</I>&gt;<i>             the '-f' flag.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-72">http://www.sun.com/msg/ZFS-8000-72</A>
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	ZFS            FAULTED  corrupted data
+</I>&gt;<i> 	  disk2s2   ONLINE
+</I>&gt;<i>
+</I>&gt;<i>  pool: ZFS
+</I>&gt;<i>       id: 5050959592823553345
+</I>&gt;<i>  state: FAULTED
+</I>&gt;<i> status: The pool was last accessed by another system.
+</I>&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-EY">http://www.sun.com/msg/ZFS-8000-EY</A>
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	ZFS         UNAVAIL  insufficient replicas
+</I>&gt;<i> 	  disk1     UNAVAIL  cannot open
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;<i> =&gt; zpool import -f 9004030332584099627
+</I>&gt;<i> cannot import 'ZFS': I/O error
+</I>&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> I am despaired as I have no backup and all my data are on this drive.
+</I>&gt;<i>
+</I>&gt;<i> Is there anything I can do ?
+</I>&gt;<i>
+</I>&gt;<i> Thank you for your help,
+</I>&gt;<i>
+</I>&gt;<i> Mathieu
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001481.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+	<LI>Next message: <A HREF="001483.html">[zfs-discuss]  Zpool disaster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1482">[ date ]</a>
+              <a href="thread.html#1482">[ thread ]</a>
+              <a href="subject.html#1482">[ subject ]</a>
+              <a href="author.html#1482">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

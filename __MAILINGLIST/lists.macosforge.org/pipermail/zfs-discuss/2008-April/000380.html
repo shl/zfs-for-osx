@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Re: RAIDZ component UNAVAIL, but actually ok?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20RAIDZ%20component%20UNAVAIL%2C%20but%20actually%20ok%3F&In-Reply-To=20080402015455.3BBCF23C761%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000379.html">
+   <LINK REL="Next"  HREF="000381.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Re: RAIDZ component UNAVAIL, but actually ok?</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20RAIDZ%20component%20UNAVAIL%2C%20but%20actually%20ok%3F&In-Reply-To=20080402015455.3BBCF23C761%40lists.macosforge.org"
+       TITLE="[zfs-discuss] Re: RAIDZ component UNAVAIL, but actually ok?">i_see at macnews.de
+       </A><BR>
+    <I>Wed Apr  2 13:28:17 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000379.html">[zfs-discuss] RAIDZ component UNAVAIL, but actually ok?
+</A></li>
+        <LI>Next message: <A HREF="000381.html">[zfs-discuss] Re: RAIDZ component UNAVAIL, but actually ok?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#380">[ date ]</a>
+              <a href="thread.html#380">[ thread ]</a>
+              <a href="subject.html#380">[ subject ]</a>
+              <a href="author.html#380">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I also occasionally have this problem and reported it to No&#235;l.
+This problem will occur if
+The physical device name changes (i.e. d24p2 -&gt; disk12s2)
+AND
+the disk is slow to become available, so it i not auto-discovered when  
+Mac OS X's zfs implementation searches for available volumes.
+For me exporting the pool and re-importing is a viable workaround.
+In future versions you should be able to issue zpool online &lt;pool&gt;  
+&lt;device&gt; and it should check the label and realize da4p2 is now indeed  
+disk12s2.
+Hope this helps,
+	ralf
+Am 02.04.2008 um 03:54 schrieb <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>:
+&gt;<i> [zfs-discuss] RAIDZ component UNAVAIL, but actually ok?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have seen a number of cases with RAIDZs in pools on removable  
+</I>&gt;<i> devices where the RAIDZ comes up degraded due to drive UNAVAIL, yet  
+</I>&gt;<i> there appears to be nothing wrong with the drive and no difficulty  
+</I>&gt;<i> accessing it with &quot;dd if=/dev/disk12s2 of=/dev/null size=65536&quot;.
+</I>&gt;<i>
+</I>&gt;<i> The test case is a 15&quot; Intel MacBook Pro with a Sans Digital TR4U 4- 
+</I>&gt;<i> drive external USB enclosure with 4 Seagate SATA 750GB drives.  The  
+</I>&gt;<i> pool &quot;d01&quot; was created on this Mac on disk{2,3,4,5}s2 IIRC.  I  
+</I>&gt;<i> created a VMware virtual machine with FreeBSD 7 to test and have  
+</I>&gt;<i> moved the enclosure back and forth between the VM and OSX to test.   
+</I>&gt;<i> It seems to work fine under Freebsd but comes up DEGRADED under  
+</I>&gt;<i> OSX.  I can't detect any problem with the UNAVAIL disk below.  Note  
+</I>&gt;<i> that name &quot;da4p2&quot; is the name the device had under FreeBSD and  
+</I>&gt;<i> diskutil shows it as disk12s2 under OSX.
+</I>&gt;<i>
+</I>&gt;<i> Note that another pool &quot;v01&quot; was created after &quot;d01&quot;.  I don't know  
+</I>&gt;<i> if its existence plays a role.
+</I>&gt;<i>
+</I>&gt;<i> Is it possible that when ZFS is loading the RAIDZ it first tries to  
+</I>&gt;<i> access the components by the name in the on-disk pool metadata, and  
+</I>&gt;<i> when that fails ZFS brings up the RAIDZ anyway since it is possible  
+</I>&gt;<i> to do so, albeit in a degraded state, on the last RAIDZ component?
+</I>&gt;<i>
+</I>&gt;<i> bash-3.2# zpool status
+</I>&gt;<i> pool: d01
+</I>&gt;<i> state: DEGRADED
+</I>&gt;<i> status: One or more devices could not be opened.  Sufficient  
+</I>&gt;<i> replicas exist for
+</I>&gt;<i>   the pool to continue functioning in a degraded state.
+</I>&gt;<i> action: Attach the missing device and online it using 'zpool online'.
+</I>&gt;<i>  see: <A HREF="http://www.sun.com/msg/ZFS-8000-2Q">http://www.sun.com/msg/ZFS-8000-2Q</A>
+</I>&gt;<i> scrub: resilver completed with 0 errors on Tue Apr  1 20:02:31 2008
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>   NAME          STATE     READ WRITE CKSUM
+</I>&gt;<i>   d01           DEGRADED     0     0     0
+</I>&gt;<i>     raidz1      DEGRADED     0     0     0
+</I>&gt;<i>       disk8s2   ONLINE       0     0     0
+</I>&gt;<i>       disk10s2  ONLINE       0     0     0
+</I>&gt;<i>       disk11s2  ONLINE       0     0     0
+</I>&gt;<i>       da4p2     UNAVAIL      0     0     0  cannot open
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000379.html">[zfs-discuss] RAIDZ component UNAVAIL, but actually ok?
+</A></li>
+	<LI>Next message: <A HREF="000381.html">[zfs-discuss] Re: RAIDZ component UNAVAIL, but actually ok?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#380">[ date ]</a>
+              <a href="thread.html#380">[ thread ]</a>
+              <a href="subject.html#380">[ subject ]</a>
+              <a href="author.html#380">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

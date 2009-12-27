@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Moving drives from enclosure to internal?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Moving%20drives%20from%20enclosure%20to%20internal%3F&In-Reply-To=%3C20090326.064942.51004048.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001472.html">
+   <LINK REL="Next"  HREF="001474.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Moving drives from enclosure to internal?</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Moving%20drives%20from%20enclosure%20to%20internal%3F&In-Reply-To=%3C20090326.064942.51004048.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] Moving drives from enclosure to internal?">hanche at math.ntnu.no
+       </A><BR>
+    <I>Wed Mar 25 22:49:42 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001472.html">[zfs-discuss] Moving drives from enclosure to internal?
+</A></li>
+        <LI>Next message: <A HREF="001474.html">[zfs-discuss] Moving drives from enclosure to internal?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1473">[ date ]</a>
+              <a href="thread.html#1473">[ thread ]</a>
+              <a href="subject.html#1473">[ subject ]</a>
+              <a href="author.html#1473">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ &quot;Mr. Zorg&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zorg at sogeeky.net</A>&gt;:
+
+&gt;<i> Although I am far from an expert, it is my understanding that it
+</I>&gt;<i> should work. The pool does not use the disk names since that change
+</I>&gt;<i> from boot to boot anyway.
+</I>
+There have been many tales of woe here indicating the opposite, but if
+the pool is properly exported before the disk names change you should
+be okay. The troubles typically occur after disk crashes and similar
+adverse events that result in different device names after reboot, and
+where it has been impossible to export the pool first. (If it does
+happen, it might help to boot into single user mode and remove
+/etc/zfs/zpool.cache. You should be able to use zpool import -f
+afterwards.)
+
+- Harald
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001472.html">[zfs-discuss] Moving drives from enclosure to internal?
+</A></li>
+	<LI>Next message: <A HREF="001474.html">[zfs-discuss] Moving drives from enclosure to internal?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1473">[ date ]</a>
+              <a href="thread.html#1473">[ thread ]</a>
+              <a href="subject.html#1473">[ subject ]</a>
+              <a href="author.html#1473">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

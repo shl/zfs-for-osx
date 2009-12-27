@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs write as user
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20write%20as%20user&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000793.html">
+   <LINK REL="Next"  HREF="000797.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs write as user</H1>
+    <B>wishi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20write%20as%20user&In-Reply-To="
+       TITLE="[zfs-discuss] zfs write as user">brouce at gmx.net
+       </A><BR>
+    <I>Mon Aug 18 01:23:03 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000793.html">[zfs-discuss] Deleting zfs.readonly.kext if zfs.kext does not	exist?
+</A></li>
+        <LI>Next message: <A HREF="000797.html">[zfs-discuss] zfs write as user
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#795">[ date ]</a>
+              <a href="thread.html#795">[ thread ]</a>
+              <a href="subject.html#795">[ subject ]</a>
+              <a href="author.html#795">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+
+
+I installed zfs write support and created a pool with 9 GB for backups.
+
+zpool status
+  pool: backups_wegups
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+	pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	backups_wegups  ONLINE       0     0     0
+	  disk0s8   ONLINE       0     0     0
+
+errors: No known data errors
+
+
+Okay, it's not the newest version. But I'm fine with that as long as it
+works on my MacOS 10.5.4 system.
+Are there any known issues with updateing?
+
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">wishi at dawn</A> ~
+% zfs get all
+NAME            PROPERTY       VALUE                    SOURCE
+backups_wegups  type           filesystem               -
+backups_wegups  creation       So Aug 17 19:50 2008     -
+backups_wegups  used           386M                     -
+backups_wegups  available      8,67G                    -
+backups_wegups  referenced     386M                     -
+backups_wegups  compressratio  1.01x                    -
+backups_wegups  mounted        yes                      -
+backups_wegups  quota          none                     default
+backups_wegups  reservation    none                     default
+backups_wegups  recordsize     128K                     default
+backups_wegups  mountpoint     /Volumes/backups_wegups  default
+backups_wegups  sharenfs       off                      default
+backups_wegups  checksum       on                       default
+backups_wegups  compression    on                       local
+backups_wegups  atime          off                      local
+backups_wegups  devices        on                       default
+backups_wegups  exec           on                       default
+backups_wegups  setuid         off                      local
+backups_wegups  readonly       off                      default
+backups_wegups  zoned          off                      default
+backups_wegups  snapdir        hidden                   default
+backups_wegups  aclmode        groupmask                default
+backups_wegups  aclinherit     secure                   default
+backups_wegups  canmount       on                       default
+backups_wegups  shareiscsi     off                      default
+backups_wegups  xattr          on                       default
+backups_wegups  copies         1                        default
+backups_wegups  version        1                        -
+
+
+
+Can someone tell me how I allow my local users to write on the pool. At
+the moment I need sudo... which isn't very compfortable I think.
+
+
+Thanks,
+wishi
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000793.html">[zfs-discuss] Deleting zfs.readonly.kext if zfs.kext does not	exist?
+</A></li>
+	<LI>Next message: <A HREF="000797.html">[zfs-discuss] zfs write as user
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#795">[ date ]</a>
+              <a href="thread.html#795">[ thread ]</a>
+              <a href="subject.html#795">[ subject ]</a>
+              <a href="author.html#795">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

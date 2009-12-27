@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Timing out
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Timing%20out&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000069.html">
+   <LINK REL="Next"  HREF="000072.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Timing out</H1>
+    <B>james sansbury</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Timing%20out&In-Reply-To="
+       TITLE="[zfs-discuss] Timing out">q0rban at gmail.com
+       </A><BR>
+    <I>Thu Jan 24 06:13:02 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000069.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+        <LI>Next message: <A HREF="000072.html">[zfs-discuss] Timing out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#70">[ date ]</a>
+              <a href="thread.html#70">[ thread ]</a>
+              <a href="subject.html#70">[ subject ]</a>
+              <a href="author.html#70">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>***This is a repost of a previous message posted in the wrong thread.
+Please reply to this post.  Apologies.***
+
+First, some details as to what I'm working with.  I have a raid-z pool that
+I created on Solaris 10, then upgraded to OpenSolaris Nevada (upgraded the
+pool as well), and then just today took the plunge and exported it to try
+and import into Leopard (ZFS 102a).
+
+Everything seemed to go very smoothly, until I needed to change ownership on
+some very large folders (300+GB).  A *chown -Rv user folder* seemed to work
+fine for about 2 minutes and then it hung.  I tried to break out of the
+process.  Nothing.  I tried to open another terminal and force unmount the
+pool.  Nothing.  I tried to eject the drives in Disk Utility.  Nothing.  So
+then after waiting another 10 minutes or so I just unplugged the drives.
+Nothing.
+
+I tried to shutdown and it wouldn't shut down so I just powered off, booted
+up, tried everything again with all the same results, except that this time
+I tried plugging back in the drives and letting it sit.  By doing this I was
+at least able to get a kernel panic out of it! ;) [I now realize from
+another post that this kernel panic is most likely due to unplugging the
+drives hot, so I won't be reposting the kernel panic info.]
+
+I am also able to replicate all of this in finder with pretty much any
+process (copy, move, etc.), provided the process takes long enough.
+
+I may try this again today, leave the drives alone, and just let it sit to
+see if I can get some sort of dump/panic; something to work with at least.
+
+-James
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080124/e85f5d43/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080124/e85f5d43/attachment.html</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000069.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+	<LI>Next message: <A HREF="000072.html">[zfs-discuss] Timing out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#70">[ date ]</a>
+              <a href="thread.html#70">[ thread ]</a>
+              <a href="subject.html#70">[ subject ]</a>
+              <a href="author.html#70">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

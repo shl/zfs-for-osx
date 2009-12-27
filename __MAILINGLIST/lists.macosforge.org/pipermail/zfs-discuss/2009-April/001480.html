@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RaidZ on SAN
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20RaidZ%20on%20SAN&In-Reply-To=%3C2b0225fb0904061350w4448dee7rb99ab3acef3ff658%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001479.html">
+   <LINK REL="Next"  HREF="001481.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RaidZ on SAN</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20RaidZ%20on%20SAN&In-Reply-To=%3C2b0225fb0904061350w4448dee7rb99ab3acef3ff658%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] RaidZ on SAN">bwaters at nrao.edu
+       </A><BR>
+    <I>Mon Apr  6 13:50:59 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001479.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+        <LI>Next message: <A HREF="001481.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1480">[ date ]</a>
+              <a href="thread.html#1480">[ thread ]</a>
+              <a href="subject.html#1480">[ subject ]</a>
+              <a href="author.html#1480">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The key here is to make sure there's a GPT label on each disk, with a
+partition marked as ZFS, *before* you add it to the array.
+
+I was able to create a raidz with &quot;raw&quot; disks, it works just fine --
+until you want to export the pool. ZFS export tries to write something
+to the disk label, and there isn't one...
+
+Anyway. I'm moving my data off that array onto the new one, then I'll
+go back and partition those disks correctly.
+
+I think. (i am often wrong)
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001479.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+	<LI>Next message: <A HREF="001481.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1480">[ date ]</a>
+              <a href="thread.html#1480">[ thread ]</a>
+              <a href="subject.html#1480">[ subject ]</a>
+              <a href="author.html#1480">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

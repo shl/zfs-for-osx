@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] rsync backups to ZFS volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20rsync%20backups%20to%20ZFS%20volume&In-Reply-To=%3C7f2931472cea820a55908c7656df0872%40localhost%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001155.html">
+   <LINK REL="Next"  HREF="001157.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] rsync backups to ZFS volume</H1>
+    <B>Nathan</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20rsync%20backups%20to%20ZFS%20volume&In-Reply-To=%3C7f2931472cea820a55908c7656df0872%40localhost%3E"
+       TITLE="[zfs-discuss] rsync backups to ZFS volume">zfs at encode.mine.nu
+       </A><BR>
+    <I>Wed Dec 10 15:59:01 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001155.html">[zfs-discuss] Using ZFS- Partition as Home- Directory
+</A></li>
+        <LI>Next message: <A HREF="001157.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1156">[ date ]</a>
+              <a href="thread.html#1156">[ thread ]</a>
+              <a href="subject.html#1156">[ subject ]</a>
+              <a href="author.html#1156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+ Hi,  
+
+ I recently got a new MBP, and thought I should do something about
+backing it up regularly.  I had an external drive formatted as zfs,
+and I figured I'd use rsync to copy files over, then do a ZFS
+snapshot.  
+
+ I'm wondering what people's thoughts are on the effectiveness of
+rsync to backup a HFS+ volume to a ZFS volume.  I'm using rsync 3.0.4,
+installed via darwinports, with the following flags (which I got from
+<A HREF="http://www.jeffawaddell.com/2008/05/rsync-solaris-problems.html">http://www.jeffawaddell.com/2008/05/rsync-solaris-problems.html</A>). 
+/Volumes/backup is my ZFS volume, I'm using the ZFS-119 binaries.  
+
+ sudo rsync -avxXHAN --fileflags --protect-args --force-change /
+/Volumes/backup  
+
+ I plan on excluding the following files and folders, although I
+haven't included that in the above command:  
+
+ /tmp/*
+ /Network/*
+ /cores/*
+ */.Trash
+ /afs/*
+ /automount/*
+ /private/tmp/*
+ /private/var/run/*
+ /private/var/spool/postfix/*
+ /private/var/vm/*
+ /Previous Systems.localized
+ .Spotlight-*/
+ Can anyone think of any issues doing this?
+ I
+notice applications seem to have the correct icons in
+/Volumes/backup/Applications, and I can run some of them from there
+with no issues.  Photoshop CS3 quits straight away, not sure if thats
+due to the application itself or something I'm overlooking.  
+
+ Thanks!  
+
+ Regards,
+ Nathan. 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081211/d1408728/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081211/d1408728/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001155.html">[zfs-discuss] Using ZFS- Partition as Home- Directory
+</A></li>
+	<LI>Next message: <A HREF="001157.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1156">[ date ]</a>
+              <a href="thread.html#1156">[ thread ]</a>
+              <a href="subject.html#1156">[ subject ]</a>
+              <a href="author.html#1156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

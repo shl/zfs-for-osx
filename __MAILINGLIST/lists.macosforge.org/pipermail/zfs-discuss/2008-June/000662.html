@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] using OpenCL for ZFS checksumming possible?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20using%20OpenCL%20for%20ZFS%20checksumming%20possible%3F&In-Reply-To=A973D658-1367-4FC2-88EA-BD89F195F65B%40aaron.gy">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000654.html">
+   <LINK REL="Next"  HREF="000665.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] using OpenCL for ZFS checksumming possible?</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20using%20OpenCL%20for%20ZFS%20checksumming%20possible%3F&In-Reply-To=A973D658-1367-4FC2-88EA-BD89F195F65B%40aaron.gy"
+       TITLE="[zfs-discuss] using OpenCL for ZFS checksumming possible?">bwaters at nrao.edu
+       </A><BR>
+    <I>Tue Jun 24 10:21:24 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000654.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+        <LI>Next message: <A HREF="000665.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#662">[ date ]</a>
+              <a href="thread.html#662">[ thread ]</a>
+              <a href="subject.html#662">[ subject ]</a>
+              <a href="author.html#662">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jun 10, 2008, at 2:04 PM, Aaron Gyes wrote:
+
+&gt;<i> According to this page here, the Mac Pro already has hardware support
+</I>&gt;<i> for algorithms including SHA, but it's unused. It would be interesting
+</I>&gt;<i> if somebody sneaky found a way to make use of this hardware. (Well, at
+</I>&gt;<i> least for us Mac Pro owners).
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://macprojournal.com/encryption.html">http://macprojournal.com/encryption.html</A>
+</I>
+
+Cool, interesting link!
+
+Hardware acceleration is always interesting, but often the overhead of  
+going off-CPU swamps any performance gain.
+
+It's totally application-dependent.
+
+  For ZFS disk operations, I suspect that you'll usually want to stay  
+on-CPU, or have a CPU core dedicated to ZFS tasks. You used to see  
+that sort of thing with Ethernet &quot;offload engines&quot;, where the Ethernet  
+NIC is pre-processing things for you. But that's very dependent on the  
+device driver, which is tied to the OS implementation...  now that  
+multi-core CPUs are standard, you are far better off with thread-core  
+affinit (letting the OS keep the I/O operations on one of the CPU  
+cores).
+
+About five years ago I played with an AES encryption engine chip and  
+FreeBSD -- it used the chip to generate *really* random numbers to / 
+dev/random, and could use the engine as the system's AES  
+implementation. (OpenSSL has similar support for plug-in drivers in  
+user-space.) Using this thing for full-disk encryption, I maybe saw a  
+performance *hit*, maybe no difference: the throughput was still  
+limited by disk I/O. Great. Curiously, I didn't notice any reduction  
+in CPU utilization. Using the thing as an entropy pool for /dev/random  
+was *great*, though: it never ran out of entropy, you never had to  
+wait! So that was cool. But the encryption part was a disappointment.
+
+Such limitations may *not* apply to *on-CPU* implementations of AES:  
+you see good results with VIA C7 chips, for example. So much so that  
+Intel will add AES-specific instructions to SSE4 -- which are  
+incompatible with the VIA implementation. Oy. (Google &quot;Intel AVX&quot; for  
+near-term, &quot;Westmere AES-NI&quot; for next year's version.)
+
+
+That's not to say that we shouldn't be excited about OpenCL.  I work  
+on an application that can really use the parallelism; we have a data- 
+cube gridding stage that has seen 100x performance improvements when  
+ported to a GPU. We've stayed out of that game for our desktop  
+application because things are changing too rapidly for us to devote  
+much scientist time to it: something like OpenCL couldn't come at a  
+better time for us.
+
+
+
+
+   - boyd
+
+
+Boyd Waters
+Scientific Programmer
+National Radio Astronomy Observatory
+Socorro, New Mexico
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000654.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+	<LI>Next message: <A HREF="000665.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#662">[ date ]</a>
+              <a href="thread.html#662">[ thread ]</a>
+              <a href="subject.html#662">[ subject ]</a>
+              <a href="author.html#662">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

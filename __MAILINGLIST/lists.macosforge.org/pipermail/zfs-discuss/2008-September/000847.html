@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-crypto implementation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-crypto%20implementation&In-Reply-To=c43d90580809131036g6ea9be87i17bd8ffb26b70fe9%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000845.html">
+   <LINK REL="Next"  HREF="000852.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-crypto implementation</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-crypto%20implementation&In-Reply-To=c43d90580809131036g6ea9be87i17bd8ffb26b70fe9%40mail.gmail.com"
+       TITLE="[zfs-discuss] zfs-crypto implementation">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Sep 15 19:28:24 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000845.html">[zfs-discuss] zfs-crypto implementation
+</A></li>
+        <LI>Next message: <A HREF="000852.html">[zfs-discuss] zfs-crypto implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#847">[ date ]</a>
+              <a href="thread.html#847">[ thread ]</a>
+              <a href="subject.html#847">[ subject ]</a>
+              <a href="author.html#847">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So in all likelihood, yes, we'll port it over.  But as always, no  
+promises ;)
+Depends largely on the final implementation of the code.  Since it is  
+in code review and talking to the Sun ZFS kids, it seems it's quite a  
+length of code, it still may be quite a while until the crypto code  
+goes into Solaris.  But when it does go in, I'll definitely be taking  
+a look at it to see if it will work out for porting as well.
+
+thanks for your interest in ZFS!
+Noel
+
+On Sep 13, 2008, at 10:36 AM, Troels N&#248;rgaard Nielsen wrote:
+
+&gt;<i> Hey everyone, No&#235;l,
+</I>&gt;<i>
+</I>&gt;<i> In some time the OpenSolaris zfs-crypto have been feature complete for
+</I>&gt;<i> first phase of the implementation to bring on-disk encryption support
+</I>&gt;<i> for our beloved filesystem, ZFS. As of 5th September 2008 Darren
+</I>&gt;<i> Moffat has annouced the project going into QA/Code review.
+</I>&gt;<i>
+</I>&gt;<i> With this in mind, what are Apple's intentions regarding a OS X port
+</I>&gt;<i> of these features? I personally see it as one of the greatest features
+</I>&gt;<i> to mobile business users, to have support for full disk-encryption. I
+</I>&gt;<i> know that FileVault's history goes back some time, but it did take on
+</I>&gt;<i> the problem at the wrong end, as in a userland application workaround
+</I>&gt;<i> to provide users with user directory encryption.
+</I>&gt;<i>
+</I>&gt;<i> So, what is your and Apple's plans for zfs disk encryption support, is
+</I>&gt;<i> it something we should be looking forward to?
+</I>&gt;<i> As far as I can see in the source code, it seems as Darren's code is
+</I>&gt;<i> pretty portable, with the exception for the ties to the Sun
+</I>&gt;<i> Cryptographic framework, but I'm far from no expert.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the openness around the project so far.
+</I>&gt;<i>
+</I>&gt;<i> ----
+</I>&gt;<i> Best Regards
+</I>&gt;<i>
+</I>&gt;<i> Troels N&#248;rgaard Nielsen
+</I>&gt;<i> t86 Consultancy
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000845.html">[zfs-discuss] zfs-crypto implementation
+</A></li>
+	<LI>Next message: <A HREF="000852.html">[zfs-discuss] zfs-crypto implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#847">[ date ]</a>
+              <a href="thread.html#847">[ thread ]</a>
+              <a href="subject.html#847">[ subject ]</a>
+              <a href="author.html#847">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

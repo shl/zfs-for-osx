@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] setting up zfs for solaris + mac ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20setting%20up%20zfs%20for%20solaris%20%2B%20mac%20%3F&In-Reply-To=%3C13D29D68-F3D7-4EA1-95BB-96D3E2A7F689%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001432.html">
+   <LINK REL="Next"  HREF="001434.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] setting up zfs for solaris + mac ?</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20setting%20up%20zfs%20for%20solaris%20%2B%20mac%20%3F&In-Reply-To=%3C13D29D68-F3D7-4EA1-95BB-96D3E2A7F689%40apple.com%3E"
+       TITLE="[zfs-discuss] setting up zfs for solaris + mac ?">ndellofano at apple.com
+       </A><BR>
+    <I>Thu Feb 19 15:32:03 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001432.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+        <LI>Next message: <A HREF="001434.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1433">[ date ]</a>
+              <a href="thread.html#1433">[ thread ]</a>
+              <a href="subject.html#1433">[ subject ]</a>
+              <a href="author.html#1433">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Germano,
+
+At least as far as OSX is concerned, you *must* create the pool on a  
+disk that is already initialized *and* when you create the pool you  
+must pass it the full disk name( i.e. disk number and slice).  This is  
+very important as if you create a pool just using the whole disk name,  
+OSX will become confused and will not mount your bool on boot.
+
+so use 'zpool create mypool /dev/diskXsX'
+
+Also on OSX, note you must do a 'diskutil partition disk....&quot;  on the  
+disk in order to format it for ZFS *before* you do the zpool create,  
+otherwise if the disk isn't labeled properly, diskutil can't  
+understand what it is and other probes may race us and try and bring  
+up the drive as something else.  It needs to be properly labeled.
+
+On the whole, Sun's code is pretty robust, so should be able to  
+understand disks fine.  I'd worry more about making sure they are  
+kosher for OSX, since we're pickier about things :)
+
+
+Noel
+
+On Feb 19, 2009, at 10:25 AM, Rich McClellan wrote:
+
+&gt;<i> ZFS best practices (Google it and read it :-) suggest using the entire
+</I>&gt;<i> disk. The Apple implementation of ZFS requires the entire disk be
+</I>&gt;<i> initialized.  So use the entire disk.
+</I>&gt;<i>
+</I>&gt;<i> Why on earth would you replace an (Open)Solaris box with Snow
+</I>&gt;<i> Leopard???  So far the Apple ZFS implementation doesn't have all of
+</I>&gt;<i> the features that are in Sun's and Apple's is new and relatively
+</I>&gt;<i> untested.
+</I>&gt;<i>
+</I>&gt;<i> Rich
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Feb 19, 2009 at 9:21 AM, Germano Caronni &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">caronni at gmail.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i> [sorry for double-post]
+</I>&gt;&gt;<i> Hey all,
+</I>&gt;&gt;<i> I'm currently in the process of setting up a 15TB disk array (10x  
+</I>&gt;&gt;<i> seagate
+</I>&gt;&gt;<i> 7200.11 in a DatOptic SBox-X), and will drive it from a PC with  
+</I>&gt;&gt;<i> Open Solaris
+</I>&gt;&gt;<i> 11/08 for now. The plan is to use the disk array with Snow Leopard  
+</I>&gt;&gt;<i> later. Do
+</I>&gt;&gt;<i> any of you have suggestions as to how to initialize the pool slices  
+</I>&gt;&gt;<i> on those
+</I>&gt;&gt;<i> ten disks such that both Open Solaris and Leopard will easily find  
+</I>&gt;&gt;<i> them? Ie:
+</I>&gt;&gt;<i> Simply use the whole disk device /dev/diskX for ZFS, or put a MBR  
+</I>&gt;&gt;<i> partition
+</I>&gt;&gt;<i> table on the disk (or GPT?), and then make one huge partition for  
+</I>&gt;&gt;<i> the pool
+</I>&gt;&gt;<i> slice? Initialisation will be done from a Leopard machine, so that  
+</I>&gt;&gt;<i> I get zfs
+</I>&gt;&gt;<i> pool version 6 on the disk. Also, any opinion concerning 'diskutil
+</I>&gt;&gt;<i> partitionDisk ... zfs ...' vs. 'zpool create' ?
+</I>&gt;&gt;<i> Any suggestions / comments welcome.
+</I>&gt;&gt;<i> Germano
+</I>&gt;&gt;<i> p.s. note that I did not mention anything about raid / stripe /  
+</I>&gt;&gt;<i> mirror /
+</I>&gt;&gt;<i> spare -- that's on purpose ;-)
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001432.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+	<LI>Next message: <A HREF="001434.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1433">[ date ]</a>
+              <a href="thread.html#1433">[ thread ]</a>
+              <a href="subject.html#1433">[ subject ]</a>
+              <a href="author.html#1433">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

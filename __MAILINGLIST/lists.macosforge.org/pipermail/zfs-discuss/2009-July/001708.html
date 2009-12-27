@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] wrong size pool creation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20wrong%20size%20pool%20creation&In-Reply-To=%3C20090718.214425.247524927.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001706.html">
+   <LINK REL="Next"  HREF="001707.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] wrong size pool creation</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20wrong%20size%20pool%20creation&In-Reply-To=%3C20090718.214425.247524927.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] wrong size pool creation">hanche at math.ntnu.no
+       </A><BR>
+    <I>Sat Jul 18 18:44:25 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001706.html">[zfs-discuss] wrong size pool creation
+</A></li>
+        <LI>Next message: <A HREF="001707.html">[zfs-discuss] Fwd: wrong size pool creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1708">[ date ]</a>
+              <a href="thread.html#1708">[ thread ]</a>
+              <a href="subject.html#1708">[ subject ]</a>
+              <a href="author.html#1708">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ ed hammond &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs at devros.com</A>&gt;:
+
+&gt;<i> I have a bunch of WD 500 gig drives behind a areca 1260 card.  I have
+</I>&gt;<i> formatted the drives correctly and they show up with the right
+</I>&gt;<i> capacity, but when I try and create a pool on them, they only format
+</I>&gt;<i> as 7 gigs.
+</I>
+Actually, things look funny before you even create the pool:
+
+&gt;<i> bash-3.2# diskutil list
+</I>&gt;<i> [...]
+</I>&gt;<i> /dev/disk1
+</I>&gt;<i>    #: TYPE NAME SIZE IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *465.8 Gi   disk2
+</I>&gt;<i>    1: EFI 200.0 Mi disk2s1
+</I>&gt;<i>    2: ZFS 465.4 Gi disk2s2
+</I>
+Partitions named disk2s1 and disk2s2 inside /dev/disk1,
+that seems mighty odd indeed.
+
+- Harald
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001706.html">[zfs-discuss] wrong size pool creation
+</A></li>
+	<LI>Next message: <A HREF="001707.html">[zfs-discuss] Fwd: wrong size pool creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1708">[ date ]</a>
+              <a href="thread.html#1708">[ thread ]</a>
+              <a href="subject.html#1708">[ subject ]</a>
+              <a href="author.html#1708">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

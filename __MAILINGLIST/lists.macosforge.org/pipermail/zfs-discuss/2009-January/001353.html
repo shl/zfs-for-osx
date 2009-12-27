@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] I lost 500GB of backup data in zfs!!!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C5A5F576C-CA41-46A6-B6B2-40DF8625E650%40charter.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001352.html">
+   <LINK REL="Next"  HREF="001354.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] I lost 500GB of backup data in zfs!!!</H1>
+    <B>Sterling Garwood</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C5A5F576C-CA41-46A6-B6B2-40DF8625E650%40charter.net%3E"
+       TITLE="[zfs-discuss] I lost 500GB of backup data in zfs!!!">slgarwood at charter.net
+       </A><BR>
+    <I>Thu Jan 22 15:27:52 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001352.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+        <LI>Next message: <A HREF="001354.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1353">[ date ]</a>
+              <a href="thread.html#1353">[ thread ]</a>
+              <a href="subject.html#1353">[ subject ]</a>
+              <a href="author.html#1353">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Below is the system log from the time period ... note the 3 error  
+messages from ZFS as Software Update reboots......
+
+
+Jan 22 16:05:13 dualg4 sshd[2404]: DEAD_PROCESS: 2410 ttys001
+Jan 22 16:40:39 dualg4 Software Update[2473]: arguments=(null)
+Jan 22 16:40:43 dualg4 login[1708]: DEAD_PROCESS: 1708 ttys000
+Jan 22 16:41:50 dualg4 authexec[2479]: executing /System/Library/ 
+CoreServices/Software Update.app/Contents/Resources/suapphelper
+Jan 22 16:42:28 dualg4 login[2484]: USER_PROCESS: 2484 ttys000
+Jan 22 16:42:46 dualg4 login[2484]: DEAD_PROCESS: 2484 ttys000
+Jan 22 16:42:58 dualg4 quicklookd[2500]: Unable to use font: no glyphs  
+present.
+Jan 22 16:42:58 dualg4 com.apple.quicklook[2500]: Thu Jan 22 16:42:58  
+dualg4.local quicklookd[2500] &lt;Error&gt;: Unable to use font: no glyphs  
+present.
+Jan 22 16:44:14 dualg4 authexec[2505]: executing /usr/bin/ditto
+Jan 22 16:45:04 dualg4 login[2507]: USER_PROCESS: 2507 ttys000
+Jan 22 16:45:05 dualg4 login[2507]: DEAD_PROCESS: 2507 ttys000
+Jan 22 16:45:54 dualg4 authexec[2518]: executing /usr/bin/ditto
+Jan 22 16:46:00 dualg4 loginwindow[34]: DEAD_PROCESS: 0 console
+Jan 22 16:46:02 dualg4 com.apple.launchd[142]  
+([0x0-0x2f02f].com.apple.AppleSpell[490]): Exited: Terminated
+Jan 22 16:46:02 dualg4 com.apple.launchd[142]  
+(com.wacom.pentablet[147]): Exited with exit code: 255
+Jan 22 16:46:02 dualg4 com.apple.launchd[142] (com.apple.pboard[157]):  
+Exited: Terminated
+Jan 22 16:46:02 dualg4 com.apple.launchd[142]  
+(com.apple.UserEventAgent-Aqua[154]): Exited: Terminated
+Jan 22 16:46:02 dualg4 com.apple.launchd[142]  
+(com.apple.ScreenSharing.server[151]): Exited: Terminated
+Jan 22 16:46:02 dualg4 com.apple.launchd[142]  
+([0x0-0x15015].com.apple.iChatAgent[205]): Exited: Terminated
+Jan 22 16:46:02 dualg4 /System/Library/CoreServices/loginwindow.app/ 
+Contents/MacOS/loginwindow[2523]: Login Window Application Started --  
+Threaded auth
+Jan 22 16:46:02 dualg4 com.apple.WindowServer[57]: Name ATY,Apache  
+matches IOService:/MacRISC2PE/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">pci at f0000000</A>/AppleMacRiscAGP/ 
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ATY,ApacheParent at 10</A>/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ATY,Apache_A at 0</A>, new version 010080dd, current  
+version 01018039
+Jan 22 16:46:02 dualg4 com.apple.WindowServer[57]: Name ATY,Apache  
+matches IOService:/MacRISC2PE/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">pci at f0000000</A>/AppleMacRiscAGP/ 
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ATY,ApacheParent at 10</A>/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ATY,Apache_B at 1</A>, new version 010080dd, current  
+version 01018039
+Jan 22 16:46:04 dualg4 loginwindow[2523]: USER_PROCESS: 2523 console
+Jan 22 16:46:04 dualg4 Software Update[2533]: arguments={\n     
+RootInstallMode = YES;\n    SkipConfirm = YES;\n}
+Jan 22 16:46:04 dualg4 Software Update[2533]: cookie=&quot;&quot;
+Jan 22 16:46:04 dualg4 Software Update[2533]: Looking for products to  
+install
+Jan 22 16:46:06 dualg4 Software Update[2533]: Performing preflight
+Jan 22 16:46:06 dualg4 Software Update[2533]: Preparing session
+Jan 22 16:46:07 dualg4 Software Update[2533]: Starting session
+Jan 22 16:46:07 dualg4 /System/Library/CoreServices/Software  
+Update.app/Contents/MacOS/Software Update[2533]: Folder Manager is  
+being asked to create a folder (flnt) while running as uid 0
+Jan 22 16:47:13 dualg4 kernel[0]: Limiting icmp unreach response from  
+251 to 250 packets per second
+Jan 22 16:47:16 dualg4 sshd[2571]: USER_PROCESS: 2579 ttys000
+Jan 22 16:47:18 dualg4 kernel[0]: Limiting icmp unreach response from  
+311 to 250 packets per second
+Jan 22 16:47:19 dualg4 sudo[2606]:     root : TTY=unknown ; PWD=/ ;  
+USER=root ; COMMAND=/Library/Updates/QuickTime/Packages/ 
+QuickTime76_Leopard.pkg/Contents/Resources/ConfigureMimeTypes -rescan - 
+verbose
+Jan 22 16:47:26 dualg4 Software Update[2533]: kextcache returned 0
+Jan 22 16:47:26 dualg4 Software Update[2533]: Running /sbin/reboot
+Jan 22 16:47:26 dualg4 kextd[10]: error reconsidering volume /Volumes/ 
+mypool
+Jan 22 16:47:26 dualg4 kextd[10]: error reconsidering volume /Volumes/ 
+zfsstg
+Jan 22 16:47:26 dualg4 kextd[10]: error reconsidering volume /Volumes/ 
+remove
+Jan 22 16:47:26 dualg4 reboot[2628]: rebooted by _securityagent
+Jan 22 16:47:26 dualg4 reboot[2628]: SHUTDOWN_TIME: 1232660846 347832
+Jan 22 16:47:27 dualg4 mDNSResponder mDNSResponder-176.3 (Sep 30 2008  
+16:59:41)[16]: stopping
+Jan 22 16:47:27 dualg4 Software Update[2533]: Terminating
+Jan 22 16:47:27 dualg4 PenTabletDriver[2527]:  
+CGSShutdownServerConnections: Detaching application from window server
+Jan 22 16:47:27 dualg4 AppleVNCServer[2528]:  
+CGSShutdownServerConnections: Detaching application from window server
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001352.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+	<LI>Next message: <A HREF="001354.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1353">[ date ]</a>
+              <a href="thread.html#1353">[ thread ]</a>
+              <a href="subject.html#1353">[ subject ]</a>
+              <a href="author.html#1353">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs alternative
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C4A329567.1010502%40loveturtle.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001640.html">
+   <LINK REL="Next"  HREF="001650.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs alternative</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C4A329567.1010502%40loveturtle.net%3E"
+       TITLE="[zfs-discuss] zfs alternative">lists at loveturtle.net
+       </A><BR>
+    <I>Fri Jun 12 10:50:31 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001640.html">[zfs-discuss] zfs alternative
+</A></li>
+        <LI>Next message: <A HREF="001650.html">[zfs-discuss] zfs alternative
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1642">[ date ]</a>
+              <a href="thread.html#1642">[ thread ]</a>
+              <a href="subject.html#1642">[ subject ]</a>
+              <a href="author.html#1642">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You should wait until 10.6 is released. I find it very unlikely that ZFS 
+is really gone. I find it more likely that it has been pulled from the 
+official release because something wasn't ready and they don't want to 
+officially support it. They will likely update the macosforge page upon 
+release.
+
+There were significant updates to ZFS in some of the 10.6 betas before 
+it was pulled and I can't imagine throwing away all that work when it's 
+already done. Not to mention a decent amount of folks at Apple are Unix 
+geeks and are probably just as excited about ZFS as the rest of us are.
+
+This isn't that dissimilar to 10.5, If anyone recalls some early 10.5 
+betas had ZFS support and then it was pulled as we got close to the 
+release just to show up in it's current unoffically supported form after 
+release.
+
+That said, I would go with FreeBSD. If you're familiar with it... 
+7-STABLE (which will become 7.3) has a much improved ZFS implementation. 
+ZFS v13, very fast, very stable, ZFS boot on GPT &amp; MBR is supported (I 
+have personally tested both, though the procedure is probably over the 
+head of anyone who isn't familiar with the specifics of FreeBSD). You 
+will be able to import your pools from OS-X.
+
+NOTE: 7.2-RELEASE which is what normal users would use has ZFS v6 which 
+will not work with your OS-X pool if you have upgraded it to v8. You 
+must use 7-STABLE which is a development branch. This is probably over 
+your head if you're not familiar with FreeBSD. Though if you have enough 
+years of Linux experience you should be able to keep up just fine. If 
+that turns you off OpenSolaris is a good alternative but the learning 
+curve is steep and the clusterfuck of solaris &amp; gnu tools needs another 
+year or two of polishing if you ask me. I'd rather use SXCE, at least I 
+don't have to worry about shitty gnu ls not understanding my ACL's.
+
+Relax and wait until September.
+
+
+On 6/12/09 1:20 PM, Mario Camou wrote:
+&gt;<i> Linux supports AFP but the ZFS support is rather bad (via UserFS). I 
+</I>&gt;<i> would recommend OpenSolaris and installing the Netatalk package (I'm 
+</I>&gt;<i> not sure if it's available as a package or if you have to recompile it).
+</I>&gt;<i>
+</I>&gt;<i> -Mario.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> I want to change the world but they won't give me the source code.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Jun 12, 2009 at 19:17, Dirk Schelfhout &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dirkschelfhout at mac.com</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dirkschelfhout at mac.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     Since probably no longer supported by apple, I would like to move
+</I>&gt;<i>     my 4 guid disks to a new machine running another os.
+</I>&gt;<i>
+</I>&gt;<i>     Any suggestions which os would be best ? Is there a *nix version
+</I>&gt;<i>     that runs afp ? Will they recognize the disks ?
+</I>&gt;<i>
+</I>&gt;<i>     Also what kind off machine would I need, just to run as a zfs
+</I>&gt;<i>     server for 2 to 3 clients. ( on a gigabit ethernet )
+</I>&gt;<i>     ( as cheap as possible consuming as little power as possible. with
+</I>&gt;<i>     the latter being more important to me ( and many disk bays ) )
+</I>&gt;<i>
+</I>&gt;<i>     Dirk_______________________________________________
+</I>&gt;<i>     zfs-discuss mailing list
+</I>&gt;<i>     <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i>     <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>    
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090612/ef340796/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090612/ef340796/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001640.html">[zfs-discuss] zfs alternative
+</A></li>
+	<LI>Next message: <A HREF="001650.html">[zfs-discuss] zfs alternative
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1642">[ date ]</a>
+              <a href="thread.html#1642">[ thread ]</a>
+              <a href="subject.html#1642">[ subject ]</a>
+              <a href="author.html#1642">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

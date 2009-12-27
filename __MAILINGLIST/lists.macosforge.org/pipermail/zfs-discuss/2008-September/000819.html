@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Help Please! /Volumes is completely gone!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Help%20Please%21%20/Volumes%20is%20completely%20gone%21&In-Reply-To=20080907.122520.131644342.hanche%40math.ntnu.no">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000818.html">
+   <LINK REL="Next"  HREF="000822.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Help Please! /Volumes is completely gone!</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Help%20Please%21%20/Volumes%20is%20completely%20gone%21&In-Reply-To=20080907.122520.131644342.hanche%40math.ntnu.no"
+       TITLE="[zfs-discuss] Help Please! /Volumes is completely gone!">lists at loveturtle.net
+       </A><BR>
+    <I>Sun Sep  7 07:45:15 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000818.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+        <LI>Next message: <A HREF="000822.html">[zfs-discuss] zfs-discuss Digest, Vol 9, Issue 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#819">[ date ]</a>
+              <a href="thread.html#819">[ thread ]</a>
+              <a href="subject.html#819">[ subject ]</a>
+              <a href="author.html#819">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>zfs unmount -a may help.
+
+there is no reason at all that you can't play with your zpools in single 
+user mode except that maybe your hostid wont be set and then you will 
+have to manually import the pool again once you exit single user mode 
+but other than that i can't see any problems.
+
+Harald Hanche-Olsen wrote:
+&gt;<i> + Harald Hanche-Olsen&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hanche at math.ntnu.no</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i> Wait, wait, here is another idea:
+</I>&gt;<i>
+</I>&gt;<i> Diagnosis: You have multiple zfs filesystems all mounted on
+</I>&gt;<i> /Volumes. They will be mounted on top of eacher, which means that all
+</I>&gt;<i> of them will be busy and can be unmounted - with the exception of the
+</I>&gt;<i> one mounted on top. You should be able to unmount that one: Just go
+</I>&gt;<i> through the motions of trying to unmount the whole pile until one
+</I>&gt;<i> unmount succeeds. Repeat, and repeat again util hopefully they are all
+</I>&gt;<i> unmounted.  (At this point, your mounted HFS volumes should magically
+</I>&gt;<i> reappear).  Then go fix the mountpoints before remounting the whole
+</I>&gt;<i> pile.
+</I>&gt;<i>
+</I>&gt;<i> - Harald
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>    
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000818.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+	<LI>Next message: <A HREF="000822.html">[zfs-discuss] zfs-discuss Digest, Vol 9, Issue 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#819">[ date ]</a>
+              <a href="thread.html#819">[ thread ]</a>
+              <a href="subject.html#819">[ subject ]</a>
+              <a href="author.html#819">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

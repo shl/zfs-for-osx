@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CA34491A7-5299-47FF-806B-4AD5FD81868E%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001634.html">
+   <LINK REL="Next"  HREF="001603.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CA34491A7-5299-47FF-806B-4AD5FD81868E%40gmail.com%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Thu Jun 11 21:56:44 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001634.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001603.html">[zfs-discuss] ZFS in Snow Leopard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1635">[ date ]</a>
+              <a href="thread.html#1635">[ thread ]</a>
+              <a href="subject.html#1635">[ subject ]</a>
+              <a href="author.html#1635">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Fwiw I found issues with an earlier build of ZFS and external USB  
+enclosures. I think the fault was the enclosure but I saw similar  
+symptoms. There were no read errors because I had used mirroring and  
+data duplication.
+
+Are disk7/8 using a different interface or enclosure than the others?
+
+Alex
+
+Sent from my (new) iPhone
+
+On 12 Jun 2009, at 04:23, Carl Magnuson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">magnu213 at umn.edu</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i> On Jun 11, 2009, at 9:43 PM, Jonathan Edwards wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jun 11, 2009, at 7:00 PM, Carl Magnuson wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> zpool scrub runs without any output and the dd command you gave  
+</I>&gt;&gt;&gt;<i> does not produce any output in dmesg, however the checksum has  
+</I>&gt;&gt;&gt;<i> definitely shot up for those two disks after running each of those:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sure .. since the dd command would be adding more data to the pool  
+</I>&gt;&gt;<i> and zfs is already busy validating data that was written to the  
+</I>&gt;&gt;<i> disks that were previously missing (disk8/disk9 .. now disk7/ 
+</I>&gt;&gt;<i> disk8) .. i'd wait for the scrub to complete (adding a spare would  
+</I>&gt;&gt;<i> be non-intrusive here), and you should see the status message go  
+</I>&gt;&gt;<i> away (you can also do a status -xv to look for changes or a zpool  
+</I>&gt;&gt;<i> iostat -v cpool 5 to watch activity) .. looks like you've got about  
+</I>&gt;&gt;<i> 6.5 hours to go now ..
+</I>&gt;<i>
+</I>&gt;<i> After the scrub completed I ran the given dd command on both disk7  
+</I>&gt;<i> and disk8, I do not see the checksum going up for either afterwords.  
+</I>&gt;<i> Out of curiosity I tried running another scrub and I do see checksum  
+</I>&gt;<i> going up for both disk7 and disk8 again but none of the other  
+</I>&gt;<i> disks.  The last scrub left the checksums at 1.96K and 2.13K.  I'm  
+</I>&gt;<i> not sure how to take this, but have two new drives on the way to be  
+</I>&gt;<i> safe.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Carl
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001634.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001603.html">[zfs-discuss] ZFS in Snow Leopard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1635">[ date ]</a>
+              <a href="thread.html#1635">[ thread ]</a>
+              <a href="subject.html#1635">[ subject ]</a>
+              <a href="author.html#1635">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

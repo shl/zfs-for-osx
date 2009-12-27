@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] speed? nope...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20speed%3F%20nope...&In-Reply-To=%3CA20EBF79-CB55-4547-9882-FDE795D0D321%40charter.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001347.html">
+   <LINK REL="Next"  HREF="001349.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] speed? nope...</H1>
+    <B>Sterling Garwood</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20speed%3F%20nope...&In-Reply-To=%3CA20EBF79-CB55-4547-9882-FDE795D0D321%40charter.net%3E"
+       TITLE="[zfs-discuss] speed? nope...">slgarwood at charter.net
+       </A><BR>
+    <I>Wed Jan 21 16:51:03 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001347.html">[zfs-discuss] speed? nah....
+</A></li>
+        <LI>Next message: <A HREF="001349.html">[zfs-discuss] speed? nope...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1348">[ date ]</a>
+              <a href="thread.html#1348">[ thread ]</a>
+              <a href="subject.html#1348">[ subject ]</a>
+              <a href="author.html#1348">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>here is a zpool iostat on a 5 sec delay for a little bit ....
+as you can see I have 2 pools - the one I am building the mirror on is  
+'zfsstg'
+
+                capacity     operations    bandwidth
+pool         used  avail   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0    187  1.13K
+zfsstg       265G   199G      1    154  95.4K  17.7M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     26    108  1.78M  6.79M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     35    120  2.86M  9.66M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     39    158  4.26M  12.9M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     53    121  4.79M  12.5M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     56     21  4.56M   669K
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     28    142  1.88M  12.3M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     16     41  1.03M  3.37M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     33    119  2.22M  12.4M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     23    138  2.25M  12.8M
+----------  -----  -----  -----  -----  -----  -----
+mypool       367K   189G      0      0      0      0
+zfsstg       265G   199G     54     73  3.98M  7.59M
+----------  -----  -----  -----  -----  -----  -----
+
+
+I tried to get a normal Unix iostat on the Firewire drive but for some  
+reason Unix iostat can not see the HFS+ Firewire drive...hmmm time to  
+file a bug report.
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001347.html">[zfs-discuss] speed? nah....
+</A></li>
+	<LI>Next message: <A HREF="001349.html">[zfs-discuss] speed? nope...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1348">[ date ]</a>
+              <a href="thread.html#1348">[ thread ]</a>
+              <a href="subject.html#1348">[ subject ]</a>
+              <a href="author.html#1348">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

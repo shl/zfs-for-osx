@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20Hosed%20my%20permissions%20to%20access%20filesystem&In-Reply-To=D0855D91-9868-4268-A590-25F75BBCE5B4%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000629.html">
+   <LINK REL="Next"  HREF="000631.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-117: Hosed my permissions to access filesystem</H1>
+    <B>Christopher LILJENSTOLPE</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20Hosed%20my%20permissions%20to%20access%20filesystem&In-Reply-To=D0855D91-9868-4268-A590-25F75BBCE5B4%40mac.com"
+       TITLE="[zfs-discuss] zfs-117: Hosed my permissions to access filesystem">cdl at asgaard.org
+       </A><BR>
+    <I>Tue Jun  3 20:27:56 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000629.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+        <LI>Next message: <A HREF="000631.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#630">[ date ]</a>
+              <a href="thread.html#630">[ thread ]</a>
+              <a href="subject.html#630">[ subject ]</a>
+              <a href="author.html#630">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+For directories, x sets the permissions to traverse the directory (and  
+act on it's constituent parts).
+
+	Chris
+
+On 03 Jun 2008, at 17.42, Dirk Schelfhout wrote:
+
+&gt;<i> strange, consituant
+</I>&gt;<i> Am i missing something here ?
+</I>&gt;<i> Why would the x bit prevent a chmod or chown ?
+</I>&gt;<i> maybe my unix skills are waning.
+</I>&gt;<i> Dirk
+</I>&gt;<i> On 04 Jun 2008, at 02:28, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> So somehow you've unset the 'x' bit on your Photos folder which is  
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i> crux of the problem.  So I would recommend as root in the terminal
+</I>&gt;&gt;<i> doing:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # find Photos -type dir | xargs chmod ugo+x
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> which should reset the 'x' bit on Photos and everything contained
+</I>&gt;&gt;<i> therein so you should be able to access everything again.
+</I>&gt;&gt;<i> So in your setup reflect is your pool and Photos is a filesystem
+</I>&gt;&gt;<i> within that pool?  And you used Finder to change permissions on the
+</I>&gt;&gt;<i> filesystem Photos and it did this?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On May 31, 2008, at 9:13 AM, Jonathan Borden wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Sigh ...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Doing something in the Finder ... trying to give permissions to
+</I>&gt;&gt;&gt;<i> access
+</I>&gt;&gt;&gt;<i> a networked zfs pool and filesystem ... asked the finder to
+</I>&gt;&gt;&gt;<i> recursively give read+write and the permissions on the filesytem
+</I>&gt;&gt;&gt;<i> symbolic link are now hosed and I am not sure how to fix them.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> they read (via ls -l):
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> drw-r--r--  26 jonathanborden  staff  33 Apr 15 19:06 Photos
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I created a new filesystem in the same pool which lists as:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> drwxr-xr-x   2 root            wheel   2 May 31 11:54 Test
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I can't do a chmod or chown to change the permissions on
+</I>&gt;&gt;&gt;<i> reflect/Photos ... what should I do ... perhaps I am just using the
+</I>&gt;&gt;&gt;<i> wrong flags for chmod and chown (tried sudo chown -v root:wheel
+</I>&gt;&gt;&gt;<i> Photos
+</I>&gt;&gt;&gt;<i> ... and it wouldn't give me permission to do that)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> TIA
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Jonathan
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+- ---
+&#26446;&#26607;&#30591;
+Check my PGP key here:
+<A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJIRgu8AAoJEGmx2Mt/+Iw/2woH/RdfGgHSco43WY4i9Rcjgx8d
+zX/Bgu0PnjicUM+oDnF62uFBQDqo4pDHmB+P9XdKv48/IDsD3rRIUrQFpTUEnYIw
++wfscemGsFbKsCg77W81nugf4oAXAZ77AK5jZx3xyFJ/hfuNFKu2YFgtjDYoDVt9
+/ptas0yfGKqoGuFYGSWIe6uaIjruxp6fsf5V3kJaKjoJTMBP3I0dLdpjEzGAWFD2
+FNSKdLIs8VaDdjG1FS9hyADJqm3xv6qJLGUuHqPqz5O+lUJw0SHPBhHT1RtO8YTg
+rrdXhRmxGundc+3MabXAI6Z7bLzw/T+/LUHm1XJ7TCtjoplyP1O0JmPD6QBs1QQ=
+=8q5O
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000629.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+	<LI>Next message: <A HREF="000631.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#630">[ date ]</a>
+              <a href="thread.html#630">[ thread ]</a>
+              <a href="subject.html#630">[ subject ]</a>
+              <a href="author.html#630">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

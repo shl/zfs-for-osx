@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] volume not automounting since 10.6
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20volume%20not%20automounting%20since%2010.6&In-Reply-To=%3C60b50dc10909172008q7661e9aby300d975b6844af0d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001854.html">
+   <LINK REL="Next"  HREF="001852.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] volume not automounting since 10.6</H1>
+    <B>Andy Webber</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20volume%20not%20automounting%20since%2010.6&In-Reply-To=%3C60b50dc10909172008q7661e9aby300d975b6844af0d%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] volume not automounting since 10.6">andy at aligature.com
+       </A><BR>
+    <I>Thu Sep 17 20:08:24 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001854.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+        <LI>Next message: <A HREF="001852.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1867">[ date ]</a>
+              <a href="thread.html#1867">[ thread ]</a>
+              <a href="subject.html#1867">[ subject ]</a>
+              <a href="author.html#1867">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>After hearing good things about zfs working on 10.6 (and doing some testing
+on my own) I decided to upgrade to Snow Leopard tonight.  I had been
+previously using the 119 bits for as long as I can remember without any
+crashes.  In my limited playing around, I couldn't get the 10A286 bits to
+work at all.  So, I've decided to stick with the 119 bits until something
+newer (hopefully) gets released by our friends at Apple.
+I took Daniel's advice and created a launchd daemon to auto-import my pool
+on login.  I had some troubles with the launchd running my command over and
+over logging an error when the pool is already imported.  Here's an update
+plist for those who are interested.  Take particular note of the
+LaunchOnlyOnce key.
+
+&lt;---------------------- Start plist file ------------------------&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot; &quot;
+<A HREF="http://www.apple.com/DTDs/PropertyList-1.0.dtd">http://www.apple.com/DTDs/PropertyList-1.0.dtd</A>&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+&lt;key&gt;ServiceDescription&lt;/key&gt;
+&lt;string&gt;ZFS Auto mount&lt;/string&gt;
+ &lt;key&gt;Label&lt;/key&gt;
+&lt;string&gt;com.test.zfs&lt;/string&gt;
+&lt;key&gt;Program&lt;/key&gt;
+ &lt;string&gt;/usr/sbin/zpool&lt;/string&gt;
+&lt;key&gt;ProgramArguments&lt;/key&gt;
+ &lt;array&gt;
+&lt;string&gt;/usr/sbin/zpool&lt;/string&gt;
+&lt;string&gt;import&lt;/string&gt;
+ &lt;string&gt;-f&lt;/string&gt;
+&lt;string&gt;lake&lt;/string&gt;
+&lt;/array&gt;
+ &lt;key&gt;RunAtLoad&lt;/key&gt;
+&lt;true/&gt;
+&lt;key&gt;LaunchOnlyOnce&lt;/key&gt;
+ &lt;true/&gt;
+
+&lt;key&gt;UserName&lt;/key&gt;
+&lt;string&gt;root&lt;/string&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+&lt;---------------------- End plist file ------------------------&gt;
+
+
+On Fri, Sep 11, 2009 at 4:40 PM, Daniel M. Zimmerman &lt;
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dmz+lists at tffenterprises.com</A> &lt;dmz%<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">2Blists at tffenterprises.com</A>&gt;&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --On 11 September 2009 7:07:47 -0400 Harald Hanche-Olsen &lt;
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hanche at math.ntnu.no</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>  + &quot;Daniel M. Zimmerman&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dmz+lists at tffenterprises.com</A>&lt;dmz%<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">2Blists at tffenterprises.com</A>&gt;
+</I>&gt;&gt;<i> &gt;:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  I'm currently debating whether to risk updating to 10.6.1... :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That's not likely to involve serious changes to the kernel, is it?
+</I>&gt;&gt;<i> Ripping functionality out of the kernel is more likely to happen with
+</I>&gt;&gt;<i> (major) upgrades than with (minor) updates.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> And, indeed, the bits are still working with 10.6.1, as is my workaround
+</I>&gt;<i> for mounting the pool at boot time.
+</I>&gt;<i>
+</I>&gt;<i> -Dan
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------
+</I>&gt;<i> Daniel M. Zimmerman                                TFF Enterprises
+</I>&gt;<i> 1900 Commerce St. Box 358426   <A HREF="http://www.tffenterprises.com/~dmz/">http://www.tffenterprises.com/~dmz/</A>
+</I>&gt;<i> Tacoma, WA  98402  USA                      <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dmz at tffenterprises.com</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090917/80cd2f98/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090917/80cd2f98/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001854.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+	<LI>Next message: <A HREF="001852.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1867">[ date ]</a>
+              <a href="thread.html#1867">[ thread ]</a>
+              <a href="subject.html#1867">[ subject ]</a>
+              <a href="author.html#1867">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS/TM/OSXS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS/TM/OSXS&In-Reply-To=8667C9C3-F67F-4830-9FB3-FD06D82BC6DF%40rehnmark.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000137.html">
+   <LINK REL="Next"  HREF="000138.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS/TM/OSXS</H1>
+    <B>Erik ABLESON</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS/TM/OSXS&In-Reply-To=8667C9C3-F67F-4830-9FB3-FD06D82BC6DF%40rehnmark.net"
+       TITLE="[zfs-discuss] ZFS/TM/OSXS">eableson at gmail.com
+       </A><BR>
+    <I>Tue Feb  5 07:50:28 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000137.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+        <LI>Next message: <A HREF="000138.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#203">[ date ]</a>
+              <a href="thread.html#203">[ thread ]</a>
+              <a href="subject.html#203">[ subject ]</a>
+              <a href="author.html#203">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I seem to recall trying that a while ago on an NFS share. Even with  
+the unsupported volume hack activated, the Time Machine UI doesn't  
+display volumes mounted from disk images (whether they're stored  
+locally or remotely) as potential destinations.
+
+Erik Ableson
++33 6 80 83 58 28
+
+Le 5 f&#233;vr. 08 &#224; 16:35, Robert Rehnmark &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">robert at rehnmark.net</A>&gt; a  
+&#233;crit :
+
+&gt;<i> Would it not work if you create an Image file and put it on the pool?
+</I>&gt;<i> Make the image HFS+ and mount/share it ... then put the sparseimage  
+</I>&gt;<i> on that.
+</I>&gt;<i>
+</I>&gt;<i> I'm interrested in doing the same thing but I'm waiting for some  
+</I>&gt;<i> parts to get my pool up and running.
+</I>&gt;<i>
+</I>&gt;<i> /Robert
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 5 feb 2008 kl. 14:57 skrev David Ritchie:
+</I>&gt;<i>
+</I>&gt;&gt;<i> TM seems to be rather picky about what kind of network volumes  
+</I>&gt;&gt;<i> (vis. the underlying file system) it will back up to. I've followed  
+</I>&gt;&gt;<i> several hints to try and get it to back up to things other than AFP  
+</I>&gt;&gt;<i> shares of HFS+ file systems from OS X, but haven't got it working.  
+</I>&gt;&gt;<i> Since it uses sparse images it doesn't seem that it should have  
+</I>&gt;&gt;<i> much trouble regardless of the file system.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm planning on setting up TM backups to my Mac Pro over the  
+</I>&gt;&gt;<i> network. At the moment, due to my failure to get TM backing up to  
+</I>&gt;&gt;<i> anything else, I'm thinking of having it back up to the HFS+ boot  
+</I>&gt;&gt;<i> drive, and then have cron rsync --inplace the sparse images over to  
+</I>&gt;&gt;<i> my ZFS volume.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If anyone can suggest how I can make TM happy to back up directly  
+</I>&gt;&gt;<i> to ZFS, I do have spare drives and I'm happy to let you know how it  
+</I>&gt;&gt;<i> goes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (It's not the ideal solution for TM on ZFS, as discussed before,  
+</I>&gt;&gt;<i> but it would have many of the advantages).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The TM backups over the network happen to sparse image bundles, by  
+</I>&gt;&gt;<i> the way, which are a new thing in 10.5. It's basically a directory  
+</I>&gt;&gt;<i> containing a bunch of files, and it adds more files as more data  
+</I>&gt;&gt;<i> are added to the sparse image. It's pretty handy.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- David
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 5 Feb 2008, at 12:03, Erik Ableson wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Slightly off topic and I haven't got any spare drives to test this  
+</I>&gt;&gt;&gt;<i> idea.  I realise that Time Machine is flaky on a ZFS volume, but  
+</I>&gt;&gt;&gt;<i> I've been looking at the behaviour of Time Machine to an AFP  
+</I>&gt;&gt;&gt;<i> network share on an OS X Server.  Instead of directly writing to  
+</I>&gt;&gt;&gt;<i> the file system, the backups are in a sparseimage (or a series of  
+</I>&gt;&gt;&gt;<i> sparseimage files - I'm still waiting for my first backup to  
+</I>&gt;&gt;&gt;<i> complete over the network to see what it looks like).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Since the object that would be stored on the ZFS filesystem would  
+</I>&gt;&gt;&gt;<i> be a simple file, I was thinking that this should work as a  
+</I>&gt;&gt;&gt;<i> practical solution for consolidating Time Machine storage with all  
+</I>&gt;&gt;&gt;<i> the advantages of using ZFS.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Has anyone tried this out?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Cheers,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Erik
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000137.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+	<LI>Next message: <A HREF="000138.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#203">[ date ]</a>
+              <a href="thread.html#203">[ thread ]</a>
+              <a href="subject.html#203">[ subject ]</a>
+              <a href="author.html#203">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

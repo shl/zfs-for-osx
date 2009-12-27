@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] unrelated question....
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20unrelated%20question....&In-Reply-To=%3C75BA1EB1-C93B-470B-A6D5-E934FC7F848C%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001022.html">
+   <LINK REL="Next"  HREF="001024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] unrelated question....</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20unrelated%20question....&In-Reply-To=%3C75BA1EB1-C93B-470B-A6D5-E934FC7F848C%40apple.com%3E"
+       TITLE="[zfs-discuss] unrelated question....">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Oct 24 17:06:39 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001022.html">[zfs-discuss] unrelated question....
+</A></li>
+        <LI>Next message: <A HREF="001024.html">[zfs-discuss] unrelated question....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1023">[ date ]</a>
+              <a href="thread.html#1023">[ thread ]</a>
+              <a href="subject.html#1023">[ subject ]</a>
+              <a href="author.html#1023">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>we are already in the process of porting zdb.  I think perhaps the  
+total snapshot size  though deserves a feature of it's own, as most  
+people don't want to go hunting in zdb, and it's really only intended  
+as a debugging aid, we really didn't intend it to be any kind of  
+status checking mechanism.
+
+Noel
+
+On Oct 24, 2008, at 9:53 AM, Jonathan Edwards wrote:
+
+&gt;<i> would it make sense to port zdb and/or perhaps extend it?
+</I>&gt;<i>
+</I>&gt;<i> On Oct 24, 2008, at 12:39 PM, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> ok, I've opened a new bug to track this issue and added everyones  
+</I>&gt;&gt;<i> comments and workarounds:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/6317759">rdar://problem/6317759</A>&gt; Space accounting feature for total  
+</I>&gt;&gt;<i> snapshot usage
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It won't be done right away since I've got other bigger things to  
+</I>&gt;&gt;<i> fix, but I'll try and get to it down the road after all the fires  
+</I>&gt;&gt;<i> are put out :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> thanks!
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Oct 24, 2008, at 6:12 AM, Dillon Kass wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It's absolutely a useful feature
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> When you have many filesystems and automated snapshots it kind of  
+</I>&gt;&gt;&gt;<i> takes on a life of it's own and  a general overview of snapshot  
+</I>&gt;&gt;&gt;<i> usage only makes sense...for many reasons I'm sure everyone can  
+</I>&gt;&gt;&gt;<i> think of including examining the effectiveness of your snapshot  
+</I>&gt;&gt;&gt;<i> schedules.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It would seem others agree since they have scripts ready to go :-)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> No&#235;l Dellofano wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hey guys,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> So sounds like perhaps this functionality should be added?  Would  
+</I>&gt;&gt;&gt;&gt;<i> this be a useful feature to have around or no?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> thanks!
+</I>&gt;&gt;&gt;&gt;<i> Noel
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Oct 23, 2008, at 2:14 PM, Jonathan Edwards wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> since you can also have KB sized snapshots and might want to  
+</I>&gt;&gt;&gt;&gt;&gt;<i> limit exposure to a pool .. here's another take using the -p  
+</I>&gt;&gt;&gt;&gt;&gt;<i> option in zfs get
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> $ cat &gt; snapsum
+</I>&gt;&gt;&gt;&gt;&gt;<i> #!/bin/bash
+</I>&gt;&gt;&gt;&gt;&gt;<i> USAGE=&quot;USAGE: $0 pool&quot;
+</I>&gt;&gt;&gt;&gt;&gt;<i> test $# -ne 1 &amp;&amp; echo $USAGE &amp;&amp; exit 1
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> sum=0
+</I>&gt;&gt;&gt;&gt;&gt;<i> pool=$1
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> for snapshot in `zfs list -Hr -t snapshot -o name ${pool}` ; do
+</I>&gt;&gt;&gt;&gt;&gt;<i> snapsize=`zfs get -Hp -o value used ${snapshot}`
+</I>&gt;&gt;&gt;&gt;&gt;<i> sum=$((sum + snapsize))
+</I>&gt;&gt;&gt;&gt;&gt;<i> done
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> echo &quot;Total snapshot usage for ${pool} = ${sum}&quot;
+</I>&gt;&gt;&gt;&gt;&gt;<i> ^D
+</I>&gt;&gt;&gt;&gt;&gt;<i> $ chmod 755 snapsum
+</I>&gt;&gt;&gt;&gt;&gt;<i> $ ./snapsum
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> -- 
+</I>&gt;&gt;&gt;&gt;&gt;<i> this is still kind of a hack .. there's some functionality you  
+</I>&gt;&gt;&gt;&gt;&gt;<i> can derive in dumping the zdb block usage, but zdb isn't really  
+</I>&gt;&gt;&gt;&gt;&gt;<i> ported here and it's still not that trivial to derive as this  
+</I>&gt;&gt;&gt;&gt;&gt;<i> sort of reporting functionality should really get RFE'd ..
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> anyhow hth
+</I>&gt;&gt;&gt;&gt;&gt;<i> jonathan
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On Oct 23, 2008, at 4:34 PM, Werner Donn&#233; wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Hi Dillon,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> The following command-line will give you the amount of bytes  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> consumed by
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> all of your snapshots:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> zfs list -t snapshot -H -o used | sed 's/K/*1024/' | sed 's/M/ 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> *1024*1024/' |
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> sed 's/G/*1024*1024*1024/' | sed 's/^/a+=/' | awk '{ print $0 }  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> END { print &quot;a&quot;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> }' | bc
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Best regards,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Werner.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> On 23 Oct 2008, at 21:07, Dillon Kass wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Hey guys, I was wondering...This doesn't really have anything  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> to do with zfs on mac osx but I figured that I would throw  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> this out there since some of you are smart :-)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Does anyone know how to get the total snapshot usage for an  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> entire pool?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> My desktop has 20 snapshots, I can just look at them and add  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> them up...
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> but my home fileserver has 206 snapshots...looking at them one  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> by one is way less practical.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> -- 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Werner Donn&#233;  --  Re                                     <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Engelbeekstraat 8                                               <A HREF="http://www.re.be">http://www.re.be</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> BE-3300 Tienen
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> tel: (+32) 486 425803    e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001022.html">[zfs-discuss] unrelated question....
+</A></li>
+	<LI>Next message: <A HREF="001024.html">[zfs-discuss] unrelated question....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1023">[ date ]</a>
+              <a href="thread.html#1023">[ thread ]</a>
+              <a href="subject.html#1023">[ subject ]</a>
+              <a href="author.html#1023">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

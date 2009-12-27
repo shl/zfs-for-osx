@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Uh%20oh%21%20Help%21%20Mac%20Mini%20keeps%20locking%20up...&In-Reply-To=%3CEEB17A99-E1B4-4AC1-9F42-B187FF36BE3A%40sogeeky.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001525.html">
+   <LINK REL="Next"  HREF="001532.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Uh%20oh%21%20Help%21%20Mac%20Mini%20keeps%20locking%20up...&In-Reply-To=%3CEEB17A99-E1B4-4AC1-9F42-B187FF36BE3A%40sogeeky.net%3E"
+       TITLE="[zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...">zorg at sogeeky.net
+       </A><BR>
+    <I>Tue Apr 21 00:13:08 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001525.html">[zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+</A></li>
+        <LI>Next message: <A HREF="001532.html">[zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1526">[ date ]</a>
+              <a href="thread.html#1526">[ thread ]</a>
+              <a href="subject.html#1526">[ subject ]</a>
+              <a href="author.html#1526">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hooray!  I found what I needed. Steps to bring up networking in 10.5  
+safe mode can be found at the bottom of this page: <A HREF="http://">http://</A> 
+www.macos.utah.edu/documentation/system_deployment/radmind/faqs/ 
+single_user_mode.html
+
+My data is happily copying away to two new network drives. Phew!
+
+On Apr 20, 2009, at 11:24 PM, &quot;Mr. Zorg ...&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zorg at sogeeky.net</A>&gt; wrote:
+
+&gt;<i> OK, so the resilver completed and I've tried rebooting both in normal
+</I>&gt;<i> mode and in safe mode and the system still locks up.  But it'll stay
+</I>&gt;<i> up all day in single user mode.  I'm fine with that, but I need to get
+</I>&gt;<i> my data off this drive and that's proving difficult too.  Looks like
+</I>&gt;<i> getting networking and/or usb disk mounting up and running isn't easy
+</I>&gt;<i> in single user mode.  I've googled till my fingers hurt and I'm not
+</I>&gt;<i> having much luck.  Can anyone out there tell me how to get networking
+</I>&gt;<i> up and/or how to mount a usb drive? The only disks showing up in safe
+</I>&gt;<i> mode are my firewire zfs drives.  :/
+</I>&gt;<i>
+</I>&gt;<i> Arg.
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Apr 20, 2009 at 10:43 AM, Mr. Zorg &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zorg at sogeeky.net</A>&gt; wrote:
+</I>&gt;&gt;<i> Here's a status update. Neither OpenSolaris or FreeBSD would play  
+</I>&gt;&gt;<i> nice with
+</I>&gt;&gt;<i> my mini, so I went back to a fresh OS X install. I kept it at  
+</I>&gt;&gt;<i> 10.5.2 with
+</I>&gt;&gt;<i> the 102A binaries thinking maybe something destabilized during an  
+</I>&gt;&gt;<i> update
+</I>&gt;&gt;<i> (like you suggested) but the same behavior exists. I found I was  
+</I>&gt;&gt;<i> able to run
+</I>&gt;&gt;<i> in single user mode without locking up. A scrub showed tree  
+</I>&gt;&gt;<i> checksome errors
+</I>&gt;&gt;<i> on one disk. I'm running a replace on it now. Perhaps spotlight was
+</I>&gt;&gt;<i> triggering a panic by hitting those checksum errors? :(
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'll report back after the resilver is complete.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 20, 2009, at 4:22 AM, Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt;  
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've been seeing the same symptoms since the last Apple Software  
+</I>&gt;&gt;&gt;<i> update
+</I>&gt;&gt;&gt;<i> occurred. There wasn't any significant difference in data size (as  
+</I>&gt;&gt;&gt;<i> I was
+</I>&gt;&gt;&gt;<i> away on vacation) over that time, yet my macine appeared to keep  
+</I>&gt;&gt;&gt;<i> dying
+</I>&gt;&gt;&gt;<i> exactly at midnight every few days when my zpool scrub happens.  
+</I>&gt;&gt;&gt;<i> I've not
+</I>&gt;&gt;&gt;<i> managed to reliably diagnose the problem though, although I  
+</I>&gt;&gt;&gt;<i> suspect it's
+</I>&gt;&gt;&gt;<i> related to zfs.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Maybe there's a slow memory leak somewhere and in the end the  
+</I>&gt;&gt;&gt;<i> spool scrub
+</I>&gt;&gt;&gt;<i> just doesn't gave enough to operate?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Alex
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Sent from my (new) iPhone
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 20 Apr 2009, at 03:44, &quot;Mr. Zorg ...&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zorg at sogeeky.net</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I've been one of those folks saying &quot;it works just fine&quot; on this  
+</I>&gt;&gt;&gt;&gt;<i> list
+</I>&gt;&gt;&gt;&gt;<i> for a long time, but now I'm one of those saying &quot;uh oh!&quot;.  My Mac
+</I>&gt;&gt;&gt;&gt;<i> Mini has taken to locking up whenever I do much of anything with my
+</I>&gt;&gt;&gt;&gt;<i> zfs pool.  Running zpool status shows all disks online and healthy.
+</I>&gt;&gt;&gt;&gt;<i> I'm reasonable confident the data is still fine, I just can't  
+</I>&gt;&gt;&gt;&gt;<i> access
+</I>&gt;&gt;&gt;&gt;<i> it on my Mac.  I was able to export the pool and will now try
+</I>&gt;&gt;&gt;&gt;<i> accessing it under opensolaris.  Unfortunately, the live cd seems  
+</I>&gt;&gt;&gt;&gt;<i> to
+</I>&gt;&gt;&gt;&gt;<i> be giving me trouble with the marvell network card in this thing,  
+</I>&gt;&gt;&gt;&gt;<i> so
+</I>&gt;&gt;&gt;&gt;<i> I'll actually try installing it and installing the driver.  I tried
+</I>&gt;&gt;&gt;&gt;<i> running a zpool import from the live CD but it just sat there for  
+</I>&gt;&gt;&gt;&gt;<i> 5+
+</I>&gt;&gt;&gt;&gt;<i> minutes.  How long should that take?  I'll search the list  
+</I>&gt;&gt;&gt;&gt;<i> archives to
+</I>&gt;&gt;&gt;&gt;<i> see what tips I can glean, but if anyone wants to chime in on  
+</I>&gt;&gt;&gt;&gt;<i> what to
+</I>&gt;&gt;&gt;&gt;<i> try next I'd greatly appreciate it.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I></PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001525.html">[zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+</A></li>
+	<LI>Next message: <A HREF="001532.html">[zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1526">[ date ]</a>
+              <a href="thread.html#1526">[ thread ]</a>
+              <a href="subject.html#1526">[ subject ]</a>
+              <a href="author.html#1526">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

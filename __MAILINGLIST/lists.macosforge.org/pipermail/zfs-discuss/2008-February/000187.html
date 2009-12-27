@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] encryption
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20encryption&In-Reply-To=A08E672D-D54C-4B26-A23F-CB31A48A50AC%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000184.html">
+   <LINK REL="Next"  HREF="000188.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] encryption</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20encryption&In-Reply-To=A08E672D-D54C-4B26-A23F-CB31A48A50AC%40spamfreemail.de"
+       TITLE="[zfs-discuss] encryption">bwaters at nrao.edu
+       </A><BR>
+    <I>Thu Feb 21 17:07:04 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000184.html">[zfs-discuss] encryption
+</A></li>
+        <LI>Next message: <A HREF="000188.html">[zfs-discuss] encryption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#187">[ date ]</a>
+              <a href="thread.html#187">[ thread ]</a>
+              <a href="subject.html#187">[ subject ]</a>
+              <a href="author.html#187">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Feb 21, 2008, at 1:40 PM, Franz Schmalzl wrote:
+
+&gt;<i> so just creating a raidz and laying a sparsebundle with hfs+ inside
+</I>&gt;<i> seems pretty pointless to me.
+</I>
+Well FWIW I've done it, but you're right: the sparsebundle is HFS, and  
+lacks all the ZFS management goodness.
+
+Of course, you can do ZFS snapshots on the file system hosting the  
+sparsebundle, so you can go back to previous states of the hosted  
+filesystem, but again not really what you'd like.
+
+It's not completely useless, but the added utility barely compensates  
+for the added complexity.
+
+
+&gt;<i> my plan was to create a encrypted sparsebundle with zfs inside, as i
+</I>&gt;<i> believe the dmg itself is encrypted ( so it's sort of device level
+</I>&gt;<i> encryption, and not filesystem level like with encfs or something )
+</I>&gt;<i>
+</I>&gt;<i> im a right?
+</I>&gt;<i>
+</I>&gt;<i> and would it work ?
+</I>
+
+Why not try it?
+
+Let's create a raidz with four encrypted disk images, instead of four  
+disks:
+
+
+$ cd /tmp
+
+$ openssl rand -base64 16 &gt; silly-password.txt
+
+$ cat silly-password.txt | hdiutil create -size 500m -encryption - 
+stdinpass -type SPARSEBUNDLE -fs HFS+J -layout NONE -volname noname1  
+test1
+created: /private/tmp/test1.sparsebundle
+
+
+$ cat silly-password.txt | hdiutil attach -encryption -stdinpass - 
+nomount test1.sparsebundle
+/dev/disk9
+
+
+$ diskutil partitiondisk /dev/disk9 GPTFormat ZFS %noformat% 100%
+Started partitioning on disk disk9 noname1
+Creating partition map
+[ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+Finished partitioning on disk disk9 noname1
+/dev/disk9
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme noname1                *500.0 Mi    
+disk9
+    1:                        ZFS                         500.0 Mi    
+disk9s1
+
+
+
+Repeat for sparse images named test2, test3, test4
+
+
+
+Now
+
+
+$ du -sh *.sparsebundle
+  31M	test1.sparsebundle
+  31M	test2.sparsebundle
+  31M	test3.sparsebundle
+  31M	test4.sparsebundle
+
+
+$ zpool create encrypted_images raidz /dev/disk9
+disk9    disk9s1
+
+
+$ zpool create encrypted_images raidz disk{9,10,11,12}s1
+
+
+$ zpool status
+   pool: encrypted_images
+  state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool  
+can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+	pool will no longer be accessible on older software versions.
+  scrub: none requested
+config:
+
+	NAME          STATE     READ WRITE CKSUM
+	encrypted_images  ONLINE       0     0     0
+	  raidz1      ONLINE       0     0     0
+	    disk9s1   ONLINE       0     0     0
+	    disk10s1  ONLINE       0     0     0
+	    disk11s1  ONLINE       0     0     0
+	    disk12s1  ONLINE       0     0     0
+
+
+$ zpool upgrade encrypted_images
+This system is currently running ZFS pool version 8.
+
+Successfully upgraded 'encrypted_images' from version 6 to version 8
+
+
+$ zfs list
+NAME                                 USED  AVAIL  REFER  MOUNTPOINT
+encrypted_images                     393K  1.41G   294K  /Volumes/ 
+encrypted_images
+
+
+
+W00t!
+
+Looks like that works!
+
+
+Now what you want to do, is to make four different disks, each with HFS 
++J on them, create a sparseimage on each disk that is as large as the  
+available space on the filesystem. Note that initially the sparseimage  
+won't take up all the space. Then create your raidz and have at it!
+
+
+Be sure to put all your boss' data on there, and tell me how it works  
+out.
+
+Seriously, I expect it to be a mite slower than device-backed raidz,  
+but it just might work. Or you might run into no end of kernel  
+deadlocks and your hair might fall out. But I think it'll work!
+
+Cool!
+
+
+
+
+
+
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000184.html">[zfs-discuss] encryption
+</A></li>
+	<LI>Next message: <A HREF="000188.html">[zfs-discuss] encryption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#187">[ date ]</a>
+              <a href="thread.html#187">[ thread ]</a>
+              <a href="subject.html#187">[ subject ]</a>
+              <a href="author.html#187">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

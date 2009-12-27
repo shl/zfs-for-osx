@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C9E6A5A5C-E123-48B0-8C28-B73F689D99C1%40telegraphics.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001938.html">
+   <LINK REL="Next"  HREF="001940.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>Toby Thain</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C9E6A5A5C-E123-48B0-8C28-B73F689D99C1%40telegraphics.com.au%3E"
+       TITLE="[zfs-discuss] must watch.">toby at telegraphics.com.au
+       </A><BR>
+    <I>Tue Oct 13 17:41:53 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001938.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001940.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1939">[ date ]</a>
+              <a href="thread.html#1939">[ thread ]</a>
+              <a href="subject.html#1939">[ subject ]</a>
+              <a href="author.html#1939">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 13-Oct-09, at 6:09 PM, James Relph wrote:
+
+&gt;&gt;<i> Another question comes to mind, after reading Dominic's comments: Is
+</I>&gt;&gt;<i> there any test we (users) can do to determine whether a given disk
+</I>&gt;&gt;<i> drive, or a disk drive together with its bus bridge, can be  
+</I>&gt;&gt;<i> trusted to
+</I>&gt;&gt;<i> honor the write barrier sync commands? Apple clearly tests all
+</I>&gt;&gt;<i> internal drives as part of their qualification, but I use a lot of
+</I>&gt;&gt;<i> third party equipment, too. I'd like to know I haven't bought crap.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> There are SAS/SATA analysers that you can hook up to devices to see  
+</I>&gt;<i> what commands are being sent, so you could use one to check to see  
+</I>&gt;<i> whether a USB/Firewire bus is passing the commands.  They are  
+</I>&gt;<i> astonishingly expensive though.  I think that the only way you  
+</I>&gt;<i> could tell if an actual drive was supporting the commands would be  
+</I>&gt;<i> to do some pretty hairy digging around in the drive's firmware, so  
+</I>&gt;<i> even if you'd used your $30k SATA analyser and found a bridge that  
+</I>&gt;<i> did support the commands, you might then hook a drive up that didn't.
+</I>&gt;<i>
+</I>&gt;<i> Apple and Sun are both mentioned in various places (and obviously  
+</I>&gt;<i> Dominic confirmed that as far as Apple are concerned) as requiring  
+</I>&gt;<i> all their drives to support the command, so that's one way to  
+</I>&gt;<i> guarantee you get ones that do.  I would guess that there's  
+</I>&gt;<i> probably manufacturers selling &quot;enterprise&quot; quality drives that  
+</I>&gt;<i> actually will tell you or mention on the spec sheet that they  
+</I>&gt;<i> support their commands, but certainly it's not a commonly  
+</I>&gt;<i> advertised feature.
+</I>&gt;<i>
+</I>&gt;<i> It's difficult, and after looking into it it does highlight the  
+</I>&gt;<i> importance of a filesystem that can work around drives or bridges  
+</I>&gt;<i> that don't honour the commands.
+</I>
+It is not clear that any such filesystem exists.
+
+&gt;<i> Obviously for a company in Sun's position, where the hardware is  
+</I>&gt;<i> generally a higher spec, and the admins are more likely to be  
+</I>&gt;<i> specifically trained, it's probably a lesser problem.  You have to  
+</I>&gt;<i> wonder if this *is* the reason Apple pulled ZFS, you get a lot of  
+</I>&gt;<i> Apple admins who do the admin side as a second job to being a  
+</I>&gt;<i> teacher/studio manager etc., and they're probably much more likely  
+</I>&gt;<i> to hook up a USB/Firewire drive to an Xserve as storage than your  
+</I>&gt;<i> average Solaris admin.
+</I>
+No, because the issue applies equally to journaling filesystems (like  
+HFS+).
+
+--Toby
+
+&gt;<i>  Perhaps Apple decided they needed a better level of pool recovery  
+</I>&gt;<i> before they gave ZFS their stamp of approval by including it with  
+</I>&gt;<i> the OS.  Of course that doesn't explain why we couldn't have a  
+</I>&gt;<i> newer build on MacOSforge, but short of storming Cupertino with  
+</I>&gt;<i> pitchforks and flaming torches I doubt we'll find out soon.
+</I>&gt;<i>
+</I>&gt;<i> Saying that, if someone wants to get some flaming torches sorted, I  
+</I>&gt;<i> could probably drum up a few pitchforks and maybe the odd scythe :-)
+</I>&gt;<i>
+</I>&gt;<i> James
+</I>&gt;<i>
+</I>&gt;<i> Website:		www.themacplace.co.uk
+</I>&gt;<i> Blog:		www.themacplace.co.uk/blog.html
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091013/a20a490e/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091013/a20a490e/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001938.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001940.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1939">[ date ]</a>
+              <a href="thread.html#1939">[ thread ]</a>
+              <a href="subject.html#1939">[ subject ]</a>
+              <a href="author.html#1939">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

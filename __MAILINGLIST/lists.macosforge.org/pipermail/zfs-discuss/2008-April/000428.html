@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RAID-Z not re-mounting on reboot
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=20080408145543.2CBD4241AB3%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000433.html">
+   <LINK REL="Next"  HREF="000456.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RAID-Z not re-mounting on reboot</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=20080408145543.2CBD4241AB3%40lists.macosforge.org"
+       TITLE="[zfs-discuss] RAID-Z not re-mounting on reboot">i_see at macnews.de
+       </A><BR>
+    <I>Tue Apr  8 12:45:01 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000433.html">[zfs-discuss] mount/umount as user
+</A></li>
+        <LI>Next message: <A HREF="000456.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+not currently, unless you have a set of slightly larger disks available.
+If you use the whole disks the data partitions are slightly larger and  
+right now ZFS is unable to replace devices by smaller ones, so you  
+have to back up your data, destroy the pool and start ove with a new  
+one..
+The sad part is that for Solaris, it is actually recommended to use  
+whole disks. It should be relatively simple to prevent this from  
+happening in the mac os x port.
+Tha ability to shrink pools will hopefully come some day (I could  
+not,however, find a ZFS roadmap anywhere on the net so far.
+
+Hope this helps,	ralf
+Am 08.04.2008 um 16:55 schrieb <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>:
+&gt;<i> Hi Maarten,
+</I>&gt;<i> i'm not sure. That was one of the reasons I joined the list. :)
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Apr 7, 2008 at 11:36 PM, Maarten Billemont  
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">lhunath at gmail.com</A>&gt; wrote:
+</I>&gt;<i> Can this be done after creating a ZFS pool on the disk too without  
+</I>&gt;<i> loosing the pool?
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000433.html">[zfs-discuss] mount/umount as user
+</A></li>
+	<LI>Next message: <A HREF="000456.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

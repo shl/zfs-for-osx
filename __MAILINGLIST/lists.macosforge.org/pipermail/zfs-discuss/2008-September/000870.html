@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] changing iSCSI target info w/o reboot locks up	Mac OS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20changing%20iSCSI%20target%20info%20w/o%20reboot%20locks%20up%0A%09Mac%20OS&In-Reply-To=4E73F191-E630-4F71-A51F-4B0B29EF0E04%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000869.html">
+   <LINK REL="Next"  HREF="000871.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] changing iSCSI target info w/o reboot locks up	Mac OS</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20changing%20iSCSI%20target%20info%20w/o%20reboot%20locks%20up%0A%09Mac%20OS&In-Reply-To=4E73F191-E630-4F71-A51F-4B0B29EF0E04%40gmail.com"
+       TITLE="[zfs-discuss] changing iSCSI target info w/o reboot locks up	Mac OS">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Sep 23 23:40:04 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000869.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up Mac OS
+</A></li>
+        <LI>Next message: <A HREF="000871.html">[zfs-discuss] export/import Pool based on files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#870">[ date ]</a>
+              <a href="thread.html#870">[ thread ]</a>
+              <a href="subject.html#870">[ subject ]</a>
+              <a href="author.html#870">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>this is expected since in essence what you're doing below is pulling  
+drives from a live ZFS pool.  ZFS keeps track of what devices belong  
+in it's pool, and writes labels to those devices and then updates  
+those devices periodically.  Even if a pool is unmounted, it is still  
+in the ZFS namespace so it still exists.  If you want to change around  
+device configs, you need to first delete the pool.
+
+The panic below is forced since we see the drive we're trying to write  
+to has disappeared, hence we can't write to it, and rather then lie  
+about what got written, we force a panic rather then render the  
+filesystem inconsistent.
+
+Noel
+
+On Sep 23, 2008, at 9:11 PM, Richard McClellan wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I've discovered that changing iSCSI target settings cause a kernel
+</I>&gt;<i> panic in ZFS code.
+</I>&gt;<i>
+</I>&gt;<i> To do this I:
+</I>&gt;<i> 1. mount (initiate) an iSCSI target
+</I>&gt;<i> 2. unmount the target
+</I>&gt;<i> 3. change the LUNs on the iSCSI target
+</I>&gt;<i> 4. restart iSCSI
+</I>&gt;<i> 5. remount (initiate) the iSCSI target
+</I>&gt;<i>
+</I>&gt;<i> Within 10 seconds the screen ghosts out and a message in several
+</I>&gt;<i> languages informs me to press and hold the power button for several
+</I>&gt;<i> seconds to restart the computer.  Here's the message that was sent to
+</I>&gt;<i> Apple:
+</I>&gt;<i>
+</I>&gt;<i> Tue Sep 23 21:02:29 2008
+</I>&gt;<i> panic(cpu 0 caller 0x00BCDD21): &quot;ZFS: I/O failure (write on &lt;unknown&gt;
+</I>&gt;<i> off 0: zio 0xb739ee8 [L0 object directory] 400L/200P
+</I>&gt;<i> DVA[0]=&lt;0:640027cc00:400&gt; DVA[1]=&lt;0:d200163800:400&gt;
+</I>&gt;<i> DVA[2]=&lt;0:1b8004a5c00:400&gt; fletcher4 lzjb LE contiguous birth=52073
+</I>&gt;<i> fill=1 cksum=cd77a5e82:563ac882499:12708c86bf606:2ada8ee44bf317):
+</I>&gt;<i> error &quot; &quot;6&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/
+</I>&gt;<i> zfs_kext/zfs/zio.c:918
+</I>&gt;<i> Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x3f857e48 : 0x12b0fa (0x459234 0x3f857e7c 0x133243 0x0)
+</I>&gt;<i> 0x3f857e98 : 0xbcdd21 (0xc3d6b0 0xc3d6a4 0xc39400 0xc6a670)
+</I>&gt;<i> 0x3f857f18 : 0xbca3fb (0xb739ee8 0x34 0x3f857f38 0xc1118a)
+</I>&gt;<i> 0x3f857f58 : 0xc29283 (0xb739ee8 0x1 0xc73ef4 0xb4818f8)
+</I>&gt;<i> 0x3f857fc8 : 0x19eccc (0xb4818f8 0x0 0x1a20b5 0xb674410)
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0xbb6000-&gt;0xc81fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9F33
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+</I>&gt;<i> root:xnu-1228.7.58~1/RELEASE_I386
+</I>&gt;<i> System model name: Macmini2,1 (Mac-F4208EAA)
+</I>&gt;<i>
+</I>&gt;<i> Is ZFS caching information about a particular target that causes it to
+</I>&gt;<i> s#!t the bed when the target has in fact changed?  The problem goes
+</I>&gt;<i> away after the crash, so this is purely informational (so far!).
+</I>&gt;<i>
+</I>&gt;<i> 		Rich
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000869.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up Mac OS
+</A></li>
+	<LI>Next message: <A HREF="000871.html">[zfs-discuss] export/import Pool based on files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#870">[ date ]</a>
+              <a href="thread.html#870">[ thread ]</a>
+              <a href="subject.html#870">[ subject ]</a>
+              <a href="author.html#870">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

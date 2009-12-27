@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Ready for my data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3C6D2FFE0A-1243-4F31-93C0-323F62678916%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001074.html">
+   <LINK REL="Next"  HREF="001075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Ready for my data</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3C6D2FFE0A-1243-4F31-93C0-323F62678916%40apple.com%3E"
+       TITLE="[zfs-discuss] ZFS Ready for my data">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Nov 17 18:31:05 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001074.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+        <LI>Next message: <A HREF="001075.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1076">[ date ]</a>
+              <a href="thread.html#1076">[ thread ]</a>
+              <a href="subject.html#1076">[ subject ]</a>
+              <a href="author.html#1076">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> I was going to partition my internal macBook drive, would I still  
+</I>&gt;<i> suffer from this? Or is it mainly external hard drives that  
+</I>&gt;<i> experience this?
+</I>&gt;<i>
+</I>&gt;<i> Pros and cons to having a ZFS partition?
+</I>
+I keep my home directory on a partition of my internal drive on my  
+MacBook Pro and don't have any issues with logging in.
+
+Also, FYI for everyone,  instead of changing the mountpoint of your  
+ZFS filesystem you wish to use as your home directory, you can also  
+just change the location of your home directory in your system  
+preferences/Accounts pane.  See the faq for details on how to do this:
+<A HREF="http://zfs.macosforge.org/trac/wiki/faq">http://zfs.macosforge.org/trac/wiki/faq</A>
+
+
+Noel
+
+On Nov 17, 2008, at 5:09 PM, Jason Todd Slack-Moehrle wrote:
+
+&gt;<i> Hi All,
+</I>&gt;<i>
+</I>&gt;&gt;<i> Be careful about ZFS for your $HOME directory; you'll get weird  
+</I>&gt;&gt;<i> failure modes in existing software because Spotlight doesn't work.
+</I>&gt;<i>
+</I>&gt;<i> I have actually disabled Spotlight completely and related. Dashboard  
+</I>&gt;<i> too.
+</I>&gt;<i>
+</I>&gt;&gt;<i> Also you won't be able to use the search box in Mail.app ... and so  
+</I>&gt;&gt;<i> on.
+</I>&gt;<i>
+</I>&gt;<i> Hmm, I use this sometimes.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I finally moved ~/Library to an HFS partition, and then a symlink  
+</I>&gt;&gt;<i> to it on my ZFS $HOME. Now everything seems fine. Spotlight still  
+</I>&gt;&gt;<i> has no clue about the bulk of my data, but at least I don't get  
+</I>&gt;&gt;<i> these wonky failures in Apple applications.
+</I>&gt;<i>
+</I>&gt;<i> OK, could be a work around if I need.
+</I>&gt;<i>
+</I>&gt;&gt;<i> (and yeah, I have to wait a bit for the ZFS volumes to be mounted  
+</I>&gt;&gt;<i> before logging in... thanks for that tip, Kevin!)
+</I>&gt;<i>
+</I>&gt;<i> I was going to partition my internal macBook drive, would I still  
+</I>&gt;<i> suffer from this? Or is it mainly external hard drives that  
+</I>&gt;<i> experience this?
+</I>&gt;<i>
+</I>&gt;<i> Pros and cons to having a ZFS partition?
+</I>&gt;<i>
+</I>&gt;<i> -Jason
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001074.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+	<LI>Next message: <A HREF="001075.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1076">[ date ]</a>
+              <a href="thread.html#1076">[ thread ]</a>
+              <a href="subject.html#1076">[ subject ]</a>
+              <a href="author.html#1076">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

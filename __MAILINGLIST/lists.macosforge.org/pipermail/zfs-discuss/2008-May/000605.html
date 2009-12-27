@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] name
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20name&In-Reply-To=E6B70158-8375-45CB-9FD0-07428DCA6BF9%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000603.html">
+   <LINK REL="Next"  HREF="000604.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] name</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20name&In-Reply-To=E6B70158-8375-45CB-9FD0-07428DCA6BF9%40spamfreemail.de"
+       TITLE="[zfs-discuss] name">ndellofano at apple.com
+       </A><BR>
+    <I>Wed May 21 14:35:11 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000603.html">[zfs-discuss] name
+</A></li>
+        <LI>Next message: <A HREF="000604.html">[zfs-discuss] the third
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#605">[ date ]</a>
+              <a href="thread.html#605">[ thread ]</a>
+              <a href="subject.html#605">[ subject ]</a>
+              <a href="author.html#605">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> must have been drunk somewhen... :)
+</I>
+sweet, then at least I'm not the only one :)
+
+As a side note, the rename thing you mentioned on the pool is  
+something i've been meaning to add to the FAQ (along with a ton of  
+other stuff).
+You can only use zfs rename on a zfs filesystem, but NOT on the zfs  
+pool.   Pools are handled slightly differently since they are container 
++fs all in one.  Hence to rename a pool you need to do
+
+#zpool export -f raidtank
+#zpool import raidtank mynewraid
+
+That will rename the pool to 'mynewraid'.  This is something we're  
+working on integrating (i.e. so you can just rename your pool via  
+Finder instead).
+
+Noel :)
+
+On May 21, 2008, at 7:31 AM, ruebezahl wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i> never mind, solved it
+</I>&gt;<i>
+</I>&gt;<i> for some odd reasen i had an alias in my .zshrc that replaced raidtank
+</I>&gt;<i> with raidtank/
+</I>&gt;<i>
+</I>&gt;<i> must have been drunk somewhen... :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> lg
+</I>&gt;<i>
+</I>&gt;<i> franz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.8 (Darwin)
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJINDI2AAoJEP8ZopU3BhmtbaUH/jFjN8Z1bcKGvyVnL8sQYkGS
+</I>&gt;<i> p44C6GjtM1hmDcuzUJPbjEk3MHke5/eQmsuAbzrv7AaN/ciQS4joJmYYLIhhcH1L
+</I>&gt;<i> rydGzMzP/aCP2ygfz8WnEwK+//iQuSi/bE4930Aqk+L5AwbsbeXQRziXtX3eTzAa
+</I>&gt;<i> kcY9/qUgHUuM8Is34LQ4l05DnzxELbki/HZEV2c/114lAvKrlCvAMSI+Uh1Nr9Qo
+</I>&gt;<i> 6qPWc9mCtXPWvc8jBk1Um+QQZNk5lGO9vczQDJK+EeQAJLO67yIqPrQau3XFN10g
+</I>&gt;<i> b23ucfhbzmh+Vs/wfuFQSrVJffz2G6XnojysESZatBZNrAhhlGKMvjkS7TdJ6hY=
+</I>&gt;<i> =Ct0B
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000603.html">[zfs-discuss] name
+</A></li>
+	<LI>Next message: <A HREF="000604.html">[zfs-discuss] the third
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#605">[ date ]</a>
+              <a href="thread.html#605">[ thread ]</a>
+              <a href="subject.html#605">[ subject ]</a>
+              <a href="author.html#605">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20Hosed%20my%20permissions%20to%20access%20filesystem&In-Reply-To=6C8F5C4D-24FA-42DC-A709-BE7FE71315E5%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000630.html">
+   <LINK REL="Next"  HREF="000632.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-117: Hosed my permissions to access filesystem</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20Hosed%20my%20permissions%20to%20access%20filesystem&In-Reply-To=6C8F5C4D-24FA-42DC-A709-BE7FE71315E5%40apple.com"
+       TITLE="[zfs-discuss] zfs-117: Hosed my permissions to access filesystem">bwaters at nrao.edu
+       </A><BR>
+    <I>Tue Jun  3 23:14:12 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000630.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+        <LI>Next message: <A HREF="000632.html">[zfs-discuss] Sharing help
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#631">[ date ]</a>
+              <a href="thread.html#631">[ thread ]</a>
+              <a href="subject.html#631">[ subject ]</a>
+              <a href="author.html#631">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jun 3, 2008, at 6:28 PM, No&#235;l Dellofano wrote:
+
+&gt;<i> So I would recommend as root in the terminal
+</I>&gt;<i> doing:
+</I>&gt;<i>
+</I>&gt;<i> # find Photos -type dir | xargs chmod ugo+x
+</I>
+
+Or maybe,
+
+# find Photos -type dir -print0 | xargs -0 chmod ugo+x
+
+
+Those pesky files with spaces in them... this works around that (uses  
+NUL (0) for terminator).
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000630.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+	<LI>Next message: <A HREF="000632.html">[zfs-discuss] Sharing help
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#631">[ date ]</a>
+              <a href="thread.html#631">[ thread ]</a>
+              <a href="subject.html#631">[ subject ]</a>
+              <a href="author.html#631">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

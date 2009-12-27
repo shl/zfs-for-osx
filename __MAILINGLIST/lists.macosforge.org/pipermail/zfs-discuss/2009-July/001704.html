@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs and nfs running on opensolaris
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20and%20nfs%20running%20on%20opensolaris&In-Reply-To=%3C5C2F79BC-0F2E-480F-B461-A304C7EA2763%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001703.html">
+   <LINK REL="Next"  HREF="001705.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs and nfs running on opensolaris</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20and%20nfs%20running%20on%20opensolaris&In-Reply-To=%3C5C2F79BC-0F2E-480F-B461-A304C7EA2763%40mac.com%3E"
+       TITLE="[zfs-discuss] zfs and nfs running on opensolaris">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Sun Jul 12 18:05:49 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001703.html">[zfs-discuss] zfs and nfs running on opensolaris
+</A></li>
+        <LI>Next message: <A HREF="001705.html">[zfs-discuss] zfs and nfs running on opensolaris
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1704">[ date ]</a>
+              <a href="thread.html#1704">[ thread ]</a>
+              <a href="subject.html#1704">[ subject ]</a>
+              <a href="author.html#1704">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>not super happy with opensolaris,
+with nfs for me it is a disaster.
+with netatalk its ok.
+but somehow things are only stable with a daily reboot.
+I don't understand why there are no problem messages in syslog.
+I used to be a solaris expert in a previous life, not a good one it  
+seems.
+knowledge fleets so easily........
+
+
+On 13 Jul 2009, at 02:03, Raoul Callaghan wrote:
+
+&gt;<i> Okay,
+</I>&gt;<i>
+</I>&gt;<i> I got hoondimac.com registered.  Will post a detailed write up of  
+</I>&gt;<i> below's efforts for all to see shortly.
+</I>&gt;<i>
+</I>&gt;<i> Anyone here used Solaris' ZFS with iSCSI and share out to Macs by  
+</I>&gt;<i> chance?
+</I>&gt;<i>
+</I>&gt;<i> I'm not really keen on setting up netatalk if I can help it. (<A HREF="http://cafenate.wordpress.com/2009/02/08/building-netatalk-on-opensolaris-200811/">http://cafenate.wordpress.com/2009/02/08/building-netatalk-on-opensolaris-200811/</A> 
+</I>&gt;<i> )
+</I>&gt;<i>
+</I>&gt;<i> Will let people know once site it up..
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i>
+</I>&gt;&gt;<i> I installed NexentaCore 2 (RC3) on a Mac Mini last weekend.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I had a couple of attempts at it, as the installer script didn't  
+</I>&gt;&gt;<i> seem to like a static ip in the end.  (kept stalling right at the  
+</I>&gt;&gt;<i> end)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm a bit concerned about the lack of ZFS being mentioned with snow  
+</I>&gt;&gt;<i> leopard so I'm looking for alternatives.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> About a month ago, I was wondering if I could get a Mac Mini to  
+</I>&gt;&gt;<i> address 8 or more drives without using FW or USB.
+</I>&gt;&gt;<i> At present, I have a G4 mobo inside an old ANS500 case using ZFS  
+</I>&gt;&gt;<i> with 8 x 250GB PATA drives. (10.5.7)
+</I>&gt;&gt;<i> I've never had a single problem with this setup and have replaced 3  
+</I>&gt;&gt;<i> drives over a 2.5 year period due to errors.
+</I>&gt;&gt;<i> I've never used USB or FW buses with ZFS, and I think this has kept  
+</I>&gt;&gt;<i> me well away from a lot of trouble I see in this forum.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It's only due to the PATA to SATA transition that I'm looking to  
+</I>&gt;&gt;<i> update this server.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Wanting to stick with the idea of not to use USB or FW buses for  
+</I>&gt;&gt;<i> ZFS, I did some homework, spent some money on the Mac Mini, and now  
+</I>&gt;&gt;<i> can  connect 10 SATA drives to a Mac mini.
+</I>&gt;&gt;<i> I don't know of anyone else in the world who's done this,  (or are  
+</I>&gt;&gt;<i> stupid enough to) or have posted it anyway.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> it's a bit, ah... ahem... weird at present, but it is only a proof- 
+</I>&gt;&gt;<i> of-concept to see if it would actually work.
+</I>&gt;&gt;<i> <A HREF="http://homepage.mac.com/tangles/embarrasing-but-works.png">http://homepage.mac.com/tangles/embarrasing-but-works.png</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It works, and works rather well.  I striped the two 1TB drives  
+</I>&gt;&gt;<i> within OS X at present, just to gauge a speed. (99MB/sec sustained)
+</I>&gt;&gt;<i> Because the Mac Mini is to be installed inside the ANS500 case,  
+</I>&gt;&gt;<i> (Apple Network Server 500), aesthetics have no relevance here.  8))
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'll write it up properly once I get a jig happening to hold the  
+</I>&gt;&gt;<i> Sata card in place.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cheers,
+</I>&gt;<i>
+</I>&gt;<i> Raoul Callaghan
+</I>&gt;<i> I.T. Manager
+</I>&gt;<i> Australian Mathematical Sciences Institute
+</I>&gt;<i> 111 Barry Street
+</I>&gt;<i> The University of Melbourne
+</I>&gt;<i> Victoria 3010 Australia
+</I>&gt;<i> p: 03 8344 1783
+</I>&gt;<i> f:  03 9349 4106
+</I>&gt;<i> e: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">raoul at amsi.org.au</A>
+</I>&gt;<i>
+</I>&gt;<i> &quot;... The only problem with Microsoft is they just have no taste,  
+</I>&gt;<i> they have absolutely no taste and what that means is, and I don't  
+</I>&gt;<i> mean that in a small way, I mean that in a big way.
+</I>&gt;<i> In the sense that: they, they don't think of original ideas, and  
+</I>&gt;<i> they don't bring much culture into their product.
+</I>&gt;<i> And you say why is that important? well proportionally spaced fonts  
+</I>&gt;<i> come from typesetting and beautiful books, that's where one gets the  
+</I>&gt;<i> idea.  If it weren't for the mac they would never have that in their  
+</I>&gt;<i> products.
+</I>&gt;<i> And, so I guess I am saddened, not by Microsoft's success, I have no  
+</I>&gt;<i> problem with their success. They've earned their success; for the  
+</I>&gt;<i> most part.
+</I>&gt;<i> I have a problem with the fact that they make just really third  
+</I>&gt;<i> grade products ...&quot;
+</I>&gt;<i>
+</I>&gt;<i> Steve Jobs, circa 1980's
+</I>&gt;<i> <A HREF="http://www.youtube.com/watch?v=oBISzVRmYIM">http://www.youtube.com/watch?v=oBISzVRmYIM</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090713/60b43605/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090713/60b43605/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001703.html">[zfs-discuss] zfs and nfs running on opensolaris
+</A></li>
+	<LI>Next message: <A HREF="001705.html">[zfs-discuss] zfs and nfs running on opensolaris
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1704">[ date ]</a>
+              <a href="thread.html#1704">[ thread ]</a>
+              <a href="subject.html#1704">[ subject ]</a>
+              <a href="author.html#1704">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

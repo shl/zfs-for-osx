@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Now zpool status is giving me a kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C51cfc2260810181317v670b42cdxe09278b0e41afa6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000996.html">
+   <LINK REL="Next"  HREF="000999.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Now zpool status is giving me a kernel panic</H1>
+    <B>Riscky Abacus</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C51cfc2260810181317v670b42cdxe09278b0e41afa6%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Now zpool status is giving me a kernel panic">riscky at gmail.com
+       </A><BR>
+    <I>Sat Oct 18 13:17:05 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000996.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+        <LI>Next message: <A HREF="000999.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#997">[ date ]</a>
+              <a href="thread.html#997">[ thread ]</a>
+              <a href="subject.html#997">[ subject ]</a>
+              <a href="author.html#997">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I don't have any knowledge as to why this happens but I've found any
+raidz i've created where the drives all sit on the same USB hub
+consistently crash when running `zpool status -v`. I have a few ideas
+why that might be but nothing solid. I have a feeling this my be to
+due to the fact disk3s* numbers my be a different physical volume on
+subsequent reboots.
+
+Just take this little test case into account... remove all zfs
+volumes... reboot. Now find to flash drives or anyhting out you could
+use for this test.... put them on the same usb hub and turn them into
+a raidz.... now run `zpool status -v` no crash... reboot and run
+`zpool status -v` crash.
+
+I've also noticed that configuration also causes issues shutting down my system.
+
+This is all based on my tinkering with free time... and I haven't
+devoted much time to figuring out the root cause... I just don't think
+the file system plays well with usb, and has issues with hubs... after
+all zfs wasn't exactly designed for desktops but servers IMHO.
+
+On Sat, Oct 18, 2008 at 4:04 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Thanks for replying.
+</I>&gt;<i>
+</I>&gt;<i> All of my drives (5 of them) are on a USB hub. Since the Mac Mini has only 4
+</I>&gt;<i> USB ports (and one of them is taken up by the keyboard/mouse) I really have
+</I>&gt;<i> no other option. Why? Could moving some of them off of the hub (or changing
+</I>&gt;<i> hubs) help?
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Oct 18, 2008 at 10:00 PM, Riscky Abacus &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">riscky at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Mario,
+</I>&gt;&gt;<i> Just based on my experience here... are any of your drives in your
+</I>&gt;&gt;<i> raidz USB devices? or on a USB hub?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, Oct 18, 2008 at 2:29 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; Another data point.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I booted in single user mode, did the fsck and &quot;mount -uw /&quot; and then
+</I>&gt;&gt;<i> &gt; did a
+</I>&gt;&gt;<i> &gt; &quot;zpool import&quot;. When doing a &quot;zpool status -v&quot; I get a kernel panic
+</I>&gt;&gt;<i> &gt; right
+</I>&gt;&gt;<i> &gt; after the config is shown (with all devices showing as ONLINE and with 0
+</I>&gt;&gt;<i> &gt; errors) and before where the filenames should be. I still get the &quot;One
+</I>&gt;&gt;<i> &gt; or
+</I>&gt;&gt;<i> &gt; more devices has experienced an error&quot; status message.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; If I knew just which device is giving the problem I could just unplug it
+</I>&gt;&gt;<i> &gt; (since both groups in the pool have redundancy -- one with mirroring and
+</I>&gt;&gt;<i> &gt; one
+</I>&gt;&gt;<i> &gt; with raidz) but now I'm really leery of trying to do anything that might
+</I>&gt;&gt;<i> &gt; result in data corruption.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Any ideas? HELP!!
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Sat, Oct 18, 2008 at 7:59 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;
+</I>&gt;&gt;<i> &gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;<i>                                                        --R.U. Sirius
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000996.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+	<LI>Next message: <A HREF="000999.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#997">[ date ]</a>
+              <a href="thread.html#997">[ thread ]</a>
+              <a href="subject.html#997">[ subject ]</a>
+              <a href="author.html#997">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

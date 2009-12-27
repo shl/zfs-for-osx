@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] DTrace w/ OS X ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20DTrace%20w/%20OS%20X%20ZFS&In-Reply-To=33644d3c0803061059g3fb24355i81ab4ae44267094d%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000277.html">
+   <LINK REL="Next"  HREF="000300.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] DTrace w/ OS X ZFS</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20DTrace%20w/%20OS%20X%20ZFS&In-Reply-To=33644d3c0803061059g3fb24355i81ab4ae44267094d%40mail.gmail.com"
+       TITLE="[zfs-discuss] DTrace w/ OS X ZFS">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Mar  7 11:37:18 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000277.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+        <LI>Next message: <A HREF="000300.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#284">[ date ]</a>
+              <a href="thread.html#284">[ thread ]</a>
+              <a href="subject.html#284">[ subject ]</a>
+              <a href="author.html#284">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Currently it is not yet possible to trace any kexts with Dtrace.  This  
+is an open RFE that is being worked on currently.  For now though  
+sadly, you cannot Dtrace ZFS, hopefully soon though.
+
+Noel
+
+On Mar 6, 2008, at 10:59 AM, James Snyder wrote:
+
+&gt;<i> I'm curious about making use of the dtrace probes in ZFS on OS X.  I
+</I>&gt;<i> can see in the source release on macosforge that some of the probes
+</I>&gt;<i> are commented out and others, eat least in the code there, look as if
+</I>&gt;<i> they should be compiled in.  I don't however see them when I do a
+</I>&gt;<i> dtrace -l.  I've poked around at some documentation for adding probes
+</I>&gt;<i> to my own code, but I've still not 100% gotten a handle on how to
+</I>&gt;<i> enable them on ZFS.  It sounds to me from documents like this one
+</I>&gt;<i> (<A HREF="http://blogs.sun.com/tpenta/entry/dtrace_using_placing_sdt_probes">http://blogs.sun.com/tpenta/entry/dtrace_using_placing_sdt_probes</A>)
+</I>&gt;<i> that dtrace needs to be run on the generated binaries to embed the
+</I>&gt;<i> probes?
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure that I'll actually do much debugging with it, but I
+</I>&gt;<i> thought I would play around with it to get a sense for what ZFS is
+</I>&gt;<i> doing while I'm working on top of it as well as getting a sense for
+</I>&gt;<i> how to use dtrace on other applications.
+</I>&gt;<i>
+</I>&gt;<i> Most of what I'm working with lately in terms of coding is in MATLAB,
+</I>&gt;<i> so I don't have much of an opportunity there to use probes :-)
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> James Snyder
+</I>&gt;<i> Biomedical Engineering
+</I>&gt;<i> Northwestern University
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000277.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+	<LI>Next message: <A HREF="000300.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#284">[ date ]</a>
+              <a href="thread.html#284">[ thread ]</a>
+              <a href="subject.html#284">[ subject ]</a>
+              <a href="author.html#284">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS panics quite easily
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3C039B9F4E-3DB6-4996-AE4C-CE9BDAF18DBF%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001270.html">
+   <LINK REL="Next"  HREF="001272.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS panics quite easily</H1>
+    <B>Deric Horn</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3C039B9F4E-3DB6-4996-AE4C-CE9BDAF18DBF%40apple.com%3E"
+       TITLE="[zfs-discuss] ZFS panics quite easily">deric at apple.com
+       </A><BR>
+    <I>Thu Jan  8 11:04:12 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001270.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+        <LI>Next message: <A HREF="001272.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1271">[ date ]</a>
+              <a href="thread.html#1271">[ thread ]</a>
+              <a href="subject.html#1271">[ subject ]</a>
+              <a href="author.html#1271">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I wish getting rid of all panics was that easy ;-)
+
+During our ZFS development for Snow Leopard we had to make several  
+changes to the kernel.  Internally we tried to maintain a Leopard  
+version of ZFS conditionalizing out features dependent on kernel  
+changes, but it became clear we couldn't continue down this path.
+
+We're currently in the process of integrating the latest OpenSolaris  
+ZFS changes into our code base, and this is one we are obviously  
+interested in.  You'll have to wait for a Snow Leopard seed to see it  
+in action though.
+
+Deric Horn
+Engineering Manager	   File Systems
+Apple Inc.			   408.974.3138
+
+On Jan 8, 2009, at 8:29 AM, Christian Kendi wrote:
+
+&gt;<i> any plans to implement this ?
+</I>&gt;<i>
+</I>&gt;<i> El Jan 5, 2009, a las 9:02 PM, Todd Moore escribi&#243;:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The setting is enabled/disabled on a pool by pool basis as it is a  
+</I>&gt;&gt;<i> property of the pool.  The setting is called &quot;failmode&quot; with values  
+</I>&gt;&gt;<i> of &quot;continue&quot;, &quot;wait&quot;, or &quot;panic&quot;.  I haven't found a lot of  
+</I>&gt;&gt;<i> information on the OpenSolaris site, but this is information from  
+</I>&gt;&gt;<i> the PSARC case -
+</I>&gt;&gt;<i> <A HREF="http://jp.opensolaris.org/os/community/arc/caselog/2007/261/commitment-materials/zpool-1m/;jsessionid=B1DA8B4D9E8DAF56AC99AA8D265979B1">http://jp.opensolaris.org/os/community/arc/caselog/2007/261/commitment-materials/zpool-1m/;jsessionid=B1DA8B4D9E8DAF56AC99AA8D265979B1</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The feature made it into Solaris 10 10/08 and the information in  
+</I>&gt;&gt;<i> the &quot;What's New&quot; includes an example output of the property -
+</I>&gt;&gt;<i> <A HREF="http://docs.sun.com/app/docs/doc/817-0547/ghgdx?l=en&amp;a=view">http://docs.sun.com/app/docs/doc/817-0547/ghgdx?l=en&amp;a=view</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Maarten Billemont wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Could you refer us where this option is documented and/or how to  
+</I>&gt;&gt;&gt;<i> set it?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 05 Jan 2009, at 15:43, Todd Moore wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The architects of ZFS placed a lot of emphasis on data  
+</I>&gt;&gt;&gt;&gt;<i> integrity.  One of the side effects you are seeing is that ZFS  
+</I>&gt;&gt;&gt;&gt;<i> will panic a host if the last device in a zpool becomes  
+</I>&gt;&gt;&gt;&gt;<i> unavailable.  In this situation, ZFS cannot guarantee that the  
+</I>&gt;&gt;&gt;&gt;<i> information in the cache, ZIL, and media will be consistent.   
+</I>&gt;&gt;&gt;&gt;<i> Some users complained about the behavior and recently putbacks  
+</I>&gt;&gt;&gt;&gt;<i> were made to the ZFS code which allow users to determine how they  
+</I>&gt;&gt;&gt;&gt;<i> would like ZFS to behave in this situation.  The default behavior  
+</I>&gt;&gt;&gt;&gt;<i> is still to panic the system, but there is now an option to raise  
+</I>&gt;&gt;&gt;&gt;<i> an error condition and log it for a sys admin to address.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Ruotger Skupin wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Am 04.01.2009 um 19:16 schrieb Alex Blewitt:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> On Sun, Jan 4, 2009 at 5:35 PM, Ruotger Skupin &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lists at chipmunk-app.com</A> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> &gt; wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> from what I have read on the list it is a known bug that ZFS  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> panics when an
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> external drive gets unpluggged (for whatever reason...).
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I suspect that's the case for a non-mirrored pool where the pool
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> effectively cannot continue. Having said that, there are times  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> if an
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> external disk spins down (USB hard drives, I'm looking at you)  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> which
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> makes the OS think that the drive has become disconnected, and so
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> panics. I've never experienced that on my FW drive. Not sure what
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> happens in the case of a raid-z setup.
+</I>&gt;&gt;&gt;&gt;&gt;<i> The first time I noticed this was when I was on a congress and  
+</I>&gt;&gt;&gt;&gt;&gt;<i> someone cut my power. So the external USB-Drive was instantly  
+</I>&gt;&gt;&gt;&gt;&gt;<i> gone (single device pool). The macbook kept running but paniced.  
+</I>&gt;&gt;&gt;&gt;&gt;<i> Accidentally unplugging a drive is also a good candidate for a  
+</I>&gt;&gt;&gt;&gt;&gt;<i> panic.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> But apart from that ZFS seems to panic fairly easy when under  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> heavy load.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> For example I tried to install Ubuntu in a Virtual Box VM.  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Both the install
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> CD image file and the harddrive image file were on the same  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> ZFS volume (pool
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> containing one drive). After what might have been 2/3 of the  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> installation
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> ZFS paniced. I tried this twice and every time ZFS paniced.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> My app Chipmunk (<A HREF="http://www.chipmunk-app.com">http://www.chipmunk-app.com</A>) also drives ZFS  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> into a panic
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> sometimes on a well filled volume.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I've had really bad experiences with USB drives, and only noticed
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> because ZFS started reporting shedloads of checksum errors.  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Have you
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> checked the pool status during your use? Also, is it a USB or FW
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> drive, and what version of OSX/ZFS have you got installed?
+</I>&gt;&gt;&gt;&gt;&gt;<i> USB-Drive with a SATA drive inside, Mac OS X 10.5.6 / ZFS 119  
+</I>&gt;&gt;&gt;&gt;&gt;<i> (lastest downloadable).
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I'm doing a &quot;zpool status&quot; from time to time but I did not  
+</I>&gt;&gt;&gt;&gt;&gt;<i> notice any errors on this drive ever. Not even after these  
+</I>&gt;&gt;&gt;&gt;&gt;<i> panics. In that respect ZFS is the most robust FS I've ever seen.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Ruotger
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090108/0a51a4a6/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090108/0a51a4a6/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001270.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+	<LI>Next message: <A HREF="001272.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1271">[ date ]</a>
+              <a href="thread.html#1271">[ thread ]</a>
+              <a href="subject.html#1271">[ subject ]</a>
+              <a href="author.html#1271">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

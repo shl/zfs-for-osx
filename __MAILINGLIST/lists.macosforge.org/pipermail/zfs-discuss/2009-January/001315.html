@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Zpool disaster
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Zpool%20disaster&In-Reply-To=%3C84D32EFF-A924-452D-9EEF-B867ACCF87A3%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001321.html">
+   <LINK REL="Next"  HREF="001316.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Zpool disaster</H1>
+    <B>mathieu.email</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Zpool%20disaster&In-Reply-To=%3C84D32EFF-A924-452D-9EEF-B867ACCF87A3%40gmail.com%3E"
+       TITLE="[zfs-discuss] Zpool disaster">mathieu.email at gmail.com
+       </A><BR>
+    <I>Thu Jan 15 16:14:22 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001321.html">[zfs-discuss] Zpool disaster
+</A></li>
+        <LI>Next message: <A HREF="001316.html">[zfs-discuss] i should get paid for this
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1315">[ date ]</a>
+              <a href="thread.html#1315">[ thread ]</a>
+              <a href="subject.html#1315">[ subject ]</a>
+              <a href="author.html#1315">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, &quot;zpool status -x&quot; just said :
+
+=&gt; no pools available
+
+I can't get over it... I created this ZFS partition 2 weeks ago cause  
+I thought it was very safe,
+and now it seems that I have just lost everything, after a simple  
+kernel panic...
+I can't believe it...
+
+Is it possible to do something like : rebuild metadata ? or scan a  
+drive to recover data ?
+
+Mathieu
+
+Le 09-01-15 &#224; 23:36, Dustin Webb a &#233;crit :
+
+&gt;<i> Did you try zpool status -x like this link says? <A HREF="http://www.sun.com/msg/ZFS-8000-72?">http://www.sun.com/msg/ZFS-8000-72?</A>
+</I>&gt;<i> I hope that it is not your problem.  Good luck.
+</I>&gt;<i>
+</I>&gt;<i> Dustin Webb
+</I>&gt;<i> ITguy
+</I>&gt;<i> Erb Co Inc
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Jan 15, 2009, at 4:31 PM, mathieu.email wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Thanks for your replies,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I looked in the /var/log/system.log :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - When I plug the drive (external usb drive), I have : &quot;  
+</I>&gt;&gt;<i> diskarbitrationd[32]: unable to mount /dev/disk2s2 (status code  
+</I>&gt;&gt;<i> 0x00000001). &quot;
+</I>&gt;&gt;<i> - With the &quot;zpool import&quot; command, nothing appears.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I changed the usb cable, but the problem is still the same (I don't  
+</I>&gt;&gt;<i> have another power supply for the moment).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I tried &quot;zpool import -f&quot;, the error is the same :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> =&gt; zpool import -f
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> pool: ZFS
+</I>&gt;&gt;<i>      id: 9004030332584099627
+</I>&gt;&gt;<i> state: FAULTED
+</I>&gt;&gt;<i> status: The pool metadata is corrupted.
+</I>&gt;&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;&gt;<i>            The pool may be active on on another system, but can be  
+</I>&gt;&gt;<i> imported using
+</I>&gt;&gt;<i>            the '-f' flag.
+</I>&gt;&gt;<i>   see: <A HREF="http://www.sun.com/msg/ZFS-8000-72">http://www.sun.com/msg/ZFS-8000-72</A>
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	ZFS            FAULTED  corrupted data
+</I>&gt;&gt;<i> 	 disk2s2   ONLINE
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> pool: ZFS
+</I>&gt;&gt;<i>      id: 5050959592823553345
+</I>&gt;&gt;<i> state: FAULTED
+</I>&gt;&gt;<i> status: The pool was last accessed by another system.
+</I>&gt;&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;&gt;<i>   see: <A HREF="http://www.sun.com/msg/ZFS-8000-EY">http://www.sun.com/msg/ZFS-8000-EY</A>
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	ZFS         UNAVAIL  insufficient replicas
+</I>&gt;&gt;<i> 	 disk1     UNAVAIL  cannot open
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Mathieu
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Le 09-01-15 &#224; 00:30, Dustin Webb a &#233;crit :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> You should be able to simply force the import.  Since your system  
+</I>&gt;&gt;&gt;<i> froze, it never properly &quot;ejected&quot; the pool.  The command is  
+</I>&gt;&gt;&gt;<i> 'zpool import -f' or 'zpool -f import'
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Don't Panic!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Dustin Webb
+</I>&gt;&gt;&gt;<i> ITguy
+</I>&gt;&gt;&gt;<i> Erb Co Inc
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Jan 5, 2009, at 4:53 PM, mathieu.email wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I have a big problem with my ZFS disk. After a kernel panic, I  
+</I>&gt;&gt;&gt;&gt;<i> cannot import the pool anymore :
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;<i> =&gt; zpool status
+</I>&gt;&gt;&gt;&gt;<i> no pools available
+</I>&gt;&gt;&gt;&gt;<i> =&gt; zpool list
+</I>&gt;&gt;&gt;&gt;<i> no pools available
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;<i> =&gt; zpool import
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> pool: ZFS
+</I>&gt;&gt;&gt;&gt;<i>      id: 9004030332584099627
+</I>&gt;&gt;&gt;&gt;<i> state: FAULTED
+</I>&gt;&gt;&gt;&gt;<i> status: The pool metadata is corrupted.
+</I>&gt;&gt;&gt;&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;&gt;&gt;&gt;<i>            The pool may be active on on another system, but can  
+</I>&gt;&gt;&gt;&gt;<i> be imported using
+</I>&gt;&gt;&gt;&gt;<i>            the '-f' flag.
+</I>&gt;&gt;&gt;&gt;<i>   see: <A HREF="http://www.sun.com/msg/ZFS-8000-72">http://www.sun.com/msg/ZFS-8000-72</A>
+</I>&gt;&gt;&gt;&gt;<i> config:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> 	ZFS            FAULTED  corrupted data
+</I>&gt;&gt;&gt;&gt;<i> 	  disk2s2   ONLINE
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> pool: ZFS
+</I>&gt;&gt;&gt;&gt;<i>      id: 5050959592823553345
+</I>&gt;&gt;&gt;&gt;<i> state: FAULTED
+</I>&gt;&gt;&gt;&gt;<i> status: The pool was last accessed by another system.
+</I>&gt;&gt;&gt;&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;&gt;&gt;&gt;<i>   see: <A HREF="http://www.sun.com/msg/ZFS-8000-EY">http://www.sun.com/msg/ZFS-8000-EY</A>
+</I>&gt;&gt;&gt;&gt;<i> config:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> 	ZFS         UNAVAIL  insufficient replicas
+</I>&gt;&gt;&gt;&gt;<i> 	  disk1     UNAVAIL  cannot open
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;<i> =&gt; zpool import -f 9004030332584099627
+</I>&gt;&gt;&gt;&gt;<i> cannot import 'ZFS': I/O error
+</I>&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I am despaired as I have no backup and all my data are on this  
+</I>&gt;&gt;&gt;&gt;<i> drive.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Is there anything I can do ?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thank you for your help,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Mathieu
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090116/56953908/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090116/56953908/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001321.html">[zfs-discuss] Zpool disaster
+</A></li>
+	<LI>Next message: <A HREF="001316.html">[zfs-discuss] i should get paid for this
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1315">[ date ]</a>
+              <a href="thread.html#1315">[ thread ]</a>
+              <a href="subject.html#1315">[ subject ]</a>
+              <a href="author.html#1315">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

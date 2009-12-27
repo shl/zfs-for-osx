@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zpool re-import?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20re-import%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000560.html">
+   <LINK REL="Next"  HREF="000562.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zpool re-import?</H1>
+    <B>Brett Koonce</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20re-import%3F&In-Reply-To="
+       TITLE="[zfs-discuss] zpool re-import?">koonce at universe42.com
+       </A><BR>
+    <I>Sat May  3 20:13:44 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000560.html">[zfs-discuss] mdls can't see ZFS pools?
+</A></li>
+        <LI>Next message: <A HREF="000562.html">[zfs-discuss] zpool re-import?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#561">[ date ]</a>
+              <a href="thread.html#561">[ thread ]</a>
+              <a href="subject.html#561">[ subject ]</a>
+              <a href="author.html#561">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've been debating moving some of my storage to ZFS and toward that  
+end I've been playing around with the 111 build.  I put an old hard  
+drive into an external USB/firewire enclosure, split it into five  
+partitions and then created a 4-slice RAID-Z.  Then I copied/deleted  
+some data, replaced one of the partitions with the spare, ran several  
+scrub operations, did a handful of imports/exports to test the  
+system.  The only times I managed to crash things were once by hitting  
+zpool status -v repeatedly during a resliver and the other by plugging  
+the drive into a vanilla leopard machine only to remember too late  
+that the read-only implementation doesn't support zpool export.  It  
+did mount, though. ;-)
+
+All was well until I decided to play around with things again today.   
+zpool import -f repeatedly insists &quot;no pools available to import&quot;.  I  
+tried &quot;zfs mount -a;  zfs volinit&quot; to no avail.  I deleted /etc/zfs/ 
+zpool.cache but cannot seem to reinit it.  I reinstalled 111, then  
+102A, then 111 again with the same results.  The only remaining thing  
+I can think of is that because I split the drive in disk utility  
+proper, the partition map has HFS as the labeling scheme which may be  
+messing with things, like so:
+
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *28.6 Gi     
+disk1
+    1:                        EFI                         200.0 Mi    
+disk1s1
+    2:                  Apple_HFS                         5.7 Gi      
+disk1s2
+    3:                  Apple_HFS                         5.7 Gi      
+disk1s3
+    4:                  Apple_HFS                         5.7 Gi      
+disk1s4
+    5:                  Apple_HFS                         5.7 Gi      
+disk1s5
+    6:                  Apple_HFS                         4.9 Gi      
+disk1s6
+
+If anybody has any suggestions on how to resurrect the volume, please  
+let me know.  The hard drive is marginal and the data meaningless.   
+But I would like to know how to solve this problem before entrusting  
+the system further.  Thanks in advance,
+
+-Brett Koonce
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000560.html">[zfs-discuss] mdls can't see ZFS pools?
+</A></li>
+	<LI>Next message: <A HREF="000562.html">[zfs-discuss] zpool re-import?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#561">[ date ]</a>
+              <a href="thread.html#561">[ thread ]</a>
+              <a href="subject.html#561">[ subject ]</a>
+              <a href="author.html#561">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

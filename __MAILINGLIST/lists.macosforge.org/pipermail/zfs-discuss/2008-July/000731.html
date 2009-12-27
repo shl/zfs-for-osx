@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic on zfs-119
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20on%20zfs-119&In-Reply-To=EE7C13B5-978B-4056-A431-3FA2EF67083C%40thinkpink.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000730.html">
+   <LINK REL="Next"  HREF="000732.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic on zfs-119</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20on%20zfs-119&In-Reply-To=EE7C13B5-978B-4056-A431-3FA2EF67083C%40thinkpink.com"
+       TITLE="[zfs-discuss] panic on zfs-119">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Jul 30 11:19:32 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000730.html">[zfs-discuss] panic on zfs-119
+</A></li>
+        <LI>Next message: <A HREF="000732.html">[zfs-discuss] panic on zfs-119
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#731">[ date ]</a>
+              <a href="thread.html#731">[ thread ]</a>
+              <a href="subject.html#731">[ subject ]</a>
+              <a href="author.html#731">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>oh grosse, kernel heap corruption.  I'll open a bug on this right away.
+Can you send me a 'zpool history' of your pool?  Out of curiosity how  
+much RAM do you have?
+
+Noel
+
+On Jul 29, 2008, at 10:58 AM, Brian Pinkerton wrote:
+
+&gt;<i> Just got the following panic doing a copy of a lot of files from a ZFS
+</I>&gt;<i> file system to an HFS one.  I used a back-to-back tar instead of using
+</I>&gt;<i> rsync, so we can rule out rsync in this case. :)
+</I>&gt;<i>
+</I>&gt;<i> bri
+</I>&gt;<i>
+</I>&gt;<i> Tue Jul 29 10:13:08 2008
+</I>&gt;<i> panic(cpu 0 caller 0x007EE1E0): &quot;kernel heap corruption detected&quot;@/
+</I>&gt;<i> Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/os/ 
+</I>&gt;<i> kmem.c:
+</I>&gt;<i> 437
+</I>&gt;<i> Latest stack backtrace for cpu 0:
+</I>&gt;<i>       Backtrace:
+</I>&gt;<i>          0x0009B498 0x0009BE3C 0x00029DD8 0x007EE1E0 0x007EE538
+</I>&gt;<i> 0x007EE68C 0x007E9CD0 0x000B05D4
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0x75a000-&gt;0x843fff
+</I>&gt;<i> Proceeding back via exception chain:
+</I>&gt;<i>    Exception state (sv=0x6b2ce780)
+</I>&gt;<i>       PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;
+</I>&gt;<i> DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000  
+</I>&gt;<i> (Unknown)
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9E17
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.4.0: Mon Jun  9 19:36:17 PDT 2008;
+</I>&gt;<i> root:xnu-1228.5.20~1/RELEASE_PPC
+</I>&gt;<i> System model name: PowerMac11,2
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000730.html">[zfs-discuss] panic on zfs-119
+</A></li>
+	<LI>Next message: <A HREF="000732.html">[zfs-discuss] panic on zfs-119
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#731">[ date ]</a>
+              <a href="thread.html#731">[ thread ]</a>
+              <a href="subject.html#731">[ subject ]</a>
+              <a href="author.html#731">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

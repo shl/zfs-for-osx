@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] USB and Firewire Performance Problem Question...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C49F0CA93.7000405%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001535.html">
+   <LINK REL="Next"  HREF="001538.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] USB and Firewire Performance Problem Question...</H1>
+    <B>Richard Elling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C49F0CA93.7000405%40gmail.com%3E"
+       TITLE="[zfs-discuss] USB and Firewire Performance Problem Question...">richard.elling at gmail.com
+       </A><BR>
+    <I>Thu Apr 23 13:07:47 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001535.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+        <LI>Next message: <A HREF="001538.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1536">[ date ]</a>
+              <a href="thread.html#1536">[ thread ]</a>
+              <a href="subject.html#1536">[ subject ]</a>
+              <a href="author.html#1536">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>David Reed wrote:
+&gt;<i> An update if it helps anyone with ideas....  
+</I>&gt;<i>
+</I>&gt;<i> Writing a different set of file sizes to the disks don't show the 
+</I>&gt;<i> problem (at least not as acutely).   So if I'm copying lots of smaller 
+</I>&gt;<i> files (&lt; 1M) I don't see the hit.  It seems to be related (right now) 
+</I>&gt;<i> to the file sizes.  Copying a lot of 2.8Mish files seems to show the 
+</I>&gt;<i> worst behavior.
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?
+</I>
+I'd suspect buffer overrun on the disk side.  If so, then the behaviour
+would be something like:
+    spit out some data
+    wait for a timeout
+    re-spit out data that was dropped by the storage
+
+On Solaris, you can change the zfs_vdev_max_pending which
+would allow finer control of this. Indeed, there are devices which
+require you to do this, or risk the porpoising behaviour I described.
+<A HREF="http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29">http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29</A>
+
+ -- richard
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001535.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+	<LI>Next message: <A HREF="001538.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1536">[ date ]</a>
+              <a href="thread.html#1536">[ thread ]</a>
+              <a href="subject.html#1536">[ subject ]</a>
+              <a href="author.html#1536">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

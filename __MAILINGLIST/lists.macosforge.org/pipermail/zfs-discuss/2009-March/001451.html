@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] First time user: Some questions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3C90B78CE1-F97D-4DF4-8ACC-EF10D2FEAB0F%40young-alumni.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001450.html">
+   <LINK REL="Next"  HREF="001452.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] First time user: Some questions</H1>
+    <B>Chris Ruiz</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3C90B78CE1-F97D-4DF4-8ACC-EF10D2FEAB0F%40young-alumni.com%3E"
+       TITLE="[zfs-discuss] First time user: Some questions">chris at young-alumni.com
+       </A><BR>
+    <I>Mon Mar  2 00:26:17 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001450.html">[zfs-discuss] First time user: Some questions
+</A></li>
+        <LI>Next message: <A HREF="001452.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1451">[ date ]</a>
+              <a href="thread.html#1451">[ thread ]</a>
+              <a href="subject.html#1451">[ subject ]</a>
+              <a href="author.html#1451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Mar 1, 2009, at 11:51 PM, Harald Hanche-Olsen wrote:
+
+&gt;&gt;<i> If you want to share the pool between operating systems, you need  
+</I>&gt;&gt;<i> to 'zpool export pool' on osx and 'zpool import -f pool' on  
+</I>&gt;&gt;<i> freebsd.  Never forget to export your pool, especially if you are  
+</I>&gt;&gt;<i> using removable media.  You will need to use -f with import because  
+</I>&gt;&gt;<i> the last system that used the pool is not the system trying to  
+</I>&gt;&gt;<i> import the pool.
+</I>&gt;<i>
+</I>&gt;<i> That is not right: You can definitely import the pool without the -f  
+</I>&gt;<i> flag. The point of -f is that it allows you to import a pool that  
+</I>&gt;<i> has not been properly exported. Without it, you would lose all the  
+</I>&gt;<i> data in the pool if the host dies while the pool is active and  
+</I>&gt;<i> cannot be revived. That this would be bad must surely be an  
+</I>&gt;<i> understatement.
+</I>
+Just to clarify what you are saying, the -f flag is not needed.   
+Otherwise my information was correct.  The main point of my original  
+response was the the OP was not properly using ZFS to achieve the  
+results they intended.  The -f flag would not have been an issue,  
+although as you said, it is unnecessary.
+
+&gt;<i> There is another gotcha with sharing between osx and freebsd,  
+</I>&gt;<i> though, and that is associated with ACLs. On one such pool that I  
+</I>&gt;<i> share regularly, new files created on the OSX side get created with  
+</I>&gt;<i> an ACL that is interpreted on the freebsd side as &quot;no access&quot;. So I  
+</I>&gt;<i> end up with files that I own (I use the same uid on both machines),  
+</I>&gt;<i> with mode -rw-r--r-- that I still cannot read. Doing chmod +t  
+</I>&gt;<i> followed by chmod -t on the files as root on the freebsd side cures  
+</I>&gt;<i> the problem, but it's a bother. I haven't found the time to  
+</I>&gt;<i> investigate the problem properly yet.
+</I>
+FreeBSD does not have support for ACLs on ZFS.  If you run CURRENT,  
+freebsd does support FreeBSD file flags, if enabled on your filesystem  
+but not ACLs.  NFSv4 ACLs on FreeBSD are not implemented AFAIK, it's  
+ready to go on the ZFS side of things but hasn't been implemented in  
+the OS.  It should be OSX that sets an ACL that says &quot;deny execute&quot; on  
+anything not written to the filesystem from OSX, not FreeBSD.   
+Besides, there should be absolutely no reason for you to need to share  
+executable files between OSX and FreeBSD, so this should not be a  
+problem.  I have no problem accessing data written from OSX on ZFS on  
+FreeBSD, as you have described.
+
+Chris
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001450.html">[zfs-discuss] First time user: Some questions
+</A></li>
+	<LI>Next message: <A HREF="001452.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1451">[ date ]</a>
+              <a href="thread.html#1451">[ thread ]</a>
+              <a href="subject.html#1451">[ subject ]</a>
+              <a href="author.html#1451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

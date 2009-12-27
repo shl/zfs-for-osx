@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20import%20%27%3Cpool%3E%27%20I/O%20error&In-Reply-To=%3C1DBB671A-C63C-48ED-B803-67FEDA9FA464%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001725.html">
+   <LINK REL="Next"  HREF="001727.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] cannot import '&lt;pool&gt;' I/O error</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20import%20%27%3Cpool%3E%27%20I/O%20error&In-Reply-To=%3C1DBB671A-C63C-48ED-B803-67FEDA9FA464%40gmail.com%3E"
+       TITLE="[zfs-discuss] cannot import '&lt;pool&gt;' I/O error">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Mon Aug  3 01:33:09 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001725.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+        <LI>Next message: <A HREF="001727.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1726">[ date ]</a>
+              <a href="thread.html#1726">[ thread ]</a>
+              <a href="subject.html#1726">[ subject ]</a>
+              <a href="author.html#1726">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 2 Aug 2009, at 21:36, Stephen Pflaum wrote:
+
+&gt;<i> apparently there are 4 copies of the metadata.
+</I>
+Right, there's 4 copies of the metadata. Two near the start of the  
+disk, (1a, 1b) and two near the end (2a, 2b). What happens is ZFS  
+writes to 1a first, then 2a, then 1b then 2b. The idea is that if the  
+disk dies during the metadata write (which is the bit where the tree  
+on disk goes from being Vn to Vn+1) then there should be a majority  
+rule going on with the pointers to the tip of the tree. Indeed,  
+there's recovery semantics which says which order to look at to find  
+this out.
+
+Unfortunately, USB disks are known for being slightly better than hand- 
+writing on toilet paper for data integrity, and probably optimised the  
+(1a,1b) write into the same call when flushing to disk. In fact, some  
+USB devices have their own buffer and return 'yes' to the fsync call  
+before they've actually sunc, which is why you can get this kind of  
+problem. The very first USB enclosure I tried out with ZFS pointed out  
+how bad the USB device was, and I went back to firewire and never  
+looked back.
+
+ From here, you might be able to find the on-disk locations for 1a,1b, 
+2a and 2b and find out where they point to (as tip to the ZFS tree).  
+The data is (likely) all on disk still, it's just the pointer that's  
+pointing somewhere else. You might need to try up to 4 values  
+(assuming that 1a..2b are all different) with an attempt at mounting  
+each one in order to find out which pointer it is. At the very least,  
+you should be able to find a root of a tree even if it was the n-1  
+tree that was written to disk (and assuming that nothing's done disk  
+writes since then).
+
+The other thing to note is that ZFS on Mac is a little old - you might  
+get joy with booting up a newer copy of OpenSolaris in VitualBox or  
+equivalent and seeing if the recovery strategies are more advanced  
+there.
+
+Alex
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001725.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+	<LI>Next message: <A HREF="001727.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1726">[ date ]</a>
+              <a href="thread.html#1726">[ thread ]</a>
+              <a href="subject.html#1726">[ subject ]</a>
+              <a href="author.html#1726">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

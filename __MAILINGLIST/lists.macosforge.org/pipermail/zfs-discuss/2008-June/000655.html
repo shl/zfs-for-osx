@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] disappearing/corrupting files in zfs-117
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20disappearing/corrupting%20files%20in%20zfs-117&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000640.html">
+   <LINK REL="Next"  HREF="000656.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] disappearing/corrupting files in zfs-117</H1>
+    <B>Karl Gyllstrom</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20disappearing/corrupting%20files%20in%20zfs-117&In-Reply-To="
+       TITLE="[zfs-discuss] disappearing/corrupting files in zfs-117">karl at cs.unc.edu
+       </A><BR>
+    <I>Mon Jun 16 16:35:17 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000640.html">[zfs-discuss] Compatibility with other systems?
+</A></li>
+        <LI>Next message: <A HREF="000656.html">[zfs-discuss] follow up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#655">[ date ]</a>
+              <a href="thread.html#655">[ thread ]</a>
+              <a href="subject.html#655">[ subject ]</a>
+              <a href="author.html#655">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I upgraded to 117 a while back.  I'm noticing a new problem I haven't  
+seen before (not since the original zfs seed last summer).  I'm  
+noticing files getting lost and/or corrupted.
+
+This presents during my command-line coding, namely using vim and  
+scons (which copies a large number of files per compile).
+
+Specifically:
+
+1) A file saved by vim becomes 'unreadable'.  When I type 'ls' I see:
+
+ls: &lt;file name&gt;: No such file or directory
+
+The file cannot be reopened.
+
+2) When compiling, often a file can't be found for compilation.  Since  
+scons copies files before compiling them, this is easily corrected by  
+re-running it.
+
+I can't really investigate any further than this.  I haven't seen it  
+occur in any other context.
+
+Karl
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000640.html">[zfs-discuss] Compatibility with other systems?
+</A></li>
+	<LI>Next message: <A HREF="000656.html">[zfs-discuss] follow up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#655">[ date ]</a>
+              <a href="thread.html#655">[ thread ]</a>
+              <a href="subject.html#655">[ subject ]</a>
+              <a href="author.html#655">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

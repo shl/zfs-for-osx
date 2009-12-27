@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Macintouch comments on RAID-Z
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=FC12AB4C-A6E6-4DB4-9D43-9C6B9153ED5C%40pobox.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000193.html">
+   <LINK REL="Next"  HREF="000200.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Macintouch comments on RAID-Z</H1>
+    <B>Adam Lindsay</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=FC12AB4C-A6E6-4DB4-9D43-9C6B9153ED5C%40pobox.com"
+       TITLE="[zfs-discuss] Macintouch comments on RAID-Z">atl at comp.lancs.ac.uk
+       </A><BR>
+    <I>Fri Feb 22 12:53:45 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000193.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+        <LI>Next message: <A HREF="000200.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#195">[ date ]</a>
+              <a href="thread.html#195">[ thread ]</a>
+              <a href="subject.html#195">[ subject ]</a>
+              <a href="author.html#195">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey all.
+I've been working with ZFS as a user (on OpenSolaris) for about a year 
+now (but my heart, as always, belongs to Mac).
+
+I would never, ever ascribe &quot;use RAID-0&quot; to Richard Elling. I think he 
+would bristle at that, as well.
+
+Since we're plugging blog entries, I'll throw my experimental results 
+into the ring as well:
+  &lt;<A HREF="http://lindsay.at/blog/archive/tag/zfs-performance/">http://lindsay.at/blog/archive/tag/zfs-performance/</A>&gt;
+(The system I benchmark has the same number of SATA-II disks as those 
+newly Apple-endorsed Promise RAID subsystems.)
+
+My take-aways about ideal performance configurations are this:
+If you care enough about your data to use ZFS, don't bother with RAID-0, 
+  except in very special circumstances.
+
+If you care about random I/O reads, then mirror (RAID-1-like) 
+configurations are the way to go.
+
+If you care about streaming I/O performance, then RAIDZ (RAID-5 and 
+-6-like) configurations are the way to go.
+
+Real systems are contrained by I/O bus throughput and vibrations and the 
+like, so performance seldom scales as linearly as you would expect.
+
+The real take-away is have an idea what you expect your workflows to be, 
+and configure for that. Keep in mind ZFS's flexibility, and know that a 
+system can contain a varied mix of zpools appropriate to multiple use cases.
+
+adam
+
+
+Kevin Purcell wrote:
+&gt;<i> I also had a blog link that I had found and put aside yesterday and  
+</I>&gt;<i> read this morning that also addresses this issue in detail. It's  
+</I>&gt;<i> funny how that happens.
+</I>&gt;<i> 
+</I>&gt;<i> &lt;<A HREF="http://blogs.sun.com/roch/entry/when_to_and_not_to">http://blogs.sun.com/roch/entry/when_to_and_not_to</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i> The trade offs revolve around bandwidth, IO/s and reliability and the  
+</I>&gt;<i> trade-offs between those factors.
+</I>&gt;<i> 
+</I>&gt;<i> There is no silver bullet (but there are composite bullets than can  
+</I>&gt;<i> be selected to be most effective for particular uses).
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for the clarification.
+</I>&gt;<i> 
+</I>&gt;<i> On Feb 22, 2008, at 10:55 AM, Brian Pinkerton wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> He's right.  Richard says it best:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://blogs.sun.com/relling/entry/">http://blogs.sun.com/relling/entry/</A> 
+</I>&gt;&gt;<i> zfs_raid_recommendations_space_performance
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Bottom line: for performance use RAID-0, for performance and  
+</I>&gt;&gt;<i> reliability use RAID-1+0.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> bri
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Feb 22, 2008, at 10:30 AM, Kevin Purcell wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Comment seen on today's Macintouch:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="http://www.macintouch.com/readerreports/harddrives/">http://www.macintouch.com/readerreports/harddrives/</A>
+</I>&gt;&gt;&gt;<i> index.html#d22feb2008&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Jeff Baker
+</I>&gt;&gt;&gt;&gt;<i> The willingness of people to see ZFS as the solution to any and all
+</I>&gt;&gt;&gt;&gt;<i> problems continues to amaze me. Contrary to the prior comment, RAID-
+</I>&gt;&gt;&gt;&gt;<i> Z in no way obsoletes or replaces the functions of a hardware RAID
+</I>&gt;&gt;&gt;&gt;<i> controller. Typically a user expects high performance from a RAID
+</I>&gt;&gt;&gt;&gt;<i> controller. RAID-Z, by comparison, is slightly slower than a single
+</I>&gt;&gt;&gt;&gt;<i> hard disk. While a normal RAID becomes faster with additional
+</I>&gt;&gt;&gt;&gt;<i> spindles, a RAID-Z exhibits flat to slightly declining performance
+</I>&gt;&gt;&gt;&gt;<i> with more spindles (on random workloads).
+</I>&gt;&gt;&gt;<i> I would have thought that RAID-Z performance would scale as the
+</I>&gt;&gt;&gt;<i> number of disks (so long as the controllers can't take multiple
+</I>&gt;&gt;&gt;<i> commands in parallel or for IDE as the number of controllers).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'd appreciate some comments from those more knowledgeable than I.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks.
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Kevin Purcell
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kevinpurcell at pobox.com</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> Kevin Purcell
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kevinpurcell at pobox.com</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000193.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+	<LI>Next message: <A HREF="000200.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#195">[ date ]</a>
+              <a href="thread.html#195">[ thread ]</a>
+              <a href="subject.html#195">[ subject ]</a>
+              <a href="author.html#195">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

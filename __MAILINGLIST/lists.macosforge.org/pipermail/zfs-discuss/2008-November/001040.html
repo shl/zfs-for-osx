@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Possible mmap problem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Possible%20mmap%20problem&In-Reply-To=%3C762437f0811060647s76a864d1qb4e6748117550fe5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001039.html">
+   <LINK REL="Next"  HREF="001041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Possible mmap problem</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Possible%20mmap%20problem&In-Reply-To=%3C762437f0811060647s76a864d1qb4e6748117550fe5%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Possible mmap problem">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Thu Nov  6 06:47:29 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001039.html">[zfs-discuss] Panic on importing a pool from the filesystem
+</A></li>
+        <LI>Next message: <A HREF="001041.html">[zfs-discuss] zfs directory names with umlaut O's (i.e. &#214;), cause goofy behavior with finder.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1040">[ date ]</a>
+              <a href="thread.html#1040">[ thread ]</a>
+              <a href="subject.html#1040">[ subject ]</a>
+              <a href="author.html#1040">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I've tried running rtorrent saving the files to my ZFS volume (3 mirrored
+pairs). I've seen 2 problems which do not occur on HFS+:
+
+1. rtorrent crashes on sartup about 70-80% of the time. I would think
+there's some sort of race condition or something because sometimes it *DOES*
+start up correctly.
+
+2. Once a file has finished downloading and rtorrent does its hash check, it
+finds that many blocks don't pass the check and has to re-download them.
+
+Researching this second problem I found a posting in the rtorrent site (at
+<A HREF="http://libtorrent.rakshasa.no/ticket/483">http://libtorrent.rakshasa.no/ticket/483</A>) in which a comment states:
+
+I did the following test on my ZFS partition: open a file (O_CREAT|O_RDWR),
+&gt;<i> truncate it to 700 MB, mmap(&#8230;, MAP_SHARED, PROT_WRITE , &#8230;), write to the
+</I>&gt;<i> memory, and then munmap() it. The data did *not* get flushed to disk.
+</I>&gt;<i>
+</I>&gt;<i> I need to call msync() to ensure that data ends up on the disk. This is
+</I>&gt;<i> unlike the HFS+ partition.
+</I>&gt;<i>
+</I>&gt;<i> I have reported the problem to Apple, I would think this is a bug in ZFS,
+</I>&gt;<i> although I can't really get from the documentation, that msync() is implicit
+</I>&gt;<i> in munmap().
+</I>&gt;<i>
+</I>So, is this an indication of a ZFS bug, an rtorrent bug or both?
+
+Thanks,
+
+-Mario.
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081106/d83e18ea/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081106/d83e18ea/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001039.html">[zfs-discuss] Panic on importing a pool from the filesystem
+</A></li>
+	<LI>Next message: <A HREF="001041.html">[zfs-discuss] zfs directory names with umlaut O's (i.e. &#214;), cause goofy behavior with finder.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1040">[ date ]</a>
+              <a href="thread.html#1040">[ thread ]</a>
+              <a href="subject.html#1040">[ subject ]</a>
+              <a href="author.html#1040">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic in AVL (build 154 aka 10a286)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20in%20AVL%20%28build%20154%20aka%2010a286%29&In-Reply-To=%3C422DC05D-48D0-47B0-8708-3AF38F1D279E%40chipmunk-app.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001888.html">
+   <LINK REL="Next"  HREF="001909.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic in AVL (build 154 aka 10a286)</H1>
+    <B>Ruotger Skupin</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20in%20AVL%20%28build%20154%20aka%2010a286%29&In-Reply-To=%3C422DC05D-48D0-47B0-8708-3AF38F1D279E%40chipmunk-app.com%3E"
+       TITLE="[zfs-discuss] Panic in AVL (build 154 aka 10a286)">lists at chipmunk-app.com
+       </A><BR>
+    <I>Thu Oct  8 01:44:42 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001888.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+        <LI>Next message: <A HREF="001909.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1889">[ date ]</a>
+              <a href="thread.html#1889">[ thread ]</a>
+              <a href="subject.html#1889">[ subject ]</a>
+              <a href="author.html#1889">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Am 07.10.2009 um 09:17 schrieb Julien-Pierre Av&#233;rous:
+
+&gt;<i> Hi there !
+</I>&gt;<i>
+</I>&gt;<i> I know, I should forget ZFS for the moment, until Apple resolve its  
+</I>&gt;<i> problems with legals (or technicals (or...)) issues. But I love too  
+</I>&gt;<i> much ZFS ;)
+</I>&gt;<i>
+</I>&gt;<i> So I have installed the build 154 (released in the Mac OS  Build  
+</I>&gt;<i> 10a286) in Mac OS X Server Snow Leopard X.6.1.
+</I>&gt;<i>
+</I>&gt;<i> I have a WD Drive in USB2 of 2 TB. I have formatted my drive,  
+</I>&gt;<i> configured the main partition as a ZFS entity, created a ZFS Pool on  
+</I>&gt;<i> this entity and finally created a filesystem on this pool.
+</I>&gt;<i>
+</I>&gt;<i> This seem work fine, until I try to copy (with cp -pR) a big amount  
+</I>&gt;<i> of file (between 3 to 6 MB each) : after a little amount of file  
+</I>&gt;<i> copied (less than 3000, not on the same directory), my server is  
+</I>&gt;<i> killed with a call to panic, generating this trace :
+</I>
+Hi Julien-Pierre,
+
+I don't want to discourage you but in my own experiments (with 119) I  
+had the problem, that heavy load would produce a kernel panic. Virtual  
+Box (fun fact: also from Sun) would trigger that reliably. There  
+seemed to be general agreement on older list postings that USB is a  
+bad choice for the mac version of ZFS.  You might want to search the  
+archives.
+
+On a side note: I have never before stumbled upon a file system people  
+get so passionate about than ZFS. Call us ZFS fanboys if you want, I  
+don't care. So it seems like a natural choice for Apple. Please go on  
+with it Apple!
+
+Ruotger
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001888.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+	<LI>Next message: <A HREF="001909.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1889">[ date ]</a>
+              <a href="thread.html#1889">[ thread ]</a>
+              <a href="subject.html#1889">[ subject ]</a>
+              <a href="author.html#1889">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

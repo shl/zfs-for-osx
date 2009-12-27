@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS-formatted sparsebundle as home directory
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS-formatted%20sparsebundle%20as%20home%20directory&In-Reply-To=BECFF64E-BF24-4A26-B7F7-D32B87974CBB%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000948.html">
+   <LINK REL="Next"  HREF="000949.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS-formatted sparsebundle as home directory</H1>
+    <B>Lorenzo Perone</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS-formatted%20sparsebundle%20as%20home%20directory&In-Reply-To=BECFF64E-BF24-4A26-B7F7-D32B87974CBB%40gmail.com"
+       TITLE="[zfs-discuss] ZFS-formatted sparsebundle as home directory">lopez.on.the.lists at yellowspace.net
+       </A><BR>
+    <I>Sat Oct 11 12:20:56 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000948.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+        <LI>Next message: <A HREF="000949.html">[zfs-discuss] MSWord 2004 V11.5.0 (080429) Problem Saving Files	to	ZFS Partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#952">[ date ]</a>
+              <a href="thread.html#952">[ thread ]</a>
+              <a href="subject.html#952">[ subject ]</a>
+              <a href="author.html#952">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I don't get the advantage of it right now... maybe it's
+the hangover still.. but, for the records, I did the inverse:
+made a real zfs partition on my disk, and created a zfs filesystem
+for my home on which the sparseimage resides.
+
+This has the advantage that I can use snapshots and
+yet it integrates fine with filevault. You have to do it once
+from another user, but it works fine: just copy your
+sparseimage onto the zfs filesystem and symlink it:
+
+ln -s /Volumes/YourPool/YourHomeOnIt/username.sparseimage / 
+Users/.username/username.sparseimage
+
+What also works fine for me, is incremental backups (with zfs send -i)
+to a zfs-formatted sparseimage.  This is nice because so I
+can share one time machine disk between a mac without zfs and one
+with it, without wasting space and/or having to reformat it.
+
+regards,
+
+Lorenzo
+
+
+On 09.10.2008, at 00:23, Alex Blewitt wrote:
+
+&gt;<i> Not a lot of point in a sparsebundle IMHO. You might as well create a
+</I>&gt;<i> file of a fixed size and use ZFS compression. You'lll still need to
+</I>&gt;<i> arrange a mount on boot but are less likely to suffer catastrophic
+</I>&gt;<i> failures that will render the entire volume ubnountable.
+</I>&gt;<i>
+</I>&gt;<i> If you need more space, create another file-type disk and add it to
+</I>&gt;<i> the pool. You can then grow as needed.
+</I>&gt;<i>
+</I>&gt;<i> Alex
+</I>&gt;<i>
+</I>&gt;<i> Sent from my (new) iPhone
+</I>&gt;<i>
+</I>&gt;<i> On 8 Oct 2008, at 21:20, Christian He&#223;mann &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs at hessmann.de</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hello everybody,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm thinking about moving my home directory to ZFS - just for the fun
+</I>&gt;&gt;<i> of it.
+</I>&gt;&gt;<i> Since one of the reasons to get me acquainted with ZFS was to get rid
+</I>&gt;&gt;<i> of partitions and their typical problems (not enough space on one,  
+</I>&gt;&gt;<i> too
+</I>&gt;&gt;<i> much on the other), I'm thinking about using a ZFS formatted
+</I>&gt;&gt;<i> sparsebundle on my HFS+ formatted root as my home directory.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I gave it a try with an AES encrypted ZFS sparsebundle on a test  
+</I>&gt;&gt;<i> user,
+</I>&gt;&gt;<i> which seemed to work quite fine, except for the inconvenience of
+</I>&gt;&gt;<i> having to mount the image from a different user each time I reboot  
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i> computer.
+</I>&gt;&gt;<i> One possible solution would be a login hook as documented by Mike
+</I>&gt;&gt;<i> Bombich, which, at least AFAIK, will prevent me from encrypt the
+</I>&gt;&gt;<i> sparsebundle - or does it?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, first of all: Bad idea or good idea to go with a sparsebundle?
+</I>&gt;&gt;<i> Second: Any chance to combine an encrypted ZFS-formatted sparsebundle
+</I>&gt;&gt;<i> with an automatic mount on login? Tamper with Filevault, for example?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Best regards,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Christian
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000948.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+	<LI>Next message: <A HREF="000949.html">[zfs-discuss] MSWord 2004 V11.5.0 (080429) Problem Saving Files	to	ZFS Partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#952">[ date ]</a>
+              <a href="thread.html#952">[ thread ]</a>
+              <a href="subject.html#952">[ subject ]</a>
+              <a href="author.html#952">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

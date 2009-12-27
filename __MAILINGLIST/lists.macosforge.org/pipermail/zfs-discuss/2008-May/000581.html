@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20anyone%20else%20observing%20ZFS%20transfers%20pausing%20briefly%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000576.html">
+   <LINK REL="Next"  HREF="000583.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] anyone else observing ZFS transfers pausing briefly?</H1>
+    <B>raoul at amsi.org.au</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20anyone%20else%20observing%20ZFS%20transfers%20pausing%20briefly%3F&In-Reply-To="
+       TITLE="[zfs-discuss] anyone else observing ZFS transfers pausing briefly?">raoul at amsi.org.au
+       </A><BR>
+    <I>Thu May  8 07:28:30 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000576.html">[zfs-discuss] zfs and Finder and Sharing difficulties
+</A></li>
+        <LI>Next message: <A HREF="000583.html">[zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#581">[ date ]</a>
+              <a href="thread.html#581">[ thread ]</a>
+              <a href="subject.html#581">[ subject ]</a>
+              <a href="author.html#581">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I have a ZFS test rig at home to play around with.
+It's actually an old AND 500/132 case with a Digital Audio mobo inside. 
+(was fun to build)
+My pool consists of 8 x 250GB drives as a raidz, which equates to about
+1.55TB capacity.
+Each drive is in a removable caddy and have a green LED for power and red
+LED for activity.
+
+I'm noticing that all transfers to or from the pool seem to pause for a
+brief couple of seconds, and then resume.
+i.e. I would see the red LEDs of all 8 drives go crazy for say, approx 2-3
+seconds, then a pause of 1-2 seconds and then more LED craziness...
+
+The Finder progress bar also suggests this trend as I see the
+&quot;data-copied&quot; value, pause congruently with the red LEDs of each drive.
+
+So.
+
+Is this normal?
+
+Is anyone else seeing this behaviour?
+
+Can others comment that have used BSD or Solaris?
+
+I also conducted earlier testing with 5 x 250GB drives and noticed the
+same thing.
+
+I've transferred ~ 900GB to the pool and it &quot;scrubs&quot; up fine. (took 7 hours!)
+I noticed that while scrubbing, that the pulsation I'm experiencing does
+not happen at all.
+It's only data reading/writing that I'm noticing this &quot;pause&quot;.
+
+Specs are:
+DA G4, 1.33GHz DP
+1GB RAM
+2 x ACARD 6885M PCI (configured as &quot;jbod&quot;)
+8 x 250GB (not all the same manufacturer though) PATA drives.
+MacOS X Server 10.5.2 (9C31)
+
+Below is a terminal dump of the 8 drive pool I created:
+Please note that I haven't created any &quot;nested&quot; pools.
+I basically just have the &quot;white disk image&quot; icon on my desktop and am
+sharing a single folder folder called LoungeRoomMac.
+
+--- Terminal Dump ---
+
+bigbox:~ badmin$ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+/dev/disk1
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                        ZFS 			             232.6 Gi   disk1s2
+/dev/disk2
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                        ZFS 			             233.4 Gi   disk2s2
+/dev/disk3
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk3
+   1:                        EFI                         200.0 Mi   disk3s1
+   2:                        ZFS                         232.6 Gi   disk3s2
+/dev/disk4
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk4
+   1:                        EFI                         200.0 Mi   disk4s1
+   2:                        ZFS 			             232.6 Gi   disk4s2
+/dev/disk5
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk5
+   1:                        EFI                         200.0 Mi   disk5s1
+   2:                        ZFS 			             233.4 Gi   disk5s2
+/dev/disk6
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk6
+   1:                        EFI                         200.0 Mi   disk6s1
+   2:                        ZFS 			             232.6 Gi   disk6s2
+/dev/disk7
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk7
+   1:                        EFI                         200.0 Mi   disk7s1
+   2:                        ZFS                         232.6 Gi   disk7s2
+
+
+bigbox:~ badmin$ diskutil partitiondisk /dev/disk0 GPTFormat ZFS
+%noformat% 100%
+Started partitioning on disk disk0
+Creating partition map
+[ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+Finished partitioning on disk disk0
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+
+[... I Formated all of them the same way, being disk0 through to disk7 ...]
+
+
+bigbox:~ badmin$ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+/dev/disk1
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                        ZFS 			             232.6 Gi   disk1s2
+/dev/disk2
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                        ZFS 			             233.4 Gi   disk2s2
+/dev/disk3
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk3
+   1:                        EFI                         200.0 Mi   disk3s1
+   2:                        ZFS                         232.6 Gi   disk3s2
+/dev/disk4
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk4
+   1:                        EFI                         200.0 Mi   disk4s1
+   2:                        ZFS 			             232.6 Gi   disk4s2
+/dev/disk5
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk5
+   1:                        EFI                         200.0 Mi   disk5s1
+   2:                        ZFS 			             233.4 Gi   disk5s2
+/dev/disk6
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk6
+   1:                        EFI                         200.0 Mi   disk6s1
+   2:                        ZFS 			             232.6 Gi   disk6s2
+/dev/disk7
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk7
+   1:                        EFI                         200.0 Mi   disk7s1
+   2:                        ZFS                         232.6 Gi   disk7s2
+
+bigbox:~ badmin$ sudo zpool create bigboxraidz raidz /dev/disk0s2
+/dev/disk1s2 /dev/disk2s2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+/dev/disk6s2 /dev/disk7s2
+
+
+bigbox:~ badmin$ zpool status bigboxraidz
+  pool: bigboxraidz
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+	pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	bigboxraidz  ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	    disk6s2  ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+
+errors: No known data errors
+bigbox:~ badmin$
+
+
+bigbox:~ badmin$ zpool upgrade bigboxraidz
+This system is currently running ZFS pool version 8.
+
+Successfully upgraded 'bigboxraidz' from version 6 to version 8
+bigbox:~ badmin$
+
+--- Terminal Dump ---
+
+Regards,
+
+Raoul,
+Australia.
+
+
+
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000576.html">[zfs-discuss] zfs and Finder and Sharing difficulties
+</A></li>
+	<LI>Next message: <A HREF="000583.html">[zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#581">[ date ]</a>
+              <a href="thread.html#581">[ thread ]</a>
+              <a href="subject.html#581">[ subject ]</a>
+              <a href="author.html#581">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

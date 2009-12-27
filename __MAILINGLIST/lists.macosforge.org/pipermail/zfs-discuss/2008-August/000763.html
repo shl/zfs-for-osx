@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] snapshot
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20snapshot&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000761.html">
+   <LINK REL="Next"  HREF="000764.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] snapshot</H1>
+    <B>ruebezahl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20snapshot&In-Reply-To="
+       TITLE="[zfs-discuss] snapshot">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Sun Aug 10 12:43:12 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000761.html">[zfs-discuss] snapshot
+</A></li>
+        <LI>Next message: <A HREF="000764.html">[zfs-discuss] snapshot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#763">[ date ]</a>
+              <a href="thread.html#763">[ thread ]</a>
+              <a href="subject.html#763">[ subject ]</a>
+              <a href="author.html#763">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+- -----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+
+
+
+hi noel!
+
+thank you for your rapid response...
+
+so i read my mail to you again this morning and noticed there was no  
+way whatsoever you could understand what i want to ask :)
+sorry, i was tired, let me try again :)
+
+
+let my show you a zfs list
+
+
+NAME                     USED  AVAIL  REFER  MOUNTPOINT
+hometank                 117G   297G   796K  /Volumes/hometank
+hometank/meister        54,0M   297G  54,0M  /Volumes/hometank/meister
+hometank/ruebezahl       117G   297G   116G  /Volumes/hometank/ruebezahl
+hometank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at 1</A>    75,1M      -   116G  -
+raidtank                 635G   280G  57,1M  /Volumes/raidtank
+raidtank/installers      161G   280G   161G  /Volumes/raidtank/ 
+installers
+raidtank/meisterbackup  54,7M   280G  54,7M  /Volumes/raidtank/ 
+meisterbackup
+raidtank/movies          347G   280G   347G  /Volumes/raidtank/movies
+raidtank/ruebebackup     116G   280G   116G  /Volumes/raidtank/ 
+ruebebackup
+raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 1</A>  42,6K      -   116G  -
+raidtank/sysbackup      10,9G   280G  10,9G  /Volumes/raidtank/backup
+
+
+my homefolders are on hometank
+my backups are on raidtank together with several other things...
+
+
+i used zfs send hometank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at 1</A> &gt; blafile
+zfs recv raidtank/ruebebackup &lt; blafile
+and then some incremental sending
+
+let's state i have done this for a while and my raidtank decided to  
+fill up
+
+so it would look like this
+
+raidtank/ruebebackup
+raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 1</A>
+raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 2</A>
+raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 3</A>
+raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 4</A>
+raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 5</A>
+.........
+
+so at this point i could start to delete @1 and @2 and @3 and maybe  
+free up about 3 or 4  gigs
+but imagine the original initial backup ruebebackup is so old it does  
+not make sense to keep it anymore
+
+how would i manage to promote <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 5</A> to the latest filesystem  
+and still be able to resume my incremental backups without having to  
+delete everything and start with a new initial backup?
+
+
+if i still didn't manage to make a point here:
+
+imagine time machine
+
+backs up initial and then incremental
+harddrive fills up
+deletes oldes backup
+and &quot;rotates&quot; the backups trough time without the need of a now  
+initial backup
+
+
+i want to imitate this behaviour
+
+
+best whateverwouldbeappropriateinenglish
+
+ruebezahl :)
+
+
+
+ps.
+thanks for your time
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> So if I'm understanding you correctly, you have a bunch of  
+</I>&gt;&gt;<i> snapshots of your filesystem, and you want to delete your  
+</I>&gt;&gt;<i> filesystem alltogether  and only keep your last snapshot of your  
+</I>&gt;&gt;<i> filesystem around for backup purposes incase you want something  
+</I>&gt;&gt;<i> from it at some point?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If the above is the case, then just use 'zfs send' to send your  
+</I>&gt;&gt;<i> snapshot to a file you can store anywhere on your machine, or  
+</I>&gt;&gt;<i> another drive.  And no, wherever you save that file, it doesn't  
+</I>&gt;&gt;<i> have to be a ZFS filesystem.  So if you had an external firewire  
+</I>&gt;&gt;<i> drive with an HFS+ partition on it, you could do
+</I>&gt;&gt;<i> 'zfs send raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 7</A> &gt; ruebebackup.out'
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This will send a complete instantiation of your filesystem to a  
+</I>&gt;&gt;<i> file.  Then you can just delete the filesystem and all the  
+</I>&gt;&gt;<i> snapshots.  Then if you want to access it, you can use 'zfs recv',  
+</I>&gt;&gt;<i> note that in order to receive you do have to receive into a ZFS  
+</I>&gt;&gt;<i> pool, since ZFS will rebuild your filesystem just as you left it,  
+</I>&gt;&gt;<i> options and all.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For more related functionality of snapshots you can also look at  
+</I>&gt;&gt;<i> 'zfs clone', which given a snapshot will recreate a writeable  
+</I>&gt;&gt;<i> version of that snapshot.  You can also use 'zfs promote' if you  
+</I>&gt;&gt;<i> decide at some point that you want to promote your clone to your  
+</I>&gt;&gt;<i> current 'parent' filesystem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is the above information what you're looking for? Or do you have  
+</I>&gt;&gt;<i> any other questions?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Aug 8, 2008, at 5:18 PM, ruebezahl wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;&gt;&gt;<i> Hash: SHA1
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> hey list!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> i'm having a little understanding issue here
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> look at this
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> raidtank/ruebebackup     116G   280G   116G  /Volumes/raidtank/
+</I>&gt;&gt;&gt;<i> ruebebackup
+</I>&gt;&gt;&gt;<i> raidtank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 1</A>  42,6K      -   116G  -
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> let's imagine i used the snapshots for a while to make my backups  
+</I>&gt;&gt;&gt;<i> and
+</I>&gt;&gt;&gt;<i> my harddrive started filling up
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> so i would have <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebebackup at 1</A>,2,3,4,5,6,7 and so on
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> of course i could start to delete some old snapshots but what if the
+</I>&gt;&gt;&gt;<i> ruebebackup itself got so outdated i want to delete it and only keep
+</I>&gt;&gt;&gt;<i> the latest state ( snapshot )
+</I>&gt;&gt;&gt;<i> zfs tells my i can't do that
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> basically i want to simulate time machine behaviour
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> how would i do that ?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> regards
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ruebezahl
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;&gt;&gt;<i> Version: GnuPG v1.4.8 (Darwin)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> iQEcBAEBAgAGBQJInOJsAAoJEP8ZopU3BhmtTzwH/R0JpPc4wMMo6s8rwfTbzTsU
+</I>&gt;&gt;&gt;<i> xJCIY0IpgRJaygHdQUTc/uBxLpvZaj/VGCnhZcrsObdw2bCfOJtI0mlLtdxeEOsJ
+</I>&gt;&gt;&gt;<i> iSOWsokxP4la65fKORUrEBfcvAFO0cH1CWAhlWEfKLk92RHCTqIqhBI/z1c/L0G+
+</I>&gt;&gt;&gt;<i> fnkJLpQercNsb+mpUXpAkkDbW+cFb827wSLpjhJ8rR20uYvft/alJxSHPBjOGOWc
+</I>&gt;&gt;&gt;<i> J4nrrU7AHL8kP287f7aKjdpz/2j1vivap5P5m+UluKAaQjs/xW623hU3An/2LQfg
+</I>&gt;&gt;&gt;<i> cqTtPbumYRmcq54c4QZqnruXTujPx/pHCa+gPkm/TDrTUHPajS0mubyVvdLSGwA=
+</I>&gt;&gt;&gt;<i> =mIbD
+</I>&gt;&gt;&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.8 (Darwin)
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJInUR+AAoJEP8ZopU3BhmtGbIIAKZklNU8QTQGVPFiTUo/dEyR
+</I>&gt;<i> YWagZ67eg0dDdjnzUk6edI3enRmriLwPtuR7Cs4Vr481j3kdKg7+Dy6afUIW4o+L
+</I>&gt;<i> YWTNAkn3gcadWHy++ChLdyUSK4sAuVv6qkvEt6n5rfKcvsOEPqx7IUabIgxjpFYS
+</I>&gt;<i> vt8LblUFXrEao34L/HEaPaqLUT7iErFyZefdti1cbKYjIPC0HC/EEJ0miVojY+HR
+</I>&gt;<i> IpKpYa7ZbNRq2xY0Ws5PbxLrOjhm3DaOCroJFiVn3UwZ0M02Skh+fTtp7SZprEuH
+</I>&gt;<i> Syq2hGbkIzu4xoU3d0SpUr0Eka7pa43JnEgjGIX3p6cI08F6T8eHHyLgQ2NetMk=
+</I>&gt;<i> =DYQF
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJIn0TQAAoJEP8ZopU3Bhmt8UIH/0wqRfSdZjVp+Qag9eRyUt3y
+BJT2NkLs1kHAbtPy9yXMnEKebHSoUxcxFl2GBO8vhD4NdYCPTyH1A8DkcWlaNFnK
+2aSgAyWA0OGOYColL3PadGKSL4aA09bFVMgu5Vky12mJ3JlRblrkV3LJ0vTHXajN
+6KFesNQWpHmYJd3Cg8aNF9vB/kxf8PiYGqtqZeBgN1DtA3GV3J+mdGaDIbRMv+XS
+vvvHUjrfrqrjL8T6t/u96ZIHRvSNuZTubxTKeXQY8pYExPc0JPrds0JScbpzr9VQ
+p5oICZTvgOvPjekpvKPHWH70iQ8PKtlDXGTkBC/1zRH1FXTitYfZ0MzKXxz09vI=
+=CFek
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000761.html">[zfs-discuss] snapshot
+</A></li>
+	<LI>Next message: <A HREF="000764.html">[zfs-discuss] snapshot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#763">[ date ]</a>
+              <a href="thread.html#763">[ thread ]</a>
+              <a href="subject.html#763">[ subject ]</a>
+              <a href="author.html#763">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

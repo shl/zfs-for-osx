@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ditto process hang from hfs to a zfs drive
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ditto%20process%20hang%20from%20hfs%20to%20a%20zfs%20drive&In-Reply-To=BAC5EA10-D315-4A76-BC46-5B1603556AE8%40sun.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000838.html">
+   <LINK REL="Next"  HREF="000840.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ditto process hang from hfs to a zfs drive</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ditto%20process%20hang%20from%20hfs%20to%20a%20zfs%20drive&In-Reply-To=BAC5EA10-D315-4A76-BC46-5B1603556AE8%40sun.com"
+       TITLE="[zfs-discuss] ditto process hang from hfs to a zfs drive">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Sep 12 09:03:12 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000838.html">[zfs-discuss] ditto process hang from hfs to a zfs drive
+</A></li>
+        <LI>Next message: <A HREF="000840.html">[zfs-discuss] ditto process hang from hfs to a zfs drive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#839">[ date ]</a>
+              <a href="thread.html#839">[ thread ]</a>
+              <a href="subject.html#839">[ subject ]</a>
+              <a href="author.html#839">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hey Bill,
+What Leopard and zfs build are you running?
+
+Noel
+
+On Sep 12, 2008, at 5:03 AM, Bill Winnett wrote:
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I recently had a ditto process hang my system.    The process was  
+</I>&gt;<i> moving a photo collection from a old hfs drive to a new ZFS drive.
+</I>&gt;<i>
+</I>&gt;<i> Here is all the info I could collect before the inevitable end and  
+</I>&gt;<i> power-off.
+</I>&gt;<i>
+</I>&gt;<i> ---
+</I>&gt;<i> Sampling process 290 for 3 seconds with 1 millisecond of run time  
+</I>&gt;<i> between samples
+</I>&gt;<i> Sampling completed, processing symbols...
+</I>&gt;<i> Analysis of sampling ditto (pid 290) every 1 millisecond
+</I>&gt;<i> Call graph:
+</I>&gt;<i>     2712 Thread_2503
+</I>&gt;<i>       2712 0x1b52
+</I>&gt;<i>         2712 0x2ee4
+</I>&gt;<i>           2712 BOMCopierCopyWithOptions
+</I>&gt;<i>             2712 _copyFromDirToDir
+</I>&gt;<i>               2712 _copyDir
+</I>&gt;<i>                 2712 _copyFromDirToDir
+</I>&gt;<i>                   2712 _copyDir
+</I>&gt;<i>                     2712 _copyFromDirToDir
+</I>&gt;<i>                       2712 _copyDir
+</I>&gt;<i>                         2712 _copyFromDirToDir
+</I>&gt;<i>                           2712 _copyFile
+</I>&gt;<i>                             2712 _executeBomCopySpecification
+</I>&gt;<i>                               2712 _BOMFileDirectWrite
+</I>&gt;<i>                                 2712 write$UNIX2003
+</I>&gt;<i>                                   2712 write$UNIX2003
+</I>&gt;<i>
+</I>&gt;<i> Total number in stack (recursive counted multiple, when &gt;=5):
+</I>&gt;<i>
+</I>&gt;<i> Sort by top of stack, same collapsed (when &gt;= 5):
+</I>&gt;<i>         write$UNIX2003        2712
+</I>&gt;<i> Sample analysis of process 290 written to file /dev/stdout
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> open files
+</I>&gt;<i>
+</I>&gt;<i> /Volumes/Photos_232G
+</I>&gt;<i> /usr/bin/ditto
+</I>&gt;<i> /usr/lib/dyld
+</I>&gt;<i> /private/var/db/dyld/dyld_shared_cache_i386
+</I>&gt;<i> /dev/ttys000
+</I>&gt;<i> /dev/ttys000
+</I>&gt;<i> /dev/ttys000
+</I>&gt;<i> /Volumes/Photos-e
+</I>&gt;<i> /Volumes/Photos-e/Home Photo's
+</I>&gt;<i> /Volumes/Photos-e/Home Photo's/2005
+</I>&gt;<i> /Volumes/Photos-e/Home Photo's/2005/2005-12-25 - Christmas
+</I>&gt;<i> /Volumes/Photos-e/Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8192.CRW
+</I>&gt;<i> /Volumes/Photos_232G/Home Photo's/2005/2005-12-25 -  
+</I>&gt;<i> Christmas/.BC.Si7KIz
+</I>&gt;<i>
+</I>&gt;<i> statistics
+</I>&gt;<i>
+</I>&gt;<i> threads:1
+</I>&gt;<i> ports:13
+</I>&gt;<i> CPU Time:2.24.90
+</I>&gt;<i> Context Switches:1196561
+</I>&gt;<i> faults:612928
+</I>&gt;<i> page ins:41
+</I>&gt;<i> Mach Messages In:41
+</I>&gt;<i> Mach Messages Out:64
+</I>&gt;<i> Mach System Calls:64
+</I>&gt;<i> Unix System Calls:1487774
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> memory
+</I>&gt;<i>
+</I>&gt;<i> Real Memory Size:628.00 KB
+</I>&gt;<i> Virtual Memory Size:17.64 MB
+</I>&gt;<i> Shared memory Size:184.00 KB
+</I>&gt;<i> Private Memory Size:200.00 KB
+</I>&gt;<i> Virtual Private Memory:9.16 MB
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> what shows in the ditto terminel
+</I>&gt;<i>
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8182.jpg ... 162865 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8182.THM ... 9549 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8183.CRW ... 7177486 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8183.jpg ... 151578 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8183.THM ... 10069 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8184.CRW ... 6871302 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8184.jpg ... 85452 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8184.THM ... 7789 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8185.CRW ... 7176994 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8185.jpg ... 125237 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8185.THM ... 9181 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8186.CRW ... 8875164 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8186.jpg ... 238386 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8186.THM ... 13311 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8187.CRW ... 7382040 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8187.jpg ... 180311 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8187.THM ... 11341 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8188.CRW ... 7535602 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8188.jpg ... 222185 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8188.THM ... 11964 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8189.CRW ... 7065884 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8189.jpg ... 166191 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8189.THM ... 10229 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8190.CRW ... 6787606 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8190.jpg ... 136645 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8190.THM ... 10299 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8191.CRW ... 8307548 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8191.jpg ... 204408 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8191.THM ... 11013 bytes
+</I>&gt;<i> copying file ./Home Photo's/2005/2005-12-25 - Christmas/ 
+</I>&gt;<i> CRW_8192.CRW ...
+</I>&gt;<i> -----
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Once the process hung, access to the zfs drive was blocked, any  
+</I>&gt;<i> process including finder that attempted access would hang.  I could  
+</I>&gt;<i> not kill/restart finder.  Kill -9 did not work.  System shutdown was  
+</I>&gt;<i> blocked, etc.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080912/a7f68967/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080912/a7f68967/attachment.html</A> 
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000838.html">[zfs-discuss] ditto process hang from hfs to a zfs drive
+</A></li>
+	<LI>Next message: <A HREF="000840.html">[zfs-discuss] ditto process hang from hfs to a zfs drive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#839">[ date ]</a>
+              <a href="thread.html#839">[ thread ]</a>
+              <a href="subject.html#839">[ subject ]</a>
+              <a href="author.html#839">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

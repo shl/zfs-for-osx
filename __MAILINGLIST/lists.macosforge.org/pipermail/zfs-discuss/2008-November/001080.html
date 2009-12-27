@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Ready for my data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3CE63CBD5A-376D-4889-A469-50BCD19D47B8%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001079.html">
+   <LINK REL="Next"  HREF="001081.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Ready for my data</H1>
+    <B>Kevin Elliott</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3CE63CBD5A-376D-4889-A469-50BCD19D47B8%40apple.com%3E"
+       TITLE="[zfs-discuss] ZFS Ready for my data">kevin_elliott at apple.com
+       </A><BR>
+    <I>Tue Nov 18 08:44:11 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001079.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+        <LI>Next message: <A HREF="001081.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1080">[ date ]</a>
+              <a href="thread.html#1080">[ thread ]</a>
+              <a href="subject.html#1080">[ subject ]</a>
+              <a href="author.html#1080">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Nov 18, 2008, at 8:07 AM, Boyd Waters wrote:
+&gt;<i> I had changed my home directory (using dscl) to /Volumes/pool/ 
+</I>&gt;<i> bwaters -- that's a ZFS filesystem on my raidz pool.
+</I>&gt;<i>
+</I>&gt;<i> When I cold-boot, if I am too quick at the login prompt, it will  
+</I>&gt;<i> think a moment, then shake its head and say that I cannot log in at  
+</I>&gt;<i> this time. I simply wait a bit and try again, and it gets me into a  
+</I>&gt;<i> Finder session just great, with the correct $HOME
+</I>&gt;<i>
+</I>&gt;<i> Isn't that the diskarbitrationd issue that has been discussed on  
+</I>&gt;<i> this thread? Or are we talking about a more serious &quot;failure&quot;?
+</I>
+Maybe?  By default, diskarbitrationd doesn't mount &quot;external&quot; volumes,  
+which in this case means volumes that have an IOKit property of  
+&quot;External&quot;.  That can cause problems if your home directory is on an  
+external device, or, in some cases, on an internal device that  
+incorrectly describes it's location.  Now, it's also possible that you  
+just have a lot of internal volumes, DiskArb takes a long time to  
+process them, and your home dir isn't mounted when you try and login.   
+Which particular problem you have depends on your individual  
+configuration....
+
+SO...  maybe this will help your problem?
+
+-Kevin
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001079.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+	<LI>Next message: <A HREF="001081.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1080">[ date ]</a>
+              <a href="thread.html#1080">[ thread ]</a>
+              <a href="subject.html#1080">[ subject ]</a>
+              <a href="author.html#1080">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

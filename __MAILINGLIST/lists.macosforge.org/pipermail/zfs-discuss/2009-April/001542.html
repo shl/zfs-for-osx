@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] This looks wrong ...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20This%20looks%20wrong%20...&In-Reply-To=%3C20090426.092725.219925910.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001541.html">
+   <LINK REL="Next"  HREF="001543.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] This looks wrong ...</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20This%20looks%20wrong%20...&In-Reply-To=%3C20090426.092725.219925910.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] This looks wrong ...">hanche at math.ntnu.no
+       </A><BR>
+    <I>Sun Apr 26 00:27:25 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001541.html">[zfs-discuss] This looks wrong ...
+</A></li>
+        <LI>Next message: <A HREF="001543.html">[zfs-discuss] This looks wrong ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1542">[ date ]</a>
+              <a href="thread.html#1542">[ thread ]</a>
+              <a href="subject.html#1542">[ subject ]</a>
+              <a href="author.html#1542">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ Kireeti Kompella &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kireeti.kompella at gmail.com</A>&gt;:
+
+&gt;<i> diophantus:~(0): zfs list
+</I>&gt;<i> NAME               USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i> zeta               783K  97.5G   404K  /Volumes/zeta
+</I>&gt;<i> zeta/zsys          292K  97.5G   273K  /Volumes/zeta/zsys
+</I>&gt;<i> zeta/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zsys at system</A>    19K      -   273K  -
+</I>&gt;<i> 
+</I>&gt;<i> diophantus:~(0): zfs destroy zeta/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zsys at system</A>
+</I>&gt;<i> cannot destroy 'zeta/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zsys at system</A>': snapshot has dependent clones
+</I>[...]
+
+&gt;<i> diophantus:~(0): zfs destroy zeta/zsys
+</I>&gt;<i> cannot destroy 'zeta/zsys': filesystem has children
+</I>[...]
+
+&gt;<i> diophantus:~(0): zpool history
+</I>&gt;<i> History for 'zeta': [somewhat pruned]
+</I>&gt;<i> 2009-04-24.00:52:02 zpool create zeta disk1s3
+</I>&gt;<i> 2009-04-24.00:54:45 zfs snapshot <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zeta at system</A>
+</I>&gt;<i> 2009-04-24.00:59:03 zfs upgrade zeta
+</I>&gt;<i> 2009-04-25.10:08:13 zfs clone <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zeta at system</A> zeta/zsys
+</I>&gt;<i> 2009-04-25.10:10:42 zfs promote zeta/zsys
+</I>
+If you re-promote zeta, do things return to normal then?
+
+- Harald
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001541.html">[zfs-discuss] This looks wrong ...
+</A></li>
+	<LI>Next message: <A HREF="001543.html">[zfs-discuss] This looks wrong ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1542">[ date ]</a>
+              <a href="thread.html#1542">[ thread ]</a>
+              <a href="subject.html#1542">[ subject ]</a>
+              <a href="author.html#1542">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel panic when plugging in USB SSD drive
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20panic%20when%20plugging%20in%20USB%20SSD%20drive&In-Reply-To=%3C636fd28e0901141626l38842bc1tc53076d52b8048b6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001302.html">
+   <LINK REL="Next"  HREF="001252.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel panic when plugging in USB SSD drive</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20panic%20when%20plugging%20in%20USB%20SSD%20drive&In-Reply-To=%3C636fd28e0901141626l38842bc1tc53076d52b8048b6%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Kernel panic when plugging in USB SSD drive">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Wed Jan 14 16:26:14 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001302.html">[zfs-discuss] Kernel panic when plugging in USB SSD drive
+</A></li>
+        <LI>Next message: <A HREF="001252.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1306">[ date ]</a>
+              <a href="thread.html#1306">[ thread ]</a>
+              <a href="subject.html#1306">[ subject ]</a>
+              <a href="author.html#1306">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Jan 3, 2009 at 8:11 PM, Sterling Garwood &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zslg01 at mac.com</A>&gt; wrote:
+&gt;<i> I installed zfs-119 on top of MacOSX 10.5.6 - used a 'thumb' USB drive to
+</I>&gt;<i> test zfs on.
+</I>&gt;<i> Created pool, copied stuff to it, did scribs and stats etc.
+</I>&gt;<i> Unmounted via Finder Apple-E then unplugged drive.
+</I>&gt;<i> when I plugged it back in the kernel panic happened.
+</I>&gt;<i> is it a known issue?
+</I>
+I'm pretty sure you'd need to do a 'zfs export -f pool' prior to
+unplugging the USB drive. The integration with the finder isn't there
+in 10.5. After unplugging, the system was probably prone to a panic on
+the next usb insert anyway. I assume that after a reboot, you could
+import the pool from the USB drive successfully?
+
+Alex
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001302.html">[zfs-discuss] Kernel panic when plugging in USB SSD drive
+</A></li>
+	<LI>Next message: <A HREF="001252.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1306">[ date ]</a>
+              <a href="thread.html#1306">[ thread ]</a>
+              <a href="subject.html#1306">[ subject ]</a>
+              <a href="author.html#1306">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

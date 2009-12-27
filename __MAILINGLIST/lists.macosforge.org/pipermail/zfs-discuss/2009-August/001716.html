@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS chksum errors on RAID, but not on disk?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20chksum%20errors%20on%20RAID%2C%20but%20not%20on%20disk%3F&In-Reply-To=%3C2D49006E-3671-4B59-8D65-ECBD09DC3F98%40hessmann.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="001717.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS chksum errors on RAID, but not on disk?</H1>
+    <B>Christian He&#223;mann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20chksum%20errors%20on%20RAID%2C%20but%20not%20on%20disk%3F&In-Reply-To=%3C2D49006E-3671-4B59-8D65-ECBD09DC3F98%40hessmann.de%3E"
+       TITLE="[zfs-discuss] ZFS chksum errors on RAID, but not on disk?">zfs at hessmann.de
+       </A><BR>
+    <I>Sun Aug  2 02:56:30 PDT 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="001717.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1716">[ date ]</a>
+              <a href="thread.html#1716">[ thread ]</a>
+              <a href="subject.html#1716">[ subject ]</a>
+              <a href="author.html#1716">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello everybody,
+
+
+one of my disks didn't spin up properly after a reboot, resulting in a  
+degraded RAID.Z, but that could be fixed by another reboot.
+zpool status now gives me a few chksum errors on this disk (disk4),  
+which I don't find too worrying, but will keep in mind anyway.
+
+But according to zpool status, I have another 26 errors on the second  
+RAID of my pool which are not attributed to any disk:
+
+         NAME         STATE     READ WRITE CKSUM
+         tank         ONLINE       0     0    26
+           raidz1     ONLINE       0     0     0
+             disk6s2  ONLINE       0     0     0
+             disk5s2  ONLINE       0     0     0
+             disk4s2  ONLINE       0     0     7
+           raidz1     ONLINE       0     0    26
+             disk2s2  ONLINE       0     0     0
+             disk1s2  ONLINE       0     0     0
+             disk3s2  ONLINE       0     0     0
+
+It's the second RAID in the same pool, didn't have any problems during  
+the degraded state and none of the individual disks seem to have any  
+chksum errors. So where do these 26 errors come from and what should I  
+do with them?
+
+Configuration: OS X 10.5.6, zfs-119, 6x external FW400 disks.
+
+Thanks.
+
+Regards
+Christian
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="001717.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1716">[ date ]</a>
+              <a href="thread.html#1716">[ thread ]</a>
+              <a href="subject.html#1716">[ subject ]</a>
+              <a href="author.html#1716">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

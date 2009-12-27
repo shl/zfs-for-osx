@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panics After IO Hang
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panics%20After%20IO%20Hang&In-Reply-To=33644d3c0802281757q2e358334k6a945879b1b20777%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000230.html">
+   <LINK REL="Next"  HREF="000226.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panics After IO Hang</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panics%20After%20IO%20Hang&In-Reply-To=33644d3c0802281757q2e358334k6a945879b1b20777%40mail.gmail.com"
+       TITLE="[zfs-discuss] Kernel Panics After IO Hang">jbsnyder at gmail.com
+       </A><BR>
+    <I>Thu Feb 28 18:09:04 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000230.html">[zfs-discuss] Kernel Panics After IO Hang
+</A></li>
+        <LI>Next message: <A HREF="000226.html">[zfs-discuss] mounting fs from one pool under another
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#231">[ date ]</a>
+              <a href="thread.html#231">[ thread ]</a>
+              <a href="subject.html#231">[ subject ]</a>
+              <a href="author.html#231">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>One other very quick note on this matter is that I'm definitely
+hitting the filesystem with more than the usual array of launching
+apps on login (about 10 of those in login items).  I keep forgetting
+to change this to delay this particular operation, but I have launchd
+items that make an attempt at automatically syncing my home directory
+to a backup server on login using Unison.  That said, I'm still doing
+the same after the afore-mentioned restore, so perhaps that just
+confounds the situation a little further and is unrelated.
+
+On Thu, Feb 28, 2008 at 7:57 PM, James Snyder &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>&gt; wrote:
+&gt;<i> As a followup on this, I made a snapshot form another account after
+</I>&gt;<i>  this from another account and had zetaback back that up, I then
+</I>&gt;<i>  restored to a fresh pool.  I previously had those two
+</I>&gt;<i>  partitions/slices being in the pool on the same disk, I removed those
+</I>&gt;<i>  and made one larger partition for the pool and then received the full
+</I>&gt;<i>  and incremental backups to that.  After that, no crashing on login.
+</I>&gt;<i>  The only other change I made during the restore process was to change
+</I>&gt;<i>  the mountpoint for zfs to my normal user directory location because it
+</I>&gt;<i>  seemed like some applications were expecting things to still be in
+</I>&gt;<i>  their original /Users/jsnyder location.
+</I>&gt;<i>
+</I>&gt;<i>  So, lots of moving parts/variables there, hard to say what may or may
+</I>&gt;<i>  not have fixed the problem :-)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  On Thu, Feb 28, 2008 at 7:36 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+</I>&gt;<i>  &gt; There have been a few &quot;issues&quot; with using Parallels on Leopard
+</I>&gt;<i>  &gt;  supported, and I've never tested ZFS with it either so something evil
+</I>&gt;<i>  &gt;  could be happening.  I'll hunt around and see if this is ZFS specific
+</I>&gt;<i>  &gt;  or some weird Parallels issue.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  thanks!
+</I>&gt;<i>  &gt;  Noel
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  On Feb 27, 2008, at 5:04 PM, James Snyder wrote:
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  &gt; Hi -
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; I've been playing with the ZFS build and just ran into an issue that I
+</I>&gt;<i>  &gt;  &gt; thought might be good to note.  I don't have ADC access so I can't
+</I>&gt;<i>  &gt;  &gt; check if this is in rdar or not.
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; I have a zfs volume on /Volumes/Aquarius that I am using as the home
+</I>&gt;<i>  &gt;  &gt; for my user.  I fired up Parallels on a recent boot and I think I
+</I>&gt;<i>  &gt;  &gt; ended up in a situation where things were swapping like crazy or
+</I>&gt;<i>  &gt;  &gt; waiting a lot on IO from something since it seemed like every app
+</I>&gt;<i>  &gt;  &gt; attempting to hit disk was beachballing.  After a little while I gave
+</I>&gt;<i>  &gt;  &gt; up and held down the power button and rebooted.  On reboot, things are
+</I>&gt;<i>  &gt;  &gt; stable at the login screen, but when I login as the user on ZFS (other
+</I>&gt;<i>  &gt;  &gt; users login fine), I get a kernel panic.  I've attached a series of 3
+</I>&gt;<i>  &gt;  &gt; ones from separate reboots to give a flavor for where the hang
+</I>&gt;<i>  &gt;  &gt; occurred.  I'm snapshotting the state of the drive, and I'm going to
+</I>&gt;<i>  &gt;  &gt; try and get things back to a state with no panic on login.
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Zfs list:
+</I>&gt;<i>  &gt;  &gt; NAME                            USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i>  &gt;  &gt; Aquarium                       33.4G  53.7G  32.9G  /Volumes/Aquarium
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Aquarium at ediaback-feb25</A>         108M      -  29.8G  -
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Aquarium at erlangback-20080225</A>   8.47M      -  30.4G  -
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Aquarium at __zb_full_1204057064</A>  22.1M      -  32.4G  -
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Aquarium at __zb_incr</A>               42K      -  32.9G  -
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; zfs get Aqarium:
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; NAME                           PROPERTY       VALUE
+</I>&gt;<i>  &gt;  &gt; SOURCE
+</I>&gt;<i>  &gt;  &gt; Aquarium                       type           filesystem             -
+</I>&gt;<i>  &gt;  &gt; Aquarium                       creation       Sun Feb 24 18:49 2008  -
+</I>&gt;<i>  &gt;  &gt; Aquarium                       used           33.4G                  -
+</I>&gt;<i>  &gt;  &gt; Aquarium                       available      53.7G                  -
+</I>&gt;<i>  &gt;  &gt; Aquarium                       referenced     32.9G                  -
+</I>&gt;<i>  &gt;  &gt; Aquarium                       compressratio  1.21x                  -
+</I>&gt;<i>  &gt;  &gt; Aquarium                       mounted        yes                    -
+</I>&gt;<i>  &gt;  &gt; Aquarium                       quota          none
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       reservation    none
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       recordsize     128K
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       mountpoint     /Volumes/Aquarium
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       sharenfs       off
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       checksum       on
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       compression    on
+</I>&gt;<i>  &gt;  &gt; local
+</I>&gt;<i>  &gt;  &gt; Aquarium                       atime          off
+</I>&gt;<i>  &gt;  &gt; local
+</I>&gt;<i>  &gt;  &gt; Aquarium                       devices        on
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       exec           on
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       setuid         on
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       readonly       off
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       zoned          off
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       snapdir        hidden
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       aclmode        groupmask
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       aclinherit     secure
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       canmount       on
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       shareiscsi     off
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       xattr          on
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       copies         1
+</I>&gt;<i>  &gt;  &gt; default
+</I>&gt;<i>  &gt;  &gt; Aquarium                       version        1                      -
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; zpool list:
+</I>&gt;<i>  &gt;  &gt; NAME                    SIZE    USED   AVAIL    CAP  HEALTH
+</I>&gt;<i>  &gt;  &gt; ALTROOT
+</I>&gt;<i>  &gt;  &gt; Aquarium               88.5G   33.4G   55.1G    37%  ONLINE     -
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; zpool status:
+</I>&gt;<i>  &gt;  &gt;  pool: Aquarium
+</I>&gt;<i>  &gt;  &gt; state: ONLINE
+</I>&gt;<i>  &gt;  &gt; status: The pool is formatted using an older on-disk format.  The
+</I>&gt;<i>  &gt;  &gt; pool can
+</I>&gt;<i>  &gt;  &gt;       still be used, but some features are unavailable.
+</I>&gt;<i>  &gt;  &gt; action: Upgrade the pool using 'zpool upgrade'.  Once this is done,
+</I>&gt;<i>  &gt;  &gt; the
+</I>&gt;<i>  &gt;  &gt;       pool will no longer be accessible on older software versions.
+</I>&gt;<i>  &gt;  &gt; scrub: scrub in progress, 77.33% done, 0h7m to go
+</I>&gt;<i>  &gt;  &gt; config:
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt;       NAME        STATE     READ WRITE CKSUM
+</I>&gt;<i>  &gt;  &gt;       Aquarium    ONLINE       0     0     0
+</I>&gt;<i>  &gt;  &gt;         disk0s4   ONLINE       0     0     0
+</I>&gt;<i>  &gt;  &gt;         disk0s3   ONLINE       0     0     0
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; And the panics:
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Wed Feb 27 18:19:56 2008
+</I>&gt;<i>  &gt;  &gt; panic(cpu 1 caller 0x001A83A6): Double fault at 0x00c98d23,
+</I>&gt;<i>  &gt;  &gt; thread:0x656e048, trapno:0x8, err:0x0),registers:
+</I>&gt;<i>  &gt;  &gt; CR0: 0x80010033, CR2: 0x549eff88, CR3: 0x0118a000, CR4: 0x00000660
+</I>&gt;<i>  &gt;  &gt; EAX: 0x0501b000, EBX: 0x50539c00, ECX: 0x00000000, EDX: 0x0007a867
+</I>&gt;<i>  &gt;  &gt; ESP: 0x549eff90, EBP: 0x549f0038, ESI: 0x5044b5a0, EDI: 0x0501b0b8
+</I>&gt;<i>  &gt;  &gt; EFL: 0x00010206, EIP: 0x00c98d23
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i>  &gt;  &gt; 0x2e6a5fb8 : 0x12b0e1 (0x457024 0x2e6a5fec 0x13321a 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x2e6a6008 : 0x1a83a6 (0x45ffd4 0xc98d23 0x656e048 0x8)
+</I>&gt;<i>  &gt;  &gt; 0x2e6a60e8 : 0x19fbc3 (0x2e6a6100 0xeeeeeeee 0xeeeeeeee 0xeeeeeeee)
+</I>&gt;<i>  &gt;  &gt; 0x549f0038 : 0xca1598 (0x549f01ec 0x0 0x0 0x549f01ec)
+</I>&gt;<i>  &gt;  &gt; 0x549f0208 : 0xc97fa1 (0x5044b588 0x206 0x549f0238 0x51ad8c0)
+</I>&gt;<i>  &gt;  &gt; 0x549f0248 : 0xc41e5b (0x5044b588 0x1 0x549f02d8 0x51ad8c0)
+</I>&gt;<i>  &gt;  &gt; 0x549f0288 : 0x1f2eb1 (0x549f02a4 0x8 0x549f02ac 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x549f02c8 : 0x1da45f (0x502b870 0x54af144 0x0 0x2)
+</I>&gt;<i>  &gt;  &gt; 0x549f0318 : 0x1da67b (0x502b870 0x1 0x549f0348 0x19d311)
+</I>&gt;<i>  &gt;  &gt; 0x549f0368 : 0x1dc2e6 (0x0 0x4f33c0 0x549f0408 0x37c76738)
+</I>&gt;<i>  &gt;  &gt; 0x549f03e8 : 0xc98ca5 (0x0 0x34 0x549f041c 0x37c766c4)
+</I>&gt;<i>  &gt;  &gt; 0x549f0468 : 0xc990ba (0x501b248 0x0 0x200 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x549f0518 : 0xca1598 (0x549f06cc 0x0 0x0 0x549f06cc)
+</I>&gt;<i>  &gt;  &gt; 0x549f06e8 : 0xc97fa1 (0x5044b670 0x206 0x549f0718 0x51ad94c)
+</I>&gt;<i>  &gt;  &gt; 0x549f0728 : 0xc41e5b (0x5044b670 0x1 0x549f07b8 0x51ad94c)
+</I>&gt;<i>  &gt;  &gt; 0x549f0768 : 0x1f2eb1 (0x549f0784 0x8 0x549f078c 0x0)
+</I>&gt;<i>  &gt;  &gt;       Backtrace continues...
+</I>&gt;<i>  &gt;  &gt;      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>  &gt;  &gt;         com.apple.filesystems.zfs(8.0)@0xc3a000-&gt;0xd05fff
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; BSD process name corresponding to current thread: Xquartz
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Mac OS version:
+</I>&gt;<i>  &gt;  &gt; 9C31
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Kernel version:
+</I>&gt;<i>  &gt;  &gt; Darwin Kernel Version 9.2.0: Tue Feb  5 16:13:22 PST 2008;
+</I>&gt;<i>  &gt;  &gt; root:xnu-1228.3.13~1/RELEASE_I386
+</I>&gt;<i>  &gt;  &gt; System model name: MacBook2,1 (Mac-F4208CAA)
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Wed Feb 27 18:22:10 2008
+</I>&gt;<i>  &gt;  &gt; panic(cpu 0 caller 0x001A83A6): Double fault at 0x00c6211c,
+</I>&gt;<i>  &gt;  &gt; thread:0x5065d60, trapno:0x8, err:0x0),registers:
+</I>&gt;<i>  &gt;  &gt; CR0: 0x80010033, CR2: 0x53427fc8, CR3: 0x0118a000, CR4: 0x00000660
+</I>&gt;<i>  &gt;  &gt; EAX: 0x534280ac, EBX: 0x5050ed64, ECX: 0x0516568c, EDX: 0x00004000
+</I>&gt;<i>  &gt;  &gt; ESP: 0x53427fd0, EBP: 0x53428118, ESI: 0x00000000, EDI: 0x00000000
+</I>&gt;<i>  &gt;  &gt; EFL: 0x00010246, EIP: 0x00c6211c
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i>  &gt;  &gt; 0x4e9e28 : 0x12b0e1 (0x457024 0x4e9e5c 0x13321a 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x4e9e78 : 0x1a83a6 (0x45ffd4 0xc6211c 0x5065d60 0x8)
+</I>&gt;<i>  &gt;  &gt; 0x4e9f58 : 0x19fbc3 (0x4e9f70 0x0 0x0 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x53428118 : 0xc59f26 (0x516568c 0xf510000 0x0 0x4000)
+</I>&gt;<i>  &gt;  &gt; 0x534281a8 : 0xc676be (0x5050ed10 0x0 0x2 0xcd2d98)
+</I>&gt;<i>  &gt;  &gt; 0x534281f8 : 0xc6794e (0x4d1af00 0x7a894 0x0 0x1)
+</I>&gt;<i>  &gt;  &gt; 0x53428228 : 0xc62fde (0x4d1af00 0x7a894 0x0 0xccf9a4)
+</I>&gt;<i>  &gt;  &gt; 0x53428288 : 0xc98d92 (0x4f43770 0x7a894 0x0 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x53428338 : 0xca1598 (0x534284ec 0x0 0x0 0x534284ec)
+</I>&gt;<i>  &gt;  &gt; 0x53428508 : 0xc97fa1 (0x503c7670 0x216 0x53428538 0x5192d20)
+</I>&gt;<i>  &gt;  &gt; 0x53428548 : 0xc41e5b (0x503c7670 0x1 0x53428598 0x5192d20)
+</I>&gt;<i>  &gt;  &gt; 0x53428588 : 0x1f2eb1 (0x534285a4 0x8 0x534285ac 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x534285c8 : 0x1da45f (0x518ac70 0x5062024 0x0 0x2)
+</I>&gt;<i>  &gt;  &gt; 0x53428618 : 0x1da67b (0x518ac70 0x1 0x53428648 0x19d311)
+</I>&gt;<i>  &gt;  &gt; 0x53428668 : 0x1dc2e6 (0x0 0x4f33c0 0x53428708 0x38904690)
+</I>&gt;<i>  &gt;  &gt; 0x534286e8 : 0xc98ca5 (0x0 0x34 0x5342871c 0x3890461c)
+</I>&gt;<i>  &gt;  &gt;       Backtrace continues...
+</I>&gt;<i>  &gt;  &gt;      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>  &gt;  &gt;         com.apple.filesystems.zfs(8.0)@0xc3a000-&gt;0xd05fff
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; BSD process name corresponding to current thread: pbs
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Mac OS version:
+</I>&gt;<i>  &gt;  &gt; 9C31
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Kernel version:
+</I>&gt;<i>  &gt;  &gt; Darwin Kernel Version 9.2.0: Tue Feb  5 16:13:22 PST 2008;
+</I>&gt;<i>  &gt;  &gt; root:xnu-1228.3.13~1/RELEASE_I386
+</I>&gt;<i>  &gt;  &gt; System model name: MacBook2,1 (Mac-F4208CAA)
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Wed Feb 27 18:24:17 2008
+</I>&gt;<i>  &gt;  &gt; panic(cpu 1 caller 0x001A83A6): Double fault at 0x00c62fd9,
+</I>&gt;<i>  &gt;  &gt; thread:0x50f2f20, trapno:0x8, err:0x0),registers:
+</I>&gt;<i>  &gt;  &gt; CR0: 0x80010033, CR2: 0x546cfff8, CR3: 0x0118a000, CR4: 0x00000660
+</I>&gt;<i>  &gt;  &gt; EAX: 0x04f52800, EBX: 0x05153a48, ECX: 0x05153800, EDX: 0x00000000
+</I>&gt;<i>  &gt;  &gt; ESP: 0x546d0000, EBP: 0x546d0058, ESI: 0x516575a0, EDI: 0x051538b8
+</I>&gt;<i>  &gt;  &gt; EFL: 0x00010206, EIP: 0x00c62fd9
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i>  &gt;  &gt; 0x2e6a5fb8 : 0x12b0e1 (0x457024 0x2e6a5fec 0x13321a 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x2e6a6008 : 0x1a83a6 (0x45ffd4 0xc62fd9 0x50f2f20 0x8)
+</I>&gt;<i>  &gt;  &gt; 0x2e6a60e8 : 0x19fbc3 (0x2e6a6100 0xeeeeeeee 0xeeeeeeee 0xeeeeeeee)
+</I>&gt;<i>  &gt;  &gt; 0x546d0058 : 0xc98d92 (0x4974290 0x7a894 0x0 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x546d0108 : 0xca1598 (0x546d02bc 0x0 0x0 0x546d02bc)
+</I>&gt;<i>  &gt;  &gt; 0x546d02d8 : 0xc97fa1 (0x51657588 0x212 0x546d0308 0x5176118)
+</I>&gt;<i>  &gt;  &gt; 0x546d0318 : 0xc41e5b (0x51657588 0x1 0x546d0368 0x5176118)
+</I>&gt;<i>  &gt;  &gt; 0x546d0358 : 0x1f2eb1 (0x546d0374 0x8 0x546d037c 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x546d0398 : 0x1da45f (0x5172760 0x50f0324 0x0 0x2)
+</I>&gt;<i>  &gt;  &gt; 0x546d03e8 : 0x1da67b (0x5172760 0x1 0x546d0418 0x19d311)
+</I>&gt;<i>  &gt;  &gt; 0x546d0438 : 0x1dc2e6 (0x0 0x4f33c0 0x546d04d8 0x377906f0)
+</I>&gt;<i>  &gt;  &gt; 0x546d04b8 : 0xc98ca5 (0x0 0x34 0x546d04ec 0x3779067c)
+</I>&gt;<i>  &gt;  &gt; 0x546d0538 : 0xc990ba (0x5153b9c 0x0 0x200 0x0)
+</I>&gt;<i>  &gt;  &gt; 0x546d05e8 : 0xca1598 (0x546d079c 0x0 0x0 0x546d079c)
+</I>&gt;<i>  &gt;  &gt; 0x546d07b8 : 0xc97fa1 (0x51657670 0x212 0x546d07e8 0x5176460)
+</I>&gt;<i>  &gt;  &gt; 0x546d07f8 : 0xc41e5b (0x51657670 0x1 0x546d0848 0x5176460)
+</I>&gt;<i>  &gt;  &gt;       Backtrace continues...
+</I>&gt;<i>  &gt;  &gt;      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>  &gt;  &gt;         com.apple.filesystems.zfs(8.0)@0xc3a000-&gt;0xd05fff
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; BSD process name corresponding to current thread: Unison
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Mac OS version:
+</I>&gt;<i>  &gt;  &gt; 9C31
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Kernel version:
+</I>&gt;<i>  &gt;  &gt; Darwin Kernel Version 9.2.0: Tue Feb  5 16:13:22 PST 2008;
+</I>&gt;<i>  &gt;  &gt; root:xnu-1228.3.13~1/RELEASE_I386
+</I>&gt;<i>  &gt;  &gt; System model name: MacBook2,1 (Mac-F4208CAA)
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Not sure what else might be helpful :-)
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; --
+</I>&gt;<i>  &gt;  &gt; James Snyder
+</I>&gt;<i>  &gt;  &gt; Biomedical Engineering
+</I>&gt;<i>  &gt;  &gt; Northwestern University
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i>  &gt;  &gt; _______________________________________________
+</I>&gt;<i>  &gt;  &gt; zfs-discuss mailing list
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  --
+</I>&gt;<i>  James Snyder
+</I>&gt;<i>  Biomedical Engineering
+</I>&gt;<i>  Northwestern University
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000230.html">[zfs-discuss] Kernel Panics After IO Hang
+</A></li>
+	<LI>Next message: <A HREF="000226.html">[zfs-discuss] mounting fs from one pool under another
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#231">[ date ]</a>
+              <a href="thread.html#231">[ thread ]</a>
+              <a href="subject.html#231">[ subject ]</a>
+              <a href="author.html#231">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

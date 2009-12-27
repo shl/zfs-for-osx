@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk problem)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20iDisk%20and%20ZFS%20Stability%20Problem%3F%20%28or%20just%20an%0A%20iDisk%20problem%29&In-Reply-To=20080926121941.281ee4c7.aorchid%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000882.html">
+   <LINK REL="Next"  HREF="000884.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk problem)</H1>
+    <B>Aric Gregson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20iDisk%20and%20ZFS%20Stability%20Problem%3F%20%28or%20just%20an%0A%20iDisk%20problem%29&In-Reply-To=20080926121941.281ee4c7.aorchid%40mac.com"
+       TITLE="[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk problem)">aorchid at mac.com
+       </A><BR>
+    <I>Fri Sep 26 12:27:57 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000882.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk	problem)
+</A></li>
+        <LI>Next message: <A HREF="000884.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#883">[ date ]</a>
+              <a href="thread.html#883">[ thread ]</a>
+              <a href="subject.html#883">[ subject ]</a>
+              <a href="author.html#883">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Apologies. It seems that this remains a Mac Finder issue, as I doubt
+that all of these persons on the discussion forum have formatted their
+computers to ZFS.
+
+&lt;<A HREF="http://discussions.apple.com/thread.jspa?threadID=1703193&amp;tstart=135">http://discussions.apple.com/thread.jspa?threadID=1703193&amp;tstart=135</A>&gt;
+
+On Fri, 26 Sep 2008 12:19:41 -0700
+Aric Gregson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">aorchid at mac.com</A>&gt; wrote:
+
+&gt;<i> Mac ZFS Community,
+</I>&gt;<i> 
+</I>&gt;<i> We recently (days ago) migrated two users' entire home directories to
+</I>&gt;<i> a ZFS formatted internal drives (mirrored, entire slice both disks).
+</I>&gt;<i> This was after using ZFS for Final Cut for many months without any
+</I>&gt;<i> problems. 
+</I>&gt;<i> 
+</I>&gt;<i> Currently, when attempting to mount our own iDisk to view contents or 
+</I>&gt;<i> copy a file to or from the iDisk, the Finder freezes---sort of. The
+</I>&gt;<i> copy to or from iDisk does not work, it says that it is copying, but
+</I>&gt;<i> actually never completes the process, a file of the same name and 0
+</I>&gt;<i> bytes shows up on the iDisk. iDisk sync is off, because I thought
+</I>&gt;<i> this was the problem two days ago.
+</I>&gt;<i> 
+</I>&gt;<i> Meanwhile, the Finder allows one to open applications, click through
+</I>&gt;<i> windows and open files, but will not update any new files on the
+</I>&gt;<i> computer. For example, if you save a new file to the Desktop, the
+</I>&gt;<i> Finder will not show you the file, even though it exists in
+</I>&gt;<i> Terminal (and in Finder upon reboot). 
+</I>&gt;<i> 
+</I>&gt;<i> Additionally, you cannot copy anything from a mounted disk (dmg, USB)
+</I>&gt;<i> to anywhere on the computer, ZFS or HFS+ formatted disks, until the
+</I>&gt;<i> Finder restarts (restarting the computer).
+</I>&gt;<i> 
+</I>&gt;<i> Logout does not work in these cases either, I have to do a manual
+</I>&gt;<i> reboot from Terminal. I haven't tried to specifically kill Finder, as
+</I>&gt;<i> I am not clear on how to do that in Mac.
+</I>&gt;<i> 
+</I>&gt;<i> Has anyone experienced anything vaguely similar? Is this an iDisk
+</I>&gt;<i> issue or does the iDisk/Finder combination have problems with ZFS?
+</I>&gt;<i> That said, cadaver does not have issues with ZFS and iDisk
+</I>&gt;<i> connections, as I can copy files to and from our iDisk using Solaris
+</I>&gt;<i> (on ZFS). In my experience, the Finder/iDisk combination has been
+</I>&gt;<i> unusable on Mac in the past, perhaps this is just a continuation of
+</I>&gt;<i> the same.
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for any ideas. 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; uname -a
+</I>&gt;<i> Darwin PowerMac1.local 9.5.0 Darwin Kernel Version 9.5.0: Wed Sep  3
+</I>&gt;<i> 11:29:43 PDT 2008; root:xnu-1228.7.58~1/RELEASE_I386 i386
+</I>&gt;<i> 
+</I>&gt;<i> aric
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+
+-- 
+Aric Gregson
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000882.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk	problem)
+</A></li>
+	<LI>Next message: <A HREF="000884.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#883">[ date ]</a>
+              <a href="thread.html#883">[ thread ]</a>
+              <a href="subject.html#883">[ subject ]</a>
+              <a href="author.html#883">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

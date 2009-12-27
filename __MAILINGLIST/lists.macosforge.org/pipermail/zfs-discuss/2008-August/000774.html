@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs filesystems
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20filesystems&In-Reply-To=327b821f0808121644x57868f8fy40dffcec735b8d35%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000773.html">
+   <LINK REL="Next"  HREF="000776.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs filesystems</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20filesystems&In-Reply-To=327b821f0808121644x57868f8fy40dffcec735b8d35%40mail.gmail.com"
+       TITLE="[zfs-discuss] zfs filesystems">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Aug 12 17:07:19 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000773.html">[zfs-discuss] zfs filesystems
+</A></li>
+        <LI>Next message: <A HREF="000776.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#774">[ date ]</a>
+              <a href="thread.html#774">[ thread ]</a>
+              <a href="subject.html#774">[ subject ]</a>
+              <a href="author.html#774">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Also note that you need to be root or use sudo to create a zfs  
+filesystem, else the filesystem will be created but won't mount.  I  
+have a bug open on this and will fix it up with a handy error messsage:
+
+&lt;5014318&gt; check for root permission before trying to create a zfs  
+filesystem
+
+Quotas, reservations, and all the filesystem goodness works fine, so  
+you should be able to easily set up multiple filesystems and set  
+quotas and such on them.
+
+Noel
+
+
+On Aug 12, 2008, at 4:44 PM, Germano Caronni wrote:
+
+&gt;<i> the filesystem user1 will appear as a directory inside the mounted  
+</I>&gt;<i> device 'mirror'.
+</I>&gt;<i> you can see its path with 'zfs list', and it should be mounted  
+</I>&gt;<i> automatically when you create it, otherwise try 'zfs mount mirror/ 
+</I>&gt;<i> user1'
+</I>&gt;<i> i believe quotas work on zfs-119. 'zfs set quota=10g mirror/user1'.  
+</I>&gt;<i> You can try it out, and see if it does what you expect ;-)
+</I>&gt;<i> Germano
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Aug 12, 2008 at 22:12, John McAdams &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">johnm at tekserve.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;<i> I'm trying to grasp the implementation of multiple filesystems in OS  
+</I>&gt;<i> X.
+</I>&gt;<i>
+</I>&gt;<i> For example &lt;<A HREF="http://flux.org.uk/howto/solaris/zfs_tutorial_02">http://flux.org.uk/howto/solaris/zfs_tutorial_02</A>&gt;  
+</I>&gt;<i> creates a bunch of home folders for users:
+</I>&gt;<i>
+</I>&gt;<i> # zfs create salmon/kent
+</I>&gt;<i> # zfs create salmon/dennisr
+</I>&gt;<i> # zfs create salmon/billj
+</I>&gt;<i>
+</I>&gt;<i> If I attempt something similar in OS X nothing happens. But what  
+</I>&gt;<i> would the result be?
+</I>&gt;<i>
+</I>&gt;<i> When the pool is created
+</I>&gt;<i>
+</I>&gt;<i> zpool create tank mirror disk2s2 disk3s2
+</I>&gt;<i>
+</I>&gt;<i> I end up with a /Volumes/mirror and mirror on the Desktop. If I run  
+</I>&gt;<i> zfs create mirror/user1 wouldn't that create, or try to create, a  
+</I>&gt;<i> volume at /Volumes/mirror/user1?
+</I>&gt;<i>
+</I>&gt;<i> It would be great to create a filesystem for every user and then put  
+</I>&gt;<i> quotas on them. Is that possible with the current (119) version of  
+</I>&gt;<i> ZFS on Mac OS?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -- jmca
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080812/23654797/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080812/23654797/attachment.html</A> 
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000773.html">[zfs-discuss] zfs filesystems
+</A></li>
+	<LI>Next message: <A HREF="000776.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#774">[ date ]</a>
+              <a href="thread.html#774">[ thread ]</a>
+              <a href="subject.html#774">[ subject ]</a>
+              <a href="author.html#774">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

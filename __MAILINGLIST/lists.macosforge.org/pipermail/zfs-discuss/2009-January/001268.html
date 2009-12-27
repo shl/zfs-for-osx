@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Why does ZFS volume look like a DMG?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Why%20does%20ZFS%20volume%20look%20like%20a%20DMG%3F&In-Reply-To=%3C67115265-C7EB-4143-8D4E-ACDEB344189D%40uwalumni.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001267.html">
+   <LINK REL="Next"  HREF="001269.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Why does ZFS volume look like a DMG?</H1>
+    <B>Dominik Hoffmann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Why%20does%20ZFS%20volume%20look%20like%20a%20DMG%3F&In-Reply-To=%3C67115265-C7EB-4143-8D4E-ACDEB344189D%40uwalumni.com%3E"
+       TITLE="[zfs-discuss] Why does ZFS volume look like a DMG?">dhoffmann at uwalumni.com
+       </A><BR>
+    <I>Thu Jan  8 07:21:26 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001267.html">[zfs-discuss] whats the url to the repo
+</A></li>
+        <LI>Next message: <A HREF="001269.html">[zfs-discuss] Why does ZFS volume look like a DMG?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1268">[ date ]</a>
+              <a href="thread.html#1268">[ thread ]</a>
+              <a href="subject.html#1268">[ subject ]</a>
+              <a href="author.html#1268">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I installed zfs-119 on a PowerMac G4 running 10.5.5 without problems.  
+I then formatted three drive mechanisms with these commands
+
+	diskutil partitiondisk /dev/disk0 GPTFormat ZFS %noformat% 100%
+	diskutil partitiondisk /dev/disk1 GPTFormat ZFS %noformat% 100%
+	diskutil partitiondisk /dev/disk2 GPTFormat ZFS %noformat% 100%
+
+Finally, I executed this ZFS command
+
+	zpool create BackupRAID raidz /dev/disk0s2 /dev/disk1s2 /dev/disk2s2
+
+The resultant ZFS volume shows up on the desktop, but with the icon of  
+a removable medium, such as that of a USB stick. Why is that, and why  
+is it not the orange icon of an external hard drive?
+
+Dominik Hoffmann
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001267.html">[zfs-discuss] whats the url to the repo
+</A></li>
+	<LI>Next message: <A HREF="001269.html">[zfs-discuss] Why does ZFS volume look like a DMG?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1268">[ date ]</a>
+              <a href="thread.html#1268">[ thread ]</a>
+              <a href="subject.html#1268">[ subject ]</a>
+              <a href="author.html#1268">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Crash (?)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Crash%20%28%3F%29&In-Reply-To=%3C649D7031-0E76-4DB0-9F11-EFC58346E191%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001590.html">
+   <LINK REL="Next"  HREF="001593.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Crash (?)</H1>
+    <B>Hendrik Beskow</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Crash%20%28%3F%29&In-Reply-To=%3C649D7031-0E76-4DB0-9F11-EFC58346E191%40googlemail.com%3E"
+       TITLE="[zfs-discuss] ZFS Crash (?)">hendrik.beskow at googlemail.com
+       </A><BR>
+    <I>Sun May 24 01:12:50 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001590.html">[zfs-discuss] ZFS setup question
+</A></li>
+        <LI>Next message: <A HREF="001593.html">[zfs-discuss] ZFS Crash (?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1591">[ date ]</a>
+              <a href="thread.html#1591">[ thread ]</a>
+              <a href="subject.html#1591">[ subject ]</a>
+              <a href="author.html#1591">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello!
+
+Had my iMac running over the night, when i wanted to turn the screen  
+back on it stayed black.
+After a reboot it said my iMac crashed, here is the crash report. Did  
+also send it to you via the crash report app..
+
+Interval Since Last Panic Report:  110731 sec
+Panics Since Last Report:          1
+Anonymous UUID:                    D43B613E-D087-4BA7-8D52-A02317C7C3CC
+
+Sun May 24 10:05:02 2009
+panic(cpu 1 caller 0x00CB8103): &quot;mutex_enter: locking against  
+myself!&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/ 
+zfs/zfs_context.c:449
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x63967428 : 0x12b4c6 (0x45ec20 0x6396745c 0x13355c 0x0)
+0x63967478 : 0xcb8103 (0xd12ff8 0x7b2506c 0x639674b8 0x1756f0)
+0x63967498 : 0xc650fc (0x69e15f10 0x1 0x639674c8 0xdef3604)
+0x639674d8 : 0x1f6072 (0x639674f4 0x8 0x639674fc 0x0)
+0x63967518 : 0x1dd510 (0xc8fa760 0x925d5e4 0x0 0x2)
+0x63967568 : 0x1dd72c (0xc8fa760 0x1 0x639675b8 0x1f7f59)
+0x639675b8 : 0x1dd9d4 (0x0 0x925d5e4 0x639675f8 0x81504838)
+0x639675d8 : 0x1dda0a (0xc8fa760 0x1 0x1 0x7b25000)
+0x639675f8 : 0xcbc881 (0xc8fa760 0x462b7 0x0 0x0)
+0x639676a8 : 0xc5f05f (0x639677e8 0x0 0x0 0x639677e8)
+0x63967808 : 0xc5f22c (0x6396793c 0x1 0x6c4a400 0xffffffff)
+0x63967848 : 0x1f895d (0x74b0b84 0x462b7 0x0 0x6396793c)
+0x63967898 : 0x1d720a (0x74b0b84 0x462b7 0x0 0x6396793c)
+0x63967958 : 0x1c55d3 (0x63967a00 0x1196b780 0x0 0x0)
+0x63967f78 : 0x3e2e3b (0x80f2748 0x925d4e0 0x925d524 0x9ac21c4)
+0x63967fc8 : 0x1a1bfa (0x9882dc0 0x0 0x1a40b5 0x7ee6d60)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xc5d000-&gt;0xd28fff
+
+BSD process name corresponding to current thread: mdworker
+
+Mac OS version:
+9J61
+
+Kernel version:
+Darwin Kernel Version 9.7.0: Tue Mar 31 22:52:17 PDT 2009;  
+root:xnu-1228.12.14~1/RELEASE_I386
+System model name: iMac7,1 (Mac-F4238CC8)
+
+System uptime in nanoseconds: 45859762746502
+unloaded kexts:
+com.apple.driver.InternalModemSupport	2.4.0 - last unloaded 177812213561
+loaded kexts:
+org.virtualbox.kext.VBoxNetAdp	2.2.0
+org.virtualbox.kext.VBoxNetFlt	2.2.0
+org.virtualbox.kext.VBoxUSB	2.2.0
+org.virtualbox.kext.VBoxDrv	2.2.0
+com.google.filesystems.fusefs	2.0.3
+com.vmware.kext.vmnet	2.0.4
+com.vmware.kext.vmioplug	2.0.4
+com.vmware.kext.vmci	2.0.4
+com.vmware.kext.vmx86	2.0.4
+com.AmbrosiaSW.AudioSupport	2.3.9
+at.obdev.nke.LittleSnitch	2.0.46
+com.apple.filesystems.afpfs	9.0.1 - last loaded 68775519066
+com.apple.nke.asp_tcp	4.7.1
+com.apple.filesystems.zfs	8.0
+com.apple.driver.InternalModemSupport	2.4.0
+com.apple.iokit.IOBluetoothSerialManager	2.1.6f8
+com.apple.filesystems.autofs	2.0.2
+com.apple.driver.CSRUSBBluetoothHCIController	2.1.6f8
+com.apple.driver.AppleHDAPlatformDriver	1.6.8a3
+com.apple.driver.CSRHIDTransitionDriver	2.1.6f8
+com.apple.Dont_Steal_Mac_OS_X	6.0.3
+com.apple.driver.AppleUpstreamUserClient	2.7.5
+com.apple.driver.AppleHDA	1.6.8a3
+com.apple.iokit.CHUDUtils	200
+com.apple.iokit.CHUDProf	207
+com.apple.kext.ATY_Hypoprion	5.4.4
+com.apple.driver.AppleHWSensor	1.9d0
+com.apple.driver.AudioIPCDriver	1.0.6
+com.apple.driver.AppleGraphicsControl	2.8.11
+com.apple.driver.AppleTyMCEDriver	1.0.0d28
+com.apple.driver.AppleHDAController	1.6.8a3
+com.apple.ATIRadeonX2000	5.4.4
+com.apple.iokit.IOFireWireIP	1.7.7
+com.apple.driver.AppleIRController	110
+com.apple.driver.ACPI_SMC_PlatformPlugin	3.4.0d10
+com.apple.driver.AppleBacklight	1.6.0
+com.apple.driver.AppleLPC	1.2.12
+com.apple.driver.AppleHIDKeyboard	1.0.8b1
+com.apple.driver.AppleUSBMergeNub	3.4.3
+com.apple.iokit.IOSCSIMultimediaCommandsDevice	2.0.9
+com.apple.iokit.SCSITaskUserClient	2.0.9
+com.apple.driver.XsanFilter	2.7.91
+com.apple.iokit.IOATAPIProtocolTransport	1.5.2
+com.apple.driver.AppleUSBHub	3.4.0
+com.apple.iokit.IOAHCIBlockStorage	1.2.1
+com.apple.iokit.AppleYukon2	3.1.12b14
+com.apple.driver.AirPortBrcm43xx	363.35.0
+com.apple.driver.AppleFWOHCI	3.8.2
+com.apple.driver.AppleAHCIPort	1.6.0
+com.apple.driver.AppleIntelPIIXATA	2.0.0
+com.apple.driver.AppleUSBEHCI	3.4.3
+com.apple.driver.AppleUSBUHCI	3.3.5
+com.apple.driver.AppleFileSystemDriver	1.1.0
+com.apple.driver.AppleEFINVRAM	1.2.0
+com.apple.driver.AppleRTC	1.2.3
+com.apple.driver.AppleHPET	1.4
+com.apple.driver.AppleACPIPCI	1.2.4
+com.apple.driver.AppleACPIButtons	1.2.4
+com.apple.driver.AppleSMBIOS	1.4
+com.apple.driver.AppleACPIEC	1.2.4
+com.apple.driver.AppleAPIC	1.4
+com.apple.security.seatbelt	107.12
+com.apple.nke.applicationfirewall	1.6.77
+com.apple.security.TMSafetyNet	3
+com.apple.driver.AppleIntelCPUPowerManagement	76.0.0
+com.apple.driver.DiskImages	199
+com.apple.BootCache	30.4
+com.apple.iokit.IOSerialFamily	9.4
+com.apple.driver.AppleUSBBluetoothHCIController	2.1.6f8
+com.apple.iokit.IOBluetoothFamily	2.1.6f8
+com.apple.driver.DspFuncLib	1.6.8a3
+com.apple.iokit.CHUDKernLib	196
+com.apple.iokit.IOHDAFamily	1.6.8a3
+com.apple.iokit.IOAudioFamily	1.6.9fc3
+com.apple.kext.OSvKernDSPLib	1.1
+com.apple.driver.IOPlatformPluginFamily	3.4.0d10
+com.apple.driver.AppleSMC	2.2.1d2
+com.apple.iokit.IONDRVSupport	1.7.3
+com.apple.iokit.IOGraphicsFamily	1.7.3
+com.apple.iokit.IOUSBHIDDriver	3.2.2
+com.apple.driver.AppleUSBComposite	3.2.0
+com.apple.iokit.IOSCSIBlockCommandsDevice	2.0.9
+com.apple.iokit.IOBDStorageFamily	1.5
+com.apple.iokit.IODVDStorageFamily	1.5
+com.apple.iokit.IOCDStorageFamily	1.5
+com.apple.iokit.IOSCSIArchitectureModelFamily	2.0.9
+com.apple.iokit.IOUSBUserClient	3.3.1
+com.apple.iokit.IO80211Family	216.1
+com.apple.iokit.IOFireWireFamily	3.4.7
+com.apple.iokit.IOAHCIFamily	1.5.0
+com.apple.iokit.IOATAFamily	2.0.1
+com.apple.iokit.IOUSBFamily	3.4.3
+com.apple.iokit.IONetworkingFamily	1.6.1
+com.apple.driver.AppleEFIRuntime	1.2.0
+com.apple.iokit.IOSMBusFamily	1.1
+com.apple.iokit.IOStorageFamily	1.5.6
+com.apple.iokit.IOHIDFamily	1.5.5
+com.apple.driver.AppleACPIPlatform	1.2.4
+com.apple.iokit.IOACPIFamily	1.2.0
+com.apple.iokit.IOPCIFamily	2.6
+
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001590.html">[zfs-discuss] ZFS setup question
+</A></li>
+	<LI>Next message: <A HREF="001593.html">[zfs-discuss] ZFS Crash (?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1591">[ date ]</a>
+              <a href="thread.html#1591">[ thread ]</a>
+              <a href="subject.html#1591">[ subject ]</a>
+              <a href="author.html#1591">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

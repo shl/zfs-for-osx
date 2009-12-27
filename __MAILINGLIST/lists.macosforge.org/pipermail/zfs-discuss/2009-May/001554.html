@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3CFDBA71B4-7EFA-44DB-9161-B583D8958891%40tastylime.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001553.html">
+   <LINK REL="Next"  HREF="001557.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation</H1>
+    <B>Jeff Rizzo</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3CFDBA71B4-7EFA-44DB-9161-B583D8958891%40tastylime.net%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation">riz at tastylime.net
+       </A><BR>
+    <I>Tue May  5 09:22:30 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001553.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+        <LI>Next message: <A HREF="001557.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1554">[ date ]</a>
+              <a href="thread.html#1554">[ thread ]</a>
+              <a href="subject.html#1554">[ subject ]</a>
+              <a href="author.html#1554">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On May 5, 2009, at 9:16 AM, John Hendy wrote:
+
+&gt;<i> I've been using ZFS on it's own slice as well with not -many-  
+</I>&gt;<i> problems. My [limited-experience-derived] comments:
+</I>&gt;<i>
+</I>&gt;<i> - I used this site, <A HREF="http://blog.igorminar.com/2009/01/using-zfs-with-mac-os-x-105.html">http://blog.igorminar.com/2009/01/using-zfs-with-mac-os-x-105.html</A> 
+</I>&gt;<i> , for help in addition to the macosforge site.
+</I>&gt;<i> - I originally had my whole Users folder on ZFS for the purpose of  
+</I>&gt;<i> wanting to share data with my freeBSD installation on a separate  
+</I>&gt;<i> partition.
+</I>&gt;<i> - I stopped that because I could never export the zpool; it was  
+</I>&gt;<i> always busy with the info in ~/Library
+</I>&gt;<i> - I have not been successful with simply issuing 'zpool export  
+</I>&gt;<i> vault' (vault is the name of my pool)
+</I>&gt;<i> --- I get 'could not export, pool busy' or something everytime
+</I>
+The documentation states that this is a known issue;  you have to use  
+the &quot;-f&quot; flag to force it.
+
+from the FAQ:
+Why do I always have to use -f to export or unmount my zfs pools? I'm  
+not using them.
+
+True you aren't, but fseventsd is. We're working on a way to get  
+unmount to trigger fseventsd to release it's hold on the filesystem  
+but as for now, you'll need to force unmount/export your filesystems  
+in order to get fseventsd to let go of it's hold.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090505/c5efb63e/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090505/c5efb63e/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001553.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+	<LI>Next message: <A HREF="001557.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1554">[ date ]</a>
+              <a href="thread.html#1554">[ thread ]</a>
+              <a href="subject.html#1554">[ subject ]</a>
+              <a href="author.html#1554">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] creating a zpool changes disk partition label
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20creating%20a%20zpool%20changes%20disk%20partition%20label&In-Reply-To=65407C55-581D-436A-A3D9-CDBDC6FCC72F%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000242.html">
+   <LINK REL="Next"  HREF="000244.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] creating a zpool changes disk partition label</H1>
+    <B>Gautam Godse</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20creating%20a%20zpool%20changes%20disk%20partition%20label&In-Reply-To=65407C55-581D-436A-A3D9-CDBDC6FCC72F%40mac.com"
+       TITLE="[zfs-discuss] creating a zpool changes disk partition label">gagix at mac.com
+       </A><BR>
+    <I>Sat Mar  1 11:27:10 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000242.html">[zfs-discuss] creating a zpool changes disk partition label
+</A></li>
+        <LI>Next message: <A HREF="000244.html">[zfs-discuss] creating a zpool changes disk partition label
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#243">[ date ]</a>
+              <a href="thread.html#243">[ thread ]</a>
+              <a href="subject.html#243">[ subject ]</a>
+              <a href="author.html#243">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>But these are whole disks not slices...
+and zpool import works fine..
+its just that every time I export the zpool I get the annoying 'Disk  
+Insertion' dialog for every disk...
+I don't know if these two events are related but it does seem like it..
+i.e. export a zpool and the disk label changes to Fdisk and  
+immediately MacOSX gives the 'Disk Insertion' dialog..
+
+These disks did have the correct EFI and ZFS partitions/labels before  
+zpool creation:
+----------------
+/dev/disk5
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *279.5 Gi    
+disk5
+    1:                        EFI                         200.0 Mi    
+disk5s1
+    2:                        ZFS                         279.1 Gi    
+disk5s2
+/dev/disk6
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *279.5 Gi    
+disk6
+    1:                        EFI                         200.0 Mi    
+disk6s1
+    2:                        ZFS                         279.1 Gi    
+disk6s2
+-------------------
+
+
+On Mar 1, 2008, at 11:05 AM, Dirk Schelfhout wrote:
+
+&gt;<i> maybe it is this :
+</I>&gt;<i> from man zpool :
+</I>&gt;<i> under export :
+</I>&gt;<i> 		For  pools to be portable, you must give the zpool command whole
+</I>&gt;<i> disks, not just slices,
+</I>&gt;<i>            	so that ZFS can label the disks with portable EFI
+</I>&gt;<i> labels.  Otherwise,  disk  drivers  on
+</I>&gt;<i>            	platforms of different endianness will not recognize the
+</I>&gt;<i> disks.
+</I>&gt;<i>
+</I>&gt;<i> On 01 Mar 2008, at 19:55, Gautam Godse wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Looks like forcing a zpool export causes the partition label to
+</I>&gt;&gt;<i> change!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is the sequence of events i did to test:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sh-3.2# zpool create tank mirror /dev/disk5 /dev/disk6
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> #diskutil list
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /dev/disk5
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:      GUID_partition_scheme                        *279.5 Gi
+</I>&gt;&gt;<i> disk5
+</I>&gt;&gt;<i> /dev/disk6
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:      GUID_partition_scheme                        *279.5 Gi
+</I>&gt;&gt;<i> disk6
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sh-3.2# zpool export tank
+</I>&gt;&gt;<i> cannot unmount '/Volumes/tank': Resource busy
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sh-3.2# zpool export -f tank
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sh-3.2# diskutil list
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /dev/disk5
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:     FDisk_partition_scheme                        *279.5 Gi
+</I>&gt;&gt;<i> disk5
+</I>&gt;&gt;<i>   1:                                                    279.5 Gi
+</I>&gt;&gt;<i> disk5s1
+</I>&gt;&gt;<i> /dev/disk6
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:     FDisk_partition_scheme                        *279.5 Gi
+</I>&gt;&gt;<i> disk6
+</I>&gt;&gt;<i>   1:                                                    279.5 Gi
+</I>&gt;&gt;<i> disk6s1
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What gives ???
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mar 1, 2008, at 10:46 AM, Gautam Godse wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> hi,
+</I>&gt;&gt;&gt;<i> In continuation of my experiments with zfs, I destroyed the existing
+</I>&gt;&gt;&gt;<i> pool and created a new one.
+</I>&gt;&gt;&gt;<i> But this time I made sure that I partitioned each disk in the array
+</I>&gt;&gt;&gt;<i> with the GPTFormat option to set the correct partition label.
+</I>&gt;&gt;&gt;<i> However, after creating a zpool raidz array, i find that the
+</I>&gt;&gt;&gt;<i> partition
+</I>&gt;&gt;&gt;<i> label has been changed to FDisk_partition_scheme. Is this  
+</I>&gt;&gt;&gt;<i> deliberate/
+</I>&gt;&gt;&gt;<i> expected ? Or is this some anomaly in the system ?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> This is the current output of 'diskutil list'
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> /dev/disk1
+</I>&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;<i>  0:     FDisk_partition_scheme                        *465.8 Gi
+</I>&gt;&gt;&gt;<i> disk1
+</I>&gt;&gt;&gt;<i> /dev/disk2
+</I>&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;<i>  0:     FDisk_partition_scheme                        *465.8 Gi
+</I>&gt;&gt;&gt;<i> disk2
+</I>&gt;&gt;&gt;<i> /dev/disk3
+</I>&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;<i>  0:     FDisk_partition_scheme                        *465.8 Gi
+</I>&gt;&gt;&gt;<i> disk3
+</I>&gt;&gt;&gt;<i> /dev/disk4
+</I>&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;<i>  0:     FDisk_partition_scheme                        *465.8 Gi
+</I>&gt;&gt;&gt;<i> disk4
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> And here is the zpool status output:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> sh-3.2# zpool status
+</I>&gt;&gt;&gt;<i> pool: Media
+</I>&gt;&gt;&gt;<i> state: ONLINE
+</I>&gt;&gt;&gt;<i> scrub: none requested
+</I>&gt;&gt;&gt;<i> config:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 	NAME        STATE     READ WRITE CKSUM
+</I>&gt;&gt;&gt;<i> 	Media       ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i> 	  raidz1    ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i> 	    disk1   ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i> 	    disk2   ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i> 	    disk3   ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i> 	    disk4   ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> errors: No known data errors
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Gautam
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000242.html">[zfs-discuss] creating a zpool changes disk partition label
+</A></li>
+	<LI>Next message: <A HREF="000244.html">[zfs-discuss] creating a zpool changes disk partition label
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#243">[ date ]</a>
+              <a href="thread.html#243">[ thread ]</a>
+              <a href="subject.html#243">[ subject ]</a>
+              <a href="author.html#243">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

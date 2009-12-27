@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20panics&In-Reply-To=%3C3A0A78C4-7FC8-4106-82F5-21D25EF2700A%40nrao.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001089.html">
+   <LINK REL="Next"  HREF="001097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs panics</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20panics&In-Reply-To=%3C3A0A78C4-7FC8-4106-82F5-21D25EF2700A%40nrao.edu%3E"
+       TITLE="[zfs-discuss] zfs panics">bwaters at nrao.edu
+       </A><BR>
+    <I>Sat Nov 22 13:34:34 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001089.html">[zfs-discuss] zfs panics
+</A></li>
+        <LI>Next message: <A HREF="001097.html">[zfs-discuss] zfs panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1095">[ date ]</a>
+              <a href="thread.html#1095">[ thread ]</a>
+              <a href="subject.html#1095">[ subject ]</a>
+              <a href="author.html#1095">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>First:
+
+   Are you exporting your ZFS pool before ejecting the (external)  
+volume?
+
+Before ejecting the disk, do
+
+  $ sudo zfs -f pool
+
+  where &quot;pool&quot; is the name of your ZFS pool. Maybe that will sort  
+things out?
+
+
+
+Second:
+
+   Can you post your kernel stack trace from the panic? That would  
+help a lot.
+
+When you reboot, you should see a crash report window. There are three  
+sections to that text area: the third section holds the stack trace.  
+You can copy that text and paste it in an email reply.
+
+Alternatively, you can open the Console utility in /Applications/ 
+Utilities/Console, on the left side of the window is the Log List. In  
+that list under LOG FILES, you'll see /Library/Logs: open the  
+PanicReporter section. Click on the most recent panic report and  
+select its text in the text area on the right. Copy it into an email...
+
+Or just from a Bash prompt, something like
+  # cat /Library/Logs/*.panic | mail -s &quot;crash reports&quot; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+
+(why does a gui make things complicated?)
+
+
+Finally:
+
+   FWIW, I've used an ExpressCard Sil3132 eSATA adapter with a raidz1  
+on an external enclosure, and I don't recall any more stability issues  
+that with my Mac Pro's &quot;native&quot; internal raidz.
+
+
+Hope that helps!
+
+
+On Nov 21, 2008, at 6:02 PM, William Robertson wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> I'm running into some stability issues with ZFS on OS X, and I was
+</I>&gt;<i> wondering whether anyone could shed some light on them.
+</I>&gt;<i>
+</I>&gt;<i> I have a SATA drive array (Sonnet Fusion D500P) connected to a
+</I>&gt;<i> fully-patched MBP with zfs-119 over an Expresscard/34 adapter (Sonnet
+</I>&gt;<i> Tempo card, Sil3132 chipset I believe).  I've had kernel panics occur
+</I>&gt;<i> both when creating a raidz1 on the array, and during moderate I/O.   
+</I>&gt;<i> I've
+</I>&gt;<i> looked over the known issues, but I don't think I've run into any of
+</I>&gt;<i> them.
+</I>&gt;<i>
+</I>&gt;<i> What is strange is that zfs doesn't seem to play well with another
+</I>&gt;<i> external drive attached to the machine (over USB2).  For instance, I  
+</I>&gt;<i> was
+</I>&gt;<i> not able to place GPT labels on the drives in the array without  
+</I>&gt;<i> killing
+</I>&gt;<i> the machine until I unmounted the USB drive.  After that, however, I  
+</I>&gt;<i> was
+</I>&gt;<i> able to create a zpool and filesystems as normal.
+</I>&gt;<i>
+</I>&gt;<i> Later, though, the machine died when I remounted the USB drive and  
+</I>&gt;<i> tried
+</I>&gt;<i> to transfer data from that drive to the array using rsync.
+</I>&gt;<i>
+</I>&gt;<i> Does anyone have any ideas on what might be causing this?
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> William Robertson
+</I>&gt;<i> Computer Security Group, UC Santa Barbara
+</I>&gt;<i> <A HREF="http://www.cs.ucsb.edu/~wkr/">http://www.cs.ucsb.edu/~wkr/</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001089.html">[zfs-discuss] zfs panics
+</A></li>
+	<LI>Next message: <A HREF="001097.html">[zfs-discuss] zfs panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1095">[ date ]</a>
+              <a href="thread.html#1095">[ thread ]</a>
+              <a href="subject.html#1095">[ subject ]</a>
+              <a href="author.html#1095">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

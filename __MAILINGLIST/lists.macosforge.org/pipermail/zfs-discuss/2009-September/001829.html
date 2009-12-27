@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Snow Leopard ZFS Research
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Snow%20Leopard%20ZFS%20Research&In-Reply-To=%3C1F699B15-904A-409B-972F-E4E82DE6EE0B%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001830.html">
+   <LINK REL="Next"  HREF="001832.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Snow Leopard ZFS Research</H1>
+    <B>Tyson Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Snow%20Leopard%20ZFS%20Research&In-Reply-To=%3C1F699B15-904A-409B-972F-E4E82DE6EE0B%40mac.com%3E"
+       TITLE="[zfs-discuss] Snow Leopard ZFS Research">tysonedwards at mac.com
+       </A><BR>
+    <I>Wed Sep  2 07:25:20 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001830.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+        <LI>Next message: <A HREF="001832.html">[zfs-discuss] Snow Leopard ZFS Research
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1829">[ date ]</a>
+              <a href="thread.html#1829">[ thread ]</a>
+              <a href="subject.html#1829">[ subject ]</a>
+              <a href="author.html#1829">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've been doing a lot of digging around inside of Snow Leopard, and  
+while ZFS is very much gone, it looks very much like it was a last  
+minute removal.
+
+I know, a lot of you are thinking &quot;duh!&quot;, except this is not based on  
+the documentation that Apple continues to publish.
+
+There are major references to ZFS all over the place, including in  
+Disk Utility.
+
+It appears that if the ZFSManager.framework existed within Snow  
+Leopard, Disk Utility would gain the ability to manage a ZFS Volume.
+
+/System/Library/PrivateFrameworks/ZFSManager.framework
+
+Of interest is that Time Machine does not make any reference to ZFS,  
+but it does make reference to HFS.
+
+This is all speculation though, based mostly on a read through some of  
+the de-compiled Disk Utility code. Not really like reading through pre- 
+compiled code is the easiest of reads, but that is what I believe to  
+have found thus far.
+
+Unfortunately, this Private Framework never made it's way into a  
+release from what I am told, not even within the 10a286 build that  
+some of you have mentioned as having the dylibs, kext, fs and  
+executable files to have ZFS v11 make a return to the GM release. I  
+have not personally investigated this myself as I let my ADC  
+subscription lapse quite some time ago.
+
+So, I guess what interests us most is a bit of clarification,  
+hopefully from someone at Apple.
+Namely, will an updated build of ZFS be made available here on  
+MacOSForge, the Developer Connection or any other location that  
+someone could go if they felt inclined to get a working Snow Leopard  
+install with ZFS support?
+
+If so, will this ZFS implementation make use of these existing hooks  
+within Snow Leopard or will we be using the command-line only  
+utilities and the non-kernel linked modules?
+
+~Tyson Edwards
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001830.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+	<LI>Next message: <A HREF="001832.html">[zfs-discuss] Snow Leopard ZFS Research
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1829">[ date ]</a>
+              <a href="thread.html#1829">[ thread ]</a>
+              <a href="subject.html#1829">[ subject ]</a>
+              <a href="author.html#1829">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

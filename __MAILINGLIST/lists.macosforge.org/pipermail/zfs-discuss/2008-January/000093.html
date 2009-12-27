@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=78FC4CA0-A61D-4F9D-88F4-16E85EDFFEC2%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000091.html">
+   <LINK REL="Next"  HREF="000096.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=78FC4CA0-A61D-4F9D-88F4-16E85EDFFEC2%40spamfreemail.de"
+       TITLE="[zfs-discuss] raidz">bwaters at nrao.edu
+       </A><BR>
+    <I>Sat Jan 26 11:32:27 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000091.html">[zfs-discuss] raidz
+</A></li>
+        <LI>Next message: <A HREF="000096.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jan 26, 2008, at 7:17 AM, Franz Schmalzl wrote:
+
+&gt;<i> use case: bob has a raidz with 4 500g drives in his home office, and  
+</I>&gt;<i> he recognises he needs more storage.
+</I>
+In this case you can add to the *pool* by creating another 4-way raidz  
+and then adding that to the existing pool.
+
+So bob would have to purchase four drives,
+  zpool add tank disk{6,7,8,9}s2
+
+  where &quot;tank&quot; is the name of the existing pool.
+
+And you'd actually have two raidz arrays, with striping between them.  
+Overhead would be one disk from each raidz.
+
+Note that tne four new disks do NOT have to be the same size as the  
+original array's disks (but should be the same size themselves).
+
+I have four 500-gig SATA disks in a really neat Addonics port- 
+multiplier enclosure for my raidz. The total cost was $750. I've just  
+purchased my fourth terabyte drive, so I'm going to add four 1-TB  
+drives to my pool. One of the 500 GB drives and one of the 1-TB drives  
+worth of storage will be parity overhead.
+
+I *think* I'll see something like
+
+$ zpool status
+   pool: tank
+  state: ONLINE
+  scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk6s2  ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+	    disk8s2  ONLINE       0     0     0
+	    disk9s2  ONLINE       0     0     0
+
+
+This isn't the same thing as what you're asking for, of course. But  
+there is a way to expand your existing pool, and the filesystems in  
+your pool should be able to use the new storage.  As a bonus, I/O  
+performance may go up somewhat.
+
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000091.html">[zfs-discuss] raidz
+</A></li>
+	<LI>Next message: <A HREF="000096.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

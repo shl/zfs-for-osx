@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS vs. Seagate 1.5TB drives?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20vs.%20Seagate%201.5TB%20drives%3F&In-Reply-To=%3C142443242573691909690087752159443073706-Webmail2%40me.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001033.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS vs. Seagate 1.5TB drives?</H1>
+    <B>Curtis Schiewek</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20vs.%20Seagate%201.5TB%20drives%3F&In-Reply-To=%3C142443242573691909690087752159443073706-Webmail2%40me.com%3E"
+       TITLE="[zfs-discuss] ZFS vs. Seagate 1.5TB drives?">curtis.schiewek at me.com
+       </A><BR>
+    <I>Fri Oct 31 10:52:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001033.html">[zfs-discuss] ZFS vs. Seagate 1.5TB drives?
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1036">[ date ]</a>
+              <a href="thread.html#1036">[ thread ]</a>
+              <a href="subject.html#1036">[ subject ]</a>
+              <a href="author.html#1036">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Brian,
+
+I set up a brand new zpool with 4 of the Seagates in RAIDZ about a week ago (FreeBSD 7.0) and haven't experienced any issues whatever.  I copied ~3TB of data form a prexisting pool to it and had no problems.  I've also done a significant amount of reads from it whithout issue.  I'll check some logs and see if any instances of the disk buffers flushing.
+
+Hope that helps!
+
+Curtis
+ 
+On Friday, October 31, 2008, at 10:45AM, &quot;Brian Pinkerton&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bplist at thinkpink.com</A>&gt; wrote:
+&gt;<i>Has anyone tried ZFS with the new Seagate 1.5TB drives?  It looks like  
+</I>&gt;<i>there may be some timeout issues with flushing the write cache on this  
+</I>&gt;<i>model of the drive that affects HFS with journaling (Mac) and XFS  
+</I>&gt;<i>(linux).  I'm guessing this will hit ZFS too, but I wanted to ask to  
+</I>&gt;<i>see if anyone's had direct experience.
+</I>&gt;<i>
+</I>&gt;<i>tia,
+</I>&gt;<i>bri
+</I>&gt;<i>
+</I>&gt;<i>_______________________________________________
+</I>&gt;<i>zfs-discuss mailing list
+</I>&gt;<i><A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i><A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001033.html">[zfs-discuss] ZFS vs. Seagate 1.5TB drives?
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1036">[ date ]</a>
+              <a href="thread.html#1036">[ thread ]</a>
+              <a href="subject.html#1036">[ subject ]</a>
+              <a href="author.html#1036">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

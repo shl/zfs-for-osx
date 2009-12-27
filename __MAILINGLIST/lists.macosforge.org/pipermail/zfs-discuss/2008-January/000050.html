@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Share filesystem as...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Share%20filesystem%20as...&In-Reply-To=92F44D48-52DF-42DF-AF2D-5D10F8B76007%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000044.html">
+   <LINK REL="Next"  HREF="000051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Share filesystem as...</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Share%20filesystem%20as...&In-Reply-To=92F44D48-52DF-42DF-AF2D-5D10F8B76007%40apple.com"
+       TITLE="[zfs-discuss] Share filesystem as...">bwaters at nrao.edu
+       </A><BR>
+    <I>Mon Jan 21 22:41:31 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000044.html">[zfs-discuss] Share filesystem as...
+</A></li>
+        <LI>Next message: <A HREF="000051.html">[zfs-discuss] Is there a now/will there be a web-based ZFS
+	management tool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>FWIW...
+
+I see a possibly-related Finder weirdness with my Home directory in  
+the Finder if I open another volume with the same name.
+
+I use FileVault at the moment; the volume name is the same as my user  
+name. If I open a second 'username' volume (on a backup disk, for  
+example), then the Finder sidebar will display the second volume as a  
+removable disk (indicated by the icon), but if I select that icon, it  
+navigates to my $HOME.
+
+I can display the second volume just fine with command-G (Go), then  
+typing /Volumes/username (the mount point of the second volume named  
+'username').
+
+Seems pretty clear to me that VFS is confusing the Finder. (Or maybe  
+the Finder doesn't need any help to get confused.)
+
+I'll file a bug on this (with some simple steps to reproduce).
+
+But anyway I think that the Leopard Finder gets confused if there are  
+multiple volumes mounted, with the same volume name... perhaps if the  
+mount points aren't the expected /Volumes/volname, /Volumes/volname\  
+1, /Volumes/volname\ 2...
+
+I don't think it is (just) a ZFS bug.
+
+
+  - boyd
+
+<A HREF="http://www.aoc.nrao.edu/~bwaters">http://www.aoc.nrao.edu/~bwaters</A>
+
+
+
+On Jan 21, 2008, at 4:33 PM, No&#235;l Dellofano wrote:
+
+&gt;<i> Ick.  You're not missing anything, you shouldn't have to do anything  
+</I>&gt;<i> special.  This should just work, or at least in my opinion it should.
+</I>&gt;<i> I'm afraid this goes under the &quot;play better with Finder&quot; problems.   
+</I>&gt;<i> I'll open a bug on this and investigate to see what's up.
+</I>&gt;<i>
+</I>&gt;<i> thanks!
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Jan 21, 2008, at 2:30 PM, Jonathan Borden wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I've done:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> #zpool create gene ...
+</I>&gt;&gt;<i> #zfs create gene/Video
+</I>&gt;&gt;<i> #zfs create gene/Photos
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> when browsing the computer on the network using Finder I see a  
+</I>&gt;&gt;<i> shares named:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> gene
+</I>&gt;&gt;<i> gene1
+</I>&gt;&gt;<i> gene2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> but when looking into &quot;gene&quot; in the Finder I get a blank directory...
+</I>&gt;&gt;<i> gene1 and gene2 correspond to gene/Video and gene/Photos
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What is the proper way to expose the mountpoints/filesystems to the
+</I>&gt;&gt;<i> remote Finder so that I can give them meaningful names?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (perhaps this is easy and I am missing something?)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jonathan
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000044.html">[zfs-discuss] Share filesystem as...
+</A></li>
+	<LI>Next message: <A HREF="000051.html">[zfs-discuss] Is there a now/will there be a web-based ZFS
+	management tool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

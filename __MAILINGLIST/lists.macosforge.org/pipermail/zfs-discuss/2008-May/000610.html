@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Best procedure for unmounting
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Best%20procedure%20for%20unmounting&In-Reply-To=20080528.114040.33703212.hanche%40math.ntnu.no">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000607.html">
+   <LINK REL="Next"  HREF="000608.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Best procedure for unmounting</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Best%20procedure%20for%20unmounting&In-Reply-To=20080528.114040.33703212.hanche%40math.ntnu.no"
+       TITLE="[zfs-discuss] Best procedure for unmounting">ndellofano at apple.com
+       </A><BR>
+    <I>Wed May 28 16:45:50 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000607.html">[zfs-discuss] Best procedure for unmounting
+</A></li>
+        <LI>Next message: <A HREF="000608.html">[zfs-discuss] zfs and panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#610">[ date ]</a>
+              <a href="thread.html#610">[ thread ]</a>
+              <a href="subject.html#610">[ subject ]</a>
+              <a href="author.html#610">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> In principle, I thought only the final step should be needed, as zpool
+</I>&gt;<i> export will take care of all unmounting. And indeed, it does unmount
+</I>&gt;<i> zetastick2/n81, after which it complains:
+</I>&gt;<i>
+</I>&gt;<i> cannot unmount '/Volumes/zetastick2': Resource busy
+</I>&gt;<i>
+</I>&gt;<i> I get the same using &quot;zfs unmount /Volumes/zetastick2&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Maybe fseventsd is at the root of the problem:
+</I>&gt;<i>
+</I>&gt;<i> ; sudo lsof +f -- /Volumes/zetastick2
+</I>&gt;<i> COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+</I>&gt;<i> fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/ 
+</I>&gt;<i> zetastick2/.fseventsd/0000000000efd051
+</I>
+Yes, you are completely correct here.
+
+
+&gt;<i> ; sudo lsof +f -- /Volumes/zetastick2
+</I>&gt;<i> COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+</I>&gt;<i> fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/ 
+</I>&gt;<i> zetastick2/.fseventsd/0000000000efd051
+</I>&gt;<i>
+</I>&gt;<i> Perhaps diskutil takes care of telling fseventsd to back off.
+</I>
+
+You are correct again here too.  Diskutil basically signals fseventsd  
+to backoff  and then calls for the unmount.
+
+So for now, I recommend you just do a 'zpool export -f mypool'  which  
+will unmount as expected (the force signals fseventsd to stop).
+So we're currently discussing internally the best way to solve this  
+problem for real, since obviously, it's not a good idea to always have  
+to force unmount your filesystems, cause that basically makes regular  
+unmount pretty useless.
+But you didn't do anything wrong, this is a known issue we are working  
+on :)
+
+Noel
+
+
+On May 28, 2008, at 2:40 AM, Harald Hanche-Olsen wrote:
+
+&gt;<i> I have a memory stick with this structure:
+</I>&gt;<i>
+</I>&gt;<i> ; zpool list
+</I>&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;<i> ALTROOT
+</I>&gt;<i> zetastick2             3.84G    118M   3.73G     2%  ONLINE     -
+</I>&gt;<i> ; zfs list
+</I>&gt;<i> NAME                        USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i> zetastick2                  118M  3.67G  69.5K  /Volumes/zetastick2
+</I>&gt;<i> zetastick2/n81              117M  3.67G   116M  /Volumes/zetastick2/ 
+</I>&gt;<i> n81
+</I>&gt;<i> zetastick2/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">n81 at 2008-05-27</A>  1.70M      -   117M  -
+</I>&gt;<i>
+</I>&gt;<i> The best procedure I have managed to come up with for unmounting all
+</I>&gt;<i> this is
+</I>&gt;<i>
+</I>&gt;<i> ; zfs unmount /Volumes/zetastick2/n81
+</I>&gt;<i> ; diskutil unmount /Volumes/zetastick2
+</I>&gt;<i> ... which produces a GUI prompt for admin password
+</I>&gt;<i> ; zpool export zetastick2
+</I>&gt;<i>
+</I>&gt;<i> In principle, I thought only the final step should be needed, as zpool
+</I>&gt;<i> export will take care of all unmounting. And indeed, it does unmount
+</I>&gt;<i> zetastick2/n81, after which it complains:
+</I>&gt;<i>
+</I>&gt;<i> cannot unmount '/Volumes/zetastick2': Resource busy
+</I>&gt;<i>
+</I>&gt;<i> I get the same using &quot;zfs unmount /Volumes/zetastick2&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Maybe fseventsd is at the root of the problem:
+</I>&gt;<i>
+</I>&gt;<i> ; sudo lsof +f -- /Volumes/zetastick2
+</I>&gt;<i> COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+</I>&gt;<i> fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/ 
+</I>&gt;<i> zetastick2/.fseventsd/0000000000efd051
+</I>&gt;<i>
+</I>&gt;<i> Perhaps diskutil takes care of telling fseventsd to back off.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So am I doing something wrong? Is unmounting supposed to be this
+</I>&gt;<i> difficult? Or is it just a bug and the beta nature of zfs support on
+</I>&gt;<i> the mac that bites? Will things improve? Should I file a bug report?
+</I>&gt;<i> (I am using the latest zfs software, btw.)
+</I>&gt;<i>
+</I>&gt;<i> - Harald
+</I>&gt;<i>
+</I>&gt;<i> PS. Yes, I know; in practice, having more than one filesystem in a
+</I>&gt;<i> pool on a memory stick is probably silly. But I am experimenting in
+</I>&gt;<i> preparation for using bigger disks.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000607.html">[zfs-discuss] Best procedure for unmounting
+</A></li>
+	<LI>Next message: <A HREF="000608.html">[zfs-discuss] zfs and panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#610">[ date ]</a>
+              <a href="thread.html#610">[ thread ]</a>
+              <a href="subject.html#610">[ subject ]</a>
+              <a href="author.html#610">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

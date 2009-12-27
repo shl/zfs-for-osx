@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=BBA1BA25-36F1-49F1-95FE-5BD8466F6FCF%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000049.html">
+   <LINK REL="Next"  HREF="000057.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c</H1>
+    <B>Brian Pinkerton</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=BBA1BA25-36F1-49F1-95FE-5BD8466F6FCF%40nrao.edu"
+       TITLE="[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c">bplist at thinkpink.com
+       </A><BR>
+    <I>Tue Jan 22 10:58:14 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000049.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+        <LI>Next message: <A HREF="000057.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've gotten this same ZFS panic a number of times with current  
+software.  So far, I can say that it always coincides with doing  
+something that involves a lot of files -- either rsync, du, or tar.
+
+That said, the new rsync looks pretty great!  I'm looking forward to  
+trying it out.
+
+bri
+
+On Jan 21, 2008, at 10:05 PM, Boyd Waters wrote:
+
+&gt;<i>
+</I>&gt;<i> On Jan 21, 2008, at 4:37 PM, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> yikes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can you try your crazy rsync tests with the new update?? It has a  
+</I>&gt;&gt;<i> lot of fixes.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I've just completed a round of my &quot;crazy rsync tests&quot; :-) with rsync  
+</I>&gt;<i> 3.0pre8 compiled for 64-bit and it seems to work _great_.
+</I>&gt;<i>
+</I>&gt;<i> Hmm!
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://samba.anu.edu.au/rsync/">http://samba.anu.edu.au/rsync/</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ./configure CC=/usr/bin/gcc-4.2 CFLAGS=&quot;-Os -ftree-vectorize - 
+</I>&gt;<i> mtune=native -pipe -ffast-math -fPIC -arch x86_64 -Wl,-pie -fstack- 
+</I>&gt;<i> protector&quot;
+</I>&gt;<i> make
+</I>&gt;<i> sudo make install
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So I don't know if my kernel panic during heavy rsync load are  
+</I>&gt;<i> (primarily) ZFS problems. The problem I initially reported on this  
+</I>&gt;<i> list was indeed a kernel panic in ZFS. Probably rsync needs some  
+</I>&gt;<i> attention, too...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - boyd
+</I>&gt;<i> <A HREF="http://www.aoc.nrao.edu/~bwaters">http://www.aoc.nrao.edu/~bwaters</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000049.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+	<LI>Next message: <A HREF="000057.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

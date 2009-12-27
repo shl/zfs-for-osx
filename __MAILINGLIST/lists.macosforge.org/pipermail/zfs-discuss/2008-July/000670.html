@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Fubar'd array
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Fubar%27d%20array&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000696.html">
+   <LINK REL="Next"  HREF="000671.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Fubar'd array</H1>
+    <B>Lee Fyock</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Fubar%27d%20array&In-Reply-To="
+       TITLE="[zfs-discuss] Fubar'd array">lee+zfs at ourstage.com
+       </A><BR>
+    <I>Wed Jul  2 18:06:32 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000696.html">[zfs-discuss] zfs silent death
+</A></li>
+        <LI>Next message: <A HREF="000671.html">[zfs-discuss] Trash cannot be cleaned under ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#670">[ date ]</a>
+              <a href="thread.html#670">[ thread ]</a>
+              <a href="subject.html#670">[ subject ]</a>
+              <a href="author.html#670">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi--
+
+Is there any way to recover a pool?
+
+Here's the scoop, in probably too much detail:
+
+I'm a sucker for new filesystems and new tech in general. For you old- 
+timers, I installed Sequoia when it was first seeded, and had to  
+reformat my drive several times as it grew to the final release. I  
+flipped the &quot;journaled&quot; flag before I even knew what it meant. I  
+installed the pre-Leopard ZFS seed and have been using it for, what, a  
+year?
+
+So, I started with two 500 GB drives in a single pool, not mirrored. I  
+bought a 1 TB drive and added it to the pool. I bought another 1 TB  
+drive, and finally had enough storage (~1.5 TB) to mirror my disks and  
+be all set for the foreseeable future.
+
+In order to migrate my data from a single pool of 500 GB + 500 GB + 1  
+TB to a mirrored 500GB/500GB + 1TB/1TB pool, I was planning on doing  
+this:
+
+1) Copy everything to the New 1 TB drive (slopping what wouldn't fit  
+onto another spare drive)
+2) Upgrade to the latest ZFS for Mac release (117)
+3) Destroy the existing pool
+4) Create a pool with the two 500 GB drives
+5) Copy everything from the New drive to the 500 GB x 2 pool
+6) Create a mirrored pool with the two 1 TB drives
+7) Copy everything from the 500 GB x 2 pool to the mirrored 1 TB pool
+8) Destroy the 500 GB x 2 pool, and create it as a 500GB/500GB  
+mirrored pair and add it to the 1TB/1TB pool
+
+During step 7, while I was at work, the power failed at home,  
+apparently long enough to drain my UPS.
+
+When I rebooted my machine, both pools refused to mount: the 500+500  
+pool and the 1TB/1TB mirrored pool. Just about all my data is lost.  
+This was my media server containing my DVD rips, so everything is  
+recoverable in that I can re-rip 1+TB, but I'd rather not.
+
+&quot;diskutil list&quot; says this:
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *465.8 Gi    
+disk1
+    1:                                                    465.8 Gi    
+disk1s1
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *465.8 Gi    
+disk2
+    1:                                                    465.8 Gi    
+disk2s1
+/dev/disk3
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *931.5 Gi    
+disk3
+    1:                                                    931.5 Gi    
+disk3s1
+/dev/disk4
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *931.5 Gi    
+disk4
+    1:                                                    931.5 Gi    
+disk4s1
+
+During step 2, I created the pools using &quot;zpool create media mirror / 
+dev/disk3 /dev/disk4&quot; then &quot;zpool upgrade&quot;, since I got warnings that  
+the filesystem version was out of date. Note that I created zpools  
+referring to the entire disk, not just a slice.
+
+Googling for &quot;FDisk_partition_scheme&quot; yields &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/2008-March/000240.html">http://lists.macosforge.org/pipermail/zfs-discuss/2008-March/000240.html</A> 
+ &gt;, among other things, but no hint of where to go from here.
+
+&quot;zpool import -D&quot; reports &quot;no pools available to import&quot;.
+
+All of this is on a Mac Mini running Mac OS X 10.5.3, BTW.
+
+So, is the data recoverable?
+
+Thanks!
+Lee
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080702/7b5e208b/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080702/7b5e208b/attachment.html</A> 
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000696.html">[zfs-discuss] zfs silent death
+</A></li>
+	<LI>Next message: <A HREF="000671.html">[zfs-discuss] Trash cannot be cleaned under ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#670">[ date ]</a>
+              <a href="thread.html#670">[ thread ]</a>
+              <a href="subject.html#670">[ subject ]</a>
+              <a href="author.html#670">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

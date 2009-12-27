@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20panic&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000643.html">
+   <LINK REL="Next"  HREF="000647.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel panic</H1>
+    <B>Scott Palmer</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20panic&In-Reply-To="
+       TITLE="[zfs-discuss] Kernel panic">swpalmer at gmail.com
+       </A><BR>
+    <I>Tue Jun 17 16:49:56 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000643.html">[zfs-discuss] iphone fails to sync contacts (it's a spotlight thing)
+</A></li>
+        <LI>Next message: <A HREF="000647.html">[zfs-discuss] Kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#646">[ date ]</a>
+              <a href="thread.html#646">[ thread ]</a>
+              <a href="subject.html#646">[ subject ]</a>
+              <a href="author.html#646">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I wasn't paying any attention when it happened.. but I saw the notice  
+that the OS rebooted because of a panic.  Here is the info in the  
+report I sent to Apple (not sure if that did any good), running ZFS-117:
+
+Mon Jun 16 18:10:29 2008
+panic(cpu 1 caller 0x001DBC35): &quot;vnode_put(0x6908c70): iocount &lt; 1&quot;@/ 
+SourceCache/xnu/xnu-1228.5.18/bsd/vfs/vfs_subr.c:3581
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x54dc7d78 : 0x12b0fa (0x459294 0x54dc7dac 0x133243 0x0)
+0x54dc7dc8 : 0x1dbc35 (0x467400 0x6908c70 0x54dc7e08 0x648e7532)
+0x54dc7de8 : 0x1dbce6 (0x6908c70 0x851bba0 0xf461dc7e 0x7c27140)
+0x54dc7e08 : 0x648b730b (0x6908c70 0x6491a2e4 0x0 0x0)
+0x54dc7f58 : 0x648a00a2 (0x7c27000 0x9b715 0x0 0x1a236f)
+0x54dc7fc8 : 0x19ebdc (0x6b20e00 0x0 0x1a20b5 0x87c7c80)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x6486f000-&gt;0x6493afff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9D34
+
+Kernel version:
+Darwin Kernel Version 9.3.0: Fri May 23 00:49:16 PDT 2008;  
+root:xnu-1228.5.18~1/RELEASE_I386
+System model name: iMac7,1 (Mac-F4238CC8)
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080617/99a69d93/attachment.p7s">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080617/99a69d93/attachment.p7s</A> 
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000643.html">[zfs-discuss] iphone fails to sync contacts (it's a spotlight thing)
+</A></li>
+	<LI>Next message: <A HREF="000647.html">[zfs-discuss] Kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#646">[ date ]</a>
+              <a href="thread.html#646">[ thread ]</a>
+              <a href="subject.html#646">[ subject ]</a>
+              <a href="author.html#646">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

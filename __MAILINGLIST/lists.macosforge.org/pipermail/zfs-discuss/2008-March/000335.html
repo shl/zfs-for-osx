@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] rsync Invalid checksum error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To=019EBDA5-4FC9-4A6C-974B-F964F7C23AD7%40hessmann.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000333.html">
+   <LINK REL="Next"  HREF="000336.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] rsync Invalid checksum error</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To=019EBDA5-4FC9-4A6C-974B-F964F7C23AD7%40hessmann.de"
+       TITLE="[zfs-discuss] rsync Invalid checksum error">bwaters at nrao.edu
+       </A><BR>
+    <I>Mon Mar 17 08:55:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000333.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+        <LI>Next message: <A HREF="000336.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#335">[ date ]</a>
+              <a href="thread.html#335">[ thread ]</a>
+              <a href="subject.html#335">[ subject ]</a>
+              <a href="author.html#335">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Have you tried rsync 3.0?
+
+It is very easy to build from source code, and I run into fewer  
+problems when I'm using it.
+
+See
+
+<A HREF="http://www.samba.org/rsync/">http://www.samba.org/rsync/</A>
+<A HREF="http://www.samba.org/ftp/rsync/src/rsync-3.0.0.tar.gz">http://www.samba.org/ftp/rsync/src/rsync-3.0.0.tar.gz</A>
+
+
+
+
+On Mar 17, 2008, at 5:21 AM, Christian He&#223;mann wrote:
+&gt;<i> Dear all,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> any update on Ticket #2 (<A HREF="http://trac.macosforge.org/projects/zfs/ticket/2">http://trac.macosforge.org/projects/zfs/ticket/2</A>)?
+</I>&gt;<i>
+</I>&gt;<i> I'm trying to copy my home directory (HFS+) to a remote 10.5.2  
+</I>&gt;<i> client with ZFS RAID.Z via rsync/ssh (-avESz --no-whole-file -- 
+</I>&gt;<i> partial --stats --progress --inplace --delete --ignore-errors), but  
+</I>&gt;<i> get errors like:
+</I>&gt;<i>
+</I>&gt;<i> Invalid checksum length 9175040
+</I>&gt;<i> rsync error: protocol incompatibility (code 2) at /SourceCache/rsync/ 
+</I>&gt;<i> rsync-30/rsync/sender.c(60)
+</I>&gt;<i>
+</I>&gt;<i> about every 200-500 files, which result in the termination of the  
+</I>&gt;<i> process.
+</I>&gt;<i>
+</I>&gt;<i> Retrying always works with the same file, but the error returns a  
+</I>&gt;<i> few hundred files later.
+</I>&gt;<i>
+</I>&gt;<i> Thank you for any information.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i>
+</I>&gt;<i> Christian
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000333.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+	<LI>Next message: <A HREF="000336.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#335">[ date ]</a>
+              <a href="thread.html#335">[ thread ]</a>
+              <a href="subject.html#335">[ subject ]</a>
+              <a href="author.html#335">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

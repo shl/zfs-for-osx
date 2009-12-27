@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Fwd: wrong size pool creation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Fwd%3A%20wrong%20size%20pool%20creation&In-Reply-To=%3C4A636B54.60401%40phys.washington.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001711.html">
+   <LINK REL="Next"  HREF="001710.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Fwd: wrong size pool creation</H1>
+    <B>Jared Nance</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Fwd%3A%20wrong%20size%20pool%20creation&In-Reply-To=%3C4A636B54.60401%40phys.washington.edu%3E"
+       TITLE="[zfs-discuss] Fwd: wrong size pool creation">nancejk at phys.washington.edu
+       </A><BR>
+    <I>Sun Jul 19 11:52:04 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001711.html">[zfs-discuss] Fwd: wrong size pool creation
+</A></li>
+        <LI>Next message: <A HREF="001710.html">[zfs-discuss] Fwd: wrong size pool creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1712">[ date ]</a>
+              <a href="thread.html#1712">[ thread ]</a>
+              <a href="subject.html#1712">[ subject ]</a>
+              <a href="author.html#1712">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If the disks were previously in another pool, then this command won't
+get rid of the end-of-disk GPT label.  You have to kill it off using gpt.
+
+JN
+
+ed hammond wrote:
+&gt;<i> I used:
+</I>&gt;<i>
+</I>&gt;<i> diskutil partitiondisk /dev/disk1 GPTFormat ZFS %noformat% 100% 
+</I>&gt;<i>
+</I>&gt;<i> On Jul 19, 2009, at 2:19 AM, Alex Blewitt wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> What diskutil command did you use to format them in the first place?
+</I>&gt;&gt;<i> Once diskutil thinks they are 7G then no amount of putting them in
+</I>&gt;&gt;<i> different pools is going to change that.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sent from my (new) iPhone
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>   
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001711.html">[zfs-discuss] Fwd: wrong size pool creation
+</A></li>
+	<LI>Next message: <A HREF="001710.html">[zfs-discuss] Fwd: wrong size pool creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1712">[ date ]</a>
+              <a href="thread.html#1712">[ thread ]</a>
+              <a href="subject.html#1712">[ subject ]</a>
+              <a href="author.html#1712">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

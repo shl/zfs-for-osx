@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Setup - Confused!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Setup%20-%20Confused%21&In-Reply-To=%3C636fd28e0811250354h5c6224f7vde50ffbfb0373845%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001104.html">
+   <LINK REL="Next"  HREF="001108.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Setup - Confused!</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Setup%20-%20Confused%21&In-Reply-To=%3C636fd28e0811250354h5c6224f7vde50ffbfb0373845%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] ZFS Setup - Confused!">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Tue Nov 25 03:54:44 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001104.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+        <LI>Next message: <A HREF="001108.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1105">[ date ]</a>
+              <a href="thread.html#1105">[ thread ]</a>
+              <a href="subject.html#1105">[ subject ]</a>
+              <a href="author.html#1105">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You might also need:
+
+diskutil eraseVolume ZFS %noformat% /dev/disk0s3
+
+prior to creating the zpool, if it doesn't work as is.
+
+Alex
+
+On Tue, Nov 25, 2008 at 2:53 AM, James R. Van Artsdalen
+&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">james-zfsosx at jrv.org</A>&gt; wrote:
+&gt;<i> $ sudo zpool create zfs-pool-name disk0s3
+</I>&gt;<i>
+</I>&gt;<i> Jason Todd Slack-Moehrle wrote:
+</I>&gt;&gt;<i> Hi All,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> OK, so I want to setup a 3 partition setup on my MacBook. I have
+</I>&gt;&gt;<i> upgraded to a 500gb internal drive.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So I did the following after turning it on:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> disktuil resizeVolume disk0s2 120G ZFS Data 295G msdos Windows 50G
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It created my three partitions.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I then installed Leopard on the 120GB Partition and Window on the 50GB
+</I>&gt;&gt;<i> Partition.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now I want to format the ZFS partition I called 'Data'. DiskUtility
+</I>&gt;&gt;<i> sees that partition, but I cannot do anything with it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I went to the ZFS MacOSForge website and looked at the Getting Started
+</I>&gt;&gt;<i> and I dont quite see what to do since I have created my partitions myself.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is what I have:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ~ slack$ diskutil list
+</I>&gt;&gt;<i> /dev/disk0
+</I>&gt;&gt;<i>    #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>    0:      GUID_partition_scheme                        *465.8 Gi   disk0
+</I>&gt;&gt;<i>    1:                        EFI                         200.0 Mi
+</I>&gt;&gt;<i> disk0s1
+</I>&gt;&gt;<i>    2:                  Apple_HFS Leopard                 119.9 Gi
+</I>&gt;&gt;<i> disk0s2
+</I>&gt;&gt;<i>    3:                        ZFS                         294.9 Gi
+</I>&gt;&gt;<i> disk0s3
+</I>&gt;&gt;<i>    4:       Microsoft Basic Data                         50.6 Gi
+</I>&gt;&gt;<i> disk0s4
+</I>&gt;&gt;<i> jason-t-slacks-macbook:~ slack$
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How do I get started with what I have now?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Jason
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001104.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+	<LI>Next message: <A HREF="001108.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1105">[ date ]</a>
+              <a href="thread.html#1105">[ thread ]</a>
+              <a href="subject.html#1105">[ subject ]</a>
+              <a href="author.html#1105">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

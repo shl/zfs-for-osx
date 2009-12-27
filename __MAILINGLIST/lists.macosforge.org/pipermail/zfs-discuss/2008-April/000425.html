@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RAID-Z not re-mounting on reboot
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=47FB90BB.6060804%40loveturtle.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000424.html">
+   <LINK REL="Next"  HREF="000426.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RAID-Z not re-mounting on reboot</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=47FB90BB.6060804%40loveturtle.net"
+       TITLE="[zfs-discuss] RAID-Z not re-mounting on reboot">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Tue Apr  8 08:57:39 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000424.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+        <LI>Next message: <A HREF="000426.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#425">[ date ]</a>
+              <a href="thread.html#425">[ thread ]</a>
+              <a href="subject.html#425">[ subject ]</a>
+              <a href="author.html#425">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Apr 8, 2008 at 4:35 PM, Dillon Kass &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">lists at loveturtle.net</A>&gt; wrote:
+&gt;<i> With the whole disk vs partition cache issue from what I understand this is
+</I>&gt;<i> specific to the implementation.
+</I>&gt;<i>
+</I>&gt;<i> It's true on Solaris, not true on FreeBSD, and I have no idea on OSX except
+</I>&gt;<i> to say that the method below is how Apple is telling us to do it. So it's
+</I>&gt;<i> safe to assume that it is the correct method.
+</I>
+The man pages for zpool specifically suggest using a whole-disk
+approach, and that the disk will be labeled accordingly:
+
+       disk      A  block  device, typically located under &quot;/dev&quot;. ZFS can use
+                 individual slices or partitions, though the recommended  mode
+                 of  operation  is to use whole disks. A disk can be specified
+                 by a full path, or it can be a shorthand name  (the  relative
+                 portion of the path under &quot;/dev&quot;). A whole disk can be speci-
+                 fied by omitting the  slice  or  partition  designation.  For
+                 example,  &quot;disk1s2&quot;  is  equivalent  to  &quot;/dev/disk1s2&quot;. When
+                 given a whole disk, ZFS automatically  labels  the  disk,  if
+                 necessary.
+
+It seems that the labelling (in particular, the EFI signature) isn't
+being written during the creation on a whole disk. Perhaps it gets
+created only when you do an 'export' (man zpool - export)
+
+           For pools to be portable, you must give  the  zpool  command  whole
+           disks, not just slices, so that ZFS can label the disks with porta-
+           ble EFI labels. Otherwise, disk drivers on platforms  of  different
+           endianness will not recognize the disks.
+
+As far as the current implementation goes, I can imagine that it's
+better to follow the advice on the mac page. But I suspect there may
+be developments in the future which will allow whole disks to be used
+for ZFS instead of a partition on a disk.
+
+Alex
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000424.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+	<LI>Next message: <A HREF="000426.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#425">[ date ]</a>
+              <a href="thread.html#425">[ thread ]</a>
+              <a href="subject.html#425">[ subject ]</a>
+              <a href="author.html#425">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

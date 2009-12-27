@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] late mount
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=48E3B4E3.7050708%40loveturtle.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000919.html">
+   <LINK REL="Next"  HREF="000920.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] late mount</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=48E3B4E3.7050708%40loveturtle.net"
+       TITLE="[zfs-discuss] late mount">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Oct  1 14:19:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000919.html">[zfs-discuss] late mount
+</A></li>
+        <LI>Next message: <A HREF="000920.html">[zfs-discuss] Another Panic to report
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#922">[ date ]</a>
+              <a href="thread.html#922">[ thread ]</a>
+              <a href="subject.html#922">[ subject ]</a>
+              <a href="author.html#922">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So the detach, reattach should work since actually what ZFS is doing  
+now is seeing the 'disk0' appending 's2' on for it's usage (whole disk  
+support is disabled right now, hence why you have to partition  
+yourself).  However since we still store the name you gave us &quot;disk0&quot;  
+then diskutil doesn't know that drive which it sees as disk0s2   
+'matches' the one in your pool.  So stuff gets all screwy and long  
+story short, you're pool won't get imported.
+
+give the detatch/reattch a try though since I believe it should work.  
+(make sure your drives are formatted for ZFS of course).
+
+Noel
+
+On Oct 1, 2008, at 10:35 AM, Dillon Kass wrote:
+
+&gt;<i> Right, Using a whole disk for zfs on my desktop looks like this
+</I>&gt;<i>
+</I>&gt;<i>   pool: z
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i>  scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>         NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>         z            ONLINE       0     0     0
+</I>&gt;<i>           mirror     ONLINE       0     0     0
+</I>&gt;<i>             disk3s2  ONLINE       0     0     0
+</I>&gt;<i>             disk2s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i> (and diskutil list output)
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *298.1 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk2s1
+</I>&gt;<i>    2:                        ZFS z                       297.8 Gi    
+</I>&gt;<i> disk2s2
+</I>&gt;<i>
+</I>&gt;<i> The problem now is that you're kind of in a pickle, you could detach  
+</I>&gt;<i> one
+</I>&gt;<i> of your disks and repartition it with diskutil and try to add the s2
+</I>&gt;<i> slice but the problem is that it's going to be a little smaller than
+</I>&gt;<i> your other (whole) disk and zfs will not allow you to add a smaller
+</I>&gt;<i> device to the mirror. You could try but I'm pretty certian it wont  
+</I>&gt;<i> work.
+</I>&gt;<i>
+</I>&gt;<i> So I suppose your only other option would be to backup your  
+</I>&gt;<i> filesystems
+</I>&gt;<i> with zfs send (too bad we don't have zfs send -R in the osx version of
+</I>&gt;<i> zfs) and then create a new pool and restore it.
+</I>&gt;<i>
+</I>&gt;<i> If you're low on space and can't hold zfs dumps of all your  
+</I>&gt;<i> filesystems
+</I>&gt;<i> you could just detach a disk from the mirror and create a new pool  
+</I>&gt;<i> with
+</I>&gt;<i> it and then zfs send | zfs recv it over to the new pool. although I
+</I>&gt;<i> think I kind of remember there being some bug with zfs on osx where  
+</I>&gt;<i> you
+</I>&gt;<i> couldn't pipe zfs send to zfs recv for some reason even though zfs  
+</I>&gt;<i> send
+</I>&gt;&gt;<i> file zfs recv &lt; file worked just fine....
+</I>&gt;<i>
+</I>&gt;<i> Well either way, I'm pretty sure that is why your pool isn't importing
+</I>&gt;<i> on boot and you could at least verify it by detaching a disk and
+</I>&gt;<i> creating a second pool with the s2 slice after reruning diskutil and
+</I>&gt;<i> rebooting and see if it's imported on boot. Then go from there..
+</I>&gt;<i>
+</I>&gt;<i> Aric Gregson wrote:
+</I>&gt;&gt;<i> OK. Here it is. I suppose this is incorrect?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  pool: peipool
+</I>&gt;&gt;<i> state: ONLINE
+</I>&gt;&gt;<i> scrub: resilver completed with 0 errors on Thu Sep 25 20:09:07 2008
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    NAME        STATE     READ WRITE CKSUM
+</I>&gt;&gt;<i>    peipool     ONLINE       0     0     0
+</I>&gt;&gt;<i>      mirror    ONLINE       0     0     0
+</I>&gt;&gt;<i>        disk1   ONLINE       0     0     0
+</I>&gt;&gt;<i>        disk2   ONLINE       0     0     0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> errors: No known data errors
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000919.html">[zfs-discuss] late mount
+</A></li>
+	<LI>Next message: <A HREF="000920.html">[zfs-discuss] Another Panic to report
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#922">[ date ]</a>
+              <a href="thread.html#922">[ thread ]</a>
+              <a href="subject.html#922">[ subject ]</a>
+              <a href="author.html#922">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

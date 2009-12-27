@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Compatibility with other systems?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Compatibility%20with%20other%20systems%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000639.html">
+   <LINK REL="Next"  HREF="000655.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Compatibility with other systems?</H1>
+    <B>Timothy Wilson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Compatibility%20with%20other%20systems%3F&In-Reply-To="
+       TITLE="[zfs-discuss] Compatibility with other systems?">timothy.wilson87 at gmail.com
+       </A><BR>
+    <I>Sun Jun 15 21:18:21 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000639.html">[zfs-discuss] Degraded pool because of missing or invalid label
+</A></li>
+        <LI>Next message: <A HREF="000655.html">[zfs-discuss] disappearing/corrupting files in zfs-117
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#640">[ date ]</a>
+              <a href="thread.html#640">[ thread ]</a>
+              <a href="subject.html#640">[ subject ]</a>
+              <a href="author.html#640">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello guys,
+
+First of all, a big thank you for porting ZFS to OS X! It works a treat :)
+
+However, I'm having some difficulty in importing a zpool into
+OpenSolaris. I made my RAIDz zpool in Leopard successfully. It works
+really well! However, when I try to import back to Solaris it fails in
+a weird way. Here's output from the Solaris console:
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at gateway</A>:/# zpool import bigstore
+cannot import 'bigstore': pool may be in use from other system
+use '-f' to import anyway
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at gateway</A>:/# zpool import -f bigstore
+cannot import 'bigstore': no such pool or dataset
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at gateway</A>:/#
+
+Of course I will ask this question on the OpenSolaris list too, but I
+was wondering if anyone else had the same problems. Is it a known bug?
+
+The zpool 'bigstore' is version 8, whereas OpenSolaris is up to
+version 10, so there's no problem there (I only need to import one
+way). Both systems are 64 bit. I can't think of any other information
+that might be relevant, but please let me know if I should provide
+more information!
+
+Kind regards,
+Timothy.
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000639.html">[zfs-discuss] Degraded pool because of missing or invalid label
+</A></li>
+	<LI>Next message: <A HREF="000655.html">[zfs-discuss] disappearing/corrupting files in zfs-117
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#640">[ date ]</a>
+              <a href="thread.html#640">[ thread ]</a>
+              <a href="subject.html#640">[ subject ]</a>
+              <a href="author.html#640">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20Hosed%20my%20permissions%20to%20access%20filesystem&In-Reply-To=7a0bc8420805310913w504d70fasf234f4935cb0a0d8%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000627.html">
+   <LINK REL="Next"  HREF="000629.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-117: Hosed my permissions to access filesystem</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20Hosed%20my%20permissions%20to%20access%20filesystem&In-Reply-To=7a0bc8420805310913w504d70fasf234f4935cb0a0d8%40mail.gmail.com"
+       TITLE="[zfs-discuss] zfs-117: Hosed my permissions to access filesystem">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Jun  3 17:28:37 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000627.html">[zfs-discuss] indestructable phantom folders with zfs-117
+</A></li>
+        <LI>Next message: <A HREF="000629.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#628">[ date ]</a>
+              <a href="thread.html#628">[ thread ]</a>
+              <a href="subject.html#628">[ subject ]</a>
+              <a href="author.html#628">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So somehow you've unset the 'x' bit on your Photos folder which is the  
+crux of the problem.  So I would recommend as root in the terminal  
+doing:
+
+# find Photos -type dir | xargs chmod ugo+x
+
+which should reset the 'x' bit on Photos and everything contained  
+therein so you should be able to access everything again.
+So in your setup reflect is your pool and Photos is a filesystem  
+within that pool?  And you used Finder to change permissions on the  
+filesystem Photos and it did this?
+
+Noel
+
+
+On May 31, 2008, at 9:13 AM, Jonathan Borden wrote:
+
+&gt;<i> Sigh ...
+</I>&gt;<i>
+</I>&gt;<i> Doing something in the Finder ... trying to give permissions to access
+</I>&gt;<i> a networked zfs pool and filesystem ... asked the finder to
+</I>&gt;<i> recursively give read+write and the permissions on the filesytem
+</I>&gt;<i> symbolic link are now hosed and I am not sure how to fix them.
+</I>&gt;<i>
+</I>&gt;<i> they read (via ls -l):
+</I>&gt;<i>
+</I>&gt;<i> drw-r--r--  26 jonathanborden  staff  33 Apr 15 19:06 Photos
+</I>&gt;<i>
+</I>&gt;<i> I created a new filesystem in the same pool which lists as:
+</I>&gt;<i>
+</I>&gt;<i> drwxr-xr-x   2 root            wheel   2 May 31 11:54 Test
+</I>&gt;<i>
+</I>&gt;<i> I can't do a chmod or chown to change the permissions on
+</I>&gt;<i> reflect/Photos ... what should I do ... perhaps I am just using the
+</I>&gt;<i> wrong flags for chmod and chown (tried sudo chown -v root:wheel Photos
+</I>&gt;<i> ... and it wouldn't give me permission to do that)
+</I>&gt;<i>
+</I>&gt;<i> TIA
+</I>&gt;<i>
+</I>&gt;<i> Jonathan
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000627.html">[zfs-discuss] indestructable phantom folders with zfs-117
+</A></li>
+	<LI>Next message: <A HREF="000629.html">[zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#628">[ date ]</a>
+              <a href="thread.html#628">[ thread ]</a>
+              <a href="subject.html#628">[ subject ]</a>
+              <a href="author.html#628">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Possible%20to%20use%20TimeMachine%20on%20a%20zfs%20pool%3F%20%28and%0A%09Home%20on%20ZFS/Spotlight%29&In-Reply-To=77D804E1-AF34-4919-BEEF-360EE58F9177%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000039.html">
+   <LINK REL="Next"  HREF="000038.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)</H1>
+    <B>David Ritchie</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Possible%20to%20use%20TimeMachine%20on%20a%20zfs%20pool%3F%20%28and%0A%09Home%20on%20ZFS/Spotlight%29&In-Reply-To=77D804E1-AF34-4919-BEEF-360EE58F9177%40apple.com"
+       TITLE="[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)">david299792 at googlemail.com
+       </A><BR>
+    <I>Mon Jan 21 15:40:43 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000039.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)
+</A></li>
+        <LI>Next message: <A HREF="000038.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#46">[ date ]</a>
+              <a href="thread.html#46">[ thread ]</a>
+              <a href="subject.html#46">[ subject ]</a>
+              <a href="author.html#46">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 21 Jan 2008, at 22:27, No&#235;l Dellofano wrote:
+
+&gt;<i>
+</I>&gt;&gt;<i> Wow - does that mean that Time Machine may soon be able to use ZFS  
+</I>&gt;&gt;<i> snapshots instead of HFS+ hard links? That would be awesome!
+</I>&gt;<i>
+</I>&gt;<i> Awesome for sure, I'd be stoked;  I wouldn't hold my breath on  
+</I>&gt;<i> &quot;soon&quot; though :)
+</I>&gt;<i>
+</I>Ah well. I'm very impatient when it comes to these things :). I'd be  
+pretty chuffed with just 'normal' ZFS snapshoting ability - even if it  
+means I have to browse the snapshots by hand for the time being rather  
+than using the fancy Time Machine UI.
+
+&gt;&gt;<i> I wonder how this would work if you're storing things on ZFS  
+</I>&gt;&gt;<i> directly rather than working on an HFS+ volume and having Time  
+</I>&gt;&gt;<i> Machine backup to ZFS.
+</I>&gt;<i>
+</I>&gt;<i> If you're working off a ZFS filesystem then life &quot;would be&quot; easy.   
+</I>&gt;<i> ZFS snapshots can be taken regularly(via the command line or some  
+</I>&gt;<i> future TM button) and then you can use Time Machine to browse those  
+</I>&gt;<i> snapshots (or use .zfs if you are old fashioned).
+</I>
+Yes, that would be ideal.
+
+&gt;<i> Also among other things we could then hook up Time Machine to use  
+</I>&gt;<i> 'zfs send' and 'zfs send -i'  and 'zfs recv' to backup your  
+</I>&gt;<i> snapshots to your backup volume for posterity.
+</I>
+Fantastic. If this functionality were made part of Time Machine that'd  
+be great. Otherwise I'll be setting up some cron jobs or something to  
+do the same thing.
+
+&gt;<i> Note that you can 'zfs send' your filesystem to a file on any  
+</I>&gt;<i> supported filesystem, so you can send your zfs snapshot to a file on  
+</I>&gt;<i> an HFS+ backup drive if you like.  However you can only 'zfs recv'  
+</I>&gt;<i> that backup into a zfs filesystem.
+</I>
+Quite so. If it's feasible, though, I figure I might as well zfs send  
+the FS to another ZFS file system, because then I can reconstruct it  
+at the other end (receive) and ZFS will check it's integrity etc. At  
+the moment I have a cheap custom built PC running Solaris which I  
+access via NFS. It has a ZFS RAID mirror on it. Sometimes I work  
+directly from that and sometimes I rsync stuff to it.
+&gt;<i>
+</I>&gt;<i> ** Keep in mind this is all hypothetical as none of this has been  
+</I>&gt;<i> discussed yet, but you get the idea :)
+</I>&gt;<i> Is that what you were asking or did I misinterpret your question?
+</I>&gt;<i>
+</I>Absolutely. The working directly on ZFS, periodic snapshoting and then  
+using send/receive to backup to another ZFS volume somewhere over the  
+network and having Time Machine provide a front end for restoring  
+stuff from backup (in addition to the normal .zfs browsing option and  
+along with all the usual ZFS features like clones etc) would be ideal.
+
+I once set up an office Solaris server (cheap commodity job) with Macs  
+connecting to it and using it for user home directories (via NFS) and  
+set it up to snapshot all the user homes every 10 minutes (keeping the  
+past 6) along with hourly and daily snapshots (the latter kept  
+forever). It was great.
+
+&gt;<i> If you are interested in details in how our snapshots work(it's  
+</I>&gt;<i> pretty cool stuff), Matt Ahrens has a great blog about it:
+</I>&gt;<i> <A HREF="http://blogs.sun.com/ahrens/entry/is_it_magic">http://blogs.sun.com/ahrens/entry/is_it_magic</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> On a different note, do you have any idea when Spotlight might be  
+</I>&gt;&gt;<i> working on nested ZFS file systems? It seems that spotlight will  
+</I>&gt;&gt;<i> index the root FS/pool (albeit with some bugs apparently) but not  
+</I>&gt;&gt;<i> any FSs contained within that. Even if they're set to mount  
+</I>&gt;&gt;<i> elsewhere.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I tried moving my Home to a ZFS fs, and it mostly worked as far as  
+</I>&gt;&gt;<i> I can tell (only tried it last night), but I would miss having  
+</I>&gt;&gt;<i> spotlight for my home folder. I could search for Mail messages  
+</I>&gt;&gt;<i> based on subject/from/to, but not the whole message :(. It was very  
+</I>&gt;&gt;<i> useful to be able to clone my User account in a matter of seconds  
+</I>&gt;&gt;<i> to experiment.
+</I>&gt;<i>
+</I>&gt;<i> Sadly this is a known problem.  As I mentioned on the zfs page,  
+</I>&gt;<i> there's still a bunch of unhappiness between ZFS and Spotlight which  
+</I>&gt;<i> is causing issues which is why I currently recommend disabling it.   
+</I>&gt;<i> We are trying very hard to get it up and running though since I know  
+</I>&gt;<i> a lot of people really depend on Spotlight, like you mentioned, for  
+</I>&gt;<i> searching home directories.  We're fixing bugs one by one, hopefully  
+</I>&gt;<i> we'll achieve a happy union between the two soon.
+</I>&gt;<i>
+</I>Good good.
+
+&gt;<i> As far as nested filesystems, Spotlight won't search them because we  
+</I>&gt;<i> flag all nested filesystems(an fs that is not the pool fs) as  
+</I>&gt;<i> MNT_DONTBROWSE.  This is for a number of reasons that basically  
+</I>&gt;<i> entail us needing a tighter integration with Finder.  For example,   
+</I>&gt;<i> if we don't use this flag then every filesystem you create Finder  
+</I>&gt;<i> will show on your desktop, which if you have many, is really  
+</I>&gt;<i> annoying.  Finder also wants to show anything filesystems it can  
+</I>&gt;<i> browse in the sidebar in the Finder window.  Needless to say this  
+</I>&gt;<i> kind of representation is fine for current use but doesn't scale  
+</I>&gt;<i> with how ZFS is generally used (we encourage a filesystem ==   
+</I>&gt;<i> directory).  The Finder window goes nuts, and well, it's just not  
+</I>&gt;<i> pretty :(
+</I>&gt;<i>
+</I>Hmm, I can see the problem. Is there any solution to allowing  
+Spotlight to index the nested volumes then? What I'm inclined, in  
+general, to do here is create a zpool and then make: pool/Users, pool/ 
+Users/david, pool/Users/david/Library, pool/Users/david/Library/Caches  
+[to exclude them from snapshots] etc etc - in other words quite a lot  
+of nested file systems. If Spotlight can't be made to index them the  
+only solution I can find is to create a pool and use the whole pool  
+for my home directory. Any other nested FS would then effectively live  
+in my home (although I could change mountpoints I suppose). Whether  
+this could be a workable setup I'm not sure. Or can peace be made  
+between Spotlight and nested zfs FSs?
+
+Would it, perhaps, be possible to set some specific nested zfs  
+filesystems to not be flagged as MNT_DONTBROWSE? If there was an  
+option to override it that might be a workaround (zfs set  
+enablespotlight=on pool/Users/david ???). I guess, as you say:-
+
+&gt;<i> Please know that we are working on it and I'll continue to keep the  
+</I>&gt;<i> list updated.  Thanks for using ZFS and continue sending the  
+</I>&gt;<i> feedback and suggestions and questions :)
+</I>&gt;<i>
+</I>No problem. I like ZFS very much indeed and I'll definitely be using  
+it. Thanks for getting it working.
+
+&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Jan 21, 2008, at 1:20 PM, David Ritchie wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Wow - does that mean that Time Machine may soon be able to use ZFS  
+</I>&gt;&gt;<i> snapshots instead of HFS+ hard links? That would be awesome!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When ZFS is working well enough (see below) I''m definitely  
+</I>&gt;&gt;<i> planning on using it for most of the information on my computer. It  
+</I>&gt;&gt;<i> would have been a shame not to have the Time Machine UI though.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I wonder how this would work if you're storing things on ZFS  
+</I>&gt;&gt;<i> directly rather than working on an HFS+ volume and having Time  
+</I>&gt;&gt;<i> Machine backup to ZFS.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ---
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On a different note, do you have any idea when Spotlight might be  
+</I>&gt;&gt;<i> working on nested ZFS file systems? It seems that spotlight will  
+</I>&gt;&gt;<i> index the root FS/pool (albeit with some bugs apparently) but not  
+</I>&gt;&gt;<i> any FSs contained within that. Even if they're set to mount  
+</I>&gt;&gt;<i> elsewhere.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I tried moving my Home to a ZFS fs, and it mostly worked as far as  
+</I>&gt;&gt;<i> I can tell (only tried it last night), but I would miss having  
+</I>&gt;&gt;<i> spotlight for my home folder. I could search for Mail messages  
+</I>&gt;&gt;<i> based on subject/from/to, but not the whole message :(. It was very  
+</I>&gt;&gt;<i> useful to be able to clone my User account in a matter of seconds  
+</I>&gt;&gt;<i> to experiment.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- David
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 21 Jan 2008, at 20:55, No&#235;l Dellofano wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Currently no, it's not possible to make Time Machine use a zfs  
+</I>&gt;&gt;&gt;<i> pool to either backup, or backup to.  Getting this functionality  
+</I>&gt;&gt;&gt;<i> to work, and work properly, involves also getting .zfs up and  
+</I>&gt;&gt;&gt;<i> running which I'm currently working on and also will involve some  
+</I>&gt;&gt;&gt;<i> changes to Time Machine.  Getting .zfs will give everyone the  
+</I>&gt;&gt;&gt;<i> ability to &quot;see&quot; and browse your zfs snapshots individually and  
+</I>&gt;&gt;&gt;<i> hence give Time Machine the ability to display your ZFS snapshots  
+</I>&gt;&gt;&gt;<i> for you in lovely GUI form :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> And no, in case anyone out there is wondering...  Time Machine  
+</I>&gt;&gt;&gt;<i> will not be doing it's current 'hardlink backups' on a ZFS  
+</I>&gt;&gt;&gt;<i> volume.  That's why we have snapshots in the first place instead :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Snapshots, and all their related functionality currently work,  
+</I>&gt;&gt;&gt;<i> with the exception of the above mentioned browsing snapshots for  
+</I>&gt;&gt;&gt;<i> individual files.  A quick workaround for this that requires no  
+</I>&gt;&gt;&gt;<i> additional space is to do a 'zfs clone' of your snapshot.  I put  
+</I>&gt;&gt;&gt;<i> more details up on the ZFS Known Issues page.  Let me know if  
+</I>&gt;&gt;&gt;<i> something doesn't work for your or anyone has any questions :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Noel
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Jan 20, 2008, at 5:33 PM, Mr. Zorg wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Is it possible to make TimeMachine use a zfs pool?  If not yet,  
+</I>&gt;&gt;&gt;&gt;<i> do any developers have an eta on the functionality?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;&gt;<i> -Mr. Zorg
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000039.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)
+</A></li>
+	<LI>Next message: <A HREF="000038.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#46">[ date ]</a>
+              <a href="thread.html#46">[ thread ]</a>
+              <a href="subject.html#46">[ subject ]</a>
+              <a href="author.html#46">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

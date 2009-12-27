@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] flash sound
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20flash%20sound&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000308.html">
+   <LINK REL="Next"  HREF="000310.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] flash sound</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20flash%20sound&In-Reply-To="
+       TITLE="[zfs-discuss] flash sound">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Tue Mar 11 15:26:49 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000308.html">[zfs-discuss] Fwd:  flash sound
+</A></li>
+        <LI>Next message: <A HREF="000310.html">[zfs-discuss] flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#309">[ date ]</a>
+              <a href="thread.html#309">[ thread ]</a>
+              <a href="subject.html#309">[ subject ]</a>
+              <a href="author.html#309">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok this is very odd, but i have got the solution
+
+again my zfs setup
+
+NAME                 USED  AVAIL  REFER  MOUNTPOINT
+hometank            58,4G   302G  16,6M  /Users
+hometank/ruebezahl  58,4G   302G  58,4G  /Users/ruebezahl
+
+when my homefolder is storden in a zfs filesystem inside my zpool
+flash sound is not working
+
+when my homefolder is stored on the root of my zpool it works
+
+
+( i tried with a test user, first created his homefolder on the root  
+of hometank ---&gt; flash sound worked; then created another zfs  
+filesystem and created a new user inside ---&gt; sound was gone )
+
+noel, can you explain ?
+
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000308.html">[zfs-discuss] Fwd:  flash sound
+</A></li>
+	<LI>Next message: <A HREF="000310.html">[zfs-discuss] flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#309">[ date ]</a>
+              <a href="thread.html#309">[ thread ]</a>
+              <a href="subject.html#309">[ subject ]</a>
+              <a href="author.html#309">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

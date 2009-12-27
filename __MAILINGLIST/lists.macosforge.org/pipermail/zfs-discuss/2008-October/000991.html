@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Mixing and matching replication types inside a	pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Mixing%20and%20matching%20replication%20types%20inside%20a%0A%09pool&In-Reply-To=%3C581ABE26-3DD7-4F44-AA95-F9BEF16CD3A3%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000990.html">
+   <LINK REL="Next"  HREF="000992.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Mixing and matching replication types inside a	pool</H1>
+    <B>Richard McClellan</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Mixing%20and%20matching%20replication%20types%20inside%20a%0A%09pool&In-Reply-To=%3C581ABE26-3DD7-4F44-AA95-F9BEF16CD3A3%40gmail.com%3E"
+       TITLE="[zfs-discuss] Mixing and matching replication types inside a	pool">richmc at gmail.com
+       </A><BR>
+    <I>Sat Oct 18 08:50:45 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000990.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+        <LI>Next message: <A HREF="000992.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#991">[ date ]</a>
+              <a href="thread.html#991">[ thread ]</a>
+              <a href="subject.html#991">[ subject ]</a>
+              <a href="author.html#991">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The ZFS Best Practices Guide is a good resource: <A HREF="http://www.solarisinternals.com/wiki/index.php/ZFS_Best_Practices_Guide#RAID-Z_Configuration_Requirements_and_Recommendations">http://www.solarisinternals.com/wiki/index.php/ZFS_Best_Practices_Guide#RAID-Z_Configuration_Requirements_and_Recommendations</A>
+
+		Rich
+
+
+On Oct 18, 2008, at 08:17 , Mario Camou wrote:
+
+&gt;<i> OK, so I should've googled a bit more. Things are a bit clearer  
+</I>&gt;<i> (just a bit).
+</I>&gt;<i>
+</I>&gt;<i> It turns out that you *CAN* mix and match but you have to specify  
+</I>&gt;<i> the -f flag to do so. However, in my googling I found several places  
+</I>&gt;<i> where it says that it's not recommended to mix. Can anybody tell me  
+</I>&gt;<i> why this would be so? I realize that mixing redundant and non- 
+</I>&gt;<i> redundant (i.e., a mirror with a plain disk) is just not a good  
+</I>&gt;<i> idea, but why would it not be a good idea to mix a mirror with a  
+</I>&gt;<i> raidz?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -Mario.
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Oct 18, 2008 at 4:41 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> I currently have a pool that uses 2 mirrored 1TB drives. I want to  
+</I>&gt;<i> add 3 RAIDZ'ed 500GB drives to get a total storage of 2TB. However  
+</I>&gt;<i> I'd like to have all my storage in a single volume.
+</I>&gt;<i>
+</I>&gt;<i> At this point if I want to add a raidz to the pool ZFS tells me that  
+</I>&gt;<i> the pool is mirrored.
+</I>&gt;<i>
+</I>&gt;<i> Is there any way to accomplish this (i.e., get a single volume with  
+</I>&gt;<i> all my storage, part mirrored and part RAIDZ'ed)? Do I need to  
+</I>&gt;<i> recreate the pool using RAIDZ and add the 2x1TB drives as a 2-volume  
+</I>&gt;<i> RAIDZ?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -Mario
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;<i>                                                        --R.U. Sirius
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;<i>                                                        --R.U. Sirius
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/be22da41/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/be22da41/attachment.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000990.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+	<LI>Next message: <A HREF="000992.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#991">[ date ]</a>
+              <a href="thread.html#991">[ thread ]</a>
+              <a href="subject.html#991">[ subject ]</a>
+              <a href="author.html#991">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

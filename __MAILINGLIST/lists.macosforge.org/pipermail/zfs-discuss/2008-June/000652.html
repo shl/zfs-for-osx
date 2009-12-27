@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] PANIC
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20PANIC&In-Reply-To=8F3166D1-39D1-44BB-846F-7C33FFD44F3D%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000651.html">
+   <LINK REL="Next"  HREF="000666.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] PANIC</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20PANIC&In-Reply-To=8F3166D1-39D1-44BB-846F-7C33FFD44F3D%40spamfreemail.de"
+       TITLE="[zfs-discuss] PANIC">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Jun 23 16:38:54 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000651.html">[zfs-discuss] PANIC
+</A></li>
+        <LI>Next message: <A HREF="000666.html">[zfs-discuss] PANIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#652">[ date ]</a>
+              <a href="thread.html#652">[ thread ]</a>
+              <a href="subject.html#652">[ subject ]</a>
+              <a href="author.html#652">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So this could be an artifact of diskutil and ZFS not playing nice  
+together yet.  Somone could have come up out of order or diskutuil  
+decided to reassign the disk's id to someone else.   Don is working on  
+bits that will better integrate ZFS with IOkit and diskutil so we  
+shouldn't see these issues.
+For the time being though, and I hate saying this, try rebooting your  
+system.  It'll shock diskutil out of it's slump and it will ahve to  
+renumber all the disks on bringup.
+
+sorry for the crappy workaround, but hopefully it works for you.
+
+Noel
+
+On Jun 22, 2008, at 6:43 AM, ruebezahl wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ahhm guys... PANIC
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> zpool import raidtank
+</I>&gt;<i> cannot import 'raidtank': invalid vdev configuration
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  zpool import
+</I>&gt;<i>   pool: raidtank
+</I>&gt;<i>     id: 17754857528528024207
+</I>&gt;<i>  state: FAULTED
+</I>&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	raidtank     UNAVAIL  insufficient replicas
+</I>&gt;<i> 	  raidz1     UNAVAIL  corrupted data
+</I>&gt;<i> 	    disk3s2  ONLINE
+</I>&gt;<i> 	    disk2s2  ONLINE
+</I>&gt;<i> 	    disk4s2  ONLINE
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> worked fine 5 minutes ago
+</I>&gt;<i>
+</I>&gt;<i> why ?
+</I>&gt;<i>
+</I>&gt;<i> greetings
+</I>&gt;<i>
+</I>&gt;<i> franz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.8 (Darwin)
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJIXlbwAAoJEP8ZopU3BhmtmNEIAJc5fjjDHf6IJNH1At6HuaVM
+</I>&gt;<i> E6lse6yk84ofZanWamvrjVojEIvrkEon7e8pmJQAgQ7QY1FG09AyStTZuDpSSPDp
+</I>&gt;<i> rSA5OPnW1Yyx3gHR57/lNIT5yAHoldPuviMpc/A5P+CtUm2JvFxqC/41nhChPRZU
+</I>&gt;<i> 4/U0qgZYdDS0F2QC9MBl7e71LSC68Kaiy/IoWZYuVWJhmUJM20f6XaBAfjN9pkdu
+</I>&gt;<i> Pop78qd0cZemNvD/VJMLFW7ShcB9u19FGLDWQSDdZMQwr3DVQ3RIyHKe9FwCcIh7
+</I>&gt;<i> 6OvEfX1eN83sbRW0VcAzk3kmutMf+CzP+AZWso0ODntnVMtalzdk9t9pmLdRWLU=
+</I>&gt;<i> =6JkQ
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000651.html">[zfs-discuss] PANIC
+</A></li>
+	<LI>Next message: <A HREF="000666.html">[zfs-discuss] PANIC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#652">[ date ]</a>
+              <a href="thread.html#652">[ thread ]</a>
+              <a href="subject.html#652">[ subject ]</a>
+              <a href="author.html#652">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

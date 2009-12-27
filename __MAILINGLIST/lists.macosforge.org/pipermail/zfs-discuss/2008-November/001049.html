@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] adding drives to a raidz volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3C21E14ED1-9F10-4C45-892C-B665A3B8DCAC%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001048.html">
+   <LINK REL="Next"  HREF="001051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] adding drives to a raidz volume</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3C21E14ED1-9F10-4C45-892C-B665A3B8DCAC%40sun.com%3E"
+       TITLE="[zfs-discuss] adding drives to a raidz volume">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Sat Nov 15 06:16:44 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001048.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+        <LI>Next message: <A HREF="001051.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1049">[ date ]</a>
+              <a href="thread.html#1049">[ thread ]</a>
+              <a href="subject.html#1049">[ subject ]</a>
+              <a href="author.html#1049">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Nov 15, 2008, at 5:56 AM, Mike Prather wrote:
+
+&gt;<i> I know this is a colossally noob-ish question but I can't seem to  
+</I>&gt;<i> find an exact answer anywhere else.
+</I>&gt;<i>
+</I>&gt;<i> As I buy them, can I add new disks to an existing raidz device  
+</I>&gt;<i> (without losing data, of course) such that this:
+</I>&gt;<i>
+</I>&gt;<i> 	testz
+</I>&gt;<i> 	  raidz1
+</I>&gt;<i> 	    disk6s2
+</I>&gt;<i> 	    disk7s2
+</I>&gt;<i> 	    disk8s2
+</I>&gt;<i>
+</I>&gt;<i> will become this:
+</I>&gt;<i>
+</I>&gt;<i> 	testz
+</I>&gt;<i> 	  raidz1
+</I>&gt;<i> 	    disk6s2
+</I>&gt;<i> 	    disk7s2
+</I>&gt;<i> 	    disk8s2
+</I>&gt;<i> 	    disk9s2
+</I>&gt;<i>
+</I>&gt;<i> ??
+</I>&gt;<i>
+</I>&gt;<i> Or do I *have* to wait until I can get a group of disks into another  
+</I>&gt;<i> raidz device and add that to the pool?
+</I>
+right, you'll want to wait until you have a new group of disks to add  
+as new devices get added to the root vdev .. in other words:
+	testz
+	  raidz1
+	    disk6s2
+	    disk7s2
+	    disk8s2
+	  raidz1
+	    disk9s2
+	    disk10s2
+	    disk11s2
+
+if you only added a single device it would like this (and you might  
+have to use the -f flag):
+	testz
+	  raidz1
+	    disk6s2
+	    disk7s2
+	    disk8s2
+	  disk9s2
+
+it wouldn't get added to the existing raidz vdev, you'd have  
+mismatched stripe groups, and inconsistent data protection.
+
+now on another side point .. 3 disk raidz sets may not be that ideal,  
+particularly if you're using large disks as you'll end up using 33% of  
+your capacity in parity - mirrored sets will perform better on reads  
+(since you'll read from both sides of the mirror), depending on what  
+you're designing for.
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001048.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+	<LI>Next message: <A HREF="001051.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1049">[ date ]</a>
+              <a href="thread.html#1049">[ thread ]</a>
+              <a href="subject.html#1049">[ subject ]</a>
+              <a href="author.html#1049">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

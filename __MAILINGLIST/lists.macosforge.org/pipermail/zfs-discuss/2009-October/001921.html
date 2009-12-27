@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C4AD20179.3040803%40jrv.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001920.html">
+   <LINK REL="Next"  HREF="001923.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>James R. Van Artsdalen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C4AD20179.3040803%40jrv.org%3E"
+       TITLE="[zfs-discuss] must watch.">james-zfsosx at jrv.org
+       </A><BR>
+    <I>Sun Oct 11 09:02:01 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001920.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001923.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1921">[ date ]</a>
+              <a href="thread.html#1921">[ thread ]</a>
+              <a href="subject.html#1921">[ subject ]</a>
+              <a href="author.html#1921">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dominic Giampaolo wrote:
+&gt;<i> What I don't understand is how you know whether there is
+</I>&gt;<i> damage to the most recent txtag without actually walking
+</I>&gt;<i> the entire file system?
+</I>
+I don't know what approach they're using.  But in practice it isn't
+necessary to scan the entire filesystem - just scan the recently written
+objects (in the same manner resilvering works after a mirror or RAID
+component is reattached).
+
+I think all ZFS objects contain the txtag in which that object was
+&quot;born&quot;.  In walking the filesystem objects born in the &quot;distant past&quot;
+needn't be scanned.  Note that even very large database files are
+efficiently handled since the data blocks need be scanned only if the
+block containing the pointers was born &quot;recently&quot;.
+
+Drawing the line between &quot;distant past&quot; and &quot;recently&quot; may be a little
+arbitrary, but ZFS could easily record the number of writes and
+wall-clock time represented by each new transaction group and ZFS could
+scan backwards 60 seconds or 2 GB in writes, etc, then choose the most
+recent valid uberblock.  This might require a pool version bump since I
+don't think uberblocks contain I/O write statistics.
+
+We're only going to do this on unclean shutdowns so it is no great price
+to delay before allowing access to the pool.  Even if you chose to check
+the most recent transaction group in its entirety on every boot as a
+sanity check that's probably only 5 seconds or so at most.
+
+(one complication is the ZIL - I'd have to think about that one for a while)
+
+Please note I'm not saying it's possible for ZFS to overcome an
+arbitrarily pathological drive.  I'm only saying that drives in the real
+world that can be safely used with mature log-based filesystems should
+be safe with ZFS also (with ZFS changes!).  The strong integrity
+mechanisms in ZFS also make it possible to detect any damage, which
+isn't true of NTFS or HFS, so if redundancy is used recovery is more likely.
+
+&gt;<i> if your log contains more data than
+</I>&gt;<i> the drive could have buffered then you're safe.
+</I>
+There's no reason for a drive to defer writes in order - a write to a
+distant part of a disk might be deferred for a long time if there are
+other writes that can be completed without a seek.  It's not &quot;could have
+buffered&quot; but rather the number of committed writes since the deferred
+write.
+
+&gt;<i> If a drive has
+</I>&gt;<i> a 16 meg cache and you've got 20 megs worth of data to
+</I>&gt;<i> replay then you will undo any damage the drive could have
+</I>&gt;<i> done.
+</I>
+I have a drive with 256 MB cache.  I'm told there's one with 1 GB of
+cache...  I would not depend on existing log filesystems having a big
+enough log to deal with write fence errors in these drives.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001920.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001923.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1921">[ date ]</a>
+              <a href="thread.html#1921">[ thread ]</a>
+              <a href="subject.html#1921">[ subject ]</a>
+              <a href="author.html#1921">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] rsync Invalid checksum error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To=437A0BDF-F475-4F14-9BD5-0541943E5C7A%40hessmann.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000340.html">
+   <LINK REL="Next"  HREF="000338.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] rsync Invalid checksum error</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To=437A0BDF-F475-4F14-9BD5-0541943E5C7A%40hessmann.de"
+       TITLE="[zfs-discuss] rsync Invalid checksum error">jbsnyder at gmail.com
+       </A><BR>
+    <I>Mon Mar 17 10:05:44 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000340.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+        <LI>Next message: <A HREF="000338.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#341">[ date ]</a>
+              <a href="thread.html#341">[ thread ]</a>
+              <a href="subject.html#341">[ subject ]</a>
+              <a href="author.html#341">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Perhaps what was meant was the -X flag:
+-X, --xattrs                preserve extended attributes
+
+?  I haven't bothered with using it so far.  I'm not sure that there
+are extended attributes that I need to preserve on ZFS for my home
+directory?  I may be wrong :-)
+
+On Mon, Mar 17, 2008 at 11:54 AM, Christian He&#223;mann &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs at hessmann.de</A>&gt; wrote:
+&gt;<i> On 17.03.2008, at 17:15, Boyd Waters wrote:
+</I>&gt;<i>
+</I>&gt;<i>  &gt;&gt; can the &quot;vanilla&quot; rsync from source handle all the OS X oddities
+</I>&gt;<i>  &gt;&gt; and extensions?
+</I>&gt;<i>  &gt; A very *good* question, and the answer is
+</I>&gt;<i>  &gt; YES!!
+</I>&gt;<i>  &gt; No more silly patches! No more Mac-specific rsync!
+</I>&gt;<i>  &gt; It has the &quot;-E&quot; extended attribute flag. And so on.
+</I>&gt;<i>  &gt; I haven't done extensive testing with resource forks, but I think it
+</I>&gt;<i>  &gt; works.
+</I>&gt;<i>
+</I>&gt;<i>  Good to know.
+</I>&gt;<i>  Interestingly, -E is described as &quot;preserve the file's executability&quot;,
+</I>&gt;<i>  but maybe it really copies all extended attributes.
+</I>&gt;<i>
+</I>&gt;<i>  One thing I can already say is that it doesn't create ._-files on ZFS
+</I>&gt;<i>  anymore, as did 2.6.6 (or whatever is shipped with 10.5.2).
+</I>&gt;<i>
+</I>&gt;<i>  Thank you.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  Best regards,
+</I>&gt;<i>
+</I>&gt;<i>  Christian
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>  zfs-discuss mailing list
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000340.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+	<LI>Next message: <A HREF="000338.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#341">[ date ]</a>
+              <a href="thread.html#341">[ thread ]</a>
+              <a href="subject.html#341">[ subject ]</a>
+              <a href="author.html#341">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

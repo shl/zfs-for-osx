@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] A Glorious Hack
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20A%20Glorious%20Hack&In-Reply-To=%3C2b0225fb0812281242s40120261j68e061806df8659d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001230.html">
+   <LINK REL="Next"  HREF="001240.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] A Glorious Hack</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20A%20Glorious%20Hack&In-Reply-To=%3C2b0225fb0812281242s40120261j68e061806df8659d%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] A Glorious Hack">bwaters at nrao.edu
+       </A><BR>
+    <I>Sun Dec 28 12:42:07 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001230.html">[zfs-discuss] A Glorious Hack
+</A></li>
+        <LI>Next message: <A HREF="001240.html">[zfs-discuss] A Glorious Hack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1231">[ date ]</a>
+              <a href="thread.html#1231">[ thread ]</a>
+              <a href="subject.html#1231">[ subject ]</a>
+              <a href="author.html#1231">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> I created VMWare &quot;raw&quot; disks for each device in the pool, then added
+</I>them to an OpenSolaris virtual machine.
+
+
+My RAIDZ is on the four internal SATA bays of my Mac Pro; that's
+/dev/disk{0,1,2,3}
+
+To let a VMWare virtual machine see these, it'll need to have a way to
+translate a virtual disk (vmdk) to a real disk. This is called &quot;raw&quot;
+access.
+
+Like this:
+
+ /Library/Application\ Support/VMware\ Fusion/vmware-rawdiskCreator \
+   create \
+   /dev/disk0 \
+   1 \
+   ~/Documents/Virtual\ Machines.localized/Solaris.vmwarevm/rawdisk0 \
+   ide
+
+
+That command will create a text file that maps the raw disk to the virtual
+machine, and a binary file that is just an MBR (master boot record) that
+might make Winders happy. I don't think that MBR is needed, but
+whatever...
+
+I can't add more than 4 IDE drives to a virtual machine.
+vmware-rawdiskCreator claims that it can create SCSI drives as well, but
+it lies. Fortunately, the vmdk text file that it spits out is dead simple
+to edit; I replaced this line
+
+   ddb.adapterType = &quot;ide&quot;
+
+with this one
+
+   ddb.adapterType = &quot;buslogic&quot;
+
+
+For each of the four hard disks in my RAIDZ.
+
+Then I added these vmdk disks to the VM via the VMWare Fusion GUI. Fine.
+Fired it up, those four disks show up fine in the OpenSolaris VM, and away
+you go!
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001230.html">[zfs-discuss] A Glorious Hack
+</A></li>
+	<LI>Next message: <A HREF="001240.html">[zfs-discuss] A Glorious Hack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1231">[ date ]</a>
+              <a href="thread.html#1231">[ thread ]</a>
+              <a href="subject.html#1231">[ subject ]</a>
+              <a href="author.html#1231">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

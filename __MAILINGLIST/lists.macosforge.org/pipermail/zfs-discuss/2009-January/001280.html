@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS panics quite easily
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3CDBC0A5D5-2E28-437D-A1E2-AED86F282FC8%40chipmunk-app.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001279.html">
+   <LINK REL="Next"  HREF="001283.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS panics quite easily</H1>
+    <B>Ruotger Skupin</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3CDBC0A5D5-2E28-437D-A1E2-AED86F282FC8%40chipmunk-app.com%3E"
+       TITLE="[zfs-discuss] ZFS panics quite easily">lists at chipmunk-app.com
+       </A><BR>
+    <I>Fri Jan  9 13:38:42 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001279.html">[zfs-discuss] Fwd:  ZFS panics quite easily
+</A></li>
+        <LI>Next message: <A HREF="001283.html">[zfs-discuss] DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1280">[ date ]</a>
+              <a href="thread.html#1280">[ thread ]</a>
+              <a href="subject.html#1280">[ subject ]</a>
+              <a href="author.html#1280">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Nathan,
+
+what I actually meant was the following scenario: I had an external  
+USB-drive with ZFS connected to the macbook. Then someone else cut my  
+power. At the very instance I had a kernel panic. It happened 3 times  
+that day. (Don't ask)
+
+I know it's an unusual case. It's sort of Ok too, I can live with it.  
+Just wanted to mention it.
+
+My real problem in the original post was that ZFS-119 seems to panic  
+under longer-lasting heavy load, which is no fun at all.
+
+After what Deric said about development resources and SL, it doesn't  
+make sense to complain about ZFS bugs in Leopard anyway. Well at least  
+at the moment. I'm fine with that and I rather have a solid ZFS in SL  
+than two half-baked versions.
+
+Ruotger
+
+Am 09.01.2009 um 22:09 schrieb Nathan Florea:
+
+&gt;<i> On Jan 4, 2009, at 9:35 AM, Ruotger Skupin wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> from what I have read on the list it is a known bug that ZFS panics  
+</I>&gt;&gt;<i> when an external drive gets unpluggged (for whatever reason...).
+</I>&gt;<i>
+</I>&gt;<i> I haven't seen this addressed yet in this thread, but this is easy  
+</I>&gt;<i> to fix.  After unmounting the ZFS pool, run &quot;zpool export [pool  
+</I>&gt;<i> name]&quot;.  I still have had a couple of panics, but I think if you  
+</I>&gt;<i> simply wait until kernel_task stops chugging, you're fine.
+</I>&gt;<i> This was driving me crazy until I actually went back and read the FAQ:
+</I>&gt;<i> <A HREF="http://zfs.macosforge.org/trac/wiki/faq">http://zfs.macosforge.org/trac/wiki/faq</A>
+</I>&gt;<i>
+</I>&gt;<i> Hope that helps.
+</I>&gt;<i>
+</I>&gt;<i> Nathan
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001279.html">[zfs-discuss] Fwd:  ZFS panics quite easily
+</A></li>
+	<LI>Next message: <A HREF="001283.html">[zfs-discuss] DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1280">[ date ]</a>
+              <a href="thread.html#1280">[ thread ]</a>
+              <a href="subject.html#1280">[ subject ]</a>
+              <a href="author.html#1280">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

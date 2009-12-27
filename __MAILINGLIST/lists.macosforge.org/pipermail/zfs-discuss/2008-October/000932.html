@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs send/recv
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20send/recv&In-Reply-To=DE5CB0FF-F9DB-4414-97D5-D223F646E20E%40hessmann.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000931.html">
+   <LINK REL="Next"  HREF="000933.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs send/recv</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20send/recv&In-Reply-To=DE5CB0FF-F9DB-4414-97D5-D223F646E20E%40hessmann.de"
+       TITLE="[zfs-discuss] zfs send/recv">info at martin-hauser.net
+       </A><BR>
+    <I>Sat Oct  4 13:29:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000931.html">[zfs-discuss] zfs send/recv
+</A></li>
+        <LI>Next message: <A HREF="000933.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#932">[ date ]</a>
+              <a href="thread.html#932">[ thread ]</a>
+              <a href="subject.html#932">[ subject ]</a>
+              <a href="author.html#932">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+
+On Oct 4, 2008, at 21:57 PM, Christian He&#223;mann wrote:
+
+&gt;<i> bash-3.2$ zfs send music.hessi/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">iTunes at 20080718084100</A> |zfs recv -d  
+</I>&gt;<i> tank/
+</I>&gt;<i> backup/music.hessi/iTunes
+</I>&gt;<i> internal error: Bad file descriptor
+</I>&gt;<i> cannot receive: invalid stream (failed to read first record)
+</I>&gt;<i> bash-3.2$ zfs send music.hessi/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">iTunes at 20080718084100</A> |zfs recv -d  
+</I>&gt;<i> tank/
+</I>&gt;<i> backup/music.hessi
+</I>&gt;<i> internal error: Bad file descriptor
+</I>&gt;<i> cannot receive: invalid stream (failed to read first record)
+</I>&gt;<i> =====
+</I>&gt;<i>
+</I>&gt;<i> tank/backup/music.hessi/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">iTunes at 20080713131900</A> is a snapshot created
+</I>&gt;<i> with send/recv but via file (send &gt; file, recv &lt; file). I tried to
+</I>&gt;<i> create this snapshot with send | recv as well, which didn't work (same
+</I>&gt;<i> error).
+</I>&gt;<i>
+</I>&gt;<i> Since sending a snapshot via a file always seems to create a file with
+</I>&gt;<i> all the data in it (not only the changes), I would really like to
+</I>&gt;<i> change my backup routine to pipe the changes through send/recv in one
+</I>&gt;<i> go. I presume it will only transfer changes on byte level, right?
+</I>
+Currently there is no support for sending stuff via the pipe. If you  
+want to skip the 'file' part, you can create yourself a fifo (mkfifo  
+fifoname) and use that instead. It will use no extra space on your  
+filesystem on sending data to that fifo, yet you'll need to connect  
+both ends to it like you'd do with a file:
+
+mkfifo zfs_recv_pipe
+zfs send &gt; zfs_recv_pipe
+zfs recv &lt; zfs_recv_pipe
+
+and there you go. The difference between a fifo and using the | are  
+only marginal and in syntax. Also you want to clean up your fifo later  
+using rm zfs_recv_fifo
+
+Hope that helps
+
+Martin
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081004/65fa789e/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081004/65fa789e/attachment.bin</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081004/65fa789e/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081004/65fa789e/attachment-0001.bin</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000931.html">[zfs-discuss] zfs send/recv
+</A></li>
+	<LI>Next message: <A HREF="000933.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#932">[ date ]</a>
+              <a href="thread.html#932">[ thread ]</a>
+              <a href="subject.html#932">[ subject ]</a>
+              <a href="author.html#932">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

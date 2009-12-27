@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=2A468659-58B3-4BAA-8DE5-2234331F6A15%40martin-hauser.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000713.html">
+   <LINK REL="Next"  HREF="000711.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=2A468659-58B3-4BAA-8DE5-2234331F6A15%40martin-hauser.net"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">caronni at gmail.com
+       </A><BR>
+    <I>Tue Jul 22 13:35:29 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000713.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+        <LI>Next message: <A HREF="000711.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#716">[ date ]</a>
+              <a href="thread.html#716">[ thread ]</a>
+              <a href="subject.html#716">[ subject ]</a>
+              <a href="author.html#716">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Don't get me wrong Martin, but as I said, rsync is made for this. Or where
+are you concerned about e.g generator.c:1627 as found on
+<A HREF="http://rsync.samba.org/ftp/unpacked/rsync/generator.c">http://rsync.samba.org/ftp/unpacked/rsync/generator.c</A> ? I agree with you hat
+device node identifiers (ie major / minor) may not make sense on target
+machines when you rsync between OSes -- but that's not an issue here.
+
+Germano
+
+
+On Tue, Jul 22, 2008 at 12:23, Martin Hauser &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">info at martin-hauser.net</A>&gt; wrote:
+
+&gt;<i> I am aware that rsync probably handles them correctly, what I wanted to get
+</I>&gt;<i> through was that this is bad practise in my eyes... it's still a bug and
+</I>&gt;<i> should be addressed but I shiver on trying o sync /dev/random without rsync
+</I>&gt;<i> completely knowing how to create the device nodes on the target system ...
+</I>&gt;<i>  I'm also not worried about unix sockets, named pipes (fifo's) and any other
+</I>&gt;<i> special file you might come across... it's the block and character devices
+</I>&gt;<i> that get me scared on....
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/4dffef9d/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/4dffef9d/attachment.html</A> 
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000713.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+	<LI>Next message: <A HREF="000711.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#716">[ date ]</a>
+              <a href="thread.html#716">[ thread ]</a>
+              <a href="subject.html#716">[ subject ]</a>
+              <a href="author.html#716">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

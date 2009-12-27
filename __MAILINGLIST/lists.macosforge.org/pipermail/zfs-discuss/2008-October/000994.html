@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Now zpool status is giving me a kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181129n22f022eu81169f8442a4e4f9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000993.html">
+   <LINK REL="Next"  HREF="000995.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Now zpool status is giving me a kernel panic</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181129n22f022eu81169f8442a4e4f9%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Now zpool status is giving me a kernel panic">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Sat Oct 18 11:29:03 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000993.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+        <LI>Next message: <A HREF="000995.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#994">[ date ]</a>
+              <a href="thread.html#994">[ thread ]</a>
+              <a href="subject.html#994">[ subject ]</a>
+              <a href="author.html#994">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Another data point.
+
+I booted in single user mode, did the fsck and &quot;mount -uw /&quot; and then did a
+&quot;zpool import&quot;. When doing a &quot;zpool status -v&quot; I get a kernel panic right
+after the config is shown (with all devices showing as ONLINE and with 0
+errors) and before where the filenames should be. I still get the &quot;One or
+more devices has experienced an error&quot; status message.
+
+If I knew just which device is giving the problem I could just unplug it
+(since both groups in the pool have redundancy -- one with mirroring and one
+with raidz) but now I'm really leery of trying to do anything that might
+result in data corruption.
+
+Any ideas? HELP!!
+
+On Sat, Oct 18, 2008 at 7:59 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+
+&gt;<i> One more problem...
+</I>&gt;<i>
+</I>&gt;<i> I was doing a zpool scrub. I did a zpool status and the host completely
+</I>&gt;<i> froze after giving the following output:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mario at tumbolia</A> ~/Downloads/incoming/rtorrent 14 % zpool status
+</I>&gt;<i>   pool: phlogiston
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i> status: One or more devices has experienced an error resulting in data
+</I>&gt;<i>         corruption.  Applications may be affected.
+</I>&gt;<i> action: Restore the file in question if possible.  Otherwise restore the
+</I>&gt;<i>         entire pool from backup.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-8A">http://www.sun.com/msg/ZFS-8000-8A</A>
+</I>&gt;<i>  scrub: scrub stopped with 0 errors on Sat Oct 18 19:45:11 2008
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>         NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>         phlogiston   ONLINE       0     0     4
+</I>&gt;<i>           mirror     ONLINE       0     0     0
+</I>&gt;<i>             disk2s2  ONLINE       0     0     0
+</I>&gt;<i>             disk1s2  ONLINE       0     0     0
+</I>&gt;<i>           raidz1     ONLINE       0     0     4
+</I>&gt;<i>             disk5s2  ONLINE       0     0     0
+</I>&gt;<i>             disk3s2  ONLINE       0     0     0
+</I>&gt;<i>             disk4s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> Now I have a few questions:
+</I>&gt;<i>
+</I>&gt;<i> - How can I determine &quot;the file in question&quot;?
+</I>&gt;<i> - Why does the raidz as a whole give the checksum error? How can I
+</I>&gt;<i> determine which physical device has the problem?
+</I>&gt;<i> - How can I recover from this without restoring from backup? I don't
+</I>&gt;<i> currently have a completely up-to-date backup. If it's just one file that
+</I>&gt;<i> has a problem I can probably work around it.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -Mario.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Oct 18, 2008 at 7:54 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I just found that this last question went just to Richard and not the rest
+</I>&gt;&gt;<i> of the list...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, Oct 18, 2008 at 7:11 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Oops....forgot to do the diskutil partitiondisk :( I guess since I
+</I>&gt;&gt;&gt;<i> haven't written anything else to the pool I could somehow detach the raidz,
+</I>&gt;&gt;&gt;<i> reformat it and re-add it? Actually, could there be a problem if I leave
+</I>&gt;&gt;&gt;<i> them like that?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> MediaCentral is payware but in some respects is better than Front Row. I
+</I>&gt;&gt;&gt;<i> like that it also supports Live TV and that you don't have to add all your
+</I>&gt;&gt;&gt;<i> media to iTunes (since most of my stuff is on the server). I am
+</I>&gt;&gt;&gt;<i> investigating what I can use for PVR functions (i.e., recording).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Sat, Oct 18, 2008 at 6:59 PM, Richard McClellan &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">richmc at gmail.com</A>&gt;wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Did you import/partition them with the
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> diskutil partitiondisk &lt;disk&gt; GPTFormat ZFS %noformat% 100%
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> command?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I totally understand the SWMBO.  In my case the disks are for movies of
+</I>&gt;&gt;&gt;&gt;<i> the kids/family so I'm given a little more leeway :-)  I find it works great
+</I>&gt;&gt;&gt;&gt;<i> for doing video editing where the bottleneck is usually disk.  I'll have to
+</I>&gt;&gt;&gt;&gt;<i> check out MediaCentral. (Your USB setup should be more than fine for
+</I>&gt;&gt;&gt;&gt;<i> streaming media.)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Let me know how using different vdevs works out for you.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>                Rich
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Oct 18, 2008, at 09:53 , Mario Camou wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  . The 3 disks in the RA
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;&gt;&gt;<i>                                                        --R.U. Sirius
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;&gt;<i>                                                        --R.U. Sirius
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;<i>                                                        --R.U. Sirius
+</I>&gt;<i>
+</I>
+
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/54f308e8/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/54f308e8/attachment.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000993.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+	<LI>Next message: <A HREF="000995.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#994">[ date ]</a>
+              <a href="thread.html#994">[ thread ]</a>
+              <a href="subject.html#994">[ subject ]</a>
+              <a href="author.html#994">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

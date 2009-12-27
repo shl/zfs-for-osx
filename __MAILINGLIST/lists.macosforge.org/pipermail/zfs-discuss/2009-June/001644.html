@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs alternative
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C5170CC05-6DA5-4AFE-BF1A-74A934CF8319%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001643.html">
+   <LINK REL="Next"  HREF="001652.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs alternative</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C5170CC05-6DA5-4AFE-BF1A-74A934CF8319%40sun.com%3E"
+       TITLE="[zfs-discuss] zfs alternative">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Fri Jun 12 11:32:47 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001643.html">[zfs-discuss] zfs alternative
+</A></li>
+        <LI>Next message: <A HREF="001652.html">[zfs-discuss] zfs alternative
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1644">[ date ]</a>
+              <a href="thread.html#1644">[ thread ]</a>
+              <a href="subject.html#1644">[ subject ]</a>
+              <a href="author.html#1644">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>i do this all the time to share data between my laptop and my  
+opensolaris boxes, or solaris 10 servers i'm working on .. only thing  
+to be careful is are the zfs and zpool versions you're working with -  
+you'll want to be on a common denominator across your systems to make  
+sure the pool is importable:
+# zpool upgrade -v
+# zfs upgrade -v
+
+you can also test with the latest OpenSolaris LiveCD (i run this in a  
+virtual machine [virtualbox is free and pretty nice now on the mac],  
+and import my usb drive(s) there if i need to test or repair something)
+
+---
+.je
+
+On Jun 12, 2009, at 1:46 PM, Mario Camou wrote:
+
+&gt;<i> I actually had to do that (mount an OS X pool on a Solaris box) a  
+</I>&gt;<i> while ago to debug some problems. IIRC, just exporting the pool from  
+</I>&gt;<i> OS X and importing to Solaris did the job, no tweaking required.
+</I>&gt;<i> -Mario.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> I want to change the world but they won't give me the source code.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Jun 12, 2009 at 19:42, Erik Ableson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">eableson at mac.com</A>&gt; wrote:
+</I>&gt;<i> Anorher vote for OpenSolaris. You can use the netatalk package if  
+</I>&gt;<i> you really want to, but OS X is a first class NFS client and with  
+</I>&gt;<i> the GlobalSAN initiator you can also use iSCSI.
+</I>&gt;<i>
+</I>&gt;<i> I'm currently using NFS &amp; iSCSI with great performance and  
+</I>&gt;<i> reliability under OpenSolaris. Even when Apple does integrate ZFS,  
+</I>&gt;<i> I'm probably going to keep the OS server for the form factor: 10  
+</I>&gt;<i> disks in a tower with one plug is a design I'm unlikely to see from  
+</I>&gt;<i> Apple. Given that my OS X &quot;server&quot; is a Macbook pro, internal  
+</I>&gt;<i> storage is not an option and daisy chaining drives and the attendant  
+</I>&gt;<i> cable spaghetti drove me nuts.
+</I>&gt;<i>
+</I>&gt;<i> I'm currently running 4 clients off a Core 2 Duo PC quite happily  
+</I>&gt;<i> (details at www.infrageeks.com, search for &quot;better NAS&quot;) with direct  
+</I>&gt;<i> GbE for my OS X Server and one other client with the rest over 11n.  
+</I>&gt;<i> The disks are more than capable of saturating the GbE connection and  
+</I>&gt;<i> even with multiple Time Machine backups running concurrently the  
+</I>&gt;<i> source disks are the bottleneck rather than the network or the server.
+</I>&gt;<i>
+</I>&gt;<i> Assuming the disks are part of a zpool they should be readable by  
+</I>&gt;<i> OpenSolaris, but the usual Apple ZFS configuration adrdesses a  
+</I>&gt;<i> partition so you may have to tweak a little to get the zpool mounted.
+</I>&gt;<i>
+</I>&gt;<i> Cordialement,
+</I>&gt;<i>
+</I>&gt;<i> Erik Ableson
+</I>&gt;<i>
+</I>&gt;<i> Envoy&#233; depuis mon iPhone
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 12 juin 09, at 19:17, Dirk Schelfhout &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dirkschelfhout at mac.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i> Since probably no longer supported by apple, I would like to move my  
+</I>&gt;<i> 4 guid disks to a new machine running another os.
+</I>&gt;<i>
+</I>&gt;<i> Any suggestions which os would be best ? Is there a *nix version  
+</I>&gt;<i> that runs afp ? Will they recognize the disks ?
+</I>&gt;<i>
+</I>&gt;<i> Also what kind off machine would I need, just to run as a zfs server  
+</I>&gt;<i> for 2 to 3 clients. ( on a gigabit ethernet )
+</I>&gt;<i> ( as cheap as possible consuming as little power as possible. with  
+</I>&gt;<i> the latter being more important to me ( and many disk bays ) )
+</I>&gt;<i>
+</I>&gt;<i> Dirk_______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001643.html">[zfs-discuss] zfs alternative
+</A></li>
+	<LI>Next message: <A HREF="001652.html">[zfs-discuss] zfs alternative
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1644">[ date ]</a>
+              <a href="thread.html#1644">[ thread ]</a>
+              <a href="subject.html#1644">[ subject ]</a>
+              <a href="author.html#1644">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

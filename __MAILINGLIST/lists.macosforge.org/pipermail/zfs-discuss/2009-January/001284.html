@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic()
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic%28%29&In-Reply-To=%3C6C9C79D3-F23B-4F9B-8112-E52C681EC53D%40ironsoftware.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001373.html">
+   <LINK REL="Next"  HREF="001285.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic()</H1>
+    <B>Christian Kendi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic%28%29&In-Reply-To=%3C6C9C79D3-F23B-4F9B-8112-E52C681EC53D%40ironsoftware.de%3E"
+       TITLE="[zfs-discuss] panic()">ksh at ironsoftware.de
+       </A><BR>
+    <I>Tue Jan 13 08:14:39 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001373.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+        <LI>Next message: <A HREF="001285.html">[zfs-discuss] A feature request
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1284">[ date ]</a>
+              <a href="thread.html#1284">[ thread ]</a>
+              <a href="subject.html#1284">[ subject ]</a>
+              <a href="author.html#1284">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+
+got &quot;new&quot; panic this time.
+
+Mon Jan 12 01:03:59 2009
+panic(cpu 1 caller 0x3460A9A0): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_dir.c  
+line 767: error == 0&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/ 
+zfs-119/zfs_kext/zfs/zfs_dir.c:767
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x3a3cb678 : 0x12b4f3 (0x45b13c 0x3a3cb6ac 0x1335e4 0x0)
+0x3a3cb6c8 : 0x3460a9a0 (0x3465f174 0x3465ef30 0x2ff 0x34620d80)
+0x3a3cb748 : 0x345aab8f (0xc8690a0 0x39806998 0xd073400 0x10)
+0x3a3cb7f8 : 0x1f4c82 (0x3a3cbb64 0x1 0x0 0x0)
+0x3a3cbbb8 : 0x1e6a96 (0x41f7170 0x64053f0 0x3a3cbeec 0x41f7170)
+0x3a3cbf78 : 0x3df460 (0x5103a34 0xb93fa40 0xb93fa84 0x0)
+0x3a3cbfc8 : 0x1a0887 (0xb8a0f54 0x0 0x1a30b5 0xbeb697c)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffad18
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x345a4000-&gt;0x3466ffff
+
+BSD process name corresponding to current thread: iTunes
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_I386
+System model name: MacBook1,1 (Mac-F4208CC8)
+
+
+Chris.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFJbL3vp+9ff145KVIRAl8FAJ9v3PV6ZtKx5P6QxLDthCGAKfoLLACaA4VT
+XNaazYcrco1mbay80ipcD1c=
+=/N0G
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001373.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+	<LI>Next message: <A HREF="001285.html">[zfs-discuss] A feature request
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1284">[ date ]</a>
+              <a href="thread.html#1284">[ thread ]</a>
+              <a href="subject.html#1284">[ subject ]</a>
+              <a href="author.html#1284">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

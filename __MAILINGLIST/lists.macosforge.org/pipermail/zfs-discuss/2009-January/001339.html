@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs /GUID-partition table Recovery tools
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20/GUID-partition%20table%20Recovery%20tools&In-Reply-To=%3C42FF4881-403D-4400-841A-7CB90407A7C7%40macnews.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001338.html">
+   <LINK REL="Next"  HREF="001340.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs /GUID-partition table Recovery tools</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20/GUID-partition%20table%20Recovery%20tools&In-Reply-To=%3C42FF4881-403D-4400-841A-7CB90407A7C7%40macnews.de%3E"
+       TITLE="[zfs-discuss] zfs /GUID-partition table Recovery tools">i_see at macnews.de
+       </A><BR>
+    <I>Sun Jan 18 15:03:34 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001338.html">[zfs-discuss] something new :) panic()
+</A></li>
+        <LI>Next message: <A HREF="001340.html">[zfs-discuss] bug report, MS Word &amp; ZFS.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1339">[ date ]</a>
+              <a href="thread.html#1339">[ thread ]</a>
+              <a href="subject.html#1339">[ subject ]</a>
+              <a href="author.html#1339">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+I use an Mac-mini and a couple of USB-enclosures for my data-storage  
+needs.
+due to cabling problems, (and due to the fact I don't want a couple of  
+humming HDs in my living-room) I can currently only use USB for my  
+data transfer.
+
+I don't mind (very much) that the transfer speed is not too high, i  
+just need a cheap and reliable solution. (Cheap should also apply to  
+the cost of electricity.)
+
+Until recently this has worked reasonably well, but somehow the  
+combination of a particular enclosure with my relatively new WD 1GB  
+GreenLine disk has produced a number of problems.
+
+ZFS is generally quite robust in a mirrored configuration, but leaves  
+one in the complete cold when it cannot make sense out of the main  
+ueberblocks (or disk labels). As I have understood, it should be  
+relatively easy to write a tool that gets date from the latest  
+snapshot if the main ueberblock gets damaged afterwards, but to my  
+knowledge such a tool has not been written yet (That could be zfs list/ 
+send applied to a non-importable pool.)
+
+Another odd problem I have is a damaged partition map on my WD drive.
+&gt;<i> bertlinge:~ Susalf$ ls -l /dev/disk2*
+</I>&gt;<i> brw-r-----  1 Susalf  operator   14,   6 15 Jan 22:00 /dev/disk2
+</I>&gt;<i> brw-r-----  1 Susalf  operator   14,   7 15 Jan 22:00 /dev/disk2s1
+</I>&gt;<i> brw-r-----  1 Susalf  operator   14,   8 15 Jan 22:00 /dev/disk2s2
+</I>&gt;<i> brw-r-----  1 Susalf  operator   14,  10 15 Jan 22:00 /dev/disk2s3
+</I>&gt;<i> brw-r-----  1 Susalf  operator   14,  11 15 Jan 22:00 /dev/disk2s4
+</I>&gt;<i> brw-r-----  1 Susalf  operator   14,   9 15 Jan 22:00 /dev/disk2s5
+</I>&gt;<i> bertlinge:~ Susalf$ zpool status
+</I>&gt;<i>   pool: Katz
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i> status: One or more devices has experienced an unrecoverable error.   
+</I>&gt;<i> An
+</I>&gt;<i> 	attempt was made to correct the error.  Applications are unaffected.
+</I>&gt;<i> action: Determine if the device needs to be replaced, and clear the  
+</I>&gt;<i> errors
+</I>&gt;<i> 	using 'zpool clear' or replace the device with 'zpool replace'.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-9P">http://www.sun.com/msg/ZFS-8000-9P</A>
+</I>&gt;<i>  scrub: scrub completed with 0 errors on Fri Jan 16 04:08:19 2009
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i> 	Katz         ONLINE       0     0     0
+</I>&gt;<i> 	  mirror     ONLINE       0     0     0
+</I>&gt;<i> 	    disk2s5  ONLINE       0     0     1
+</I>&gt;<i> 	    disk1s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i> bertlinge:~ Susalf$ diskutil list /dev/disk2
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *931.5 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk2s1
+</I>&gt;<i>    2:                        ZFS                         120.0 Gi    
+</I>&gt;<i> disk2s2
+</I>&gt;<i> bertlinge:~ Susalf$
+</I>Somehow diskutil does not recognize most of my partitions while ZFS is  
+merrily accessing at least one of my &quot;invisible&quot; partitions.
+The point is, I would really like to get some date from an HFS+  
+partition on that drive and from another damaged ZFS pool that is  
+currently non-importable.
+Now it looks a bit like all the redundant blocks in ZFS are of little  
+help when you can still have a single point of failure in your  
+partition map.
+
+ From what I had read, I suspected the Mac port would use diskutil to  
+search for ZFS partitions, but this seems to be not entirely correct.
+1. Is there a recommended way to try mounting and/or repairing the  
+partitions.
+2. What data would need to save do some external non-volatile storage  
+to be able to repair the partition-map on a GUID-disk
+3. Whats the easiest way to re-import get the data from a broken ZFS- 
+Volume.
+4. Are there any firmware patches or settings that force testing the  
+data written to a USB-device has actually been written to the disk? (I  
+mean, no matter how superior FireWire is, its just binary data, so its  
+either there or not. It should be possible to get it where it belongs,  
+even if its slower than it could/should be).
+5. Since some enclosures work very well, can anyone point me to the  
+right ones or are there good test utilities, so I can be reasonably  
+sure before I move my data onto them?
+6. (Probably this list is the wrong place to ask this). I've got some  
+old server hardware and want to build a file-/backup server on it,  
+preferably deploying ZFS.
+Obviously, I want to access it from a Mac, other potential users will  
+likely use Windows or Linux. Can anyone point me to good how-tos or  
+recommendations  on disk-controllers and solaris vs. Linux vs. FreeBsd  
+vs. Darwin as a Server OS. (This really has to be cheap, so I cannot  
+make investments on Hard- or Software.
+
+Thanks,	
+	ralf
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001338.html">[zfs-discuss] something new :) panic()
+</A></li>
+	<LI>Next message: <A HREF="001340.html">[zfs-discuss] bug report, MS Word &amp; ZFS.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1339">[ date ]</a>
+              <a href="thread.html#1339">[ thread ]</a>
+              <a href="subject.html#1339">[ subject ]</a>
+              <a href="author.html#1339">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

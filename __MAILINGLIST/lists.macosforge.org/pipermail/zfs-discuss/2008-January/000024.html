@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel panic after SATA cable change
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20panic%20after%20SATA%20cable%20change&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000061.html">
+   <LINK REL="Next"  HREF="000034.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel panic after SATA cable change</H1>
+    <B>Jonathan Borden</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20panic%20after%20SATA%20cable%20change&In-Reply-To="
+       TITLE="[zfs-discuss] Kernel panic after SATA cable change">zfs-discuss at openhealth.org
+       </A><BR>
+    <I>Thu Jan 17 19:12:57 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000061.html">[zfs-discuss] Filename conventions
+</A></li>
+        <LI>Next message: <A HREF="000034.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I had created a zpool with 2 stripes of 3x250 Gb RAIDZ (total size 1 tb) and
+then copied a bunch of files to the array.These discs are located in two 5
+bay enclosures attached to a Sonnet X4P eSATA PM card.
+
+Subsequently I shut down the computer (Powermac G5 dual 2.0 PCI-X version)
+in order to add a Sonnet Tempo-X eSATA 8 card. Of course I had to move all
+my cards around and moved the X4P into slot-4, tempo-X into slot-3 and a
+dual intet gigabit ethernet card into slot-2.
+
+Of course the cables were connected and disconnected.
+
+When trying to reboot, the machine kernel panics during startup if I have
+both of the enclosures connected with all the drives in the enclosure. If I
+remove all the 250Gb drives from the enclosure the machine boots fine. The
+panic was in the process: zpool.
+
+Ideas?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080117/814c5d48/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080117/814c5d48/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000061.html">[zfs-discuss] Filename conventions
+</A></li>
+	<LI>Next message: <A HREF="000034.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] OpenSolaris as Server for MacOS X 10.5 - [a bit	off-topic, sorry]
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20OpenSolaris%20as%20Server%20for%20MacOS%20X%2010.5%20-%20%5Ba%20bit%0A%09off-topic%2C%20sorry%5D&In-Reply-To=%3C3033784D-77E2-4F53-8F34-0581FB32931F%40yellowspace.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001163.html">
+   <LINK REL="Next"  HREF="001165.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] OpenSolaris as Server for MacOS X 10.5 - [a bit	off-topic, sorry]</H1>
+    <B>Lorenzo Perone</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20OpenSolaris%20as%20Server%20for%20MacOS%20X%2010.5%20-%20%5Ba%20bit%0A%09off-topic%2C%20sorry%5D&In-Reply-To=%3C3033784D-77E2-4F53-8F34-0581FB32931F%40yellowspace.net%3E"
+       TITLE="[zfs-discuss] OpenSolaris as Server for MacOS X 10.5 - [a bit	off-topic, sorry]">lopez.on.the.lists at yellowspace.net
+       </A><BR>
+    <I>Mon Dec 15 03:29:04 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001163.html">[zfs-discuss] OpenSolaris as Server for MacOS X 10.5 - [a bit off-topic, sorry]
+</A></li>
+        <LI>Next message: <A HREF="001165.html">[zfs-discuss] Questions about hot spares
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1164">[ date ]</a>
+              <a href="thread.html#1164">[ thread ]</a>
+              <a href="subject.html#1164">[ subject ]</a>
+              <a href="author.html#1164">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'd give a look at nexenta - <A HREF="http://www.nexenta.org/">http://www.nexenta.org/</A>
+haven't used it yet but if I had the need for a working
+ZFS pool server I'd go for that.
+You should be able to get netatalk (2.x) compiled
+on it (there's no package for it yet) so that
+shouldn't give any problems for the beginning.
+
+The downside is extended attributes and acls support:
+the former aren't placed in their appropriate space
+(but rather homed in several .AppleDouble directories),
+the latter aren't supported at all afaik. So that means
+You'd have to retransfer the files over the Finder when
+ZFS is available bugfree for Mac OS X.
+(same problem with NFS afaik - with the only difference
+that you'd have lots of ._file files instead of
+the netatalk .AppleDouble dirs)
+
+Regards,
+
+Lorenzo
+
+On 14.12.2008, at 14:43, Bernd Hofmann wrote:
+
+&gt;<i> Hi List!
+</I>&gt;<i>
+</I>&gt;<i> Im on my new MacBook Pro now and while i have a bunch of hds which i  
+</I>&gt;<i> could connect via FW800 to it i would like to have the flexibility  
+</I>&gt;<i> to go with my shiny book wherever i want in my house and have all  
+</I>&gt;<i> the hds in a ZFS-related Server, so, maybe OSolaris in it's newest  
+</I>&gt;<i> Version.
+</I>&gt;<i>
+</I>&gt;<i> I think this could be the way to go for the time being as long as  
+</I>&gt;<i> zfs on mac os isn't finally mature.
+</I>&gt;<i>
+</I>&gt;<i> So the question is: is there anyone on the list who considered this  
+</I>&gt;<i> or have already an OS-server running in his home? Any  
+</I>&gt;<i> recommendations or links for that?
+</I>&gt;<i>
+</I>&gt;<i> What i would like to do is to serve my media-library (musik, films,  
+</I>&gt;<i> learning media, etc.) from that server with 5 or max. 8 HDs as  
+</I>&gt;<i> raidz. Also i would like to use it for Apache, RoR and  
+</I>&gt;<i> Webapplication related work, it would be great if there was a way to  
+</I>&gt;<i> remote-administer the server from my macbook in an timbuktu-like  
+</I>&gt;<i> style way...
+</I>&gt;<i>
+</I>&gt;<i> Any takers on this?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks, and sorry for the off-topicness of this mail,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Bernd
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001163.html">[zfs-discuss] OpenSolaris as Server for MacOS X 10.5 - [a bit off-topic, sorry]
+</A></li>
+	<LI>Next message: <A HREF="001165.html">[zfs-discuss] Questions about hot spares
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1164">[ date ]</a>
+              <a href="thread.html#1164">[ thread ]</a>
+              <a href="subject.html#1164">[ subject ]</a>
+              <a href="author.html#1164">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS on Mac OS X in production use?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20on%20Mac%20OS%20X%20in%20production%20use%3F&In-Reply-To=EBD66233-0050-4D81-9017-300417D6BCA4%40fusion.gat.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000530.html">
+   <LINK REL="Next"  HREF="000532.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS on Mac OS X in production use?</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20on%20Mac%20OS%20X%20in%20production%20use%3F&In-Reply-To=EBD66233-0050-4D81-9017-300417D6BCA4%40fusion.gat.com"
+       TITLE="[zfs-discuss] ZFS on Mac OS X in production use?">zorg at sogeeky.net
+       </A><BR>
+    <I>Mon Apr 21 14:12:54 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000530.html">[zfs-discuss] ZFS on Mac OS X in production use?
+</A></li>
+        <LI>Next message: <A HREF="000532.html">[zfs-discuss] ZFS on Mac OS X in production use?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#531">[ date ]</a>
+              <a href="thread.html#531">[ thread ]</a>
+              <a href="subject.html#531">[ subject ]</a>
+              <a href="author.html#531">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think the fact that the read/write drivers are still beta should be  
+answer enough to your first question. That said, some people are using  
+it in &quot;production&quot; environments, but its suitability for that depends  
+greatly on your intended usage and whether or not any of the known  
+limitations are important to you.
+
+As for growing the pool. Yes, you've got it correct. You can add more  
+disks, raidz, or mirrors to a pool just fine. But as you say, you  
+can't grow a raidz.
+
+On Apr 21, 2008, at 1:58 PM, David Miller &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">millerdc at fusion.gat.com</A>&gt;  
+wrote:
+
+&gt;<i> It would appear there are a few people on this list using ZFS 
+</I>&gt;<i> +Leopard in production. Is ZFS under Mac OS X really ready to be  
+</I>&gt;<i> used for production file storage and backups?
+</I>&gt;<i>
+</I>&gt;<i> I also had a question about pools. is a pool the total size of  
+</I>&gt;<i> storage you have in the pool? I know you can't grow a raidz by  
+</I>&gt;<i> adding another disk but could you add multiple raidz's to a pool?  
+</I>&gt;<i> for example could I do this
+</I>&gt;<i>
+</I>&gt;<i> zpool create tank raidz disk2 disk3 disk4
+</I>&gt;<i>
+</I>&gt;<i> Then later add another raidz to the tank pool to increase the  
+</I>&gt;<i> storage of that filesystem? if so could I also add mirrors to the  
+</I>&gt;<i> pool?
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> David.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000530.html">[zfs-discuss] ZFS on Mac OS X in production use?
+</A></li>
+	<LI>Next message: <A HREF="000532.html">[zfs-discuss] ZFS on Mac OS X in production use?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#531">[ date ]</a>
+              <a href="thread.html#531">[ thread ]</a>
+              <a href="subject.html#531">[ subject ]</a>
+              <a href="author.html#531">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

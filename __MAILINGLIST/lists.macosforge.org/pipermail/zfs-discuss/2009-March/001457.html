@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] First time user: Some questions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3C20090302.170143.179791369.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001455.html">
+   <LINK REL="Next"  HREF="001458.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] First time user: Some questions</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3C20090302.170143.179791369.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] First time user: Some questions">hanche at math.ntnu.no
+       </A><BR>
+    <I>Mon Mar  2 08:01:43 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001455.html">[zfs-discuss] First time user: Some questions
+</A></li>
+        <LI>Next message: <A HREF="001458.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1457">[ date ]</a>
+              <a href="thread.html#1457">[ thread ]</a>
+              <a href="subject.html#1457">[ subject ]</a>
+              <a href="author.html#1457">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ John Hendy &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jw.hendy at gmail.com</A>&gt;:
+
+&gt;<i> What if my pool (and the filesystem on it) holds my user folder? I
+</I>&gt;<i> have been unsuccessful in unmounting/exporting it, as it's in use
+</I>&gt;<i> whenever I'm logged on.
+</I>
+Good question. I find lots of information on developper.apple.com
+about the login and startup procedure, but very little on shutdown and
+logout. And that is when you want to run cleanup scripts.
+
+&gt;<i> - What would I have to change to use this as a bash script, if you'd
+</I>&gt;<i> be able to offer that info...
+</I>
+Oh, well, I wasn't going to do that, but here is a quick-n-dirty
+translation. It even works in a simple case, but may not be
+sufficiently robust. Again, there needs to be a literal TAB character
+before the word &quot;yes&quot;.
+
+
+#!/bin/sh
+if [ $# -ne 1 ]; then
+  echo Usage: $0 '&lt;pool&gt;' &gt;&amp;2
+  exit 1
+fi
+if [ &quot;`id -u`&quot; -ne 0 ]; then
+  echo Running under sudo ...
+  exec sudo $0 &quot;$@&quot;
+fi
+for mp in \
+  `zfs list -Hrt filesystem -o mountpoint,mounted -S name $1 |\
+   sed -ne 's|	yes||p'`; do
+    echo Unmounting $mp
+    diskutil unmount $mp || exit 1
+done
+echo Exporting $1
+zpool export $1
+
+
+&gt;<i> - Do you think I could run this at logout successfully (as a logout hook)?
+</I>
+Only if the logout hook runs after all your other processes are
+shutdown, so that the home filesystem is not busy. I don't know if it
+does, or if there is a way to run a script at that time. On freebsd
+there is /etc/rc.shutdown, but osx doesn't seem to have anything like
+it.
+
+- Harald
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001455.html">[zfs-discuss] First time user: Some questions
+</A></li>
+	<LI>Next message: <A HREF="001458.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1457">[ date ]</a>
+              <a href="thread.html#1457">[ thread ]</a>
+              <a href="subject.html#1457">[ subject ]</a>
+              <a href="author.html#1457">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

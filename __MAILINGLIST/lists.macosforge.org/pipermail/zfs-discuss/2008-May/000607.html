@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Best procedure for unmounting
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Best%20procedure%20for%20unmounting&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000606.html">
+   <LINK REL="Next"  HREF="000610.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Best procedure for unmounting</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Best%20procedure%20for%20unmounting&In-Reply-To="
+       TITLE="[zfs-discuss] Best procedure for unmounting">hanche at math.ntnu.no
+       </A><BR>
+    <I>Wed May 28 02:40:40 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000606.html">[zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+</A></li>
+        <LI>Next message: <A HREF="000610.html">[zfs-discuss] Best procedure for unmounting
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#607">[ date ]</a>
+              <a href="thread.html#607">[ thread ]</a>
+              <a href="subject.html#607">[ subject ]</a>
+              <a href="author.html#607">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have a memory stick with this structure:
+
+; zpool list
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+zetastick2             3.84G    118M   3.73G     2%  ONLINE     -
+; zfs list
+NAME                        USED  AVAIL  REFER  MOUNTPOINT
+zetastick2                  118M  3.67G  69.5K  /Volumes/zetastick2
+zetastick2/n81              117M  3.67G   116M  /Volumes/zetastick2/n81
+zetastick2/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">n81 at 2008-05-27</A>  1.70M      -   117M  -
+
+The best procedure I have managed to come up with for unmounting all
+this is
+
+; zfs unmount /Volumes/zetastick2/n81
+; diskutil unmount /Volumes/zetastick2
+ ... which produces a GUI prompt for admin password
+; zpool export zetastick2
+
+In principle, I thought only the final step should be needed, as zpool
+export will take care of all unmounting. And indeed, it does unmount
+zetastick2/n81, after which it complains:
+
+cannot unmount '/Volumes/zetastick2': Resource busy
+
+I get the same using &quot;zfs unmount /Volumes/zetastick2&quot;.
+
+Maybe fseventsd is at the root of the problem:
+
+; sudo lsof +f -- /Volumes/zetastick2
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/zetastick2/.fseventsd/0000000000efd051
+
+Perhaps diskutil takes care of telling fseventsd to back off.
+
+
+So am I doing something wrong? Is unmounting supposed to be this
+difficult? Or is it just a bug and the beta nature of zfs support on
+the mac that bites? Will things improve? Should I file a bug report?
+(I am using the latest zfs software, btw.)
+
+- Harald
+
+PS. Yes, I know; in practice, having more than one filesystem in a
+pool on a memory stick is probably silly. But I am experimenting in
+preparation for using bigger disks.
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000606.html">[zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+</A></li>
+	<LI>Next message: <A HREF="000610.html">[zfs-discuss] Best procedure for unmounting
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#607">[ date ]</a>
+              <a href="thread.html#607">[ thread ]</a>
+              <a href="subject.html#607">[ subject ]</a>
+              <a href="author.html#607">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

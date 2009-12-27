@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] data corruption
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20data%20corruption&In-Reply-To=0DC34084-F82E-4AFB-8469-CFBEA4C59DB7%40att.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000437.html">
+   <LINK REL="Next"  HREF="000439.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] data corruption</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20data%20corruption&In-Reply-To=0DC34084-F82E-4AFB-8469-CFBEA4C59DB7%40att.net"
+       TITLE="[zfs-discuss] data corruption">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Wed Apr  9 11:14:24 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000437.html">[zfs-discuss] data corruption
+</A></li>
+        <LI>Next message: <A HREF="000439.html">[zfs-discuss] data corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#438">[ date ]</a>
+              <a href="thread.html#438">[ thread ]</a>
+              <a href="subject.html#438">[ subject ]</a>
+              <a href="author.html#438">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>good workoround, i just don't happen to have 2 tb of space to copy the  
+data off : )
+
+but thanks for your reply tough....
+
+the filesystems vere obvioulsy not corrupted because the ones who i  
+care of are just sparsebundles, and they mount fine....
+
+
+
+On Apr 9, 2008, at 8:06 PM, Michael Eberlein wrote:
+
+&gt;<i> Franz,
+</I>&gt;<i>
+</I>&gt;<i>  I had the same problem, which I mentioned a little earlier in the  
+</I>&gt;<i> kernel panic discussion (zpool status -v caused an immediate kernel  
+</I>&gt;<i> panic).  Additionally, attempting certain disk operations (such as  
+</I>&gt;<i> moving the files via iTunes -&gt; I was using my pool as an AV drive)  
+</I>&gt;<i> would cause the computer to die with no way to figure out the problem.
+</I>&gt;<i>
+</I>&gt;<i> In the process of copying the salvageable data from the pool, I  
+</I>&gt;<i> found a workaround.  The damaged files will fail when you copy them  
+</I>&gt;<i> over to a known good drive (I used cp -R -v and just located the  
+</I>&gt;<i> files that generated error messages).  All other files were good.   
+</I>&gt;<i> (The bad files were partially copied over, but easily identified and  
+</I>&gt;<i> deleted.  Fortunately it was a video library so I could just rerip..)
+</I>&gt;<i>
+</I>&gt;<i> Of course, this required copying the ENTIRE POOL.  Takes awhile for  
+</I>&gt;<i> a 400GB library over USB :)
+</I>&gt;<i>
+</I>&gt;<i> After doing this, I destroyed the pool and started over.   Now I can  
+</I>&gt;<i> finally do zpool status again...
+</I>&gt;<i>
+</I>&gt;<i> Mike
+</I>&gt;<i>
+</I>&gt;<i> On Apr 9, 2008, at 7:49 PM, Franz Schmalzl wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> hi folks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> One or more devices has experienced an error resulting in data
+</I>&gt;&gt;<i> 	corruption.  Applications may be affected.
+</I>&gt;&gt;<i> action: Restore the file in question if possible.  Otherwise  
+</I>&gt;&gt;<i> restore the
+</I>&gt;&gt;<i> 	entire pool from backup.
+</I>&gt;&gt;<i>  see: <A HREF="http://www.sun.com/msg/ZFS-8000-8A">http://www.sun.com/msg/ZFS-8000-8A</A>
+</I>&gt;&gt;<i> scrub: scrub in progress, 4.99% done, 3h48m to go
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	NAME         STATE     READ WRITE CKSUM
+</I>&gt;&gt;<i> 	raidtank     ONLINE       0     0     0
+</I>&gt;&gt;<i> 	  raidz1     ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk2s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk1s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk3s2  ONLINE       0     0     0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> errors: 1399 data errors, use '-v' for a list
+</I>&gt;&gt;<i> jrg:zfs ruebezahl$
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> i got this recently when two of my stupid WD drives went to sleep  
+</I>&gt;&gt;<i> during a resilver *argh*
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> now the data it was resilvering is completely unimportant ( it was  
+</I>&gt;&gt;<i> a faulted test backup )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> i deleted the files....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> now i only hope the files wich were already present before are not  
+</I>&gt;&gt;<i> affected...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> first one went to sleep during the backup, i woke it up again and  
+</I>&gt;&gt;<i> zfs started resilvering... during that process the other one went  
+</I>&gt;&gt;<i> to sleep ( for odd reasons )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> it suddenly began to give me read write errors....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> so no important data should be affected, the actual problem is that  
+</I>&gt;&gt;<i> i can't verify becaus zpool status -v freezes my system comlpetely...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> any ideas ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> kind regards
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> franz_______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000437.html">[zfs-discuss] data corruption
+</A></li>
+	<LI>Next message: <A HREF="000439.html">[zfs-discuss] data corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#438">[ date ]</a>
+              <a href="thread.html#438">[ thread ]</a>
+              <a href="subject.html#438">[ subject ]</a>
+              <a href="author.html#438">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

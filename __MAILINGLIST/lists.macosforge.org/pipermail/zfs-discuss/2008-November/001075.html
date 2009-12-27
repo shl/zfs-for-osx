@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Ready for my data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3C19ca54260811171729m27b38207n4e5ea44d506b90ac%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001076.html">
+   <LINK REL="Next"  HREF="001079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Ready for my data</H1>
+    <B>Chris Suter</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3C19ca54260811171729m27b38207n4e5ea44d506b90ac%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] ZFS Ready for my data">csuter at sutes.co.uk
+       </A><BR>
+    <I>Mon Nov 17 17:29:52 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001076.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+        <LI>Next message: <A HREF="001079.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1075">[ date ]</a>
+              <a href="thread.html#1075">[ thread ]</a>
+              <a href="subject.html#1075">[ subject ]</a>
+              <a href="author.html#1075">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Nov 18, 2008 at 4:42 AM, Kevin Elliott &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kevin_elliott at apple.com</A>&gt; wrote:
+
+&gt;<i> Most of the time the problem isn't that diskarbitrationd is slowed down,
+</I>&gt;<i> it's that diskarbitrationd didn't even start mounting  external volumes
+</I>&gt;<i> until you login.  When you've got a lot of partitions that can take a while.  The
+</I>&gt;<i> link below describes a hidden setting you can configure to tell diskarb
+</I>&gt;<i> to start mounting volume immediately:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.macosxhints.com/article.php?story=20031103155828117">http://www.macosxhints.com/article.php?story=20031103155828117</A>
+</I>
+Well it definitely works more reliably if you wait a while before
+logging in. I'm guessing this is because Disk Arbitration still does
+stuff before log-in (probing and other pre-mount stuff). Whilst the
+solution you link to above helps, a more fine grained equivalent to
+the above would be to put something in /etc/fstab and use the &quot;auto&quot;
+option.
+
+Having said all that, I've looked into it a bit and it looks like the
+HomeDirMechanism plugin (the Security Agent plugin that sorts out home
+directories) will mount home directories automatically provided the
+home directory location has a &quot;/Volumes/&quot; prefix. It would have been
+nice if they'd used realpath before checking this
+(<A HREF="rdar://problem/6379785">rdar://problem/6379785</A> &#8212; others please file duplicates).
+
+I've changed my home directory location (using dscl) and now
+everything seems to work fine.
+
+-- Chris
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001076.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+	<LI>Next message: <A HREF="001079.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1075">[ date ]</a>
+              <a href="thread.html#1075">[ thread ]</a>
+              <a href="subject.html#1075">[ subject ]</a>
+              <a href="author.html#1075">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

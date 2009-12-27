@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=A78EDE51-82FC-49A3-9F41-80F0E1D766E5%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000350.html">
+   <LINK REL="Next"  HREF="000351.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=A78EDE51-82FC-49A3-9F41-80F0E1D766E5%40spamfreemail.de"
+       TITLE="[zfs-discuss] raidz">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Wed Mar 19 13:50:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000350.html">[zfs-discuss] raidz
+</A></li>
+        <LI>Next message: <A HREF="000351.html">[zfs-discuss] time machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#352">[ date ]</a>
+              <a href="thread.html#352">[ thread ]</a>
+              <a href="subject.html#352">[ subject ]</a>
+              <a href="author.html#352">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>see man diskutil
+On 19 Mar 2008, at 20:48, Franz Schmalzl wrote:
+
+&gt;<i> what does the %noformat% mean ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 19.03.2008, at 20:16, Boyd Waters wrote:
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> Currently though,
+</I>&gt;&gt;&gt;<i> there are no bugs which would cause raidz data loss at all.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have two small raidz arrays, four disks each, one is 4x500GB the
+</I>&gt;&gt;<i> other 4x1TB. I have *hammered* on these arrays with large files,
+</I>&gt;&gt;<i> millions of small files, rsync transfers, backups, etc. Though there
+</I>&gt;&gt;<i> have been many kernel panics along the way, I have never experienced
+</I>&gt;&gt;<i> any data loss.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I did it the way it says in the README:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> # diskutil partitionDisk disk{2,3,4,5} GPTFormat ZFS %noformat% 100%
+</I>&gt;&gt;&gt;<i> #sudo zpool create wombat raidz disk{2,3,4,5}s2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000350.html">[zfs-discuss] raidz
+</A></li>
+	<LI>Next message: <A HREF="000351.html">[zfs-discuss] time machine
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#352">[ date ]</a>
+              <a href="thread.html#352">[ thread ]</a>
+              <a href="subject.html#352">[ subject ]</a>
+              <a href="author.html#352">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

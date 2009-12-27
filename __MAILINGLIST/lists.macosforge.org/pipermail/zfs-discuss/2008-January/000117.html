@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=34F1533F-D65A-4FBC-B593-6B40BE31E1BB%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000100.html">
+   <LINK REL="Next"  HREF="000121.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=34F1533F-D65A-4FBC-B593-6B40BE31E1BB%40spamfreemail.de"
+       TITLE="[zfs-discuss] raidz">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Jan 29 15:03:08 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000100.html">[zfs-discuss] raidz
+</A></li>
+        <LI>Next message: <A HREF="000121.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#117">[ date ]</a>
+              <a href="thread.html#117">[ thread ]</a>
+              <a href="subject.html#117">[ subject ]</a>
+              <a href="author.html#117">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There's no current plans to add this functionality as of yet.  Since  
+this is a rather uninteresting problem for Solaris (a Thumper has 48  
+drives stock), it's not a problem they are concerned with, and we at  
+Apple are working on stability and other more basic features like  
+Spotlight bugs and Finder.
+
+We may consider doing this in the future at some point but even so it  
+would be quite a while as it's a complicated problem since our raidz  
+geometry is complex and as part of adding a drive we'd somehow have to  
+'rebalance' the raidz set when you add the new drive.
+
+So for now, I'm afraid Bob is going to have to start saving his  
+pennies and have multiple raidz sets in the pool :)
+
+Noel
+
+On Jan 27, 2008, at 3:28 AM, Franz Schmalzl wrote:
+
+&gt;<i> Thanks for the info, i already knew this was possible tough.
+</I>&gt;<i> And it certainly would be a better solution for a storage company or  
+</I>&gt;<i> really big offices.
+</I>&gt;<i>
+</I>&gt;<i> But Bob doesn't have that much money :)
+</I>&gt;<i>
+</I>&gt;<i> So adding just one drive would be way better for him....
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 26, 2008, at 7:17 AM, Franz Schmalzl wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> use case: bob has a raidz with 4 500g drives in his home office,  
+</I>&gt;&gt;&gt;<i> and he recognises he needs more storage.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In this case you can add to the *pool* by creating another 4-way  
+</I>&gt;&gt;<i> raidz and then adding that to the existing pool.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So bob would have to purchase four drives,
+</I>&gt;&gt;<i> zpool add tank disk{6,7,8,9}s2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> where &quot;tank&quot; is the name of the existing pool.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And you'd actually have two raidz arrays, with striping between  
+</I>&gt;&gt;<i> them. Overhead would be one disk from each raidz.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Note that tne four new disks do NOT have to be the same size as the  
+</I>&gt;&gt;<i> original array's disks (but should be the same size themselves).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have four 500-gig SATA disks in a really neat Addonics port- 
+</I>&gt;&gt;<i> multiplier enclosure for my raidz. The total cost was $750. I've  
+</I>&gt;&gt;<i> just purchased my fourth terabyte drive, so I'm going to add four 1- 
+</I>&gt;&gt;<i> TB drives to my pool. One of the 500 GB drives and one of the 1-TB  
+</I>&gt;&gt;<i> drives worth of storage will be parity overhead.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I *think* I'll see something like
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ zpool status
+</I>&gt;&gt;<i> pool: tank
+</I>&gt;&gt;<i> state: ONLINE
+</I>&gt;&gt;<i> scrub: none requested
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	NAME         STATE     READ WRITE CKSUM
+</I>&gt;&gt;<i> 	tank         ONLINE       0     0     0
+</I>&gt;&gt;<i> 	  raidz1     ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk2s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk3s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk4s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk5s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	  raidz1     ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk6s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk7s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk8s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk9s2  ONLINE       0     0     0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This isn't the same thing as what you're asking for, of course. But  
+</I>&gt;&gt;<i> there is a way to expand your existing pool, and the filesystems in  
+</I>&gt;&gt;<i> your pool should be able to use the new storage.  As a bonus, I/O  
+</I>&gt;&gt;<i> performance may go up somewhat.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000100.html">[zfs-discuss] raidz
+</A></li>
+	<LI>Next message: <A HREF="000121.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#117">[ date ]</a>
+              <a href="thread.html#117">[ thread ]</a>
+              <a href="subject.html#117">[ subject ]</a>
+              <a href="author.html#117">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C77DF43AB-65CE-43BD-BA69-6B0F94BEF81B%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001907.html">
+   <LINK REL="Next"  HREF="001911.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>Dominic Giampaolo</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C77DF43AB-65CE-43BD-BA69-6B0F94BEF81B%40apple.com%3E"
+       TITLE="[zfs-discuss] must watch.">dbg at apple.com
+       </A><BR>
+    <I>Fri Oct  9 16:33:55 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001907.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001911.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1908">[ date ]</a>
+              <a href="thread.html#1908">[ thread ]</a>
+              <a href="subject.html#1908">[ subject ]</a>
+              <a href="author.html#1908">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> There is a possible technical answer to a question everone asks  
+</I>&gt;<i> themselves on that list starting at about minute 22!
+</I>&gt;<i>
+</I>Without implying anything about why ZFS was not shipped with
+SnowLeopard, the discussion that starts out at minute 22
+exposes some continued mis-understanding by Mr. Bonwick and
+crew.  I have a great deal of respect for Jeff but I am a
+bit surprised that he's not aware of these issues.
+
+At around 23:45 or so he says that &quot;laptops never experience
+problems with flush-track-cache because they have a battery
+and thus never lose power&quot;.   While it is true that laptops
+have batteries, machines still crash and/or get force rebooted.
+When a reboot happens the bus is reset and what the drive will
+do with dirty data sitting in its cache is undefined at that
+point.  Regardless of what the specs say, some drives toss any
+unwritten data while others will keep it and eventually write
+it after the reset.
+
+To be fair, we guarantee that all internal drives Apple ships
+will honor flush track cache so you're safe on a Mac laptop.
+However if you're running Solaris on some other brand of laptop
+you may or may not be out of luck.
+
+Last, I do not believe that the crash protection scheme used
+by ZFS can ever work reliably on drives that drop the flush
+track cache request.  The only approach that is guaranteed to
+work is to keep enough data in a log that when you remount the
+drive, you can replay more data than the drive could have kept
+cached.  This is effectively what the journal on HFS has done
+since Leopard.
+
+
+--dominic
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001907.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001911.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1908">[ date ]</a>
+              <a href="thread.html#1908">[ thread ]</a>
+              <a href="subject.html#1908">[ subject ]</a>
+              <a href="author.html#1908">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

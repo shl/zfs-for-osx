@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] endless scrub
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20endless%20scrub&In-Reply-To=%3C39CA9DC1-42AB-4EA7-BBBD-60FAABE0ED0D%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001365.html">
+   <LINK REL="Next"  HREF="001367.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] endless scrub</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20endless%20scrub&In-Reply-To=%3C39CA9DC1-42AB-4EA7-BBBD-60FAABE0ED0D%40gmail.com%3E"
+       TITLE="[zfs-discuss] endless scrub">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Sun Jan 25 02:30:40 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001365.html">[zfs-discuss] endless scrub
+</A></li>
+        <LI>Next message: <A HREF="001367.html">[zfs-discuss] endless scrub
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1366">[ date ]</a>
+              <a href="thread.html#1366">[ thread ]</a>
+              <a href="subject.html#1366">[ subject ]</a>
+              <a href="author.html#1366">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In my crontab, I explicitly look for a scrub completed message before  
+doing an hourly snapshot. That way, the scrub can complete and  
+snapshots automatically resume. I posted it on by blog  
+(alblue.blogspot.com) a while back if you're interested.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 25 Jan 2009, at 04:10, Christian Kendi &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at ironsoftware.de</A>&gt; wrote:
+
+&gt;<i> Yes, i have. Thanks.
+</I>&gt;<i>
+</I>&gt;<i> El Jan 24, 2009, a las 8:21 PM, Mr. Zorg escribi&#243;:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Others who have seen such behavior had snapshots scheduled in their  
+</I>&gt;&gt;<i> crontab. Do you?  If so, try turning them off.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 24, 2009, at 2:32 PM, Christian Kendi &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at ironsoftware.de</A>&gt;  
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;&gt;&gt;<i> Hash: SHA1
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> what could cause an endless scrub ?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I started to scrub 14h ago and the drive is still scrubbing + the  
+</I>&gt;&gt;&gt;<i> progress seems to
+</I>&gt;&gt;&gt;<i> be reset from time to time. i never saw the scrub exceed 1%.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> NAME   USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;&gt;&gt;<i> home  66.5G  37.9G   360K  none
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at kshs-Computer</A>:~ $ zpool status
+</I>&gt;&gt;&gt;<i> pool: home
+</I>&gt;&gt;&gt;<i> state: ONLINE
+</I>&gt;&gt;&gt;<i> scrub: scrub in progress, 1.92% done, 5h15m to go
+</I>&gt;&gt;&gt;<i> config:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   NAME        STATE     READ WRITE CKSUM
+</I>&gt;&gt;&gt;<i>   home        ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i>     disk2     ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> errors: No known data errors
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at kshs-Computer</A>:~ $ zpool status
+</I>&gt;&gt;&gt;<i> pool: home
+</I>&gt;&gt;&gt;<i> state: ONLINE
+</I>&gt;&gt;&gt;<i> scrub: scrub in progress, 0.01% done, 103h9m to go
+</I>&gt;&gt;&gt;<i> config:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   NAME        STATE     READ WRITE CKSUM
+</I>&gt;&gt;&gt;<i>   home        ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i>     disk2     ONLINE       0     0     0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> errors: No known data errors
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Chris.
+</I>&gt;&gt;&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;&gt;&gt;<i> Version: GnuPG v1.4.7 (Darwin)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> iD8DBQFJe5b/p+9ff145KVIRAi3oAJ4mEW+ZMHef9t6qOrnEtLzDD1U8UQCfXXj/
+</I>&gt;&gt;&gt;<i> Xzoj96e/8rd33K0DDZjQ3v0=
+</I>&gt;&gt;&gt;<i> =9Dze
+</I>&gt;&gt;&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090125/ff9ad31b/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090125/ff9ad31b/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001365.html">[zfs-discuss] endless scrub
+</A></li>
+	<LI>Next message: <A HREF="001367.html">[zfs-discuss] endless scrub
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1366">[ date ]</a>
+              <a href="thread.html#1366">[ thread ]</a>
+              <a href="subject.html#1366">[ subject ]</a>
+              <a href="author.html#1366">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

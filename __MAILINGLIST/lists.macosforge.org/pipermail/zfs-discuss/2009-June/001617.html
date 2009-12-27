@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C1C0EAA6E-107D-4FB8-B8F5-35F10EFA2028%40umn.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001616.html">
+   <LINK REL="Next"  HREF="001618.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Carl Magnuson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C1C0EAA6E-107D-4FB8-B8F5-35F10EFA2028%40umn.edu%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">magnu213 at umn.edu
+       </A><BR>
+    <I>Tue Jun  9 17:51:31 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001616.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001618.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1617">[ date ]</a>
+              <a href="thread.html#1617">[ thread ]</a>
+              <a href="subject.html#1617">[ subject ]</a>
+              <a href="author.html#1617">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Here is the output John:
+
+g5:~ bobcat$ diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *298.1 Gi    
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS Boot                    297.8 Gi    
+disk0s2
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     Apple_partition_scheme                        *232.9 Gi    
+disk1
+    1:        Apple_partition_map                         31.5 Ki     
+disk1s1
+    2:                  Apple_HFS Users                   232.8 Gi    
+disk1s3
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk2
+    1:                        EFI                         200.0 Mi    
+disk2s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk2s2
+/dev/disk3
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk3
+    1:                        EFI                         200.0 Mi    
+disk3s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk3s2
+/dev/disk4
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk4
+    1:                        EFI                         200.0 Mi    
+disk4s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk4s2
+/dev/disk5
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk5
+    1:                        EFI                         200.0 Mi    
+disk5s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk5s2
+/dev/disk6
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk6
+    1:                        EFI                         200.0 Mi    
+disk6s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk6s2
+/dev/disk7
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk7
+    1:                        EFI                         200.0 Mi    
+disk7s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk7s2
+/dev/disk8
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk8
+    1:                        EFI                         200.0 Mi    
+disk8s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk8s2
+/dev/disk9
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk9
+    1:                        EFI                         200.0 Mi    
+disk9s1
+    2:                  Apple_HFS Backup                  465.4 Gi    
+disk9s2
+/dev/disk10
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *931.5 Gi    
+disk10
+    1:                        EFI                         200.0 Mi    
+disk10s1
+    2:                  Apple_HFS Backup-G5               931.2 Gi    
+disk10s2
+/dev/disk11
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:                                                   *320.0 Ki    
+disk11
+/dev/disk12
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:                                                   *320.0 Ki    
+disk12
+
+
+g5:~ bobcat$ zpool status -v
+   pool: cpool
+  state: DEGRADED
+status: One or more devices could not be used because the label is  
+missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+  scrub: resilver completed with 0 errors on Mon Jun  8 15:15:31 2009
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	cpool                     DEGRADED     0     0     0
+	  raidz2                  DEGRADED     0     0     0
+	    disk2s2               ONLINE       0     0     0
+	    disk3s2               ONLINE       0     0     0
+	    disk6s2               ONLINE       0     0     0
+	    disk5s2               ONLINE       0     0     0
+	    disk4s2               ONLINE       0     0     0
+	    1751454142452109774   FAULTED      0     0     0  was /dev/disk8s2
+	    13962824586312699565  UNAVAIL      0     0     0  was /dev/disk9s2
+
+errors: No known data errors
+
+Thanks,
+
+Carl
+
+On Jun 9, 2009, at 7:42 PM, Jonathan Edwards wrote:
+
+&gt;<i> what's your 'diskutil list' and 'zpool status -v' look like now?
+</I>&gt;<i>
+</I>&gt;<i> from your previous output it appears that the vdev label got  
+</I>&gt;<i> corrupted somehow on the disk, and there's another disk that you  
+</I>&gt;<i> appear to be using for backup, but it's hard to tell which is which  
+</I>&gt;<i> right now
+</I>&gt;<i>
+</I>&gt;<i> btw - the /dev/disk value shouldn't matter as the zfs pool  
+</I>&gt;<i> information is stored on the disks themselves (not tied to the /dev  
+</I>&gt;<i> entry) .. we used to always demonstrate this by building a pool,  
+</I>&gt;<i> exporting it, moving the disks all around and re-importing it.
+</I>&gt;<i>
+</I>&gt;<i> ---
+</I>&gt;<i> .je
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001616.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001618.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1617">[ date ]</a>
+              <a href="thread.html#1617">[ thread ]</a>
+              <a href="subject.html#1617">[ subject ]</a>
+              <a href="author.html#1617">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

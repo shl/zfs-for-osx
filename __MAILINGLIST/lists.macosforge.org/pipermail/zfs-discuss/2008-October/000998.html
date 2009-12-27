@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Now zpool status is giving me a kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181319i7b6fb40fw44c1bb7028f47d2c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001012.html">
+   <LINK REL="Next"  HREF="001003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Now zpool status is giving me a kernel panic</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181319i7b6fb40fw44c1bb7028f47d2c%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Now zpool status is giving me a kernel panic">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Sat Oct 18 13:19:12 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001012.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+        <LI>Next message: <A HREF="001003.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me a	kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#998">[ date ]</a>
+              <a href="thread.html#998">[ thread ]</a>
+              <a href="subject.html#998">[ subject ]</a>
+              <a href="author.html#998">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi again,
+
+Rereading your email I think the operative part was &quot;in the raidz&quot;. I
+plugged in the 3 raidz drives to ports on the Mac Mini (moving the keyboard
+to the same hub with the mirrored drives). Same results. Kernel panic.
+
+I guess I should've said this since the first email. I'm running Leopard
+(10.5.5) with the latest updates and zfs-119. It might not be of much use to
+anyone but just in case, here's most of the relevant panic data. If you need
+the full backtrace or the register values just ask, I can reproduce this
+100% of the time.
+
+panic(cpu 1 caller 0x001A8CEC): Kernel trap at 0x003626de, type 14=page
+fault
+... (register data)...
+Error code: 0x00000000
+
+Debugger called: &lt;panic&gt;
+Backtrace (CPU 1), Frame: Return Address (4 potential args on stack)
+0x35f1bb88 : 0x12b0fa (0x459234 0x35f1bbbc 0x133243 0x0))
+... (rest of the backtrace) ...
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffad88
+     Kernel loadable modules in backtrace (with dependencies):
+        com.apple.filesystems.zfs(8.0)@0xb6f000-&gt;0xc3affff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: Macmini1,1 (Mac-F4208EC8)
+
+On Sat, Oct 18, 2008 at 10:04 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Thanks for replying.
+</I>&gt;<i>
+</I>&gt;<i> All of my drives (5 of them) are on a USB hub. Since the Mac Mini has only
+</I>&gt;<i> 4 USB ports (and one of them is taken up by the keyboard/mouse) I really
+</I>&gt;<i> have no other option. Why? Could moving some of them off of the hub (or
+</I>&gt;<i> changing hubs) help?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Oct 18, 2008 at 10:00 PM, Riscky Abacus &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">riscky at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Mario,
+</I>&gt;&gt;<i> Just based on my experience here... are any of your drives in your
+</I>&gt;&gt;<i> raidz USB devices? or on a USB hub?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, Oct 18, 2008 at 2:29 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; Another data point.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I booted in single user mode, did the fsck and &quot;mount -uw /&quot; and then
+</I>&gt;&gt;<i> did a
+</I>&gt;&gt;<i> &gt; &quot;zpool import&quot;. When doing a &quot;zpool status -v&quot; I get a kernel panic
+</I>&gt;&gt;<i> right
+</I>&gt;&gt;<i> &gt; after the config is shown (with all devices showing as ONLINE and with 0
+</I>&gt;&gt;<i> &gt; errors) and before where the filenames should be. I still get the &quot;One
+</I>&gt;&gt;<i> or
+</I>&gt;&gt;<i> &gt; more devices has experienced an error&quot; status message.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; If I knew just which device is giving the problem I could just unplug it
+</I>&gt;&gt;<i> &gt; (since both groups in the pool have redundancy -- one with mirroring and
+</I>&gt;&gt;<i> one
+</I>&gt;&gt;<i> &gt; with raidz) but now I'm really leery of trying to do anything that might
+</I>&gt;&gt;<i> &gt; result in data corruption.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Any ideas? HELP!!
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Sat, Oct 18, 2008 at 7:59 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;<i>                                                        --R.U. Sirius
+</I>&gt;<i>
+</I>
+
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/139a27f9/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/139a27f9/attachment-0001.html</A> 
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001012.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+	<LI>Next message: <A HREF="001003.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me a	kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#998">[ date ]</a>
+              <a href="thread.html#998">[ thread ]</a>
+              <a href="subject.html#998">[ subject ]</a>
+              <a href="author.html#998">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Finder eject vs. multiple pools
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Finder%20eject%20vs.%20multiple%20pools&In-Reply-To=8A9BC02F-4014-4518-9147-29689BFA7249%40thinkpink.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000835.html">
+   <LINK REL="Next"  HREF="000844.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Finder eject vs. multiple pools</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Finder%20eject%20vs.%20multiple%20pools&In-Reply-To=8A9BC02F-4014-4518-9147-29689BFA7249%40thinkpink.com"
+       TITLE="[zfs-discuss] Finder eject vs. multiple pools">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Sep 12 18:50:17 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000835.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+        <LI>Next message: <A HREF="000844.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#843">[ date ]</a>
+              <a href="thread.html#843">[ thread ]</a>
+              <a href="subject.html#843">[ subject ]</a>
+              <a href="author.html#843">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>you sir made the right call :)
+So in general I strongly encourage using command line for right now.   
+I&quot;m still working with the diskarb people here at Apple as well as the  
+Finder kids to work ZFS into the rest of the system.  Right now, most  
+of the system is dumbfounded when not presented with a simple /dev  
+node.  Everyone has the assumption that you have one filesystem per  
+device, which isn't the case for ZFS so it doesn't really mesh well yet.
+Working on it...
+
+Noel :)
+
+On Sep 11, 2008, at 10:54 AM, Brian Pinkerton wrote:
+
+&gt;<i> After doing some backups today from a couple of ZFS file systems on a
+</I>&gt;<i> &quot;permanent&quot; pool, I tried using the Finder to eject the backup disks
+</I>&gt;<i> (a couple of 1TB drives with a single striped ZFS pool) and got the
+</I>&gt;<i> Finder message:
+</I>&gt;<i>
+</I>&gt;<i> 	The device containing &quot;Backup2&quot; also contains 5 other volumes that
+</I>&gt;<i> will not be ejected.  Are you sure...
+</I>&gt;<i>
+</I>&gt;<i> Looks like the Finder somehow considers all ZFS filesystems to be on
+</I>&gt;<i> the same device, even if they're on completely separate devices/pools.
+</I>&gt;<i>
+</I>&gt;<i> I wasn't brave enough to just say &quot;yes&quot;, but &quot;zfs export -f Backup2&quot;
+</I>&gt;<i> worked just fine. :)
+</I>&gt;<i>
+</I>&gt;<i> bri
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000835.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+	<LI>Next message: <A HREF="000844.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#843">[ date ]</a>
+              <a href="thread.html#843">[ thread ]</a>
+              <a href="subject.html#843">[ subject ]</a>
+              <a href="author.html#843">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

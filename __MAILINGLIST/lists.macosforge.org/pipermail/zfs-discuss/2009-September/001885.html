@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Snapshots under os x
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Snapshots%20under%20os%20x&In-Reply-To=%3C20090930.183458.141037587.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001883.html">
+   <LINK REL="Next"  HREF="001877.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Snapshots under os x</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Snapshots%20under%20os%20x&In-Reply-To=%3C20090930.183458.141037587.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] Snapshots under os x">hanche at math.ntnu.no
+       </A><BR>
+    <I>Wed Sep 30 15:34:58 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001883.html">[zfs-discuss] Snapshots under os x
+</A></li>
+        <LI>Next message: <A HREF="001877.html">[zfs-discuss] Snapshots under os x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1885">[ date ]</a>
+              <a href="thread.html#1885">[ thread ]</a>
+              <a href="subject.html#1885">[ subject ]</a>
+              <a href="author.html#1885">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ Jason Belec &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jasonbelec at rogers.com</A>&gt;:
+
+&gt;<i> Harald, running the snapshots trying the script from the link you
+</I>&gt;<i> posted here. How does one know what they are named in order to clone
+</I>&gt;<i> them? Or did I miss something really obvious?
+</I>
+&quot;zfs list&quot; will show you all filesystems, snapshots, and clones.
+Add &quot;-t snapshot&quot; to get snapshots only. Add -r and the name of a
+filesystem to restrict the listing to that filesystem and its
+descendants. And so on.
+
+If you want to use the output of &quot;zfs list&quot; (or many other zpool and
+zfs subcommand), make sure to use the -H flag to get easily parseable
+output. And there is an option -o to list what properties you want.
+There's a whole truckload of information you can get with &quot;zfs list&quot;
+and &quot;zfs get&quot;. RTFM for the details.
+
+- Harald
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001883.html">[zfs-discuss] Snapshots under os x
+</A></li>
+	<LI>Next message: <A HREF="001877.html">[zfs-discuss] Snapshots under os x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1885">[ date ]</a>
+              <a href="thread.html#1885">[ thread ]</a>
+              <a href="subject.html#1885">[ subject ]</a>
+              <a href="author.html#1885">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

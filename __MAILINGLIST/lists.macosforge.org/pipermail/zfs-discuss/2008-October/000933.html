@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20hanging%20when%20a%20disk%20in%20a%20mirror%20goes%20offline&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000932.html">
+   <LINK REL="Next"  HREF="000936.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS hanging when a disk in a mirror goes offline</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20hanging%20when%20a%20disk%20in%20a%20mirror%20goes%20offline&In-Reply-To="
+       TITLE="[zfs-discuss] ZFS hanging when a disk in a mirror goes offline">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Sun Oct  5 03:53:51 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000932.html">[zfs-discuss] zfs send/recv
+</A></li>
+        <LI>Next message: <A HREF="000936.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#933">[ date ]</a>
+              <a href="thread.html#933">[ thread ]</a>
+              <a href="subject.html#933">[ subject ]</a>
+              <a href="author.html#933">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm running zfs-119 downloaded yesterday from zfs.macosforge.org.
+
+In the end I went with the &quot;sane&quot; option: 2x1TB mirrored and 3x500GB
+RAIDZ'd.
+
+I first added the mirror to the pool, since 2 of the 500GB disks currently
+have data that will be moved into ZFS. I started copying with cpio but after
+a while the copy hung.
+
+I found out that one of my 1TB disks suddenly turns itself off for no
+apparent reason. I get a bunch of IOUSBKit error messages in dmesg, and
+zpool status tells me that &quot;One or more devices could not be opened.
+Sufficient replicas exist for the pool to continue functioning in a degraded
+state&quot;. The device in question shows as UNAVAIL and the pool and the mirror
+as DEGRADED.
+
+Why does the copy hang if the pool is still usable?
+
+Now I turn the offending device off and on again. Thing is, OS X assigns it
+a new device name. So I do an ls /dev/disk*, find out which is the latest
+disk (from just a couple of seconds ago). If before it was disk4s2, it turns
+out it's now disk7s2 (I have other disks on this machine). So I do a zpool
+online plogiston /dev/disk7s2...which hangs. I next do a zpool
+status...which hangs. I have to do a hard shutdown (holding down the power
+button). I disconnect all other external hard drives to correctly identify
+the parts of the pool and restart. I only have 2 external drives: disk1s2
+(which is now online) and disk2s2 (which doesn't appear in zpool status, it
+still says disk4s2). So I try a zpool online /dev/disk2s2 and it tells me
+that device is not part of the pool. So now I seem to have half a mirror
+(whichfor some reason is resilvering) and another disk which is completely
+unavailable.
+
+How could I recover from this situation?
+
+At this point I could recreate the pool since I still have the original data
+in the 2x500GB disks, but in the end these will be RAIDZ'ed with another
+500GB and added to the pool. I of course need to get the faulty 1TB disk
+replaced but at this point I don't think I can trust ZFS to give it all my
+data. I would really like to know what's going on
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081005/e19e45f6/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081005/e19e45f6/attachment-0001.html</A> 
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000932.html">[zfs-discuss] zfs send/recv
+</A></li>
+	<LI>Next message: <A HREF="000936.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#933">[ date ]</a>
+              <a href="thread.html#933">[ thread ]</a>
+              <a href="subject.html#933">[ subject ]</a>
+              <a href="author.html#933">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

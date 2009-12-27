@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Feature request: bette utilization of mixed size	disks in ZRaid
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Feature%20request%3A%20bette%20utilization%20of%20mixed%20size%0A%09disks%20in%20ZRaid&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000247.html">
+   <LINK REL="Next"  HREF="000249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Feature request: bette utilization of mixed size	disks in ZRaid</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Feature%20request%3A%20bette%20utilization%20of%20mixed%20size%0A%09disks%20in%20ZRaid&In-Reply-To="
+       TITLE="[zfs-discuss] Feature request: bette utilization of mixed size	disks in ZRaid">i_see at macnews.de
+       </A><BR>
+    <I>Sun Mar  2 06:48:10 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000247.html">[zfs-discuss] Behaviour on bad sectors?
+</A></li>
+        <LI>Next message: <A HREF="000249.html">[zfs-discuss] zfs system/kernel panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#248">[ date ]</a>
+              <a href="thread.html#248">[ thread ]</a>
+              <a href="subject.html#248">[ subject ]</a>
+              <a href="author.html#248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+When I started deploying zfs, I was thrilled by the fact that I would  
+be able to use my disks, that have very different sizes to form a  
+dynamic redundant array with raidz. Not to long after that i found  
+out, that this only results in rathe poor space utilization if the  
+disks do not have the same size.
+The first consequence was to build the second pool from the smaller  
+disks and partitions of the larger disks that match the size of the  
+smaller disks. This way, I can use the remaining space for non- 
+redundant data (e.g. software updates that can easily be replaced if a  
+drive fails) and Mac OS Time-Machine backups of my HFS+ drive.). Still  
+Id would be nice to throw JBODODS (Just a bunch of disks of different  
+sizes) at ZFS and automagically have most of the space available for  
+use.
+
+The math:
+Obviously you have to pay for redundancy and if the biggest disk has  
+no other disks to match it, some more space is lost.
+To be exact, for a single VDev with raidz1, the size of the biggest  
+disk can not be available for data, for Raidz2 the sum of the sizes of  
+the two biggest disks/partitions are not usable.
+The DIY-Workaround:
+
+1.Order your disks by size. Use the size of the smallest disk (create  
+partitions of the same size on the larger disks) and form a raidz vdev.
+2. Use the smallest non-zero disk size to form another set of  
+partitions that will form another raidz vdev.
+3. Repeat step 2 until the remaining disks are insufficient to achieve  
+the desired replication level.
+4. (optional): Use the remaining space for storage needs with lower  
+replication needs (i.e. /tmp Updates...)
+
+The catch is, with the current ZFS implementation you should not add  
+the vdevs to the same pool as ZFS will use striping assuming your  
+partitions are in fact different disks. The resulting pool will  
+work,but not run (running implies speed).
+If you have different filesystems that you can easily separate, you  
+should rather use independent pools to avoid this problem.
+
+The next catch is, that replacing a disk by a bigger one will now  
+involve moving large amounts of data and probably creating a number of  
+new pools. I am unsure if there is an easy way to recreate a zfs  
+filesystem with all snapshots and clones in this situation, so this  
+might be a lot of additional work.
+
+Request:
+Allow zraid configurations to logically segment the devices in a vdev  
+as outlined above, without trying to stripe across an individual device.
+Ideally, the unused space could be more or less automatically be  
+available for other uses.
+The implied reconfiguration problems should become obsolete as soon as  
+there will be a restriping and/or evacuation routine for zfs vdevs and/ 
+or pools.
+
+Now I have probably written enough about zfs for a day...
+
+ralf bertling
+PS: An interessting story about MTTDL I have witnessed:
+A company was deploying a redundant RAID configuration 24/7 with its  
+own UPS-system for the file-servers. Some maintenance work required to  
+take the UPS and the fileserve down; this was scheduled on a weekend  
+to cause minimum trouble. Everything went well up to the point when  
+the fileserver should be started again. As it turned out, the bearings  
+in most disks had gone bad over years, but while the spindles were  
+turning, the problem was never recognized. Once stopped, the drived  
+were unable to start turning again.
+So apart from your redundancy level and your backup strategy and  
+SMART, maybe you should consider a maintenance schedule to spin down a  
+drive once in a while. ZFS always allows you to replace intact drives  
+and remove / re-attach them. These MTTDL numbers assume that a disk's  
+failure is independent of the others. However this is not always true.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000247.html">[zfs-discuss] Behaviour on bad sectors?
+</A></li>
+	<LI>Next message: <A HREF="000249.html">[zfs-discuss] zfs system/kernel panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#248">[ date ]</a>
+              <a href="thread.html#248">[ thread ]</a>
+              <a href="subject.html#248">[ subject ]</a>
+              <a href="author.html#248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20iSCSI%20on%20ZFS%20%28was%20Re%3A%20%20zfs-10a286%20%3F%29&In-Reply-To=%3C4F67CD08-08AA-4C3B-97EB-583F546CD4EC%40fgm.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001981.html">
+   <LINK REL="Next"  HREF="002004.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)</H1>
+    <B>Adams, Geoff</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20iSCSI%20on%20ZFS%20%28was%20Re%3A%20%20zfs-10a286%20%3F%29&In-Reply-To=%3C4F67CD08-08AA-4C3B-97EB-583F546CD4EC%40fgm.com%3E"
+       TITLE="[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)">gadams at fgm.com
+       </A><BR>
+    <I>Fri Oct 23 09:52:15 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001981.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+        <LI>Next message: <A HREF="002004.html">[zfs-discuss] iSCSI on ZFS (was Re: zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1988">[ date ]</a>
+              <a href="thread.html#1988">[ thread ]</a>
+              <a href="subject.html#1988">[ subject ]</a>
+              <a href="author.html#1988">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 23 Oct 2009, at 12:10 PM, David Ritchie wrote:
+
+&gt;<i> I used the globalSAN initiator on my Mac Pro to connect to a zvol  
+</I>&gt;<i> over GigE. In this way I managed to lower the write performance to  
+</I>&gt;<i> &lt;1MB/s - similar to the results Raoul Callaghan gets!!
+</I>
+That's quite surprising.
+
+I actually just last night set up the globalSAN initiator on a  
+PowerMac G5 (Mac OS 10.5.x), using the COMSTAR iSCSI target on  
+OpenSolaris (build 125) running on a SunFire x4150. Over 100base-T  
+(the GigE port on the G5 was lightning damaged), I see over 6 MB/s.  
+Granted, this is nothing compared to the roughly 100 GB/s that I can  
+see to that same zpool of cheap, large SATA disks locally, but 6 MB/s  
+isn't too bad for 100base-T. I'll have to stick a GigE card in the  
+client machine to see if it gets any better.
+
+hfuhruhurr:~: dd if=/dev/zero of=/Volumes/Time\ Machine/gig bs=1m  
+count=1024
+1024+0 records in
+1024+0 records out
+1073741824 bytes transferred in 160.978045 secs (6670113 bytes/sec)
+
+Not too bad for a first test, I think.
+
+- Geoff
+(I apologize for the Exchange email system here at the office that  
+insists on rudely HTMLizing my outgoing mail.)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091023/56f94359/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091023/56f94359/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001981.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+	<LI>Next message: <A HREF="002004.html">[zfs-discuss] iSCSI on ZFS (was Re: zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1988">[ date ]</a>
+              <a href="thread.html#1988">[ thread ]</a>
+              <a href="subject.html#1988">[ subject ]</a>
+              <a href="author.html#1988">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

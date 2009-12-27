@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] I lost 500GB of backup data in zfs!!!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3CDAE6C9DE-6303-4292-9247-C87163F762FD%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001353.html">
+   <LINK REL="Next"  HREF="001355.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] I lost 500GB of backup data in zfs!!!</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3CDAE6C9DE-6303-4292-9247-C87163F762FD%40sun.com%3E"
+       TITLE="[zfs-discuss] I lost 500GB of backup data in zfs!!!">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Thu Jan 22 15:38:17 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001353.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+        <LI>Next message: <A HREF="001355.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1354">[ date ]</a>
+              <a href="thread.html#1354">[ thread ]</a>
+              <a href="subject.html#1354">[ subject ]</a>
+              <a href="author.html#1354">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jan 22, 2009, at 6:27 PM, Sterling Garwood wrote:
+
+&gt;<i> Jan 22 16:47:26 dualg4 Software Update[2533]: kextcache returned 0
+</I>&gt;<i> Jan 22 16:47:26 dualg4 Software Update[2533]: Running /sbin/reboot
+</I>&gt;<i> Jan 22 16:47:26 dualg4 kextd[10]: error reconsidering volume / 
+</I>&gt;<i> Volumes/mypool
+</I>&gt;<i> Jan 22 16:47:26 dualg4 kextd[10]: error reconsidering volume / 
+</I>&gt;<i> Volumes/zfsstg
+</I>&gt;<i> Jan 22 16:47:26 dualg4 kextd[10]: error reconsidering volume / 
+</I>&gt;<i> Volumes/remove
+</I>&gt;<i> Jan 22 16:47:26 dualg4 reboot[2628]: rebooted by _securityagent
+</I>
+erm .. if you're talking about these - somebody else chime in, but i  
+believe this is simply that it couldn't unmount these volumes before  
+it rebooted .. not to worry though - i suspect the ZFS volumes already  
+had a FAT header on them - how are you determining these as FAT? - are  
+you saying that you can't:
+
+# zpool import -f mypool
+# zpool import -f zfsstg
+# zpool import -f remove
+
+and it's not clear which zfs kernel version you're using here ..
+
+Jonathan
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001353.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+	<LI>Next message: <A HREF="001355.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1354">[ date ]</a>
+              <a href="thread.html#1354">[ thread ]</a>
+              <a href="subject.html#1354">[ subject ]</a>
+              <a href="author.html#1354">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

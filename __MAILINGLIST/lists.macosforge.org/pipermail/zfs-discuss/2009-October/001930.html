@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Pool gone after Kernel Panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Pool%20gone%20after%20Kernel%20Panic&In-Reply-To=%3C2bfa7a9b0910121238rc30a208s6a473e09e6bb7686%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001929.html">
+   <LINK REL="Next"  HREF="001931.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Pool gone after Kernel Panic</H1>
+    <B>mano vasilakis</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Pool%20gone%20after%20Kernel%20Panic&In-Reply-To=%3C2bfa7a9b0910121238rc30a208s6a473e09e6bb7686%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Pool gone after Kernel Panic">developer at mvasilakis.com
+       </A><BR>
+    <I>Mon Oct 12 12:38:38 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001929.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+        <LI>Next message: <A HREF="001931.html">[zfs-discuss] Snapshots under os x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1930">[ date ]</a>
+              <a href="thread.html#1930">[ thread ]</a>
+              <a href="subject.html#1930">[ subject ]</a>
+              <a href="author.html#1930">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok when I attach the drive using: zpool import -f Backup
+The drive becomes accessible but will not mount to desktop. Finder gives the
+message that this version will not mount but the drive is accessible via
+command line. (Is this because I did a zpool upgrade? I'm using v119 and I
+built it myself using the instructions on the website.) I can even access
+files and open them under finder, I just cant open the directories that
+contain the files in Finder.
+
+FWIW after a zpool scrub I got 100,000+ errors. Nice. No wonder I was
+loosing my backups.
+
+I am thinking of getting a DROBO enclosure to use in the next month or two.
+Till then I want to play with ZFS to see what a worst case scenario looks
+like. And to tell you the truth I am highly impressed that this file system
+has found errors where they were not apparent to Disk Warrior until after a
+week or two of use. I don't know much about the underpinnings of file
+systems but one that self repairs pretty cool. (I guess I wouldn't be saying
+that if I worked for a file system utility company.)
+
+Thanks again for for your time.
+Mano
+
+On Sun, Oct 11, 2009 at 7:11 PM, mano vasilakis &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">developer at mvasilakis.com</A>&gt;wrote:
+
+&gt;<i> It's an older enclosure I picked up at OWC as on open box. I had to flash
+</I>&gt;<i> it to get it to recognize over 2TB and I think that RAIDON may not have
+</I>&gt;<i> fully developed the drivers.
+</I>&gt;<i> Anyway that is why my suspicions are with the enclosure and not the drives.
+</I>&gt;<i> I will order a SATA to USB cable and see if I see errors with these drives
+</I>&gt;<i> individually but I'm fairly certain I blew my money on the enclosure. (once
+</I>&gt;<i> in the enclosure the drives are viewable to the FW bus as one drive, that's
+</I>&gt;<i> why I referenced it in my original post as one drive, to keep from confusing
+</I>&gt;<i> anyone.)
+</I>&gt;<i>
+</I>&gt;<i> Enclosure:
+</I>&gt;<i> Stardom 7610 4 Bay Rack Mount SATA-II Removable HD Enclosure with
+</I>&gt;<i> eSATA/FW800/USB 2.0
+</I>&gt;<i>
+</I>&gt;<i> FireWire:
+</I>&gt;<i>
+</I>&gt;<i>     FireWire Bus:
+</I>&gt;<i>
+</I>&gt;<i>       Maximum Speed: Up to 800 Mb/sec
+</I>&gt;<i>
+</I>&gt;<i>         Built-in Hub:
+</I>&gt;<i>
+</I>&gt;<i>           Maximum Speed: Up to 800 Mb/sec
+</I>&gt;<i>           Connection Speed: Up to 800 Mb/sec
+</I>&gt;<i>
+</I>&gt;<i>         Oxford IDE Device0:
+</I>&gt;<i>
+</I>&gt;<i>           Manufacturer: Oxford Semiconductor Ltd.
+</I>&gt;<i>           Model: 0x0
+</I>&gt;<i>           GUID: ***********
+</I>&gt;<i>           Maximum Speed: Up to 800 Mb/sec
+</I>&gt;<i>           Connection Speed: Up to 800 Mb/sec
+</I>&gt;<i>           Sub-units:
+</I>&gt;<i>             Oxford IDE Device0 Unit:
+</I>&gt;<i>               Unit Software Version: 0x10483
+</I>&gt;<i>               Unit Spec ID: 0x609E
+</I>&gt;<i>               Firmware Revision: 0x100
+</I>&gt;<i>               Product Revision Level: V.70
+</I>&gt;<i>               Sub-units:
+</I>&gt;<i>                 Oxford IDE Device0 SBP-LUN:
+</I>&gt;<i>                   Capacity: 4 TB (4,000,819,445,760 bytes)
+</I>&gt;<i>                   Removable Media: Yes
+</I>&gt;<i>                   BSD Name: disk4
+</I>&gt;<i>                   Partition Map Type: GPT (GUID Partition Table)
+</I>&gt;<i>                   S.M.A.R.T. status: Not Supported
+</I>&gt;<i>                   Volumes:
+</I>&gt;<i>                     ZFS File System:
+</I>&gt;<i>                       Capacity: 4 TB (4,000,475,471,872 bytes)
+</I>&gt;<i>                       Writable: Yes
+</I>&gt;<i>                       File System: ZFS (Not Mountable)
+</I>&gt;<i>                       BSD Name: disk4s2
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Oct 11, 2009 at 4:14 PM, Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On Oct 11, 2009, at 20:45, mano vasilakis wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  I doubt the disk is hosed. I think rather the enclosure may be the issue.
+</I>&gt;&gt;&gt;<i> When I looked and saw quite a few people having issues with Time Machine and
+</I>&gt;&gt;&gt;<i> firewire backup volumes I figured it was possible that TM was corrupting
+</I>&gt;&gt;&gt;<i> something. And with 10.6 so new well...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'll deal with the manufacturer and see if they can't help me. (Long
+</I>&gt;&gt;&gt;<i> story there) If not I guess I need to buy a new enclosure.
+</I>&gt;&gt;&gt;<i> Thanks.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Certainly something is suspect :-) There were, back in the dim and distant
+</I>&gt;&gt;<i> past, problems with Oxford FireWire chipsets but those flavour of problems
+</I>&gt;&gt;<i> were consigned to the 10.1/10.2 days. I've not seen any problems with
+</I>&gt;&gt;<i> FireWire drives since then. I did see problems with cheapo external USB
+</I>&gt;&gt;<i> drives. So it's possible that it's the controller/enclosure, but unless
+</I>&gt;&gt;<i> you've got a way of testing the drive in different enclosures to find out,
+</I>&gt;&gt;<i> it's a bit difficult to know.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There's a small possibility that the make/model of your firewire
+</I>&gt;&gt;<i> drive/enclosure might help others (Apple?) on this list, though they might
+</I>&gt;&gt;<i> not want to ask for it in case it gives the game away. If you run
+</I>&gt;&gt;<i> system_profiler | pbcopy, you'll get a diagnostic of what's on your system.
+</I>&gt;&gt;<i> Search for FireWire:, which will be the start of your firewire drives, and
+</I>&gt;&gt;<i> then you can cut out the rest of the stuff in a mail, e.g. mine as below.
+</I>&gt;&gt;<i> You'll probably want to sanity check it to confirm it doesn't have any
+</I>&gt;&gt;<i> personally identifiable information in it (it will have the GUID of the
+</I>&gt;&gt;<i> drive which if you're paranoid, you might want to obfuscate) but otherwise
+</I>&gt;&gt;<i> it'll be a text file which is similar to the data in System Profiler. (You
+</I>&gt;&gt;<i> could probably get the info from the graphical system profiler and doing a
+</I>&gt;&gt;<i> 'copy' on the appropriate bit too ... click on 'About this Mac' and then
+</I>&gt;&gt;<i> 'More Info' to launch the GUI one)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Alex
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> FireWire:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    FireWire Bus:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>      Maximum Speed: Up to 400 Mb/sec
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        Rugged FW/USB:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>          Manufacturer: LaCie
+</I>&gt;&gt;<i>          Model: 0x0
+</I>&gt;&gt;<i>          GUID: **********
+</I>&gt;&gt;<i>          Maximum Speed: Up to 800 Mb/sec
+</I>&gt;&gt;<i>          Connection Speed: Up to 400 Mb/sec
+</I>&gt;&gt;<i>          Sub-units:
+</I>&gt;&gt;<i>            Rugged FW/USB Unit:
+</I>&gt;&gt;<i>              Unit Software Version: 0x10483
+</I>&gt;&gt;<i>              Unit Spec ID: 0x609E
+</I>&gt;&gt;<i>              Firmware Revision: 0x110
+</I>&gt;&gt;<i>              Product Revision Level:
+</I>&gt;&gt;<i>              Sub-units:
+</I>&gt;&gt;<i>                Rugged FW/USB SBP-LUN:
+</I>&gt;&gt;<i>                  Capacity: 465.76 GB
+</I>&gt;&gt;<i>                  Removable Media: Yes
+</I>&gt;&gt;<i>                  BSD Name: disk2
+</I>&gt;&gt;<i>                  Mac OS 9 Drivers: No
+</I>&gt;&gt;<i>                  Partition Map Type: GPT (GUID Partition Table)
+</I>&gt;&gt;<i>                  S.M.A.R.T. status: Not Supported
+</I>&gt;&gt;<i>                  Volumes:
+</I>&gt;&gt;<i>                    Data:
+</I>&gt;&gt;<i>                      Capacity: 465.44 GB
+</I>&gt;&gt;<i>                      Writable: Yes
+</I>&gt;&gt;<i>                      File System: ZFS
+</I>&gt;&gt;<i>                      BSD Name: disk2s2
+</I>&gt;&gt;<i>                      Mount Point:
+</I>&gt;&gt;<i>                  Volumes:
+</I>&gt;&gt;<i>                    disk2s2:
+</I>&gt;&gt;<i>                      Capacity: 465.44 GB
+</I>&gt;&gt;<i>                      Writable: Yes
+</I>&gt;&gt;<i>                      File System: ZFS
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091012/1fccf39b/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091012/1fccf39b/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001929.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+	<LI>Next message: <A HREF="001931.html">[zfs-discuss] Snapshots under os x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1930">[ date ]</a>
+              <a href="thread.html#1930">[ thread ]</a>
+              <a href="subject.html#1930">[ subject ]</a>
+              <a href="author.html#1930">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

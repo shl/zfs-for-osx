@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=D281763C-A193-4998-AD24-B796B94ACBF3%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000122.html">
+   <LINK REL="Next"  HREF="000124.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=D281763C-A193-4998-AD24-B796B94ACBF3%40nrao.edu"
+       TITLE="[zfs-discuss] raidz">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Jan 30 12:06:41 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000122.html">[zfs-discuss] raidz
+</A></li>
+        <LI>Next message: <A HREF="000124.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#123">[ date ]</a>
+              <a href="thread.html#123">[ thread ]</a>
+              <a href="subject.html#123">[ subject ]</a>
+              <a href="author.html#123">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Yes, this is what people *want* o happen, but it doesn't happen that  
+</I>&gt;<i> way. Not yet.
+</I>&gt;<i>
+</I>&gt;<i> As I understand it, you can't add devices to an existing raidz  
+</I>&gt;<i> array. (On the ZFS that's currently shipping with Solaris, I think  
+</I>&gt;<i> you can add on-line spares to an existing array, but that won't  
+</I>&gt;<i> increase the storage capacity of the array.)
+</I>&gt;<i>
+</I>&gt;<i> You *can* add storage to an existing storage *pool*, as long as the  
+</I>&gt;<i> new elements of the pool are at least as large as the existing  
+</I>&gt;<i> elements.
+</I>
+Yes exactly, all three of the above assertions Boyd makes are correct.
+
+
+
+&gt;<i> So in your example of a 3x500GB raidz, I *think* you could add a  
+</I>&gt;<i> single 1TB drive to the pool, and it would stripe across the single  
+</I>&gt;<i> drive and the raidz. Which is not what you want; the failure of the  
+</I>&gt;<i> single 1TB drive would kill the whole pool.  So I'm not certain it  
+</I>&gt;<i> will let you do that.
+</I>
+So currently, ZFS will let you do this *however* when you issue the  
+zpool add command to do this we will fail the request and warn you  
+about the mismatched replication.  You then need to use '-f' if you  
+wish to actually go ahead with it.  I used file vdevs below do demo  
+this, but the same will happen with disks:
+
+sh-3.2# zpool status wombat
+   pool: wombat
+  state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool  
+can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+	pool will no longer be accessible on older software versions.
+  scrub: none requested
+config:
+
+	NAME                 STATE     READ WRITE CKSUM
+	wombat               ONLINE       0     0     0
+	  raidz1             ONLINE       0     0     0
+	    /var/root/vdev1  ONLINE       0     0     0
+	    /var/root/vdev2  ONLINE       0     0     0
+	    /var/root/vdev3  ONLINE       0     0     0
+
+errors: No known data errors
+sh-3.2# zpool add wombat /var/root/vdev4
+invalid vdev specification
+use '-f' to override the following errors:
+mismatched replication level: pool uses raidz and new vdev is file
+
+
+
+&gt;<i> I am pretty sure it would let you add another 3x500GB raidz to the  
+</I>&gt;<i> pool, your I/O performance would go up because you're striping  
+</I>&gt;<i> between two arrays, and each individual array could survive the  
+</I>&gt;<i> failure of one of its devices. You would end up with a 2 TB pool.
+</I>
+You can do the above (add a new raidz set to your pool) and it will  
+increase your performance as mentioned.  However I know as you said  
+that this isn't exactly what you are looking for.
+
+Note that you can add as many disks as you like to mirrors and regular  
+single stripe configs, but adding a single disk to a preexisting raidz  
+set is not currently possible.
+
+
+Noel
+
+
+
+
+On Jan 30, 2008, at 11:49 AM, Boyd Waters wrote:
+
+&gt;<i>
+</I>&gt;<i> On Jan 30, 2008, at 4:07 AM, Erik Ableson wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> the day I need more storage, I plan to simple extend the raidz set  
+</I>&gt;&gt;<i> using :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> zpool add [-fn] &lt;pool&gt; &lt;vdev&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> the result should be that my existing pool goes from 3x500 (1Tb) to  
+</I>&gt;&gt;<i> 4x500 (1.5Tb) and I don't have to migrate anything or move anything  
+</I>&gt;&gt;<i> around
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Yes, this is what people *want* o happen, but it doesn't happen that  
+</I>&gt;<i> way. Not yet.
+</I>&gt;<i>
+</I>&gt;<i> As I understand it, you can't add devices to an existing raidz  
+</I>&gt;<i> array. (On the ZFS that's currently shipping with Solaris, I think  
+</I>&gt;<i> you can add on-line spares to an existing array, but that won't  
+</I>&gt;<i> increase the storage capacity of the array.)
+</I>&gt;<i>
+</I>&gt;<i> You *can* add storage to an existing storage *pool*, as long as the  
+</I>&gt;<i> new elements of the pool are at least as large as the existing  
+</I>&gt;<i> elements.
+</I>&gt;<i>
+</I>&gt;<i> So in your example of a 3x500GB raidz, I *think* you could add a  
+</I>&gt;<i> single 1TB drive to the pool, and it would stripe across the single  
+</I>&gt;<i> drive and the raidz. Which is not what you want; the failure of the  
+</I>&gt;<i> single 1TB drive would kill the whole pool.  So I'm not certain it  
+</I>&gt;<i> will let you do that.
+</I>&gt;<i>
+</I>&gt;<i> I am pretty sure it would let you add another 3x500GB raidz to the  
+</I>&gt;<i> pool, your I/O performance would go up because you're striping  
+</I>&gt;<i> between two arrays, and each individual array could survive the  
+</I>&gt;<i> failure of one of its devices. You would end up with a 2 TB pool.
+</I>&gt;<i>
+</I>&gt;<i> If you think that your Solaris box can do this, could you post the  
+</I>&gt;<i> output of &quot;zpool status&quot; before and after adding your additional disk?
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>&gt;<i> - boyd
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000122.html">[zfs-discuss] raidz
+</A></li>
+	<LI>Next message: <A HREF="000124.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#123">[ date ]</a>
+              <a href="thread.html#123">[ thread ]</a>
+              <a href="subject.html#123">[ subject ]</a>
+              <a href="author.html#123">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-discuss%20Digest%2C%20Vol%2018%2C%20Issue%2022&In-Reply-To=%3CA9C90B7E-AE78-4490-BEE2-E5F0FC835B67%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001688.html">
+   <LINK REL="Next"  HREF="001690.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22</H1>
+    <B>Mike Prather</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-discuss%20Digest%2C%20Vol%2018%2C%20Issue%2022&In-Reply-To=%3CA9C90B7E-AE78-4490-BEE2-E5F0FC835B67%40mac.com%3E"
+       TITLE="[zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22">mike666 at mac.com
+       </A><BR>
+    <I>Tue Jun 30 14:02:20 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001688.html">[zfs-discuss] ZFS and kernel panics
+</A></li>
+        <LI>Next message: <A HREF="001690.html">[zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1689">[ date ]</a>
+              <a href="thread.html#1689">[ thread ]</a>
+              <a href="subject.html#1689">[ subject ]</a>
+              <a href="author.html#1689">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Do either of you use Apple Remote Desktop admin?  If so make sure any  
+automatic report generation options for your zfs machines are turned  
+off.  I was getting the same thing after my initial zfs setup and this  
+was the culprit.
+
+Mike
+
+On Jun 30, 2009, at 7:00 AM, <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>  
+wrote:
+
+&gt;<i> Alex-
+</I>&gt;<i> Indeed I have had almost exactly the same issue.  My setup is 3  
+</I>&gt;<i> external
+</I>&gt;<i> hard drives in a ZRAID1 pool.  Everything is fine until late  
+</I>&gt;<i> evening, at
+</I>&gt;<i> which point I can no longer stat my zfs pool at all - zpool status
+</I>&gt;<i> works, zfs list is fine, but when I try to run anything at FS level  
+</I>&gt;<i> e.g.
+</I>&gt;<i> ls, the system locks up completely.  Not a kernel panic, but becomes
+</I>&gt;<i> totally unresponsive and requires a reboot.  I moved two of the drives
+</I>&gt;<i> to a standard software RAID1, and kept one as a zpool, just for
+</I>&gt;<i> experimental purposes - my thought was that perhaps it was some i/o
+</I>&gt;<i> issue that was causing the problem.  However, even when the zpool
+</I>&gt;<i> contains no data that the OS is accessing regularly, the lockup  
+</I>&gt;<i> occurs.
+</I>&gt;<i> Very distressing.
+</I>&gt;<i>
+</I>&gt;<i> Jared N
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Alex Blewitt wrote:
+</I>&gt;&gt;<i> I've noticed since 10.5.6 (or 10.5.7) I've been getting kernel panics
+</I>&gt;&gt;<i> more regularly than I used to before (i.e. not). The symptom is the
+</I>&gt;&gt;<i> same; a kernel panic which requires rebooting.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> At midnight, I have a (potentially raceful) condition of a zpool  
+</I>&gt;&gt;<i> scrub
+</I>&gt;&gt;<i> and a zfs snapshot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> @daily  /usr/sbin/zpool scrub Data
+</I>&gt;&gt;<i> @daily  /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-</A>`date +&quot;\%F&quot;`
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Over the last week, my laptop  (when it's been on over midnight) has
+</I>&gt;&gt;<i> kernel paniced at exactly midnight. In addition, my Mac Mini (with  
+</I>&gt;&gt;<i> its
+</I>&gt;&gt;<i> external disks making up the Data pool) has the same process. The Mac
+</I>&gt;&gt;<i> Mini tends to barf over midnight, though sometimes not until the  
+</I>&gt;&gt;<i> early
+</I>&gt;&gt;<i> hours (presumably, when the ZFS scrub is finishing; it takes a lot
+</I>&gt;&gt;<i> longer on that box due to the size of data it has to process).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There are no problems with the pool itself; upon reboot, the disk is
+</I>&gt;&gt;<i> there and a subsequent scrub does not trigger the kernel panic. I can
+</I>&gt;&gt;<i> go days (on the Mini) without needing this, but the laptop seems to
+</I>&gt;&gt;<i> have triggered the kernel panic fairly regularly. Of course, crontab
+</I>&gt;&gt;<i> doesn't run when the machine is off, so I only see this over the
+</I>&gt;&gt;<i> midnight boundary (like tonight) when I happen to be up.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Has anyone else noticed a lack of stability since applying the 10.5.6
+</I>&gt;&gt;<i> or 10.5.7 patches? Before then, I never used to get a kernel panic  
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i> I've been using the same pool continuously since then.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Alex
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090630/56df8d91/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090630/56df8d91/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001688.html">[zfs-discuss] ZFS and kernel panics
+</A></li>
+	<LI>Next message: <A HREF="001690.html">[zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1689">[ date ]</a>
+              <a href="thread.html#1689">[ thread ]</a>
+              <a href="subject.html#1689">[ subject ]</a>
+              <a href="author.html#1689">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

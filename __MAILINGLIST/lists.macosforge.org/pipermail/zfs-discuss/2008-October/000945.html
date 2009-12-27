@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20hanging%20when%20a%20disk%20in%20a%20mirror%20goes%20offline&In-Reply-To=E930FBEC-027D-4FA0-ADC1-AD7ED3A4C85C%40re.be">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000936.html">
+   <LINK REL="Next"  HREF="000937.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS hanging when a disk in a mirror goes offline</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20hanging%20when%20a%20disk%20in%20a%20mirror%20goes%20offline&In-Reply-To=E930FBEC-027D-4FA0-ADC1-AD7ED3A4C85C%40re.be"
+       TITLE="[zfs-discuss] ZFS hanging when a disk in a mirror goes offline">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Tue Oct  7 16:18:40 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000936.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+        <LI>Next message: <A HREF="000937.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#945">[ date ]</a>
+              <a href="thread.html#945">[ thread ]</a>
+              <a href="subject.html#945">[ subject ]</a>
+              <a href="author.html#945">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've never had this problem with any of my other disks, I went in and  
+exchanged it for a MyBook 1TB (the other one was IOMega).
+
+My concern here is with the fact that the system hangs and there seems  
+to be no way to get it back up short of a hard shutdown (i.e., power  
+switch). I am sometimes travelling for several weeks/months and the  
+system has to be able to run unattended. I realize there has to be  
+manual intervention in the case of a disk failure (d'oh!) but I would  
+assume that if one disk of a mirror goes temporarily offline and comes  
+back up ZFS should detect it and continue working. I would also assume  
+that in this case the system should continue to work &quot;normally&quot; (as  
+far as processes that are reading/writing to the pool). However, the  
+cpio process is hanging hard and can't be stopped by any means short  
+of the power switch. A reboot command won't work because the cpio  
+command won't die and thus will interrupt the reboot.
+
+And then after the reboot I haven't found a way of bringing the faulty  
+disk back into the pool. In this case, do I need to do a full reformat  
+of the disk and add it back to the mirror as if it was a completely  
+new volume?
+
+-Mario.
+
+On 6 Oct 2008, at 13:11, Werner Donn&#233; wrote:
+
+&gt;<i> The 1TB disk isn't necessarily faulty. I have this problem all the  
+</I>&gt;<i> time
+</I>&gt;<i> and it is not always with the same disk. After a number of reboots or
+</I>&gt;<i> manual export/imports the pool is mounted properly and the so called
+</I>&gt;<i> faulty disk remains perfectly OK for the rest of the day.
+</I>&gt;<i>
+</I>&gt;<i> Werner.
+</I>&gt;<i>
+</I>&gt;<i> On 05 Oct 2008, at 12:53, Mario Camou wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'm running zfs-119 downloaded yesterday from zfs.macosforge.org.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In the end I went with the &quot;sane&quot; option: 2x1TB mirrored and  
+</I>&gt;&gt;<i> 3x500GB RAIDZ'd.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I first added the mirror to the pool, since 2 of the 500GB disks  
+</I>&gt;&gt;<i> currently have data that will be moved into ZFS. I started copying  
+</I>&gt;&gt;<i> with cpio but after a while the copy hung.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I found out that one of my 1TB disks suddenly turns itself off for  
+</I>&gt;&gt;<i> no apparent reason. I get a bunch of IOUSBKit error messages in  
+</I>&gt;&gt;<i> dmesg, and zpool status tells me that &quot;One or more devices could  
+</I>&gt;&gt;<i> not be opened. Sufficient replicas exist for the pool to continue  
+</I>&gt;&gt;<i> functioning in a degraded state&quot;. The device in question shows as  
+</I>&gt;&gt;<i> UNAVAIL and the pool and the mirror as DEGRADED.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Why does the copy hang if the pool is still usable?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now I turn the offending device off and on again. Thing is, OS X  
+</I>&gt;&gt;<i> assigns it a new device name. So I do an ls /dev/disk*, find out  
+</I>&gt;&gt;<i> which is the latest disk (from just a couple of seconds ago). If  
+</I>&gt;&gt;<i> before it was disk4s2, it turns out it's now disk7s2 (I have other  
+</I>&gt;&gt;<i> disks on this machine). So I do a zpool online plogiston /dev/ 
+</I>&gt;&gt;<i> disk7s2...which hangs. I next do a zpool status...which hangs. I  
+</I>&gt;&gt;<i> have to do a hard shutdown (holding down the power button). I  
+</I>&gt;&gt;<i> disconnect all other external hard drives to correctly identify the  
+</I>&gt;&gt;<i> parts of the pool and restart. I only have 2 external drives:  
+</I>&gt;&gt;<i> disk1s2 (which is now online) and disk2s2 (which doesn't appear in  
+</I>&gt;&gt;<i> zpool status, it still says disk4s2). So I try a zpool online /dev/ 
+</I>&gt;&gt;<i> disk2s2 and it tells me that device is not part of the pool. So now  
+</I>&gt;&gt;<i> I seem to have half a mirror (whichfor some reason is resilvering)  
+</I>&gt;&gt;<i> and another disk which is completely unavailable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How could I recover from this situation?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> At this point I could recreate the pool since I still have the  
+</I>&gt;&gt;<i> original data in the 2x500GB disks, but in the end these will be  
+</I>&gt;&gt;<i> RAIDZ'ed with another 500GB and added to the pool. I of course need  
+</I>&gt;&gt;<i> to get the faulty 1TB disk replaced but at this point I don't think  
+</I>&gt;&gt;<i> I can trust ZFS to give it all my data. I would really like to know  
+</I>&gt;&gt;<i> what's going on
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;&gt;<i>                                                       --R.U. Sirius
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Werner Donn&#233;  --  Re                                     <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+</I>&gt;<i> Engelbeekstraat 8                                               <A HREF="http://www.re.be">http://www.re.be</A>
+</I>&gt;<i> BE-3300 Tienen
+</I>&gt;<i> tel: (+32) 486 425803	e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000936.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+	<LI>Next message: <A HREF="000937.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#945">[ date ]</a>
+              <a href="thread.html#945">[ thread ]</a>
+              <a href="subject.html#945">[ subject ]</a>
+              <a href="author.html#945">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

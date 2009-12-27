@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Re: [OG #289023] OmniGraffle Pro 5.0
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20%5BOG%20%23289023%5D%20OmniGraffle%20Pro%205.0&In-Reply-To=rt-3.6.6-289023-6081148-6.11.3334894187962%40omnigroup.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000548.html">
+   <LINK REL="Next"  HREF="000572.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Re: [OG #289023] OmniGraffle Pro 5.0</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20%5BOG%20%23289023%5D%20OmniGraffle%20Pro%205.0&In-Reply-To=rt-3.6.6-289023-6081148-6.11.3334894187962%40omnigroup.com"
+       TITLE="[zfs-discuss] Re: [OG #289023] OmniGraffle Pro 5.0">bwaters at nrao.edu
+       </A><BR>
+    <I>Fri Apr 25 11:04:26 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000548.html">[zfs-discuss] weird zfs thread synchronization issue? (perhaps
+	mmap is the culprit?)
+</A></li>
+        <LI>Next message: <A HREF="000572.html">[zfs-discuss] zfs and Finder and Sharing difficulties
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#550">[ date ]</a>
+              <a href="thread.html#550">[ thread ]</a>
+              <a href="subject.html#550">[ subject ]</a>
+              <a href="author.html#550">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In general, everything works.
+
+ZFS has omigod support for extended attributes, and I generally have  
+no trouble saving things.
+
+    $ ls -ld@  vision-enrollment.graffle
+    drwxr-xr-x@ 3 bwaters  staff  6 Apr 25 11:27 vision- 
+enrollment.graffle
+	com.apple.FinderInfo	32
+
+
+Weird! I can double-click to open the file, make a trivial change, but  
+OmniGraffle doesn't want to save it: &quot;The document could not be saved.&quot;
+
+So I go to File..Save As... and make a trivial change to the file  
+name, save it in the SAME directory. It saves *fine*.
+
+Make a trivial change to *that* copy, try to save with File/Save, and  
+OG says &quot;no can do&quot;.
+
+
+What's going on?
+
+
+
+
+On Apr 25, 2008, at 11:55 AM, OmniGraffle Support wrote:
+
+&gt;<i> Boyd-
+</I>&gt;<i>
+</I>&gt;<i> Aha, suddenly I'm wondering if this test version of ZFS can handle  
+</I>&gt;<i> file packages -- Do you have trouble normally saving files to it  
+</I>&gt;<i> when done so by hand?
+</I>&gt;<i>
+</I>&gt;<i> Joel Page
+</I>&gt;<i> Product Manager, OmniGraffle
+</I>&gt;<i> The Omni Group
+</I>&gt;<i>
+</I>&gt;&gt;<i> [Boyd Waters - Fri Apr 25 10:53:19 2008]:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks, Joel!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I didn't give you the whole story, of course...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My home directory is on a crazy test version of ZFS, it's hosted on  
+</I>&gt;&gt;<i> an
+</I>&gt;&gt;<i> external ZFS RAID at the moment.
+</I>&gt;&gt;<i> <A HREF="http://trac.macosforge.org/projects/zfs/wiki/">http://trac.macosforge.org/projects/zfs/wiki/</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The most recent version is supposed to be mmap-coherent, so I don't
+</I>&gt;&gt;<i> know what the problem is.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But if I enable &quot;automatic backups&quot;, then every 2 minutes I get a
+</I>&gt;&gt;<i> modal document sheet that says the backup cannot be saved because the
+</I>&gt;&gt;<i> file isn't found.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can you think of a log that I can poke in?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 25, 2008, at 11:34 AM, OmniGraffle Support wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Boyd-
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Interesting, I shouldn't think that the location of your home
+</I>&gt;&gt;&gt;<i> directory wouldn't have any bearing on the autosave/backup, as that
+</I>&gt;&gt;&gt;<i> backup gets created in the same directory as the OmniGraffle file.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> We'll poke around this a bit, but it stills sounds to me like it
+</I>&gt;&gt;&gt;<i> shouldn't have any effect.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks for the feedback,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Joel Page
+</I>&gt;&gt;&gt;<i> Product Manager, OmniGraffle
+</I>&gt;&gt;&gt;<i> The Omni Group
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> [Boyd Waters - Fri Apr 25 10:13:29 2008]:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Automatic Backup does NOT work if your $HOME is not /Users/username
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   - boyd
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Boyd Waters
+</I>&gt;&gt;<i> Scientific Programmer
+</I>&gt;&gt;<i> National Radio Astronomy Observatory
+</I>&gt;&gt;<i> Socorro, New Mexico
+</I>&gt;&gt;<i> <A HREF="http://www.aoc.nrao.edu/~bwaters">http://www.aoc.nrao.edu/~bwaters</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000548.html">[zfs-discuss] weird zfs thread synchronization issue? (perhaps
+	mmap is the culprit?)
+</A></li>
+	<LI>Next message: <A HREF="000572.html">[zfs-discuss] zfs and Finder and Sharing difficulties
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#550">[ date ]</a>
+              <a href="thread.html#550">[ thread ]</a>
+              <a href="subject.html#550">[ subject ]</a>
+              <a href="author.html#550">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

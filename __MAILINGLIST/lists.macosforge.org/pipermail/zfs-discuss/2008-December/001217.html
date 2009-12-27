@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] A feature request
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20A%20feature%20request&In-Reply-To=%3C636fd28e0812230214n5404d9a2yba34bda269f5cc05%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001216.html">
+   <LINK REL="Next"  HREF="001218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] A feature request</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20A%20feature%20request&In-Reply-To=%3C636fd28e0812230214n5404d9a2yba34bda269f5cc05%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] A feature request">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Tue Dec 23 02:14:48 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001216.html">[zfs-discuss] A feature request
+</A></li>
+        <LI>Next message: <A HREF="001218.html">[zfs-discuss] A feature request
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1217">[ date ]</a>
+              <a href="thread.html#1217">[ thread ]</a>
+              <a href="subject.html#1217">[ subject ]</a>
+              <a href="author.html#1217">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> I swear I saw a *nix program to do that once, but I'll be darned if I can
+</I>&gt;<i> find it now.
+</I>
+If you've got a disk activity light, you could do something like:
+
+while true
+do
+dd if=/dev/disk1 of=/dev/null bs=1024 count=10
+sleep 1
+done
+
+That would pulse the disk activity light every second. Bonus points to
+those who have a variation on 'count' to make it pulse SOS in morse
+code.
+
+Of course, in a heavily loaded disk, that's not going to show up much
+- but if you've got a faulted disk that isn't otherwise being used,
+should make it somewhat obvious.
+
+Alex
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001216.html">[zfs-discuss] A feature request
+</A></li>
+	<LI>Next message: <A HREF="001218.html">[zfs-discuss] A feature request
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1217">[ date ]</a>
+              <a href="thread.html#1217">[ thread ]</a>
+              <a href="subject.html#1217">[ subject ]</a>
+              <a href="author.html#1217">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] backup
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20backup&In-Reply-To=54E5DB6F-78C7-470F-93DC-8BB1BD2B18D9%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000376.html">
+   <LINK REL="Next"  HREF="000378.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] backup</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20backup&In-Reply-To=54E5DB6F-78C7-470F-93DC-8BB1BD2B18D9%40spamfreemail.de"
+       TITLE="[zfs-discuss] backup">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Tue Apr  1 13:22:57 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000376.html">[zfs-discuss] backup
+</A></li>
+        <LI>Next message: <A HREF="000378.html">[zfs-discuss] backup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#377">[ date ]</a>
+              <a href="thread.html#377">[ thread ]</a>
+              <a href="subject.html#377">[ subject ]</a>
+              <a href="author.html#377">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Apr 1, 2008 at 8:21 PM, Franz Schmalzl
+&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">franzschmalzl at spamfreemail.de</A>&gt; wrote:
+&gt;<i> hi!
+</I>&gt;<i>
+</I>&gt;<i>  i wast just wondering if zfs on mac osx supports resource forks and
+</I>&gt;<i>  acl's ?
+</I>&gt;<i>
+</I>&gt;<i>  i wanted to use my external raidz as backup volume, and make sure
+</I>&gt;<i>  *everything* is backed up when running my backup script.
+</I>
+I'd do some testing to verify it does what you expect. I've played
+around with ZFS using 'xattr' to set/get attributes on the filing
+system, and they seem to do the right thing. Not used ACLs though.
+
+If you export to a different machine via AFS, I'd imagine that the
+client would also be able to use them. It doesn't work over NFS
+though.
+
+Alex
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000376.html">[zfs-discuss] backup
+</A></li>
+	<LI>Next message: <A HREF="000378.html">[zfs-discuss] backup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#377">[ date ]</a>
+              <a href="thread.html#377">[ thread ]</a>
+              <a href="subject.html#377">[ subject ]</a>
+              <a href="author.html#377">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

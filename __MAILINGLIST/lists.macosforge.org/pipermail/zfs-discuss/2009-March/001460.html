@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Questions from an amateur re: created pool,	then a file system then a 	ZIL and got kernel panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Questions%20from%20an%20amateur%20re%3A%20created%20pool%2C%0A%09then%20a%20file%20system%20then%20a%20%09ZIL%20and%20got%20kernel%20panics&In-Reply-To=%3C75D46F58-C716-42BB-8618-4DD244C2F5C6%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001456.html">
+   <LINK REL="Next"  HREF="001462.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Questions from an amateur re: created pool,	then a file system then a 	ZIL and got kernel panics</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Questions%20from%20an%20amateur%20re%3A%20created%20pool%2C%0A%09then%20a%20file%20system%20then%20a%20%09ZIL%20and%20got%20kernel%20panics&In-Reply-To=%3C75D46F58-C716-42BB-8618-4DD244C2F5C6%40apple.com%3E"
+       TITLE="[zfs-discuss] Questions from an amateur re: created pool,	then a file system then a 	ZIL and got kernel panics">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Mar  2 09:35:03 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001456.html">[zfs-discuss] ACLs
+</A></li>
+        <LI>Next message: <A HREF="001462.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1460">[ date ]</a>
+              <a href="thread.html#1460">[ thread ]</a>
+              <a href="subject.html#1460">[ subject ]</a>
+              <a href="author.html#1460">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Regretfully, Dtrace currently doesn't work to trace any kexts on OSX : 
+(  There is a linker issue that needs to be resolved.
+
+Noel
+
+On Feb 28, 2009, at 6:12 PM, Richard Elling wrote:
+
+&gt;<i> James R. Van Artsdalen wrote:
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alvinmoonesq at gmail.com</A> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've read that we can't do ZILs in Mac OS X so I'm wondering whether
+</I>&gt;&gt;&gt;<i> the kernel panics are because of the ZILs or the sequence of  
+</I>&gt;&gt;&gt;<i> creation.
+</I>&gt;&gt;&gt;<i> Should I have created the FS last? The panics only happen when I try
+</I>&gt;&gt;&gt;<i> to write to the file system, but after that, there are kernel panics
+</I>&gt;&gt;&gt;<i> whenever I boot. BTW: the ZFS fs is located on four 2.5&quot; WD Scorpio
+</I>&gt;&gt;&gt;<i> Blacks (320GB) which are in two &quot;Dual Portable Raid Enclosures&quot; and
+</I>&gt;&gt;&gt;<i> connected via esata expresscard 34
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> All ZFS pools have a ZIL (ZFS Intent Log).  Normally the ZIL is in  
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i> pool storage with everything else.  The &quot;log&quot; feature lets you  
+</I>&gt;&gt;<i> reserve a
+</I>&gt;&gt;<i> disk for the ZIL and nothing else.  This probably isn't useful and  
+</I>&gt;&gt;<i> might
+</I>&gt;&gt;<i> even reduce reliability.  Just create the pool normally without
+</I>&gt;&gt;<i> specifying a log device - this is probably what you want anyway.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> There are two scenarios where a separate log really help, especially  
+</I>&gt;<i> if the
+</I>&gt;<i> separate log is on a low-write-latency device (eg. STEC Zeus or RAID  
+</I>&gt;<i> array):
+</I>&gt;<i>   1. NAS server
+</I>&gt;<i>   2. database server
+</I>&gt;<i>
+</I>&gt;<i> For the vast majority of common uses, a separate log is rarely needed.
+</I>&gt;<i>
+</I>&gt;<i> This leads to a question of how do you know if your workload is  
+</I>&gt;<i> affected?
+</I>&gt;<i> I've written a dtrace script called zilstat to try to answer that  
+</I>&gt;<i> question.
+</I>&gt;<i> <A HREF="http://richardelling.blogspot.com/2009/02/zilstat-improved.html">http://richardelling.blogspot.com/2009/02/zilstat-improved.html</A>
+</I>&gt;<i>
+</I>&gt;<i> While I originally wrote that for Solaris, it should work very  
+</I>&gt;<i> similarly for
+</I>&gt;<i> OSX.  If someone would be so kind as to try it, I would appreciate the
+</I>&gt;<i> effort.
+</I>&gt;<i> -- richard-who-is-currently-sans-Mac :-(
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001456.html">[zfs-discuss] ACLs
+</A></li>
+	<LI>Next message: <A HREF="001462.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1460">[ date ]</a>
+              <a href="thread.html#1460">[ thread ]</a>
+              <a href="subject.html#1460">[ subject ]</a>
+              <a href="author.html#1460">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

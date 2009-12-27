@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs alternative
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C9E38E7CC-BBA5-4221-B8C2-F942BF4BCB34%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001657.html">
+   <LINK REL="Next"  HREF="001660.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs alternative</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C9E38E7CC-BBA5-4221-B8C2-F942BF4BCB34%40sun.com%3E"
+       TITLE="[zfs-discuss] zfs alternative">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Sun Jun 14 03:10:47 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001657.html">[zfs-discuss] zfs alternative
+</A></li>
+        <LI>Next message: <A HREF="001660.html">[zfs-discuss] How to recover from a FAULTED RAID-Z?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1658">[ date ]</a>
+              <a href="thread.html#1658">[ thread ]</a>
+              <a href="subject.html#1658">[ subject ]</a>
+              <a href="author.html#1658">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>the next question is obviously how are you testing? .. typically a  
+test like:
+time dd if=/dev/zero of=/mypool/testfile.out
+may not go that well, or be that much of a real world example unless  
+you typically write out 512B null blocks to a single file (at least  
+set a higher blocksize, run more threads, and look at aggregate  
+operations with zpool iostat 5 or zpool iostat -v 5) .. sun engineers  
+also worked on a framework for testing, or constructing workloads and  
+doing microbenchmarks called filebench .. there's still a fair amount  
+of community work to do some cleanup on this, but for the most part  
+you should be able to generate some decent workloads to simulate  
+things like file serving, web requests, or some database loads -  
+depending on what you'd like to do
+
+what you might be seeing with the cyclical nature of the I/O  
+throughput (if you're watching the disks) has to do with the txg  
+pushes .. I/O aggregates in the ARC and attempts to push out more  
+optimal full stripe writes at higher block sizes to take advantage of  
+better backend utilization if you have it .. however, if you're  
+finding better utilization on your backend storage with smaller  
+blocksize writes - then you might want to tune the blocksize or  
+volblocksize on the FS (or zvol)
+
+also note that if you're doing a lot of sync() or dysnc() writes (eg:  
+you do a lot of COMMIT operations on NFS) - you can run into  
+situations where you might be doing incomplete txg pushes .. using a  
+write optimized SSD for a slog device on later versions of zfs can  
+help here.  similarly for read issues, read optimized SSDs used as  
+L2ARC can also help tremendously .. you can see the zfs/zpool version  
+descriptions here along with what build they were integrated in the  
+sxce tree:
+<A HREF="http://www.opensolaris.org/os/community/zfs/version/N/">http://www.opensolaris.org/os/community/zfs/version/N/</A>
+<A HREF="http://www.opensolaris.org/os/community/zfs/version/zpl/N/">http://www.opensolaris.org/os/community/zfs/version/zpl/N/</A>
+(macosforge build 119 is currently at zpool version 8, zfs version 2)
+
+
+On Jun 14, 2009, at 5:19 AM, Hendrik Beskow wrote:
+
+&gt;<i> I get that speed with this setup:
+</I>&gt;<i>
+</I>&gt;<i> Raid-5 with 3x Seagate Baracuda ES.2 -&gt; LVM -&gt; Ext4
+</I>&gt;<i>
+</I>&gt;<i> On 14.06.2009, at 11:16, Robert Rehnmark wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 14 jun 2009 kl. 10:55 skrev Hendrik Beskow:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> As far as i can tell, unless you have a fully supported machine (a  
+</I>&gt;&gt;&gt;<i> via epia sn isn't supported it seams) the performance of  
+</I>&gt;&gt;&gt;<i> OpenSolaris and/or Nexenta is... worse than a usb2.0 external  
+</I>&gt;&gt;&gt;<i> drive. The iSCSI implementation of OpenSolaris is also a mess, the  
+</I>&gt;&gt;&gt;<i> latest Release has a bug that gives you around 10-15MB/s with  
+</I>&gt;&gt;&gt;<i> either implementation they give you. via netatalk/nfs/samba i get  
+</I>&gt;&gt;&gt;<i> Data by.. chunks it varies between 50KB/s and 30MB/s every Second.  
+</I>&gt;&gt;&gt;<i> With Linux on that Box i get around 70MB/s, constantly.
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When you say you get 70MB/s on Linux, are you talking about  
+</I>&gt;&gt;<i> ZFS_on_FUSE or any other filesytem?
+</I>&gt;&gt;<i> Getting data in chunks over the network seems to be a real problem  
+</I>&gt;&gt;<i> that nobody is talking much about, it was exactly the sam with ZFS  
+</I>&gt;&gt;<i> on OSX.
+</I>&gt;&gt;<i> I got 60-70MB/s with OSX and HFS+ but with ZFS it was a disaster.
+</I>&gt;&gt;<i> I'm running OpenSolaris 2009-06 on the server now and that is the  
+</I>&gt;&gt;<i> best solution I have tried so far.
+</I>&gt;&gt;<i> My Pool is version 14 since it's created on NexentaStor and I don't  
+</I>&gt;&gt;<i> know if it will be importable under any other OS except OpenSolaris  
+</I>&gt;&gt;<i> right now.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /Robert
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001657.html">[zfs-discuss] zfs alternative
+</A></li>
+	<LI>Next message: <A HREF="001660.html">[zfs-discuss] How to recover from a FAULTED RAID-Z?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1658">[ date ]</a>
+              <a href="thread.html#1658">[ thread ]</a>
+              <a href="subject.html#1658">[ subject ]</a>
+              <a href="author.html#1658">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

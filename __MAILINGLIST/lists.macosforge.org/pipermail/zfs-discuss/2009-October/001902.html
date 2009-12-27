@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Another ZFS is missing on 10.6 reason?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Another%20ZFS%20is%20missing%20on%2010.6%20reason%3F&In-Reply-To=%3C4ACDF1B4.9090602%40loveturtle.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001900.html">
+   <LINK REL="Next"  HREF="001899.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Another ZFS is missing on 10.6 reason?</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Another%20ZFS%20is%20missing%20on%2010.6%20reason%3F&In-Reply-To=%3C4ACDF1B4.9090602%40loveturtle.net%3E"
+       TITLE="[zfs-discuss] Another ZFS is missing on 10.6 reason?">lists at loveturtle.net
+       </A><BR>
+    <I>Thu Oct  8 07:05:40 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001900.html">[zfs-discuss] Another ZFS is missing on 10.6 reason?
+</A></li>
+        <LI>Next message: <A HREF="001899.html">[zfs-discuss] Another ZFS is missing on 10.6 reason?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1902">[ date ]</a>
+              <a href="thread.html#1902">[ thread ]</a>
+              <a href="subject.html#1902">[ subject ]</a>
+              <a href="author.html#1902">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If you haven't already you should check out RELENG_7 or one of the 8.0 
+betas. The newer ZFS code (not in 7.2-R) is really nice.
+
+We had this customer that had a flood and lost some hardware and we 
+rigged up this old 800mhz(ish) 32bit p3 with like 14 80gb disks with
+7-STABLE and with a little kmem size tuning it worked flawlessly for a 
+few months until they could replace it with something more modern.
+
+I'm currently running FreeBSD on my dell mini9 netbook for work with ZFS 
+root and it's 32bit and works great. but yeah, there's still a few rough 
+edges.
+
+On 10/8/09 9:52 AM, Harald Hanche-Olsen wrote:
+&gt;<i> + John-Paul Bader&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hukl at h3q.com</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>&gt;&gt;<i> ZFS is indeed recommended to run on 64 Bit but it should run fine on
+</I>&gt;&gt;<i> 32 Bit with a bit of tuning to get good performance and stability.
+</I>&gt;&gt;<i>      
+</I>&gt;<i> FWIW, I have run ZFS both on 32 bit and 64 bit FreeBSD. Even with
+</I>&gt;<i> tuning, my limited experience said it was vastly more stable running
+</I>&gt;<i> on 64 bit. Eh, make that vastly less unstable ... It was still usable
+</I>&gt;<i> on 32 bit, but I learned do little tricks like using kill -STOP once
+</I>&gt;<i> in a while on processes that wanted to copy many gigabytes of data,
+</I>&gt;<i> just to allow the ZFS susbsystem to catch up. (Follow, of course, by
+</I>&gt;<i> kill -CONT once disk activity ceased.)
+</I>&gt;<i>
+</I>&gt;<i> - Harald
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>    
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001900.html">[zfs-discuss] Another ZFS is missing on 10.6 reason?
+</A></li>
+	<LI>Next message: <A HREF="001899.html">[zfs-discuss] Another ZFS is missing on 10.6 reason?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1902">[ date ]</a>
+              <a href="thread.html#1902">[ thread ]</a>
+              <a href="subject.html#1902">[ subject ]</a>
+              <a href="author.html#1902">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

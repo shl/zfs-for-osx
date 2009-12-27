@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Permission Denied
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Permission%20Denied&In-Reply-To=%3C7B6A3F69-3645-4BAD-9E68-FC8664D3A182%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001088.html">
+   <LINK REL="Next"  HREF="001089.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Permission Denied</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Permission%20Denied&In-Reply-To=%3C7B6A3F69-3645-4BAD-9E68-FC8664D3A182%40apple.com%3E"
+       TITLE="[zfs-discuss] Permission Denied">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Nov 24 12:37:35 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001088.html">[zfs-discuss] Permission Denied
+</A></li>
+        <LI>Next message: <A HREF="001089.html">[zfs-discuss] zfs panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1101">[ date ]</a>
+              <a href="thread.html#1101">[ thread ]</a>
+              <a href="subject.html#1101">[ subject ]</a>
+              <a href="author.html#1101">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>'sudo chown -R' is your friend :) Use the terminal and do that for  
+whatever owner:group you'd like to change your pool to.
+
+eg.
+
+sudo chown -R noel:staff /Volumes/mypool
+
+Noel
+
+On Nov 21, 2008, at 2:11 PM, Dustin Webb wrote:
+
+&gt;<i> Hey, I've been using ZFS on OS X for about a year now, before that I  
+</I>&gt;<i> was using it on Nexenta.  Just recently my motherboard died so I had  
+</I>&gt;<i> to install a new OS X.  My permissions got all screwy on my ZFS  
+</I>&gt;<i> pool.  The Admin group account isn't recognized on the pool.  If I  
+</I>&gt;<i> look at the permissions with get info there is an unknown account.   
+</I>&gt;<i> If I remove it then it shows up again when I try to add the admin  
+</I>&gt;<i> group.  I can add my admin accounts separately but not the group.   
+</I>&gt;<i> Also, I'm not sure if this an issue with OS X or the ZFS system but  
+</I>&gt;<i> if I tell the permissions to propagate down then it does so  
+</I>&gt;<i> randomly.  Some files and folders pick up the changes but others do  
+</I>&gt;<i> not.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for any help, I'm really looking forward to the full  
+</I>&gt;<i> implementation of ZFS in OS X.  It's a very exciting FS.
+</I>&gt;<i>
+</I>&gt;<i> Dustin
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001088.html">[zfs-discuss] Permission Denied
+</A></li>
+	<LI>Next message: <A HREF="001089.html">[zfs-discuss] zfs panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1101">[ date ]</a>
+              <a href="thread.html#1101">[ thread ]</a>
+              <a href="subject.html#1101">[ subject ]</a>
+              <a href="author.html#1101">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

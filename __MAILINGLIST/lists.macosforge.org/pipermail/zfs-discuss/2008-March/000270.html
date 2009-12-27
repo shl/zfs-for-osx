@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%20ZFS%3F&In-Reply-To=4F1312F9-E498-4A7E-B1FD-89AD0A6AB210%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000255.html">
+   <LINK REL="Next"  HREF="000256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%20ZFS%3F&In-Reply-To=4F1312F9-E498-4A7E-B1FD-89AD0A6AB210%40mac.com"
+       TITLE="[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?">lists at loveturtle.net
+       </A><BR>
+    <I>Wed Mar  5 09:15:13 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000255.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+        <LI>Next message: <A HREF="000256.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#270">[ date ]</a>
+              <a href="thread.html#270">[ thread ]</a>
+              <a href="subject.html#270">[ subject ]</a>
+              <a href="author.html#270">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Gautam Godse wrote:
+&gt;<i> Frankly I have yet to be convinced that ZFS should be used for your  
+</I>&gt;<i> Boot / User file system.
+</I>&gt;<i> The advantages of ZFS are only apparent (to me) when ZFS is deployed  
+</I>&gt;<i> in a redundant configuration (mirror/raid) 
+</I>I agree, mirror/raid is where ZFS shines.
+
+What does that have to do with not being convinced that / should be ZFS? 
+What's wrong with a mirror/raid /?
+
+# uname -sr
+FreeBSD 7.0-RC1
+
+# df -h /
+Filesystem    Size    Used   Avail Capacity  Mounted on
+zroot         984M    235M    749M    24%    /
+
+# zpool list
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+universe               2.25T    389G   1.87T    16%  ONLINE     -
+zroot                  1016M    235M    781M    23%  ONLINE     -
+
+# zpool status zroot
+  pool: zroot
+ state: ONLINE
+ scrub: none requested
+config:
+
+        NAME         STATE     READ WRITE CKSUM
+        zroot        ONLINE       0     0     0
+          mirror     ONLINE       0     0     0
+            ad20s1d  ONLINE       0     0     0
+            ad22s1d  ONLINE       0     0     0
+
+errors: No known data errors
+
+
+Sounds like a plan to me :-) I'd love to do this on OSX :-)
+
+As for the question that started this conversation..
+
+I wouldn't put too much on a zpool for now. You have to keep in mind 
+that everything required for the system to start &amp; for the zpool to 
+import needs to be on the HFS+ partition/drive.
+
+The zpool doesn't seem to import until rather late in the boot process 
+so I wouldn't try to put too much of the system on your zpool because it 
+will probably just cause more of a headache than it's worth. I just 
+stick to keeping my home dir on ZFS.
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000255.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+	<LI>Next message: <A HREF="000256.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#270">[ date ]</a>
+              <a href="thread.html#270">[ thread ]</a>
+              <a href="subject.html#270">[ subject ]</a>
+              <a href="author.html#270">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

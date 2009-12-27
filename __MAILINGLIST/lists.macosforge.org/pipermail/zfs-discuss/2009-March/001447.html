@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] First time user: Some questions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3Ca037f7360903011432o1415a9f3k64b85a9e3958da0a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="001448.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] First time user: Some questions</H1>
+    <B>John Hendy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3Ca037f7360903011432o1415a9f3k64b85a9e3958da0a%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] First time user: Some questions">jw.hendy at gmail.com
+       </A><BR>
+    <I>Sun Mar  1 14:32:21 PST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="001448.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1447">[ date ]</a>
+              <a href="thread.html#1447">[ thread ]</a>
+              <a href="subject.html#1447">[ subject ]</a>
+              <a href="author.html#1447">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Feb 28, 2009 at 3:17 AM, Robert Muench &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">robert.muench at gmail.com</A>&gt;wrote:
+
+&gt;<i> On Fri, Feb 27, 2009 at 7:53 PM, John Hendy &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jw.hendy at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; One thing I've found that I have not solved yet is how to share my zfs
+</I>&gt;<i> pool
+</I>&gt;<i> &gt; [well] with FreeBSD, which I dual boot.
+</I>&gt;<i>
+</I>&gt;<i> Hi, is this a common &quot;problem/feature&quot; of ZFS or is it specific to FreeBSD?
+</I>
+
+Not sure... I've only tried this with FreeBSD.
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; To correctly do this, at least as
+</I>&gt;<i> &gt; far as I've figured out, the zpool likes to be exported from the current
+</I>&gt;<i> OS
+</I>&gt;<i> &gt; before rebooting to the other.
+</I>&gt;<i>
+</I>&gt;<i> But if you shutdown OS-1 isn't the pool exported correctly? So that
+</I>&gt;<i> booting into OS-2 makes no problems? Or do you want to use the same
+</I>&gt;<i> pool from two or more OS at the same time?
+</I>
+
+I would think it gets exported, but from my experience, if I just reboot
+from OS X into FreeBSD and do 'zpool import pool', it says that it appears
+to be in use by another operating system. This makes me question whether OS
+X really exports on reboot/shutdown. Not sure how to check... I don't recall
+for sure, but I don't think that OS X ever complains one way or the other if
+I export from FreeBSD or not.
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; I also think that mounting is goofy in OS X with zfs. Every
+</I>&gt;<i> pool/filesystem
+</I>&gt;<i> &gt; should be handled by zfs, but to do certain things, you have to unmount
+</I>&gt;<i> it
+</I>&gt;<i> &gt; before you can 'zfs unmount' it. It's like the mounting of OS X prevents
+</I>&gt;<i> zfs
+</I>&gt;<i> &gt; from doing it's thing. I just might not know what I'm doing though...
+</I>&gt;<i>
+</I>&gt;<i> So, you first have to unmount from OSX and than you can ZFS-unmount
+</I>&gt;<i> it? Hm... strange.
+</I>
+
+Yup - 'zfs unmount pool' gives me 'cannot unmount /Volumes/pool; resource
+busy'
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I just tried the PGP whole-disk-encryption on a ZFS pool. But via the
+</I>&gt;<i> GUI itnerface it's not working. Here the output of PGP's enumeration
+</I>&gt;<i> of disks:
+</I>&gt;<i>
+</I>&gt;<i> Total number of installed fixed/removable storage
+</I>&gt;<i> device (excluding floppy and CDROM): 5
+</I>&gt;<i>
+</I>&gt;<i> Disk disk0 (wde enabled) has 1 online volumes:
+</I>&gt;<i>  volume &quot;System&quot; (disk0s2) is on partition 2
+</I>&gt;<i>
+</I>&gt;<i> Disk disk1 has 0 online volumes:
+</I>&gt;<i>
+</I>&gt;<i> Disk disk2 (wde enabled) has 1 online volumes:
+</I>&gt;<i>  volume &quot;Daten&quot; (disk2s2) is on partition 2
+</I>&gt;<i>
+</I>&gt;<i> Disk disk3 (wde enabled) has 1 online volumes:
+</I>&gt;<i>  volume &quot;CORSAIR&quot; (disk3s1) is on partition 1
+</I>&gt;<i>
+</I>&gt;<i> Disk disk4 (wde enabled) has 1 online volumes:
+</I>&gt;<i>  volume &quot;Backup&quot; (disk4s1) is on partition 1
+</I>&gt;<i>
+</I>&gt;<i> What's strange is, that disk1 (that's my ZFS volume) isn't recognized
+</I>&gt;<i> as an online volume. Why this? Is this the cause why it's not shown on
+</I>&gt;<i> the desktop etc.? Do I need to OSX-mount it beside ZFS-mounting?
+</I>&gt;<i>
+</I>&gt;<i> &gt; [...]
+</I>&gt;<i> &gt; Maybe this is not what you're looking for... but these are my thoughts!
+</I>&gt;<i>
+</I>&gt;<i> No problem, thanks for all the information. When starting with a new
+</I>&gt;<i> filesystem more information is better then less :-)
+</I>
+
+No problem. I love the resources and help from the online community so I
+figure I gotta pitch in whenever I find something I know even a little bit
+about!
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Robert M. M&#252;nch
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090301/81c54d90/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090301/81c54d90/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="001448.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1447">[ date ]</a>
+              <a href="thread.html#1447">[ thread ]</a>
+              <a href="subject.html#1447">[ subject ]</a>
+              <a href="author.html#1447">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

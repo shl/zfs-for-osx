@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] data loss with ZFS as scratch disk
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20data%20loss%20with%20ZFS%20as%20scratch%20disk&In-Reply-To=39CBC861-A2A0-4866-A3B1-039E0B6614FD%40sogeeky.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000745.html">
+   <LINK REL="Next"  HREF="000746.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] data loss with ZFS as scratch disk</H1>
+    <B>Joergen Geerds</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20data%20loss%20with%20ZFS%20as%20scratch%20disk&In-Reply-To=39CBC861-A2A0-4866-A3B1-039E0B6614FD%40sogeeky.net"
+       TITLE="[zfs-discuss] data loss with ZFS as scratch disk">geerds at bago.net
+       </A><BR>
+    <I>Mon Aug  4 10:35:03 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000745.html">[zfs-discuss] data loss with ZFS as scratch disk
+</A></li>
+        <LI>Next message: <A HREF="000746.html">[zfs-discuss] data loss with ZFS as scratch disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#742">[ date ]</a>
+              <a href="thread.html#742">[ thread ]</a>
+              <a href="subject.html#742">[ subject ]</a>
+              <a href="author.html#742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I added the history of the pool on the bottom. after the first setup  
+gave me only 230GB, I properly destroyed the pool, and redid it with  
+one disk, and then adding the second to create a raid (i do assume  
+that it would do some sort of stripping). if this is not the proper  
+way to go, then the FAQ needs some work (i.e. &quot;you can't build a raid  
+from 2 disks&quot;). maybe the FAQ should say that the raidz is something  
+like a RAID5, not a RAID0, and therefore needs 3 disks minimum.
+
+can anyone shed a bit more light on this?
+
+Joergen Geerds
+<A HREF="http://luminous-newyork.com">http://luminous-newyork.com</A>
+<A HREF="http://newyorkpanorama.com">http://newyorkpanorama.com</A>
+
+On Aug 4, 2008, at 12:03 , Mr. Zorg wrote:
+
+&gt;<i> 230GB is correct. In a raidz configuration you only get n-1 disks  
+</I>&gt;<i> worth of storage since one disk is reserved for parity. It really  
+</I>&gt;<i> doesn't make sense to use less than three disks for raidz, with just  
+</I>&gt;<i> two you may as well use a mirror configuration.
+</I>&gt;<i>
+</I>&gt;<i> It is possible that the corruption is a result of you adding disk2s2  
+</I>&gt;<i> to the pool a second time. It may have been using it both as a data  
+</I>&gt;<i> disk and a parity disk resulting in scrambled data. Of course, it  
+</I>&gt;<i> should not have allowed that.
+</I>&gt;<i>
+</I>&gt;<i> I don't have any spare disks, can anyone else verify this behavior?
+</I>&gt;<i>
+</I>&gt;<i> On Aug 4, 2008, at 8:09 AM, Joergen Geerds &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">geerds at bago.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I installed the latest build of ZFS (July 16, 2008), and  
+</I>&gt;&gt;<i> partinioned my external FW800 case (2 sata disks) as a ZFS raid pool.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> First bug:
+</I>&gt;&gt;<i> On my first attempt, I did follow the &quot;Getting started&quot; steps:
+</I>&gt;&gt;<i> zpool create bigraid raidz disk1s2 disk2s2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This resulted in a raidz pool that was only reporting 230GB instead  
+</I>&gt;&gt;<i> of 460GB to the OS (but zpool iostat reported 460GB in size)
+</I>&gt;&gt;<i> So I redid the setup, created the pool with just one disk, and then  
+</I>&gt;&gt;<i> &quot;zpool add bigraid raidz  disk2s2&quot;
+</I>&gt;&gt;<i> This gave me a pool with 460 GB. It would be great if you could  
+</I>&gt;&gt;<i> look into this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Second bug:
+</I>&gt;&gt;<i> photoshop seems to love the additional speed of the ZFS scratch  
+</I>&gt;&gt;<i> disk, it felt really faster than usual (no hard data to back it up)  
+</I>&gt;&gt;<i> and no problems.
+</I>&gt;&gt;<i> So I decided to do a quick test with PTgui 8b6 (using the ZFS  
+</I>&gt;&gt;<i> bigraid as PTgui temp folder, but reading/writing all input/output  
+</I>&gt;&gt;<i> from the internal HFS+). The output is a layered PSB file of about  
+</I>&gt;&gt;<i> 1GB in this case. The PSB was shredded.
+</I>&gt;&gt;<i> See <A HREF="http://nypano.com/clients/ptgui8b6-scratchdisk-error.jpg">http://nypano.com/clients/ptgui8b6-scratchdisk-error.jpg</A>
+</I>&gt;&gt;<i> I was able to verify that it is indeed the ZFS scratchdisk that is  
+</I>&gt;&gt;<i> the culprit (moving the ptgui temp folder to the internal disk  
+</I>&gt;&gt;<i> results in normal output, but PTgui 7.8 with the ZFS as temp folder  
+</I>&gt;&gt;<i> shreds the PSB also).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Joost from PTgui claims that system &amp; ZFS is at fault, not PTgui.  
+</I>&gt;&gt;<i> Any ideas what went wrong?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> System info:
+</I>&gt;&gt;<i> Imac 2.16GHz, 10.5.4, 3GB, 500GB internal HFS+, 2x250GB ext FW800
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> pool: bigraid
+</I>&gt;&gt;<i> state: ONLINE
+</I>&gt;&gt;<i> scrub: none requested
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	NAME        STATE     READ WRITE CKSUM
+</I>&gt;&gt;<i> 	bigraid     ONLINE       0     0     0
+</I>&gt;&gt;<i> 	  disk1s2   ONLINE       0     0     0
+</I>&gt;&gt;<i> 	  disk2s2   ONLINE       0     0     0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> errors: No known data errors
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> History for 'bigraid':
+</I>&gt;&gt;<i> 2008-08-03.18:42:02 zpool create bigraid /dev/disk1s2
+</I>&gt;&gt;<i> 2008-08-03.18:46:03 zpool upgrade bigraid 8
+</I>&gt;&gt;<i> 2008-08-03.18:47:10 zpool add bigraid disk2s2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Joergen Geerds
+</I>&gt;&gt;<i> <A HREF="http://luminous-newyork.com">http://luminous-newyork.com</A>
+</I>&gt;&gt;<i> <A HREF="http://newyorkpanorama.com">http://newyorkpanorama.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080804/74011935/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080804/74011935/attachment.html</A> 
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000745.html">[zfs-discuss] data loss with ZFS as scratch disk
+</A></li>
+	<LI>Next message: <A HREF="000746.html">[zfs-discuss] data loss with ZFS as scratch disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#742">[ date ]</a>
+              <a href="thread.html#742">[ thread ]</a>
+              <a href="subject.html#742">[ subject ]</a>
+              <a href="author.html#742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

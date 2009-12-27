@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C4AD51D17.10100%40jrv.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001937.html">
+   <LINK REL="Next"  HREF="001939.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>James R. Van Artsdalen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C4AD51D17.10100%40jrv.org%3E"
+       TITLE="[zfs-discuss] must watch.">james-zfsosx at jrv.org
+       </A><BR>
+    <I>Tue Oct 13 17:36:39 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001937.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001939.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1938">[ date ]</a>
+              <a href="thread.html#1938">[ thread ]</a>
+              <a href="subject.html#1938">[ subject ]</a>
+              <a href="author.html#1938">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>James Relph wrote:
+&gt;<i> I think that the only way you could tell if an actual drive was
+</I>&gt;<i> supporting the commands would be to do some pretty hairy digging
+</I>&gt;<i> around in the drive's firmware, so even if you'd used your $30k SATA
+</I>&gt;<i> analyser and found a bridge that did support the commands, you might
+</I>&gt;<i> then hook a drive up that didn't.
+</I>
+Testing is not impractical.  First mark the sectors on a disk with a
+unique per-sector pattern.  Then write code that does the following:
+
+1. A long write starting at block 0.
+2. A one-sector write at the end of the disk.
+3. A disk flush / write fence.
+4. A one-sector write not far after the end of step 1.
+5. An X microsecond delay.
+6. ACPI power off.
+
+This would have to be written tightly, going right to the hardware, and
+with some trial &amp; error in step 5 to determine &quot;X&quot;.  But I think it will
+show whether the firmware is tempted to violate the write fence in #3. 
+The hard part might be finding a system that actually turned off power
+quickly when the ACPI power bit is flipped so you can catch it doing one
+of #2 &amp; #4 before the other: you might have to solder a FET into the
+SATA power cable instead.
+
+&gt;<i> Apple and Sun are both mentioned in various places (and obviously
+</I>&gt;<i> Dominic confirmed that as far as Apple are concerned) as requiring all
+</I>&gt;<i> their drives to support the command, so that's one way to guarantee
+</I>&gt;<i> you get ones that do.  I would guess that there's probably
+</I>&gt;<i> manufacturers selling &quot;enterprise&quot; quality drives that actually will
+</I>&gt;<i> tell you or mention on the spec sheet that they support their
+</I>&gt;<i> commands, but certainly it's not a commonly advertised feature.
+</I>
+Also, the disk vendors can't be trusted.  As you near the day when the
+supply contract is to be awarded the sales rep who's losing will
+suddenly walk in the door one day with new, much faster disk drive
+firmware.  What's in that firmware?  Why didn't they have the
+twice-as-fast firmware the week before?  The sales rep is paid to win
+that contract, not give honest answers, so you're not going to be told
+what's wrong with it, just how much better it is than the competitor's.
+
+Were I put in charge of a group to do a new FS my first act would be to
+go to a flea market in a cheap part of town and buy up every
+mostly-working disk I could find, and then require the devs to use only
+those (but as many as they wished).  If you want a fault-tolerant FS,
+develop it on faulty disks.
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001937.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001939.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1938">[ date ]</a>
+              <a href="thread.html#1938">[ thread ]</a>
+              <a href="subject.html#1938">[ subject ]</a>
+              <a href="author.html#1938">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

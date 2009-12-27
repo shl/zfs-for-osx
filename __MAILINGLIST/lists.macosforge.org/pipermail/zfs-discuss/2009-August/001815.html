@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss]  Kernel Panic with ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%20Kernel%20Panic%20with%20ZFS&In-Reply-To=%3C9ae776de0908272023l639fcc1s870a3782e2137e95%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001752.html">
+   <LINK REL="Next"  HREF="001753.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss]  Kernel Panic with ZFS</H1>
+    <B>GWB</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%20Kernel%20Panic%20with%20ZFS&In-Reply-To=%3C9ae776de0908272023l639fcc1s870a3782e2137e95%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss]  Kernel Panic with ZFS">gwb at 2realms.com
+       </A><BR>
+    <I>Thu Aug 27 20:23:13 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001752.html">[zfs-discuss] Kernel Panic with ZFS
+</A></li>
+        <LI>Next message: <A HREF="001753.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1815">[ date ]</a>
+              <a href="thread.html#1815">[ thread ]</a>
+              <a href="subject.html#1815">[ subject ]</a>
+              <a href="author.html#1815">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In the past, automount could be turned off by setting the parameter in:
+
+/etc/hostconfig
+
+Look for the setting:
+
+AUTOMOUNT=-YES-
+
+and change that to:
+
+AUTOMOUNT=-NO-
+
+The process is described here:
+
+<A HREF="http://www.macosxhints.com/article.php?story=20030211060027212">http://www.macosxhints.com/article.php?story=20030211060027212</A>
+
+
+And you might try to run, from the terminal (probably as root, or
+sudo, or sudo su:)
+
+% sudo diskarbitrationd -d
+
+It should print the output to terminal, but it also outputs to a file.
+ Take a look at the output in:
+
+/var/log/diskarbitrationd.log
+
+I do not understand Apple's disc arbitration, and I'm like you: I
+would rather just mount things manually when I have to debug.  Try,
+from the terminal:
+
+% apropos disk
+
+and:
+
+% apropos mount
+
+This should give you an idea of what kinds of commands os x has for
+this sort of thing.
+
+Have you tried:
+
+zpool scrub &lt;name of pool&gt;
+
+It takes a while (sometimes hours, or days, depending on machine, size
+of pool, etc., but you can start it, and let it run overnight.
+
+Also take lots of snapshots, and consider using at least one mirror,
+and maybe also a hot spare, if you really need that.
+
+By the way, on other topics on this list, I have no idea what Apple
+will, or will not, do as far as officially supporting ZFS in the
+kernel.  But, if you have ever dealt with Apple's support for
+something slightly complicated (like a file system error, or kernel
+extension) they tend to have a stock answer when the debug steps do
+not solve the problem: back up, and do a complete reinstall.  That
+gets old fast, especially when you have lots of third party
+applications.
+
+So it could be their reflexive first approach: they don't want to
+further complicate something that they may not be able to quickly
+debug, especially with a new release.  Or, it could be the usual
+secrecy, fear of possible outcome of the Sun NetApp lawsuit (but I
+would bet heavily on Sun on this one).  In any event, if you need ZFS
+on Mac's OS, download from here, macosforge.  If you need ZFS, but are
+flexible for an OS, OpenSolaris and FreeBSD both rock, and both have
+ZFS in kernel, and I have not seen either one hang from a zfs related
+kernel panic (but who knows, it might happen, and they can hang for
+other reasons).
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001752.html">[zfs-discuss] Kernel Panic with ZFS
+</A></li>
+	<LI>Next message: <A HREF="001753.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1815">[ date ]</a>
+              <a href="thread.html#1815">[ thread ]</a>
+              <a href="subject.html#1815">[ subject ]</a>
+              <a href="author.html#1815">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

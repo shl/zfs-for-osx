@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0808040901t2b990795hafd71595d3c7ff4e%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000739.html">
+   <LINK REL="Next"  HREF="000753.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0808040901t2b990795hafd71595d3c7ff4e%40mail.gmail.com"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Aug  5 12:37:06 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000739.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+        <LI>Next message: <A HREF="000753.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#751">[ date ]</a>
+              <a href="thread.html#751">[ thread ]</a>
+              <a href="subject.html#751">[ subject ]</a>
+              <a href="author.html#751">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sadly Dtrace doesn't help us here because it doesn't work on kexts.   
+So that's why no probes are listed and none are available even to add  
+statically.
+
+Debugging remotely is also a problem since you have to have symbols  
+and another machine and boot args and some magical incantations to get  
+the symbols for zfs loaded.
+
+So first it would be easier and really helpful if you could get a  
+sample of the rsync process.  Then I can get some idea of what's  
+running.  Can you do
+
+#sudo sample &lt;pid&gt; 10 10 -file /tmp/mysample
+
+where &lt;pid&gt; is the pid of the rsync process?
+
+Also, Andrew did you say you get this problem on your HFS+ drive as  
+well?  Or did I just misread that... I&quot;m still working on getting a  
+reproduce and narrowing the scope... for whatever reason, I have no  
+problems doing thins on my mac pros and it won't reproduce....
+
+Thanks for all your help and info!  I'm trying to pin it down :)
+
+Noel
+
+On Aug 4, 2008, at 9:01 AM, Germano Caronni wrote:
+
+&gt;<i> Here some specifics on the silent death. This should be a lot of fun  
+</I>&gt;<i> for you @ Apple ;-)
+</I>&gt;<i>
+</I>&gt;<i> rsync 3.0.3 also fails. Having interspersed lots of sync() and  
+</I>&gt;<i> sleep() in that one, I finally got to see a partially copied dev  
+</I>&gt;<i> tree. Funnily enough, the major numbers of all devices on zfs are  
+</I>&gt;<i> zero. That certainly is a problem, and probably / hopefully it is  
+</I>&gt;<i> related to the deadlock. The machine dies at disk0s2 (my root  
+</I>&gt;<i> volume). Trying to reproduce this manually:
+</I>&gt;<i>
+</I>&gt;<i> bash-3.2# pwd
+</I>&gt;<i> /Volumes/z
+</I>&gt;<i> bash-3.2# mknod disk0 b 14 0
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# ls -al
+</I>&gt;<i> total 80
+</I>&gt;<i> [...]
+</I>&gt;<i> brw-r--r--  1 root     staff    0,   0 Aug  4 17:03 disk0
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# mknod disk0s1 b 14 1
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# ls -al
+</I>&gt;<i> total 81
+</I>&gt;<i> [...]
+</I>&gt;<i> brw-r--r--  1 root     staff    0,   0 Aug  4 17:03 disk0
+</I>&gt;<i> brw-r--r--  1 root     staff    0,   1 Aug  4 17:04 disk0s1
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# mknod disk0s2 b 14 2
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> [the world comes to an end]
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The output of 'stat' agrees that the major is indeed 0. Checking  
+</I>&gt;<i> back on my big repository confirms that all devices (char and block)  
+</I>&gt;<i> in it now have a major of '0'. I'm so happy that I still have the  
+</I>&gt;<i> originals ;-)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I hope this helps. I looked a bit at the source code to zfs_mknode  
+</I>&gt;<i> and friends, but did not feel like poking randomly. Also, a pity  
+</I>&gt;<i> that there are no zfs dtrace probes around (ie dtrace -l does not  
+</I>&gt;<i> list any). Is there a good way to get them into the kernel? I'm  
+</I>&gt;<i> guessing it would just involve using the 'Debug' target and copying  
+</I>&gt;<i> things to the right location -- but maybe you can tell me?  
+</I>&gt;<i> Obviously, what I wanted to do was dtrace on zfs_mknode and then  
+</I>&gt;<i> print out the arguments to the function to see if the problem is  
+</I>&gt;<i> above or below.
+</I>&gt;<i>
+</I>&gt;<i> Germano
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/83707a7d/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/83707a7d/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000739.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+	<LI>Next message: <A HREF="000753.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#751">[ date ]</a>
+              <a href="thread.html#751">[ thread ]</a>
+              <a href="subject.html#751">[ subject ]</a>
+              <a href="author.html#751">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

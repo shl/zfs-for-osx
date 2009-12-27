@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Status of ZFS on Mac OS X?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=A384DE4E-6348-4728-BE8B-B112376FD2D2%40yellowspace.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000430.html">
+   <LINK REL="Next"  HREF="000448.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Status of ZFS on Mac OS X?</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=A384DE4E-6348-4728-BE8B-B112376FD2D2%40yellowspace.net"
+       TITLE="[zfs-discuss] Status of ZFS on Mac OS X?">bwaters at nrao.edu
+       </A><BR>
+    <I>Wed Apr  9 13:42:51 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000430.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+        <LI>Next message: <A HREF="000448.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#446">[ date ]</a>
+              <a href="thread.html#446">[ thread ]</a>
+              <a href="subject.html#446">[ subject ]</a>
+              <a href="author.html#446">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Apr 8, 2008, at 6:24 PM, Lorenzo Perone wrote:
+&gt;<i> On the other hand, it would be interesting to see what happens when
+</I>&gt;<i> using File Vault (provided that it is possible to symlink it to
+</I>&gt;<i> an encrypted sparse image within a zfs volume). Since zfs snapshots
+</I>&gt;<i> are block-wise, at least that would be a way to backup the sparse-
+</I>&gt;<i> monster incrementally - and to have a &quot;portable&quot; time machine.
+</I>
+
+I use FileVault. A lot. For years and years.
+
+Every hour I copy my FileVault sparsebundle to the ZFS pool via rsync,  
+then I create a snapshot.
+
+You can mount the sparsebundle by double-clicking on it.
+
+This actually seems to work just fine -- while the FileVault is  
+mounted. I think the whole motivation behind implementing  
+sparsebundles was to carve up a disk image into small chunks so that  
+things like this would work. From hour to hour, only a handful of the  
+8-megabyte &quot;bands&quot; change, so the rsync is fast, and of course the ZFS  
+snapshots don't take up much room.
+
+To be clear:  an internal 500 GB disk, boots the Mac, has my FileVault  
+image on it, no change from a standard Mac setup.  An external disk  
+formatted ZFS, every hour we rsync from the internal to the external,  
+and make a zfs snapshot.
+
+Here's the script:
+
+==========
+
+
+#! /bin/bash
+#
+# file name; /usr/local/bin/backup
+
+# TODO: exclude some things from backup like vm swapfiles
+
+h=$(/bin/hostname -s)
+
+/usr/local/bin/rsync -aEHx  /  /Volumes/pool/backup/${h}/
+
+/usr/sbin/zfs snapshot pool/backup/${h}@$(date +%FT%T)
+
+
+# delete all but the last four snapshots
+
+snaps=($(zfs list| grep ${h}@20 | cut -f 1 -d ' '))
+
+fourth_from_last=$(( ${#snaps[@]} - 4 ))
+
+i=0
+while [ $i -lt $fourth_from_last ]
+do
+	zfs destroy ${snaps[$i]}
+	let &quot;i = $i + 1&quot;
+done
+
+
+==========
+
+
+and here's the LaunchDaemon that runs it every hour (or so)
+
+
+====
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;<A HREF="http://www.apple.com/DTDs/PropertyList-1.0.dtd">http://www.apple.com/DTDs/PropertyList-1.0.dtd</A> 
+&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+	&lt;dict&gt;
+		&lt;key&gt;Disabled&lt;/key&gt;
+		&lt;false/&gt;
+		&lt;key&gt;Label&lt;/key&gt;
+		&lt;string&gt;edu.nrao.bwaters.backup&lt;/string&gt;
+		&lt;key&gt;ProgramArguments&lt;/key&gt;
+		&lt;array&gt;
+			&lt;string&gt;/usr/local/bin/backup&lt;/string&gt;
+		&lt;/array&gt;
+		&lt;key&gt;RunAtLoad&lt;/key&gt;
+		&lt;true/&gt;
+		&lt;key&gt;StandardErrorPath&lt;/key&gt;
+		&lt;string&gt;/var/log/rsync-backup.log&lt;/string&gt;
+		&lt;key&gt;StandardOutPath&lt;/key&gt;
+		&lt;string&gt;/var/log/rsync-backup.log&lt;/string&gt;
+		&lt;key&gt;StartInterval&lt;/key&gt;
+		&lt;integer&gt;4380&lt;/integer&gt;
+	&lt;/dict&gt;
+&lt;/plist&gt;
+
+
+====
+
+
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000430.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+	<LI>Next message: <A HREF="000448.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#446">[ date ]</a>
+              <a href="thread.html#446">[ thread ]</a>
+              <a href="subject.html#446">[ subject ]</a>
+              <a href="author.html#446">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

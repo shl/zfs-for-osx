@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] changing iSCSI target info w/o reboot locks up Mac OS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20changing%20iSCSI%20target%20info%20w/o%20reboot%20locks%20up%20Mac%20OS&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000868.html">
+   <LINK REL="Next"  HREF="000870.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] changing iSCSI target info w/o reboot locks up Mac OS</H1>
+    <B>Richard McClellan</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20changing%20iSCSI%20target%20info%20w/o%20reboot%20locks%20up%20Mac%20OS&In-Reply-To="
+       TITLE="[zfs-discuss] changing iSCSI target info w/o reboot locks up Mac OS">richmc at gmail.com
+       </A><BR>
+    <I>Tue Sep 23 21:11:46 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000868.html">[zfs-discuss] Panic during diff (Assertion failure: zap_hash(zap,	name) ==   hash failed, 0 == 0)
+</A></li>
+        <LI>Next message: <A HREF="000870.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up	Mac OS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#869">[ date ]</a>
+              <a href="thread.html#869">[ thread ]</a>
+              <a href="subject.html#869">[ subject ]</a>
+              <a href="author.html#869">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I've discovered that changing iSCSI target settings cause a kernel  
+panic in ZFS code.
+
+To do this I:
+1. mount (initiate) an iSCSI target
+2. unmount the target
+3. change the LUNs on the iSCSI target
+4. restart iSCSI
+5. remount (initiate) the iSCSI target
+
+Within 10 seconds the screen ghosts out and a message in several  
+languages informs me to press and hold the power button for several  
+seconds to restart the computer.  Here's the message that was sent to  
+Apple:
+
+Tue Sep 23 21:02:29 2008
+panic(cpu 0 caller 0x00BCDD21): &quot;ZFS: I/O failure (write on &lt;unknown&gt;  
+off 0: zio 0xb739ee8 [L0 object directory] 400L/200P  
+DVA[0]=&lt;0:640027cc00:400&gt; DVA[1]=&lt;0:d200163800:400&gt;  
+DVA[2]=&lt;0:1b8004a5c00:400&gt; fletcher4 lzjb LE contiguous birth=52073  
+fill=1 cksum=cd77a5e82:563ac882499:12708c86bf606:2ada8ee44bf317):  
+error &quot; &quot;6&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/ 
+zfs_kext/zfs/zio.c:918
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x3f857e48 : 0x12b0fa (0x459234 0x3f857e7c 0x133243 0x0)
+0x3f857e98 : 0xbcdd21 (0xc3d6b0 0xc3d6a4 0xc39400 0xc6a670)
+0x3f857f18 : 0xbca3fb (0xb739ee8 0x34 0x3f857f38 0xc1118a)
+0x3f857f58 : 0xc29283 (0xb739ee8 0x1 0xc73ef4 0xb4818f8)
+0x3f857fc8 : 0x19eccc (0xb4818f8 0x0 0x1a20b5 0xb674410)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xbb6000-&gt;0xc81fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: Macmini2,1 (Mac-F4208EAA)
+
+Is ZFS caching information about a particular target that causes it to  
+s#!t the bed when the target has in fact changed?  The problem goes  
+away after the crash, so this is purely informational (so far!).
+
+		Rich
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000868.html">[zfs-discuss] Panic during diff (Assertion failure: zap_hash(zap,	name) ==   hash failed, 0 == 0)
+</A></li>
+	<LI>Next message: <A HREF="000870.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up	Mac OS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#869">[ date ]</a>
+              <a href="thread.html#869">[ thread ]</a>
+              <a href="subject.html#869">[ subject ]</a>
+              <a href="author.html#869">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

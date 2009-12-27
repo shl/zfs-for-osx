@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20iSCSI%20on%20ZFS%20%28was%20Re%3A%20%20zfs-10a286%20%3F%29&In-Reply-To=%3C4FEB9AC8-4EB0-4ED1-A4E7-FDBC8E9ABF69%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001975.html">
+   <LINK REL="Next"  HREF="001988.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)</H1>
+    <B>David Ritchie</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20iSCSI%20on%20ZFS%20%28was%20Re%3A%20%20zfs-10a286%20%3F%29&In-Reply-To=%3C4FEB9AC8-4EB0-4ED1-A4E7-FDBC8E9ABF69%40googlemail.com%3E"
+       TITLE="[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)">david299792 at googlemail.com
+       </A><BR>
+    <I>Fri Oct 23 09:10:00 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001975.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+        <LI>Next message: <A HREF="001988.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1981">[ date ]</a>
+              <a href="thread.html#1981">[ thread ]</a>
+              <a href="subject.html#1981">[ subject ]</a>
+              <a href="author.html#1981">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+In case anyone's interested I've been doing some more experimenting  
+with iSCSI.
+
+I tried installing OpenSolaris on my MacBook using a spare hard drive  
+in order to see what iSCSI performance would be like with the target  
+running on real hardware. Turns out OpenSolaris runs pretty well on a  
+MacBook.
+
+I used the globalSAN initiator on my Mac Pro to connect to a zvol over  
+GigE. In this way I managed to lower the write performance to &lt;1MB/s -  
+similar to the results Raoul Callaghan gets!!
+
+This isn't great. It surprises me a bit, because going from a VMWare  
+Solaris target on one machine to the globalSAN initiator on another  
+machine got me much better performance than that. Why does running  
+OpenSolaris on real hardware make it that much worse? Is there  
+something much better about the network card in the Mac Pro? (maybe).  
+I guess it would be good to try another initiator, although it seems  
+to be quite expensive for the Atto one.
+
+I got slightly better performance using the MS initiator in Windows XP  
+in VMWare connecting to the Solaris on MacBook - about 2.4MB/s. Still  
+not great.
+
+I'm beginning to wonder whether it would be quicker to just mount a  
+file share via AFP or SMB on the client machine (shared from a Solaris  
+box) and put a disk image on it. By mounting the disk image and having  
+my home folder in that I get spotlight coupled with ZFS goodness and  
+reasonable speed. A quick test indicates that works pretty well  
+(serving a sparse disk image via AFP from Mac Pro). I'd have to write  
+some startup script to hook this all up on boot on the client, and  
+point my home folder to the appropriate place, or mount the image  
+over /Users.
+
+
+-- David
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001975.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+	<LI>Next message: <A HREF="001988.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1981">[ date ]</a>
+              <a href="thread.html#1981">[ thread ]</a>
+              <a href="subject.html#1981">[ subject ]</a>
+              <a href="author.html#1981">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

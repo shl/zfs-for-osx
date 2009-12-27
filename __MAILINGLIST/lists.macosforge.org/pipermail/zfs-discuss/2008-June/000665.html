@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] using OpenCL for ZFS checksumming possible?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20using%20OpenCL%20for%20ZFS%20checksumming%20possible%3F&In-Reply-To=72A541BB-8878-4408-9754-2135E46186B7%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000662.html">
+   <LINK REL="Next"  HREF="000637.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] using OpenCL for ZFS checksumming possible?</H1>
+    <B>Jim Thompson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20using%20OpenCL%20for%20ZFS%20checksumming%20possible%3F&In-Reply-To=72A541BB-8878-4408-9754-2135E46186B7%40nrao.edu"
+       TITLE="[zfs-discuss] using OpenCL for ZFS checksumming possible?">jim at netgate.com
+       </A><BR>
+    <I>Tue Jun 24 17:45:13 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000662.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+        <LI>Next message: <A HREF="000637.html">[zfs-discuss] Weird device identifier
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#665">[ date ]</a>
+              <a href="thread.html#665">[ thread ]</a>
+              <a href="subject.html#665">[ subject ]</a>
+              <a href="author.html#665">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jun 24, 2008, at 7:21 AM, Boyd Waters wrote:
+
+&gt;<i> About five years ago I played with an AES encryption engine chip and
+</I>&gt;<i> FreeBSD -- it used the chip to generate *really* random numbers to /
+</I>&gt;<i> dev/random, and could use the engine as the system's AES
+</I>&gt;<i> implementation. (OpenSSL has similar support for plug-in drivers in
+</I>&gt;<i> user-space.) Using this thing for full-disk encryption, I maybe saw a
+</I>&gt;<i> performance *hit*, maybe no difference: the throughput was still
+</I>&gt;<i> limited by disk I/O. Great. Curiously, I didn't notice any reduction
+</I>&gt;<i> in CPU utilization. Using the thing as an entropy pool for /dev/random
+</I>&gt;<i> was *great*, though: it never ran out of entropy, you never had to
+</I>&gt;<i> wait! So that was cool. But the encryption part was a disappointment.
+</I>&gt;<i>
+</I>&gt;<i> Such limitations may *not* apply to *on-CPU* implementations of AES:
+</I>&gt;<i> you see good results with VIA C7 chips, for example. So much so that
+</I>&gt;<i> Intel will add AES-specific instructions to SSE4 -- which are
+</I>&gt;<i> incompatible with the VIA implementation. Oy. (Google &quot;Intel AVX&quot; for
+</I>&gt;<i> near-term, &quot;Westmere AES-NI&quot; for next year's version.)
+</I>
+I've discussed the performance and limitations of the various crypto  
+chipsets with Sam Leffler over the years,
+mostly as a side-discussion to our continuing discourse on things  
+802.11.
+
+Sam is the author of most, if not all of the crypto drivers in FreeBSD.
+
+He's pretty 'down' on many (but not all!) implementations, so it could  
+just be that you picked the wrong one.
+
+But back to ZFS.  A crypto offload engine might be useful when we get  
+a crypto layer for ZFS.   This already works
+in FreeBSD, where the GEOM layer allows stacking in the filesystem,  
+under (over?) ZFS.
+
+As for checksum offloading, I doubt you're going to want to use the  
+vector registers (SSE3) for that, due to the overhead of loading/ 
+unloading them
+for every context switch, and not everyone has a GPU supported by  
+OpenCL (much less factoring in the issues with moving the data to/from  
+the GPU.)
+
+Jim
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000662.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+	<LI>Next message: <A HREF="000637.html">[zfs-discuss] Weird device identifier
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#665">[ date ]</a>
+              <a href="thread.html#665">[ thread ]</a>
+              <a href="subject.html#665">[ subject ]</a>
+              <a href="author.html#665">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

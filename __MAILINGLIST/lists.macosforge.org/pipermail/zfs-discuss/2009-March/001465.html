@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] crash report - plugged in external FW drive with zfs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20crash%20report%20-%20plugged%20in%20external%20FW%20drive%20with%0A%20zfs&In-Reply-To=%3C49BA70D6.2030506%40baumann.name%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001464.html">
+   <LINK REL="Next"  HREF="001466.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] crash report - plugged in external FW drive with zfs</H1>
+    <B>Tilman Baumann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20crash%20report%20-%20plugged%20in%20external%20FW%20drive%20with%0A%20zfs&In-Reply-To=%3C49BA70D6.2030506%40baumann.name%3E"
+       TITLE="[zfs-discuss] crash report - plugged in external FW drive with zfs">tilman at baumann.name
+       </A><BR>
+    <I>Fri Mar 13 07:42:30 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001464.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+        <LI>Next message: <A HREF="001466.html">[zfs-discuss] panic on corrupted ZIL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1465">[ date ]</a>
+              <a href="thread.html#1465">[ thread ]</a>
+              <a href="subject.html#1465">[ subject ]</a>
+              <a href="author.html#1465">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jonathan Edwards wrote:
+&gt;<i> on ZFS you have a pool that's imported, and then filesystems within the 
+</I>&gt;<i> pool .. eg:
+</I>&gt;<i> $ zpool list
+</I>&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+</I>&gt;<i> Aeden                   464G    265G    199G    57%  ONLINE     -
+</I>&gt;<i> $ zfs list
+</I>&gt;<i> NAME                USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i> Aeden               265G   192G   583K  /Volumes/Aeden
+</I>&gt;<i> Aeden/Development  23.5K   192G  23.5K  /Volumes/Development
+</I>&gt;<i> Aeden/OSOL         6.01G   192G  6.01G  /Volumes/OSOL
+</I>&gt;<i> Aeden/Pictures     30.8G   192G  30.8G  /Volumes/Pictures
+</I>&gt;<i> Aeden/Serenity      228G   192G   228G  /Volumes/Serenity
+</I>&gt;<i> 
+</I>&gt;<i> so simply doing an unmount on the filesystem isn't going to help you 
+</I>&gt;<i> with the pool being imported .. it looks like you pulled the drive  
+</I>&gt;<i> before you exported the pool and you got a standard ZIO failure trying 
+</I>&gt;<i> to write to a device that's not there anymore .. so - if you're using an 
+</I>&gt;<i> external drive, in the future you'll want to export the pool .. eg:
+</I>&gt;<i> $ zpool export Aeden
+</I>&gt;<i> or
+</I>&gt;<i> $ sudo zpool export -f Aeden
+</I>&gt;<i> 
+</I>&gt;<i> to unmount the filesystems and export the pool in one shot .. then it 
+</I>&gt;<i> should be safe to remove the drive.
+</I>
+Oh, good to know.
+But I have to say, a bit odd.
+Export sounds more like sharing than like detaching.
+
+If I click eject on a filesystem on a external drive osx does not only 
+umount the fs but also ejects the drive from the bus.
+zfs probably needs to hook in there and safely export the pool first.
+
+-- 
+Imagination is more important than knowledge.
+  Albert Einstein
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001464.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+	<LI>Next message: <A HREF="001466.html">[zfs-discuss] panic on corrupted ZIL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1465">[ date ]</a>
+              <a href="thread.html#1465">[ thread ]</a>
+              <a href="subject.html#1465">[ subject ]</a>
+              <a href="author.html#1465">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

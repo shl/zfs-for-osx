@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RAID-Z not re-mounting on reboot
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=6879ebc80804072115y4c3d3025m2460ea02cb585e91%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000420.html">
+   <LINK REL="Next"  HREF="000424.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RAID-Z not re-mounting on reboot</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=6879ebc80804072115y4c3d3025m2460ea02cb585e91%40mail.gmail.com"
+       TITLE="[zfs-discuss] RAID-Z not re-mounting on reboot">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Tue Apr  8 08:20:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000420.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+        <LI>Next message: <A HREF="000424.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#423">[ date ]</a>
+              <a href="thread.html#423">[ thread ]</a>
+              <a href="subject.html#423">[ subject ]</a>
+              <a href="author.html#423">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Apr 8, 2008 at 5:15 AM, Matt Snow &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">mattsnow at gmail.com</A>&gt; wrote:
+&gt;<i> Adrian,
+</I>&gt;<i> I had the exact same problem. you have to use the command line diskutil to
+</I>&gt;<i> create the EFI label and ZFS slice using this command:
+</I>&gt;<i>
+</I>&gt;<i> diskutil partitiondisk /dev/disk2 GPTFormat ZFS %noformat% 100%
+</I>
+I thought this was bad because (a) you end up with a disk2s2
+partition, and (b) the on-disk format of ZFS leaves the first X bytes
+free so that an EFI label can be put on there anyway? In any case, (c)
+ZFS works better if it's given complete control of the disk since it
+can use the on-disk cache properly, whereas if it's given a partition
+(even if that partition is most of the system and the other partitions
+are never written) then it doesn't know that it has the whole disk and
+thus doesn't use the disk cache.
+
+Alex.
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000420.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+	<LI>Next message: <A HREF="000424.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#423">[ date ]</a>
+              <a href="thread.html#423">[ thread ]</a>
+              <a href="subject.html#423">[ subject ]</a>
+              <a href="author.html#423">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CB8A2872A-C8D0-400F-9885-21BBDF6722F7%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001917.html">
+   <LINK REL="Next"  HREF="001921.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>Dominic Giampaolo</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CB8A2872A-C8D0-400F-9885-21BBDF6722F7%40apple.com%3E"
+       TITLE="[zfs-discuss] must watch.">dbg at apple.com
+       </A><BR>
+    <I>Sun Oct 11 06:25:37 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001917.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001921.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1920">[ date ]</a>
+              <a href="thread.html#1920">[ thread ]</a>
+              <a href="subject.html#1920">[ subject ]</a>
+              <a href="author.html#1920">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Oct 10, 2009, at 4:31 PM, James R. Van Artsdalen wrote:
+
+&gt;<i> Dominic Giampaolo wrote:
+</I>&gt;&gt;<i> If the ZFS guys keep a pool of uberblocks then they
+</I>&gt;&gt;<i> will be able to recover.
+</I>&gt;<i>
+</I>&gt;<i> ZFS never updates anything in place, not even the superblock/ 
+</I>&gt;<i> uberblock.
+</I>&gt;<i> There is an array of 128 uberblocks (replicated four times) written
+</I>&gt;<i> circularly.  At mount time ZFS chooses the uberblock with the highest
+</I>&gt;<i> txtag - the most recently written slot - and uses it if it has a good
+</I>&gt;<i> checksum.
+</I>&gt;<i>
+</I>I understand this.
+
+What I don't understand is how you know whether there is
+damage to the most recent txtag without actually walking
+the entire file system?  Even if the uberblock checksum is
+ok, there may be damage elsewhere in the pool.
+
+If you just start using the pool represented by latest
+valid txtag and then later find damage, what do you do?
+Which txtag do you roll back to?  There's nothing that says
+the previous txtag is any more valid than the one you used.
+Further, how do you apply the changes you made since you
+mounted to the previous pool?  Further still, if it takes
+you a while to discover the damage and you make a lot of
+changes, you may have recycled through those 128 uberblocks
+already.
+
+On drives that do not honor flush-track-cache, unless you
+do a complete file system walk at mount time I don't see how
+you can know if a particular txtag is valid or not.  Please
+educate me if I'm missing something.
+
+
+&gt;<i> Fundamentally no filesytem can withstand having block writes being
+</I>&gt;<i> arbitrarily reordered and indefinitely deferred, not even log-based
+</I>&gt;<i> filesystems such as NTFS or HFS.  Fortunately write deferrals are not
+</I>&gt;<i>
+</I>Actually I disagree: if your log contains more data than
+the drive could have buffered then you're safe.  That's why
+we let the active journal grow very large on HFS (on a big
+drive it may be 10's of megabytes or more).  If a drive has
+a 16 meg cache and you've got 20 megs worth of data to
+replay then you will undo any damage the drive could have
+done.
+
+
+--dominic
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001917.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001921.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1920">[ date ]</a>
+              <a href="thread.html#1920">[ thread ]</a>
+              <a href="subject.html#1920">[ subject ]</a>
+              <a href="author.html#1920">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

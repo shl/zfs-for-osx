@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] hungry for new bits...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20hungry%20for%20new%20bits...&In-Reply-To=819D142E-D01C-47B7-A596-EB0765EB747D%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000962.html">
+   <LINK REL="Next"  HREF="000967.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] hungry for new bits...</H1>
+    <B>Jason Richard McNeil</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20hungry%20for%20new%20bits...&In-Reply-To=819D142E-D01C-47B7-A596-EB0765EB747D%40apple.com"
+       TITLE="[zfs-discuss] hungry for new bits...">jason at jasonrm.net
+       </A><BR>
+    <I>Tue Oct 14 19:29:12 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000962.html">[zfs-discuss] hungry for new bits...
+</A></li>
+        <LI>Next message: <A HREF="000967.html">[zfs-discuss] hungry for new bits...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#963">[ date ]</a>
+              <a href="thread.html#963">[ thread ]</a>
+              <a href="subject.html#963">[ subject ]</a>
+              <a href="author.html#963">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>No&#235;l, thank you very much for what you do. I know I am looking forward  
+to more bits as I have a new MacBook Pro on the way as of today and I  
+would very much like to start off with a ZFS home. :)
+
+I have had some issues with a multi drive pool on my mac pro thou that  
+I'll follow up with later tonight.
+
+Sorry for shortness, back to Spanish class, ;)
+
+jrm
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jason at jasonrm.net</A>
+
+On Oct 14, 2008, at 6:17 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;  
+wrote:
+
+&gt;<i> Hey guys!
+</I>&gt;<i>
+</I>&gt;<i> Yeah, so the whole schedule ramping up party you allude to is
+</I>&gt;<i> happening, hence my slowness on the email of late.  Sorry.
+</I>&gt;<i>
+</I>&gt;<i> So on to some answers for you.  So I was holding releasing new bits
+</I>&gt;<i> until we sync with the new Solaris base, which will have those tasty
+</I>&gt;<i> case insensitivity options you hunger for.  Problem being, it's not
+</I>&gt;<i> stable, and we're still debugging it.  So I didn't want to release
+</I>&gt;<i> shady bits to everyone, hence I haven't released any.  I do have a few
+</I>&gt;<i> fixes in line for you for some issues.  The trash emptying for example
+</I>&gt;<i> is fixed, the wacky names of filesystems over AFP and NFS in Finder
+</I>&gt;<i> we've got fixes for, and a few others.  Spotlight, I hear you, we are
+</I>&gt;<i> working on.  Finder issues, also being worked on.  Many issues involve
+</I>&gt;<i> more then just the ZFS code to change (opting in to preference panes
+</I>&gt;<i> and such) so fixed bits I get to you still may not do exactly what you
+</I>&gt;<i> want as other parts of the system has to be adjusted as well.
+</I>&gt;<i>
+</I>&gt;<i> and never fear, telling my what drives you nuts is good, it helps me
+</I>&gt;<i> know what's broken and what you guys use so I can fix it :) So info is
+</I>&gt;<i> good and I promise to not black list you :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Oct 12, 2008, at 2:03 PM, Boyd Waters wrote:
+</I>&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> hi there @mothership,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> it's sunday afternoon here, so why not use some spare minutes just
+</I>&gt;&gt;&gt;&gt;<i> to
+</I>&gt;&gt;&gt;&gt;<i> get on your nerves... :&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> any new bits in sight? especially the problem with the volume names
+</I>&gt;&gt;&gt;&gt;<i> within Finder and other parts (sharing prefpane, time machine
+</I>&gt;&gt;&gt;&gt;<i> prefpane, etc...) throughout mac os x is really a show stopper...  
+</I>&gt;&gt;&gt;&gt;<i> (I
+</I>&gt;&gt;&gt;&gt;<i> try to survive with icons, but they're not used in every place)..
+</I>&gt;&gt;&gt;&gt;<i> also
+</I>&gt;&gt;&gt;&gt;<i> the incompatibility (or sort of) with spotlight.
+</I>&gt;&gt;&gt;&gt;<i> And yes, the fact that ZFS filesystems mounted on any other place
+</I>&gt;&gt;&gt;&gt;<i> than
+</I>&gt;&gt;&gt;&gt;<i> the /Volumes/Pool/Fs default do not appear _at all_ in the Finder
+</I>&gt;&gt;&gt;&gt;<i> (just with cmd-shift-G) is no fun... Oh, and while I'm here, to add
+</I>&gt;&gt;&gt;&gt;<i> some salt, let me exhume those case-sensitivity flamewars: that
+</I>&gt;&gt;&gt;&gt;<i> filesystem-specific flag is really a must, unfortunately. I keep on
+</I>&gt;&gt;&gt;&gt;<i> stumbling upon apps that I have to move to my HFS /Applications to
+</I>&gt;&gt;&gt;&gt;<i> get
+</I>&gt;&gt;&gt;&gt;<i> them to work... (afaik this issue is likely to be a show stopper
+</I>&gt;&gt;&gt;&gt;<i> also
+</I>&gt;&gt;&gt;&gt;<i> on a fileserver, for example for the network Applications
+</I>&gt;&gt;&gt;&gt;<i> share...but
+</I>&gt;&gt;&gt;&gt;<i> then again maybe the afp handles this, haven't tried it yet..)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ok, now I'm definitively on your blacklist and I better get some
+</I>&gt;&gt;&gt;&gt;<i> shelter before you get to Your mailbox ;)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Sincere regards for all the work done and shared so far,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Lorenzo
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> On Oct 12, 2008, at 12:08 PM, Byron Servies wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Having spent the past 3 months doing exactly the same thing, I  wish
+</I>&gt;&gt;&gt;<i> them good luck.  Don't forget sleep and exercise!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Oh, man. What you said. I completely agree with that estimate!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And as I understand, you could compile the bits yourself, as the
+</I>&gt;&gt;<i> source code is posted on the site.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000962.html">[zfs-discuss] hungry for new bits...
+</A></li>
+	<LI>Next message: <A HREF="000967.html">[zfs-discuss] hungry for new bits...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#963">[ date ]</a>
+              <a href="thread.html#963">[ thread ]</a>
+              <a href="subject.html#963">[ subject ]</a>
+              <a href="author.html#963">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Can't export a ZFS FS via AFP
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Can%27t%20export%20a%20ZFS%20FS%20via%20AFP&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000572.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Can't export a ZFS FS via AFP</H1>
+    <B>Christopher LILJENSTOLPE</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Can%27t%20export%20a%20ZFS%20FS%20via%20AFP&In-Reply-To="
+       TITLE="[zfs-discuss] Can't export a ZFS FS via AFP">cdl at asgaard.org
+       </A><BR>
+    <I>Wed Apr 30 20:14:59 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000572.html">[zfs-discuss] zfs and Finder and Sharing difficulties
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#552">[ date ]</a>
+              <a href="thread.html#552">[ thread ]</a>
+              <a href="subject.html#552">[ subject ]</a>
+              <a href="author.html#552">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Greetings,
+
+	I have a tank where I've created a number of zfs file systems under  
+10.5.2 server with build 111.  Something like
+
+tank/parent/child.  /parent and /parent/child are mounted in / 
+Volumes.  tank is not.  One interesting datapoint is that these don't  
+show up as mounted file systems or drives in finder.  And since / 
+Volumes don't show up in finder, normally, I have to do a goto to get  
+to them via the finder.  That's a side issue, however.
+
+In server admin, I can't get the sharing manager to see /Volumes/ 
+parent/child to make it a sharepoint under afp.  I can do so using the  
+sharing cli.
+
+If I make parent/child a sharepoint using sharing, I can see it on a  
+client, I am unable to browse to it, and a connect to server <A HREF="afp://server/child">afp://server/child</A> 
+  (the sharepoint) fails.
+
+On the sharing manager in serveradmin, once I've used sharing to share  
+parent/child out, I can see child as a share, but any attempt to click  
+on it is rejected (the next sharepoint is selected, instead).  Any  
+ideas?
+
+	Chris
+
+- ---
+&#26446;&#26607;&#30591;
+Check my PGP key here:
+<A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJIGTWzAAoJEGmx2Mt/+Iw/ol4H/jSZiySzA5vns1+rwM6tVFB5
+lF09Q/3+TqTXL8nirj1x9SI6wIP2wvWymQoKcsx+8xj2PSdglpMwq1CP53NaIwRe
+CRVljCFcDNr3xstjP9wDOx9bkyGLs3H0KB4CG9s40EVEYl1ieuUUvoQvIy1f1EWv
+uOWYk4LLn6wwr2767rhYSKIjR/CSmtO2mV+bhDIVc6zXe5CYycLFWH8hq3ZCcOkQ
+zDnln303rjzjzgzwsyUcbsQMFJDPd7WqKDAnXayLZZm8cY2fCn75d9O9HcCJf5Mh
+DlrUBdpU4r8fGU4fzf8Wo7xcrv+VAMR7vof8auXfbsBF8xnJaJG6W+gVn6mf3fU=
+=eLOl
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000572.html">[zfs-discuss] zfs and Finder and Sharing difficulties
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#552">[ date ]</a>
+              <a href="thread.html#552">[ thread ]</a>
+              <a href="subject.html#552">[ subject ]</a>
+              <a href="author.html#552">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

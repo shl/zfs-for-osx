@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] rsync Invalid checksum error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To=B319F49A-F62B-4533-A117-66D59C6B2A0F%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000341.html">
+   <LINK REL="Next"  HREF="000339.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] rsync Invalid checksum error</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To=B319F49A-F62B-4533-A117-66D59C6B2A0F%40nrao.edu"
+       TITLE="[zfs-discuss] rsync Invalid checksum error">lists at loveturtle.net
+       </A><BR>
+    <I>Mon Mar 17 09:19:00 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000341.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+        <LI>Next message: <A HREF="000339.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#338">[ date ]</a>
+              <a href="thread.html#338">[ thread ]</a>
+              <a href="subject.html#338">[ subject ]</a>
+              <a href="author.html#338">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>3.0 has been in macports for a little while now too. if you have that 
+installed you can just selfupdate and install rsync
+
+Boyd Waters wrote:
+&gt;<i> Have you tried rsync 3.0?
+</I>&gt;<i>
+</I>&gt;<i> It is very easy to build from source code, and I run into fewer 
+</I>&gt;<i> problems when I'm using it.
+</I>&gt;<i>
+</I>&gt;<i> See
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.samba.org/rsync/">http://www.samba.org/rsync/</A>
+</I>&gt;<i> <A HREF="http://www.samba.org/ftp/rsync/src/rsync-3.0.0.tar.gz">http://www.samba.org/ftp/rsync/src/rsync-3.0.0.tar.gz</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mar 17, 2008, at 5:21 AM, Christian He&#223;mann wrote:
+</I>&gt;&gt;<i> Dear all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> any update on Ticket #2 
+</I>&gt;&gt;<i> (<A HREF="http://trac.macosforge.org/projects/zfs/ticket/2">http://trac.macosforge.org/projects/zfs/ticket/2</A>)?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm trying to copy my home directory (HFS+) to a remote 10.5.2 client 
+</I>&gt;&gt;<i> with ZFS RAID.Z via rsync/ssh (-avESz --no-whole-file --partial 
+</I>&gt;&gt;<i> --stats --progress --inplace --delete --ignore-errors), but get 
+</I>&gt;&gt;<i> errors like:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Invalid checksum length 9175040
+</I>&gt;&gt;<i> rsync error: protocol incompatibility (code 2) at 
+</I>&gt;&gt;<i> /SourceCache/rsync/rsync-30/rsync/sender.c(60)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> about every 200-500 files, which result in the termination of the 
+</I>&gt;&gt;<i> process.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Retrying always works with the same file, but the error returns a few 
+</I>&gt;&gt;<i> hundred files later.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you for any information.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Best regards,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Christian
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>   
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000341.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+	<LI>Next message: <A HREF="000339.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#338">[ date ]</a>
+              <a href="thread.html#338">[ thread ]</a>
+              <a href="subject.html#338">[ subject ]</a>
+              <a href="author.html#338">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Possible to use TimeMachine on a zfs pool?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Possible%20to%20use%20TimeMachine%20on%20a%20zfs%20pool%3F&In-Reply-To=5f0d46fb0801211350s677c12d4y4d81afbcd5e8c2f8%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000038.html">
+   <LINK REL="Next"  HREF="000041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Possible to use TimeMachine on a zfs pool?</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Possible%20to%20use%20TimeMachine%20on%20a%20zfs%20pool%3F&In-Reply-To=5f0d46fb0801211350s677c12d4y4d81afbcd5e8c2f8%40mail.gmail.com"
+       TITLE="[zfs-discuss] Possible to use TimeMachine on a zfs pool?">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Jan 21 15:10:56 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000038.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+        <LI>Next message: <A HREF="000041.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As you guessed,  we do have a more intelligent implementation :)
+
+Basically, we have block birth times associated with each block and  
+also &quot;dead&quot; lists (blocks that were live in a previous snapshot/fs,  
+but aren't in this current snapshot/fs).
+These two things help us know which blocks &quot;have changed&quot; since the  
+last snapshot or event.  We will actually only bother &quot;updating&quot; the  
+snapshot with blocks that have a birth time *later* than the  
+snapshot.  Hence the amount of space a snapshot takes up is  
+proportional to the amount of data you have changed between it and the  
+live filesystem you're snap-shotting.  (I say &quot;updating&quot; in quotes  
+because of how our snapshots work.  Since ZFS is COW, snapshots are  
+free, since essentially when a block changes in your live filesystem,  
+instead of freeing that block(as we would done if you hadn't done any  
+snapshots), we keep it around.)  Visually this is like two trees that  
+start out the same, but gradually diverge the more changes you make to  
+your live filesystem.  A good visual of this can be seen in the  
+&quot;Constant Time Snapshots&quot; slide of the ZFS Filesystem presentation on  
+open solaris:
+
+<A HREF="http://opensolaris.org/os/community/zfs/docs/zfs_last.pdf">http://opensolaris.org/os/community/zfs/docs/zfs_last.pdf</A>
+
+'zfs send' also is done at the block level.  So if you do a 'zfs send - 
+i' for example, only the *blocks* that have changed between this  
+snapshot and the last one will be sent over.
+Incidentally, the block birth time is also what helps us know what to  
+resilver in the case of a transient outage in a raidz or mirror such  
+that we don't incur the overhead of having to blindly resilver the  
+entire raidz or mirror.
+
+If your're interested you can read up on how this works in more detail:
+Matt's snapshot blog entry:
+<A HREF="http://blogs.sun.com/ahrens/entry/is_it_magic">http://blogs.sun.com/ahrens/entry/is_it_magic</A>
+
+Jeffs resilver blog entry:
+<A HREF="http://blogs.sun.com/bonwick/entry/smokin_mirrors">http://blogs.sun.com/bonwick/entry/smokin_mirrors</A>
+
+Noel
+
+On Jan 21, 2008, at 1:50 PM, James Blackburn wrote:
+
+&gt;&gt;<i> And no, in case anyone out there is wondering...  Time Machine will
+</I>&gt;&gt;<i> not be doing it's current 'hardlink backups' on a ZFS volume.  That's
+</I>&gt;&gt;<i> why we have snapshots in the first place instead :)
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, ZFS doesn't yet support block deduplication. Time
+</I>&gt;<i> Machine from an HFS+ disk to a ZFS disk would presumably still require
+</I>&gt;<i> the entire file to be replaced -- rather than a block level delta --
+</I>&gt;<i> which would result in the same space overhead as in the current
+</I>&gt;<i> implementation (unless you guys are more intelligent with diffing
+</I>&gt;<i> files, or implement deduplication :) ).
+</I>&gt;<i>
+</I>&gt;<i> James
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080121/b3d1e7b1/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080121/b3d1e7b1/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000038.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+	<LI>Next message: <A HREF="000041.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#42">[ date ]</a>
+              <a href="thread.html#42">[ thread ]</a>
+              <a href="subject.html#42">[ subject ]</a>
+              <a href="author.html#42">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

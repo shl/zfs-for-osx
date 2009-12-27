@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Mixing and matching replication types inside a	pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Mixing%20and%20matching%20replication%20types%20inside%20a%0A%09pool&In-Reply-To=%3C762437f0810180817v1dda547co47f7b566b92e96f2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000989.html">
+   <LINK REL="Next"  HREF="000991.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Mixing and matching replication types inside a	pool</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Mixing%20and%20matching%20replication%20types%20inside%20a%0A%09pool&In-Reply-To=%3C762437f0810180817v1dda547co47f7b566b92e96f2%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Mixing and matching replication types inside a	pool">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Sat Oct 18 08:17:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000989.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+        <LI>Next message: <A HREF="000991.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#990">[ date ]</a>
+              <a href="thread.html#990">[ thread ]</a>
+              <a href="subject.html#990">[ subject ]</a>
+              <a href="author.html#990">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK, so I should've googled a bit more. Things are a bit clearer (just a
+bit).
+
+It turns out that you *CAN* mix and match but you have to specify the -f
+flag to do so. However, in my googling I found several places where it says
+that it's not recommended to mix. Can anybody tell me why this would be so?
+I realize that mixing redundant and non-redundant (i.e., a mirror with a
+plain disk) is just not a good idea, but why would it not be a good idea to
+mix a mirror with a raidz?
+
+Thanks,
+-Mario.
+
+On Sat, Oct 18, 2008 at 4:41 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> I currently have a pool that uses 2 mirrored 1TB drives. I want to add 3
+</I>&gt;<i> RAIDZ'ed 500GB drives to get a total storage of 2TB. However I'd like to
+</I>&gt;<i> have all my storage in a single volume.
+</I>&gt;<i>
+</I>&gt;<i> At this point if I want to add a raidz to the pool ZFS tells me that the
+</I>&gt;<i> pool is mirrored.
+</I>&gt;<i>
+</I>&gt;<i> Is there any way to accomplish this (i.e., get a single volume with all my
+</I>&gt;<i> storage, part mirrored and part RAIDZ'ed)? Do I need to recreate the pool
+</I>&gt;<i> using RAIDZ and add the 2x1TB drives as a 2-volume RAIDZ?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -Mario
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;<i>                                                        --R.U. Sirius
+</I>&gt;<i>
+</I>
+
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/9c24b12d/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/9c24b12d/attachment.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000989.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+	<LI>Next message: <A HREF="000991.html">[zfs-discuss] Mixing and matching replication types inside a	pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#990">[ date ]</a>
+              <a href="thread.html#990">[ thread ]</a>
+              <a href="subject.html#990">[ subject ]</a>
+              <a href="author.html#990">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] cannot reimport new pool until reboot also crash on	copy
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20cannot%20reimport%20new%20pool%20until%20reboot%20also%20crash%20on%0A%09copy&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000210.html">
+   <LINK REL="Next"  HREF="000191.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] cannot reimport new pool until reboot also crash on	copy</H1>
+    <B>Jonathan Borden</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20cannot%20reimport%20new%20pool%20until%20reboot%20also%20crash%20on%0A%09copy&In-Reply-To="
+       TITLE="[zfs-discuss] cannot reimport new pool until reboot also crash on	copy">zfs-discuss at openhealth.org
+       </A><BR>
+    <I>Fri Feb 22 09:31:06 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000210.html">[zfs-discuss] Fwd: encryption
+</A></li>
+        <LI>Next message: <A HREF="000191.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#190">[ date ]</a>
+              <a href="thread.html#190">[ thread ]</a>
+              <a href="subject.html#190">[ subject ]</a>
+              <a href="author.html#190">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Two issues (possible bug reports):
+
+1) when a new pool is created it seems to act flaky until the machine
+is rebooted.
+I created a new raidz pool with 5 disks. Copied some stuff. I exported
+the pool (using -f) ... I did this because I've noticed that when
+doing
+$ diskutil list
+the pool name is not written to the disk until after a reboot (which
+includes export/import)
+
+When i try reimporting e.g.
+$ sudo zpool import tank
+
+doesn't work... but when I reboot the machine all is well...
+
+2) While copying ~200 gb into the new pool using finder I started
+another copy of ~100 gb... the second copy crashed after ~10gb. The
+computer didn't kernel panic, but the directory had a few file in it
+and a bunch of blank files that hadn't yet been copies. Perhaps a
+threading issue???
+
+Jonathan
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000210.html">[zfs-discuss] Fwd: encryption
+</A></li>
+	<LI>Next message: <A HREF="000191.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#190">[ date ]</a>
+              <a href="thread.html#190">[ thread ]</a>
+              <a href="subject.html#190">[ subject ]</a>
+              <a href="author.html#190">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

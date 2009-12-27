@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS as read/write
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20as%20read/write&In-Reply-To=BB96F3FB-2571-4D75-A2E9-87F4A0BE32CF%40daimi.au.dk">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000281.html">
+   <LINK REL="Next"  HREF="000283.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS as read/write</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20as%20read/write&In-Reply-To=BB96F3FB-2571-4D75-A2E9-87F4A0BE32CF%40daimi.au.dk"
+       TITLE="[zfs-discuss] ZFS as read/write">bwaters at nrao.edu
+       </A><BR>
+    <I>Fri Mar  7 09:50:56 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000281.html">[zfs-discuss] ZFS as read/write
+</A></li>
+        <LI>Next message: <A HREF="000283.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#282">[ date ]</a>
+              <a href="thread.html#282">[ thread ]</a>
+              <a href="subject.html#282">[ subject ]</a>
+              <a href="author.html#282">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Mar 7, 2008, at 10:19 AM, Dan Villiom Podlaski Christiansen wrote:
+&gt;<i> I believe ZFS will set the ownership of the file system root  
+</I>&gt;<i> directory to the user that issues the &#8216;zfs create&#8217; command. If you  
+</I>&gt;<i> create a new file system in an existing file system &#8212; or pool &#8212; but  
+</I>&gt;<i> don't have write permissions to the parent root directory, the  
+</I>&gt;<i> create will succeed but the mount fail. You should be able to fix  
+</I>&gt;<i> that by changing the mount point.
+</I>
+
+I don't consider that a bug. Under ZFS, what's the real difference  
+between creating a filesystem and creating a file?
+
+Oh, I see.. if a user doesn't have write permission on the pool, they  
+shouldn't be able to create a filesystem in that pool. Is that it?
+
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000281.html">[zfs-discuss] ZFS as read/write
+</A></li>
+	<LI>Next message: <A HREF="000283.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#282">[ date ]</a>
+              <a href="thread.html#282">[ thread ]</a>
+              <a href="subject.html#282">[ subject ]</a>
+              <a href="author.html#282">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] nested filesystems, any problems?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nested%20filesystems%2C%20any%20problems%3F&In-Reply-To=%3C4936E58D.1090804%40loveturtle.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001140.html">
+   <LINK REL="Next"  HREF="001141.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] nested filesystems, any problems?</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nested%20filesystems%2C%20any%20problems%3F&In-Reply-To=%3C4936E58D.1090804%40loveturtle.net%3E"
+       TITLE="[zfs-discuss] nested filesystems, any problems?">lists at loveturtle.net
+       </A><BR>
+    <I>Wed Dec  3 12:01:17 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001140.html">[zfs-discuss] nested filesystems, any problems?
+</A></li>
+        <LI>Next message: <A HREF="001141.html">[zfs-discuss] nested filesystems, any problems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1137">[ date ]</a>
+              <a href="thread.html#1137">[ thread ]</a>
+              <a href="subject.html#1137">[ subject ]</a>
+              <a href="author.html#1137">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yeah, really. I have some way deep zfs filesystems, it's totally normal, 
+everyone should do it!
+
+I've had a similar problem a couple times on FreeBSD. One time it was 
+because the parent fs (actually the root fs for the pool itself) had the 
+zfs mountpoint property set to legacy and wasn't mounted anywhere at 
+all. This shouldn't have made a difference but it did, I googled and if 
+I remember correctly it was a known zfs problem that was fixed a whlie 
+ago. Creating some useless directory and mounting the parent fs there 
+solved the problem.
+
+One other time it happend for no reason I can explain and simply 
+unmounting and remounting the fs fixed it. That would be the easiest one 
+to try.
+I think you'll need to use &quot;diskutil unmount /mountpoint&quot; to do it, zfs 
+unmount and umount will probably just get confused.
+
+Obviously if you're going to unmount your home directory you'll need to 
+not be logged in at the time. I like to log out and then log in as 
+&quot;&gt;console&quot; which will drop you to the cli and then you're free to trash 
+most everything and still be okay :-)
+
+You could try that and see if it makes a difference....If not I have no 
+clue :-)
+
+On 12/3/08 2:18 PM, Boyd Waters wrote:
+&gt;<i> Is anyone really testing out nested filesystems?
+</I>&gt;<i>
+</I>&gt;<i> ZFS filesystems can contain other filesystems. Like a directory
+</I>&gt;<i>
+</I>&gt;<i> &quot;That's crazy talk. Why would you want to do that?&quot;
+</I>&gt;<i>
+</I>&gt;<i> I want to perform snapshots of a sub-directory independently of 
+</I>&gt;<i> snapshots on the parent.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> For example, my top-level pool is a mounted as a ZFS filesystem called 
+</I>&gt;<i> &quot;pool&quot;. I have a home directory under that called &quot;bwaters&quot; so that 
+</I>&gt;<i> filesystem is pool/bwaters ... I can have other filesystems under my 
+</I>&gt;<i> home directory...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Everything is working OK over here with that setup. Except snapshots.
+</I>&gt;<i>
+</I>&gt;<i> cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-03T12</A>:12:55': dataset is 
+</I>&gt;<i> busy
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I logged out, logged in as an admin user, performed a scrub of the 
+</I>&gt;<i> entire pool (this took about six hours), and there were no data errors 
+</I>&gt;<i> reported but I still cannot create snapshots.
+</I>&gt;<i>
+</I>&gt;<i> I used to create snapshots all the time.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Back when I had only one pool attached... hmm... now I have an 
+</I>&gt;<i> external SATA enclosure with another raidz1 mounted.  That one is OK, 
+</I>&gt;<i> too. Why should it matter?
+</I>&gt;<i>
+</I>&gt;<i> # zpool status
+</I>&gt;<i>   pool: pool
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i>  scrub: scrub completed with 0 errors on Tue Dec  2 23:05:14 2008
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>     NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>     pool         ONLINE       0     0     0
+</I>&gt;<i>       raidz1     ONLINE       0     0     0
+</I>&gt;<i>         disk0s2  ONLINE       0     0     0
+</I>&gt;<i>         disk3s2  ONLINE       0     0     0
+</I>&gt;<i>         disk2s2  ONLINE       0     0     0
+</I>&gt;<i>         disk1s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i>
+</I>&gt;<i>   pool: tank
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i>  scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>     NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>     tank         ONLINE       0     0     0
+</I>&gt;<i>       raidz1     ONLINE       0     0     0
+</I>&gt;<i>         disk6s2  ONLINE       0     0     0
+</I>&gt;<i>         disk9s2  ONLINE       0     0     0
+</I>&gt;<i>         disk7s2  ONLINE       0     0     0
+</I>&gt;<i>         disk8s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> IS ANYONE RUNNING INTO THIS &quot;CANNOT CREATE SNAPSHOTS&quot; PROBLEM?
+</I>&gt;<i> ANY SUGGESTIONS TO FIX THIS?
+</I>&gt;<i>
+</I>&gt;<i> (the pool is 1.9 Terabytes at the moment. exporting/importing is 
+</I>&gt;<i> do-able, but I'll need to procure *even more* disk to do so... I'd 
+</I>&gt;<i> purchase 4x1.5T and that would set me back at least $350... any other 
+</I>&gt;<i> idea?)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001140.html">[zfs-discuss] nested filesystems, any problems?
+</A></li>
+	<LI>Next message: <A HREF="001141.html">[zfs-discuss] nested filesystems, any problems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1137">[ date ]</a>
+              <a href="thread.html#1137">[ thread ]</a>
+              <a href="subject.html#1137">[ subject ]</a>
+              <a href="author.html#1137">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

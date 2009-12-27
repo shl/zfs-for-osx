@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] weird zfs thread synchronization issue?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20weird%20zfs%20thread%20synchronization%20issue%3F&In-Reply-To=33644d3c0804220649r507d81b7u3a6a8f42064e2c2a%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000537.html">
+   <LINK REL="Next"  HREF="000539.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] weird zfs thread synchronization issue?</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20weird%20zfs%20thread%20synchronization%20issue%3F&In-Reply-To=33644d3c0804220649r507d81b7u3a6a8f42064e2c2a%40mail.gmail.com"
+       TITLE="[zfs-discuss] weird zfs thread synchronization issue?">info at martin-hauser.net
+       </A><BR>
+    <I>Tue Apr 22 07:20:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000537.html">[zfs-discuss] weird zfs thread synchronization issue?
+</A></li>
+        <LI>Next message: <A HREF="000539.html">[zfs-discuss] weird zfs thread synchronization issue?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#538">[ date ]</a>
+              <a href="thread.html#538">[ thread ]</a>
+              <a href="subject.html#538">[ subject ]</a>
+              <a href="author.html#538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Everything seemed pretty consistent till now. The only thing I've ever  
+notice that is all git status related things (so the listing of the  
+files in git-commit, the commiting itself works fine). I would assume  
+that the git's index file is treated special somehow and doing a git  
+diff rewrites that file....
+
+Let me know if you find out more.
+
+Martin
+
+On Apr 22, 2008, at 15:49 PM, James Snyder wrote:
+
+&gt;<i> I'll give that a try.  I'm not 100% sure that that will resolve the
+</I>&gt;<i> problem though.
+</I>&gt;<i>
+</I>&gt;<i> Does that seem to work consistently or do you find yourself having to
+</I>&gt;<i> sometimes do things multiple times?
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure what git is doing behind the scenes during a status
+</I>&gt;<i> check.  Is it refreshing the index somehow that obviates a little of
+</I>&gt;<i> this limbo file state issue?
+</I>&gt;<i>
+</I>&gt;<i> I haven't checked entirely whether this happens for creating, deleting
+</I>&gt;<i> and modifying, but if it happens on modifications too, that could lead
+</I>&gt;<i> to some messy issues.
+</I>&gt;<i>
+</I>&gt;<i> Example: Say, I was working with an sqlite database, made some
+</I>&gt;<i> changes, unlocked things, and subsequently another process hit the
+</I>&gt;<i> database and made changes but got the old version of the file and
+</I>&gt;<i> worked with that.
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Apr 22, 2008 at 8:36 AM, Martin Hauser &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">info at martin-</A> 
+</I>&gt;<i> hauser.net&gt; wrote:
+</I>&gt;&gt;<i> Hi there,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> more on that issue,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've got some problems with it as well, but mostly due to git not  
+</I>&gt;&gt;<i> catching
+</I>&gt;&gt;<i> commits immediatlly as such. For example:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1. do some work
+</I>&gt;&gt;<i> 2. git add somefile
+</I>&gt;&gt;<i> 3. git commit -m &quot;some commit message&quot;
+</I>&gt;&gt;<i> 4. git status
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> you'll notice that the file you added for commiting is still listed
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For me, it was easy enough to 'work around' just by doing a git  
+</I>&gt;&gt;<i> status
+</I>&gt;&gt;<i> before every index file related operation (just a small alias in  
+</I>&gt;&gt;<i> my .zshrc),
+</I>&gt;&gt;<i> might be work-around-ing your problem also James?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'd be much prefering the issue to be fixed though.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Martin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 22, 2008, at 15:31 PM, James Snyder wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> SUMMARY
+</I>&gt;&gt;&gt;<i> During the following situations:
+</I>&gt;&gt;&gt;<i> git reset --hard &lt;revision&gt;
+</I>&gt;&gt;&gt;<i> git-svn clone ... (on a large svn repository)
+</I>&gt;&gt;&gt;<i> (sometimes followed by)
+</I>&gt;&gt;&gt;<i> rm -rf &lt;some directory&gt; (after just working with a lot of files,  
+</I>&gt;&gt;&gt;<i> like
+</I>&gt;&gt;&gt;<i> one of the above commands)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The listed git commands sometimes fail, sometimes succeed, citing
+</I>&gt;&gt;&gt;<i> sometimes missing files.  With rm -rf, shortly after the operation  
+</I>&gt;&gt;&gt;<i> an
+</I>&gt;&gt;&gt;<i> ls or other file operation will sometimes show certain
+</I>&gt;&gt;&gt;<i> directories/files just operated on and sometimes not.  This may or  
+</I>&gt;&gt;&gt;<i> may
+</I>&gt;&gt;&gt;<i> not stabilize in the subsequent seconds.  This behavior leaves me  
+</I>&gt;&gt;&gt;<i> with
+</I>&gt;&gt;&gt;<i> the sense that the file operations are talking to different threads
+</I>&gt;&gt;&gt;<i> associated with ZFS and that they're not all on the &quot;same page&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> STEPS TO REPRODUCE
+</I>&gt;&gt;&gt;<i> 1. Find a rather large svn repository, with lots of revisions and
+</I>&gt;&gt;&gt;<i> files (or make one).  The repo I'm working with has lots of binary
+</I>&gt;&gt;&gt;<i> files in it and the db for svn is around 9 gigabytes with 4000
+</I>&gt;&gt;&gt;<i> revisions or so.
+</I>&gt;&gt;&gt;<i> 2. Install latest git w/ svn support from macports. (sudo port  
+</I>&gt;&gt;&gt;<i> install git
+</I>&gt;&gt;<i> +svn)
+</I>&gt;&gt;&gt;<i> 3. do a git-svn clone on your repository
+</I>&gt;&gt;&gt;<i> 4. With the current version of git-svn, it should try and repack  
+</I>&gt;&gt;&gt;<i> files
+</I>&gt;&gt;&gt;<i> at different stages during the clone process if you have enough
+</I>&gt;&gt;&gt;<i> revisions, you will likely see a failure after this point when it
+</I>&gt;&gt;&gt;<i> tries to pick up and check out the next increment from svn.
+</I>&gt;&gt;&gt;<i> 5. Quickly look for the files it says it cannot find in the .git
+</I>&gt;&gt;&gt;<i> directory of your partial clone, you should find that sometimes it  
+</I>&gt;&gt;&gt;<i> is
+</I>&gt;&gt;&gt;<i> there and sometimes not.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> RESULTS
+</I>&gt;&gt;&gt;<i> Files associated with recent large batches of operations are there/ 
+</I>&gt;&gt;&gt;<i> not
+</I>&gt;&gt;&gt;<i> there with subsequent &quot;ls&quot; listings.  If no new userland operations
+</I>&gt;&gt;&gt;<i> are pending on the file, the file should either be there or not  
+</I>&gt;&gt;&gt;<i> there,
+</I>&gt;&gt;&gt;<i> not in limbo.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> REGRESSION
+</I>&gt;&gt;&gt;<i> I haven't checked this with 102A or other revs, just 111.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> NOTES
+</I>&gt;&gt;&gt;<i> Running current 111 release on a MacBook, with a single pool on a
+</I>&gt;&gt;&gt;<i> single partition.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> James Snyder
+</I>&gt;&gt;&gt;<i> Biomedical Engineering
+</I>&gt;&gt;&gt;<i> Northwestern University
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> James Snyder
+</I>&gt;<i> Biomedical Engineering
+</I>&gt;<i> Northwestern University
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080422/a296d073/PGP.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080422/a296d073/PGP.bin</A>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000537.html">[zfs-discuss] weird zfs thread synchronization issue?
+</A></li>
+	<LI>Next message: <A HREF="000539.html">[zfs-discuss] weird zfs thread synchronization issue?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#538">[ date ]</a>
+              <a href="thread.html#538">[ thread ]</a>
+              <a href="subject.html#538">[ subject ]</a>
+              <a href="author.html#538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

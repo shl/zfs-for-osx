@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Anyone else observing ZFS transfers pausing	briefly?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Anyone%20else%20observing%20ZFS%20transfers%20pausing%0A%09briefly%3F&In-Reply-To=8FCD4B5C-2157-48B2-A4C7-D8A896961C17%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000674.html">
+   <LINK REL="Next"  HREF="000680.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Anyone else observing ZFS transfers pausing	briefly?</H1>
+    <B>Adrian Thornton</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Anyone%20else%20observing%20ZFS%20transfers%20pausing%0A%09briefly%3F&In-Reply-To=8FCD4B5C-2157-48B2-A4C7-D8A896961C17%40spamfreemail.de"
+       TITLE="[zfs-discuss] Anyone else observing ZFS transfers pausing	briefly?">canadrian at electricteaparty.net
+       </A><BR>
+    <I>Mon Jul 14 14:21:04 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000674.html">[zfs-discuss] thanks, ZFS!
+</A></li>
+        <LI>Next message: <A HREF="000680.html">[zfs-discuss] Anyone else observing ZFS transfers	pausing	briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#678">[ date ]</a>
+              <a href="thread.html#678">[ thread ]</a>
+              <a href="subject.html#678">[ subject ]</a>
+              <a href="author.html#678">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Not sure if this is the same issue, but it appears related: I am  
+noticing something similar when playing video off my raidz1 array.  
+Even though I can copy 2 hours of h.264 or divx compressed video from  
+the raidz1 to the OS drive in just a couple minutes, if I actually  
+play said files in VLC (or quicktime player etc.) FROM the array, it  
+stutters and jumps frequently. It makes playback of media from the  
+array almost impossible, which somewhat limits its usefulness for my  
+purposes. I have tested the same files by playing them from the HFS+  
+OS drive, and there are no stutter issues there.
+
+- Adrian
+
+On Jun 25, 2008, at 01:39 , ruebezahl wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have got the exact same thing here...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 15.05.2008, at 16:04, <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">raoul at amsi.org.au</A> wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi Noel,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you for the zpool iostats command.  Very nice to see what's
+</I>&gt;&gt;<i> actually
+</I>&gt;&gt;<i> going on.
+</I>&gt;&gt;<i> I ran the command, but it has raised another question that I'm
+</I>&gt;&gt;<i> scratching
+</I>&gt;&gt;<i> my head over, here is some sample output of iostat.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> #sudo zpool iostat bigboxraidz 1
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>               capacity     operations    bandwidth
+</I>&gt;&gt;<i> pool          used  avail   read  write   read  write
+</I>&gt;&gt;<i> -----------  -----  -----  -----  -----  -----  -----
+</I>&gt;&gt;<i> bigboxraidz   880G   980G      6     19   601K  1.43M
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    320      0  39.8M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    269      0  33.4M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    254    116  30.3M  1.52M
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    274      0  33.9M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    339      0  41.9M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    304      0  37.5M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    330      0  40.5M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    247    137  30.1M  1.22M
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    320      0  39.8M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    312      0  38.5M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    330      0  41.0M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    313      0  38.7M      0
+</I>&gt;&gt;<i> bigboxraidz   880G   980G    207    209  24.6M  2.14M
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Using a MacPro, the stats above were observed by mounting the share
+</I>&gt;&gt;<i> &quot;LoungeRoomMac&quot; which resides on the bigboxraidz pool via Appleshare
+</I>&gt;&gt;<i> (gigabit).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, I understand that the zpool is being read at an average of around
+</I>&gt;&gt;<i> 30MB/sec...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But when I look at actual network transfer speeds via MenuMeters for
+</I>&gt;&gt;<i> example, it only shows a transfer speed of approximately 3-5MB/sec..
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This I don't understand.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> iostat is saying 30MB/sec reads, but Menumeters is only showing 5Mb/
+</I>&gt;&gt;<i> sec
+</I>&gt;&gt;<i> maximum. (the 5Mb/sec is about right when calculating the time it
+</I>&gt;&gt;<i> took to
+</I>&gt;&gt;<i> transfer a 1GB VOB file)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have a screenshot of this at: <A HREF="http://homepage.mac.com/tangles/zfs.html">http://homepage.mac.com/tangles/zfs.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cheers,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Raoul
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It could be that what you're witnessing is ZFS's transactional IO
+</I>&gt;&gt;&gt;<i> syncing.  Basically we write to disk (ie sync a transaction group)
+</I>&gt;&gt;&gt;<i> every five seconds, hence this likely explains your crazy drive  
+</I>&gt;&gt;&gt;<i> light
+</I>&gt;&gt;&gt;<i> issue.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> To actually see what's going on down there, I'd recommend running
+</I>&gt;&gt;&gt;<i> this
+</I>&gt;&gt;&gt;<i> on the command line in a terminal window:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> #sudo zpool iostat bigboxraidz 1
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> This will give you all the specs on what I/O ZFS is doing every
+</I>&gt;&gt;&gt;<i> second.  How many reads, how many writes, and the size of each
+</I>&gt;&gt;&gt;<i> respectively. And will keep going until you ctl-C it.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.8 (Darwin)
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJIYfYgAAoJEP8ZopU3BhmtfucIAMuWt3bXU9eTjfVcBNs+PilR
+</I>&gt;<i> fmQ6MCMXVmiJKOs+jCABXx+gD4viyyxQuUbow8VU4Vcz85szQT+4XVyXpz84mbj1
+</I>&gt;<i> +4RpfJOi8ZBkw+KaSsLivkeumHauoOcI+9cFLARlBSoAXCT8cFUzs+Gess+cR1B4
+</I>&gt;<i> yqjmJF0HgMwhz9v/FYsIFviJ+RDIaAFevDMNYYYuKHtI6a9e6xlpS2MTYsXIo9GL
+</I>&gt;<i> 1zKYkgUa8kph/9BxGDWfut9hnF5L+faYHA/i4FtQ0QGS3qs93P9Yj384rEY7t2ip
+</I>&gt;<i> PStG0OrFfmtVAziTqZxCuFA61RAugzGLPJC5IwL4kB1SaNYajH5VAAZuhZwzRzI=
+</I>&gt;<i> =78UC
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000674.html">[zfs-discuss] thanks, ZFS!
+</A></li>
+	<LI>Next message: <A HREF="000680.html">[zfs-discuss] Anyone else observing ZFS transfers	pausing	briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#678">[ date ]</a>
+              <a href="thread.html#678">[ thread ]</a>
+              <a href="subject.html#678">[ subject ]</a>
+              <a href="author.html#678">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

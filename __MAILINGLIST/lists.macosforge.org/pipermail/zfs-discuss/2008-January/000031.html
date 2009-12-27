@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Home on a ZFS volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Home%20on%20a%20ZFS%20volume&In-Reply-To=2694A684-EF64-4574-9771-B81FB24BF7E9%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000030.html">
+   <LINK REL="Next"  HREF="000023.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Home on a ZFS volume</H1>
+    <B>Dillon</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Home%20on%20a%20ZFS%20volume&In-Reply-To=2694A684-EF64-4574-9771-B81FB24BF7E9%40nrao.edu"
+       TITLE="[zfs-discuss] Home on a ZFS volume">lists at loveturtle.net
+       </A><BR>
+    <I>Sat Jan 19 07:54:52 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000030.html">[zfs-discuss] Home on a ZFS volume
+</A></li>
+        <LI>Next message: <A HREF="000023.html">[zfs-discuss] Filename conventions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Cool, I didn't know about dscl.
+
+Yeah, Everyone should always keep in mind that each fs created in your 
+zpool can be mounted anywhere in the system. So for instance I have a 
+zpool for /opt which is where my macports install lives.
+
+The biggest problem I have with running my home dir on zfs is finders 
+confusion over the path names sometimes. If I click on the hard drive 
+and then click on &quot;Users&quot; it tries to take me to /Volumes/genepool even 
+though that's not right.
+
+I don't really use finder often though since I'm usually faster with 
+mv,cp,so on. You can always get finder to open the correct directory by 
+just saying typing open . (open working directory in finder) or open 
+/Users or whatever. Even though it will show up as the zpool volume you 
+will see the correct contents for whatever directory you opened.
+
+Some applications get a little confused too, For instance I use EyeTV 
+with my usb tv card on my workstation and it will crash non-stop unless 
+I change the recording destination path off the zpool. There's probably 
+other applications that suffer problems too so everyone will have to 
+make their own decision at this stage of the game.
+
+It works for me :-)
+
+Cheers,
+Dillon
+
+Boyd Waters wrote:
+&gt;<i>
+</I>&gt;<i> On Jan 18, 2008, at 3:20 PM, Dillon wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> zfs set mountpoint=/Users genepool/Users
+</I>&gt;<i>
+</I>&gt;<i> That's brilliant!
+</I>&gt;<i>
+</I>&gt;<i> Thanks very much for these notes!
+</I>&gt;<i>
+</I>&gt;<i> Note that you can set the HOME directory on a per-user basis:
+</I>&gt;<i>
+</I>&gt;<i> $ dscl . -read /Users/bwaters NFSHomeDirectory
+</I>&gt;<i> NFSHomeDirectory: /Users/bwaters
+</I>&gt;<i>
+</I>&gt;<i> $ dscl . -write /Users/bwaters NFSHomeDirectory /Volumes/genepool/bwaters
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have not tried this. But I think it would work...
+</I>&gt;<i>
+</I>&gt;<i>  - boyd
+</I>&gt;<i>
+</I>&gt;<i> Boyd Waters
+</I>&gt;<i> National Radio Astronomy Observatory
+</I>&gt;<i> <A HREF="http://www.aoc.nrao.edu/~bwaters">http://www.aoc.nrao.edu/~bwaters</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000030.html">[zfs-discuss] Home on a ZFS volume
+</A></li>
+	<LI>Next message: <A HREF="000023.html">[zfs-discuss] Filename conventions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#31">[ date ]</a>
+              <a href="thread.html#31">[ thread ]</a>
+              <a href="subject.html#31">[ subject ]</a>
+              <a href="author.html#31">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

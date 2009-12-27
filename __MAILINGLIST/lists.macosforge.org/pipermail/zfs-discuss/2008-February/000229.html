@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zpool export
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20export&In-Reply-To=E837B12D-404E-482E-9B07-B86E8D02D46C%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000215.html">
+   <LINK REL="Next"  HREF="000236.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zpool export</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20export&In-Reply-To=E837B12D-404E-482E-9B07-B86E8D02D46C%40spamfreemail.de"
+       TITLE="[zfs-discuss] zpool export">ndellofano at apple.com
+       </A><BR>
+    <I>Thu Feb 28 17:47:47 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000215.html">[zfs-discuss] zpool export
+</A></li>
+        <LI>Next message: <A HREF="000236.html">[zfs-discuss] zpool export
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#229">[ date ]</a>
+              <a href="thread.html#229">[ thread ]</a>
+              <a href="subject.html#229">[ subject ]</a>
+              <a href="author.html#229">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>We are working on trying to change the system so things like this are  
+streamlined more.  And you can just do a 'zpool export' instead of  
+unmounting and then exporting.  The unmount happens automatically as  
+part of the export.  But yes, this is a bit confusing for external  
+drives especially since you tend to want to remove them easily or they  
+may get bumped out.  We're working on improving this behavior.
+
+Noel
+
+On Feb 24, 2008, at 8:59 AM, Franz Schmalzl wrote:
+
+&gt;<i> i have to do a zpool export after unmounting a pool, i know
+</I>&gt;<i> (kernel panic when replugging the underlaying device if i don't)
+</I>&gt;<i>
+</I>&gt;<i> are there plans to change this behaviour ?
+</I>&gt;<i> (maybe an automatic export )
+</I>&gt;<i>
+</I>&gt;<i> regards
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000215.html">[zfs-discuss] zpool export
+</A></li>
+	<LI>Next message: <A HREF="000236.html">[zfs-discuss] zpool export
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#229">[ date ]</a>
+              <a href="thread.html#229">[ thread ]</a>
+              <a href="subject.html#229">[ subject ]</a>
+              <a href="author.html#229">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

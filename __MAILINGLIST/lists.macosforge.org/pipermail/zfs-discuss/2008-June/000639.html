@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Degraded pool because of missing or invalid label
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Degraded%20pool%20because%20of%20missing%20or%20invalid%20label&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000638.html">
+   <LINK REL="Next"  HREF="000640.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Degraded pool because of missing or invalid label</H1>
+    <B>Werner Donn&#233;</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Degraded%20pool%20because%20of%20missing%20or%20invalid%20label&In-Reply-To="
+       TITLE="[zfs-discuss] Degraded pool because of missing or invalid label">werner.donne at re.be
+       </A><BR>
+    <I>Sun Jun 15 04:59:39 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000638.html">[zfs-discuss] Weird device identifier
+</A></li>
+        <LI>Next message: <A HREF="000640.html">[zfs-discuss] Compatibility with other systems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#639">[ date ]</a>
+              <a href="thread.html#639">[ thread ]</a>
+              <a href="subject.html#639">[ subject ]</a>
+              <a href="author.html#639">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I have a pool on a set of three USB-disks. It is attached to a Mac Mini
+running with Mac OS X 10.5.3 and ZFS 111. Currently the pool is  
+degraded.
+Zpool status produces the following:
+
+   pool: re
+  state: DEGRADED
+status: One or more devices could not be used because the label is  
+missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+  scrub: resilver completed with 0 errors on Sun Jun 15 13:23:39 2008
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	re                        DEGRADED     0     0     0
+	  raidz1                  DEGRADED     0     0     0
+	    disk1s2               ONLINE       0     0     0
+	    disk2s2               ONLINE       0     0     0
+	    11495588248848248386  FAULTED      0     0     0  was /dev/disk1s2
+
+errors: No known data errors
+
+I'm not able to perform any actions because the faulted disk doesn't
+have a proper name, just a number. I don't think by the way the disk
+itself is faulted, because it is only a few months old and it is being
+contacted during the boot cycle. I rather suspect the USB-link, though
+I have no prove for it.
+
+This is the second time it happens. The first time the disk came back
+after a strange sequence of events. At some point I power off the disk
+and back on. The OS froze because of this. After a reboot there was no
+pool anymore. Then I did a shutdown and powered off everything. After
+the boot all three disks were online again, but the day after I was
+again in the same situation.
+
+I have also tried switching the USB-ports as well as removing the USB- 
+hub.
+It doesn't change anything.
+
+Does anyone have an idea about what causes this and how I can recover
+from the situation?
+
+Best regards,
+
+Werner.
+--
+Werner Donn&#233;  --  Re                                     <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+Engelbeekstraat 8                                               <A HREF="http://www.re.be">http://www.re.be</A>
+BE-3300 Tienen
+tel: (+32) 486 425803	e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+
+
+
+
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000638.html">[zfs-discuss] Weird device identifier
+</A></li>
+	<LI>Next message: <A HREF="000640.html">[zfs-discuss] Compatibility with other systems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#639">[ date ]</a>
+              <a href="thread.html#639">[ thread ]</a>
+              <a href="subject.html#639">[ subject ]</a>
+              <a href="author.html#639">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz and hfsplus striped
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz%20and%20hfsplus%20striped&In-Reply-To=E5697F64-ED45-47A1-8F36-A935E501FA2F%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000174.html">
+   <LINK REL="Next"  HREF="000176.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz and hfsplus striped</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz%20and%20hfsplus%20striped&In-Reply-To=E5697F64-ED45-47A1-8F36-A935E501FA2F%40mac.com"
+       TITLE="[zfs-discuss] raidz and hfsplus striped">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Tue Feb 19 10:13:23 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000174.html">[zfs-discuss] raidz and hfsplus striped
+</A></li>
+        <LI>Next message: <A HREF="000176.html">[zfs-discuss] raidz and hfsplus striped
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#175">[ date ]</a>
+              <a href="thread.html#175">[ thread ]</a>
+              <a href="subject.html#175">[ subject ]</a>
+              <a href="author.html#175">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm facing some linguistic understanding problems here sorry.....
+
+You said you created a sriped HFS and still get reliability?
+
+So you have  created a raidz but formatted the drive HFS+ ?
+
+So you still use the raidz parity algorithms but with a hfs+  
+filesystem ?
+
+Afaik just striping hfs+ via apple software raid doesn't bring you any  
+safety. i.e. if one drive fails, everything is gone..
+
+
+
+
+
+
+
+On 19.02.2008, at 16:24, Dirk Schelfhout wrote:
+
+&gt;<i> I decided to destroy my raidz pool on 3 500g disks in my macpro and
+</I>&gt;<i> format them, so I can use a striped hfsplus raid
+</I>&gt;<i> and a raidz on the same disks. I get reliability and can still play
+</I>&gt;<i> with raidz.
+</I>&gt;<i>
+</I>&gt;<i> As I unmounted the pool and then did zpool destroy backup ( backup is
+</I>&gt;<i> pool name ),
+</I>&gt;<i> I got the screen where the os asks me to hold down the power button to
+</I>&gt;<i> reset.
+</I>&gt;<i>
+</I>&gt;<i> I later did a zpool destroy while the pool was still mounted and that
+</I>&gt;<i> gave no problem.
+</I>&gt;<i> I am not willing to retry this, but it seems to be a nasty bug. :)
+</I>&gt;<i>
+</I>&gt;<i> Dirk
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000174.html">[zfs-discuss] raidz and hfsplus striped
+</A></li>
+	<LI>Next message: <A HREF="000176.html">[zfs-discuss] raidz and hfsplus striped
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#175">[ date ]</a>
+              <a href="thread.html#175">[ thread ]</a>
+              <a href="subject.html#175">[ subject ]</a>
+              <a href="author.html#175">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

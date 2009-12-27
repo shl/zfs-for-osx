@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] simpler approach for reproducing files-in-limbo	problem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20simpler%20approach%20for%20reproducing%20files-in-limbo%0A%09problem&In-Reply-To=0AA9F52A-B242-43C3-8957-2FA1A1341542%40yellowspace.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000599.html">
+   <LINK REL="Next"  HREF="000601.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] simpler approach for reproducing files-in-limbo	problem</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20simpler%20approach%20for%20reproducing%20files-in-limbo%0A%09problem&In-Reply-To=0AA9F52A-B242-43C3-8957-2FA1A1341542%40yellowspace.net"
+       TITLE="[zfs-discuss] simpler approach for reproducing files-in-limbo	problem">jbsnyder at gmail.com
+       </A><BR>
+    <I>Thu May 15 14:52:13 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000599.html">[zfs-discuss] simpler approach for reproducing files-in-limbo	problem
+</A></li>
+        <LI>Next message: <A HREF="000601.html">[zfs-discuss] simpler approach for reproducing files-in-limbo	problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#600">[ date ]</a>
+              <a href="thread.html#600">[ thread ]</a>
+              <a href="subject.html#600">[ subject ]</a>
+              <a href="author.html#600">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Interesting.  I've generally given up if it doesn't get it within the first
+10-20 iterations, so I'm unsure about the prevalence of occurrence if it's
+left to run longer.
+
+I haven't come up with any better way to reproducing the problem.
+
+On Thu, May 15, 2008 at 7:31 AM, Lorenzo Perone &lt;
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lopez.on.the.lists at yellowspace.net</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i> On 12.05.2008, at 14:13, James Snyder wrote:
+</I>&gt;<i>
+</I>&gt;<i> This command alone is currently giving me that failure consistently now:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> bonnie++ -b -n 50 -s 0 -x 100
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Can anyone else reproduce this issue, or is it just me :-)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hello James,
+</I>&gt;<i>
+</I>&gt;<i> that's what I get. on my first attempt to run bonnie++ -b -n 50 -s 0 -x 100
+</I>&gt;<i> it broke up almost immediately with a :
+</I>&gt;<i>
+</I>&gt;<i> Create files in random order...Can't change to directory ./Bonnie.2419
+</I>&gt;<i> Cleaning up test directory after error.
+</I>&gt;<i> Bonnie: drastic I/O error (rmdir): No such file or directory
+</I>&gt;<i>
+</I>&gt;<i> the subsequent run I started, has reached its 30th iteration without
+</I>&gt;<i> any more problems - still running now... but gotta go so I'll let it
+</I>&gt;<i> do the other 70 tonight maybe ..
+</I>&gt;<i>
+</I>&gt;<i> using a MacBookPro2,2 (Core2Duo 2.1GHz) with
+</I>&gt;<i> 4GB RAM and a 199G zpool made out of one partition of the internal 320GB
+</I>&gt;<i> sata 2.5&quot; disk.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Lorenzo
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080515/6572c62a/attachment.htm">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080515/6572c62a/attachment.htm</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000599.html">[zfs-discuss] simpler approach for reproducing files-in-limbo	problem
+</A></li>
+	<LI>Next message: <A HREF="000601.html">[zfs-discuss] simpler approach for reproducing files-in-limbo	problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#600">[ date ]</a>
+              <a href="thread.html#600">[ thread ]</a>
+              <a href="subject.html#600">[ subject ]</a>
+              <a href="author.html#600">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

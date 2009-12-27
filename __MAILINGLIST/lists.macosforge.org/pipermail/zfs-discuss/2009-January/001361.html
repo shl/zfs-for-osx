@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] I lost 500GB of backup data in zfs!!!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C6FA682F3-3988-453B-A35F-DBEEBBF1CF83%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001360.html">
+   <LINK REL="Next"  HREF="001362.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] I lost 500GB of backup data in zfs!!!</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C6FA682F3-3988-453B-A35F-DBEEBBF1CF83%40sun.com%3E"
+       TITLE="[zfs-discuss] I lost 500GB of backup data in zfs!!!">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Thu Jan 22 19:25:31 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001360.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+        <LI>Next message: <A HREF="001362.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1361">[ date ]</a>
+              <a href="thread.html#1361">[ thread ]</a>
+              <a href="subject.html#1361">[ subject ]</a>
+              <a href="author.html#1361">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jan 22, 2009, at 8:20 PM, Sterling Garwood wrote:
+
+&gt;<i> On Jan 22, 2009, at 8:07 PM, Sterling Garwood wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> 1. kext is loaded (and its NOT the Apple read-only one)
+</I>&gt;&gt;<i> 2. nope ... no pools listed
+</I>&gt;&gt;<i> 3. nope ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I tried the attach trick (I thought that's what it did too) but it  
+</I>&gt;&gt;<i> did not show up as a mirror ... just a concatenated set of drives  
+</I>&gt;&gt;<i> (the total pool storage was the sum of both drives added together).
+</I>
+hrm .. you sure it wasn't an add by mistake?  for example:
+$ zpool create mypool /var/tmp/file1
+$ zpool status
+&lt;snip&gt;
+config:
+
+	NAME              STATE     READ WRITE CKSUM
+	mypool            ONLINE       0     0     0
+	  /var/tmp/file1  ONLINE       0     0     0
+
+$ zpool add mypool /var/tmp/file2
+$ zpool status
+&lt;snip&gt;
+config:
+
+	NAME              STATE     READ WRITE CKSUM
+	mypool            ONLINE       0     0     0
+	  /var/tmp/file1  ONLINE       0     0     0
+	  /var/tmp/file2  ONLINE       0     0     0
+
+errors: No known data errors
+
+--vs--
+
+$ zpool create mypool /var/tmp/file1
+$ zpool status
+&lt;snip&gt;
+config:
+
+	NAME              STATE     READ WRITE CKSUM
+	mypool            ONLINE       0     0     0
+	  /var/tmp/file1  ONLINE       0     0     0
+
+$ zpool attach mypool /var/tmp/file1 /var/tmp/file2
+$ zpool status
+  &lt;snip&gt;
+config:
+
+	NAME                STATE     READ WRITE CKSUM
+	mypool              ONLINE       0     0     0
+	  mirror            ONLINE       0     0     0
+	    /var/tmp/file1  ONLINE       0     0     0
+	    /var/tmp/file2  ONLINE       0     0     0
+
+---
+you can check the man page for zpool attach to see what you should get  
+there
+
+
+&gt;&gt;<i> I think something stepped on the first part of the disk (partition  
+</I>&gt;&gt;<i> table, etc) ... on all zfs drives. Maybe a bug, maybe a stray  
+</I>&gt;&gt;<i> cosmic ray (Apple Powermac memory is not ECCd AFAIK).
+</I>&gt;&gt;<i> I'll try and see if I can somehow hex dump a bit of one drive and  
+</I>&gt;&gt;<i> see whats what...
+</I>
+take a look at pp 6-8 on the ODF document here:
+<A HREF="http://opensolaris.org/os/community/zfs/docs/ondiskformat0822.pdf">http://opensolaris.org/os/community/zfs/docs/ondiskformat0822.pdf</A>
+
+you should have 4 redundant ZFS labels .. if you haven't already  
+destroyed the data on the disks just look for the 256KB blocks  
+starting with:
+0x2f5b007b10c
+(or 0c b1 07 b0 f5 02 - depending on endian-ness)
+
+two labels are the 512K at the front of the disk after the GPT and two  
+labels are at the tail end before the backup GPT label .. if you  
+didn't do a GPT - I'm guessing they might be somewhere around the  
+pdisk or fdisk layout cylinders
+
+each of these are copies of one another .. essentially 128KB of header  
+info (blank space, header, nv pairs) and then 128KB of uberblock  
+entries each beginning with:
+0x00bab10c  (read oo-ba-block)
+(or 0c b1 ba 00 - depending on endian-ness)
+
+if you can .. you should be able to dd them to the right place after a  
+proper disk label .. provided you're careful and don't have data/label  
+overlap you should be good to go ..
+
+hth
+Jonathan
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001360.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+	<LI>Next message: <A HREF="001362.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1361">[ date ]</a>
+              <a href="thread.html#1361">[ thread ]</a>
+              <a href="subject.html#1361">[ subject ]</a>
+              <a href="author.html#1361">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

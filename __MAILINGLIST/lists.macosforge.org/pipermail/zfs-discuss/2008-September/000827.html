@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Problems%20with%20ZFS%20on%20Intel%20Mac%20Pro%20Copying%0A%09Hundreds%20of%20Files&In-Reply-To=84B0B0A3-0C7B-4294-90E4-0B50507D292A%40thinkpink.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000826.html">
+   <LINK REL="Next"  HREF="000830.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Problems%20with%20ZFS%20on%20Intel%20Mac%20Pro%20Copying%0A%09Hundreds%20of%20Files&In-Reply-To=84B0B0A3-0C7B-4294-90E4-0B50507D292A%40thinkpink.com"
+       TITLE="[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Mon Sep  8 15:06:53 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000826.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+        <LI>Next message: <A HREF="000830.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#827">[ date ]</a>
+              <a href="thread.html#827">[ thread ]</a>
+              <a href="subject.html#827">[ subject ]</a>
+              <a href="author.html#827">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Right, that's because there were problems with ZFS and mmap'ing files
+in earlier releases, and those programs that used mmap didn't work
+well. I believe that the current and previous release had mmap support
+working OK, but there are still a few bugs (after all, it is
+pre-release software). So some software tickles bugs, and some don't.
+The ones that tickle bugs cause hangs :-)
+
+Alex
+
+On Mon, Sep 8, 2008 at 10:23 PM, Brian Pinkerton &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bplist at thinkpink.com</A>&gt; wrote:
+&gt;<i> I think the main point is that a user-level program (be it rsync 2, 3,
+</I>&gt;<i> pax, tar or whatever) shouldn't be able to hang the system.  I could
+</I>&gt;<i> easily panic the system with earlier versions of zfs by doing
+</I>&gt;<i> operations involving large numbers of small-ish files (like a big
+</I>&gt;<i> iPhoto Library), but I haven't had such problems recently.
+</I>&gt;<i>
+</I>&gt;<i> bri
+</I>&gt;<i>
+</I>&gt;<i> On Sep 8, 2008, at 1:47 PM, Alex Blewitt wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Use rsync 3. There are problems with rsync 2.x, possibly due to the
+</I>&gt;&gt;<i> way it copies files. I've used rsync 3 and it works fine.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Alex
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mon, Sep 8, 2008 at 9:45 PM, Craig Peterson
+</I>&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">craig at mainstream.net</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> I had the same problem with pax...  Not sure why rsync 3.x would
+</I>&gt;&gt;&gt;<i> help, as
+</I>&gt;&gt;&gt;<i> that solution is usually aimed at a problem with the caching of
+</I>&gt;&gt;&gt;<i> copy tables.
+</I>&gt;&gt;&gt;<i> I did verify that it wasn't a hardware problem by re-formatting the
+</I>&gt;&gt;&gt;<i> disks
+</I>&gt;&gt;&gt;<i> into a striped volume with Apple's FS on it and have been able to
+</I>&gt;&gt;&gt;<i> both pax
+</I>&gt;&gt;&gt;<i> and rsync over the entire contents of the drive I was trying to
+</I>&gt;&gt;&gt;<i> copy to zfs,
+</I>&gt;&gt;&gt;<i> but which kept getting locked-up hanging on writes,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Craig.
+</I>&gt;&gt;&gt;<i> On Sep 5, 2008, at 10:00 AM, zfs-discuss-
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">request at lists.macosforge.org</A> wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Date: Thu, 04 Sep 2008 13:40:27 -0400
+</I>&gt;&gt;&gt;<i> From: Dillon Kass &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lists at loveturtle.net</A>&gt;
+</I>&gt;&gt;&gt;<i> Subject: Re: [zfs-discuss] Problems with ZFS on Intel Mac Pro Copying
+</I>&gt;&gt;&gt;<i> Hundreds of Files
+</I>&gt;&gt;&gt;<i> To: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">48C01D8B.8050209 at loveturtle.net</A>&gt;
+</I>&gt;&gt;&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> try using rsync 3.x
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000826.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+	<LI>Next message: <A HREF="000830.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#827">[ date ]</a>
+              <a href="thread.html#827">[ thread ]</a>
+              <a href="subject.html#827">[ subject ]</a>
+              <a href="author.html#827">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

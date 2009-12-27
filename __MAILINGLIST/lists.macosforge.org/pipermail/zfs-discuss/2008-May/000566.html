@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Where's the self healing?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=C22EF067-09D4-4833-BB5E-9AFA10F6CFAA%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000565.html">
+   <LINK REL="Next"  HREF="000568.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Where's the self healing?</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=C22EF067-09D4-4833-BB5E-9AFA10F6CFAA%40gmail.com"
+       TITLE="[zfs-discuss] Where's the self healing?">lists at loveturtle.net
+       </A><BR>
+    <I>Mon May  5 09:22:12 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000565.html">[zfs-discuss] Where's the self healing?
+</A></li>
+        <LI>Next message: <A HREF="000568.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#566">[ date ]</a>
+              <a href="thread.html#566">[ thread ]</a>
+              <a href="subject.html#566">[ subject ]</a>
+              <a href="author.html#566">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Scott Palmer wrote:
+&gt;<i> While testing my mirrored pool I decided to unplug the power for one 
+</I>&gt;<i> of the firewire drives while I was updating some data on the 
+</I>&gt;<i> filesystem.  I expected the pool status/health to change from &quot;ONLINE&quot; 
+</I>&gt;<i> to &quot;DEGRADED&quot; it did not.  Both drives in the mirror remained listed 
+</I>&gt;<i> as &quot;ONLINE&quot;.  But then I noticed &quot;zpool status&quot; saying:
+</I>&gt;<i>
+</I>&gt;<i> scott-palmers-imac:~ scott$ zpool status
+</I>&gt;<i>   pool: tank
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i> status: One or more devices has experienced an unrecoverable error.  An
+</I>&gt;<i>     attempt was made to correct the error.  Applications are unaffected.
+</I>&gt;<i> action: Determine if the device needs to be replaced, and clear the 
+</I>&gt;<i> errors
+</I>&gt;<i>     using 'zpool clear' or replace the device with 'zpool replace'.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-9P">http://www.sun.com/msg/ZFS-8000-9P</A>
+</I>&gt;<i>  scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>     NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>     tank         ONLINE       0     0     0
+</I>&gt;<i>       mirror     ONLINE       0     0     0
+</I>&gt;<i>         disk1s2  ONLINE       0     0     0
+</I>&gt;<i>         disk2s2  ONLINE   6.43K 33.9K     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+</I>&gt;<i>
+</I>It did heal, What you're seeing here is just notification that there is 
+a problem with disk2. You could either use zpool scrub to search the 
+entire disk for more errors, or you could just run zpool clear to reset 
+the error counters. That's why the state was still &quot;online&quot;, because it 
+did perform &quot;self healing&quot;. Pull the disk out and you'll see &quot;state: 
+degraded&quot; because that is something it can't self-heal.
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000565.html">[zfs-discuss] Where's the self healing?
+</A></li>
+	<LI>Next message: <A HREF="000568.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#566">[ date ]</a>
+              <a href="thread.html#566">[ thread ]</a>
+              <a href="subject.html#566">[ subject ]</a>
+              <a href="author.html#566">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

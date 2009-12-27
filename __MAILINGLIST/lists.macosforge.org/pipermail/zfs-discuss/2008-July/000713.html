@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0807221218y2d9f31c4we250fd055f585445%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000710.html">
+   <LINK REL="Next"  HREF="000716.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0807221218y2d9f31c4we250fd055f585445%40mail.gmail.com"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">info at martin-hauser.net
+       </A><BR>
+    <I>Tue Jul 22 12:23:36 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000710.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+        <LI>Next message: <A HREF="000716.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#713">[ date ]</a>
+              <a href="thread.html#713">[ thread ]</a>
+              <a href="subject.html#713">[ subject ]</a>
+              <a href="author.html#713">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am aware that rsync probably handles them correctly, what I wanted  
+to get through was that this is bad practise in my eyes... it's still  
+a bug and should be addressed but I shiver on trying o sync /dev/ 
+random without rsync completely knowing how to create the device nodes  
+on the target system ...  I'm also not worried about unix sockets,  
+named pipes (fifo's) and any other special file you might come  
+across... it's the block and character devices that get me scared on....
+
+Martin
+
+On Jul 22, 2008, at 21:18 PM, Germano Caronni wrote:
+
+&gt;<i> rsync is specifically made to create faithful copies of named pipes,
+</I>&gt;<i> AF_UNIX sockets, devices, whatever by looking at the inode type and
+</I>&gt;<i> recreating that. The sync from HFS to HFS works perfectly. To ZFS
+</I>&gt;<i> fails spectacularly...;-)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jul 22, 2008 at 12:15, Martin Hauser &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">info at martin-</A> 
+</I>&gt;<i> hauser.net&gt; wrote:
+</I>&gt;&gt;<i> Ehm... I'm not quite sure about Mac Os X and rsync, but touching  
+</I>&gt;&gt;<i> the /dev is
+</I>&gt;&gt;<i> always been a bad idea.... depending on how the file is copied and  
+</I>&gt;&gt;<i> how well
+</I>&gt;&gt;<i> rsync handles special device files you could end up with real read  
+</I>&gt;&gt;<i> calls to
+</I>&gt;&gt;<i> the files in /dev which would get you the contents of your hard- 
+</I>&gt;&gt;<i> disks ...
+</I>&gt;&gt;<i> which would be _lots_ of data, more then you'll ever have space  
+</I>&gt;&gt;<i> for. That's
+</I>&gt;&gt;<i> just my 2cc on that though, I'd never expect anything to sync /dev
+</I>&gt;&gt;<i> correctly.
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/c2aa5ceb/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/c2aa5ceb/attachment.bin</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/c2aa5ceb/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/c2aa5ceb/attachment-0001.bin</A> 
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000710.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+	<LI>Next message: <A HREF="000716.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#713">[ date ]</a>
+              <a href="thread.html#713">[ thread ]</a>
+              <a href="subject.html#713">[ subject ]</a>
+              <a href="author.html#713">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

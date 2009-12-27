@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C2EE2905A-03CE-436E-AB23-0F8E1D517C2A%40washdcmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001955.html">
+   <LINK REL="Next"  HREF="001935.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>rwalists at washdcmail.com</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C2EE2905A-03CE-436E-AB23-0F8E1D517C2A%40washdcmail.com%3E"
+       TITLE="[zfs-discuss] must watch.">rwalists at washdcmail.com
+       </A><BR>
+    <I>Fri Oct 16 05:18:20 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001955.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001935.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1956">[ date ]</a>
+              <a href="thread.html#1956">[ thread ]</a>
+              <a href="subject.html#1956">[ subject ]</a>
+              <a href="author.html#1956">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Oct 15, 2009, at 9:30 PM, Peter Bierman wrote:
+
+&gt;<i> But you have to be brutally honest with yourself about #3. Sunshine
+</I>&gt;<i> and good feelings won't cut it. Can you show a specific person or
+</I>&gt;<i> group that would take specific action that would benefit Apple if they
+</I>&gt;<i> clarified their ZFS plans?
+</I>
+We have two data centers, each with (formerly) 5x XServe RAIDs serving  
+purely as MySQL storage DAS boxes over fibre channel.  Right after the  
+Promise Boxes came out we upgraded one to Promise SAS boxes, but we  
+had been waiting for Snow Leopard and ZFS to consider what to do next.
+
+When ZFS disappeared we got a Sun 7410 on try and buy and connected it  
+to our XServes via NFS.  It was faster than the Promise boxes (for our  
+internal MySQL benchmark scripts and sysbench) and so far it has  
+sustained that speed advantage with 5 MySQL servers all accessing the  
+same pool.  With that many servers (and Sun's discounting even to  
+small customers...you should get a price quote) it is cheaper than the  
+Promise boxes, faster and you get all the ZFS benefits for free.
+
+While we were at it we got a Sun x2270 instead of XServes to try as  
+MySQL heads.  Those were just as easy and cheaper after the discount  
+(we got the x2270 with 48 GB RAM for less than we could get the XServe  
+with 24 GB RAM).  That got us looking at VMWare and we started  
+migrating things to VMs on ESXi (storage on the 7410) rather than  
+hosting them on XServes.
+
+So I'll admit we aren't a core market for Apple, and we aren't very  
+big, but we formerly had 10x XServes with MySQL, 2-4 XServes for other  
+things and 10x Apple DAS boxes which are now going to wind up 10-20x  
+x2270s (MySQL and ESXi) and 2x 7410s.  We are very happy with it after  
+five months.
+
+I think your point is correct, but I do think in some cases Apple has  
+hurt itself.  For some customers there are alternatives, and waiting  
+for an unspecified (possibly infinite) time for Apple to match them  
+isn't realistic.
+
+--Ware
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001955.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001935.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1956">[ date ]</a>
+              <a href="thread.html#1956">[ thread ]</a>
+              <a href="subject.html#1956">[ subject ]</a>
+              <a href="author.html#1956">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

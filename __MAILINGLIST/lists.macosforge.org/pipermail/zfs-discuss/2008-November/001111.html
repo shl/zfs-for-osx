@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs scrub hangs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20scrub%20hangs&In-Reply-To=%3CD46FE76A-4D65-460F-8ABC-C5FC3A2CAEB7%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001107.html">
+   <LINK REL="Next"  HREF="001112.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs scrub hangs</H1>
+    <B>Garrett Power</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20scrub%20hangs&In-Reply-To=%3CD46FE76A-4D65-460F-8ABC-C5FC3A2CAEB7%40gmail.com%3E"
+       TITLE="[zfs-discuss] zfs scrub hangs">garrett.power at gmail.com
+       </A><BR>
+    <I>Wed Nov 26 22:28:10 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001107.html">[zfs-discuss] ACLs on ZFS
+</A></li>
+        <LI>Next message: <A HREF="001112.html">[zfs-discuss] Automatic scrub?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1111">[ date ]</a>
+              <a href="thread.html#1111">[ thread ]</a>
+              <a href="subject.html#1111">[ subject ]</a>
+              <a href="author.html#1111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>	I am having issues when doing a zpool scrub on my raidz setup. My  
+setup is configured of 5 1TB drives in a raidz configuration. They are  
+housed in a 5 drive bay esata enclosure that uses a port multiplier.  
+After doing the latest mac updates for 10.5.5 i.e. security update, it  
+seems that when doing a scrub on the raidz, it will hang. It will hang  
+from 26+%. It hung at one point at 46% and another time at 51% and so  
+on. I have never had an issue when doing a scrub. Is anyone else  
+having any problems? Could it be the security update?
+
+	As mentioned above, I am running on Mac OS 10.5.5. The hardware is a  
+G5 dual 1.8 with 2.5GB of ram. The hangs that I am describing are the  
+finder will freeze up, but I can still load up applications that are  
+not finder specific. I can not issue any zfs or zpool commands and I  
+can not list the contents of the raidz pool with the command line  
+prompt. I have not received any kernel panics. The only way for me to  
+reboot the machine is by holding down the power button on the G5.  
+Finder will not reboot correctly. I have looked at the logs and do not  
+see anything suspicious.
+
+	Can anyone give me any suggestions? Is there anything I can do to  
+grab more data to help me solve this problem? Everything seems to be  
+fine. For example, I can read the data fine or copy data to the pool  
+fine, but when doing a scrub it will hang up.
+
+Thanks for any help that can be provided,
+
+Garrett Power
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1605 bytes
+Desc: not available
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081127/ec2b0a7c/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081127/ec2b0a7c/attachment.bin</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001107.html">[zfs-discuss] ACLs on ZFS
+</A></li>
+	<LI>Next message: <A HREF="001112.html">[zfs-discuss] Automatic scrub?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1111">[ date ]</a>
+              <a href="thread.html#1111">[ thread ]</a>
+              <a href="subject.html#1111">[ subject ]</a>
+              <a href="author.html#1111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

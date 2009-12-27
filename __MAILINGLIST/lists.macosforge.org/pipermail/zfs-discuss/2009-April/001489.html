@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Performance and Spare...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Performance%20and%20Spare...&In-Reply-To=%3CCB3330DC-69BC-47A4-B7DD-E959BB926D65%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001488.html">
+   <LINK REL="Next"  HREF="001490.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Performance and Spare...</H1>
+    <B>Richard McClellan</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Performance%20and%20Spare...&In-Reply-To=%3CCB3330DC-69BC-47A4-B7DD-E959BB926D65%40gmail.com%3E"
+       TITLE="[zfs-discuss] Performance and Spare...">richmc at gmail.com
+       </A><BR>
+    <I>Wed Apr  8 17:35:28 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001488.html">[zfs-discuss] Performance and Spare...
+</A></li>
+        <LI>Next message: <A HREF="001490.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1489">[ date ]</a>
+              <a href="thread.html#1489">[ thread ]</a>
+              <a href="subject.html#1489">[ subject ]</a>
+              <a href="author.html#1489">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Apr 8, 2009, at 17:07 , Ted Simbajon wrote:
+
+&gt;<i> Hey guys, I know its a bit normal for a Raidz2 (raid6) to have a  
+</I>&gt;<i> little bit
+</I>&gt;<i> of penalty plus+ the checksum zfs does on the background.
+</I>&gt;<i>
+</I>&gt;<i> As I new ZFS user, I want to cover all aspect of this filesystem  
+</I>&gt;<i> since im
+</I>&gt;<i> Loving it!.
+</I>&gt;<i>
+</I>&gt;<i> Does this look normal? Is disk10s2 &amp; disk157s2 out of the raidz2  
+</I>&gt;<i> (Array)?
+</I>&gt;<i> And is it pretty normal to have a max write speed of about 25MBps?
+</I>&gt;<i>
+</I>
+Without knowing more about your hardware it's difficult to say whether  
+that's slow or not. If all of those disks and the bus connecting them  
+are modern, then you should be seeing much higher r/w bandwidth.
+
+
+&gt;<i> Thank you.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> #zpool status Array
+</I>&gt;<i> ------------------
+</I>&gt;<i>  pool: Array
+</I>&gt;<i> state: ONLINE
+</I>&gt;<i> scrub: scrub stopped with 0 errors on Wed Apr  8 16:26:00 2009
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>    NAME           STATE     READ WRITE CKSUM
+</I>&gt;<i>    Array          ONLINE       0     0     0
+</I>&gt;<i>      raidz2       ONLINE       0     0     0
+</I>&gt;<i>        disk9s2    ONLINE       0     0     0
+</I>&gt;<i>        disk5s2    ONLINE       0     0     0
+</I>&gt;<i>        disk12s2   ONLINE       0     0     0
+</I>&gt;<i>        disk8s2    ONLINE       0     0     0
+</I>&gt;<i>        disk18s2   ONLINE       0     0     0
+</I>&gt;<i>        disk19s2   ONLINE       0     0     0
+</I>&gt;<i>        disk20s2   ONLINE       0     0     0
+</I>&gt;<i>        disk28s2   ONLINE       0     0     0
+</I>&gt;<i>        disk25s2   ONLINE       0     0     0
+</I>&gt;<i>        disk21s2   ONLINE       0     0     0
+</I>&gt;<i>        disk29s2   ONLINE       0     0     0
+</I>&gt;<i>        disk33s2   ONLINE       0     0     0
+</I>&gt;<i>        disk36s2   ONLINE       0     0     0
+</I>&gt;<i>        disk35s2   ONLINE       0     0     0
+</I>&gt;<i>        disk42s2   ONLINE       0     0     0
+</I>&gt;<i>        disk39s2   ONLINE       0     0     0
+</I>&gt;<i>        disk56s2   ONLINE       0     0     0
+</I>&gt;<i>        disk41s2   ONLINE       0     0     0
+</I>&gt;<i>        disk50s2   ONLINE       0     0     0
+</I>&gt;<i>        disk44s2   ONLINE       0     0     0
+</I>&gt;<i>        disk49s2   ONLINE       0     0     0
+</I>&gt;<i>        disk58s2   ONLINE       0     0     0
+</I>&gt;<i>        disk51s2   ONLINE       0     0     0
+</I>&gt;<i>        disk69s2   ONLINE       0     0     0
+</I>&gt;<i>        disk63s2   ONLINE       0     0     0
+</I>&gt;<i>        disk60s2   ONLINE       0     0     0
+</I>&gt;<i>        disk71s2   ONLINE       0     0     0
+</I>&gt;<i>        disk82s2   ONLINE       0     0     0
+</I>&gt;<i>        disk77s2   ONLINE       0     0     0
+</I>&gt;<i>        disk70s2   ONLINE       0     0     0
+</I>&gt;<i>        disk90s2   ONLINE       0     0     0
+</I>&gt;<i>        disk62s2   ONLINE       0     0     0
+</I>&gt;<i>        disk81s2   ONLINE       0     0     0
+</I>&gt;<i>        disk74s2   ONLINE       0     0     0
+</I>&gt;<i>        disk94s2   ONLINE       0     0     0
+</I>&gt;<i>        disk87s2   ONLINE       0     0     0
+</I>&gt;<i>        disk83s2   ONLINE       0     0     0
+</I>&gt;<i>        disk84s2   ONLINE       0     0     0
+</I>&gt;<i>        disk101s2  ONLINE       0     0     0
+</I>&gt;<i>        disk92s2   ONLINE       0     0     0
+</I>&gt;<i>        disk91s2   ONLINE       0     0     0
+</I>&gt;<i>        disk104s2  ONLINE       0     0     0
+</I>&gt;<i>        disk124s2  ONLINE       0     0     0
+</I>&gt;<i>        disk112s2  ONLINE       0     0     0
+</I>&gt;<i>        disk110s2  ONLINE       0     0     0
+</I>&gt;<i>        disk120s2  ONLINE       0     0     0
+</I>&gt;<i>        disk115s2  ONLINE       0     0     0
+</I>&gt;<i>        disk130s2  ONLINE       0     0     0
+</I>&gt;<i>        disk135s2  ONLINE       0     0     0
+</I>&gt;<i>        disk150s2  ONLINE       0     0     0
+</I>&gt;<i>        disk132s2  ONLINE       0     0     0
+</I>&gt;<i>        disk129s2  ONLINE       0     0     0
+</I>&gt;<i>        disk122s2  ONLINE       0     0     0
+</I>&gt;<i>        disk121s2  ONLINE       0     0     0
+</I>&gt;<i>        disk131s2  ONLINE       0     0     0
+</I>&gt;<i>        disk165s2  ONLINE       0     0     0
+</I>&gt;<i>        disk137s2  ONLINE       0     0     0
+</I>&gt;<i>        disk133s2  ONLINE       0     0     0
+</I>&gt;<i>        disk145s2  ONLINE       0     0     0
+</I>&gt;<i>        disk164s2  ONLINE       0     0     0
+</I>&gt;<i>        disk141s2  ONLINE       0     0     0
+</I>&gt;<i>        disk148s2  ONLINE       0     0     0
+</I>&gt;<i>      disk10s2     ONLINE       0     0     0
+</I>&gt;<i>      disk157s2    ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i> -----------------
+</I>&gt;<i>
+</I>
+It would be weird if disk10 and disk157 weren't in the Array pool. I'm  
+pretty sure you would have had to force it (i.e., -f) in order to  
+create a pool out of a raidz2 and two simple vdevs.
+
+You might consider organizing things a little differently if you want  
+good performance.  Check out the ZFS Best Practices guide for  
+recommendations.
+
+&gt;<i>
+</I>&gt;<i> #zpool iostat
+</I>&gt;<i> -----------------
+</I>&gt;<i>               capacity     operations    bandwidth
+</I>&gt;<i> pool         used  avail   read  write   read  write
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> Array       3.56T  7.10T     19    139  1.40M  14.9M
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+Try `zpool iostat Array 1` or zpool iostat -v Array 1` to see more  
+representative numbers.
+
+		Rich
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001488.html">[zfs-discuss] Performance and Spare...
+</A></li>
+	<LI>Next message: <A HREF="001490.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1489">[ date ]</a>
+              <a href="thread.html#1489">[ thread ]</a>
+              <a href="subject.html#1489">[ subject ]</a>
+              <a href="author.html#1489">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

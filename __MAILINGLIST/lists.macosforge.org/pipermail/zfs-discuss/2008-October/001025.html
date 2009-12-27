@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs on OSX 600 files disappeared
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20on%20OSX%20600%20files%20disappeared&In-Reply-To=%3C68B95C93-8F7D-4265-9E79-C427F78BB7E2%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001030.html">
+   <LINK REL="Next"  HREF="001026.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs on OSX 600 files disappeared</H1>
+    <B>Gregor Guncar</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20on%20OSX%20600%20files%20disappeared&In-Reply-To=%3C68B95C93-8F7D-4265-9E79-C427F78BB7E2%40gmail.com%3E"
+       TITLE="[zfs-discuss] zfs on OSX 600 files disappeared">gregor.guncar at gmail.com
+       </A><BR>
+    <I>Sat Oct 25 02:58:41 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001030.html">[zfs-discuss] unrelated question....
+</A></li>
+        <LI>Next message: <A HREF="001026.html">[zfs-discuss] ZFS and some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1025">[ date ]</a>
+              <a href="thread.html#1025">[ thread ]</a>
+              <a href="subject.html#1025">[ subject ]</a>
+              <a href="author.html#1025">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I like zfs. Very much. And since I want to use it for some serious  
+stuff I need to know what has happened to some 600 files that just  
+disappeared from my zfs pool. It is 3 identical disks of 750GB in one  
+raidz pool on my MacPro (10.5.5, <A HREF="http://zfs.macosforge.org/downloads/zfs-119bin.tgz">http://zfs.macosforge.org/downloads/zfs-119bin.tgz</A>) 
+. I was processing some data the other day- that resulted in a few  
+directories and some 600 files that just simply aren't there anymore.   
+I am sure the files were there, because all of them were subsequently  
+processed resulting in a single result and log file (containing the  
+path of the files) that I have copied on my laptop the same day. Later  
+that day my Finder stopped responding when I was searching something  
+using spotlight. I couldn't restart  Finder.app (killall Finder) or  
+shutdown my mac in any other way (shutdown -h now) than to press the  
+on/off button to turn it off.  Next day I couldn't find any of the  
+files that I have written the previous day.  So I did zpool scrub,  
+export and import and all is reported to be fine, that is no errors. I  
+have also turned off continuous spotlight indexing on that disk to  
+prevent further hangups.
+I know that zfs on OSX is highly experimental and I don't need to  
+rescue those files. I just want to know what has happend and what I  
+(and developers) can do to prevent it in the future. Zfs being so  
+robust should not be prone to such data loss. Is it possible that  
+after half an hour my data were still in the RAM (4GB), not yet  
+written on the disk? How often does zfs commit changes and what does  
+that depend on?
+Thank you for your answers!
+Cheers,
+Gregor
+
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001030.html">[zfs-discuss] unrelated question....
+</A></li>
+	<LI>Next message: <A HREF="001026.html">[zfs-discuss] ZFS and some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1025">[ date ]</a>
+              <a href="thread.html#1025">[ thread ]</a>
+              <a href="subject.html#1025">[ subject ]</a>
+              <a href="author.html#1025">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

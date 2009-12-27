@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] setting up zfs for solaris + mac ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20setting%20up%20zfs%20for%20solaris%20%2B%20mac%20%3F&In-Reply-To=%3C327b821f0902232316j5337100g79d1753596edca3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001434.html">
+   <LINK REL="Next"  HREF="001436.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] setting up zfs for solaris + mac ?</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20setting%20up%20zfs%20for%20solaris%20%2B%20mac%20%3F&In-Reply-To=%3C327b821f0902232316j5337100g79d1753596edca3%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] setting up zfs for solaris + mac ?">caronni at gmail.com
+       </A><BR>
+    <I>Mon Feb 23 23:16:17 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001434.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+        <LI>Next message: <A HREF="001436.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1435">[ date ]</a>
+              <a href="thread.html#1435">[ thread ]</a>
+              <a href="subject.html#1435">[ subject ]</a>
+              <a href="author.html#1435">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi again to all, and thank you for your input.
+
+So a little update (with a boo-boo) for those interested -- everybody else,
+just whistle loudly while I'm talking :-)
+
+Hardware setup:
+SBox-X with SiI3726 port multiplier and SiI3132 ExpressCard/34 host adapter,
+with 10 1.5TB Seagate 7200.11 disks. MacbookPro4,1 with 10.5.6 as a little
+test system.
+
+Configuration for testing:
+Each disk has a GPT, with 200 MB EFI on s1 (yuck, but staying strictly
+vanilla for now) and s2 is a giant slice of a ten-disk RAIDZ2 pool.
+
+Observation under ZFS-119: Most times when the card is inserted into the
+macbook, the pool gets detected and imported correctly, BUT 1-2 disks are
+reported as 'FAULTED'. zpool replace &lt;id(1|2)&gt; disk(10|11)s2; will fix
+things up. After fixing the pool back up, the disks will operate flawlessy.
+
+My guess: Drive detection times out somewhere for the last drives to come
+online. Not sure if this is a problem with the zfs/zpool implementation to
+gather disks -- and giving the disks enough time to spin up, or if this is
+the domain of the sata driver, and zpool import is not at fault.
+
+Any ideas / comments? Maybe suggestions on how to increase timeouts under
+MacOS? Also, this FreeBSD post appears strangely relevant (and would point
+at the sata driver):
+<A HREF="http://lists.freebsd.org/pipermail/freebsd-current/2008-December/001375.html">http://lists.freebsd.org/pipermail/freebsd-current/2008-December/001375.html</A>
+
+Germano
+
+
+
+On Fri, Feb 20, 2009 at 00:32, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+
+&gt;<i> Germano,
+</I>&gt;<i>
+</I>&gt;<i> At least as far as OSX is concerned, you *must* create the pool on a disk
+</I>&gt;<i> that is already initialized *and* when you create the pool you must pass it
+</I>&gt;<i> the full disk name( i.e. disk number and slice).  This is very important as
+</I>&gt;<i> if you create a pool just using the whole disk name, OSX will become
+</I>&gt;<i> confused and will not mount your bool on boot.
+</I>&gt;<i>
+</I>&gt;<i> so use 'zpool create mypool /dev/diskXsX'
+</I>&gt;<i>
+</I>&gt;<i> Also on OSX, note you must do a 'diskutil partition disk....&quot;  on the disk
+</I>&gt;<i> in order to format it for ZFS *before* you do the zpool create, otherwise if
+</I>&gt;<i> the disk isn't labeled properly, diskutil can't understand what it is and
+</I>&gt;<i> other probes may race us and try and bring up the drive as something else.
+</I>&gt;<i>  It needs to be properly labeled.
+</I>&gt;<i>
+</I>&gt;<i> On the whole, Sun's code is pretty robust, so should be able to understand
+</I>&gt;<i> disks fine.  I'd worry more about making sure they are kosher for OSX, since
+</I>&gt;<i> we're pickier about things :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Feb 19, 2009, at 10:25 AM, Rich McClellan wrote:
+</I>&gt;<i>
+</I>&gt;<i>  ZFS best practices (Google it and read it :-) suggest using the entire
+</I>&gt;&gt;<i> disk. The Apple implementation of ZFS requires the entire disk be
+</I>&gt;&gt;<i> initialized.  So use the entire disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Why on earth would you replace an (Open)Solaris box with Snow
+</I>&gt;&gt;<i> Leopard???  So far the Apple ZFS implementation doesn't have all of
+</I>&gt;&gt;<i> the features that are in Sun's and Apple's is new and relatively
+</I>&gt;&gt;<i> untested.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Rich
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Feb 19, 2009 at 9:21 AM, Germano Caronni &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">caronni at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [sorry for double-post]
+</I>&gt;&gt;&gt;<i> Hey all,
+</I>&gt;&gt;&gt;<i> I'm currently in the process of setting up a 15TB disk array (10x seagate
+</I>&gt;&gt;&gt;<i> 7200.11 in a DatOptic SBox-X), and will drive it from a PC with Open
+</I>&gt;&gt;&gt;<i> Solaris
+</I>&gt;&gt;&gt;<i> 11/08 for now. The plan is to use the disk array with Snow Leopard later.
+</I>&gt;&gt;&gt;<i> Do
+</I>&gt;&gt;&gt;<i> any of you have suggestions as to how to initialize the pool slices on
+</I>&gt;&gt;&gt;<i> those
+</I>&gt;&gt;&gt;<i> ten disks such that both Open Solaris and Leopard will easily find them?
+</I>&gt;&gt;&gt;<i> Ie:
+</I>&gt;&gt;&gt;<i> Simply use the whole disk device /dev/diskX for ZFS, or put a MBR
+</I>&gt;&gt;&gt;<i> partition
+</I>&gt;&gt;&gt;<i> table on the disk (or GPT?), and then make one huge partition for the
+</I>&gt;&gt;&gt;<i> pool
+</I>&gt;&gt;&gt;<i> slice? Initialisation will be done from a Leopard machine, so that I get
+</I>&gt;&gt;&gt;<i> zfs
+</I>&gt;&gt;&gt;<i> pool version 6 on the disk. Also, any opinion concerning 'diskutil
+</I>&gt;&gt;&gt;<i> partitionDisk ... zfs ...' vs. 'zpool create' ?
+</I>&gt;&gt;&gt;<i> Any suggestions / comments welcome.
+</I>&gt;&gt;&gt;<i> Germano
+</I>&gt;&gt;&gt;<i> p.s. note that I did not mention anything about raid / stripe / mirror /
+</I>&gt;&gt;&gt;<i> spare -- that's on purpose ;-)
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090224/175ff180/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090224/175ff180/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001434.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+	<LI>Next message: <A HREF="001436.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1435">[ date ]</a>
+              <a href="thread.html#1435">[ thread ]</a>
+              <a href="subject.html#1435">[ subject ]</a>
+              <a href="author.html#1435">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

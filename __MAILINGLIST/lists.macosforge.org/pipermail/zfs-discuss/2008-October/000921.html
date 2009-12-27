@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] late mount
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=20080930155309.71cbf62e.aorchid%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000920.html">
+   <LINK REL="Next"  HREF="000924.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] late mount</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=20080930155309.71cbf62e.aorchid%40mac.com"
+       TITLE="[zfs-discuss] late mount">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Oct  1 14:11:02 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000920.html">[zfs-discuss] Another Panic to report
+</A></li>
+        <LI>Next message: <A HREF="000924.html">[zfs-discuss] Leopard Server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#921">[ date ]</a>
+              <a href="thread.html#921">[ thread ]</a>
+              <a href="subject.html#921">[ subject ]</a>
+              <a href="author.html#921">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>try doing 'zpool status', if you put in a whole drive, you'll get  
+status on the whole drive instead of the 's2' slice which is the  
+reason you're pool isn't importing on boot.
+Also, everyone can double check they partitioned their drive properly  
+by doing a 'diskutil list'.
+
+As Dillon mentioned, the only two reasons (at least I've ever seen)  
+for a pool to not import on it's own is if it wasn't formated for ZFS  
+first with diskutil, or if you passed ZFS the whole disk instead of  
+the s2 slice.
+
+the slowness in bringing up, especially for Dillon is likely due to  
+the fact he has two drives.  The problem is diskutil is racing  
+launchd, and as you've all seemed to witness, well, launchd usually  
+wins.  So diskutil can't bring up the pool until all the devices are  
+found and it has to go through on boot and sniff every single device  
+it can find, regardless of what it is.  We're working on fixing this  
+issue currently with making ZFS a first class IOkit citizen.  So hang  
+tight.
+
+I currently have my internal drive partitioned, small part for HFS+  
+where the os sits, and the rest for ZFS which I use for all my data  
+and my home directory.
+
+
+Noel
+
+On Sep 30, 2008, at 3:53 PM, Aric Gregson wrote:
+
+&gt;<i> On Tue, 30 Sep 2008 18:26:37 -0400
+</I>&gt;<i> Dillon Kass &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lists at loveturtle.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> From what I've seen on this list the &quot;not importing on boot&quot; is
+</I>&gt;&gt;<i> generally because diskutil wasn't used first to prepare the disk
+</I>&gt;&gt;<i> before adding it to your zpool. Even if you did use diskutil to
+</I>&gt;&gt;<i> prepare the disk if you inserted the entire disk and not the s2 slice
+</I>&gt;&gt;<i> it would probably act this way as well.
+</I>&gt;<i>
+</I>&gt;<i> That is what I keep reading and hearing, but I created them only a
+</I>&gt;<i> couple of months ago following the recipe on the Mac ZFS site, so I
+</I>&gt;<i> suspect that I created them properly. Although, I may have inserted  
+</I>&gt;<i> the
+</I>&gt;<i> entire disk, as this is what I do in solaris. Unfortunately, there is
+</I>&gt;<i> no real way to figure that out now, or is there?
+</I>&gt;<i>
+</I>&gt;&gt;<i> note that you can also log in as the user &gt;console from loginwindow
+</I>&gt;&gt;<i> and it will drop you to the command line. This is a little easier
+</I>&gt;&gt;<i> than creating a second user.
+</I>&gt;<i>
+</I>&gt;<i> Thanks, I'll try that in the future.
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Aric Gregson
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000920.html">[zfs-discuss] Another Panic to report
+</A></li>
+	<LI>Next message: <A HREF="000924.html">[zfs-discuss] Leopard Server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#921">[ date ]</a>
+              <a href="thread.html#921">[ thread ]</a>
+              <a href="subject.html#921">[ subject ]</a>
+              <a href="author.html#921">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

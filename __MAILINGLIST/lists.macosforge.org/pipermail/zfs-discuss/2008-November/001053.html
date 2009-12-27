@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] adding drives to a raidz volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3C4D561C73-3C26-4B61-8145-7CBC0711BD3D%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001052.html">
+   <LINK REL="Next"  HREF="001054.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] adding drives to a raidz volume</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3C4D561C73-3C26-4B61-8145-7CBC0711BD3D%40gmail.com%3E"
+       TITLE="[zfs-discuss] adding drives to a raidz volume">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Sat Nov 15 15:10:09 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001052.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+        <LI>Next message: <A HREF="001054.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1053">[ date ]</a>
+              <a href="thread.html#1053">[ thread ]</a>
+              <a href="subject.html#1053">[ subject ]</a>
+              <a href="author.html#1053">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The idea has been discussed on the Sun dev lists but not implemented  
+there yet. Given that the OSX protect is (a) to just get it ported/ 
+running on OSX and (b) to merge ahead to some of the more recent stuff  
+that Sun has done, it's likely to remain on the wish list for a while.
+
+Note that it is fairly likely the way to upgrade a zfs pool for home  
+users is simply to buy another n drives that are (much) larger than  
+your current set of drives, and by a sequence of one-for-one  
+replacements increase your size that way. That can be done either for  
+a mirrored or raid set.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 15 Nov 2008, at 22:32, &quot;Mr. Zorg&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zorg at sogeeky.net</A>&gt; wrote:
+
+&gt;<i> I think it is technically possible to do, but very tricky. You'd  
+</I>&gt;<i> want to do it in an atomic way that doesn't but your data at risk if  
+</I>&gt;<i> something should fail during the operation. It is far cheaper and  
+</I>&gt;<i> easier to just buy a handful of disks than it is to implement this  
+</I>&gt;<i> feature. The only people who really care about such functionality is  
+</I>&gt;<i> us poor nerds who can only afford one drive at a time. :)
+</I>&gt;<i>
+</I>&gt;<i> On Nov 15, 2008, at 2:25 PM, Mike Prather &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mike666 at mac.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Thanks to all for the quick and kind responses - I figured that was  
+</I>&gt;&gt;<i> the case but just wanted to confirm.  I wasn't able to make it work  
+</I>&gt;&gt;<i> with test images - got the results demonstrated below by Jonathan.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I guess the next question would naturally be: Is it at all feasible  
+</I>&gt;&gt;<i> for this to be possible at some future date?  I know the current  
+</I>&gt;&gt;<i> push is to simply(!) get zfs up to par for Mac OS X but the ability  
+</I>&gt;&gt;<i> to add disks to striped/parity sets would be a tremendous boon for  
+</I>&gt;&gt;<i> future versions. That would certainly be truly dynamic striping and  
+</I>&gt;&gt;<i> would make zfs THE filesystem for the common nerd!  I'd think as  
+</I>&gt;&gt;<i> storage moves towards solid state and the true random access that  
+</I>&gt;&gt;<i> provides, that might make it easier, no?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Mike
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;And let he who hath not a backup be visited by evil upon his hard  
+</I>&gt;&gt;<i> drive, for therein lies the money.  And further let he who doth not  
+</I>&gt;&gt;<i> learn from this lesson be forever known as Fool.&quot;  Mike 6:66
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Nov 15, 2008, at 6:16 AM, Jonathan Edwards wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Nov 15, 2008, at 5:56 AM, Mike Prather wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I know this is a colossally noob-ish question but I can't seem to  
+</I>&gt;&gt;&gt;&gt;<i> find an exact answer anywhere else.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> As I buy them, can I add new disks to an existing raidz device  
+</I>&gt;&gt;&gt;&gt;<i> (without losing data, of course) such that this:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>   testz
+</I>&gt;&gt;&gt;&gt;<i>     raidz1
+</I>&gt;&gt;&gt;&gt;<i>       disk6s2
+</I>&gt;&gt;&gt;&gt;<i>       disk7s2
+</I>&gt;&gt;&gt;&gt;<i>       disk8s2
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> will become this:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>   testz
+</I>&gt;&gt;&gt;&gt;<i>     raidz1
+</I>&gt;&gt;&gt;&gt;<i>       disk6s2
+</I>&gt;&gt;&gt;&gt;<i>       disk7s2
+</I>&gt;&gt;&gt;&gt;<i>       disk8s2
+</I>&gt;&gt;&gt;&gt;<i>       disk9s2
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ??
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Or do I *have* to wait until I can get a group of disks into  
+</I>&gt;&gt;&gt;&gt;<i> another raidz device and add that to the pool?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> right, you'll want to wait until you have a new group of disks to  
+</I>&gt;&gt;&gt;<i> add as new devices get added to the root vdev .. in other words:
+</I>&gt;&gt;&gt;<i>   testz
+</I>&gt;&gt;&gt;<i>     raidz1
+</I>&gt;&gt;&gt;<i>       disk6s2
+</I>&gt;&gt;&gt;<i>       disk7s2
+</I>&gt;&gt;&gt;<i>       disk8s2
+</I>&gt;&gt;&gt;<i>     raidz1
+</I>&gt;&gt;&gt;<i>       disk9s2
+</I>&gt;&gt;&gt;<i>       disk10s2
+</I>&gt;&gt;&gt;<i>       disk11s2
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> if you only added a single device it would like this (and you  
+</I>&gt;&gt;&gt;<i> might have to use the -f flag):
+</I>&gt;&gt;&gt;<i>   testz
+</I>&gt;&gt;&gt;<i>     raidz1
+</I>&gt;&gt;&gt;<i>       disk6s2
+</I>&gt;&gt;&gt;<i>       disk7s2
+</I>&gt;&gt;&gt;<i>       disk8s2
+</I>&gt;&gt;&gt;<i>     disk9s2
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> it wouldn't get added to the existing raidz vdev, you'd have  
+</I>&gt;&gt;&gt;<i> mismatched stripe groups, and inconsistent data protection.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> now on another side point .. 3 disk raidz sets may not be that  
+</I>&gt;&gt;&gt;<i> ideal, particularly if you're using large disks as you'll end up  
+</I>&gt;&gt;&gt;<i> using 33% of your capacity in parity - mirrored sets will perform  
+</I>&gt;&gt;&gt;<i> better on reads (since you'll read from both sides of the mirror),  
+</I>&gt;&gt;&gt;<i> depending on what you're designing for.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001052.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+	<LI>Next message: <A HREF="001054.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1053">[ date ]</a>
+              <a href="thread.html#1053">[ thread ]</a>
+              <a href="subject.html#1053">[ subject ]</a>
+              <a href="author.html#1053">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

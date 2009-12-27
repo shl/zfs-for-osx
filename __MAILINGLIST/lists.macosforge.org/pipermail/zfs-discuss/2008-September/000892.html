@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] late mount
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=EE40AA30-A795-456F-9183-E184E7DDA0B4%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000891.html">
+   <LINK REL="Next"  HREF="000893.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] late mount</H1>
+    <B>Andrew Webber</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=EE40AA30-A795-456F-9183-E184E7DDA0B4%40apple.com"
+       TITLE="[zfs-discuss] late mount">andy at aligature.com
+       </A><BR>
+    <I>Tue Sep 30 13:36:01 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000891.html">[zfs-discuss] late mount
+</A></li>
+        <LI>Next message: <A HREF="000893.html">[zfs-discuss] late mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#892">[ date ]</a>
+              <a href="thread.html#892">[ thread ]</a>
+              <a href="subject.html#892">[ subject ]</a>
+              <a href="author.html#892">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This may be off topic, but...
+
+Noel, how are you guys keeping your home directories on ZFS?  Did you
+partition the internal drive into an HFS+ partition and a ZFS partition?  Or
+is there some secret to booting from ZFS that I don't know?
+
+Best,
+Andy
+
+On Tue, Sep 30, 2008 at 4:31 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;wrote:
+
+&gt;<i> This is strange.  A group of us at Apple keep our home directories on
+</I>&gt;<i> ZFS on our laptops on the internal drive.  Are all of you guys using
+</I>&gt;<i> the internal drives, or USB drives for your home directories? or some
+</I>&gt;<i> other type of detachable (non internal bay) drive?  There has been
+</I>&gt;<i> some issues in the past noted with external drives since a lot of them
+</I>&gt;<i> have power saving features and such so the drive sometimes isn't
+</I>&gt;<i> actually spun up,  or takes a bit to get spun up.
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Sep 30, 2008, at 5:14 AM, Dillon Kass wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; I just use the login window to add a few more seconds to the login
+</I>&gt;<i> &gt; time.
+</I>&gt;<i> &gt; Usually by the time the login window loads and i type my username and
+</I>&gt;<i> &gt; password + take a single breath my home dir has mounted and i can
+</I>&gt;<i> &gt; safely
+</I>&gt;<i> &gt; log in.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I also have cron snapshot my home dir by hourly so that if i do log in
+</I>&gt;<i> &gt; too quick and lose my settings i can just log out and rollback.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Werner Donn&#233; wrote:
+</I>&gt;<i> &gt;&gt; Hi,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; This is how it started for me too. Since then it has deteriorated
+</I>&gt;<i> &gt;&gt; gradually up to the point, today, where after twenty reboots I still
+</I>&gt;<i> &gt;&gt; have no online pool. I wonder if ZFS is suitable for USB-disks on Mac
+</I>&gt;<i> &gt;&gt; OS X. If it isn't I'm going to get a Solaris box and move the pool to
+</I>&gt;<i> &gt;&gt; it.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Regards,
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Werner.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On 28 Sep 2008, at 17:46, ruebezahl wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; hey there!
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; guys: PANIC !
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; It seems my internal zpool which contains my homefolder gets mounted
+</I>&gt;<i> &gt;&gt;&gt; very late in the booting process, maybe not even until i trie to
+</I>&gt;<i> &gt;&gt;&gt; login.
+</I>&gt;<i> &gt;&gt;&gt; which results in my library/wallpaper and so on not getting loaded
+</I>&gt;<i> &gt;&gt;&gt; properly
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; when logging in as another user first, and then logging in again it
+</I>&gt;<i> &gt;&gt;&gt; works ?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; is there a way to force osx to mount my zpool at boot time ?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; i tried via a launchd entry, but failed.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; regards
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; franz
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt; zfs-discuss mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; Werner Donn&#233;  --  Re
+</I>&gt;<i> <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+</I>&gt;<i> &gt;&gt; Engelbeekstraat 8
+</I>&gt;<i> <A HREF="http://www.re.be">http://www.re.be</A>
+</I>&gt;<i> &gt;&gt; BE-3300 Tienen
+</I>&gt;<i> &gt;&gt; tel: (+32) 486 425803        e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; zfs-discuss mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080930/8f888361/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080930/8f888361/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000891.html">[zfs-discuss] late mount
+</A></li>
+	<LI>Next message: <A HREF="000893.html">[zfs-discuss] late mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#892">[ date ]</a>
+              <a href="thread.html#892">[ thread ]</a>
+              <a href="subject.html#892">[ subject ]</a>
+              <a href="author.html#892">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

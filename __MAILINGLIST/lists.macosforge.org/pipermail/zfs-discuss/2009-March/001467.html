@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic on corrupted ZIL
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic%20on%20corrupted%20ZIL&In-Reply-To=%3C5100DEF1-01E4-410F-B3BA-2AD7B26F0CF5%40berczi.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001466.html">
+   <LINK REL="Next"  HREF="001468.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic on corrupted ZIL</H1>
+    <B>Berczi Gabor</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic%20on%20corrupted%20ZIL&In-Reply-To=%3C5100DEF1-01E4-410F-B3BA-2AD7B26F0CF5%40berczi.be%3E"
+       TITLE="[zfs-discuss] panic on corrupted ZIL">gabor at berczi.be
+       </A><BR>
+    <I>Tue Mar 24 08:13:25 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001466.html">[zfs-discuss] panic on corrupted ZIL
+</A></li>
+        <LI>Next message: <A HREF="001468.html">[zfs-discuss] ARC barely used?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1467">[ date ]</a>
+              <a href="thread.html#1467">[ thread ]</a>
+              <a href="subject.html#1467">[ subject ]</a>
+              <a href="author.html#1467">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>No success.
+
+Output on FreeBSD:
+
+# zpool status -v store3
+   pool: store3
+  state: ONLINE
+status: One or more devices has experienced an error resulting in data
+         corruption.  Applications may be affected.
+action: Restore the file in question if possible.  Otherwise restore the
+         entire pool from backup.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-8A">http://www.sun.com/msg/ZFS-8000-8A</A>
+  scrub: none requested
+config:
+
+         NAME        STATE     READ WRITE CKSUM
+         store3      ONLINE       0     0     4
+           da0s1     ONLINE       0     0     4
+
+errors: Permanent errors have been detected in the following files:
+
+         store3:&lt;0x0&gt;
+
+On Mar 24, 2009, at 3:50 PM, Berczi Gabor wrote:
+
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I have unwillingly created a corrupted ZIL on a 260Gb ZFS pool,  
+</I>&gt;<i> resulting in &quot;can't process intent log&quot; on FreeBSD's import efforts,  
+</I>&gt;<i> and a kernel panic on OSX upon executing &quot;zfs status|import|scrub  
+</I>&gt;<i> &lt;poolname&gt;&quot;.
+</I>&gt;<i>
+</I>&gt;<i> I'm now trying a rescue with FreeBSD as described here:
+</I>&gt;<i> <A HREF="http://www.mail-archive.com/freebsd-stable@freebsd.org/msg97368.html">http://www.mail-archive.com/freebsd-stable@freebsd.org/msg97368.html</A>
+</I>&gt;<i>
+</I>&gt;<i> Just letting you know :)
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001466.html">[zfs-discuss] panic on corrupted ZIL
+</A></li>
+	<LI>Next message: <A HREF="001468.html">[zfs-discuss] ARC barely used?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1467">[ date ]</a>
+              <a href="thread.html#1467">[ thread ]</a>
+              <a href="subject.html#1467">[ subject ]</a>
+              <a href="author.html#1467">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

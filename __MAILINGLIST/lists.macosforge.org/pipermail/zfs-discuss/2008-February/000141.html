@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Interesting VMWare issue
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Interesting%20VMWare%20issue&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000201.html">
+   <LINK REL="Next"  HREF="000142.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Interesting VMWare issue</H1>
+    <B>David Ritchie</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Interesting%20VMWare%20issue&In-Reply-To="
+       TITLE="[zfs-discuss] Interesting VMWare issue">david299792 at googlemail.com
+       </A><BR>
+    <I>Thu Feb  7 14:33:07 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000201.html">[zfs-discuss] Interesting VMWare issue
+</A></li>
+        <LI>Next message: <A HREF="000142.html">[zfs-discuss] Problem compacting EyeTV program on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#141">[ date ]</a>
+              <a href="thread.html#141">[ thread ]</a>
+              <a href="subject.html#141">[ subject ]</a>
+              <a href="author.html#141">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I've just discovered an interesting issue in VMWare Fusion. I've got a  
+VM set up with Windows XP running form a ZFS file system. When I do  
+this:-
+	1. start the VM in VMWare
+	2. suspend
+	3. quite vmware
+	4. zfs snapshot tank/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">the-file-system at test</A>
+	5. reload the VM, fiddle about a bit, suspend, reload to check it,  
+suspend
+	6. zfs rollbank tank/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">the-file-system at test</A>
+	7. reload the (now rolled back VM) in VMWare
+
+The VM appears to resume, but just before running again I get a  
+message: *** Virtual machine kernel stack fault (hardware reset)
+
+(I can send a screen grab of the message dialog)
+
+The same happens if I suspend, clone, and then try and resume the clone.
+
+I'll try in Parallels and see what happens there...
+
+&lt;&lt;&lt; time passes &gt;&gt;&gt;
+
+No issues in Parallels. It's rather useful to be able to very quickly  
+clone a whole, running (suspended) VM in order to experiment with  
+something in a matter of seconds.
+
+
+-- David
+
+(I accidentally sent this from the wrong email address first time)
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000201.html">[zfs-discuss] Interesting VMWare issue
+</A></li>
+	<LI>Next message: <A HREF="000142.html">[zfs-discuss] Problem compacting EyeTV program on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#141">[ date ]</a>
+              <a href="thread.html#141">[ thread ]</a>
+              <a href="subject.html#141">[ subject ]</a>
+              <a href="author.html#141">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

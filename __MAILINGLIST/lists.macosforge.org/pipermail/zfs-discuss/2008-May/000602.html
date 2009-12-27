@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] names
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20names&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000598.html">
+   <LINK REL="Next"  HREF="000603.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] names</H1>
+    <B>ruebezahl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20names&In-Reply-To="
+       TITLE="[zfs-discuss] names">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Wed May 21 07:28:54 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000598.html">[zfs-discuss] Keynote issues
+</A></li>
+        <LI>Next message: <A HREF="000603.html">[zfs-discuss] name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#602">[ date ]</a>
+              <a href="thread.html#602">[ thread ]</a>
+              <a href="subject.html#602">[ subject ]</a>
+              <a href="author.html#602">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+i'm having some issues here...
+
+
+look at that
+
+at first, i always have to reimport a pool after kicking off my  
+external raidz because one always fails to get mounted, after a  
+reimport things are fine again
+
+
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at jrg</A> ~ % zpool status
+   pool: raidtank
+  state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas  
+exist for
+	the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-2Q">http://www.sun.com/msg/ZFS-8000-2Q</A>
+  scrub: resilver completed with 0 errors on Wed May 21 16:24:12 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	raidtank     DEGRADED     0     0     0
+	  raidz1     DEGRADED     0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk5s2  UNAVAIL      0     0     0  cannot open
+
+errors: No known data errors
+
+
+
+But now i'm experiencing this issue:
+
+
+
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at jrg</A> ~ % sudo zpool export -f raidtank
+Password:
+cannot open '/Volumes/raidtank/': invalid character '/' in pool name
+
+
+What does that mean?
+
+
+
+renaming does not work:
+
+
+1 <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at jrg</A> ~ % zfs rename
+missing source dataset argument
+usage:
+	rename &lt;filesystem|volume|snapshot&gt; &lt;filesystem|volume|snapshot&gt;
+	rename -p &lt;filesystem|volume&gt; &lt;filesystem|volume&gt;
+	rename -r &lt;snapshot&gt; &lt;snapshot&gt;
+For the property list, run: zfs set|get
+2 <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at jrg</A> ~ % man zfs
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at jrg</A> ~ % zfs rename raidtank tankraid
+cannot open '/Volumes/raidtank/': invalid dataset name
+1 <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at jrg</A> ~ % sudo zfs rename raidtank tankraid
+cannot open '/Volumes/raidtank/': invalid dataset name
+1 <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ruebezahl at jrg</A> ~ % sudo zfs rename raidtank  
+tankraid                        :(
+
+
+
+
+help is very appreciated...
+
+
+regards
+
+franz
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJINDGmAAoJEP8ZopU3Bhmt1xwH/RLLYHPHYfLAbEz5cTfiTAXE
+IzvLjRS48BtpTmiTtqf/IMaFIJYPSlIMW968voaTltdIlnE3jGo8d98gguLEOBu3
+fGeXm2gCswXZ+ec5JZ4SrqE3AzzOrjiaYA5QvdutnFiWigNPjwySfeywsRVX0SPI
+gYwZPnHAuz1N85i3ak/Bc2SQOB6e+2WPQX8YY4ThBkl/XehUs1mvD0RPTkTLyvms
+1Pre9DS/QwLbwtMdHhepWp0ElIoQxdp3XXuuEpET0syvk53oWMuF2qwAkkOPGIm4
+aIlX9DwTkJeczRc827qKf4FkHzXuf4MVYTe9U+0bFz6hxv3A03MQK2XXnjOniCM=
+=w5tP
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000598.html">[zfs-discuss] Keynote issues
+</A></li>
+	<LI>Next message: <A HREF="000603.html">[zfs-discuss] name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#602">[ date ]</a>
+              <a href="thread.html#602">[ thread ]</a>
+              <a href="subject.html#602">[ subject ]</a>
+              <a href="author.html#602">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic in AVL (build 154 aka 10a286)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20in%20AVL%20%28build%20154%20aka%2010a286%29&In-Reply-To=%3C367a23780910100624s387e4322lcb81bdad4c3a3dcc%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001909.html">
+   <LINK REL="Next"  HREF="001890.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic in AVL (build 154 aka 10a286)</H1>
+    <B>Kacper Wysocki</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20in%20AVL%20%28build%20154%20aka%2010a286%29&In-Reply-To=%3C367a23780910100624s387e4322lcb81bdad4c3a3dcc%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Panic in AVL (build 154 aka 10a286)">kacperw at online.no
+       </A><BR>
+    <I>Sat Oct 10 06:24:30 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001909.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+        <LI>Next message: <A HREF="001890.html">[zfs-discuss] Another ZFS is missing on 10.6 reason?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1910">[ date ]</a>
+              <a href="thread.html#1910">[ thread ]</a>
+              <a href="subject.html#1910">[ subject ]</a>
+              <a href="author.html#1910">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>2009/10/10 Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt;:
+&gt;<i> On 7 Oct 2009, at 08:17, Julien-Pierre Av&#233;rous wrote:
+</I>[snip the-future-of-zfs woes]
+&gt;&gt;<i> I have a WD Drive in USB2 of 2 TB. I have formatted my drive, configured
+</I>&gt;&gt;<i> the main partition as a ZFS entity, created a ZFS Pool on this entity and
+</I>&gt;&gt;<i> finally created a filesystem on this pool.
+</I>&gt;<i>
+</I>&gt;<i> Don't do it! USB sucks. USB2 sucks faster.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://alblue.blogspot.com/2007/12/mac-data-loss-on-leopard-usb-drives.html">http://alblue.blogspot.com/2007/12/mac-data-loss-on-leopard-usb-drives.html</A>
+</I>&gt;<i>
+</I>&gt;&gt;<i> This seem work fine, until I try to copy (with cp -pR) a big amount of
+</I>&gt;&gt;<i> file (between 3 to 6 MB each) : after a little amount of file copied (less
+</I>&gt;&gt;<i> than 3000, not on the same directory), my server is killed with a call to
+</I>&gt;&gt;<i> panic, generating this trace :
+</I>&gt;<i>
+</I>&gt;<i> There are problems with the USB drive and filling the write cache. The USB
+</I>&gt;<i> device is reporting (in response to an fsync) that eveything is written,
+</I>&gt;<i> when it isn't. This ends up confusing ZFS and you end up with weird errors.
+</I>&gt;<i>
+</I>&gt;<i> Best go out and buy yourself a decent FireWire drive and then use the USB as
+</I>&gt;<i> a /tmp drive.
+</I>
+Oh no, you shouldn't use it for /tmp either... The ubiquity of USB is
+pretty much the only thing USB has going for it. USB is still
+excellent for sneakernet &amp; cold boots.
+
+But my God fire wire.
+
+-- 
+<A HREF="http://kacper.doesntexist.org">http://kacper.doesntexist.org</A>
+<A HREF="http://windows.dontexist.com">http://windows.dontexist.com</A>
+Employ no technique to gain supreme enlightment.
+- Mar pa Chos kyi blos gros
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001909.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+	<LI>Next message: <A HREF="001890.html">[zfs-discuss] Another ZFS is missing on 10.6 reason?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1910">[ date ]</a>
+              <a href="thread.html#1910">[ thread ]</a>
+              <a href="subject.html#1910">[ subject ]</a>
+              <a href="author.html#1910">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

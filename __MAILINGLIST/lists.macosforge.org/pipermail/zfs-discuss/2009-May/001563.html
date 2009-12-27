@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3CFA0CBF4E-22B2-4B22-9AC1-1D8A8CA91300%40designlifecycle.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001561.html">
+   <LINK REL="Next"  HREF="001556.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation</H1>
+    <B>Alex Bowden</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3CFA0CBF4E-22B2-4B22-9AC1-1D8A8CA91300%40designlifecycle.com%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation">alex at designlifecycle.com
+       </A><BR>
+    <I>Tue May  5 17:00:59 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001561.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+        <LI>Next message: <A HREF="001556.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1563">[ date ]</a>
+              <a href="thread.html#1563">[ thread ]</a>
+              <a href="subject.html#1563">[ subject ]</a>
+              <a href="author.html#1563">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+You really don't listen to a word people say do you?
+
+The bottom line is that
+
+	/dev/disk2 = whole disk
+
+	/dev/disk2s2 = a slice or partition
+
+If you're still confused please see The Ladybird Book of Computers.
+
+The documentation does not say to give ZFS the whole of the usable  
+disk as a partition.  It says give ZFS the whole disk.
+
+The rest is bull and obfustication of the issue to cover up the fact  
+that you have been putting people down for not reading the  
+documentation, without bothering to check that it was right.
+
+The purpose of documentation, particularly &quot;getting started&quot;  
+documentation, is not to have some obscure interpretation that might  
+be seen as right by someone trying to justify his failure to read it  
+before quoting it to others, but to be unambiguously convey the  
+correct information to the reader.
+
+Furthermore, the usage of zpool that you propose, in assuming  
+ownership of a resource beyond  the stripe that it is given, goes  
+against 40 years of Unix convention and is dangerously bad practice.
+
+There is no reason why it shouldn't be given the whole disk and still  
+maintain the GTP format and two slices within that structure and use  
+just the second one.  That conforms to Unix usage.
+
+
+
+
+
+
+
+
+On 5 May 2009, at 22:18, Alex Blewitt wrote:
+
+&gt;<i> On Tue, May 5, 2009 at 8:24 PM, Alex Bowden  
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex at designlifecycle.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Alex Blewitt
+</I>&gt;&gt;<i> With respect you are simply wrong.
+</I>&gt;&gt;<i> Because the Apple GPT implementation reserves a 200MB EFI slice.
+</I>&gt;<i>
+</I>&gt;<i> And your point is? Please note what I said:
+</I>&gt;<i>
+</I>&gt;<i> &quot;That's not the case. If you give the whole disk (with one zfs
+</I>&gt;<i> partition) it kicks in the optimisations. If you have more partitions
+</I>&gt;<i> on there, it doesn't &quot;
+</I>&gt;<i>
+</I>&gt;<i> The EFI partition is akin to the master boot record on other disks.
+</I>&gt;<i> It's not a 'real' partition (though it can be mounted as such). ZFS
+</I>&gt;<i> uses a whole-disk concept not to take up any more (or less) space, but
+</I>&gt;<i> rather to guarantee that it has sole use of the disk cache. If you
+</I>&gt;<i> don't have the whole disk, it assumes that the disk is mixed use, and
+</I>&gt;<i> doesn't use the cache when writing to disk (with the resulting slow
+</I>&gt;<i> down that this may cause).
+</I>&gt;<i>
+</I>&gt;<i> However, it is my understanding that if you create a disk with a
+</I>&gt;<i> single ZFS partition and no other filesystem partitions (i.e.
+</I>&gt;<i> specifying the 100% on the command line) then you will benefit from
+</I>&gt;<i> these optimizations which are specific to Mac OS X. The EFI partition
+</I>&gt;<i> is treated as a driver location, much like earlier Apple Partitions on
+</I>&gt;<i> PPCs stored OS9 drivers. In other words, it's treated as a boot device
+</I>&gt;<i> which isn't mounted again at runtime; therefore, ZFS can assume
+</I>&gt;<i> ownership of the cache.
+</I>&gt;<i>
+</I>&gt;&gt;<i> This shows clearly in the Getting Started example.
+</I>&gt;&gt;<i> read the output in the example.
+</I>&gt;&gt;<i> # diskutil partitiondisk /dev/disk2 GPTFormat ZFS %noformat% 100%
+</I>&gt;<i>
+</I>&gt;<i> Right, this is the command you should have used. The GPTFormat will
+</I>&gt;<i> result in the 200Mb EFI partition; however, the usable disk space is
+</I>&gt;<i> given over to ZFS at 100%. 100% of the usable disk != 100% of the raw
+</I>&gt;<i> disk.
+</I>&gt;<i>
+</I>&gt;&gt;<i> When the getting started says for best results give it the whole  
+</I>&gt;&gt;<i> disk,  the
+</I>&gt;&gt;<i> correct interpretation is disk2.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, it was not the correct interpretation.
+</I>&gt;<i>
+</I>&gt;&gt;<i> So what Teng Yao and I independently did was to follow the  
+</I>&gt;&gt;<i> recommendation
+</I>&gt;&gt;<i> i.e. to label the disk with a GPT label and then give ZFS the whole  
+</I>&gt;&gt;<i> disk
+</I>&gt;<i>
+</I>&gt;<i> No, you followed what you thought was the recommendation but in fact  
+</I>&gt;<i> wasn't.
+</I>&gt;<i>
+</I>&gt;&gt;<i> But that is NOT what importing a zpool is about.  Its about moving an
+</I>&gt;&gt;<i> exported zpool from one machine (type) to another.
+</I>&gt;<i>
+</I>&gt;<i> The Mac kernel does not recognize raw disks in ZFS format (in 10.5
+</I>&gt;<i> with 119). It's quite possible that will change with 10.6. Note that
+</I>&gt;<i> the ZFS on-disk format actually leaves a couple of hundred meg spare
+</I>&gt;<i> at the front to allow for a EFI partition, so it's quite likely
+</I>&gt;<i> they'll use both.
+</I>&gt;<i>
+</I>&gt;<i> However, not using a ZFS partition means it doesn't get imported  
+</I>&gt;<i> automatically.
+</I>&gt;<i>
+</I>&gt;&gt;<i> Its not an adjunct to mounting process.  This isn't just a case of  
+</I>&gt;&gt;<i> disks
+</I>&gt;&gt;<i> that haven't mounted.  The disks zpools are lost unless the user  
+</I>&gt;&gt;<i> takes
+</I>&gt;&gt;<i> exceptional action to recover them.
+</I>&gt;<i>
+</I>&gt;<i> Right, hence the instructions tell you how to do it properly.
+</I>&gt;<i>
+</I>&gt;&gt;<i> But I go back to my original statement that what one should be able  
+</I>&gt;&gt;<i> to
+</I>&gt;&gt;<i> expect from the MacOS ZFS documentation is highlighting of these  
+</I>&gt;&gt;<i> quirks
+</I>&gt;&gt;<i> rather than provide incorrect recommendations that lead to failure
+</I>&gt;&gt;<i> situations and then have that followed up by users being wrongly  
+</I>&gt;&gt;<i> told to go
+</I>&gt;&gt;<i> back and read the documentation.
+</I>&gt;<i>
+</I>&gt;<i> As usual, RTFM.
+</I>&gt;<i>
+</I>&gt;<i> Alex
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001561.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+	<LI>Next message: <A HREF="001556.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1563">[ date ]</a>
+              <a href="thread.html#1563">[ thread ]</a>
+              <a href="subject.html#1563">[ subject ]</a>
+              <a href="author.html#1563">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Serious Problems with ZFS on Intel Mac Pro	Copying Hundreds of Files
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Serious%20Problems%20with%20ZFS%20on%20Intel%20Mac%20Pro%0A%09Copying%20Hundreds%20of%20Files&In-Reply-To=21852A79-8C7D-4793-9F03-70311B1BFA1B%40mainstream.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000823.html">
+   <LINK REL="Next"  HREF="000824.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Serious Problems with ZFS on Intel Mac Pro	Copying Hundreds of Files</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Serious%20Problems%20with%20ZFS%20on%20Intel%20Mac%20Pro%0A%09Copying%20Hundreds%20of%20Files&In-Reply-To=21852A79-8C7D-4793-9F03-70311B1BFA1B%40mainstream.net"
+       TITLE="[zfs-discuss] Serious Problems with ZFS on Intel Mac Pro	Copying Hundreds of Files">caronni at gmail.com
+       </A><BR>
+    <I>Mon Sep  8 23:37:27 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000823.html">[zfs-discuss] Serious Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+        <LI>Next message: <A HREF="000824.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#828">[ date ]</a>
+              <a href="thread.html#828">[ thread ]</a>
+              <a href="subject.html#828">[ subject ]</a>
+              <a href="author.html#828">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You are seeing what I saw. Still waiting for a version after -119 which
+might fix this.
+Germano
+
+On Mon, Sep 8, 2008 at 22:34, Craig Peterson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">craig at mainstream.net</A>&gt; wrote:
+
+&gt;<i> [Not sure if this made it through last time...  Craig.]
+</I>&gt;<i>
+</I>&gt;<i> I'm running build 119 on an up-to-date Mac Pro (10.5.4).  I've set up a
+</I>&gt;<i> three-disk zfs raid-z:
+</I>&gt;<i> $ zpool status
+</I>&gt;<i>   pool: Internal
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i> status: The pool is formatted using an older on-disk format.  The pool can
+</I>&gt;<i>         still be used, but some features are unavailable.
+</I>&gt;<i> action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+</I>&gt;<i>         pool will no longer be accessible on older software versions.
+</I>&gt;<i>  scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>         NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>         Internal     ONLINE       0     0     0
+</I>&gt;<i>           raidz1     ONLINE       0     0     0
+</I>&gt;<i>             disk1s2  ONLINE       0     0     0
+</I>&gt;<i>             disk2s2  ONLINE       0     0     0
+</I>&gt;<i>             disk3s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i>
+</I>&gt;<i> I'm copying my music collection over to the pool, and it locks up trying to
+</I>&gt;<i> write to the zfs partition after an indeterminate amount of time.  At this
+</I>&gt;<i> point I have to reboot the machine by physically power cycling it in order
+</I>&gt;<i> to get back at the zfs partition and anything that tries to write to it gets
+</I>&gt;<i> locked up:
+</I>&gt;<i>
+</I>&gt;<i> iTunes/iTunes Music/Dr. Jeffrey D. Thompson/Music for Brainwave Massage
+</I>&gt;<i> CD2/
+</I>&gt;<i> iTunes/iTunes Music/Dr. Jeffrey D. Thompson/Music for Brainwave Massage
+</I>&gt;<i> CD2/03 Awakened Focus.m4a
+</I>&gt;<i>    138083516 100%   70.69MB/s    0:00:01 (xfer#55201,
+</I>&gt;<i> to-check=12475/116940)
+</I>&gt;<i> iTunes/iTunes Music/Dr. Jeffrey D. Thompson/Music for Brainwave Massage
+</I>&gt;<i> CD2/04 Tranquil Awareness.m4a
+</I>&gt;<i> ^C
+</I>&gt;<i> rsync error: received SIGINT, SIGTERM, or SIGHUP (code 20) at
+</I>&gt;<i> /SourceCache/rsync/rsync-35.2/rsync/rsync.c(244) [sender=2.6.9]
+</I>&gt;<i> rsync: writefd_unbuffered failed to write 133 bytes [generator]: Broken
+</I>&gt;<i> pipe (32)
+</I>&gt;<i> bash-3.2# rsync -av --progress iTunes /Volumes/Internal/
+</I>&gt;<i> building file list ...
+</I>&gt;<i> 116941 files to consider
+</I>&gt;<i>
+</I>&gt;<i> At this point it hangs, as do any write operations to the partition.
+</I>&gt;<i>
+</I>&gt;<i> I've only tried using rsync to copy the files, and rebooting the machine
+</I>&gt;<i> every hour or so isn't much of an option :-)
+</I>&gt;<i>
+</I>&gt;<i> Suggestions?  I found a bug report of something similar that was said to be
+</I>&gt;<i> fixed in build 119... but it doesn't appear to be.
+</I>&gt;<i>
+</I>&gt;<i> In order to make sure that the problem wasn't hardware related, I created a
+</I>&gt;<i> three-disk RAID-0 using Diskutil and MAC's filesystem and have been
+</I>&gt;<i> performing the same copy -- with no problems.  It really does appear to be a
+</I>&gt;<i> zfs problem.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Craig.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080909/26830c24/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080909/26830c24/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000823.html">[zfs-discuss] Serious Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+	<LI>Next message: <A HREF="000824.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#828">[ date ]</a>
+              <a href="thread.html#828">[ thread ]</a>
+              <a href="subject.html#828">[ subject ]</a>
+              <a href="author.html#828">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

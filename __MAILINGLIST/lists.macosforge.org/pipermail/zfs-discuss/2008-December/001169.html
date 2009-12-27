@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Questions about hot spares
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Questions%20about%20hot%20spares&In-Reply-To=%3C7927312F-B5F1-4868-9EA5-4392E3630032%40sogeeky.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001167.html">
+   <LINK REL="Next"  HREF="001170.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Questions about hot spares</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Questions%20about%20hot%20spares&In-Reply-To=%3C7927312F-B5F1-4868-9EA5-4392E3630032%40sogeeky.net%3E"
+       TITLE="[zfs-discuss] Questions about hot spares">zorg at sogeeky.net
+       </A><BR>
+    <I>Wed Dec 17 09:38:55 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001167.html">[zfs-discuss] Questions about hot spares
+</A></li>
+        <LI>Next message: <A HREF="001170.html">[zfs-discuss] Questions about hot spares
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1169">[ date ]</a>
+              <a href="thread.html#1169">[ thread ]</a>
+              <a href="subject.html#1169">[ subject ]</a>
+              <a href="author.html#1169">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>My data is still intact so no harm no foul. That's the hazards of  
+playing with a beta. :)
+
+Keep up the good work, I look forward to 10.6!
+
+On Dec 17, 2008, at 8:18 AM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;  
+wrote:
+
+&gt;&gt;<i> 1) Why didn't the hot spare automatically fill in for the faulted
+</I>&gt;&gt;<i> disk?  Isn't that what they're for?
+</I>&gt;<i>
+</I>&gt;<i> Eek, my fault for not advertising this issue better since I didn't  
+</I>&gt;<i> think anyone was using it.  Hot spares don't currently work because  
+</I>&gt;<i> there is no disk ioctl notification in OSX to tell me that a disk  
+</I>&gt;<i> has died/disappeard/gone AWOL.  There is notification for disks via  
+</I>&gt;<i> IOkit and the iokit layer.  But to play in that sandbox you need to  
+</I>&gt;<i> be an iokit kext.  We've recently just finished converting zfs into  
+</I>&gt;<i> an IOkit kext, however because if changes on both our side and  
+</I>&gt;<i> kernel, these bits will not work on Leopard.  It has to be the new  
+</I>&gt;<i> release, hence if you're on the Seed program you'll get it soon,  
+</I>&gt;<i> otherwise you will have to wait till Snow Leopard gets released.
+</I>&gt;<i>
+</I>&gt;&gt;<i> 2) I know you can't grow a raidz, but can you add a disk to convert a
+</I>&gt;&gt;<i> raidz1 to raidz2?
+</I>&gt;<i>
+</I>&gt;<i> Nope, this isn't possible either.  This migration also would require  
+</I>&gt;<i> rewriting lots of block pointers which gets messy.  Sun is working  
+</I>&gt;<i> on getting block pointer rewrite to work, but it's not ready yet  
+</I>&gt;<i> last I'd checked.
+</I>&gt;<i>
+</I>&gt;&gt;<i> 3) While the disk was in a quazi-weird state (that's a technical
+</I>&gt;&gt;<i> term!) I couldn't run zpool status without locking up.  I guessed at
+</I>&gt;&gt;<i> what was happening and tracked down the back drive.  Only when it was
+</I>&gt;&gt;<i> powered off could I run zpool status successfully.  Others have seen
+</I>&gt;&gt;<i> similar issues, as I recall.  Has this been fixed yet?  Any ETA on  
+</I>&gt;&gt;<i> new
+</I>&gt;&gt;<i> bits?
+</I>&gt;<i>
+</I>&gt;<i> This issue should be fixed in the new IOkit bits, now that we get  
+</I>&gt;<i> actual disk status. (p.s. I like your new technical term :)  )
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Dec 16, 2008, at 11:36 PM, Mr. Zorg ... wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2) I know you can't grow a raidz, but can you add a disk to convert a
+</I>&gt;&gt;<i> raidz1 to raidz2?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3) While the disk was in a quazi-weird state (that's a technical
+</I>&gt;&gt;<i> term!) I couldn't run zpool status without locking up.  I guessed at
+</I>&gt;&gt;<i> what was happening and tracked down the back drive.  Only when it was
+</I>&gt;&gt;<i> powered off could I run zpool status successfully.  Others have seen
+</I>&gt;&gt;<i> similar issues, as I recall.  Has this been fixed yet?  Any ETA on  
+</I>&gt;&gt;<i> new
+</I>&gt;&gt;<i> bits?
+</I>&gt;<i>
+</I></PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001167.html">[zfs-discuss] Questions about hot spares
+</A></li>
+	<LI>Next message: <A HREF="001170.html">[zfs-discuss] Questions about hot spares
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1169">[ date ]</a>
+              <a href="thread.html#1169">[ thread ]</a>
+              <a href="subject.html#1169">[ subject ]</a>
+              <a href="author.html#1169">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%5Bfollow-up%5DRe%3A%20DiskManagement%20setuid-tool%20failure%0A%20on%20zfs%20disks&In-Reply-To=%3C0B09BBDF-F45F-4F08-9850-E5E064C1E55B%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001297.html">
+   <LINK REL="Next"  HREF="001299.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%5Bfollow-up%5DRe%3A%20DiskManagement%20setuid-tool%20failure%0A%20on%20zfs%20disks&In-Reply-To=%3C0B09BBDF-F45F-4F08-9850-E5E064C1E55B%40mac.com%3E"
+       TITLE="[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Wed Jan 14 11:26:10 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001297.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+        <LI>Next message: <A HREF="001299.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1298">[ date ]</a>
+              <a href="thread.html#1298">[ thread ]</a>
+              <a href="subject.html#1298">[ subject ]</a>
+              <a href="author.html#1298">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oeps I was wrong.
+I was looking at the wrong device.
+It does help with gpt.
+As soon as i run the command :
+gpt show /dev/disk1
+the finder remounts my zfs raid
+diskutil list still fails
+Dirk
+On 14 Jan 2009, at 20:08, Dirk Schelfhout wrote:
+
+&gt;<i> No it doesn't.
+</I>&gt;<i> On 14 Jan 2009, at 19:47, Brian Pinkerton wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I bet ZFS still has it open.  Does it help if you export the pool?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> bri
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 14, 2009, at 10:45 AM, Dirk Schelfhout wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> But the disk is unmounted.
+</I>&gt;&gt;&gt;<i> So no other should be reading it.
+</I>&gt;&gt;&gt;<i> On 14 Jan 2009, at 19:41, Brian Pinkerton wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Looks like a bug in gpt to me.  gpt is opening with O_EXCL |  
+</I>&gt;&gt;&gt;&gt;<i> O_RDWR (0x802), and the open is returning EBUSY (errno 16), which  
+</I>&gt;&gt;&gt;&gt;<i> makes me think that the device file system is allowing but one  
+</I>&gt;&gt;&gt;&gt;<i> writer on the device at a time.  In this case, gpt could clearly  
+</I>&gt;&gt;&gt;&gt;<i> open with O_RDONLY and succeed, regardless of which other  
+</I>&gt;&gt;&gt;&gt;<i> processes have the device open.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> bri
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Jan 14, 2009, at 8:34 AM, Dirk Schelfhout wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 412/0xa03d048:  open(&quot;/dev/disk0\0&quot;, 0x802, 0x400)		 = -1 Err#16
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001297.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+	<LI>Next message: <A HREF="001299.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1298">[ date ]</a>
+              <a href="thread.html#1298">[ thread ]</a>
+              <a href="subject.html#1298">[ subject ]</a>
+              <a href="author.html#1298">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

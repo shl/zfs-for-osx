@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] and another one...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20and%20another%20one...&In-Reply-To=BEE95B44-414F-4AEE-9520-9632C98396C9%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000296.html">
+   <LINK REL="Next"  HREF="000298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] and another one...</H1>
+    <B>Brett Ault-McCoy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20and%20another%20one...&In-Reply-To=BEE95B44-414F-4AEE-9520-9632C98396C9%40spamfreemail.de"
+       TITLE="[zfs-discuss] and another one...">btm at pobox.com
+       </A><BR>
+    <I>Sun Mar  9 14:54:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000296.html">[zfs-discuss] and another one...
+</A></li>
+        <LI>Next message: <A HREF="000298.html">[zfs-discuss] vmem_alloc panic is back
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#297">[ date ]</a>
+              <a href="thread.html#297">[ thread ]</a>
+              <a href="subject.html#297">[ subject ]</a>
+              <a href="author.html#297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Mar 9, 2008 at 8:32 PM, Franz Schmalzl &lt;
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">franzschmalzl at spamfreemail.de</A>&gt; wrote:
+
+&gt;<i> so that means i will always have to keep at least one snapshot
+</I>&gt;<i> internal and external as reference and rotate them by hand ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> another question
+</I>&gt;<i>
+</I>&gt;<i> when my backup dist starts to fill up, how will i be able to rotate my
+</I>&gt;<i> backups like time machine does ?
+</I>&gt;<i>
+</I>&gt;<i> is i understand i allways have to keep the first instance of my
+</I>&gt;<i> filesystem complete to act as a reference for the first snapshot
+</I>&gt;<i>
+</I>
+It works something like this.  You make a snapshot of your source filesystem
+and then send/recv it as a full stream to your backup destination.  This
+will create a new filesystem on your backup destination that has a single
+snapshot.  That snapshot references all the data in the filesystem as it is
+at that point in time.
+
+Now, at a later point in time you create a new snapshot on your source
+filesystem then do an incremental send/recv using that first snapshot as the
+reference.  This will create a new snapshot on your destination.  That
+snapshot will reference any data from the first snapshot that still exists,
+plus any new data that's been added or modified between the two snapshots.
+ It will not reference any data that ceased to exist between the two
+snapshots (deleted files or pieces of files that have been modified).
+
+Now, your backup filesystem has a union of all data that existed at both
+points in time that the snapshots were created with the snapshots as a way
+of selecting which set you want to reference.  You can keep doing this using
+the previous snapshot as the reference and your backup destination will grow
+by the amount of new/modified data between snapshots.
+
+When your destination starts to fill up you can start destroying snapshots.
+ When you destroy a snapshot any data that is referenced solely by that
+snapshot will go away.  So, if you destroy the origninal snapshot, data that
+was deleted or modified between the first and second snapshot will go away.
+ All other data will stay because it's still referenced by that second
+snapshot, at least.
+
+You do not have to keep the original instance, per se, because it's only a
+set of references to data blocks, in effect.  Destroying it only deletes the
+data that ceased to exist between it and the second snapshot.
+
+When you run 'zfs list' you can see how much data a snapshot &quot;references&quot;,
+which is basically how much was in the filesystem at the time of the
+snapshot.  You can also see how much data the snapshot &quot;uses&quot;, which is the
+data that only that snapshot references.  Destroying a snapshot will only
+ever delete as much data as is shown in the &quot;used&quot; column.  However, be
+destroying a snapshot you may cause the &quot;used&quot; value for another snapshot to
+increase if it becomes the sole remaining snapshot to reference a block of
+data.
+
+++Brett;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080309/2a7ee02f/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080309/2a7ee02f/attachment.html</A> 
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000296.html">[zfs-discuss] and another one...
+</A></li>
+	<LI>Next message: <A HREF="000298.html">[zfs-discuss] vmem_alloc panic is back
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#297">[ date ]</a>
+              <a href="thread.html#297">[ thread ]</a>
+              <a href="subject.html#297">[ subject ]</a>
+              <a href="author.html#297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

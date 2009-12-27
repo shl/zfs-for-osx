@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] A Glorious Hack
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20A%20Glorious%20Hack&In-Reply-To=%3C2b0225fb0812281241q2c1fa480xd7b2b89c311e7a3d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001229.html">
+   <LINK REL="Next"  HREF="001231.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] A Glorious Hack</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20A%20Glorious%20Hack&In-Reply-To=%3C2b0225fb0812281241q2c1fa480xd7b2b89c311e7a3d%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] A Glorious Hack">bwaters at nrao.edu
+       </A><BR>
+    <I>Sun Dec 28 12:41:08 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001229.html">[zfs-discuss] TimeMachine (Again)
+</A></li>
+        <LI>Next message: <A HREF="001231.html">[zfs-discuss] A Glorious Hack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1230">[ date ]</a>
+              <a href="thread.html#1230">[ thread ]</a>
+              <a href="subject.html#1230">[ subject ]</a>
+              <a href="author.html#1230">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have been unable to create snapshots since October. Until today.
+
+I exported the raidz1 pool, then I tried to boot my Mac Pro with the
+OpenSolaris 2008.11 CD. didn't work, got stuck on an unrecognized UART
+value at 0x3f8 (I think).
+
+But did you know that VMWare Fusion can see non-Windows disks? I created
+VMWare &quot;raw&quot; disks for each device in the pool, then added them to an
+OpenSolaris virtual machine. Before I started the virtual machine, I made
+*sure* that my pool was exported (zpool export) and unmounted. Started it
+up. It worked.
+
+I got different complaints from OpenSolaris, which helped me troubleshoot
+my problem. I have ZFS filesystems nested under other, top-level ZFS
+filesystems. Fine. BUT the mountpoint directories for those
+sub-filesystems were not empty. &quot;zpool import&quot; on OpenSolaris complained
+about that; I don't think zpool on Mac OS X said anything about it.
+
+If the mountpoint of a ZFS filesystem isn't empty, and is a directory on
+another ZFS filesystem, then everything will work rock-solid UNTIL you try
+to create a snapshot. The snapshot will fail with a completely cryptic
+&quot;dataset is busy&quot; message.
+
+
+Once I figured that out, I simply mounted my filesystems elsewhere,
+snapshot no problem.
+Also I could see the offending files: usually an empty &quot;.automounted&quot;
+file. My home-dir mountpoint had a new user template (e.g., the &quot;About
+Stacks.PDF&quot; in the Documents folder).
+
+I cleared up some of that inside the OpenSolaris VM, unmounted everything,
+another zpool export, shut down the VM. It seemed to get stuck shutting
+down. I waited a bit then turned it off from vmware.
+
+On a Mac OS X Terminal, I did a zpool import and zpool status...
+
+Oops. My raidz1 is degraded, somehow it's looking for the BSD-style
+&quot;dsk/c0t0s3p1&quot; instead of &quot;/dev/disk3s2&quot;. For the last element; an
+off-by-1 bug? Anyway, I did a &quot;zpool replace&quot; to explain that to the
+system. Now it's resilvering, 5 hours to go.
+
+
+
+So yeah, this is insanely dangerous, perhaps. But if you want to examine a
+ZFS setup on OpenSolaris, you can use VMWare running on the Mac!
+
+I will post the detailed commands I used to set up the VM when I get back
+to a working computer. I'm typing all this on my iPhone, sorry. The
+auto-correction is driving me crazy...
+
+
+~ boyd
+
+Boyd Waters
+National Radio Astronomy Observatory
+Socorro, New Mexico
+<A HREF="http://www.aoc.nrao.edu/~bwaters">http://www.aoc.nrao.edu/~bwaters</A>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001229.html">[zfs-discuss] TimeMachine (Again)
+</A></li>
+	<LI>Next message: <A HREF="001231.html">[zfs-discuss] A Glorious Hack
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1230">[ date ]</a>
+              <a href="thread.html#1230">[ thread ]</a>
+              <a href="subject.html#1230">[ subject ]</a>
+              <a href="author.html#1230">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

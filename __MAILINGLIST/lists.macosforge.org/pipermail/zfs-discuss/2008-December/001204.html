@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] snapshots
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C5B5B61CC-65D9-4804-921C-AF367C2F18F3%40sbod.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001203.html">
+   <LINK REL="Next"  HREF="001205.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] snapshots</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C5B5B61CC-65D9-4804-921C-AF367C2F18F3%40sbod.at%3E"
+       TITLE="[zfs-discuss] snapshots">zfs at sbod.at
+       </A><BR>
+    <I>Sat Dec 20 12:47:36 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001203.html">[zfs-discuss] snapshots
+</A></li>
+        <LI>Next message: <A HREF="001205.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1204">[ date ]</a>
+              <a href="thread.html#1204">[ thread ]</a>
+              <a href="subject.html#1204">[ subject ]</a>
+              <a href="author.html#1204">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>try adjusting the mountpoint property
+
+zfs set mountpoint=mountpoint pool/filesystem
+
+
+franz
+
+
+
+On 20.12.2008, at 21:34, John McAdams wrote:
+
+&gt;<i> Could someone remind me how to get the ZFS FS to mount? I can create  
+</I>&gt;<i> one just fine using zfs create reflection/Music.
+</I>&gt;<i>
+</I>&gt;<i> I see my Music FS under the reflection pool, but clicking on it and  
+</I>&gt;<i> issuing zfs mount commands don't work. I believe this has been  
+</I>&gt;<i> covered before but I can't find the thread.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -- jmca
+</I>&gt;<i>
+</I>&gt;<i> On Dec 20, 2008, at 3:02 PM, Richard McClellan wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Dec 20, 2008, at 11:46 , Boyd Waters wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Dec 20, 2008, at 12:23 PM, Richard McClellan wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> What is your snapshot command aliased to?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Very good question, very sorry I didn't show that:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> $ cat $(which snapshot)
+</I>&gt;&gt;&gt;<i> #! /bin/bash
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> zfs snapshot pool/bwaters@$(date +%FT%T)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hmm.  The command looks fine and works for me.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Others that have encountered this error (dataset busy) manually  
+</I>&gt;&gt;<i> umount/mount the filesystem and snapshots started working again.   
+</I>&gt;&gt;<i> Check this out: <A HREF="http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html">http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 		Rich
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001203.html">[zfs-discuss] snapshots
+</A></li>
+	<LI>Next message: <A HREF="001205.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1204">[ date ]</a>
+              <a href="thread.html#1204">[ thread ]</a>
+              <a href="subject.html#1204">[ subject ]</a>
+              <a href="author.html#1204">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=D25C3DAA-C505-4EE5-AB26-479A8026222F%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000057.html">
+   <LINK REL="Next"  HREF="000060.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c</H1>
+    <B>Kane Dijkman</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=D25C3DAA-C505-4EE5-AB26-479A8026222F%40nrao.edu"
+       TITLE="[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c">kane at inius.com
+       </A><BR>
+    <I>Tue Jan 22 18:12:27 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000057.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+        <LI>Next message: <A HREF="000060.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi, I am new to the list. Looking to get ZFS running on my &quot;mirrored  
+nightly&quot; backup raid. Right now I have 2 raid sets. One is used  
+actively and the other contains a nightly mirroring of the first. I  
+want to move this second raid to a ZFS pool.
+I am using rsync to do the mirroring and per what is already known,  
+the shipping version with Leopard dies when running on the ZFS drive.
+
+So I saw Boyd's comments that the latest is working and am hoping to  
+use that.
+
+&gt;&gt;&gt;<i> I've just completed a round of my &quot;crazy rsync tests&quot; :-) with  
+</I>&gt;&gt;&gt;<i> rsync 3.0pre8 compiled for 64-bit and it seems to work _great_.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hmm!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="http://samba.anu.edu.au/rsync/">http://samba.anu.edu.au/rsync/</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ./configure CC=/usr/bin/gcc-4.2 CFLAGS=&quot;-Os -ftree-vectorize - 
+</I>&gt;&gt;&gt;<i> mtune=native -pipe -ffast-math -fPIC -arch x86_64 -Wl,-pie -fstack- 
+</I>&gt;&gt;&gt;<i> protector&quot;
+</I>&gt;&gt;&gt;<i> make
+</I>&gt;&gt;&gt;<i> sudo make install
+</I>
+However, with the latest Dev tools install from Apple I only have  
+gcc-4.0 so I get an error when building using the configure line  
+above., and I don't know enough about all the params to tweak stuff  
+myself.
+
+Does anyone have a configure string that will lead to a good build on  
+the latest release of Leopard?
+
+Thanks,
+Kane
+
+
+
+On Jan 22, 2008, at 11:18 AM, Boyd Waters wrote:
+
+&gt;<i> Ok, my crazy rysnc test is proceeding along with rsync 3.0pre8 (64- 
+</I>&gt;<i> bit) and combined with ZFS and snapshots I've achieved nerd-vana. It  
+</I>&gt;<i> just works.
+</I>&gt;<i>
+</I>&gt;<i> Of course, by saying this I risk the wrath of the kernel-panic  
+</I>&gt;<i> gremlins... nope, still cruising along! Great.
+</I>&gt;<i>
+</I>&gt;<i> So for what it's worth my recommendation for the use of rsync 3.0  
+</I>&gt;<i> rather than 2.{6,7,8} is hereby submitted.
+</I>&gt;<i>
+</I>&gt;<i> The standard source tree handles Mac OS X extended attributes just  
+</I>&gt;<i> fine, thank you -- the only files I have that still have resource  
+</I>&gt;<i> forks are Finder aliases, and those still retain their forks.  
+</I>&gt;<i> Colors, custom icons, ACLs, other extended attributes -- no problem  
+</I>&gt;<i> so far.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://samba.anu.edu.au/rsync/">http://samba.anu.edu.au/rsync/</A>
+</I>&gt;<i>
+</I>&gt;<i> Yay.
+</I>&gt;<i>
+</I>&gt;<i> - boyd
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Jan 22, 2008, at 11:58 AM, Brian Pinkerton wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I've gotten this same ZFS panic a number of times with current  
+</I>&gt;&gt;<i> software.  So far, I can say that it always coincides with doing  
+</I>&gt;&gt;<i> something that involves a lot of files -- either rsync, du, or tar.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That said, the new rsync looks pretty great!  I'm looking forward  
+</I>&gt;&gt;<i> to trying it out.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> bri
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 21, 2008, at 10:05 PM, Boyd Waters wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Jan 21, 2008, at 4:37 PM, No&#235;l Dellofano wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> yikes.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Can you try your crazy rsync tests with the new update?? It has a  
+</I>&gt;&gt;&gt;&gt;<i> lot of fixes.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've just completed a round of my &quot;crazy rsync tests&quot; :-) with  
+</I>&gt;&gt;&gt;<i> rsync 3.0pre8 compiled for 64-bit and it seems to work _great_.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hmm!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="http://samba.anu.edu.au/rsync/">http://samba.anu.edu.au/rsync/</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ./configure CC=/usr/bin/gcc-4.2 CFLAGS=&quot;-Os -ftree-vectorize - 
+</I>&gt;&gt;&gt;<i> mtune=native -pipe -ffast-math -fPIC -arch x86_64 -Wl,-pie -fstack- 
+</I>&gt;&gt;&gt;<i> protector&quot;
+</I>&gt;&gt;&gt;<i> make
+</I>&gt;&gt;&gt;<i> sudo make install
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So I don't know if my kernel panic during heavy rsync load are  
+</I>&gt;&gt;&gt;<i> (primarily) ZFS problems. The problem I initially reported on this  
+</I>&gt;&gt;&gt;<i> list was indeed a kernel panic in ZFS. Probably rsync needs some  
+</I>&gt;&gt;&gt;<i> attention, too...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> - boyd
+</I>&gt;&gt;&gt;<i> <A HREF="http://www.aoc.nrao.edu/~bwaters">http://www.aoc.nrao.edu/~bwaters</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+
+------------------------------------------------------------------------------------------
+&quot;I prayed and prayed to God to give me a bicycle. Then I realized  
+that's not the way he works. So I stole one and prayed for forgiveness.&quot;
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000057.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+	<LI>Next message: <A HREF="000060.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

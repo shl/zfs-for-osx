@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs system/kernel panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20system/kernel%20panics&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000248.html">
+   <LINK REL="Next"  HREF="000261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs system/kernel panics</H1>
+    <B>Bill Winnett</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20system/kernel%20panics&In-Reply-To="
+       TITLE="[zfs-discuss] zfs system/kernel panics">William.Winnett at Sun.COM
+       </A><BR>
+    <I>Sun Mar  2 16:17:06 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000248.html">[zfs-discuss] Feature request: bette utilization of mixed size	disks in ZRaid
+</A></li>
+        <LI>Next message: <A HREF="000261.html">[zfs-discuss] zfs system/kernel panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#249">[ date ]</a>
+              <a href="thread.html#249">[ thread ]</a>
+              <a href="subject.html#249">[ subject ]</a>
+              <a href="author.html#249">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+    I have experienced a few of these panics over the last few  
+weeks.    I
+    don't know if this tells you much, but here is the info.
+    ---
+    Sun Mar  2 18:55:15 2008
+    panic(cpu 1 caller 0x00CF0A41): &quot;zap_hash(zap, name) == hash  
+failed, 0
+    == 0&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/
+    zfs_kext/zfs/zap_micro.c:117
+    Backtrace, Format - Frame : Return Address (4 potential args on  
+stack)
+    0x666736f8 : 0x12b0e1 (0x457024 0x6667372c 0x13321a 0x0)
+    0x66673748 : 0xcf0a41 (0xd57470 0xd57454 0x0 0xd2ec90)
+    0x666737f8 : 0xcf1578 (0x0 0x25a872d0 0x0 0x0)
+    0x66673858 : 0xd1a3d2 (0x80c2d70 0x4ced9 0x0 0xf8de700)
+    0x666738d8 : 0xd1a60b (0x6667390c 0x65932498 0x66673950 0x66673908)
+    0x66673928 : 0xcb7dc7 (0x65932498 0x66673950 0x66673df4 0x1f0d72)
+    0x666739a8 : 0x1f1b5f (0x666739c8 0x2 0x666739f8 0x44dc07)
+    0x666739f8 : 0x1d36f9 (0x963ad00 0x66673df4 0x66673f08 0x7aca104)
+    0x66673a88 : 0x1d447e (0x66673ddc 0x100 0x66673dfc 0x0)
+    0x66673b48 : 0x1e2ff0 (0x66673ddc 0x0 0x0 0x0)
+    0x66673d88 : 0x1e35e4 (0xb0523e98 0x0 0x0 0x0)
+    0x66673f48 : 0x1e367d (0xb0523e98 0x0 0x0 0x0)
+    0x66673f78 : 0x3dbe77 (0x7423c50 0x7aca000 0x7aca044 0x7dab7d8)
+    0x66673fc8 : 0x19f084 (0x7da3880 0x0 0x1a20b5 0x740f8b8)
+
+- Ignored:
+    No mapping exists for frame pointer
+    Backtrace terminated-invalid frame pointer 0xb0523f78
+           Kernel loadable modules in backtrace (with dependencies):
+              com.apple.filesystems.zfs(8.0)@0xcb4000-&gt;0xd7ffff
+
+    BSD process name corresponding to current thread: fseventsd
+
+    Mac OS version:
+    9C31
+
+    Kernel version:
+    Darwin Kernel Version 9.2.0: Tue Feb  5 16:13:22 PST 2008;
+    root:xnu-1228.3.13~1/RELEASE_I386
+    System model name: iMac7,1 (Mac-F4238CC8)
+
+
+    --
+
+    Model: iMac7,1, BootROM IM71.007A.B00, 2 processors, Intel Core 2  
+Duo,
+    2.4 GHz, 4 GB
+    Graphics: kHW_ATIr600M76Item, ATI,RadeonHD2600,
+    spdisplays_pcie_device, 256 MB
+    Memory Module: BANK 0/DIMM0, 2 GB, DDR2 SDRAM, 667 MHz
+    Memory Module: BANK 1/DIMM1, 2 GB, DDR2 SDRAM, 667 MHz
+    AirPort: spairport_wireless_card_type_airport_extreme (0x14E4,  
+0x88),
+    Broadcom BCM43xx 1.0 (4.170.46.3)
+    Bluetooth: Version 2.1.0f14, 2 service, 1 devices, 1 incoming serial
+    ports
+    Network Service: AirPort, AirPort, en1
+    Network Service: Parallels Host-Guest, Ethernet, en2
+    Network Service: Parallels NAT, Ethernet, en3
+    Serial ATA Device: WDC WD3200AAJS-40RYA0, 298.09 GB
+    Parallel ATA Device: PIONEER DVD-RW  DVR-K06A
+    USB Device: Keyboard Hub, Apple, Inc., high_speed, 500 mA
+    USB Device: USB-PS/2 Trackball, Logitech, low_speed, 100 mA
+    USB Device: Apple Keyboard, Apple, Inc, low_speed, 100 mA
+    USB Device: Built-in iSight, Apple Inc., high_speed, 500 mA
+    USB Device: Bluetooth USB Host Controller, Apple, Inc., full_speed,
+    500 mA
+    USB Device: IR Receiver, Apple Computer, Inc., low_speed, 500 mA
+    FireWire Device: 1394 Storage Front Panel*, Maxtor, 800mbit_speed
+    FireWire Device: 1394 Storage Front Panel*, Maxtor, 800mbit_speed
+    FireWire Device: 1394 Storage Front Panel*, Maxtor, 800mbit_speed
+    FireWire Device: 1394 Storage Front Panel*, Maxtor, 800mbit_speed
+
+
+
+
+
+
+    It seems to be when the zfs volume is in high use.  Writes from a
+    networked xp system to a shared directory and writes from a  
+Parallels
+    process to a private directory.    Reads and writes from a Solaris  
+system
+    to a shared directory.   The zfs volume is composed of 4 1tb  
+firewire
+    disks.
+
+
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000248.html">[zfs-discuss] Feature request: bette utilization of mixed size	disks in ZRaid
+</A></li>
+	<LI>Next message: <A HREF="000261.html">[zfs-discuss] zfs system/kernel panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#249">[ date ]</a>
+              <a href="thread.html#249">[ thread ]</a>
+              <a href="subject.html#249">[ subject ]</a>
+              <a href="author.html#249">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] endless scrub
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20endless%20scrub&In-Reply-To=%3C636fd28e0901251317u5d3f53d6h11b006de8a296f44%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001367.html">
+   <LINK REL="Next"  HREF="001371.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] endless scrub</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20endless%20scrub&In-Reply-To=%3C636fd28e0901251317u5d3f53d6h11b006de8a296f44%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] endless scrub">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Sun Jan 25 13:17:16 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001367.html">[zfs-discuss] endless scrub
+</A></li>
+        <LI>Next message: <A HREF="001371.html">[zfs-discuss] iMovie 09 and ZFS problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1368">[ date ]</a>
+              <a href="thread.html#1368">[ thread ]</a>
+              <a href="subject.html#1368">[ subject ]</a>
+              <a href="author.html#1368">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jan 25, 2009 at 5:49 PM, Christian Kendi &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at ironsoftware.de</A>&gt; wrote:
+&gt;<i> actually good to know. Is this a limitation to the Mac port or is solaris
+</I>&gt;<i> having the same problem?
+</I>&gt;<i> zpool status home | grep scrub | egrep -q &quot;in progress&quot;
+</I>&gt;<i> if [ $? -eq 0 ]; then
+</I>&gt;<i>         echo &quot;Can't snapshot due to running scrub&quot;
+</I>&gt;<i>         exit 1;
+</I>&gt;<i> fi
+</I>&gt;<i> will do the trick.
+</I>&gt;<i> Chris.
+</I>
+It was a bug in Solaris, but fixed in a version (80?) behind where we
+are with the (public) ZFS port (72). So it's still a known bug with no
+hope of fixing in the Leopard time schedule, since the public
+development has gone private :-(
+
+PS Mike (<A HREF="http://www.blogger.com/profile/17454659201337993537">http://www.blogger.com/profile/17454659201337993537</A>)
+commented on my blog
+(<A HREF="http://alblue.blogspot.com/2008/11/crontab-generated-zfs-snapshots.html">http://alblue.blogspot.com/2008/11/crontab-generated-zfs-snapshots.html</A>)
+that you need to also look for 'none requested', since that'll be the
+state of a new pool and otherwise you won't see the snapshots ever
+starting, or at least until the next time a nightly scrub happens:
+
+/usr/bin/egrep -q &quot;scrub completed|none requested&quot;
+
+Alex
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001367.html">[zfs-discuss] endless scrub
+</A></li>
+	<LI>Next message: <A HREF="001371.html">[zfs-discuss] iMovie 09 and ZFS problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1368">[ date ]</a>
+              <a href="thread.html#1368">[ thread ]</a>
+              <a href="subject.html#1368">[ subject ]</a>
+              <a href="author.html#1368">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

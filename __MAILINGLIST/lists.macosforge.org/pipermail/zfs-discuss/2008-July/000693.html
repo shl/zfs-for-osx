@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] weird device identifier
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20weird%20device%20identifier&In-Reply-To=86CD8D5D-C020-475C-B291-85436345A768%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000692.html">
+   <LINK REL="Next"  HREF="000694.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] weird device identifier</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20weird%20device%20identifier&In-Reply-To=86CD8D5D-C020-475C-B291-85436345A768%40spamfreemail.de"
+       TITLE="[zfs-discuss] weird device identifier">ndellofano at apple.com
+       </A><BR>
+    <I>Thu Jul 17 17:37:00 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000692.html">[zfs-discuss] how to avoid one ZFS Kernel Panic
+</A></li>
+        <LI>Next message: <A HREF="000694.html">[zfs-discuss] the third
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#693">[ date ]</a>
+              <a href="thread.html#693">[ thread ]</a>
+              <a href="subject.html#693">[ subject ]</a>
+              <a href="author.html#693">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry, just got back, hopefully your setup is still ok.
+
+So for the replace (assuming you have taken out the failing disk and  
+put in your new disk), I usually do a diskutil list first to figure  
+out what diskutility has decided to name my new disk i just stuck in  
+there.  Once you know that, lets say for example you stuck in your new  
+drive and diskutil brings it in as disk3, then you need to format that  
+disk for ZFS, ala
+
+%diskutil partitionDisk disk3 GPTFormat ZFS %noformat% myraiddrive 100%
+
+Then after the drive is formatted, you can issue the replace:
+
+%sudo zpool replace raidtank 5723000294216582652 disk3s2
+
+The crazy number you see is the disk's guuid id which we use only when  
+the drive is in a failed state.  Libzfs should recognize this number  
+and replace it with your new drive, at which point a resilver should  
+automatically kick off to bring your new disk up to speed.
+
+let me know if you have any issues or questions with this,
+Noel
+
+
+
+On Jun 30, 2008, at 11:25 AM, ruebezahl wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> i'm facing a little problem here
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> status: One or more devices could not be used because the label is
+</I>&gt;<i> missing or
+</I>&gt;<i> 	invalid.  Sufficient replicas exist for the pool to continue
+</I>&gt;<i> 	functioning in a degraded state.
+</I>&gt;<i> action: Replace the device using 'zpool replace'.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+</I>&gt;<i>  scrub: resilver completed with 0 errors on Mon Jun 30 19:58:54 2008
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	NAME                     STATE     READ WRITE CKSUM
+</I>&gt;<i> 	raidtank                 DEGRADED     0     0     0
+</I>&gt;<i> 	  raidz1                 DEGRADED     0     0     0
+</I>&gt;<i> 	    disk2s2              ONLINE       0     0     0
+</I>&gt;<i> 	    disk4s2              ONLINE       0     0     0
+</I>&gt;<i> 	    5723000294216582652  FAULTED      0     0     0  was /dev/disk4s2
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> the third disk died and i got a replacement today, but i don't know
+</I>&gt;<i> how to tell zfs to replace the disk since 5723000294216582652 isn't
+</I>&gt;<i> being accepted
+</I>&gt;<i>
+</I>&gt;<i> any ideas on this ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> best regards
+</I>&gt;<i>
+</I>&gt;<i> franz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.8 (Darwin)
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJIaSUoAAoJEP8ZopU3Bhmtu8AH/Rs5d39KegWKM92J7Xy7YTMZ
+</I>&gt;<i> Ez7JrvNFrjuMHp+Eml7PGbahB5apv0HpYQ8NXeYAT1dOg0Niocg+bSmqHgyX3iFE
+</I>&gt;<i> 7mQfAUBW0Lqn+Zoq1FNd/e/p9a/mvxQjNhgSl3lCk0NmUiSR666j55Izoi0SKVFE
+</I>&gt;<i> 9dhKYDX/4KTZJvh4gVCGFaHWSs70B7clOdrfZA9F05ErU07QpQsTndfOzghafr8f
+</I>&gt;<i> rxeCw9sGLi8yLcWhDOxS4Xj/xz1LwaigxguMQVU5RsSLFYvJlbQKb84k6FJKLA8J
+</I>&gt;<i> 4fCf01uZ2JdhmeFSbSGp1fS0H0RDGIuRSNjhG+bkblHaGWAIv4EWAGxsFcVlB28=
+</I>&gt;<i> =U/zP
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000692.html">[zfs-discuss] how to avoid one ZFS Kernel Panic
+</A></li>
+	<LI>Next message: <A HREF="000694.html">[zfs-discuss] the third
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#693">[ date ]</a>
+              <a href="thread.html#693">[ thread ]</a>
+              <a href="subject.html#693">[ subject ]</a>
+              <a href="author.html#693">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

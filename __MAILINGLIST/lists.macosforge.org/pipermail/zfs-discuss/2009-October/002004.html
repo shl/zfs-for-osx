@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] iSCSI on ZFS (was Re: zfs-10a286 ?)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20iSCSI%20on%20ZFS%20%28was%20Re%3A%20zfs-10a286%20%3F%29&In-Reply-To=%3C3977537a0910231130k7878e1f3qcc9b2e581f11c62d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001988.html">
+   <LINK REL="Next"  HREF="001989.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] iSCSI on ZFS (was Re: zfs-10a286 ?)</H1>
+    <B>Silas Baronda</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20iSCSI%20on%20ZFS%20%28was%20Re%3A%20zfs-10a286%20%3F%29&In-Reply-To=%3C3977537a0910231130k7878e1f3qcc9b2e581f11c62d%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] iSCSI on ZFS (was Re: zfs-10a286 ?)">baronda.2 at osu.edu
+       </A><BR>
+    <I>Fri Oct 23 11:30:49 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001988.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+        <LI>Next message: <A HREF="001989.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2004">[ date ]</a>
+              <a href="thread.html#2004">[ thread ]</a>
+              <a href="subject.html#2004">[ subject ]</a>
+              <a href="author.html#2004">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Oct 23, 2009 at 12:52 PM, Adams, Geoff &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">gadams at fgm.com</A>&gt; wrote:
+&gt;<i> On 23 Oct 2009, at 12:10 PM, David Ritchie wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I used the globalSAN initiator on my Mac Pro to connect to a zvol
+</I>&gt;&gt;<i> over GigE. In this way I managed to lower the write performance to
+</I>&gt;&gt;<i> &lt;1MB/s - similar to the results Raoul Callaghan gets!!
+</I>&gt;<i>
+</I>&gt;<i> That's quite surprising.
+</I>&gt;<i>
+</I>&gt;<i> I actually just last night set up the globalSAN initiator on a
+</I>&gt;<i> PowerMac G5 (Mac OS 10.5.x), using the COMSTAR iSCSI target on
+</I>&gt;<i> OpenSolaris (build 125) running on a SunFire x4150. Over 100base-T
+</I>&gt;<i> (the GigE port on the G5 was lightning damaged), I see over 6 MB/s.
+</I>&gt;<i> Granted, this is nothing compared to the roughly 100 GB/s that I can
+</I>&gt;<i> see to that same zpool of cheap, large SATA disks locally, but 6 MB/s
+</I>&gt;<i> isn't too bad for 100base-T. I'll have to stick a GigE card in the
+</I>&gt;<i> client machine to see if it gets any better.
+</I>&gt;<i>
+</I>&gt;<i> hfuhruhurr:~: dd if=/dev/zero of=/Volumes/Time\ Machine/gig bs=1m
+</I>&gt;<i> count=1024
+</I>&gt;<i> 1024+0 records in
+</I>&gt;<i> 1024+0 records out
+</I>&gt;<i> 1073741824 bytes transferred in 160.978045 secs (6670113 bytes/sec)
+</I>&gt;<i>
+</I>&gt;<i> Not too bad for a first test, I think.
+</I>
+If I am not mistaken I can push 10 MB/s through FTP on a Mini over 100
+MB/s network.  I figure that you should get closer to line speed from
+iscsi.
+
+&gt;<i>
+</I>&gt;<i> - Geoff
+</I>&gt;<i> (I apologize for the Exchange email system here at the office that
+</I>&gt;<i> insists on rudely HTMLizing my outgoing mail.)
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001988.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+	<LI>Next message: <A HREF="001989.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2004">[ date ]</a>
+              <a href="thread.html#2004">[ thread ]</a>
+              <a href="subject.html#2004">[ subject ]</a>
+              <a href="author.html#2004">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

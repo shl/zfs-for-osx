@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Zpool disaster
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Zpool%20disaster&In-Reply-To=%3C5B7C083B-12A5-4D85-9A26-3FEE1E7AB468%40ironsoftware.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001319.html">
+   <LINK REL="Next"  HREF="001322.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Zpool disaster</H1>
+    <B>Christian Kendi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Zpool%20disaster&In-Reply-To=%3C5B7C083B-12A5-4D85-9A26-3FEE1E7AB468%40ironsoftware.de%3E"
+       TITLE="[zfs-discuss] Zpool disaster">ksh at ironsoftware.de
+       </A><BR>
+    <I>Fri Jan 16 13:22:14 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001319.html">[zfs-discuss] Zpool disaster
+</A></li>
+        <LI>Next message: <A HREF="001322.html">[zfs-discuss] plastic surgery
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1320">[ date ]</a>
+              <a href="thread.html#1320">[ thread ]</a>
+              <a href="subject.html#1320">[ subject ]</a>
+              <a href="author.html#1320">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>well, invite me to the club.
+
+As i stated before i was &quot;scared&quot; this could happen to me as well.
+Resilvering was ongoing but didn't finish over the night (100gb on  
+USB2.0), still stuck at 0.59% !!
+However, the system stuck while the USB drive dissappeard. Reboot and  
+the same result for me.
+I/O error in import. Solaris wasnt able to import as well. The  
+statement was that some crucial metadata
+was damaged.
+
+The unfinished resilvering disk coulnd help to restore. I keep you  
+posted on this. I will continue to test
+poor-mans backup solution and keep a &quot;real&quot; backup.
+
+I wonder what i could have done else instead of creating a new pool.  
+Even sun says if the metadata is
+corrupted i should restore from a backup.
+
+Good luck anyways.
+
+---
+Christian Kendi
+Iron Software
+Gemeinschaftsstr. 2b
+85435 Erding, Germany
+mailto: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at ironsoftware.de</A>
+us mobile: +1-321-507-0653
+mobile: +049 (0) 177 / 55 - 31 33 7
+phone: +049 (0) 1801 / 6666 26 23 48
+*****************************************
+Geschaeftsfuehrer: Christian Kendi
+Steuernr: 114/235/50572 * Amtsgericht: Erding
+
+
+
+El Jan 16, 2009, a las 7:58 AM, James R. Van Artsdalen escribi&#243;:
+
+&gt;<i> mathieu.email wrote:
+</I>&gt;&gt;<i> Thanks for your replies,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I looked in the /var/log/system.log :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - When I plug the drive (external usb drive), I have : &quot;
+</I>&gt;&gt;<i> diskarbitrationd[32]: unable to mount /dev/disk2s2 (status code
+</I>&gt;&gt;<i> 0x00000001). &quot;
+</I>&gt;&gt;<i> - With the &quot;zpool import&quot; command, nothing appears.
+</I>&gt;<i>
+</I>&gt;<i> The diskarbitration error is &quot;normal&quot;.  Since there is no error logged
+</I>&gt;<i> when ZFS reports an I/O error the ZFS message is probably bogus and  
+</I>&gt;<i> the
+</I>&gt;<i> disk is fine.
+</I>&gt;<i>
+</I>&gt;<i> Because this happened after a panic I'm guessing it means USB didn't  
+</I>&gt;<i> do
+</I>&gt;<i> cache flushes correctly and the uberblock on the disk point to blocks
+</I>&gt;<i> that never got written.  There's a good chance that the uberblock from
+</I>&gt;<i> the previous transaction group will work, but getting ZFS to try to  
+</I>&gt;<i> use
+</I>&gt;<i> that previous uberblock requires either modifying the ZFS code or
+</I>&gt;<i> clobbering the uberblock that ZFS is trying to use.  You can look at  
+</I>&gt;<i> the
+</I>&gt;<i> Sun/Solaris lists and see if anyone has written a tool to do this.
+</I>&gt;<i>
+</I>&gt;<i> The data is very likely still on your disk - don't erase it!  The
+</I>&gt;<i> problem is how to get to the data.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090116/a6a9784a/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090116/a6a9784a/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: Mensaje firmado digitalmente
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090116/a6a9784a/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090116/a6a9784a/attachment.bin</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001319.html">[zfs-discuss] Zpool disaster
+</A></li>
+	<LI>Next message: <A HREF="001322.html">[zfs-discuss] plastic surgery
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1320">[ date ]</a>
+              <a href="thread.html#1320">[ thread ]</a>
+              <a href="subject.html#1320">[ subject ]</a>
+              <a href="author.html#1320">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

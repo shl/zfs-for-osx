@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS create failure
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20create%20failure&In-Reply-To=%3C9BE69F64-D519-4DD0-9EA9-690CEB97B755%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001083.html">
+   <LINK REL="Next"  HREF="001232.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS create failure</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20create%20failure&In-Reply-To=%3C9BE69F64-D519-4DD0-9EA9-690CEB97B755%40apple.com%3E"
+       TITLE="[zfs-discuss] ZFS create failure">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Nov 19 00:11:02 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001083.html">[zfs-discuss] ZFS create failure
+</A></li>
+        <LI>Next message: <A HREF="001232.html">[zfs-discuss] ZFS create failure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1084">[ date ]</a>
+              <a href="thread.html#1084">[ thread ]</a>
+              <a href="subject.html#1084">[ subject ]</a>
+              <a href="author.html#1084">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've never seen this behavior.  Are you running zfs-119? What build  
+are you running and what kind of machine?
+
+Noel
+
+On Nov 18, 2008, at 9:55 PM, Roger Singh wrote:
+
+&gt;<i> I am trying to create a zpool on a partition, everything looks fine  
+</I>&gt;<i> however I get
+</I>&gt;<i>
+</I>&gt;<i> wecoyote:~ root# diskutil list
+</I>&gt;<i> /dev/disk0
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *298.1 Gi    
+</I>&gt;<i> disk0
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk0s1
+</I>&gt;<i>    2:                  Apple_HFS Macintosh HD            190.0 Gi    
+</I>&gt;<i> disk0s2
+</I>&gt;<i>    3:                        ZFS                         107.6 Gi    
+</I>&gt;<i> disk0s3
+</I>&gt;<i> wecoyote:~ root# zpool create mypool disk0s3
+</I>&gt;<i> cannot create 'mypool': invalid argument for this pool operation
+</I>&gt;<i>
+</I>&gt;<i> Am i doing something wrong or have I run into a known issue?
+</I>&gt;<i>
+</I>&gt;<i> -Roger
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081119/1aa576f2/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081119/1aa576f2/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001083.html">[zfs-discuss] ZFS create failure
+</A></li>
+	<LI>Next message: <A HREF="001232.html">[zfs-discuss] ZFS create failure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1084">[ date ]</a>
+              <a href="thread.html#1084">[ thread ]</a>
+              <a href="subject.html#1084">[ subject ]</a>
+              <a href="author.html#1084">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

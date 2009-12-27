@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] follow up Re:  A Glorious Hack
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20follow%20up%20Re%3A%20%20A%20Glorious%20Hack&In-Reply-To=%3C0563271D-1703-4ACA-86A7-0D635B6DAF3C%40sogeeky.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001247.html">
+   <LINK REL="Next"  HREF="001249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] follow up Re:  A Glorious Hack</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20follow%20up%20Re%3A%20%20A%20Glorious%20Hack&In-Reply-To=%3C0563271D-1703-4ACA-86A7-0D635B6DAF3C%40sogeeky.net%3E"
+       TITLE="[zfs-discuss] follow up Re:  A Glorious Hack">zorg at sogeeky.net
+       </A><BR>
+    <I>Thu Jan  1 12:27:22 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001247.html">[zfs-discuss] follow up Re:  A Glorious Hack
+</A></li>
+        <LI>Next message: <A HREF="001249.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1248">[ date ]</a>
+              <a href="thread.html#1248">[ thread ]</a>
+              <a href="subject.html#1248">[ subject ]</a>
+              <a href="author.html#1248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A soft link would, yes. It's nothing more than a text file with a path  
+in it. So when solaris reads it, it would logically interpret /dev/ 
+whatever to be in its filesystem. For this reason, softlinks never  
+work on shared drives.
+
+It probably won't let you hardlink because hardlinks point directly to  
+the same space on disk as another file. But /dev devices aren't file  
+pointers. They're yet another kind of special pointer to a physical  
+device.
+
+On Jan 1, 2009, at 12:07 PM, Dirk Schelfhout &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dirkschelfhout at mac.com</A>&gt;  
+wrote:
+
+&gt;<i> I created an mirror on an external firewire drive ( 2 partitions )
+</I>&gt;<i> exported it under osx.
+</I>&gt;<i> tried to create hard links to the rdisk ( osx doesn't let me )
+</I>&gt;<i> soft links work ok.
+</I>&gt;<i> nfs share the directory containing the 2 links to the zfs partitions.
+</I>&gt;<i> mount these in solaris running inside virtualbox.
+</I>&gt;<i> thats how far i got, then it stops working, I think solaris sees the  
+</I>&gt;<i> 2 files
+</I>&gt;<i> as links to its own /dev directory.
+</I>&gt;<i>
+</I>&gt;<i> Dirk
+</I>&gt;<i>
+</I>&gt;<i> On 31 Dec 2008, at 10:24, Dirk Schelfhout wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Could I do the same with solaris running in virtualbox ?
+</I>&gt;&gt;<i> unmount my zfs raidz in osx
+</I>&gt;&gt;<i> create hardlinks to the rdisk slices into a shared folder with  
+</I>&gt;&gt;<i> solaris
+</I>&gt;&gt;<i> and then import the zfs in solaris ?
+</I>&gt;&gt;<i> Can something go wrong ?
+</I>&gt;&gt;<i> I'll try testing this
+</I>&gt;&gt;<i> Dirk
+</I>&gt;&gt;<i> On 29 Dec 2008, at 16:57, Germano Caronni wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> the thing about non-empty mount points blocking snapshots is  
+</I>&gt;&gt;&gt;<i> *very* useful to know.
+</I>&gt;&gt;&gt;<i> thanks for sharing!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Sun, Dec 28, 2008 at 21:42, Boyd Waters &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at nrao.edu</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> &gt; I created VMWare &quot;raw&quot; disks for each device in the pool, then  
+</I>&gt;&gt;&gt;<i> added
+</I>&gt;&gt;&gt;<i> them to an OpenSolaris virtual machine.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> My RAIDZ is on the four internal SATA bays of my Mac Pro; that's
+</I>&gt;&gt;&gt;<i> /dev/disk{0,1,2,3}
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> To let a VMWare virtual machine see these, it'll need to have a  
+</I>&gt;&gt;&gt;<i> way to
+</I>&gt;&gt;&gt;<i> translate a virtual disk (vmdk) to a real disk. This is called &quot;raw&quot;
+</I>&gt;&gt;&gt;<i> access.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Like this:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  /Library/Application\ Support/VMware\ Fusion/vmware- 
+</I>&gt;&gt;&gt;<i> rawdiskCreator \
+</I>&gt;&gt;&gt;<i>   create \
+</I>&gt;&gt;&gt;<i>   /dev/disk0 \
+</I>&gt;&gt;&gt;<i>   1 \
+</I>&gt;&gt;&gt;<i>   ~/Documents/Virtual\ Machines.localized/Solaris.vmwarevm/ 
+</I>&gt;&gt;&gt;<i> rawdisk0 \
+</I>&gt;&gt;&gt;<i>   ide
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> That command will create a text file that maps the raw disk to the  
+</I>&gt;&gt;&gt;<i> virtual
+</I>&gt;&gt;&gt;<i> machine, and a binary file that is just an MBR (master boot  
+</I>&gt;&gt;&gt;<i> record) that
+</I>&gt;&gt;&gt;<i> might make Winders happy. I don't think that MBR is needed, but
+</I>&gt;&gt;&gt;<i> whatever...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I can't add more than 4 IDE drives to a virtual machine.
+</I>&gt;&gt;&gt;<i> vmware-rawdiskCreator claims that it can create SCSI drives as  
+</I>&gt;&gt;&gt;<i> well, but
+</I>&gt;&gt;&gt;<i> it lies. Fortunately, the vmdk text file that it spits out is dead  
+</I>&gt;&gt;&gt;<i> simple
+</I>&gt;&gt;&gt;<i> to edit; I replaced this line
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   ddb.adapterType = &quot;ide&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> with this one
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   ddb.adapterType = &quot;buslogic&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> For each of the four hard disks in my RAIDZ.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Then I added these vmdk disks to the VM via the VMWare Fusion GUI.  
+</I>&gt;&gt;&gt;<i> Fine.
+</I>&gt;&gt;&gt;<i> Fired it up, those four disks show up fine in the OpenSolaris VM,  
+</I>&gt;&gt;&gt;<i> and away
+</I>&gt;&gt;&gt;<i> you go!
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090101/bf12e7cd/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090101/bf12e7cd/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001247.html">[zfs-discuss] follow up Re:  A Glorious Hack
+</A></li>
+	<LI>Next message: <A HREF="001249.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1248">[ date ]</a>
+              <a href="thread.html#1248">[ thread ]</a>
+              <a href="subject.html#1248">[ subject ]</a>
+              <a href="author.html#1248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

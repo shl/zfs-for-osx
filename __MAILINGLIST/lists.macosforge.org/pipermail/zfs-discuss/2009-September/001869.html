@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Disk speeds
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3C612C550B-0C41-426F-8487-87711F08B84C%40ironsoftware.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001865.html">
+   <LINK REL="Next"  HREF="001871.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Disk speeds</H1>
+    <B>Christian Kendi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3C612C550B-0C41-426F-8487-87711F08B84C%40ironsoftware.de%3E"
+       TITLE="[zfs-discuss] Disk speeds">ksh at ironsoftware.de
+       </A><BR>
+    <I>Sun Sep 20 17:50:59 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001865.html">[zfs-discuss] Disk speeds
+</A></li>
+        <LI>Next message: <A HREF="001871.html">[zfs-discuss] Disk speeds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1869">[ date ]</a>
+              <a href="thread.html#1869">[ thread ]</a>
+              <a href="subject.html#1869">[ subject ]</a>
+              <a href="author.html#1869">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi sammy,
+
+&gt;<i> The geniza on the left is using Christian's first posted kext, the  
+</I>&gt;<i> one on the right is with his second, after patching for the Sun  
+</I>&gt;<i> mailing list bug.  I suspect the numbers on the left are skewed by  
+</I>&gt;<i> the cache.
+</I>
+I did not get the part which one about the second kext. I never  
+pusblished the code fixed kext. Therefore you where running the same  
+test twice.
+Here is the link to the code patched one. This one actually fixed the  
+bug and does not disable the prefetch routing:
+<A HREF="http://www.ironsoftware.de/public/ksh_zfs_cp.kext.tgz">http://www.ironsoftware.de/public/ksh_zfs_cp.kext.tgz</A>
+
+&gt;<i> Oh, Christian, here are your numbers (60 8MB files, using your  
+</I>&gt;<i> second posted kext):
+</I>&gt;<i>
+</I>&gt;<i> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+</I>&gt;<i> 983051 blocks
+</I>&gt;<i> real	0m8.761s
+</I>&gt;<i> user	0m0.125s
+</I>&gt;<i> sys	0m1.087s
+</I>&gt;<i>
+</I>&gt;<i> Second run:
+</I>&gt;<i> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+</I>&gt;<i> 983051 blocks
+</I>&gt;<i> real	0m8.462s
+</I>&gt;<i> user	0m0.108s
+</I>&gt;<i> sys	0m1.331s
+</I>
+My question was rather concerning the zfs-10a286 bits. But good to  
+know that my zfs-119 once work with 10.6.
+The major failure you did here was to use only 60 8MB files. You have  
+a 4GB RAM. To trigger the bug you should use at least use 512 files.
+I suggest you just use 2000 files and test it again with the 10a286  
+bits. In order to verify the bug you have to use the original zfs.kext  
+first and afterwards
+my modifications.
+
+Greets
+Chris.
+
+
+El 17/09/2009, a las 22:45, sammy ominsky escribi&#243;:
+
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> I mentioned the other day that I got my raidz back up and running  
+</I>&gt;<i> happy on Snow leopard.  Today I saw a hard disk benchmark app I  
+</I>&gt;<i> thought I'd try.  The results are interesting.
+</I>&gt;<i>
+</I>&gt;<i> System specs:
+</I>&gt;<i>
+</I>&gt;<i> MBP 2.4GHz C2D
+</I>&gt;<i> 4GB RAM
+</I>&gt;<i> Mac OS X 10.6.1
+</I>&gt;<i> internal 250GB 5400rpm SATA disk - [zefat] (system disk)
+</I>&gt;<i>
+</I>&gt;<i> zfs-119 using the optimized kext from Christian Kendi
+</I>&gt;<i> SiI3132- based eSATA ExpressCard - Addonics SATA port multiplier
+</I>&gt;<i> (Using the Sonnet SiI3132 driver even though the card isn't Sonnet- 
+</I>&gt;<i> branded.)
+</I>&gt;<i> 5x1TB 7200rpm SATA disks raidz1 - [geniza]
+</I>&gt;<i>
+</I>&gt;<i> Using <A HREF="http://www.unscale.com/DST.html">http://www.unscale.com/DST.html</A> for the benchmark.
+</I>&gt;<i>
+</I>&gt;<i> My results: <A HREF="http://avoidant.org/disktest.png">http://avoidant.org/disktest.png</A>
+</I>&gt;<i>
+</I>&gt;<i> The geniza on the left is using Christian's first posted kext, the  
+</I>&gt;<i> one on the right is with his second, after patching for the Sun  
+</I>&gt;<i> mailing list bug.  I suspect the numbers on the left are skewed by  
+</I>&gt;<i> the cache.
+</I>&gt;<i>
+</I>&gt;<i> Oh, Christian, here are your numbers (60 8MB files, using your  
+</I>&gt;<i> second posted kext):
+</I>&gt;<i>
+</I>&gt;<i> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+</I>&gt;<i> 983051 blocks
+</I>&gt;<i> real	0m8.761s
+</I>&gt;<i> user	0m0.125s
+</I>&gt;<i> sys	0m1.087s
+</I>&gt;<i>
+</I>&gt;<i> Second run:
+</I>&gt;<i> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+</I>&gt;<i> 983051 blocks
+</I>&gt;<i> real	0m8.462s
+</I>&gt;<i> user	0m0.108s
+</I>&gt;<i> sys	0m1.331s
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --sambo
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFKts3zp+9ff145KVIRAhjxAJ9mmPfnlvu29CwbbvrGC/Ji2wv2iwCgi5Jm
+DdbqXcZX6xPxw6Zk6fCUOT8=
+=Xy+P
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001865.html">[zfs-discuss] Disk speeds
+</A></li>
+	<LI>Next message: <A HREF="001871.html">[zfs-discuss] Disk speeds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1869">[ date ]</a>
+              <a href="thread.html#1869">[ thread ]</a>
+              <a href="subject.html#1869">[ subject ]</a>
+              <a href="author.html#1869">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

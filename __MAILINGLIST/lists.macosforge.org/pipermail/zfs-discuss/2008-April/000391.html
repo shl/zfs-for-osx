@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] missing space found by du
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20missing%20space%20found%20by%20du&In-Reply-To=7bccd8dc0804040532g762929dmfb458db364c5e3e1%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000384.html">
+   <LINK REL="Next"  HREF="000385.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] missing space found by du</H1>
+    <B>James R. Van Artsdalen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20missing%20space%20found%20by%20du&In-Reply-To=7bccd8dc0804040532g762929dmfb458db364c5e3e1%40mail.gmail.com"
+       TITLE="[zfs-discuss] missing space found by du">james-zfsosx at jrv.org
+       </A><BR>
+    <I>Fri Apr  4 16:08:17 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000384.html">[zfs-discuss] missing space found by du
+</A></li>
+        <LI>Next message: <A HREF="000385.html">[zfs-discuss] Panic on scrub
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#391">[ date ]</a>
+              <a href="thread.html#391">[ thread ]</a>
+              <a href="subject.html#391">[ subject ]</a>
+              <a href="author.html#391">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Brett Ault-McCoy wrote:
+&gt;<i> So, it would seem that some sort of asynchronous garbage collection is 
+</I>&gt;<i> happening that just took a while to notice the freed space, or the du 
+</I>&gt;<i> caused it to notice the free space or something.  Does anyone have any 
+</I>&gt;<i> ideas what would have caused this?
+</I>&gt;<i>
+</I>
+The ZFS on-disk specification PDF has this text that is likely related:
+
+Section 6.1: ZPL Filesystem Layout
+...
+Name: DELETE_QUEUE
+Value: 64 bit object number for the delete queue object
+Description: The delete queue provides a list of deletes that were 
+in-progress when
+the filesystem was force unmounted or as a result of a system failure 
+such as a
+power outage.   Upon the next mount of the filesystem, the delete queue is
+processed to remove the files/dirs that are in the delete queue.  This 
+mechanism is
+used to avoid leaking files and directories in the filesystem.
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000384.html">[zfs-discuss] missing space found by du
+</A></li>
+	<LI>Next message: <A HREF="000385.html">[zfs-discuss] Panic on scrub
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#391">[ date ]</a>
+              <a href="thread.html#391">[ thread ]</a>
+              <a href="subject.html#391">[ subject ]</a>
+              <a href="author.html#391">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C80C98667-F34E-4C23-AF9A-3890FCCD519E%40Sun.COM%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001619.html">
+   <LINK REL="Next"  HREF="001621.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C80C98667-F34E-4C23-AF9A-3890FCCD519E%40Sun.COM%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Wed Jun 10 07:11:18 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001619.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001621.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1620">[ date ]</a>
+              <a href="thread.html#1620">[ thread ]</a>
+              <a href="subject.html#1620">[ subject ]</a>
+              <a href="author.html#1620">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jun 10, 2009, at 2:34 AM, Carl Magnuson wrote:
+
+&gt;<i> On Jun 9, 2009, at 9:43 PM, Jonathan Edwards wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> .. what might work is:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # zpool replace cpool disk8s2 disk8s2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> see if this completes .. (or perhaps zpool replace  
+</I>&gt;&gt;<i> 1751454142452109774 disk8s2) .. this should just do an in place  
+</I>&gt;&gt;<i> upgrade .. then:
+</I>&gt;<i>
+</I>&gt;<i> I still run into the same issue with disk8 being busy:
+</I>&gt;<i>
+</I>&gt;<i> g5:~ bobcat$ zpool replace cpool disk8s2 disk8s2
+</I>&gt;<i> cannot replace disk8s2 with disk8s2: disk8s2 is busy
+</I>&gt;<i> g5:~ bobcat$ zpool replace cpool 1751454142452109774 disk8s2
+</I>&gt;<i> cannot replace 1751454142452109774 with disk8s2: disk8s2 is busy
+</I>&gt;<i>
+</I>&gt;<i> Any ideas why the drive is busy if it supposedly isn't in use, and  
+</I>&gt;<i> how to get around this?
+</I>
+my guess is that disk8 is the faulted device which is still being held  
+by the pool or something else .. you can try doing a diskutil eject / 
+dev/disk8s2, but i'm guessing you'll have a problem here as well ..
+
+what about the other one?  can you do either a
+# zpool replace cpool disk8s2 disk7s2
+or
+# zpool replace cpool 13962824586312699565 disk7s2
+(for the one that was previously disk9s2)
+
+---
+.je
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001619.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001621.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1620">[ date ]</a>
+              <a href="thread.html#1620">[ thread ]</a>
+              <a href="subject.html#1620">[ subject ]</a>
+              <a href="author.html#1620">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

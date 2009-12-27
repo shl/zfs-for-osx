@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20import%20%27%3Cpool%3E%27%20I/O%20error&In-Reply-To=%3C064E1D94-0FF9-49A0-A27D-AA43D3C3A61B%40me.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001722.html">
+   <LINK REL="Next"  HREF="001724.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] cannot import '&lt;pool&gt;' I/O error</H1>
+    <B>Stephen Pflaum</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20import%20%27%3Cpool%3E%27%20I/O%20error&In-Reply-To=%3C064E1D94-0FF9-49A0-A27D-AA43D3C3A61B%40me.com%3E"
+       TITLE="[zfs-discuss] cannot import '&lt;pool&gt;' I/O error">stephenpflaum at me.com
+       </A><BR>
+    <I>Sun Aug  2 13:28:27 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001722.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+        <LI>Next message: <A HREF="001724.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1723">[ date ]</a>
+              <a href="thread.html#1723">[ thread ]</a>
+              <a href="subject.html#1723">[ subject ]</a>
+              <a href="author.html#1723">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've found some information on invalidating the uberblock which forces  
+zpool to use a backup copy of the metadata:
+
+<A HREF="http://www.opensolaris.org/jive/thread.jspa?threadID=85794">http://www.opensolaris.org/jive/thread.jspa?threadID=85794</A>
+
+
+On Aug 2, 2009, at 3:11 PM, Dirk Schelfhout wrote:
+
+&gt;<i> zfs needs a tool to store recovery information outside the pool.
+</I>&gt;<i> like on a cd. ( or dvd )
+</I>&gt;<i> When it goes bad it really goes bad.
+</I>&gt;<i> Dirk
+</I>&gt;<i> On 02 Aug 2009, at 18:35, Stephen Pflaum wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I get this info when I run the zpool import command. The -f flag  
+</I>&gt;&gt;<i> results in the I/O error.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ zpool import
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> pool: minno
+</I>&gt;&gt;<i>   id: 13557045635172549735
+</I>&gt;&gt;<i> state: FAULTED
+</I>&gt;&gt;<i> status: The pool metadata is corrupted.
+</I>&gt;&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;&gt;<i> 	The pool may be active on on another system, but can be imported  
+</I>&gt;&gt;<i> using
+</I>&gt;&gt;<i> 	the '-f' flag.
+</I>&gt;&gt;<i>  see: <A HREF="http://www.sun.com/msg/ZFS-8000-72">http://www.sun.com/msg/ZFS-8000-72</A>
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	minno       FAULTED  corrupted data
+</I>&gt;&gt;<i> 	  mirror    ONLINE
+</I>&gt;&gt;<i> 	    disk1   ONLINE
+</I>&gt;&gt;<i> 	    disk2   ONLINE
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Aug 2, 2009, at 11:17 AM, Stephen Pflaum wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Sorry...the answer is they were mirrored.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Aug 2, 2009, at 11:16 AM, Stephen Pflaum wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Its a dual drive enclosure. I removed and tested each one  
+</I>&gt;&gt;&gt;&gt;<i> individually without any luck. same error.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Aug 2, 2009, at 11:15 AM, Alex Blewitt wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Were they mirrored or striped? If they were mirrored, then you  
+</I>&gt;&gt;&gt;&gt;&gt;<i> could try plugging just one of them in and see if they're  
+</I>&gt;&gt;&gt;&gt;&gt;<i> recognized as ZFS partitions ( and if so, whether they'll import  
+</I>&gt;&gt;&gt;&gt;&gt;<i> there).
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> If they were striped, and one of the disk has unrecoverable read  
+</I>&gt;&gt;&gt;&gt;&gt;<i> problems, it might be time to restore from backup.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Alex
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Sent from my (new) iPhone
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On 2 Aug 2009, at 17:05, Stephen Pflaum &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">stephenpflaum at me.com</A>&gt;  
+</I>&gt;&gt;&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Hello,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I had a machine freeze last night and when I reboot and try to  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> import my pool I get this error:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> cannot import '&lt;pool&gt;' I/O error
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I've tried on 2 different machines. I have 2 usb disks and I  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> can see them with diskutil list.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Any suggestions on what to do next? are there any disk repair  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> utilities under solaris perhaps?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Steve
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001722.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+	<LI>Next message: <A HREF="001724.html">[zfs-discuss] cannot import '&lt;pool&gt;' I/O error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1723">[ date ]</a>
+              <a href="thread.html#1723">[ thread ]</a>
+              <a href="subject.html#1723">[ subject ]</a>
+              <a href="author.html#1723">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

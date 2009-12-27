@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] No space left on device
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20No%20space%20left%20on%20device&In-Reply-To=F47F4460-E7BF-44A3-A70A-DA9354212EEC%40inius.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000703.html">
+   <LINK REL="Next"  HREF="000704.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] No space left on device</H1>
+    <B>Matt Snow</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20No%20space%20left%20on%20device&In-Reply-To=F47F4460-E7BF-44A3-A70A-DA9354212EEC%40inius.com"
+       TITLE="[zfs-discuss] No space left on device">mattsnow at gmail.com
+       </A><BR>
+    <I>Sat Jul 19 11:55:03 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000703.html">[zfs-discuss] No space left on device
+</A></li>
+        <LI>Next message: <A HREF="000704.html">[zfs-discuss] Mac OS X server ZFS volume ACLs not being applied to	new items...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#701">[ date ]</a>
+              <a href="thread.html#701">[ thread ]</a>
+              <a href="subject.html#701">[ subject ]</a>
+              <a href="author.html#701">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I encourage you to check the S.M.A.R.T. information for bad sectors.
+The checksum collumn should always be zero. also verify that
+checksuming is enabled with `zfs get checksum`.
+
+..Matt Snow
+
+On Fri, Jul 18, 2008 at 8:36 AM, Kane Dijkman &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kane at inius.com</A>&gt; wrote:
+&gt;<i> Here is my zpool
+</I>&gt;<i>
+</I>&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+</I>&gt;<i> zMirror                1.91T   1.88T   30.5G    98%  ONLINE     -
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>        NAME          STATE     READ WRITE CKSUM
+</I>&gt;<i>        zMirror       ONLINE       0     0     0
+</I>&gt;<i>          raidz1      ONLINE       0     0     0
+</I>&gt;<i>            disk7s2   ONLINE       0     0     9
+</I>&gt;<i>            disk8s2   ONLINE       0     0     7
+</I>&gt;<i>            disk5s2   ONLINE       0     0    13
+</I>&gt;<i>          raidz1      ONLINE       0     0     0
+</I>&gt;<i>            disk9s2   ONLINE       0     0    13
+</I>&gt;<i>            disk6s2   ONLINE       0     0    16
+</I>&gt;<i>            disk10s2  ONLINE       0     0     4
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Everything is online and working fine according tot he above. It also
+</I>&gt;<i> says I have about 30 gig available.
+</I>&gt;<i>
+</I>&gt;<i> However I am getting the &quot;No space left on device&quot; error when I try to
+</I>&gt;<i> copy anything new on to the drive.
+</I>&gt;<i>
+</I>&gt;<i> And more importantly I am also getting this when I try and delete (rm -
+</I>&gt;<i> rf) anything off the drive to make more room.
+</I>&gt;<i>
+</I>&gt;<i> Here is an example:
+</I>&gt;<i>
+</I>&gt;<i> rm -rf games
+</I>&gt;<i>
+</I>&gt;<i> rm: games/American McGee's Alice&#8482;/American McGee's Alice&#8482;/
+</I>&gt;<i> Contents/.DS_Store: No space left on device
+</I>&gt;<i> rm: games/American McGee's Alice&#8482;/American McGee's Alice&#8482;/Contents/
+</I>&gt;<i> MacOSClassic/.DS_Store: No space left on device
+</I>&gt;<i> rm: games/American McGee's Alice&#8482;/American McGee's Alice&#8482;/Contents/
+</I>&gt;<i> MacOSClassic/American McGee's Alice&#8482;: No space left on device
+</I>&gt;<i> rm: games/American McGee's Alice&#8482;/American McGee's Alice&#8482;/Contents/
+</I>&gt;<i> MacOSClassic: No space left on device
+</I>&gt;<i>
+</I>&gt;<i> and so on for every file.
+</I>&gt;<i>
+</I>&gt;<i> I first got this with 117, and was going to email the list when I saw
+</I>&gt;<i> 119 was out. So I updated to 119 and did a scrub and am still getting
+</I>&gt;<i> this error right afterwards.
+</I>&gt;<i>
+</I>&gt;<i> Anyone have any ideas what is up?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000703.html">[zfs-discuss] No space left on device
+</A></li>
+	<LI>Next message: <A HREF="000704.html">[zfs-discuss] Mac OS X server ZFS volume ACLs not being applied to	new items...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#701">[ date ]</a>
+              <a href="thread.html#701">[ thread ]</a>
+              <a href="subject.html#701">[ subject ]</a>
+              <a href="author.html#701">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

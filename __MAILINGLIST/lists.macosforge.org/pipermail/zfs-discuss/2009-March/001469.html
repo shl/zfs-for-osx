@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ARC barely used?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ARC%20barely%20used%3F&In-Reply-To=%3C84081AE1-0E43-4A34-98ED-302CABA60C3E%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001468.html">
+   <LINK REL="Next"  HREF="001470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ARC barely used?</H1>
+    <B>Erik Ableson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ARC%20barely%20used%3F&In-Reply-To=%3C84081AE1-0E43-4A34-98ED-302CABA60C3E%40mac.com%3E"
+       TITLE="[zfs-discuss] ARC barely used?">eableson at mac.com
+       </A><BR>
+    <I>Wed Mar 25 03:03:44 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001468.html">[zfs-discuss] ARC barely used?
+</A></li>
+        <LI>Next message: <A HREF="001470.html">[zfs-discuss] offline/online with changed device name &amp; strange
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1469">[ date ]</a>
+              <a href="thread.html#1469">[ thread ]</a>
+              <a href="subject.html#1469">[ subject ]</a>
+              <a href="author.html#1469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> From what I understand of the ARC logic it's limited to read caching  
+first off, so the effect of copying data to your volumes will not  
+result in the data being loaded into ARC. Following that, there's some  
+internal logic about identifying both frequently solicited data (MFU)  
+and current working data (MRU) - it doesn't just load up the ARC cache  
+unless there appears to be some compelling reason to do so.  It's not  
+just a straight MRU (Most Recently Used) like older caching models.  
+For example, streaming reads are generally not put into ARC since you  
+are better served going directly to disk instead of overwriting  
+currently cached data which has (probably) more value in cache based  
+on usage history.
+
+It's also a dynamic cache so when the OS imposes memory pressure by  
+requesting memory assignment to other processes, the cache will shrink  
+and OS X can be pretty aggressive about consuming memory for it's own  
+caching purposes. You'd need to be reading in 3Gb of data from disk to  
+get it into the cache in the first place, assuming your machine wasn't  
+doing anything else at all that required any memory.
+
+A more detailed summary can be found at:
+&lt;<A HREF="http://www.c0t0d0s0.org/archives/5329-Some-insight-into-the-read-cache-of-ZFS-or-The-ARC.html">http://www.c0t0d0s0.org/archives/5329-Some-insight-into-the-read-cache-of-ZFS-or-The-ARC.html</A> 
+ &gt;
+
+I'm not sure if there any specific tuning parameters applied to the  
+current OS X implementation.
+
+Cheers,
+
+Erik
+
+On 25 mars 09, at 08:40, Brandon Low wrote:
+&gt;<i> In this setup, my zoink reports:
+</I>&gt;<i> ZFS footprint:  134M used,  934M peak,  134M goal                26  
+</I>&gt;<i> threads
+</I>&gt;<i> ARC footprint:   68M used,  690M peak,  255M goal
+</I>&gt;<i>
+</I>&gt;<i> This is much much less than my HFS+ volumes, containing the same data,
+</I>&gt;<i> accessed in the same way would cache prior to my conversion.  Is there
+</I>&gt;<i> some good reason that my ARC is barely being used?  Shouldn't most any
+</I>&gt;<i> data that I've used from the filesystems in the pool be cached, up to
+</I>&gt;<i> the 3 gig maximum allowed by the calculations in arc.c? (I have 4GB of
+</I>&gt;<i> ram in my macbook).
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001468.html">[zfs-discuss] ARC barely used?
+</A></li>
+	<LI>Next message: <A HREF="001470.html">[zfs-discuss] offline/online with changed device name &amp; strange
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1469">[ date ]</a>
+              <a href="thread.html#1469">[ thread ]</a>
+              <a href="subject.html#1469">[ subject ]</a>
+              <a href="author.html#1469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

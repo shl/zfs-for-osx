@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%20documentation&In-Reply-To=%3C20090505.214228.204467625.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001559.html">
+   <LINK REL="Next"  HREF="001562.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS documentation</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%20documentation&In-Reply-To=%3C20090505.214228.204467625.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS documentation">hanche at math.ntnu.no
+       </A><BR>
+    <I>Tue May  5 12:42:28 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001559.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+        <LI>Next message: <A HREF="001562.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1560">[ date ]</a>
+              <a href="thread.html#1560">[ thread ]</a>
+              <a href="subject.html#1560">[ subject ]</a>
+              <a href="author.html#1560">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ Alex Bowden &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex at designlifecycle.com</A>&gt;:
+
+&gt;<i> Because the Apple GPT implementation reserves a 200MB EFI slice.
+</I>&gt;<i> [...]
+</I>&gt;<i> So in this case, giving ZFS disk2s2 only gives it 98% of the disk.
+</I>&gt;<i> Not the whole disk.
+</I>
+I'll grant you that the &quot;getting started&quot; document is highly
+misleading on this point. This is one reason I prefer to use FreeBSD
+for partitioning and zpool creation:
+
+#; gpt create -f da2
+#; gpt add -t 6a898cc3-1dd2-11b2-99a6-080020736631 da2
+#; zpool create poolname da2p1
+
+(that long argument is the uuid that os x recognizes as signifying a
+zfs partition).
+
+&gt;<i> Now I do believe that giving it 100% of the available partition
+</I>&gt;<i> space after GPT takes its bit, may well kick in the whole disk
+</I>&gt;<i> optimisations which is why I asked that question.
+</I>
+There are a whole lot of heuristics that could be used for deciding
+whether to go for whole disk optimisation. For example, one could look
+to see if there are more than one active filesystem living on the
+disk. If this is the method used, it doesn't matter if there are other
+partitions.
+
+&gt;<i> When the getting started says for best results give it the whole
+</I>&gt;<i> disk, the correct interpretation is disk2.
+</I>
+It is a reasonable interpretation, until (and if) you realize that
+doing so will overwrite the partition table you just created. At which
+point it doesn't seem very reasonable at all, does it? But I can
+certainly understand how you reached this conclusion.
+
+- Harald
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001559.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+	<LI>Next message: <A HREF="001562.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1560">[ date ]</a>
+              <a href="thread.html#1560">[ thread ]</a>
+              <a href="subject.html#1560">[ subject ]</a>
+              <a href="author.html#1560">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

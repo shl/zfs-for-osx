@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] One big pool / Several ones ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3CF8D80E68-8414-41D7-BE3A-6E2D7D23B542%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001404.html">
+   <LINK REL="Next"  HREF="001409.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] One big pool / Several ones ?</H1>
+    <B>Aaron Berland</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3CF8D80E68-8414-41D7-BE3A-6E2D7D23B542%40gmail.com%3E"
+       TITLE="[zfs-discuss] One big pool / Several ones ?">fruitboi at gmail.com
+       </A><BR>
+    <I>Mon Feb 16 14:05:08 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001404.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+        <LI>Next message: <A HREF="001409.html">[zfs-discuss] Best order for destroying snapshots?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1408">[ date ]</a>
+              <a href="thread.html#1408">[ thread ]</a>
+              <a href="subject.html#1408">[ subject ]</a>
+              <a href="author.html#1408">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Grr.. Did it again! My msg is below
+
+Sent from my iPhone
+
+On Feb 16, 2009, at 3:08 PM, Aaron Berland  wrote:
+
+&gt;<i> OpenSolaris is fun! NexentaStor is solaris kernal with ubuntu gnu  
+</I>&gt;<i> management tools and the web GUI us super sweet as a storage  
+</I>&gt;<i> appliance for cifs, nfs, webdav, iSCSI and the works!
+</I>&gt;<i>
+</I>&gt;<i> Sent from my iPhone
+</I>&gt;<i>
+</I>&gt;<i> On Feb 16, 2009, at 2:12 PM, Colin Johnson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">colin_s_johnson at comcast.net</A> 
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi there,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I saw everyone's posts about building an OpenSolaris server.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I just went through weeks of hell doing this, so maybe I can share  
+</I>&gt;&gt;<i> my experiences:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My current system is as follows:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Dell PowerEdge SC1430 quad core server with 6GB RAM.
+</I>&gt;&gt;<i> 1x 80GB drive for OpenSolaris rpool (not mirrored yet, but I'll use  
+</I>&gt;&gt;<i> an external USB drive for this).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 4x750GB Seagate drives in a single RAIDZ pool and a SATA port left  
+</I>&gt;&gt;<i> over and a bay left over for a hot spare. I broke the connector off  
+</I>&gt;&gt;<i> one of my drives, so it's either hot glue or buy another for $75.
+</I>&gt;&gt;<i> I run the 80GB drive off the motherboard and the 4x Seagates off a  
+</I>&gt;&gt;<i> SuperMicro AOC SAT2-MV8.
+</I>&gt;&gt;<i> I'm running build 106 and I have had zero issues with it now that  
+</I>&gt;&gt;<i> it is up and running.
+</I>&gt;&gt;<i> I've bench marked OpenSolaris with the drives in normal stripe,  
+</I>&gt;&gt;<i> mirror, raidz and raidz2 and using the kernel CIFS server and both  
+</I>&gt;&gt;<i> a 5GB zip drag drop test and IOMeter, consistently get around 50MB/ 
+</I>&gt;&gt;<i> second, regardless of configuration.
+</I>&gt;&gt;<i> The stripe and mirror is a 'little' faster, but not so you would  
+</I>&gt;&gt;<i> notice.
+</I>&gt;&gt;<i> My recommendation is to run raidz with a hot spare if this is your  
+</I>&gt;&gt;<i> NAS.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I originally planned to also run an external array from the same  
+</I>&gt;&gt;<i> server but I had major issues with this Super Micro board.
+</I>&gt;&gt;<i> It turns out that after 3 weeks of hell, Super Micro eventually  
+</I>&gt;&gt;<i> admitted that the board does NOT and never will support 1.5TB or  
+</I>&gt;&gt;<i> higher drives. The Seagate's I had planned to use were giving all  
+</I>&gt;&gt;<i> sorts of weird errors.
+</I>&gt;&gt;<i> The end result is I really learned a lot about setting up  
+</I>&gt;&gt;<i> OpenSolaris.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This left me with a EnhanceBox ML-8 infiniband external enclosure  
+</I>&gt;&gt;<i> and 8x 1.5TB drives to play with :)
+</I>&gt;&gt;<i> I ended up using the 3Ware 3650SE 8LPML card in my Mac Pro (8 core  
+</I>&gt;&gt;<i> + 6GB RAM) and using the Sidecare drivers for Leopard.
+</I>&gt;&gt;<i> 3Ware tell me they will have full Leopard and OpenSolaris support  
+</I>&gt;&gt;<i> for all their boards in a matter of days (so this gives another  
+</I>&gt;&gt;<i> alternative to the Supermicro, running as JBOD).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Even this wasn't plain sailing as the drivers wouldn't work  
+</I>&gt;&gt;<i> correctly on anything that required parity (RAID 5, 50, 6 etc).
+</I>&gt;&gt;<i> I reluctantly tried configuring it as raid 10 (striped of mirrors)  
+</I>&gt;&gt;<i> and although I have 5.45TB usable out of 8x1.5TB drives, it has by  
+</I>&gt;&gt;<i> accident turned into the best possible solution.
+</I>&gt;&gt;<i> It is lightening fast due to the size of the array!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So now I have a Dell server running as a NAS with OpenSolaris,  
+</I>&gt;&gt;<i> purely hosting files and sharing via the kernel CIFS server (very  
+</I>&gt;&gt;<i> nice).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have had problems getting SqueezeCenter to build on OpenSolaris.  
+</I>&gt;&gt;<i> so I've given up there.
+</I>&gt;&gt;<i> I've also tried using XBMC linked to the CIFS shares on the  
+</I>&gt;&gt;<i> OpenSolaris NAS for my AppleTV, but the video quality sucks.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The end result is I am loaning my new MacBook Pro to the temporary  
+</I>&gt;&gt;<i> task of running iTunes and SlimServer and pointing to the NAS to  
+</I>&gt;&gt;<i> get the files via CIFS.
+</I>&gt;&gt;<i> I will replace the MacBook Pro with wither an old dual core Mac  
+</I>&gt;&gt;<i> Mini or wait a few weeks to see if the new model arrives.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This works pretty flawlessly and I use Automater to mount the CIFS  
+</I>&gt;&gt;<i> shares at reboot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The large extrenal DAS array is used for very very fast storage  
+</I>&gt;&gt;<i> when/if I need it and also as a backup target for the OpenSolaris  
+</I>&gt;&gt;<i> NAS.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> All I need to do now is get some backup scheme in place. I'd love  
+</I>&gt;&gt;<i> to use iSCSI from the Mac Mini to the NAS but that's an exercise  
+</I>&gt;&gt;<i> for later.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Please don't hesitate to ask if you have any questions about  
+</I>&gt;&gt;<i> OpenSolaris, I feel I could write a book on it now :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ~Colin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001404.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+	<LI>Next message: <A HREF="001409.html">[zfs-discuss] Best order for destroying snapshots?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1408">[ date ]</a>
+              <a href="thread.html#1408">[ thread ]</a>
+              <a href="subject.html#1408">[ subject ]</a>
+              <a href="author.html#1408">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

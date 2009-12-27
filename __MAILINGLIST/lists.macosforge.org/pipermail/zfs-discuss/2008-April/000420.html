@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RAID-Z not re-mounting on reboot
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=8F73D3A4-4B9D-4259-938B-87662ED78F41%40electricteaparty.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000419.html">
+   <LINK REL="Next"  HREF="000423.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RAID-Z not re-mounting on reboot</H1>
+    <B>Matt Snow</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=8F73D3A4-4B9D-4259-938B-87662ED78F41%40electricteaparty.net"
+       TITLE="[zfs-discuss] RAID-Z not re-mounting on reboot">mattsnow at gmail.com
+       </A><BR>
+    <I>Mon Apr  7 21:15:30 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000419.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+        <LI>Next message: <A HREF="000423.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#420">[ date ]</a>
+              <a href="thread.html#420">[ thread ]</a>
+              <a href="subject.html#420">[ subject ]</a>
+              <a href="author.html#420">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Adrian,
+I had the exact same problem. you have to use the command line diskutil to
+create the EFI label and ZFS slice using this command:
+
+diskutil partitiondisk /dev/disk2 GPTFormat ZFS %noformat% 100%
+
+
+This is vaguely covered in the getting started page here:
+<A HREF="http://trac.macosforge.org/projects/zfs/wiki/get_the_party_started">http://trac.macosforge.org/projects/zfs/wiki/get_the_party_started</A>
+
+It would be nice if this was not required like in solaris. A simple &quot;zpool
+create tank disk1 disk2 disk3 disk4&quot; did the trick when using entire disks.
+
+..Matt
+
+On Mon, Apr 7, 2008 at 7:51 PM, Adrian Thornton &lt;
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">canadrian at electricteaparty.net</A>&gt; wrote:
+
+&gt;<i> For some reason, my RAID-Z is not automatically re-mounting when I reboot.
+</I>&gt;<i> I wouldn't mind too much, but as it is I get a million &quot;disk not recognized&quot;
+</I>&gt;<i> prompts every time I restart. Is there any reason you can think of why this
+</I>&gt;<i> may be happening? And is there any way for me to automate the re-mount
+</I>&gt;<i> without creating an Automator login item with &quot;sudo zpool import -f
+</I>&gt;<i> Archives&quot; in it? I'd rather have it re-mount before anyone logs in to ensure
+</I>&gt;<i> it's available already to the first logged in user.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Adrian
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/10d2ce3a/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/10d2ce3a/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000419.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+	<LI>Next message: <A HREF="000423.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#420">[ date ]</a>
+              <a href="thread.html#420">[ thread ]</a>
+              <a href="subject.html#420">[ subject ]</a>
+              <a href="author.html#420">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

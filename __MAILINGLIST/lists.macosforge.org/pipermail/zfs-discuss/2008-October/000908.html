@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] late mount
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=60b50dc10810010430i4733e6e4ob720667ffb5696c8%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000905.html">
+   <LINK REL="Next"  HREF="000906.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] late mount</H1>
+    <B>ruebezahl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=60b50dc10810010430i4733e6e4ob720667ffb5696c8%40mail.gmail.com"
+       TITLE="[zfs-discuss] late mount">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Wed Oct  1 07:38:20 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000905.html">[zfs-discuss] late mount
+</A></li>
+        <LI>Next message: <A HREF="000906.html">[zfs-discuss] added storage and rsync --inplace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#908">[ date ]</a>
+              <a href="thread.html#908">[ thread ]</a>
+              <a href="subject.html#908">[ subject ]</a>
+              <a href="author.html#908">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>nope, wouldn't work because the guys at apple assume users ought to  
+have only one partition on their harddrive...
+
+but as far is i understand boot camp assistant does nothing different  
+than repartition and sync gpt and mbr
+which i have done manually
+
+
+
+franz
+
+
+
+
+
+&gt;<i> Did you use the boot camp utility to install Windows?  It should  
+</I>&gt;<i> have done the *right* thing with respect to repartitioning your drive.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Oct 1, 2008 at 5:12 AM, ruebezahl &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">franzschmalzl at spamfreemail.de</A> 
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i> I invested some time the last days to fix this issue and came to the
+</I>&gt;<i> conclusion that ( at least in my case it was not really zfs' fault)
+</I>&gt;<i> I had 4 partitions on my one and only internal harddrive ( 500gb in an
+</I>&gt;<i> imac)
+</I>&gt;<i> EFI
+</I>&gt;<i> HFS+
+</I>&gt;<i> ZFS
+</I>&gt;<i> NTFS
+</I>&gt;<i>
+</I>&gt;<i> Apparently Windows fucked up my partition table, which at first i did
+</I>&gt;<i> not notice.
+</I>&gt;<i> When doing a diskutil list it would crash with &quot;Diskmanagement set-uid
+</I>&gt;<i> tool failure&quot;
+</I>&gt;<i> Diskutility GUI would crash when erasing volumes or trying to
+</I>&gt;<i> partition my internal harddrive.
+</I>&gt;<i>
+</I>&gt;<i> I tried to erase everything and set everything up from scratch, worked
+</I>&gt;<i> fine until i installed windows again *and* synced gpt and mbr using
+</I>&gt;<i> rEFIt ( mayb it's rEFIt's fault ? )
+</I>&gt;<i> same thing again, zfs partition was not properly mounted at boot,
+</I>&gt;<i> diskmanagement setuid tool failure.
+</I>&gt;<i>
+</I>&gt;<i> I now ended up restoring everything again from backups, but without
+</I>&gt;<i> any windows partiton.
+</I>&gt;<i> Again, everything works like a charm now.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So i think i ran into some partition table/poor osx management of
+</I>&gt;<i> partititon issues
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> My thanks for your time No&#235;l
+</I>&gt;<i>
+</I>&gt;<i> Franz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 30.09.2008, at 22:31, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; This is strange.  A group of us at Apple keep our home directories  
+</I>&gt;<i> on
+</I>&gt;<i> &gt; ZFS on our laptops on the internal drive.  Are all of you guys using
+</I>&gt;<i> &gt; the internal drives, or USB drives for your home directories? or  
+</I>&gt;<i> some
+</I>&gt;<i> &gt; other type of detachable (non internal bay) drive?  There has been
+</I>&gt;<i> &gt; some issues in the past noted with external drives since a lot of  
+</I>&gt;<i> them
+</I>&gt;<i> &gt; have power saving features and such so the drive sometimes isn't
+</I>&gt;<i> &gt; actually spun up,  or takes a bit to get spun up.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Noel
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Sep 30, 2008, at 5:14 AM, Dillon Kass wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; I just use the login window to add a few more seconds to the login
+</I>&gt;<i> &gt;&gt; time.
+</I>&gt;<i> &gt;&gt; Usually by the time the login window loads and i type my username  
+</I>&gt;<i> and
+</I>&gt;<i> &gt;&gt; password + take a single breath my home dir has mounted and i can
+</I>&gt;<i> &gt;&gt; safely
+</I>&gt;<i> &gt;&gt; log in.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I also have cron snapshot my home dir by hourly so that if i do log
+</I>&gt;<i> &gt;&gt; in
+</I>&gt;<i> &gt;&gt; too quick and lose my settings i can just log out and rollback.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Werner Donn&#233; wrote:
+</I>&gt;<i> &gt;&gt;&gt; Hi,
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; This is how it started for me too. Since then it has deteriorated
+</I>&gt;<i> &gt;&gt;&gt; gradually up to the point, today, where after twenty reboots I  
+</I>&gt;<i> still
+</I>&gt;<i> &gt;&gt;&gt; have no online pool. I wonder if ZFS is suitable for USB-disks on
+</I>&gt;<i> &gt;&gt;&gt; Mac
+</I>&gt;<i> &gt;&gt;&gt; OS X. If it isn't I'm going to get a Solaris box and move the pool
+</I>&gt;<i> &gt;&gt;&gt; to
+</I>&gt;<i> &gt;&gt;&gt; it.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Regards,
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Werner.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; On 28 Sep 2008, at 17:46, ruebezahl wrote:
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; hey there!
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; guys: PANIC !
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; It seems my internal zpool which contains my homefolder gets
+</I>&gt;<i> &gt;&gt;&gt;&gt; mounted
+</I>&gt;<i> &gt;&gt;&gt;&gt; very late in the booting process, maybe not even until i trie to
+</I>&gt;<i> &gt;&gt;&gt;&gt; login.
+</I>&gt;<i> &gt;&gt;&gt;&gt; which results in my library/wallpaper and so on not getting  
+</I>&gt;<i> loaded
+</I>&gt;<i> &gt;&gt;&gt;&gt; properly
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; when logging in as another user first, and then logging in  
+</I>&gt;<i> again it
+</I>&gt;<i> &gt;&gt;&gt;&gt; works ?
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; is there a way to force osx to mount my zpool at boot time ?
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; i tried via a launchd entry, but failed.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; regards
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; franz
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt;&gt; zfs-discuss mailing list
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; --
+</I>&gt;<i> &gt;&gt;&gt; Werner Donn&#233;  --  Re                                     <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+</I>&gt;<i> &gt;&gt;&gt; Engelbeekstraat 8                                               <A HREF="http://www.re.be">http://www.re.be</A>
+</I>&gt;<i> &gt;&gt;&gt; BE-3300 Tienen
+</I>&gt;<i> &gt;&gt;&gt; tel: (+32) 486 425803       e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt; zfs-discuss mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; zfs-discuss mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000905.html">[zfs-discuss] late mount
+</A></li>
+	<LI>Next message: <A HREF="000906.html">[zfs-discuss] added storage and rsync --inplace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#908">[ date ]</a>
+              <a href="thread.html#908">[ thread ]</a>
+              <a href="subject.html#908">[ subject ]</a>
+              <a href="author.html#908">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

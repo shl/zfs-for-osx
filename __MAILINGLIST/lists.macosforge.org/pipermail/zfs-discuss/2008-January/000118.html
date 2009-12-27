@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> Fwd: [zfs-discuss] ztest
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Fwd%3A%20%5Bzfs-discuss%5D%20ztest&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000119.html">
+   <LINK REL="Next"  HREF="000125.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>Fwd: [zfs-discuss] ztest</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Fwd%3A%20%5Bzfs-discuss%5D%20ztest&In-Reply-To="
+       TITLE="Fwd: [zfs-discuss] ztest">zorg at sogeeky.net
+       </A><BR>
+    <I>Tue Jan 29 17:05:02 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000119.html">[zfs-discuss] Development on ZFS
+</A></li>
+        <LI>Next message: <A HREF="000125.html">[zfs-discuss] How to activate/set ACL on ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#118">[ date ]</a>
+              <a href="thread.html#118">[ thread ]</a>
+              <a href="subject.html#118">[ subject ]</a>
+              <a href="author.html#118">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I keep forgetting to reply to all. Others on the list might find this  
+interesting, so I'm forwarding it.
+
+Begin forwarded message:
+
+&gt;<i> From: &quot;Mr. Zorg&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zorg at sogeeky.net</A>&gt;
+</I>&gt;<i> Date: January 29, 2008 5:03:19 PM PST
+</I>&gt;<i> To: Eric A Hulteen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">eric at hulteen.com</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] ztest
+</I>&gt;<i>
+</I>
+&gt;<i> The only real advice specific to zfs on OS X would be to copy small  
+</I>&gt;<i> chunks at a time. There seem to be some issues when copying large  
+</I>&gt;<i> folders (or applying chown or chmod on them), and although it hasn't  
+</I>&gt;<i> corrupted anything, it has locked up requiring a hard reboot.  A  
+</I>&gt;<i> little frustrating.
+</I>&gt;<i>
+</I>&gt;<i> Before zfs I was using Apple's software RAID, and I did learn  
+</I>&gt;<i> something from that. My array is on a mac mini which only has one  
+</I>&gt;<i> FireWire port. But the drives supported daisy chaining, so I just  
+</I>&gt;<i> did that. Don't do it. I had an enclosure fail, which had the effect  
+</I>&gt;<i> of taking everything daisy chained off of it offline too, rendering  
+</I>&gt;<i> the raid useless. Get yourself some firewire hubs and plug each  
+</I>&gt;<i> drive directly into those. Much less likely the hub will fail.
+</I>&gt;<i>
+</I>&gt;<i> Also, use good quality enclosures!  Cheap ones will fail under 24/7  
+</I>&gt;<i> usage.  I'm particularly fond of the AcomData E5 series. Built like  
+</I>&gt;<i> a tank and quite affordable. No fan, but if you space the drives  
+</I>&gt;<i> out, their solid aluminium case will stay plenty cool. I stacked  
+</I>&gt;<i> mine side by side, and put a couple of those internal hard drive  
+</I>&gt;<i> cooler fans ( I forget what they're called) on top using thermal  
+</I>&gt;<i> tape. I power them with an adjustable dc power brick I rigged with a  
+</I>&gt;<i> molex connector. Running the fans under voltage at 7.5v is nice and  
+</I>&gt;<i> quiet, and all 8 of my drives stay cool to the touch despite being  
+</I>&gt;<i> flush side by side with each other.
+</I>&gt;<i>
+</I>&gt;<i> Hope that helps!
+</I>&gt;<i>
+</I>&gt;<i> On Jan 29, 2008, at 3:06 PM, Eric A Hulteen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">eric at hulteen.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Mr. Zorg,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm planning to do the same thing -- 5 1TB Firewire drives in a  
+</I>&gt;&gt;<i> Raidz2 configuration.  Any advice, particularly related to Firewire?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regards,
+</I>&gt;&gt;<i> Eric
+</I>&gt;&gt;<i> _________
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Quoting &quot;Mr. Zorg&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zorg at sogeeky.net</A>&gt;:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> For what its worth, I've done the same thing (with external FireWire
+</I>&gt;&gt;&gt;<i> drives), except I was stupid enough to go trial by fire. As I  
+</I>&gt;&gt;&gt;<i> played, I
+</I>&gt;&gt;&gt;<i> moved my data to and from its original volumes multiple times. I did
+</I>&gt;&gt;&gt;<i> bulk copies (many hundreds of GB), moves, chown, etc. While I did  
+</I>&gt;&gt;&gt;<i> have
+</I>&gt;&gt;&gt;<i> it lockup on me several times forcing hard reboots (even had to
+</I>&gt;&gt;&gt;<i> reinstall leopard once or twice -- may or may not be related), not  
+</I>&gt;&gt;&gt;<i> once
+</I>&gt;&gt;&gt;<i> did I loose anything.  Its been awesome.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Jan 29, 2008, at 12:52 PM, Franz Schmalzl
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">franzschmalzl at spamfreemail.de</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Hi!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'm planning to build an external raidz for my music and movies...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> before I place all my valuable data on the raid i wanted to to a   
+</I>&gt;&gt;&gt;&gt;<i> bit of stress testing
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I heard about a tool called ztest, which does extensive read/ 
+</I>&gt;&gt;&gt;&gt;<i> write  tests, creates filesystems mounts/umounts them, destroys  
+</I>&gt;&gt;&gt;&gt;<i> them,  creates snapshots etc etc...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> is there an OS X port?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> regards
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> franz
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080129/454cea1a/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080129/454cea1a/attachment-0001.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000119.html">[zfs-discuss] Development on ZFS
+</A></li>
+	<LI>Next message: <A HREF="000125.html">[zfs-discuss] How to activate/set ACL on ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#118">[ date ]</a>
+              <a href="thread.html#118">[ thread ]</a>
+              <a href="subject.html#118">[ subject ]</a>
+              <a href="author.html#118">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

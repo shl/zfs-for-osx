@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic with Zpool Status if a pool has	corruption
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20with%20Zpool%20Status%20if%20a%20pool%20has%0A%09corruption&In-Reply-To=%3CBAC40FB0-F6A6-49BC-B6CC-36D82BF30EB0%40Sun.COM%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001011.html">
+   <LINK REL="Next"  HREF="001031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic with Zpool Status if a pool has	corruption</H1>
+    <B>Bill Winnett</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20with%20Zpool%20Status%20if%20a%20pool%20has%0A%09corruption&In-Reply-To=%3CBAC40FB0-F6A6-49BC-B6CC-36D82BF30EB0%40Sun.COM%3E"
+       TITLE="[zfs-discuss] Kernel Panic with Zpool Status if a pool has	corruption">William.Winnett at Sun.COM
+       </A><BR>
+    <I>Tue Oct 21 11:38:22 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001011.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me a kernel panic
+</A></li>
+        <LI>Next message: <A HREF="001031.html">[zfs-discuss] Kernel Panic with Zpool Status if a pool	has	corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1014">[ date ]</a>
+              <a href="thread.html#1014">[ thread ]</a>
+              <a href="subject.html#1014">[ subject ]</a>
+              <a href="author.html#1014">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+It appears that if a pool has some corruption and zfs has detected it,  
+then if you use &quot;zpool status&quot; on that pool you will panic.
+
+====
+Tue Oct 21 12:12:15 2008
+panic(cpu 0 caller 0x001A8CD4): Kernel trap at 0x0036271b, type  
+14=page fault, registers:
+CR0: 0x80010033, CR2: 0x0000000c, CR3: 0x01287000, CR4: 0x00000660
+EAX: 0x00000000, EBX: 0x5dbd7de8, ECX: 0x1f000000, EDX: 0x00000000
+CR2: 0x0000000c, EBP: 0x5dbd7d18, ESI: 0x00000200, EDI: 0x09255000
+EFL: 0x00010202, EIP: 0x0036271b, CS:  0x00000008, DS:  0x00530010
+Error code: 0x00000000
+
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x5dbd7b38 : 0x12b0fa (0x4592a4 0x5dbd7b6c 0x133243 0x0)
+0x5dbd7b88 : 0x1a8cd4 (0x46280c 0x36271b 0xe 0x461fbc)
+0x5dbd7c68 : 0x19ede5 (0x5dbd7c80 0xe07cf20 0x5dbd7d18 0x36271b)
+0x5dbd7c78 : 0x36271b (0xe 0x48 0x7e00010 0x190010)
+0x5dbd7d18 : 0xc97ea4 (0x0 0x2993e 0x3 0x0)
+0x5dbd7d38 : 0xc9f9ba (0x0 0x0 0x5dbd7dc8 0x19d5b1)
+0x5dbd7d78 : 0x20300f (0x1f000000 0xcf1c5a20 0x9255000 0x3)
+0x5dbd7db8 : 0x1f63a2 (0x5dbd7de8 0x246 0x5dbd7e18 0x1da567)
+0x5dbd7e18 : 0x1ec67c (0x76d9ef0 0xcf1c5a20 0x9255000 0x3)
+0x5dbd7e78 : 0x3661ff (0x716e7e0 0xcf1c5a20 0x9255000 0x5dbd7f50)
+0x5dbd7e98 : 0x38cb8f (0x716e7e0 0xcf1c5a20 0x9255000 0x5dbd7f50)
+0x5dbd7f78 : 0x3ddde2 (0x7acd2e0 0x7e1d1e0 0x7e1d224 0x0)
+0x5dbd7fc8 : 0x19f2c3 (0x7b99900 0x0 0x10 0x7b99900)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffa7d8
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xc3c000-&gt;0xd07fff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;  
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: iMac7,1 (Mac-F4238CC8)
+====
+
+
+I loaded virtualbox and installed a Solaris image and attached my  
+disks to the VM.  When I ran scrub and status on the pool, Solaris  
+correctly indicates corruption.
+Now I don't know if the corruption is in the way the file was stored  
+by ZFS on the Mac, or if there is a bad sector, but it seems  
+suspicious that this happened only
+after I added a bunch of pools and disks to my configuration.  I have  
+since undone that, but the one pool has problems.  Lucky for me this  
+is just junk for testing.
+
+=====
+(<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at milax</A>)# zpool status -xv
+   pool:  bef
+  state:  ONLINE
+status: One or more devices has experienced an error resulting in data
+         corruption.  Applications may be affected.
+action: Restore the file in question if possible.  Otherwise restore the
+         entire pool from backup.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-8A">http://www.sun.com/msg/ZFS-8000-8A</A>
+  scrub: scrub in progress for 0h29m, 5.37% done, 8h31m to go
+config:
+
+         NAME        STATE     READ WRITE CHKSUM
+         bef         ONLINE       0     0      0
+           c7t0d0s1  ONLINE       0     0      0
+           c6t0d0s1  ONLINE       0     0      0
+
+errors: Permanent errors have been detected in the following files:
+
+         /bef/test/file3
+         bef:&lt;0x4845&gt;
+         bef:&lt;0x4848&gt;
+         /bef/test/file2
+         bef:0x193&gt;
+         /bef/test/file1
+         /bef/test/file5
+         bef:&lt;0x4af4&gt;
+(<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at milax</A>)#
+llll
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081021/8bf51f31/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081021/8bf51f31/attachment.html</A> 
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001011.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me a kernel panic
+</A></li>
+	<LI>Next message: <A HREF="001031.html">[zfs-discuss] Kernel Panic with Zpool Status if a pool	has	corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1014">[ date ]</a>
+              <a href="thread.html#1014">[ thread ]</a>
+              <a href="subject.html#1014">[ subject ]</a>
+              <a href="author.html#1014">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

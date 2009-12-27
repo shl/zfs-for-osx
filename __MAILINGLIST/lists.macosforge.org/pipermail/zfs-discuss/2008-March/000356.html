@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Volume Won't Automount
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Volume%20Won%27t%20Automount&In-Reply-To=6F7A72EF-5EE5-470A-89B6-ACA0A38BEC6B%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000355.html">
+   <LINK REL="Next"  HREF="000364.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Volume Won't Automount</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Volume%20Won%27t%20Automount&In-Reply-To=6F7A72EF-5EE5-470A-89B6-ACA0A38BEC6B%40gmail.com"
+       TITLE="[zfs-discuss] Volume Won't Automount">info at martin-hauser.net
+       </A><BR>
+    <I>Thu Mar 20 02:39:55 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000355.html">[zfs-discuss] Volume Won't Automount
+</A></li>
+        <LI>Next message: <A HREF="000364.html">[zfs-discuss] Volume Won't Automount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#356">[ date ]</a>
+              <a href="thread.html#356">[ thread ]</a>
+              <a href="subject.html#356">[ subject ]</a>
+              <a href="author.html#356">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Chris,
+
+On Mar 20, 2008, at 06:40 AM, Chris Shuman wrote:
+&gt;<i> My mirrored pool will not mount on reboot. I have to do a 'sudo zpool
+</I>&gt;<i> import -f zdata' to mount it every time. I checked the FAQs, but did
+</I>&gt;<i> not see any known issues. I also get a dialog box for each disk in the
+</I>&gt;<i> mirror indicating an unrecognized disk; asking if I want to format or
+</I>&gt;<i> ignore? Of course I always ignore, but is there a way to suppress
+</I>&gt;<i> those messages? It looks to me as if both of my issues are related, I
+</I>&gt;<i> just don't know how to fix them.
+</I>
+The only reason I've ever seen this problem was as I didn't have the  
+drive formated with ZFS (that is not having done diskutil  
+partitiondisk /dev/disk2 GPTFormat ZFS %noformat% 100%
+
+I'm not quite sure if you should do that with something that has  
+already data on as it might destroy your data. Noel has written  
+somewhere else that they are working on making the process of setup  
+easier not to mess up.
+
+regards
+
+Martin
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080320/a3663452/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080320/a3663452/attachment.bin</A> 
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000355.html">[zfs-discuss] Volume Won't Automount
+</A></li>
+	<LI>Next message: <A HREF="000364.html">[zfs-discuss] Volume Won't Automount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#356">[ date ]</a>
+              <a href="thread.html#356">[ thread ]</a>
+              <a href="subject.html#356">[ subject ]</a>
+              <a href="author.html#356">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

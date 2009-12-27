@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C4AD5A3E2.4000708%40jrv.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001940.html">
+   <LINK REL="Next"  HREF="001945.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>James R. Van Artsdalen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3C4AD5A3E2.4000708%40jrv.org%3E"
+       TITLE="[zfs-discuss] must watch.">james-zfsosx at jrv.org
+       </A><BR>
+    <I>Wed Oct 14 03:11:46 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001940.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001945.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1944">[ date ]</a>
+              <a href="thread.html#1944">[ thread ]</a>
+              <a href="subject.html#1944">[ subject ]</a>
+              <a href="author.html#1944">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>James Relph wrote:
+&gt;<i> The issue is the same, but journaled filesystems (including HFS+) at
+</I>&gt;<i> least have a pretty reliable method of recovery from the problem by
+</I>&gt;<i> replaying the journal.  Currently the same problem with ZFS basically
+</I>&gt;<i> leaves you with an inconsistent pool and a recovery option that boils
+</I>&gt;<i> down to &quot;I hope your backups have been working&quot;.
+</I>
+The problems people see are not related to the journal / log etc but
+rather to the transactional &quot;never update in place&quot; nature of ZFS. 
+Journals and logs are Red Herrings.
+
+HFS or NTFS filesystems generally don't move around the superblocks,
+filesystem metadata or even the top levels of the filesystem: these
+objects are usually updated in place.  When the system crashes the few
+things that may have changed are generally easily repaired by the log,
+or buried deeply enough in the filesystem that the damage is localized.
+
+ZFS is different because it uses a different &quot;superblock&quot; every few
+seconds (every transaction commit), and more importantly, the top levels
+of the filesystem and some pool metadata are moved too.  After every tx
+commit the uberblock is in a different place and some of its pointers
+are to different places.
+
+Moreover, blocks that were freed by this process are rapidly reclaimed. 
+The uberblock itself is not reclaimed for another 127 commits - several
+minutes - but the things it points to are.  In other words as soon as tx
+group N is committed, blocks from N-1 that are no longer referenced are
+reclaimed as free space.
+
+What goes wrong when the write fence / cache flush doesn't happen:
+
+As soon as the uberblock for tx group N is written everything from N-1
+that is no longer referenced is marked free for reallocation, and these
+newly-freed blocks often contain part of the top levels of the N-1 pool
+/ filesystems and metadata.
+
+If the uberblock for N is _not_ written to media when it was supposed to
+be then ZFS may happily reuse the blocks from N-1 while the uberblock
+for N-1 is still the most recent on media, instead of N as ZFS expects. 
+In other words there might be a window where the most recent uberblock
+on disk media (N-1) points to a toplevel directory block that is
+overwritten with unrelated data - disaster.
+
+That window closes once uberblock N hits media.  Unfortunately with no
+write fence it might be a long time before that happens.  The uberblocks
+are near the ends of the disk and likely to require a longseek, and
+elevator sort algorithms are likely to put off writing them.  If ZFS is
+being used within a Virtual Machine then the disk drive may behave as
+though the disk cache/buffer was hundreds of megabytes in size and the
+window of vulnerability might be many seconds long (even extending into
+the N+1 group!)
+
+The fix is to delay reallocation of N-1's newly-unreferenced blocks. 
+This way if uberblock N is not written when it is supposed to be at
+least N-1 continues to point to valid data longer, and the window of
+vulnerability goes away.
+
+How long that reallocation delay needs to be is an interesting question
+and may require some tuning.
+
+The uberblock rollback feature should be unneeded.  If it is ever needed
+that means that delayed reallocation failed and must be increased.  Once
+delayed reallocation is ironed out I doubt that uberblock rollback will
+work well in the real world: anything too severely broken for a long
+delayed reallocation probably won't leave much behind for uberblock
+rollback.
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001940.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001945.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1944">[ date ]</a>
+              <a href="thread.html#1944">[ thread ]</a>
+              <a href="subject.html#1944">[ subject ]</a>
+              <a href="author.html#1944">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

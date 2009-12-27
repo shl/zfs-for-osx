@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] HFS+ in a ZFS world
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20HFS%2B%20in%20a%20ZFS%20world&In-Reply-To=%3C3eda533629493ca4ebda19ab0b851549.squirrel%40gnukia.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001517.html">
+   <LINK REL="Next"  HREF="001518.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] HFS+ in a ZFS world</H1>
+    <B>Tilman Baumann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20HFS%2B%20in%20a%20ZFS%20world&In-Reply-To=%3C3eda533629493ca4ebda19ab0b851549.squirrel%40gnukia.org%3E"
+       TITLE="[zfs-discuss] HFS+ in a ZFS world">tilman at baumann.name
+       </A><BR>
+    <I>Mon Apr 20 01:38:17 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001517.html">[zfs-discuss] HFS+ in a ZFS world
+</A></li>
+        <LI>Next message: <A HREF="001518.html">[zfs-discuss] ZFS Volumes exported as RAW device?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1522">[ date ]</a>
+              <a href="thread.html#1522">[ thread ]</a>
+              <a href="subject.html#1522">[ subject ]</a>
+              <a href="author.html#1522">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Christopher LILJENSTOLPE schrieb:
+
+&gt;<i> 	The reason I had hfs+ was for home directories, time machine, and
+</I>&gt;<i> aperture (which really doesn't like ZFS, or didn't in the past).
+</I>
+Little side note on that.
+The reason why time machine does not like ZFS is that apple 'abused' the
+HFS+ filesystem a little bit to allow hardlinks for directories.
+Which is not too bad, if you use them you just need to know what to do.
+And AFAIK it does not conflict with POSIX.
+
+Are there any plans on allowing hardlinks to directory nodes on ZFS?
+I' know it sounds scary and stupid. But actually there is no reason not to
+have it.
+Details:
+<A HREF="http://arstechnica.com/apple/reviews/2007/10/mac-os-x-10-5.ars/14#symlinks-and-hard-links">http://arstechnica.com/apple/reviews/2007/10/mac-os-x-10-5.ars/14#symlinks-and-hard-links</A>
+
+Of course, it would probably be smarter to provide time machine like
+functionality with ZFS tools. Like time slider.
+But for compatibility...
+
+-- 
+MFG
+ Tilman Baumann
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001517.html">[zfs-discuss] HFS+ in a ZFS world
+</A></li>
+	<LI>Next message: <A HREF="001518.html">[zfs-discuss] ZFS Volumes exported as RAW device?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1522">[ date ]</a>
+              <a href="thread.html#1522">[ thread ]</a>
+              <a href="subject.html#1522">[ subject ]</a>
+              <a href="author.html#1522">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Macintouch comments on RAID-Z
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=79696DA3-0B5C-44AA-B045-9FAF0F1A21F4%40pobox.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000205.html">
+   <LINK REL="Next"  HREF="000194.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Macintouch comments on RAID-Z</H1>
+    <B>Brett Ault-McCoy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=79696DA3-0B5C-44AA-B045-9FAF0F1A21F4%40pobox.com"
+       TITLE="[zfs-discuss] Macintouch comments on RAID-Z">btm at pobox.com
+       </A><BR>
+    <I>Fri Feb 22 16:21:16 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000205.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+        <LI>Next message: <A HREF="000194.html">[zfs-discuss] Announcing zfsonosx.com
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#206">[ date ]</a>
+              <a href="thread.html#206">[ thread ]</a>
+              <a href="subject.html#206">[ subject ]</a>
+              <a href="author.html#206">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The only reason hardware raid controllers ever give better performance is
+because they put a huge amount of battery backed RAM on them.  Since they
+are basically just CPU's like in any computer any real benefit comes from
+offloading the CPU.  In something like a modern Mac Pro with 8 cores
+offloading to an external CPU isn't necessarily a gain (unless your workload
+can peg all 8 cores in your machine).
+The problem with most RAID controllers is that there is no guarantee of on
+disk data consistancy.  Writes go to RAM and are then written to disk at
+some later time in the most efficient order.  A failure of the controller
+can render all of the disks connected to it corrupt.  A failure of the
+battery can do the same thing in a power outage.  Batteries can seem
+perfectly fine right up to the point you put a load on them.
+
+ZFS RAID-Z claims to ensure on-disk consistancy at all times.  You don't get
+this for free.  Anyone who tells you otherwise is lieing.  If your data is
+really important, use mirrors (with N&gt;2 if it's really, really important).
+ RAID was a good idea when inexpensive disks were still really expensive.
+ Now with 1T disks costing a few hundred dollars it just doesn't seem
+worthwhile to me anymore.
+
+++Brett;
+
+
+On Fri, Feb 22, 2008 at 6:30 PM, Kevin Purcell &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kevinpurcell at pobox.com</A>&gt;
+wrote:
+
+&gt;<i> Comment seen on today's Macintouch:
+</I>&gt;<i>
+</I>&gt;<i> &lt;<A HREF="http://www.macintouch.com/readerreports/harddrives/">http://www.macintouch.com/readerreports/harddrives/</A>
+</I>&gt;<i> index.html#d22feb2008&gt;
+</I>&gt;<i>
+</I>&gt;<i> &gt; Jeff Baker
+</I>&gt;<i> &gt; The willingness of people to see ZFS as the solution to any and all
+</I>&gt;<i> &gt; problems continues to amaze me. Contrary to the prior comment, RAID-
+</I>&gt;<i> &gt; Z in no way obsoletes or replaces the functions of a hardware RAID
+</I>&gt;<i> &gt; controller. Typically a user expects high performance from a RAID
+</I>&gt;<i> &gt; controller. RAID-Z, by comparison, is slightly slower than a single
+</I>&gt;<i> &gt; hard disk. While a normal RAID becomes faster with additional
+</I>&gt;<i> &gt; spindles, a RAID-Z exhibits flat to slightly declining performance
+</I>&gt;<i> &gt; with more spindles (on random workloads).
+</I>&gt;<i>
+</I>&gt;<i> I would have thought that RAID-Z performance would scale as the
+</I>&gt;<i> number of disks (so long as the controllers can't take multiple
+</I>&gt;<i> commands in parallel or for IDE as the number of controllers).
+</I>&gt;<i>
+</I>&gt;<i> I'd appreciate some comments from those more knowledgeable than I.
+</I>&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i> --
+</I>&gt;<i> Kevin Purcell
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kevinpurcell at pobox.com</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080223/a6ad6a14/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080223/a6ad6a14/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000205.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+	<LI>Next message: <A HREF="000194.html">[zfs-discuss] Announcing zfsonosx.com
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#206">[ date ]</a>
+              <a href="thread.html#206">[ thread ]</a>
+              <a href="subject.html#206">[ subject ]</a>
+              <a href="author.html#206">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

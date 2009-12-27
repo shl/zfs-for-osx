@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Home on a ZFS volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Home%20on%20a%20ZFS%20volume&In-Reply-To=4792CE6B.5040002%40terranova.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000033.html">
+   <LINK REL="Next"  HREF="000048.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Home on a ZFS volume</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Home%20on%20a%20ZFS%20volume&In-Reply-To=4792CE6B.5040002%40terranova.net"
+       TITLE="[zfs-discuss] Home on a ZFS volume">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Jan 21 15:26:30 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000033.html">[zfs-discuss] Home on a ZFS volume
+</A></li>
+        <LI>Next message: <A HREF="000048.html">[zfs-discuss] Mounting zfs-fs in hfs homedir on another volume
+	pushes hfs-homedir away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#43">[ date ]</a>
+              <a href="thread.html#43">[ thread ]</a>
+              <a href="subject.html#43">[ subject ]</a>
+              <a href="author.html#43">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It all should work, and sounds like it is, it just depends on how you  
+want to do it.  The way Barry mentioned is actually what I did on my  
+laptop just since it's how I happened to set it up, but what Dillon  
+did will work fine too, it really just depends on what you want to put  
+where and how :)
+
+I installed, created a local admin user, logged in.  Created my ZFS  
+pool on my other partition, created some filesystems within it, and  
+then copied all my data over.   Then I just created a new user(I keep  
+one local for test purposes, and one zfs), changed the new user's home  
+directory to point to the mountpoint of my zfs pool home filesystem (/ 
+Volumes/mytank/home/ndellofano) and I log in and voila my home  
+directory is my ZFS filesystem.
+
+Noel
+
+On Jan 19, 2008, at 8:30 PM, Dillon wrote:
+
+&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> A much easier way of changing your home directory is via the  
+</I>&gt;&gt;<i> Accounts pref pane.  Go to accounts, authenticate via the padlock,  
+</I>&gt;&gt;<i> and then right click on your username and choose Advanced Options.   
+</I>&gt;&gt;<i> You can change the home dir path there to anywhere you want to.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> barry
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000033.html">[zfs-discuss] Home on a ZFS volume
+</A></li>
+	<LI>Next message: <A HREF="000048.html">[zfs-discuss] Mounting zfs-fs in hfs homedir on another volume
+	pushes hfs-homedir away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#43">[ date ]</a>
+              <a href="thread.html#43">[ thread ]</a>
+              <a href="subject.html#43">[ subject ]</a>
+              <a href="author.html#43">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

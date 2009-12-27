@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] An interesting crash..
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20An%20interesting%20crash..&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000798.html">
+   <LINK REL="Next"  HREF="000802.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] An interesting crash..</H1>
+    <B>Sean Hafeez</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20An%20interesting%20crash..&In-Reply-To="
+       TITLE="[zfs-discuss] An interesting crash..">sah.list at gmail.com
+       </A><BR>
+    <I>Mon Aug 18 15:30:50 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000798.html">[zfs-discuss] zfs write as user
+</A></li>
+        <LI>Next message: <A HREF="000802.html">[zfs-discuss] KP after plugging in drive.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#800">[ date ]</a>
+              <a href="thread.html#800">[ thread ]</a>
+              <a href="subject.html#800">[ subject ]</a>
+              <a href="author.html#800">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Mon Aug 18 14:02:34 2008
+panic(cpu 0 caller 0x00AD3D21): &quot;ZFS: I/O failure (write on &lt;unknown&gt;  
+off 0: zio 0x5192000 [L0 ZFS directory] 1000L/400P  
+DVA[0]=&lt;0:62002ea400:400&gt; DVA[1]=&lt;0:16002d1400:400&gt; fletcher4 lzjb LE  
+contiguous birth=14120 fill=1 cksum=3498ec9a6a: 
+248c486680be:d8d42a10f95cc:389c946baa00d4b): error &quot; &quot;6&quot;@/Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zio.c:918
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x50593e38 : 0x12b0fa (0x4592a4 0x50593e6c 0x133243 0x0)
+0x50593e88 : 0xad3d21 (0xb436b0 0xb436a4 0xb3f400 0xb70670)
+0x50593f08 : 0xad03fb (0x5192000 0x374 0x50593f28 0xb1718a)
+0x50593f48 : 0xb2f4a6 (0x5192000 0x5102500 0x647c7 0xb585f4)
+0x50593fc8 : 0x19ebdc (0x4eb64a0 0x0 0x1a20b5 0x798fb58)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xabc000-&gt;0xb87fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;  
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: MacBookPro3,1 (Mac-F4238BC8)
+
+So we has some power issues here. The HD is external and formated ZFS.  
+The HD would go down but not the laptop. When the power comes back on  
+the HD spins up and the Mac would hard look requiring a reboot.
+
+Thanks,
+Sean
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000798.html">[zfs-discuss] zfs write as user
+</A></li>
+	<LI>Next message: <A HREF="000802.html">[zfs-discuss] KP after plugging in drive.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#800">[ date ]</a>
+              <a href="thread.html#800">[ thread ]</a>
+              <a href="subject.html#800">[ subject ]</a>
+              <a href="author.html#800">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Ready for my data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3CB44A40DD-9B59-4455-8DBC-3FC22946A612%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001059.html">
+   <LINK REL="Next"  HREF="001061.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Ready for my data</H1>
+    <B>Andrew Chace</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Ready%20for%20my%20data&In-Reply-To=%3CB44A40DD-9B59-4455-8DBC-3FC22946A612%40gmail.com%3E"
+       TITLE="[zfs-discuss] ZFS Ready for my data">andrew.chace at gmail.com
+       </A><BR>
+    <I>Sun Nov 16 18:55:33 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001059.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+        <LI>Next message: <A HREF="001061.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1060">[ date ]</a>
+              <a href="thread.html#1060">[ thread ]</a>
+              <a href="subject.html#1060">[ subject ]</a>
+              <a href="author.html#1060">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Chris,
+
+Regarding symlinks, I haven't had a chance to set up ZFS in Mac OS X  
+yet, but in Solaris and FreeBSD, you can set mount points for ZFS  
+filesystems. Something like:
+
+	zfs set mountpoint=/Users/andrew zpool/andrew
+
+See the &quot;Mount Points&quot; section in the &quot;zfs(1) man page [<A HREF="http://docs.sun.com/app/docs/doc/819-2240/zfs-1m">http://docs.sun.com/app/docs/doc/819-2240/zfs-1m</A> 
+]. I would assume that this can also be done in Mac OS X.
+
+-Andrew
+
+On Nov 16, 2008, at 8:36 PM, Chris Suter wrote:
+
+&gt;<i> On Mon, Nov 17, 2008 at 1:17 PM, Jason Todd Slack-Moehrle
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mailinglists at mailnewsrss.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> What is the general consensus about ZFS being ready to hold me  
+</I>&gt;&gt;<i> data? I was
+</I>&gt;&gt;<i> considering partitioning my drive and moving my home (~) directory  
+</I>&gt;&gt;<i> (all my
+</I>&gt;&gt;<i> data that I care about) to a new ZFS partition.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I keep good backups, but what is everyones opinions?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Obvious benefits?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Obvious reasons not to yet?
+</I>&gt;<i>
+</I>&gt;<i> I'm currently operating in that way (mainly so that my data is on a
+</I>&gt;<i> separate partition to the OS files that I'm messing about with). I've
+</I>&gt;<i> spotted a couple of things:
+</I>&gt;<i>
+</I>&gt;<i> 1. I use Xcode a lot and it will often tell me a file has been changed
+</I>&gt;<i> when it hasn't actually.
+</I>&gt;<i>
+</I>&gt;<i> 2. At present I've just used a symlink to point my Users folder to the
+</I>&gt;<i> ZFS partition but that's not ideal --- if I'm quick and log in before
+</I>&gt;<i> it's had a chance to mount it, I run into problems. I'm sure there's a
+</I>&gt;<i> way of fixing this but I haven't had the time to look into it yet;
+</I>&gt;<i> it's possibly better to change the Directory Services database rather
+</I>&gt;<i> than use a symlink.
+</I>&gt;<i>
+</I>&gt;<i> 3. I've somehow lost all the entries listed under PLACES in Finder. I
+</I>&gt;<i> suspect that might be because of #2 above.
+</I>&gt;<i>
+</I>&gt;<i> -- Chris
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001059.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+	<LI>Next message: <A HREF="001061.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1060">[ date ]</a>
+              <a href="thread.html#1060">[ thread ]</a>
+              <a href="subject.html#1060">[ subject ]</a>
+              <a href="author.html#1060">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

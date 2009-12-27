@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic while listing snapshots
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20while%20listing%20snapshots&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000601.html">
+   <LINK REL="Next"  HREF="000597.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic while listing snapshots</H1>
+    <B>Christian He&#223;mann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20while%20listing%20snapshots&In-Reply-To="
+       TITLE="[zfs-discuss] panic while listing snapshots">zfs at hessmann.de
+       </A><BR>
+    <I>Tue May 13 03:08:20 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000601.html">[zfs-discuss] simpler approach for reproducing files-in-limbo	problem
+</A></li>
+        <LI>Next message: <A HREF="000597.html">[zfs-discuss] Keynote issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#596">[ date ]</a>
+              <a href="thread.html#596">[ thread ]</a>
+              <a href="subject.html#596">[ subject ]</a>
+              <a href="author.html#596">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good morning,
+
+
+not quite reproducible, but at least twice in 14 days.
+
+Specific processes running during that time:
+
+- rsync (3.0.0) from OS X client to RAID.Z on panic'd Mini (to  
+filesystem with Snapshots)
+- Playing movie in Quicktime from encrypted sparsebundle on RAID.Z
+- zfs list -t snapshot
+
+The last one seems to produce this panic:
+
+====
+Sun May 11 21:19:07 2008
+panic(cpu 1 caller 0x0019DE45): &quot;trying to interlock destroyed mutex  
+0xd5d8f60&quot;@/SourceCache/xnu/xnu-1228.4.31/osfmk/i386/locks_i386.c:1760
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x3be1be28 : 0x12b0f7 (0x4581f4 0x3be1be5c 0x133230 0x0)
+0x3be1be78 : 0x19de45 (0x45ff10 0xd5d8f60 0x3be1bea8 0xbb1efa)
+0x3be1be98 : 0x19b54a (0xd5d8f60 0x216 0x3be1bee8 0xb75b30)
+0x3be1bea8 : 0xb75b30 (0xd5d8f60 0x3be1bec8 0x19a8a3 0x5beb1dc4)
+0x3be1bee8 : 0xb77715 (0x5beb1dc4 0x0 0xc0ba80 0x147d9cf0)
+0x3be1bf08 : 0xb71670 (0x147d96f0 0x147d9cf0 0x3be1bf28 0x189eef4e)
+0x3be1bf28 : 0xb71be3 (0xc0b8c8 0xc0b8c8 0x5a2afd9 0xbdd005)
+0x3be1bfc8 : 0x19eadc (0x0 0x0 0x1a20b5 0x3c503c8)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xb57000-&gt;0xc12fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9C7010
+
+Kernel version:
+Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+root:xnu-1228.4.31~1/RELEASE_I386
+System model name: Macmini2,1 (Mac-F4208EAA)
+====
+
+
+Best regards,
+
+Christian
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000601.html">[zfs-discuss] simpler approach for reproducing files-in-limbo	problem
+</A></li>
+	<LI>Next message: <A HREF="000597.html">[zfs-discuss] Keynote issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#596">[ date ]</a>
+              <a href="thread.html#596">[ thread ]</a>
+              <a href="subject.html#596">[ subject ]</a>
+              <a href="author.html#596">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

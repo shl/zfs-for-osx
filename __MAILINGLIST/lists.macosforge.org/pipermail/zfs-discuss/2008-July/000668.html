@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] half frozen
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20half%20frozen&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000679.html">
+   <LINK REL="Next"  HREF="000669.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] half frozen</H1>
+    <B>ruebezahl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20half%20frozen&In-Reply-To="
+       TITLE="[zfs-discuss] half frozen">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Tue Jul  1 16:26:06 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000679.html">[zfs-discuss] zfs silent death
+</A></li>
+        <LI>Next message: <A HREF="000669.html">[zfs-discuss] zfs silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#668">[ date ]</a>
+              <a href="thread.html#668">[ thread ]</a>
+              <a href="subject.html#668">[ subject ]</a>
+              <a href="author.html#668">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+
+Dear list!
+
+I came across a serious issue the last days...
+
+When performing heavy r/w operations on my zpool, after an hour or so,  
+my system goes into an weird &quot;half-frozen&quot; state.
+
+Let me explain:
+Mouse and keyboard completely work and already open applications work  
+nice but it is not possible to open new ones. They just do not fire  
+up, not even a new shell, just a forever bouncing icon in the dock.
+Re-opening the finder renders my system &quot;gui less&quot;
+Diskutility opens but loops in getting it's disk info.
+Control-C an open task in Terminal neither works, nor does a shutdown  
+and of course the transfer ( i tried rsync, ditto, cp, and normal  
+finder)  to/from my zpool completely stops.
+
+I tried writing an empty folder to the root of my pool, which did to  
+my confusion still work.
+
+I also noticed this during a resilver since one of my harddrives got  
+replaced. I had to to a hard reset and start from the beginning.
+
+I experienced this on OS X Server and &quot;normal&quot; 10.5.0/3/4
+
+My zfs configuration looks like this:
+
+   pool: raidtank
+  state: ONLINE
+  scrub: resilver completed with 0 errors on Wed Jul  2 00:14:30 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	raidtank     ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+3 Firewire 800 Drives in a daisy chain
+
+I think a hardware problem is very unlikely the case.
+I did not find any valuable log file entries, maybe someone can give  
+me a hint where to look ( Noel! )
+
+I did only experience this using the latest zfs-bits.
+
+Best regards
+
+franz
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJIar0OAAoJEP8ZopU3BhmthWYH/Rrw7y4wWSNMsvxTDt3waWyN
+G7H1FwDHmIr9AJ4OtZ9DTxNiiNfd8/kYyAkvElvP1Uz24BzvI0dfLN0hsvW1MWOK
+12Imz0mcCpN+nWPs5bv6ZtxUnKvIxagdMXdJ/xU88AMHz/SsEl7M5Fo8gTd4aTym
+f4N86WwxHATHu2X9tYkuND/lV/xnhe6gyuHHTcwb3N9Mq4V3j+6fRjsL5UcW1Aq9
+Q3Vc45opLO3BHaToNANMzMEXKOUJKfLALcfgN1x0AeQlLgu5+fGrAbfpX22it9J1
+yzeMR9wXJE8HOU9o4qwonZ2B8ruzI1TptUXVm9yj10AHhUZJvGrHu47wFKg0c+I=
+=rIlU
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000679.html">[zfs-discuss] zfs silent death
+</A></li>
+	<LI>Next message: <A HREF="000669.html">[zfs-discuss] zfs silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#668">[ date ]</a>
+              <a href="thread.html#668">[ thread ]</a>
+              <a href="subject.html#668">[ subject ]</a>
+              <a href="author.html#668">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

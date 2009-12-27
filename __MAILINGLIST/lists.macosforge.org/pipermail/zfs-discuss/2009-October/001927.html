@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CB355A87B-3864-4832-A462-443D0BBC2D1D%40themacplace.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001923.html">
+   <LINK REL="Next"  HREF="001928.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>James Relph</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CB355A87B-3864-4832-A462-443D0BBC2D1D%40themacplace.co.uk%3E"
+       TITLE="[zfs-discuss] must watch.">james at themacplace.co.uk
+       </A><BR>
+    <I>Sun Oct 11 14:24:31 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001923.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001928.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1927">[ date ]</a>
+              <a href="thread.html#1927">[ thread ]</a>
+              <a href="subject.html#1927">[ subject ]</a>
+              <a href="author.html#1927">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> I did not think there was a way to iterate over
+</I>&gt;<i> just the objects in a transaction group.  I guess
+</I>&gt;<i> you're saying that they start at the root and walk
+</I>&gt;<i> just the items referenced in &quot;recent&quot; transaction
+</I>&gt;<i> groups to insure they're valid.
+</I>&gt;<i>
+</I>&gt;<i> Yeah, I suppose that would work and would avoid a
+</I>&gt;<i> full file system walk.
+</I>
+Sounds like that's what they're doing, from 25:30 in the video Jeff  
+Bonwick says that they can step back to the last uberblock and do a  
+scrub of the recent transactions (which only takes a few seconds), and  
+if that fails, step back to the previous uberblock etc. until it  
+checks out.  According to the slides that's a working system and  
+they're just &quot;finalizing user experience&quot;, wikipedia seems to suggest  
+that that's due Q4 2009, although there's no source for that.
+
+James
+
+Website:		www.themacplace.co.uk
+Blog:		www.themacplace.co.uk/blog.html
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001923.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001928.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1927">[ date ]</a>
+              <a href="thread.html#1927">[ thread ]</a>
+              <a href="subject.html#1927">[ subject ]</a>
+              <a href="author.html#1927">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

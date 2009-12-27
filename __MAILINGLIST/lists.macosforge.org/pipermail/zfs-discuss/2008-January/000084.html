@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] memory limits
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=6FCD7AEC-23E9-445E-895E-83EF4C55494C%40berczi.be">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000083.html">
+   <LINK REL="Next"  HREF="000085.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] memory limits</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=6FCD7AEC-23E9-445E-895E-83EF4C55494C%40berczi.be"
+       TITLE="[zfs-discuss] memory limits">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Jan 25 12:54:11 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000083.html">[zfs-discuss] memory limits
+</A></li>
+        <LI>Next message: <A HREF="000085.html">[zfs-discuss] memory limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#84">[ date ]</a>
+              <a href="thread.html#84">[ thread ]</a>
+              <a href="subject.html#84">[ subject ]</a>
+              <a href="author.html#84">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Depends on what kind of possibilities you are looking for.  Currently  
+we set the high water mark for the ARC based on a percentage of the  
+physical memory in the system.  If you'd like to tweak this number,  
+you'll have to change the source and recompile the code because there  
+is no 'mdb -k' on Mac in order to change the zfs_arc_max on a live  
+kernel.  If you're interested in doing that you can find the code for  
+the arc set up here in zfs_kext/zfs/arc.c  in arc_init.  There are a  
+few iterations of things we check in order to gauge what to cap the  
+arc at, so I'd recommend taking a look at the function, but you get  
+the idea of what's up below:
+
+
+void
+arc_init(void)
+{
+#ifdef __APPLE__
+         /*
+          * Use more conservative limits in Mac OS X
+          *
+          * 2/3 of maximum zfs footprint
+          */
+         zfs_arc_max = (zfs_footprint.maximum / 3) * 2;
+         zfs_arc_min = MAX((physmem * PAGESIZE) / 16, 64&lt;&lt;20);
+#endif
+
+....&lt;&lt;&lt;&lt; snip &gt;&gt;&gt;&gt;&gt; .....
+
+         /* set min cache to 1/32 of all memory, or 64MB, whichever is  
+more */
+         arc_c_min = MAX(arc_c / 4, 64&lt;&lt;20);
+         /* set max to 3/4 of all memory, or all but 1GB, whichever is  
+more */
+         if (arc_c * 8 &gt;= 1&lt;&lt;30)
+                 arc_c_max = (arc_c * 8) - (1&lt;&lt;30);
+         else
+                 arc_c_max = arc_c_min;
+         arc_c_max = MAX(arc_c * 6, arc_c_max);
+
+	 /*
+          * Allow the tunables to override our calculations if they are
+          * reasonable (ie. over 64MB)
+          */
+         if (zfs_arc_max &gt; 64&lt;&lt;20 &amp;&amp; zfs_arc_max &lt; physmem * PAGESIZE)
+                 arc_c_max = zfs_arc_max;
+
+Also in arc_init,  you'll see more rules where we have special  
+settings for memory if you're physmem is greater then the 32-bit  
+address space.  This case we haven't done too much experimenting yet  
+and we'll likely tweek as we find what values work best for this.  For  
+now, not many people have that much physmem anyway.
+
+  Be warned that in general, the smaller you force the ARC, the worse  
+your performance will get.  Obviously this differs based on your  
+expected workload, but just a heads up :)
+
+
+Noel
+
+On Jan 25, 2008, at 1:27 AM, B&#233;rczi G&#225;bor wrote:
+
+&gt;<i> What are the possibilities of limiting ZFS memory usage on OS X?
+</I>&gt;<i> (for example limiting the ARC size)
+</I>&gt;<i>
+</I>&gt;<i> ZFS footprint:  346M used,  504M peak,  369M goal               299  
+</I>&gt;<i> threads
+</I>&gt;<i> ARC footprint:  232M used,  385M peak,  244M goal
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Gabucino
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000083.html">[zfs-discuss] memory limits
+</A></li>
+	<LI>Next message: <A HREF="000085.html">[zfs-discuss] memory limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#84">[ date ]</a>
+              <a href="thread.html#84">[ thread ]</a>
+              <a href="subject.html#84">[ subject ]</a>
+              <a href="author.html#84">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

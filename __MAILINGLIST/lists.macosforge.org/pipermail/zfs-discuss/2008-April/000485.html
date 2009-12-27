@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Re: RAIDZ continuous panic after zpool replace
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20RAIDZ%20continuous%20panic%20after%20zpool%20replace&In-Reply-To=CB635C30-EE86-4CC4-8A47-C31194F696BE%40electricteaparty.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000484.html">
+   <LINK REL="Next"  HREF="000487.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Re: RAIDZ continuous panic after zpool replace</H1>
+    <B>Thornton Adrian</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20RAIDZ%20continuous%20panic%20after%20zpool%20replace&In-Reply-To=CB635C30-EE86-4CC4-8A47-C31194F696BE%40electricteaparty.net"
+       TITLE="[zfs-discuss] Re: RAIDZ continuous panic after zpool replace">canadrian at electricteaparty.net
+       </A><BR>
+    <I>Tue Apr 15 23:42:39 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000484.html">[zfs-discuss] Re: RAIDZ continuous panic after zpool replace
+</A></li>
+        <LI>Next message: <A HREF="000487.html">[zfs-discuss] Re: RAIDZ continuous panic after zpool replace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#485">[ date ]</a>
+              <a href="thread.html#485">[ thread ]</a>
+              <a href="subject.html#485">[ subject ]</a>
+              <a href="author.html#485">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Turns out a Belenix LiveCD recognizes my SATA card and sees my pool.  
+But it's not all good news. For some reason, though Belenix shows  
+seven out of eight devices online and happy, it still claims it can't  
+import the pool. Here's the zpool import:
+
+pool: Archives
+id: 16750878087681595004
+state: UNAVAIL
+status: One or more devices are missing from the system.
+action: The pool cannot be imported. Attach the missing devices and  
+try again.
+see: <A HREF="http://www.sun.com/msg/ZFS-8000-3C">http://www.sun.com/msg/ZFS-8000-3C</A>
+config:
+
+	Archives		UNAVAIL	insufficient replicas
+		raidz1	UNAVAIL	corrupted data
+		c8d1p0	ONLINE
+		c2t1d0p0	ONLINE
+	`	c7d1p0	ONLINE
+		c2t0d0p0	ONLINE
+		c8d0s1	ONLINE
+		c4d0s1	ONLINE
+		636893339691769212	UNAVAIL	cannot open
+		c5d0s1	ONLINE
+
+Looks fine, right? (Well, aside from the fact is should say DEGRADED  
+not UNAVAIL.) One missing disk in an 8-disk raidz1 pool. But zpool  
+import -f Archives says:
+
+cannot import 'Archives': invalid vdev configuration
+
+So... what's going on then? Any clues?
+
+Cheers,
+Adrian
+
+On 15-Apr-08, at 8:37 PM, Thornton Adrian wrote:
+&gt;<i> I managed to boot in single-user mode and a zpool import showed the  
+</I>&gt;<i> pool with one faulted device, just as it should. I thought maybe I  
+</I>&gt;<i> could do a zpool import -f poolname followed rapidly by a zpool  
+</I>&gt;<i> destroy poolname to clear any tasks, and then import -f again, but I  
+</I>&gt;<i> got a panic. Luckily it wrote the details to the screen this time,  
+</I>&gt;<i> so it's time for me to type...
+</I>&gt;<i>
+</I>&gt;<i> panic(cpu 1 caller 0x37046B71): &quot;[ZFS]: assertion failed in /Volumes/ 
+</I>&gt;<i> pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/zfs_kext/zfs/dmu.c  
+</I>&gt;<i> line 437: 0 == dmu_buf_hold_array(os, object, offset, size, FALSE,  
+</I>&gt;<i> FTAG, &amp;numbufs, &amp;dbp)&quot;@Volumes/pixie_d
+</I>&gt;<i> Debugger called: &lt;panic&gt;
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x391b7b78 : 0x12b0f7 (0x4581f4 0x391b7bac 0x133230 0x0)
+</I>&gt;<i> 0x391b7bc8 : 0x37046b71 (0x370b2e0c 0x370b29e4 0x1b5 0x370b2dbc)
+</I>&gt;<i> 0x391b7c58 : 0x3702efe9 (0x511fd18 0x1ec 0x0 0xe938)
+</I>&gt;<i> 0x391b7d28 : 0x3702b9c9 (0x515ce20 0x1 0c515cc2c 0c511fd18)
+</I>&gt;<i> 0x391b7db8 : 0x370730b7 (0x515cc00 0x25ca1f 0x0 0x0)
+</I>&gt;<i> 0x391b7e08 : 0x3706508f (0x487f800 0x25ca1f 0x0 0x0)
+</I>&gt;<i> 0x391b7f58 : 0x3704e22a (0x4a3d800 0x25ca1f 0x0 0x1369fb)
+</I>&gt;<i> 0x391b7fc8 : 0x19eadc (0x511bc00 0x0 0x1a20b5 0x51bcba0)
+</I>&gt;<i> Backtrace terminate-invalid frame pointer 0
+</I>&gt;<i> 	Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i> 		com.apple.filesystems.zfs(8.0)@0x3701d000-&gt;0x370e8fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9C7010
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 15-Apr-08, at 7:35 PM, Thornton Adrian wrote:
+</I>&gt;&gt;<i> I'm having a big problem here. I was replacing the drives in my  
+</I>&gt;&gt;<i> RAIDZ with bigger ones, and in the midst of a resilver the machine  
+</I>&gt;&gt;<i> panicked. I rebooted, and now it panics shortly after the login  
+</I>&gt;&gt;<i> screen every time I reboot the machine. &quot;Screw it,&quot; I thought, and  
+</I>&gt;&gt;<i> moved the disks over to a Solaris 10 box to repair the array.  
+</I>&gt;&gt;<i> Unfortunately, no matter what I do the Solaris box won't recognize  
+</I>&gt;&gt;<i> my SiI 3114 card so I can't get it to see all the drives. The only  
+</I>&gt;&gt;<i> way to get OS X to boot properly is in safe mode or by detaching  
+</I>&gt;&gt;<i> some of the drives. In safe mode, zfs doesn't function.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there any way I can STOP it from doing whatever it's trying to  
+</I>&gt;&gt;<i> do (resilver? scrub?) and figure out what the problem is? Or at  
+</I>&gt;&gt;<i> least how to I find a log of the kernel panic so I can post it for  
+</I>&gt;&gt;<i> your perusal? This is utterly aggravating because 7 of the 8 drives  
+</I>&gt;&gt;<i> in the RAIDZ should be perfectly fine, and my data should be  
+</I>&gt;&gt;<i> intact. I just can't get the bloody thing to stop panicking if I  
+</I>&gt;&gt;<i> have all the drives attached.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> Adrian
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000484.html">[zfs-discuss] Re: RAIDZ continuous panic after zpool replace
+</A></li>
+	<LI>Next message: <A HREF="000487.html">[zfs-discuss] Re: RAIDZ continuous panic after zpool replace
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#485">[ date ]</a>
+              <a href="thread.html#485">[ thread ]</a>
+              <a href="subject.html#485">[ subject ]</a>
+              <a href="author.html#485">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

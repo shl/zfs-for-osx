@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Possible alternatives and posting to both lists.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Possible%20alternatives%20and%20posting%20to%20both%20lists.&In-Reply-To=%3C9ae776de0910232342o545b58e3j16ca5a26260d82df%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002021.html">
+   <LINK REL="Next"  HREF="002031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Possible alternatives and posting to both lists.</H1>
+    <B>426F6C74 55707269676874</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Possible%20alternatives%20and%20posting%20to%20both%20lists.&In-Reply-To=%3C9ae776de0910232342o545b58e3j16ca5a26260d82df%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Possible alternatives and posting to both lists.">gwb0908 at 2Realms.com
+       </A><BR>
+    <I>Fri Oct 23 23:42:42 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002021.html">[zfs-discuss] Thanks for everything
+</A></li>
+        <LI>Next message: <A HREF="002031.html">[zfs-discuss] Possible alternatives and posting to both lists.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2029">[ date ]</a>
+              <a href="thread.html#2029">[ thread ]</a>
+              <a href="subject.html#2029">[ subject ]</a>
+              <a href="author.html#2029">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks to everybody on the list for all your help.  Please put me in
+on the new list, and leave me on the old one as long as it runs.
+
+I follow this list, and several other zfs related lists (Nexenta and
+Belenix), and I use several zfs capable OS's in office computers.
+
+I've joined the google list, and I'm posting to both lists,
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A> and <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-macos at googlegroups.com</A>, in
+case I miss something from either one in the transition.  Who knows,
+maybe they won't yank the macosforge list entirely, or too quickly.  I
+think it would be good to at least to document how zfs on mac os x
+came to be, and then came not to be.  I don't think its right for
+Apple, or anyone else, to change and delete items from their website,
+and then pretend it never happened.  When you see a company, group,
+government or any kind of organisation using this kind of &quot;memory
+hole&quot; technique, you need to call them on it.
+
+&gt;<i>From what I have read on the lists for some time, the speculation
+</I>probably is close to the mark, but things may be less complicated or
+mysterious than they appear.  Apple's highest profit margins come from
+it's gadgets, iPhones and iPods.  Apple also sold more Macs than any
+previous quarter - 3.05 million - but the price pressure on computers
+is greater, meaning their profit margin on laptops, desktops, etc., is
+less than on the gadgets.
+
+Where apple has sold least, and where their profit margin has been
+slim or non-existent, has been in the business and enterprise section.
+ They seem to have dropped the xserve, and have given their enterprise
+business to Promise.  Apple apparently believes that ZFS and os x
+server are, largely, business and enterprise products, with little
+appeal to their most lucrative market, the retail customer.  So apple
+has little incentive to keep and develop enterprise level hardware and
+software (xserve, zfs, os x server).
+
+What is unfortunate is that Apple seems able to give this information
+in (or it can be easily understood from) their reports to analysts and
+investors, but they will not say this to the people who actually buy,
+use and want to keep using, their products.  So the best way to
+determine what Apple will do is to read the financial information they
+give, and also what financial analysts are saying.  And, if you really
+want to have a good laugh, ask an Apple rep or employee about
+something Apple has already told investors, and watch them deny it, or
+claim it never happened, or won't happen.
+
+Do I blame Apple for this?  No.  Do they make great products?  Yes,
+they do.  Would I consider them for long term business or enterprise
+users, small, large or in between?  Not any more.  Do serious and
+successful companies drop an entire line of servers, and then have key
+features of an upcoming file system disappear without explanation?
+Apparently Apple will be the only one to pull this off, but it is
+pretty much unheard of among the Hewlitt Packards, IBM's, Solarises
+(Solareses?), and Microsofts.  Would I buy more of their stock?  Sure
+I would, just as soon as the price drops back down after the next
+correction.  Is it an amazing business model?  You bet, but I'm not
+sure they planned to be a mostly retail maker and seller of iPhones
+and iPods that sells computers on the side, in their own proprietary
+stores.  But, hey, it works for them.
+
+After getting zfs to work on several macs in the office some time ago,
+I decided it was sufficiently buggy that I needed a backup.  I mean
+that literally.  I needed to move zpools of one version to another,
+because the versions on OpenSolaris, FreeBSD and OS X varied over
+time.  So I took older, generic machines (any recent intel board with
+4 to 8 gigs of memory will do) and set them up as fileservers, running
+zfs over cifs (samba).  Of the opensolaris variants, at least 2 keep
+fairly up to date with revisions in ZFS:
+
+NexentaCore (the free version of Nexenta)
+Belenix
+
+(I don't know how the list handles urls, but you can see the listing
+at opensolaris.org, os/downloads/)
+
+The learning curve can be high for these two, and they still have some
+kinks.  But they run zfs over samba very well.  Or just use
+OpenSolaris.  FreeBSD is also great, and is closer to os x, but the
+zpool version lags somewhat compared to opensolaris.
+
+So, yes, by all means, let's try to get zfs better and more stable on
+os x, but in the meantime, I would suggest you get another machine
+running your zfs pools, and sharing them over samba (or NFS, or
+webdav).
+
+It would be great to have time machine working on a zpool.  Some of
+the people on this list have probably done it by using a sparse bundle
+disk image, and then changing the plist (or whatever apple calls it)
+for time machine back ups.  But I would worry about Apple changing or
+modifying Time Machine in some way that it won't work with that set up
+in future revisions.
+
+So, please, keep up the good work.  I can't help or contribute much to
+the 10.6 discussion, because I'm not buying it, or new apple machines,
+for the near future.  I'll keep following the list, and if someone is
+interested in some of the other zfs capable OS's, I can point them to
+sources, and a few &quot;how-to's&quot;.
+
+Gordon
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002021.html">[zfs-discuss] Thanks for everything
+</A></li>
+	<LI>Next message: <A HREF="002031.html">[zfs-discuss] Possible alternatives and posting to both lists.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2029">[ date ]</a>
+              <a href="thread.html#2029">[ thread ]</a>
+              <a href="subject.html#2029">[ subject ]</a>
+              <a href="author.html#2029">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Questions about hot spares
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Questions%20about%20hot%20spares&In-Reply-To=%3Cfbaadd320812162336o6feb57dfve6c4445de25f947f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001164.html">
+   <LINK REL="Next"  HREF="001166.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Questions about hot spares</H1>
+    <B>Mr. Zorg ...</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Questions%20about%20hot%20spares&In-Reply-To=%3Cfbaadd320812162336o6feb57dfve6c4445de25f947f%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Questions about hot spares">zorg at sogeeky.net
+       </A><BR>
+    <I>Tue Dec 16 23:36:49 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001164.html">[zfs-discuss] OpenSolaris as Server for MacOS X 10.5 - [a bit	off-topic, sorry]
+</A></li>
+        <LI>Next message: <A HREF="001166.html">[zfs-discuss] Questions about hot spares
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1165">[ date ]</a>
+              <a href="thread.html#1165">[ thread ]</a>
+              <a href="subject.html#1165">[ subject ]</a>
+              <a href="author.html#1165">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Uh oh, it's my turn to ask for help/advice.  First, I want to say I
+have not lost any data, so no worries there.  But, my zfs pool is on a
+set of external firewire drives and I've had ongoing problems with bad
+capacitors taking out the power supplies on them.  I fix them when
+that happens and resilver and all is well since I'm running as raidz1.
+ Recently I added a hot spare on the idea that it would automatically
+spring in to action a replace a failed drive.  But it didn't.  Here's
+what things looked like:
+
+$ zpool status
+  pool: Storage
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+ scrub: none requested
+config:
+
+	NAME                    STATE     READ WRITE CKSUM
+	Storage                 DEGRADED     0     0     0
+	  raidz1                DEGRADED     0     0     0
+	    disk7s2             ONLINE       0     0     0
+	    disk6s2             ONLINE       0     0     0
+	    699198789361538667  FAULTED      0     0     0  was /dev/disk6s2
+	    disk4s2             ONLINE       0     0     0
+	    disk3s2             ONLINE       0     0     0
+	    disk2s2             ONLINE       0     0     0
+	spares
+	  disk1s2               AVAIL
+
+errors: No known data errors
+
+So my questions are as follows:
+
+1) Why didn't the hot spare automatically fill in for the faulted
+disk?  Isn't that what they're for?
+
+2) I know you can't grow a raidz, but can you add a disk to convert a
+raidz1 to raidz2?
+
+3) While the disk was in a quazi-weird state (that's a technical
+term!) I couldn't run zpool status without locking up.  I guessed at
+what was happening and tracked down the back drive.  Only when it was
+powered off could I run zpool status successfully.  Others have seen
+similar issues, as I recall.  Has this been fixed yet?  Any ETA on new
+bits?
+
+Thank you!
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001164.html">[zfs-discuss] OpenSolaris as Server for MacOS X 10.5 - [a bit	off-topic, sorry]
+</A></li>
+	<LI>Next message: <A HREF="001166.html">[zfs-discuss] Questions about hot spares
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1165">[ date ]</a>
+              <a href="thread.html#1165">[ thread ]</a>
+              <a href="subject.html#1165">[ subject ]</a>
+              <a href="author.html#1165">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%5Bfollow-up%5DRe%3A%20DiskManagement%20setuid-tool%20failure%20on%0A%20zfs%20disks&In-Reply-To=%3CF6827D21-6DD6-445E-81E1-AF6A69D417E6%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001283.html">
+   <LINK REL="Next"  HREF="001294.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%5Bfollow-up%5DRe%3A%20DiskManagement%20setuid-tool%20failure%20on%0A%20zfs%20disks&In-Reply-To=%3CF6827D21-6DD6-445E-81E1-AF6A69D417E6%40mac.com%3E"
+       TITLE="[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Wed Jan 14 08:34:28 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001283.html">[zfs-discuss] DiskManagement setuid-tool failure on zfs disks
+</A></li>
+        <LI>Next message: <A HREF="001294.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure	on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1293">[ date ]</a>
+              <a href="thread.html#1293">[ thread ]</a>
+              <a href="subject.html#1293">[ subject ]</a>
+              <a href="author.html#1293">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Strange things are happening.
+In single user mode I can get gpt show to list info on my zfs disks.
+In multi user mode. with zfs pool unmounted, I get errors.
+I am at a loss at what to do next.
+All help welcome ,
+see below :
+
+Macintosh:etc root# gpt show /dev/disk0
+gpt show: unable to open device '/dev/disk0': No such file or directory
+
+Macintosh:etc root# zpool status
+   pool: backup
+  state: ONLINE
+  scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	backup       ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+Macintosh:etc root# mount
+/dev/disk4s2 on / (hfs, local, journaled)
+devfs on /dev (devfs, local)
+fdesc on /dev (fdesc, union)
+map -hosts on /net (autofs, automounted)
+map auto_home on /home (autofs, automounted)
+/dev/disk1s2 on /Volumes/osx (hfs, local)
+/dev/disk1s3 on /Volumes/empty (hfs, local, journaled)
+/dev/disk1s4 on /Volumes/windowsXP (ntfs, local, read-only, noowners)
+/dev/disk5 on /Volumes/GB1CULXFRE_EN_DVD (udf, local, nodev, nosuid,  
+read-only, noowners)
+
+Macintosh:etc root# dtruss -lf gpt show /dev/disk0
+gpt show: unable to open device '/dev/disk0': No such file or directory
+	PID/THRD  SYSCALL(args) 		 = return
+   412/0xa03d048:  getpid(0x0, 0x0, 0x0)		 = 412 0
+   412/0xa03d048:  __sysctl(0xBFFFE5A8, 0x3, 0xBFFFF9C8)		 = 0 0
+   412/0xa03d048:  issetugid(0xBFFFE5A8, 0x3, 0xBFFFF9C8)		 = 0 0
+   412/0xa03d048:  __sysctl(0xBFFFE464, 0x2, 0xBFFFE42C)		 = 0 0
+   412/0xa03d048:  __sysctl(0xBFFFE42C, 0x2, 0xBFFFE4AC)		 = 0 0
+   412/0xa03d048:  shared_region_check_np(0xBFFFF9A8, 0x2,  
+0xBFFFE4AC)		 = 0 0
+   412/0xa03d048:  stat(&quot;/usr/lib/dtrace/libdtrace_dyld.dylib\0&quot;,  
+0xBFFFD618, 0xBFFFE4AC)		 = 0 0
+   412/0xa03d048:  open(&quot;/usr/lib/dtrace/libdtrace_dyld.dylib\0&quot;, 0x0,  
+0x0)		 = 3 0
+   412/0xa03d048:  pread(0x3, &quot;\312\376\272\276\0&quot;, 0x1000, 0x0)		 =  
+4096 0
+   412/0xa03d048:  pread(0x3, &quot;\316\372\355\376\a\0&quot;, 0x1000,  
+0x9000)		 = 4096 0
+   412/0xa03d048:  mmap(0xA000, 0x1000, 0x5, 0x12, 0x3,  
+0xFFFFFFFF00000000)		 = 0xA000 0
+   412/0xa03d048:  mmap(0xB000, 0x1000, 0x3, 0x12, 0x3,  
+0xFFFFFFFF00000000)		 = 0xB000 0
+   412/0xa03d048:  mmap(0xC000, 0x1000, 0x7, 0x12, 0x3,  
+0xFFFFFFFF00000000)		 = 0xC000 0
+   412/0xa03d048:  mmap(0xD000, 0x1900, 0x1, 0x12, 0x3,  
+0xFFFFFFFF00000000)		 = 0xD000 0
+   412/0xa03d048:  fcntl(0x3, 0x2C, 0xFFFFFFFFBFFFBC84)		 = 0 0
+   412/0xa03d048:  close(0x3)		 = 0 0
+   412/0xa03d048:  stat(&quot;/usr/lib/libgcc_s.1.dylib\0&quot;, 0xBFFFD418,  
+0xFFFFFFFFBFFFBC84)		 = 0 0
+   412/0xa03d048:  stat(&quot;/usr/lib/libSystem.B.dylib\0&quot;, 0xBFFFD418,  
+0xFFFFFFFFBFFFBC84)		 = 0 0
+   412/0xa03d048:  stat(&quot;/usr/lib/system/libmathCommon.A.dylib\0&quot;,  
+0xBFFFD258, 0xFFFFFFFFBFFFBC84)		 = 0 0
+   412/0xa03d048:  open(&quot;/dev/dtracehelper\0&quot;, 0x2, 0xBFFFE434)		 = 3 0
+   412/0xa03d048:  ioctl(0x3, 0x80086804, 0xBFFFE3B8)		 = 0 0
+   412/0xa03d048:  close(0x3)		 = 0 0
+   412/0xa03d048:  __sysctl(0xBFFFE28C, 0x2, 0xBFFFE294)		 = 0 0
+   412/0xa03d048:  bsdthread_register(0x91198F30, 0x911D12A4,  
+0x1000)		 = 0 0
+   412/0xa03d048:  open_nocancel(&quot;/dev/urandom\0&quot;, 0x0, 0x0)		 = 3 0
+   412/0xa03d048:  read_nocancel(0x3, &quot;\001C\021&amp;(\n6\027\340\005\324cm 
+\244+\242\310\372\312+\0&quot;, 0x20)		 = 32 0
+   412/0xa03d048:  close_nocancel(0x3)		 = 0 0
+   412/0xa03d048:  mmap(0x0, 0x3000, 0x3, 0x1002, 0x1000000,  
+0xFFFFFFFF00000000)		 = 0xF000 0
+   412/0xa03d048:  mmap(0x0, 0x200000, 0x3, 0x1002, 0x7000000,  
+0xFFFFFFFF00000000)		 = 0x12000 0
+   412/0xa03d048:  munmap(0x12000, 0xEE000)		 = 0 0
+   412/0xa03d048:  munmap(0x200000, 0x12000)		 = 0 0
+   412/0xa03d048:  mmap(0x0, 0x3000, 0x3, 0x1002, 0x1000000,  
+0xFFFFFFFF00000000)		 = 0x12000 0
+   412/0xa03d048:  getpid(0x0, 0x3000, 0x3)		 = 412 0
+   412/0xa03d048:  __sysctl(0xBFFFFA58, 0x2, 0x0)		 = 0 0
+   412/0xa03d048:  open(&quot;/dev/disk0\0&quot;, 0x802, 0x400)		 = -1 Err#16
+   412/0xa03d048:  open(&quot;/dev//dev/disk0\0&quot;, 0x802, 0x5B94)		 = -1 Err#2
+   412/0xa03d048:  write_nocancel(0x2, &quot;gpt show: \0&quot;, 0xA)		 = 10 0
+   412/0xa03d048:  write_nocancel(0x2, &quot;unable to open device '/dev/ 
+disk0'\0&quot;, 0x22)		 = 34 0
+   412/0xa03d048:  write_nocancel(0x2, &quot;: \0&quot;, 0x2)		 = 2 0
+   412/0xa03d048:  write_nocancel(0x2, &quot;No such file or directory\n 
+\0&quot;, 0x1A)		 = 26 0
+
+On 11 Jan 2009, at 17:35, Dirk Schelfhout wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Can anyone tell me why diskutil is giving this error
+</I>&gt;<i> on my zfs disks.
+</I>&gt;<i> All works fine. ( did a scrub yesterday )
+</I>&gt;<i> I first noticed this error by using winclone.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Dirk
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> diskutil list disk0
+</I>&gt;<i> /dev/disk0
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk0
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk0s1
+</I>&gt;<i>    2:                  Apple_HFS osx                     80.0 Gi     
+</I>&gt;<i> disk0s2
+</I>&gt;<i>    3:                  Apple_HFS empty                   10.0 Gi     
+</I>&gt;<i> disk0s3
+</I>&gt;<i>    4:       Microsoft Basic Data windowsXP               116.7 Gi    
+</I>&gt;<i> disk0s4
+</I>&gt;<i>
+</I>&gt;<i> Macintosh:~ schelfd$ diskutil list disk1
+</I>&gt;<i> /dev/disk1
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk1
+</I>&gt;<i>
+</I>&gt;<i> DiskManagement setuid-tool failure
+</I>&gt;<i>
+</I>&gt;<i> Macintosh:~ schelfd$ diskutil list disk2
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>
+</I>&gt;<i> DiskManagement setuid-tool failure
+</I>&gt;<i>
+</I>&gt;<i> Macintosh:~ schelfd$ diskutil list disk3
+</I>&gt;<i> /dev/disk3
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk3
+</I>&gt;<i>
+</I>&gt;<i> DiskManagement setuid-tool failure
+</I>&gt;<i>
+</I>&gt;<i> Macintosh:~ schelfd$ diskutil list disk4
+</I>&gt;<i> /dev/disk4
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *233.8 Gi    
+</I>&gt;<i> disk4
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk4s1
+</I>&gt;<i>    2:                  Apple_HFS bootOSX                 233.4 Gi    
+</I>&gt;<i> disk4s2
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090114/779e09ce/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090114/779e09ce/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001283.html">[zfs-discuss] DiskManagement setuid-tool failure on zfs disks
+</A></li>
+	<LI>Next message: <A HREF="001294.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure	on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1293">[ date ]</a>
+              <a href="thread.html#1293">[ thread ]</a>
+              <a href="subject.html#1293">[ subject ]</a>
+              <a href="author.html#1293">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

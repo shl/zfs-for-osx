@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic in AVL (build 154 aka 10a286)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20in%20AVL%20%28build%20154%20aka%2010a286%29&In-Reply-To=%3C7C911D5D-69EB-4FFA-B8E3-BC9447BA4311%40sourcemac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="001887.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic in AVL (build 154 aka 10a286)</H1>
+    <B>Julien-Pierre Av&#233;rous</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20in%20AVL%20%28build%20154%20aka%2010a286%29&In-Reply-To=%3C7C911D5D-69EB-4FFA-B8E3-BC9447BA4311%40sourcemac.com%3E"
+       TITLE="[zfs-discuss] Panic in AVL (build 154 aka 10a286)">j.averous at sourcemac.com
+       </A><BR>
+    <I>Wed Oct  7 00:17:00 PDT 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="001887.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1886">[ date ]</a>
+              <a href="thread.html#1886">[ thread ]</a>
+              <a href="subject.html#1886">[ subject ]</a>
+              <a href="author.html#1886">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there !
+
+I know, I should forget ZFS for the moment, until Apple resolve its  
+problems with legals (or technicals (or...)) issues. But I love too  
+much ZFS ;)
+
+So I have installed the build 154 (released in the Mac OS  Build  
+10a286) in Mac OS X Server Snow Leopard X.6.1.
+
+I have a WD Drive in USB2 of 2 TB. I have formatted my drive,  
+configured the main partition as a ZFS entity, created a ZFS Pool on  
+this entity and finally created a filesystem on this pool.
+
+This seem work fine, until I try to copy (with cp -pR) a big amount of  
+file (between 3 to 6 MB each) : after a little amount of file copied  
+(less than 3000, not on the same directory), my server is killed with  
+a call to panic, generating this trace :
+
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+========================================================================
+panic(cpu 0 caller 0x32f09ab3): &quot;avl_find() succeeded inside avl_add 
+()&quot;@/SourceCache/zfs/zfs-154/src/common/avl/avl.c:642
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x3a5e3c68 : 0x21acfa (0x5ce650 0x3a5e3c9c 0x223156 0x0)
+0x3a5e3cb8 : 0x32f09ab3 (0x32f6c850 0x3a5e3d84 0x3a5e3cdc 0x32ef65b0)
+0x3a5e3ce8 : 0x32e8e34c (0x3a98294c 0x3a5e3d84 0x6 0x0)
+0x3a5e3de8 : 0x2f4082 (0x3a5e3e0c 0x5474ba 0x41a6000 0x4fb5c6)
+0x3a5e3e48 : 0x4cdad7 (0x5b45c54 0x0 0x80000 0x0)
+0x3a5e3ed8 : 0x24fcfa (0x5b45c54 0x0 0x80000 0x0)
+0x3a5e3f38 : 0x25040c (0x36bdc94 0x80000 0x0 0x1000)
+0x3a5e3f68 : 0x274bd5 (0x36bdc94 0x80000 0x0 0x1000)
+0x3a5e3fc8 : 0x29c68c (0x84985c 0x0 0x10 0x45af764)
+       Kernel Extensions in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x32e87000-&gt;0x32fcdfff
+             dependency: com.apple.iokit.IOStorageFamily(1.6)@0xb6c000
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+10B504
+
+Kernel version:
+Darwin Kernel Version 10.0.0: Fri Jul 31 22:47:34 PDT 2009;  
+root:xnu-1456.1.25~1/RELEASE_I386
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+= 
+========================================================================
+
+Have you an idea why this happen ?
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="001887.html">[zfs-discuss] Panic in AVL (build 154 aka 10a286)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1886">[ date ]</a>
+              <a href="thread.html#1886">[ thread ]</a>
+              <a href="subject.html#1886">[ subject ]</a>
+              <a href="author.html#1886">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

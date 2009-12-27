@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS new bits on the wiki
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20new%20bits%20on%20the%20wiki&In-Reply-To=33644d3c0804161216v672d609ck90167a17b11626ef%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000495.html">
+   <LINK REL="Next"  HREF="000493.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS new bits on the wiki</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20new%20bits%20on%20the%20wiki&In-Reply-To=33644d3c0804161216v672d609ck90167a17b11626ef%40mail.gmail.com"
+       TITLE="[zfs-discuss] ZFS new bits on the wiki">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Apr 18 11:48:57 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000495.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+        <LI>Next message: <A HREF="000493.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#509">[ date ]</a>
+              <a href="thread.html#509">[ thread ]</a>
+              <a href="subject.html#509">[ subject ]</a>
+              <a href="author.html#509">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> 1) Install instructions reference &quot;Release&quot; directory, should be
+</I>&gt;<i> adjusted to for the &quot;Leopard_Release&quot; path they reside within in the
+</I>&gt;<i> tarball.
+</I>
+Fixed.  Thanks for finding this :)
+
+
+&gt;<i> 2) Firefox addon install issue still present (though it sounds like
+</I>&gt;<i> something in xulrunner needs to be fixed to resolve that issue)
+</I>
+So the Firefox addon issue is due to the fact that we (ZFS) don't  
+support vop_preallocate, hence why in your debugging you were seeing  
+45, ENOTSUP.  vop_preallocate doesn't even make sense for ZFS  
+really.   Ideally, it would be cool if I could contact the Firefox  
+people and ask them not to rely on vop_preallocate returning success,  
+just make the write call outright.  I can try and fake something up  
+but I&quot;m not sure if that will make Firefox really happy...
+
+
+&gt;<i> Anything in particular that should be banged on in this release aside
+</I>&gt;<i> from the noted fixes?  Is there anything else new we should check out?
+</I>
+Not really, the new mmap coherency is really the most interesting  
+thing in this drop that you could bang on.  Assuming you have programs  
+that rely on mmap coherency.
+
+
+&gt;<i> Is using swap on a zfs volume advisable?
+</I>
+Sun discourages it in their systems because /swap is a separate  
+partition. However, in Mac OS X swap is just a file that resides on  
+the root filesystem. Since swap is just a file, having it on zfs (by  
+mounting a zfs file system over &quot;/var/vm&quot;) should work for the vm swap  
+file.  AFAIK, swap is only accessed by page in/out not read/write.
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Is there a generalized approach for making a minimal HFS partition and
+</I>&gt;<i> having everything else on ZFS, similar to what one can do on FreeBSD
+</I>
+There's no generalized approach yet really.  ZFS boot is still being  
+worked on.  If you want to go &quot;do it yourself&quot; style, then for  
+testing, we are able to mount zfs file systems over most of the  
+directories in &quot;/&quot; ( /Applications, /System, /Library, /Users, etc).
+
+So you could strip some of these down on HFS+ (especially / 
+Applications, /Users to the minimum), perhaps looking at the Mac OSX  
+install DVD as an example for the minimums.
+
+
+Noel
+
+
+On Apr 16, 2008, at 12:16 PM, James Snyder wrote:
+
+&gt;<i> Hi -
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the fresh bits!
+</I>&gt;<i>
+</I>&gt;<i> A couple minor notes (haven't really dug into extensive testing):
+</I>&gt;<i>
+</I>&gt;<i> 1) Install instructions reference &quot;Release&quot; directory, should be
+</I>&gt;<i> adjusted to for the &quot;Leopard_Release&quot; path they reside within in the
+</I>&gt;<i> tarball.
+</I>&gt;<i> 2) Firefox addon install issue still present (though it sounds like
+</I>&gt;<i> something in xulrunner needs to be fixed to resolve that issue)
+</I>&gt;<i>
+</I>&gt;<i> Another few questions:
+</I>&gt;<i> Anything in particular that should be banged on in this release aside
+</I>&gt;<i> from the noted fixes?  Is there anything else new we should check out?
+</I>&gt;<i>
+</I>&gt;<i> Also, is there a workaround for the piping/fifo issue aside from  
+</I>&gt;<i> using fifos?
+</I>&gt;<i>
+</I>&gt;<i> Is using swap on a zfs volume advisable?
+</I>&gt;<i>
+</I>&gt;<i> Is there a generalized approach for making a minimal HFS partition and
+</I>&gt;<i> having everything else on ZFS, similar to what one can do on FreeBSD
+</I>&gt;<i> (<A HREF="http://wiki.freebsd.org/ZFSOnRoot">http://wiki.freebsd.org/ZFSOnRoot</A>)?
+</I>&gt;<i>
+</I>&gt;<i> Again, thanks for the new release.  My first-five-minutes impressions
+</I>&gt;<i> are that it works as well as the previous release.  As before, I'll be
+</I>&gt;<i> sure to report any experiences :-)
+</I>&gt;<i> On Wed, Apr 16, 2008 at 1:37 PM, No&#235;l Dellofano  
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Hey everyone,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for you patience!  Just a heads up that I posted new bits on  
+</I>&gt;&gt;<i> the wiki
+</I>&gt;&gt;<i> today.  The latest drop is zfs-111.  Fixes in this rev are:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/4873926">rdar://problem/4873926</A>&gt; make mmap'd pages for zfs play nice
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5290357">rdar://problem/5290357</A>&gt; copyfile(3) fails on symlinks on ZFS
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5687660">rdar://problem/5687660</A>&gt; zfs send won't die
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5659137">rdar://problem/5659137</A>&gt; No negative namecache for ZFS
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5285605">rdar://problem/5285605</A>&gt; zfs should tune the number of threads it  
+</I>&gt;&gt;<i> initially
+</I>&gt;&gt;<i> generates
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5653782">rdar://problem/5653782</A>&gt; zio_checksum_sha256() incorrect if buffer  
+</I>&gt;&gt;<i> size not
+</I>&gt;&gt;<i> a multiple of 64
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5727711">rdar://problem/5727711</A>&gt; zfs panic when swap file resides on zfs
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5735151">rdar://problem/5735151</A>&gt; Fix zfs build targets
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5756450">rdar://problem/5756450</A>&gt; need to fix Leopard only build target due  
+</I>&gt;&gt;<i> to symbol
+</I>&gt;&gt;<i> change
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5795082">rdar://problem/5795082</A>&gt; ZFS should remove its kqueue support
+</I>&gt;&gt;<i> &lt;<A HREF="rdar://problem/5853667">rdar://problem/5853667</A>&gt; define MAX_UPL_TRANSFER for open source  
+</I>&gt;&gt;<i> builds
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've also put all this on the website and I've also left zfs-102A  
+</I>&gt;&gt;<i> up at the
+</I>&gt;&gt;<i> bottom under 'Past Revisions' incase anyone was dependent on that for
+</I>&gt;&gt;<i> anything.
+</I>&gt;&gt;<i> Things to note:
+</I>&gt;&gt;<i> - This build *is* mmap coherent, so your mmap programs should be much
+</I>&gt;&gt;<i> happier and working.
+</I>&gt;&gt;<i> - the build process has been changed. With the fix of 5795082,  
+</I>&gt;&gt;<i> kqueues are
+</I>&gt;&gt;<i> no longer needed in ZFS since they've moved up to the VFS layer.   
+</I>&gt;&gt;<i> So all you
+</I>&gt;&gt;<i> need to do to build is choose the &quot;Leopard_Release&quot; config under  
+</I>&gt;&gt;<i> the build
+</I>&gt;&gt;<i> menu and you're good to go.  No more flags to mess with.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> let me know if you have any problems with the website or  
+</I>&gt;&gt;<i> downloading the
+</I>&gt;&gt;<i> bits.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> thanks!
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> James Snyder
+</I>&gt;<i> Biomedical Engineering
+</I>&gt;<i> Northwestern University
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000495.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+	<LI>Next message: <A HREF="000493.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#509">[ date ]</a>
+              <a href="thread.html#509">[ thread ]</a>
+              <a href="subject.html#509">[ subject ]</a>
+              <a href="author.html#509">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

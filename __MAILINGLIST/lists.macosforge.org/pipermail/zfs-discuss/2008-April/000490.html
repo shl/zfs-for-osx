@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Re: 3 x 750 GB or 4 x 500 GB
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%203%20x%20750%20GB%20or%204%20x%20500%20GB&In-Reply-To=20080416105414.C04602482A9%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000489.html">
+   <LINK REL="Next"  HREF="000491.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Re: 3 x 750 GB or 4 x 500 GB</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%203%20x%20750%20GB%20or%204%20x%20500%20GB&In-Reply-To=20080416105414.C04602482A9%40lists.macosforge.org"
+       TITLE="[zfs-discuss] Re: 3 x 750 GB or 4 x 500 GB">i_see at macnews.de
+       </A><BR>
+    <I>Wed Apr 16 09:18:07 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000489.html">[zfs-discuss] Re: RAIDZ continuous panic after zpool replace
+</A></li>
+        <LI>Next message: <A HREF="000491.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#490">[ date ]</a>
+              <a href="thread.html#490">[ thread ]</a>
+              <a href="subject.html#490">[ subject ]</a>
+              <a href="author.html#490">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Chris,
+I don't know about the influence of cache size on ZFS, but in general  
+the number of spindels is an important factor to disk array  
+performance for sequential reads and writes. Since ZFS will almost  
+always write sequentially, this would offer a slightly better  
+performance with more smaller disks.
+Small random reads might be a bit better on smaller vdevs, but this  
+could change in future versions of ZFS IMHO and is not a very typical  
+workload.
+Reliability is a bit better with less drives in a vdev, but then  
+again, if you really care, you use 3-way mirroring or raidz2 with a  
+hot spare. the effect of devoting an extra disk to redundancy is MUCH  
+bigger then the difference in probablility of two out of three disks  
+failing compared to two out of four disks failing.
+If you want to be reasonably save, use cron or some alternative to  
+issue a zpool scrub on a regular basis, so you do actually detect  
+problems while they can still be fixed. If you do that and replace  
+disks that show regular problems the odds are good you will not live  
+long enough to see data loss.
+
+Hope this helps,
+ralf
+Am 16.04.2008 um 12:54 schrieb <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have been testing ZFS on my Mac with some spare disks I had lying  
+</I>&gt;<i> around, but I am now ready to make the jump to all home folders on  
+</I>&gt;<i> ZFS. My question is whether or not it would make a difference in  
+</I>&gt;<i> performance or reliability building a raidz from 4 x 500 GB drives  
+</I>&gt;<i> vs. 3 x 750 GB drives?
+</I>&gt;<i>
+</I>&gt;<i> 750 GB 7200 w/32 MB cache vs 500 GB 7200 w/16MB cache.
+</I>&gt;<i>
+</I>&gt;<i> and. . .Seagate Barracuda vs. Samsung Spinpoint F1. Should either of  
+</I>&gt;<i> these be avoided?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Chris Shuman
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000489.html">[zfs-discuss] Re: RAIDZ continuous panic after zpool replace
+</A></li>
+	<LI>Next message: <A HREF="000491.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#490">[ date ]</a>
+              <a href="thread.html#490">[ thread ]</a>
+              <a href="subject.html#490">[ subject ]</a>
+              <a href="author.html#490">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

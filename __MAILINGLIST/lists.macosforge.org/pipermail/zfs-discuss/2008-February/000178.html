@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz and hfsplus striped
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz%20and%20hfsplus%20striped&In-Reply-To=973D7332-6569-4D30-8B79-B1FCE144C0BD%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000177.html">
+   <LINK REL="Next"  HREF="000179.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz and hfsplus striped</H1>
+    <B>Kane Dijkman</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz%20and%20hfsplus%20striped&In-Reply-To=973D7332-6569-4D30-8B79-B1FCE144C0BD%40mac.com"
+       TITLE="[zfs-discuss] raidz and hfsplus striped">kane at inius.com
+       </A><BR>
+    <I>Tue Feb 19 17:49:35 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000177.html">[zfs-discuss] raidz and hfsplus striped
+</A></li>
+        <LI>Next message: <A HREF="000179.html">[zfs-discuss] crash on $zpool online gene disk14s2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#178">[ date ]</a>
+              <a href="thread.html#178">[ thread ]</a>
+              <a href="subject.html#178">[ subject ]</a>
+              <a href="author.html#178">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If you look through the archive for the past month you will find some  
+talk about rsync 3 working better with zfs. I downloaded and built the  
+latest version of it and all my rsyncing problems on a 1.2TB array  
+went away and everything is happy now.
+
+Might solve your issues too.
+
+On Feb 19, 2008, at 10:30 AM, Dirk Schelfhout wrote:
+
+&gt;<i> No, sorry for the misunderstanding.
+</I>&gt;<i> I formatted the disks in 2 partitions.
+</I>&gt;<i> I use the 1st partiition of the 3 disks to create an hfsplus stripe.
+</I>&gt;<i> ( hfsplus is stable, so... reliable )
+</I>&gt;<i> I use the 2nd partition on each of the 3 disks to create a raidz. ( so
+</I>&gt;<i> I can play with it and learn )
+</I>&gt;<i> rsync really doesn't like syncen to this new raidz ......... :-(
+</I>&gt;<i>
+</I>&gt;<i> On 19 Feb 2008, at 19:13, Franz Schmalzl wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'm facing some linguistic understanding problems here sorry.....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You said you created a sriped HFS and still get reliability?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So you have  created a raidz but formatted the drive HFS+ ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So you still use the raidz parity algorithms but with a hfs+
+</I>&gt;&gt;<i> filesystem ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Afaik just striping hfs+ via apple software raid doesn't bring you
+</I>&gt;&gt;<i> any safety. i.e. if one drive fails, everything is gone..
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 19.02.2008, at 16:24, Dirk Schelfhout wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I decided to destroy my raidz pool on 3 500g disks in my macpro and
+</I>&gt;&gt;&gt;<i> format them, so I can use a striped hfsplus raid
+</I>&gt;&gt;&gt;<i> and a raidz on the same disks. I get reliability and can still play
+</I>&gt;&gt;&gt;<i> with raidz.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> As I unmounted the pool and then did zpool destroy backup ( backup  
+</I>&gt;&gt;&gt;<i> is
+</I>&gt;&gt;&gt;<i> pool name ),
+</I>&gt;&gt;&gt;<i> I got the screen where the os asks me to hold down the power button
+</I>&gt;&gt;&gt;<i> to
+</I>&gt;&gt;&gt;<i> reset.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I later did a zpool destroy while the pool was still mounted and  
+</I>&gt;&gt;&gt;<i> that
+</I>&gt;&gt;&gt;<i> gave no problem.
+</I>&gt;&gt;&gt;<i> I am not willing to retry this, but it seems to be a nasty bug. :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Dirk
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+
+----------------------------------------------------------------------------------
+Does the movement of the trees make the wind blow?
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000177.html">[zfs-discuss] raidz and hfsplus striped
+</A></li>
+	<LI>Next message: <A HREF="000179.html">[zfs-discuss] crash on $zpool online gene disk14s2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#178">[ date ]</a>
+              <a href="thread.html#178">[ thread ]</a>
+              <a href="subject.html#178">[ subject ]</a>
+              <a href="author.html#178">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

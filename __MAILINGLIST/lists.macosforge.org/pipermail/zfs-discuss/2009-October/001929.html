@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Pool gone after Kernel Panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Pool%20gone%20after%20Kernel%20Panic&In-Reply-To=%3C2bfa7a9b0910111611x3dccc113l5dc12b5da1f1a73d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001926.html">
+   <LINK REL="Next"  HREF="001930.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Pool gone after Kernel Panic</H1>
+    <B>mano vasilakis</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Pool%20gone%20after%20Kernel%20Panic&In-Reply-To=%3C2bfa7a9b0910111611x3dccc113l5dc12b5da1f1a73d%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Pool gone after Kernel Panic">developer at mvasilakis.com
+       </A><BR>
+    <I>Sun Oct 11 16:11:36 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001926.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+        <LI>Next message: <A HREF="001930.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1929">[ date ]</a>
+              <a href="thread.html#1929">[ thread ]</a>
+              <a href="subject.html#1929">[ subject ]</a>
+              <a href="author.html#1929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It's an older enclosure I picked up at OWC as on open box. I had to flash it
+to get it to recognize over 2TB and I think that RAIDON may not have fully
+developed the drivers.
+Anyway that is why my suspicions are with the enclosure and not the drives.
+I will order a SATA to USB cable and see if I see errors with these drives
+individually but I'm fairly certain I blew my money on the enclosure. (once
+in the enclosure the drives are viewable to the FW bus as one drive, that's
+why I referenced it in my original post as one drive, to keep from confusing
+anyone.)
+
+Enclosure:
+Stardom 7610 4 Bay Rack Mount SATA-II Removable HD Enclosure with
+eSATA/FW800/USB 2.0
+
+FireWire:
+
+    FireWire Bus:
+
+      Maximum Speed: Up to 800 Mb/sec
+
+        Built-in Hub:
+
+          Maximum Speed: Up to 800 Mb/sec
+          Connection Speed: Up to 800 Mb/sec
+
+        Oxford IDE Device0:
+
+          Manufacturer: Oxford Semiconductor Ltd.
+          Model: 0x0
+          GUID: ***********
+          Maximum Speed: Up to 800 Mb/sec
+          Connection Speed: Up to 800 Mb/sec
+          Sub-units:
+            Oxford IDE Device0 Unit:
+              Unit Software Version: 0x10483
+              Unit Spec ID: 0x609E
+              Firmware Revision: 0x100
+              Product Revision Level: V.70
+              Sub-units:
+                Oxford IDE Device0 SBP-LUN:
+                  Capacity: 4 TB (4,000,819,445,760 bytes)
+                  Removable Media: Yes
+                  BSD Name: disk4
+                  Partition Map Type: GPT (GUID Partition Table)
+                  S.M.A.R.T. status: Not Supported
+                  Volumes:
+                    ZFS File System:
+                      Capacity: 4 TB (4,000,475,471,872 bytes)
+                      Writable: Yes
+                      File System: ZFS (Not Mountable)
+                      BSD Name: disk4s2
+
+On Sun, Oct 11, 2009 at 4:14 PM, Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt;wrote:
+
+&gt;<i> On Oct 11, 2009, at 20:45, mano vasilakis wrote:
+</I>&gt;<i>
+</I>&gt;<i>  I doubt the disk is hosed. I think rather the enclosure may be the issue.
+</I>&gt;&gt;<i> When I looked and saw quite a few people having issues with Time Machine and
+</I>&gt;&gt;<i> firewire backup volumes I figured it was possible that TM was corrupting
+</I>&gt;&gt;<i> something. And with 10.6 so new well...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'll deal with the manufacturer and see if they can't help me. (Long story
+</I>&gt;&gt;<i> there) If not I guess I need to buy a new enclosure.
+</I>&gt;&gt;<i> Thanks.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Certainly something is suspect :-) There were, back in the dim and distant
+</I>&gt;<i> past, problems with Oxford FireWire chipsets but those flavour of problems
+</I>&gt;<i> were consigned to the 10.1/10.2 days. I've not seen any problems with
+</I>&gt;<i> FireWire drives since then. I did see problems with cheapo external USB
+</I>&gt;<i> drives. So it's possible that it's the controller/enclosure, but unless
+</I>&gt;<i> you've got a way of testing the drive in different enclosures to find out,
+</I>&gt;<i> it's a bit difficult to know.
+</I>&gt;<i>
+</I>&gt;<i> There's a small possibility that the make/model of your firewire
+</I>&gt;<i> drive/enclosure might help others (Apple?) on this list, though they might
+</I>&gt;<i> not want to ask for it in case it gives the game away. If you run
+</I>&gt;<i> system_profiler | pbcopy, you'll get a diagnostic of what's on your system.
+</I>&gt;<i> Search for FireWire:, which will be the start of your firewire drives, and
+</I>&gt;<i> then you can cut out the rest of the stuff in a mail, e.g. mine as below.
+</I>&gt;<i> You'll probably want to sanity check it to confirm it doesn't have any
+</I>&gt;<i> personally identifiable information in it (it will have the GUID of the
+</I>&gt;<i> drive which if you're paranoid, you might want to obfuscate) but otherwise
+</I>&gt;<i> it'll be a text file which is similar to the data in System Profiler. (You
+</I>&gt;<i> could probably get the info from the graphical system profiler and doing a
+</I>&gt;<i> 'copy' on the appropriate bit too ... click on 'About this Mac' and then
+</I>&gt;<i> 'More Info' to launch the GUI one)
+</I>&gt;<i>
+</I>&gt;<i> Alex
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> FireWire:
+</I>&gt;<i>
+</I>&gt;<i>    FireWire Bus:
+</I>&gt;<i>
+</I>&gt;<i>      Maximum Speed: Up to 400 Mb/sec
+</I>&gt;<i>
+</I>&gt;<i>        Rugged FW/USB:
+</I>&gt;<i>
+</I>&gt;<i>          Manufacturer: LaCie
+</I>&gt;<i>          Model: 0x0
+</I>&gt;<i>          GUID: **********
+</I>&gt;<i>          Maximum Speed: Up to 800 Mb/sec
+</I>&gt;<i>          Connection Speed: Up to 400 Mb/sec
+</I>&gt;<i>          Sub-units:
+</I>&gt;<i>            Rugged FW/USB Unit:
+</I>&gt;<i>              Unit Software Version: 0x10483
+</I>&gt;<i>              Unit Spec ID: 0x609E
+</I>&gt;<i>              Firmware Revision: 0x110
+</I>&gt;<i>              Product Revision Level:
+</I>&gt;<i>              Sub-units:
+</I>&gt;<i>                Rugged FW/USB SBP-LUN:
+</I>&gt;<i>                  Capacity: 465.76 GB
+</I>&gt;<i>                  Removable Media: Yes
+</I>&gt;<i>                  BSD Name: disk2
+</I>&gt;<i>                  Mac OS 9 Drivers: No
+</I>&gt;<i>                  Partition Map Type: GPT (GUID Partition Table)
+</I>&gt;<i>                  S.M.A.R.T. status: Not Supported
+</I>&gt;<i>                  Volumes:
+</I>&gt;<i>                    Data:
+</I>&gt;<i>                      Capacity: 465.44 GB
+</I>&gt;<i>                      Writable: Yes
+</I>&gt;<i>                      File System: ZFS
+</I>&gt;<i>                      BSD Name: disk2s2
+</I>&gt;<i>                      Mount Point:
+</I>&gt;<i>                  Volumes:
+</I>&gt;<i>                    disk2s2:
+</I>&gt;<i>                      Capacity: 465.44 GB
+</I>&gt;<i>                      Writable: Yes
+</I>&gt;<i>                      File System: ZFS
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091011/6759ecf6/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091011/6759ecf6/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001926.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+	<LI>Next message: <A HREF="001930.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1929">[ date ]</a>
+              <a href="thread.html#1929">[ thread ]</a>
+              <a href="subject.html#1929">[ subject ]</a>
+              <a href="author.html#1929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

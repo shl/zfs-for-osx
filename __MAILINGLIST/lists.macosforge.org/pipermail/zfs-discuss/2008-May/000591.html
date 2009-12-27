@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] my first zfs panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=a782ada90805091404t15ca6a14o1dba6d1bf0977644%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000589.html">
+   <LINK REL="Next"  HREF="000592.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] my first zfs panic</H1>
+    <B>Trevor Talbot</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=a782ada90805091404t15ca6a14o1dba6d1bf0977644%40mail.gmail.com"
+       TITLE="[zfs-discuss] my first zfs panic">quension at mac.com
+       </A><BR>
+    <I>Fri May  9 23:54:35 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000589.html">[zfs-discuss] my first zfs panic
+</A></li>
+        <LI>Next message: <A HREF="000592.html">[zfs-discuss] my first zfs panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#591">[ date ]</a>
+              <a href="thread.html#591">[ thread ]</a>
+              <a href="subject.html#591">[ subject ]</a>
+              <a href="author.html#591">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On May 9, 2008, at 2:04 PM, Andrei Dorofeev wrote:
+
+&gt;<i> On Fri, May 9, 2008 at 1:17 PM, Scott Palmer &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">swpalmer at gmail.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>
+&gt;&gt;<i> The OS X kernel is 32-bit? (If so, Apple is doing some seriously  
+</I>&gt;&gt;<i> weaselly marketing.  I mean, more than expected :-) )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How do 64-bit drivers work?  According to this page (<A HREF="http://www.apple.com/macosx/technology/64bit.html">http://www.apple.com/macosx/technology/64bit.html</A> 
+</I>&gt;&gt;<i> ) on the Apple website it is possible to have 64-bit drivers, so  
+</I>&gt;&gt;<i> the next questions is why can't ZFS be one of them?
+</I>&gt;<i>
+</I>&gt;<i> You [can't] have 64-bit drivers and 32-bit base kernel sharing the  
+</I>&gt;<i> same 32-bit virtual address space.  Even though this web page says  
+</I>&gt;<i> &quot;drivers&quot;, it probably refers to usermode drivers (like USB  
+</I>&gt;<i> printers, etc).
+</I>
+While the kernel VM environment is 32bit, device drivers can work with  
+64bit physical addresses. When dealing with appropriate hardware, a  
+64bit-aware driver is able to avoid some intermediate buffering that  
+affects performance, especially when doing large I/O on behalf of a  
+process.
+
+That doesn't help ZFS at all, since it needs access to the entire  
+cache within the kernel's limited VM space.
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000589.html">[zfs-discuss] my first zfs panic
+</A></li>
+	<LI>Next message: <A HREF="000592.html">[zfs-discuss] my first zfs panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#591">[ date ]</a>
+              <a href="thread.html#591">[ thread ]</a>
+              <a href="subject.html#591">[ subject ]</a>
+              <a href="author.html#591">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

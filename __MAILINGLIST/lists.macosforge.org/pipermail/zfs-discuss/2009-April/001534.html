@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] USB and Firewire Performance Problem Question...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C94A8EC9D-A1FC-4F9D-9DB3-89DC55955043%40me.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001533.html">
+   <LINK REL="Next"  HREF="001535.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] USB and Firewire Performance Problem Question...</H1>
+    <B>David Reed</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C94A8EC9D-A1FC-4F9D-9DB3-89DC55955043%40me.com%3E"
+       TITLE="[zfs-discuss] USB and Firewire Performance Problem Question...">david.reed at me.com
+       </A><BR>
+    <I>Thu Apr 23 07:18:48 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001533.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001535.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1534">[ date ]</a>
+              <a href="thread.html#1534">[ thread ]</a>
+              <a href="subject.html#1534">[ subject ]</a>
+              <a href="author.html#1534">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I apologize if this is already addressed somewhere in the list  
+archives.  I've spent time looking for an answer but haven't found  
+one.  I also apologize for the length of this post.  I'm trying to  
+include as many details as possible so I don't waste anyone's time.
+
+Summary:
+When I use an external USB attached drive with ZFS performance drops  
+to about 40% of an HFS+ partition.  The same is true for Firewire  
+attached drives.
+
+Details:
+* I'm wanting to use an external ZFS drive to store data - photos in  
+particular.  So lots (100k+) of 1-12M files.
+* Downloaded and installed zfs-119 (on an MacBook Pro running 10.5.6)
+* I noticed when copying files to the drive that it would &quot;pause&quot;  
+every 3-5 seconds or so (I could hear the drive heads moving about and  
+then nothing for a second or two).
+* I switched to an &quot;rsync&quot; style copy (rsync -a --progress) so I could  
+see a little better what was happening.  Every 3-5 or so seconds it  
+would just &quot;stop&quot; in the middle of a copy for a few seconds.
+* I stopped the copy, deleted the files from the ZFS drive, and  
+started again... This time running zpool iostat 1 in a different shell  
+window.  (Output attached below - depending on the sampling and timing  
+you can see either the &quot;0&quot; for write bandwidth during the pauses or a  
+small number typically occurring every 3-4 seconds).
+* I checked my CPU during the process - not CPU bound (max was about  
+10% CPU usage including kernel)
+* The net impact of the pauses is to significantly slow down write  
+times.  To copy just 2.9GB of photos was taking about 3.5 to 4 minutes.
+* Thinking something was wrong with the drive, I tried another  
+external drive I have.  Same behavior... it &quot;pauses&quot; every so often.
+* Then thinking it must be the drive I was copying the files from I  
+tried copying from different drives.  Same behavior.
+* Then finally wondering if it was ZFS, I destroyed the ZFS partition  
+and recreated it (same spot on the physical disk) with HFS+.  I re-ran  
+the copy.  This time there were no &quot;pauses&quot; of the disk head movement  
+and the copy completed in slightly under 2 minutes.
+* I re-tried the HFS+ partition copy a few times and got the same  
+numbers plus/minus a few seconds.  Switching the partition back to ZFS  
+and re-doing the copy yet again I noticed the same performance issues  
+- about 4 minutes and frequent &quot;pauses&quot; in the copy process (as  
+evidenced by the iostat and listening to the drive head movement).
+* Wondering if it was USB related somehow I switched to using a  
+Firewire drive and repeated the tests.  Same basic results.  ZFS was  
+&quot;pausing&quot; during the writes to the disk.
+
+So, any suggestions on what to try next?  Are there any &quot;tunables&quot; I  
+should be aware of?  Copies are set to &quot;1&quot; and compression is  
+&quot;off&quot; (see the zfs get all output below).  I know ZFS does more, but  
+somehow I doubt that Sun engineers would have made ZFS have such bad  
+performance which makes me wonder if it's my system, or the zfs port  
+or something else.  Any thoughts?  Suggestions?   Can anyone recreate  
+the problem?
+
+Supporting Data:
+Data being copied for this test:
+* One directory with 7 sub-directories.
+* A total of 1065 files.  Average size for this batch of files about  
+2.8M
+
+zfs get all output
+$ zfs get all zfs-data
+NAME      PROPERTY       VALUE                  SOURCE
+zfs-data  type           filesystem             -
+zfs-data  creation       Thu Apr 23  8:58 2009  -
+zfs-data  used           2.94G                  -
+zfs-data  available      18.5G                  -
+zfs-data  referenced     2.94G                  -
+zfs-data  compressratio  1.00x                  -
+zfs-data  mounted        yes                    -
+zfs-data  quota          none                   default
+zfs-data  reservation    none                   default
+zfs-data  recordsize     128K                   local
+zfs-data  mountpoint     /Volumes/zfs-data      default
+zfs-data  sharenfs       off                    default
+zfs-data  checksum       on                     default
+zfs-data  compression    off                    default
+zfs-data  atime          on                     default
+zfs-data  devices        on                     default
+zfs-data  exec           on                     default
+zfs-data  setuid         on                     default
+zfs-data  readonly       off                    default
+zfs-data  zoned          off                    default
+zfs-data  snapdir        hidden                 default
+zfs-data  aclmode        groupmask              default
+zfs-data  aclinherit     secure                 default
+zfs-data  canmount       on                     default
+zfs-data  shareiscsi     off                    default
+zfs-data  xattr          on                     default
+zfs-data  copies         1                      default
+zfs-data  version        1                      -
+
+
+
+zpool iostat 1 output when copying files across...
+$ zpool iostat 1
+                capacity     operations    bandwidth
+pool         used  avail   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+zfs-data     958M  20.8G      0    105  64.0K  2.76M
+zfs-data     958M  20.8G      0    117      0  12.4M
+zfs-data     958M  20.8G      0    217      0  27.2M
+zfs-data    1021M  20.8G      1    274   128K  24.0M
+zfs-data    1021M  20.8G      0      0      0      0
+zfs-data    1021M  20.8G      0    140  64.0K  15.8M
+zfs-data    1021M  20.8G      0    217      0  27.2M
+zfs-data    1.06G  20.7G      0    262  64.0K  21.1M
+zfs-data    1.06G  20.7G      0      0      0      0
+zfs-data    1.06G  20.7G      0     17      0  1.39M
+zfs-data    1.06G  20.7G      0    221      0  26.8M
+zfs-data    1.06G  20.7G      0    215      0  27.0M
+zfs-data    1.12G  20.6G      0    157      0  8.99M
+zfs-data    1.12G  20.6G      0      0      0      0
+zfs-data    1.12G  20.6G      0     42      0  3.31M
+zfs-data    1.12G  20.6G      1    188  35.0K  23.6M
+zfs-data    1.12G  20.6G      0    218      0  27.3M
+zfs-data    1.18G  20.6G      0    173  64.0K  10.0M
+zfs-data    1.18G  20.6G      0     99      0  11.3M
+zfs-data    1.20G  20.5G      0    114      0  8.55M
+zfs-data    1.20G  20.5G      0      0      0      0
+zfs-data    1.20G  20.5G      0      0      0      0
+zfs-data    1.20G  20.5G      0     97      0  10.2M
+zfs-data    1.20G  20.5G      0    217      0  27.1M
+zfs-data    1.26G  20.5G      0    284      0  26.0M
+zfs-data    1.26G  20.5G      0      0      0      0
+zfs-data    1.26G  20.5G      0      0      0      0
+zfs-data    1.26G  20.5G      0     79   128K  7.18M
+zfs-data    1.26G  20.5G      0    207  64.0K  26.0M
+zfs-data    1.26G  20.5G      0    215      0  27.0M
+zfs-data    1.33G  20.4G      0    118      0  4.00M
+zfs-data    1.33G  20.4G      0      0      0      0
+zfs-data    1.33G  20.4G      0      0      0      0
+zfs-data    1.33G  20.4G      0     45   128K  3.78M
+zfs-data    1.33G  20.4G      0    221   127K  27.7M
+zfs-data    1.33G  20.4G      0    213      0  26.4M
+zfs-data    1.39G  20.4G      0    119      0  5.24M
+zfs-data    1.39G  20.4G      0      0      0      0
+zfs-data    1.39G  20.4G      0    107      0  11.9M
+zfs-data    1.39G  20.4G      0    222      0  27.9M
+zfs-data    1.45G  20.3G      0    271  64.0K  23.9M
+zfs-data    1.45G  20.3G      0      0      0      0
+zfs-data    1.45G  20.3G      1     24   228K  2.02M
+zfs-data    1.45G  20.3G      0    208      0  26.1M
+zfs-data    1.45G  20.3G      0    218      0  26.9M
+zfs-data    1.51G  20.2G      2    151   192K  9.21M
+zfs-data    1.51G  20.2G      0      0      0      0
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090423/0839d9de/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090423/0839d9de/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001533.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001535.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1534">[ date ]</a>
+              <a href="thread.html#1534">[ thread ]</a>
+              <a href="subject.html#1534">[ subject ]</a>
+              <a href="author.html#1534">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

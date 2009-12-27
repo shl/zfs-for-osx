@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] How to erase cached zpool member info?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20How%20to%20erase%20cached%20zpool%20member%20info%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000362.html">
+   <LINK REL="Next"  HREF="000363.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] How to erase cached zpool member info?</H1>
+    <B>James R. Van Artsdalen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20How%20to%20erase%20cached%20zpool%20member%20info%3F&In-Reply-To="
+       TITLE="[zfs-discuss] How to erase cached zpool member info?">james-zfsosx at jrv.org
+       </A><BR>
+    <I>Thu Mar 20 20:57:37 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000362.html">[zfs-discuss] No progress - scrub
+</A></li>
+        <LI>Next message: <A HREF="000363.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#361">[ date ]</a>
+              <a href="thread.html#361">[ thread ]</a>
+              <a href="subject.html#361">[ subject ]</a>
+              <a href="author.html#361">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>How do I erase the cached zpool information?
+
+I have tremendous trouble reusing disks under OSX/ZFS if they have ever 
+been used for ZFS elsewhere: kernel panics, etc.  I'm suspicious the 
+problem may actually bogus state in some zfs cache since &quot;zpool import&quot; 
+gives me nonsensical output:
+
+bash-3.2# zpool import
+  pool: xxx-1
+    id: 1218651719753128900
+ state: FAULTED
+status: The pool was last accessed by another system.
+action: The pool cannot be imported due to damaged devices or data.
+   see: <A HREF="http://www.sun.com/msg/ZFS-8000-EY">http://www.sun.com/msg/ZFS-8000-EY</A>
+config:
+
+    xxx-1                   UNAVAIL  insufficient replicas
+      raidz1                 UNAVAIL  insufficient replicas
+        da0                  UNAVAIL  cannot open
+        9526628723727662261  UNAVAIL  cannot open
+        da1                  UNAVAIL  cannot open
+        disk2                UNAVAIL  cannot open
+        disk4                UNAVAIL  cannot open
+bash-3.2#
+
+
+No pool with that name has every been attached to this host.  There was 
+such a pool attached to a FreeBSD host and then the disks recycled.
+
+There is a file /etc/zfs/zpool.cache but this doesn't appear to contain 
+useful data:
+
+bash-3.2# od -x /etc/zfs/zpool.cache
+0000000      0001    0000    0000    0000    0000    0100    0000    0000
+0000020      0000    0000                                               
+0000024
+bash-3.2#
+
+Once I get a zpool created it seems to work well, and I have never had a 
+corruption problem.  But there are disk-full boundary cases to deal 
+with: it appears possible to fill a disk such that an unprivileged user 
+cannot recover (I've gotten a zpool full to the point that chmod failed 
+but rm seems to still work).
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000362.html">[zfs-discuss] No progress - scrub
+</A></li>
+	<LI>Next message: <A HREF="000363.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#361">[ date ]</a>
+              <a href="thread.html#361">[ thread ]</a>
+              <a href="subject.html#361">[ subject ]</a>
+              <a href="author.html#361">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

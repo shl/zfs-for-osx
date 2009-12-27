@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Some More on Firefox
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Some%20More%20on%20Firefox&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000382.html">
+   <LINK REL="Next"  HREF="000449.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Some More on Firefox</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Some%20More%20on%20Firefox&In-Reply-To="
+       TITLE="[zfs-discuss] Some More on Firefox">jbsnyder at gmail.com
+       </A><BR>
+    <I>Thu Apr  3 11:32:52 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000382.html">[zfs-discuss] zfs assertion/kernel panic
+</A></li>
+        <LI>Next message: <A HREF="000449.html">[zfs-discuss] Some More on Firefox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#441">[ date ]</a>
+              <a href="thread.html#441">[ thread ]</a>
+              <a href="subject.html#441">[ subject ]</a>
+              <a href="author.html#441">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I had played with DTrace a little before with firefox and the plugin
+installation bug, and I decided to pull it out again today when b5 of
+Firefox 3 became available today.
+
+Related to the previous &quot;fcntl&quot; troubles I noticed before, I've now
+got a trace from Instruments, which may or may not be useful.
+
+I've attached the trace file, and below is one of the stack traces
+(attached has 3 since I let it try and update 3 extensions).
+
+   0 libSystem.B.dylib fcntl$UNIX2003
+   1 CarbonCore PBAllocateForkSync
+   2 CarbonCore FSAllocateFork
+   3 XUL XPT_Do64
+   4 XUL XPT_Do64
+   5 XUL XPT_Do64
+   6 XUL XPT_Do64
+   7 XUL NS_NewLocalFile_P
+   8 XUL NS_NewLocalFile_P
+   9 XUL NS_InvokeByIndex_P
+  10 XUL XRE_GetFileFromPath
+  11 XUL XRE_GetFileFromPath
+  12 libmozjs.dylib js_Invoke
+  13 libmozjs.dylib js_FreeStack
+  14 libmozjs.dylib js_Invoke
+  15 XUL XRE_GetFileFromPath
+  16 XUL XRE_GetFileFromPath
+  17 XUL NS_InvokeByIndex_P
+  18 XUL NS_InvokeByIndex_P
+  19 XUL XRE_GetFileFromPath
+  20 XUL XRE_GetFileFromPath
+  21 XUL XRE_GetFileFromPath
+  22 XUL XRE_GetFileFromPath
+  23 XUL XRE_GetFileFromPath
+  24 XUL XRE_GetFileFromPath
+  25 XUL JNIEnv_::CallStaticObjectMethod(_jclass*, _jmethodID*, ...)
+  26 XUL NS_GetComponentRegistrar_P
+  27 XUL GetSecurityContext(JNIEnv_*, nsISecurityContext**)
+  28 XUL JSD_GetValueForObject
+  29 XUL JSD_GetValueForObject
+  30 CoreFoundation CFRunLoopRunSpecific
+  31 CoreFoundation CFRunLoopRunInMode
+  32 HIToolbox RunCurrentEventLoopInMode
+  33 HIToolbox ReceiveNextEventCommon
+  34 HIToolbox BlockUntilNextEventMatchingListInMode
+  35 AppKit _DPSNextEvent
+  36 AppKit -[NSApplication nextEventMatchingMask:untilDate:inMode:dequeue:]
+  37 AppKit -[NSApplication run]
+  38 XUL JSD_GetValueForObject
+  39 XUL XRE_GetFileFromPath
+  40 XUL XRE_main
+  41 firefox-bin start
+  42 firefox-bin start
+
+The other thing I noticed in dtruss is this sequence of syscalls
+leading up to the error:
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/71903/tmp.xpi\0&quot;,
+0xBFFFAEB0, 0xBFFFAD00)         = 0 0
+89550/0x54a93c8:  setattrlist(0xBFFFA454, 0xBFFFABF8, 0xBFFFA3B0)        = 0 0
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA8B0,
+0xBFFFA6E0)        = 0 0
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA8B0,
+0xBFFFA6E0)        = 0 0
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA8B0,
+0xBFFFA6E0)        = 0 0
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867362\0&quot;, 0xBFFFA510,
+0xBFFFA340)        = 0 0
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867362\0&quot;, 0xBFFFA1C0,
+0xBFFF9CE0)        = 0 0
+89550/0x54a93c8:  open(&quot;/.vol/754974724/71903/tmp.xpi\0&quot;, 0x26, 0x1B6)
+      = 65 0
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA1C0,
+0xBFFF9CE0)        = 0 0
+89550/0x54a93c8:  open(&quot;/.vol/754974724/581663/tmp.xpi\0&quot;, 0x0, 0x1B6)
+      = 66 0
+89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/71903/tmp.xpi\0&quot;,
+0xBFFFA820, 0xBFFFA660)         = 0 0
+89550/0x54a93c8:  fcntl(0x41, 0x2A, 0xFFFFFFFFBFFFABB0)      = -1 Err#45
+
+What is .vol?  I'm not sure if these syscalls are connected with the
+same file, but /.vol seems to be owned by root:wheel and have nothing
+in it on my HFS+ volume.
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Firefox_fcntl_error.trace.zip
+Type: application/zip
+Size: 665353 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080403/99818dd8/Firefox_fcntl_error.trace-0001.zip">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080403/99818dd8/Firefox_fcntl_error.trace-0001.zip</A>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000382.html">[zfs-discuss] zfs assertion/kernel panic
+</A></li>
+	<LI>Next message: <A HREF="000449.html">[zfs-discuss] Some More on Firefox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#441">[ date ]</a>
+              <a href="thread.html#441">[ thread ]</a>
+              <a href="subject.html#441">[ subject ]</a>
+              <a href="author.html#441">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

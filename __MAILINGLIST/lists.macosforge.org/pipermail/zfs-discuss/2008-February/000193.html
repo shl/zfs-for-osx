@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Macintouch comments on RAID-Z
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=71A35519-A69C-4BF2-8723-B5761ED0EA61%40thinkpink.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000192.html">
+   <LINK REL="Next"  HREF="000195.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Macintouch comments on RAID-Z</H1>
+    <B>Kevin Purcell</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=71A35519-A69C-4BF2-8723-B5761ED0EA61%40thinkpink.com"
+       TITLE="[zfs-discuss] Macintouch comments on RAID-Z">kevinpurcell at pobox.com
+       </A><BR>
+    <I>Fri Feb 22 11:37:00 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000192.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+        <LI>Next message: <A HREF="000195.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#193">[ date ]</a>
+              <a href="thread.html#193">[ thread ]</a>
+              <a href="subject.html#193">[ subject ]</a>
+              <a href="author.html#193">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I also had a blog link that I had found and put aside yesterday and  
+read this morning that also addresses this issue in detail. It's  
+funny how that happens.
+
+&lt;<A HREF="http://blogs.sun.com/roch/entry/when_to_and_not_to">http://blogs.sun.com/roch/entry/when_to_and_not_to</A>&gt;
+
+The trade offs revolve around bandwidth, IO/s and reliability and the  
+trade-offs between those factors.
+
+There is no silver bullet (but there are composite bullets than can  
+be selected to be most effective for particular uses).
+
+Thanks for the clarification.
+
+On Feb 22, 2008, at 10:55 AM, Brian Pinkerton wrote:
+
+&gt;<i> He's right.  Richard says it best:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://blogs.sun.com/relling/entry/">http://blogs.sun.com/relling/entry/</A> 
+</I>&gt;<i> zfs_raid_recommendations_space_performance
+</I>&gt;<i>
+</I>&gt;<i> Bottom line: for performance use RAID-0, for performance and  
+</I>&gt;<i> reliability use RAID-1+0.
+</I>&gt;<i>
+</I>&gt;<i> bri
+</I>&gt;<i>
+</I>&gt;<i> On Feb 22, 2008, at 10:30 AM, Kevin Purcell wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Comment seen on today's Macintouch:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;<A HREF="http://www.macintouch.com/readerreports/harddrives/">http://www.macintouch.com/readerreports/harddrives/</A>
+</I>&gt;&gt;<i> index.html#d22feb2008&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Jeff Baker
+</I>&gt;&gt;&gt;<i> The willingness of people to see ZFS as the solution to any and all
+</I>&gt;&gt;&gt;<i> problems continues to amaze me. Contrary to the prior comment, RAID-
+</I>&gt;&gt;&gt;<i> Z in no way obsoletes or replaces the functions of a hardware RAID
+</I>&gt;&gt;&gt;<i> controller. Typically a user expects high performance from a RAID
+</I>&gt;&gt;&gt;<i> controller. RAID-Z, by comparison, is slightly slower than a single
+</I>&gt;&gt;&gt;<i> hard disk. While a normal RAID becomes faster with additional
+</I>&gt;&gt;&gt;<i> spindles, a RAID-Z exhibits flat to slightly declining performance
+</I>&gt;&gt;&gt;<i> with more spindles (on random workloads).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I would have thought that RAID-Z performance would scale as the
+</I>&gt;&gt;<i> number of disks (so long as the controllers can't take multiple
+</I>&gt;&gt;<i> commands in parallel or for IDE as the number of controllers).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'd appreciate some comments from those more knowledgeable than I.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks.
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Kevin Purcell
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kevinpurcell at pobox.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+--
+Kevin Purcell
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kevinpurcell at pobox.com</A>
+
+
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000192.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+	<LI>Next message: <A HREF="000195.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#193">[ date ]</a>
+              <a href="thread.html#193">[ thread ]</a>
+              <a href="subject.html#193">[ subject ]</a>
+              <a href="author.html#193">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Advice for ZFS config
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Advice%20for%20ZFS%20config&In-Reply-To=3FDB5662-FC5E-4DA1-84F3-0215EF30BDF4%40tecnoguru.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000898.html">
+   <LINK REL="Next"  HREF="000923.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Advice for ZFS config</H1>
+    <B>Kona Blend</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Advice%20for%20ZFS%20config&In-Reply-To=3FDB5662-FC5E-4DA1-84F3-0215EF30BDF4%40tecnoguru.com"
+       TITLE="[zfs-discuss] Advice for ZFS config">kona8lend at gmail.com
+       </A><BR>
+    <I>Tue Sep 30 17:08:02 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000898.html">[zfs-discuss] Advice for ZFS config
+</A></li>
+        <LI>Next message: <A HREF="000923.html">[zfs-discuss] MSWord 2004 V11.5.0 (080429) Problem Saving Files to	ZFS Partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#899">[ date ]</a>
+              <a href="thread.html#899">[ thread ]</a>
+              <a href="subject.html#899">[ subject ]</a>
+              <a href="author.html#899">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I would recommend case #1 because the performance characteristic will  
+be that writes will behave like striping across 2 spindles, and reads  
+will behave at worse like striping across 2 spindles and at best like  
+striping across 3 spindles. And up to 2 drives (1 drive from each set)  
+may fail without losing data.
+
+Case #2 sounds pretty bad; as though it will simply behave like 1  
+spindle for any reads or writes. Drive failure survival is murky. You  
+can survive at least 1 drive failure, or 2, depending on the  
+combinations. As I understand it:
+
+A = 1TB, A.1 = 500, A.2 = 500
+B = 1TB, B.1 = 500, B.2 = 500
+C = 500GB
+D = 500GB
+E = 500GB
+
+RAIDZ { A.1 + B.1 + C + D } + RAIDZ { A.2 + B.2 + E }
+
+Is there a case where the RAIDZs can service the requests  
+concurrently? RAIDZ does full stripe-writes, thus drives A,B act as  
+contention points between the concat'd RAIDZs.
+
+--Kona Blend
+
+On 30-Sep-08, at 7:02 PM, Mario Camou wrote:
+
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> I am planning to turn a Mac Mini into a disk server / media center to
+</I>&gt;<i> replace a Linux machine I have running with MythTV. I am planning to
+</I>&gt;<i> use ZFS for the filesystem. The thing is, I'm not exactly sure which
+</I>&gt;<i> will be the best hard drive config.
+</I>&gt;<i>
+</I>&gt;<i> I currently have about 1.7TB of data in several independent USB disks.
+</I>&gt;<i> I want to create a single ZFS volume. I have 2x1TB disks and 3x500GB
+</I>&gt;<i> disks.
+</I>&gt;<i>
+</I>&gt;<i> My question is regarding how to best organize the disks into pools to
+</I>&gt;<i> get a bit of data security (of which I currently have none). I see two
+</I>&gt;<i> options:
+</I>&gt;<i>
+</I>&gt;<i> 1. Mirror the 2x1TB drives and RAIDZ the 3x500GB drives, giving 2TB of
+</I>&gt;<i> data space
+</I>&gt;<i>
+</I>&gt;<i> 2. Partition the 2x!TB drives into 2x500GB partitions each. RAIDZ one
+</I>&gt;<i> partition from each drive with 2x500GB hard drives, and also RAIDZ the
+</I>&gt;<i> other partition in each drive with 1x500GB drive. That would give me
+</I>&gt;<i> 2.5TB of data.
+</I>&gt;<i>
+</I>&gt;<i> I would prefer to use approach 2) since it gives me more data space
+</I>&gt;<i> but I'd like your thoughts on why this might be a bad idea, or on
+</I>&gt;<i> other ideas on how to lay out the pools.
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance,
+</I>&gt;<i> -Mario.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000898.html">[zfs-discuss] Advice for ZFS config
+</A></li>
+	<LI>Next message: <A HREF="000923.html">[zfs-discuss] MSWord 2004 V11.5.0 (080429) Problem Saving Files to	ZFS Partition
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#899">[ date ]</a>
+              <a href="thread.html#899">[ thread ]</a>
+              <a href="subject.html#899">[ subject ]</a>
+              <a href="author.html#899">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

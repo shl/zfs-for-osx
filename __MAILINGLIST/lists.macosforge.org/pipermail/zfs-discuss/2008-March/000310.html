@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] flash sound
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20flash%20sound&In-Reply-To=C6923D3D-EEAA-47C9-B1AE-37ED37388165%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000309.html">
+   <LINK REL="Next"  HREF="000311.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] flash sound</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20flash%20sound&In-Reply-To=C6923D3D-EEAA-47C9-B1AE-37ED37388165%40spamfreemail.de"
+       TITLE="[zfs-discuss] flash sound">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Mar 11 16:45:45 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000309.html">[zfs-discuss] flash sound
+</A></li>
+        <LI>Next message: <A HREF="000311.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#310">[ date ]</a>
+              <a href="thread.html#310">[ thread ]</a>
+              <a href="subject.html#310">[ subject ]</a>
+              <a href="author.html#310">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>not immediately, other then nested filesystems in zfs pools are still  
+confusing Finder and the upper layers since they aren't really sure  
+how to handle them.  My guess is this has somethign to do with that  
+problem that upper layers where the flash is trying to run.  I will  
+add this information to the bug I have tracking issues like this with  
+userland and nested filesystems.
+
+apologies for the weirdnes.... still getting stuff like this hammered  
+out..
+
+Noel
+
+On Mar 11, 2008, at 3:26 PM, Franz Schmalzl wrote:
+
+&gt;<i> ok this is very odd, but i have got the solution
+</I>&gt;<i>
+</I>&gt;<i> again my zfs setup
+</I>&gt;<i>
+</I>&gt;<i> NAME                 USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i> hometank            58,4G   302G  16,6M  /Users
+</I>&gt;<i> hometank/ruebezahl  58,4G   302G  58,4G  /Users/ruebezahl
+</I>&gt;<i>
+</I>&gt;<i> when my homefolder is storden in a zfs filesystem inside my zpool
+</I>&gt;<i> flash sound is not working
+</I>&gt;<i>
+</I>&gt;<i> when my homefolder is stored on the root of my zpool it works
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ( i tried with a test user, first created his homefolder on the root  
+</I>&gt;<i> of hometank ---&gt; flash sound worked; then created another zfs  
+</I>&gt;<i> filesystem and created a new user inside ---&gt; sound was gone )
+</I>&gt;<i>
+</I>&gt;<i> noel, can you explain ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000309.html">[zfs-discuss] flash sound
+</A></li>
+	<LI>Next message: <A HREF="000311.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#310">[ date ]</a>
+              <a href="thread.html#310">[ thread ]</a>
+              <a href="subject.html#310">[ subject ]</a>
+              <a href="author.html#310">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

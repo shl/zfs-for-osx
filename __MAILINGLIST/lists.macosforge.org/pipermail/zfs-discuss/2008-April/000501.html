@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Version Verification
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Version%20Verification&In-Reply-To=B9171DE4-5811-4EA5-900F-A89E8B84B75C%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000500.html">
+   <LINK REL="Next"  HREF="000504.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Version Verification</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Version%20Verification&In-Reply-To=B9171DE4-5811-4EA5-900F-A89E8B84B75C%40apple.com"
+       TITLE="[zfs-discuss] Version Verification">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Thu Apr 17 19:01:25 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000500.html">[zfs-discuss] Version Verification
+</A></li>
+        <LI>Next message: <A HREF="000504.html">[zfs-discuss] Uninstalling ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#501">[ date ]</a>
+              <a href="thread.html#501">[ thread ]</a>
+              <a href="subject.html#501">[ subject ]</a>
+              <a href="author.html#501">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>should probably update the Info.plist for a new CFBundleVersion to  
+have it show up in kextstat .. but for md5 checksums on 111 i show:
+
+$ openssl md5 /System/Library/Extensions/zfs.kext/Contents/MacOS/zfs
+MD5(/System/Library/Extensions/zfs.kext/Contents/MacOS/zfs)=  
+1eb60fb0207b07480859c77b5c38fe3d
+$ openssl md5 /System/Library/Filesystems/zfs.fs/zfs.util
+MD5(/System/Library/Filesystems/zfs.fs/zfs.util)=  
+28ca89154c61b75f7ea6348a6065e874
+$ openssl md5 /usr/sbin/zfs
+MD5(/usr/sbin/zfs)= c38cf2f456453aab2d6816dbee5cc43b
+$ openssl md5 /usr/sbin/zpool
+MD5(/usr/sbin/zpool)= 299926f8822f4c28d761bd5ad0af54c0
+$ openssl md5 /usr/lib/libzfs.dylib
+MD5(/usr/lib/libzfs.dylib)= c83af97e487feffea96036cb0138eb6a
+$ openssl md5 /usr/sbin/zoink
+MD5(/usr/sbin/zoink)= 77c835f93942af1e230d88ccd9edd350
+
+instead of:
+$ openssl md5 /System/Library/Extensions/zfs.kext.102A/Contents/MacOS/ 
+zfs
+MD5(/System/Library/Extensions/zfs.kext.102A/Contents/MacOS/zfs)=  
+4e7a07febe62f6d608deb5ad24461f0f
+$ openssl md5 /System/Library/Filesystems/zfs.fs.102A/zfs.util
+MD5(/System/Library/Filesystems/zfs.fs.102A/zfs.util)=  
+c46e790ca50b71a4e4bda700ae6737c2
+$ openssl md5 /usr/sbin/zfs.102A
+MD5(/usr/sbin/zfs.102A)= d068d3d12df63e7c32caf360363aea5e
+$ openssl md5 /usr/sbin/zpool.102A
+MD5(/usr/sbin/zpool.102A)= 375e2f60f6e9fd43abf6c943f9b3db49
+$ openssl md5 /usr/lib/libzfs.dylib.102A
+MD5(/usr/lib/libzfs.dylib.102A)= 66e5703fcf58d55fbbb708c42caecc89
+$ openssl md5 /usr/sbin/zoink.102A
+MD5(/usr/sbin/zoink.102A)= 04c2c5bd92bdc5a26ce00e69435156d8
+
+---
+.je
+
+On Apr 17, 2008, at 4:45 PM, No&#235;l Dellofano wrote:
+
+&gt;<i> Actually not a stupid question at all.  We currently don't have a  
+</I>&gt;<i> pretty way to do this, but the quick and dirty way would be to get  
+</I>&gt;<i> to your nearest terminal window and do:
+</I>&gt;<i>
+</I>&gt;<i> #strings   /System/Library/Extensions/zfs.kext/Contents/MacOS/zfs
+</I>&gt;<i>
+</I>&gt;<i> which will spit out a bunch of strings at you from the executable,  
+</I>&gt;<i> which will say what version you're running.  For example:
+</I>&gt;<i>
+</I>&gt;<i> /Volumes/pixie_dust/home/ndellofano/Wiki/zfs-111/zfs_kext/zfs/ 
+</I>&gt;<i> zfs_vfsops.c
+</I>&gt;<i> &quot;[ZFS]: assertion failed in %s line %d: %s&quot;@/Volumes/pixie_dust/home/ 
+</I>&gt;<i> ndellofano/Wiki/zfs-111/zfs_kext/zfs/zfs_vfsops.c:195
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Apr 16, 2008, at 8:57 PM, Chris Shuman wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Might be a stupid question, but how do I verify that I have version  
+</I>&gt;&gt;<i> 111 installed?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000500.html">[zfs-discuss] Version Verification
+</A></li>
+	<LI>Next message: <A HREF="000504.html">[zfs-discuss] Uninstalling ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#501">[ date ]</a>
+              <a href="thread.html#501">[ thread ]</a>
+              <a href="subject.html#501">[ subject ]</a>
+              <a href="author.html#501">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

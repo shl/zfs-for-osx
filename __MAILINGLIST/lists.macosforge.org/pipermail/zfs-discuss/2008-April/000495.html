@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS new bits on the wiki
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20new%20bits%20on%20the%20wiki&In-Reply-To=D694A2AB-E51E-47FA-8CE5-6F0300CA1AF5%40martin-hauser.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000494.html">
+   <LINK REL="Next"  HREF="000509.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS new bits on the wiki</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20new%20bits%20on%20the%20wiki&In-Reply-To=D694A2AB-E51E-47FA-8CE5-6F0300CA1AF5%40martin-hauser.net"
+       TITLE="[zfs-discuss] ZFS new bits on the wiki">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Apr 16 13:27:01 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000494.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+        <LI>Next message: <A HREF="000509.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#495">[ date ]</a>
+              <a href="thread.html#495">[ thread ]</a>
+              <a href="subject.html#495">[ subject ]</a>
+              <a href="author.html#495">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>
+</I>&gt;<i> As far as I can tell, the upgrade was nearly seamless. Only problem  
+</I>&gt;<i> was a kernel panick on kextunload zfs.kext even though all pools  
+</I>&gt;<i> were exported.
+</I>
+This is a known and annoying problem that I have a bug open on but  
+haven't been able to get to since it's rather low on the stack.  Hence  
+rebooting is your only refuge when you change the kext.
+
+&gt;<i> mmap coherent means now that 99.9% of all programs that made  
+</I>&gt;<i> problems before should work fine now, doesn't it?
+</I>
+If it was an application that relies on mmap then yes.  This still  
+won't fix programs or apps that have case insensitivity issues or  
+Finder issues, but those are still being worked on.
+
+&gt;<i> Keep up the great work!
+</I>
+thanks!!! :)
+
+Noel
+
+On Apr 16, 2008, at 12:50 PM, Martin Hauser wrote:
+
+&gt;<i> Hello Everyone,
+</I>&gt;<i>
+</I>&gt;<i> I'm fresh off and running from this new version of zfs. It seems to  
+</I>&gt;<i> look quite nice. I would also want to know how to do a minimal HFS+  
+</I>&gt;<i> and rest zfs or at least home dir on ZFS thing... I've not found any  
+</I>&gt;<i> doku on that scenarios anywhere yet.
+</I>&gt;<i>
+</I>&gt;<i> As far as I can tell, the upgrade was nearly seamless. Only problem  
+</I>&gt;<i> was a kernel panick on kextunload zfs.kext even though all pools  
+</I>&gt;<i> were exported.
+</I>&gt;<i>
+</I>&gt;<i> mmap coherent means now that 99.9% of all programs that made  
+</I>&gt;<i> problems before should work fine now, doesn't it?
+</I>&gt;<i>
+</I>&gt;<i> Keep up the great work!
+</I>&gt;<i>
+</I>&gt;<i> kind regards
+</I>&gt;<i>
+</I>&gt;<i> Martin
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000494.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+	<LI>Next message: <A HREF="000509.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#495">[ date ]</a>
+              <a href="thread.html#495">[ thread ]</a>
+              <a href="subject.html#495">[ subject ]</a>
+              <a href="author.html#495">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] One big pool / Several ones ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3C6879ebc80902161003u4a3569eew97fddf07794f8ca9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001403.html">
+   <LINK REL="Next"  HREF="001394.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] One big pool / Several ones ?</H1>
+    <B>Matt Snow</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3C6879ebc80902161003u4a3569eew97fddf07794f8ca9%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] One big pool / Several ones ?">mattsnow at gmail.com
+       </A><BR>
+    <I>Mon Feb 16 10:03:51 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001403.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+        <LI>Next message: <A HREF="001394.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1392">[ date ]</a>
+              <a href="thread.html#1392">[ thread ]</a>
+              <a href="subject.html#1392">[ subject ]</a>
+              <a href="author.html#1392">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Franz,
+Good luck! Hopefully you don't get too many dieing drives. I've been running
+RAIDZ with 5x 500GB drives for the last year on OSX and its been great. 1
+drive gave up and was RMA'd with Seagate.
+
+You will certainly see better I/O performance with multiple mirrors. My
+suggestion is get a motherboard with PCI-X, and one of these SATA
+controller&lt;<A HREF="http://www.supermicro.com/products/accessories/addon/AoC-SAT2-MV8.cfm">http://www.supermicro.com/products/accessories/addon/AoC-SAT2-MV8.cfm</A>&gt;from
+SuperMicro. I have 8 systems with both intel and tyan boards in my
+work
+lab using two of these cards with S10U5(+misc patches for marvell chipset
+and ZFS) and they both scream.
+Anyways, get one of those cards and use a couple of the onboard SATA ports
+for 1-2 hot spares so you don't have to work as much about losing a mirror
+pair.
+
+To create mirrored stripes(aka RAID-10) in zfs you can do `zpool create tank
+mirror c0t1d0 c0t2d0 mirror c0t3d0 c0t4d0 mirror c0t5d0 c0t6d0`.
+if you choose to add a spare, append `spare c0t7d0` to the end.
+
+There is no way with ZFS to store your data across 4 mirror pairs and be
+able to lose 1 mirror pair and still have the rest of your data, unless of
+course you create 4 seperate pools. data loss is not acceptable in my eyes
+so i'm not sure why you'd want to let it get to that point. =\
+
+..Matt
+
+On Mon, Feb 16, 2009 at 9:19 AM, Franz Schmalzl &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs at sbod.at</A>&gt; wrote:
+
+&gt;<i> Hey there beloved list :)
+</I>&gt;<i>
+</I>&gt;<i> After using zfs on osx almost 1 year it&#180;s time to move on :)
+</I>&gt;<i> Since 2 of my Western Digital Harddrives died at the same time ( grrrr )
+</I>&gt;<i> I decided it&#180;s time to build an opensolaris server.... ,-)
+</I>&gt;<i>
+</I>&gt;<i> I&#180;m waving raidz goodbye and will be using zfs mirrors, i think...
+</I>&gt;<i>
+</I>&gt;<i> So, here&#180;s my  question:
+</I>&gt;<i>
+</I>&gt;<i> Do you think its better to combine all of my mirrors ( i will be using 8
+</I>&gt;<i> drives, i.e . 4 mirror pairs ) into one pool
+</I>&gt;<i> or build 4 pools consisting of one mirror pair each ?
+</I>&gt;<i>
+</I>&gt;<i> When using the first method, if one mirror dies, all my data is gone (
+</I>&gt;<i> again )
+</I>&gt;<i> But having 4 pools is annoying...
+</I>&gt;<i>
+</I>&gt;<i> Is there a way to &quot;stripe&quot; ( i know stripe is the wrong term here ) my data
+</I>&gt;<i> across all of the pools, but only loose data on one of the mirror pairs if
+</I>&gt;<i> it dies ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance !
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> p.s.
+</I>&gt;<i>
+</I>&gt;<i> Is Noel still around ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Franz_______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090216/bdb66d4a/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090216/bdb66d4a/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001403.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+	<LI>Next message: <A HREF="001394.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1392">[ date ]</a>
+              <a href="thread.html#1392">[ thread ]</a>
+              <a href="subject.html#1392">[ subject ]</a>
+              <a href="author.html#1392">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

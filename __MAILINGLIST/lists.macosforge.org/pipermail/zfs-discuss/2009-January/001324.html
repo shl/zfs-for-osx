@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic() zfs send
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic%28%29%20zfs%20send&In-Reply-To=%3C9154D65D-BFD1-41ED-A31D-5B44A409EDBC%40ironsoftware.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001370.html">
+   <LINK REL="Next"  HREF="001325.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic() zfs send</H1>
+    <B>Christian Kendi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic%28%29%20zfs%20send&In-Reply-To=%3C9154D65D-BFD1-41ED-A31D-5B44A409EDBC%40ironsoftware.de%3E"
+       TITLE="[zfs-discuss] panic() zfs send">ksh at ironsoftware.de
+       </A><BR>
+    <I>Sat Jan 17 08:52:01 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001370.html">[zfs-discuss] deleted directories and files
+</A></li>
+        <LI>Next message: <A HREF="001325.html">[zfs-discuss] Applications/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1324">[ date ]</a>
+              <a href="thread.html#1324">[ thread ]</a>
+              <a href="subject.html#1324">[ subject ]</a>
+              <a href="author.html#1324">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+this one was with zfs send &gt; fifo ; zfs recv &lt; fifo.
+
+Sat Jan 17 11:37:23 2009
+panic(cpu 0 caller 0x0019F4EF): &quot;trying to interlock destroyed mutex  
+0xd3baac4&quot;@/SourceCache/xnu/xnu-1228.9.59/osfmk/i386/locks_i386.c:1760
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x34283e08 : 0x12b4f3 (0x45b13c 0x34283e3c 0x1335e4 0x0)
+0x34283e58 : 0x19f4ef (0x462eb0 0xd3baac4 0xd3baac4 0x53a27250)
+0x34283e78 : 0x19c568 (0xd3baac4 0x206 0x34283ea8 0x4edc010b)
+0x34283e88 : 0x4edc010b (0xd3baac4 0x8da842d6 0x34283ea8 0x4edc018a)
+0x34283ea8 : 0x4ed83ce0 (0xd3baac4 0x34283ec8 0x19c584 0x53a2728c)
+0x34283ee8 : 0x4ed85938 (0x53a2728c 0x5310000 0x34283f28 0xb4c6ee8)
+0x34283f08 : 0x4ed7f898 (0x8cba930 0xb4c6ee8 0xede0 0x61544)
+0x34283f28 : 0x4ed7fe0b (0x4ee29948 0x4ee29948 0x5ceba7 0x4edef8a5)
+0x34283fc8 : 0x1a017c (0x0 0x0 0x1a30b5 0x4a705d0)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x4ed65000-&gt;0x4ee30fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_I386
+System model name: MacBook1,1 (Mac-F4208CC8)
+  
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFJcgyyp+9ff145KVIRAppZAJ0f2mFoIv/GX2qn1p8+I2YSi2gcSgCffohN
+Phc59Uk1AVO9CKYziWGpVF0=
+=iq3j
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001370.html">[zfs-discuss] deleted directories and files
+</A></li>
+	<LI>Next message: <A HREF="001325.html">[zfs-discuss] Applications/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1324">[ date ]</a>
+              <a href="thread.html#1324">[ thread ]</a>
+              <a href="subject.html#1324">[ subject ]</a>
+              <a href="author.html#1324">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

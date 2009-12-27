@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3C89B623DD-A6D3-4604-AC05-1B7FA943C468%40designlifecycle.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001575.html">
+   <LINK REL="Next"  HREF="001577.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation</H1>
+    <B>Alex Bowden</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3C89B623DD-A6D3-4604-AC05-1B7FA943C468%40designlifecycle.com%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation">alex at designlifecycle.com
+       </A><BR>
+    <I>Wed May  6 19:00:32 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001575.html">[zfs-discuss] 'File has changed' type messages in XCode and the like
+</A></li>
+        <LI>Next message: <A HREF="001577.html">[zfs-discuss] Subject: 'File has changed' type messages in	XCode and the like
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1576">[ date ]</a>
+              <a href="thread.html#1576">[ thread ]</a>
+              <a href="subject.html#1576">[ subject ]</a>
+              <a href="author.html#1576">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+This whole controversy was about whether the wording of paragraph 1 of  
+the MacOS ZFS &quot;getting started&quot;.
+
+
+.... A pool may consist of one or more whole disks or disk  
+partitions. .... ZFS typically works best when it owns the entire  
+disk ....
+
+I say whole disk means diskN and not diskNs2.
+
+Several of you seem to think that it is clear that MacOS GPT is  
+special and on it whole disk means diskNs2 and not diskN and that  
+those that think otherwise are being somehow odd.
+
+Well it turns out that MacOS 10.5.6's diskutil has its own view on  
+what is a whole disk.  And I for one am not surprised to see that is  
+agrees with the last 40 years of Unix usage and not with the MacOS ZFS  
+getting started unique view.
+
+Alex-Bowdens-Computer:~ alex$ diskutil info  /dev/disk0
+    Device Identifier:        disk0
+    Device Node:              /dev/disk0
+    Part Of Whole:            disk0
+    ...
+    Whole:                    Yes
+    ...
+Alex-Bowdens-Computer:~ alex$ diskutil info  /dev/disk0s1
+    Device Identifier:        disk0s1
+    Device Node:              /dev/disk0s1
+    Part Of Whole:            disk0
+    ...
+    Whole:                    No
+    ...
+Alex-Bowdens-Computer:~ alex$ diskutil info  /dev/disk0s2
+    Device Identifier:        disk0s2
+    Device Node:              /dev/disk0s2
+    Part Of Whole:            disk0
+    ...
+    Whole:                    No
+    ...
+
+
+So.  Those of you that just can't cope with changing your view, I  
+suggest you send a bug report to Apple and tell them that you think  
+that diskutil is wrong.
+
+But please spare me any more bizarre arguments that MacOS is somehow  
+different, and that white is black and black is white.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001575.html">[zfs-discuss] 'File has changed' type messages in XCode and the like
+</A></li>
+	<LI>Next message: <A HREF="001577.html">[zfs-discuss] Subject: 'File has changed' type messages in	XCode and the like
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1576">[ date ]</a>
+              <a href="thread.html#1576">[ thread ]</a>
+              <a href="subject.html#1576">[ subject ]</a>
+              <a href="author.html#1576">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

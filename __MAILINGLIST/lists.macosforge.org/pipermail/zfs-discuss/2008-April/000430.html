@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Status of ZFS on Mac OS X?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=33644d3c0804051703j79c39b6fr2567c049aa18ffa6%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000396.html">
+   <LINK REL="Next"  HREF="000446.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Status of ZFS on Mac OS X?</H1>
+    <B>Lorenzo Perone</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=33644d3c0804051703j79c39b6fr2567c049aa18ffa6%40mail.gmail.com"
+       TITLE="[zfs-discuss] Status of ZFS on Mac OS X?">lopez.on.the.lists at yellowspace.net
+       </A><BR>
+    <I>Tue Apr  8 17:24:53 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000396.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+        <LI>Next message: <A HREF="000446.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#430">[ date ]</a>
+              <a href="thread.html#430">[ thread ]</a>
+              <a href="subject.html#430">[ subject ]</a>
+              <a href="author.html#430">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanx for Your contributions, first of all.
+
+On 06.04.2008, at 02:03, James Snyder wrote:
+
+&gt;<i> Aside from the known issues with
+</I>&gt;<i> having to empty trash by rm'ing and not being able to use spotlight,
+</I>
+These are two nasty limitations for daily usage (which would be
+one important use to test it, would it?), if you ask me ;/
+I use spotlight a lot, so I couldn't put my home on it.
+
+On the other hand, it would be interesting to see what happens when
+using File Vault (provided that it is possible to symlink it to
+an encrypted sparse image within a zfs volume). Since zfs snapshots
+are block-wise, at least that would be a way to backup the sparse-
+monster incrementally - and to have a &quot;portable&quot; time machine.
+
+Of course it would be great for things like the iTunes library,
+as well as volumes containing big files such as Paralels VM
+images, etc.
+
+&gt;<i> One thing I might stay away from, at the moment, is attaching and
+</I>&gt;<i> detaching disks a lot from mirrors
+</I>
+Personally, I don't think that this example is one of the most notable
+features of zfs (besides you can do this with diskutil as well)...
+
+&gt;<i> I'm not sure how I would rate it in comparison to the FreeBSD port.
+</I>&gt;<i> That one is relatively stable as well, though there are the known
+</I>&gt;<i> memory issues and some deadlocks there that I don't think I've seen on
+</I>&gt;<i> OS X.
+</I>
+I've been using zfs on freebsd/amd64 since FreeBSD 7.0-BETA4
+and it runs smoothly with appropriate kernel memory settings.
+One of my systems receives rsync as well as psyncX backups from
+other Unixes and from Macs, and has yet to show any problem.
+
+As for a feature comparison, it looks to me like the Mac OS X
+port has implemented more features (ACLs and things like
+labels look like they're being kept, at least from a
+Finder perspective). I've seen it has problems with resource
+forks however (at least when copying recursively with cp).
+
+Finally, I took some more time to read the past posts
+on this lists, and have found that No&#235;l Dellofano from inside the
+&quot;mothership&quot; is keeping us up to date at a fair pace, and even
+posted about a new release shortly.
+I look forward to it and will start using zfs on a macbook pro
+for the beginning...
+
+Thanx a lot and Regards,
+
+
+Lorenzo
+
+
+
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000396.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+	<LI>Next message: <A HREF="000446.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#430">[ date ]</a>
+              <a href="thread.html#430">[ thread ]</a>
+              <a href="subject.html#430">[ subject ]</a>
+              <a href="author.html#430">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

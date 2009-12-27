@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS and Samba do not get along
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20and%20Samba%20do%20not%20get%20along&In-Reply-To=ca3c5ef60808291518g7ddec061ib7921a16df82d097%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000805.html">
+   <LINK REL="Next"  HREF="000810.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS and Samba do not get along</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20and%20Samba%20do%20not%20get%20along&In-Reply-To=ca3c5ef60808291518g7ddec061ib7921a16df82d097%40mail.gmail.com"
+       TITLE="[zfs-discuss] ZFS and Samba do not get along">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Sat Aug 30 04:08:35 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000805.html">[zfs-discuss] ZFS and Samba do not get along
+</A></li>
+        <LI>Next message: <A HREF="000810.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#806">[ date ]</a>
+              <a href="thread.html#806">[ thread ]</a>
+              <a href="subject.html#806">[ subject ]</a>
+              <a href="author.html#806">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>you need a more recent version of Samba, minimally 3.0.26 along with  
+the right build parameters to get the ZFS ACL support (ZFS uses a  
+variant of NFSv4 style ACLs)  .. we put this in around snv_70 in  
+opensolaris last year see:
+<A HREF="http://mail.opensolaris.org/pipermail/zfs-discuss/2007-September/042552.html">http://mail.opensolaris.org/pipermail/zfs-discuss/2007-September/042552.html</A>
+
+you can find all sun's patches (ones that haven't been integrated into  
+the Samba base) against the current GPLv2 version of samba (3.0.31)  
+here:
+<A HREF="http://src.opensolaris.org/source/xref/sfw/usr/src/cmd/samba/">http://src.opensolaris.org/source/xref/sfw/usr/src/cmd/samba/</A>
+
+or optionally i guess we (apple/sun/someone) could start a side  
+project to attempt a port of the CIFS server which has integral  
+support in the newer ZFS bits:
+<A HREF="http://opensolaris.org/os/project/cifs-server/">http://opensolaris.org/os/project/cifs-server/</A>
+
+hth
+Jonathan
+
+On Aug 29, 2008, at 6:18 PM, Marko Milisavljevic wrote:
+
+&gt;<i> No idea how to fix it, but I can confirm the same problem form Vista.
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Aug 27, 2008 at 5:19 PM, Alex P. Frangis &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">qapf at qapf.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i> Using the built in Samba sharing in OSX I have a folder shared on a  
+</I>&gt;&gt;<i> 3 Drive
+</I>&gt;&gt;<i> Raid-Z connected via firewire, and when accessing the samba share  
+</I>&gt;&gt;<i> from
+</I>&gt;&gt;<i> windows hosts I can not copy files, all file copies end with a host  
+</I>&gt;&gt;<i> is
+</I>&gt;&gt;<i> unreachable error after transfering 99% of their content. You can  
+</I>&gt;&gt;<i> open
+</I>&gt;&gt;<i> files, you can view files in notepad, you can mount ISO's across the
+</I>&gt;&gt;<i> network, but copying a file from point A to point B fails.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Anyone have any idea how to fix this one?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000805.html">[zfs-discuss] ZFS and Samba do not get along
+</A></li>
+	<LI>Next message: <A HREF="000810.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#806">[ date ]</a>
+              <a href="thread.html#806">[ thread ]</a>
+              <a href="subject.html#806">[ subject ]</a>
+              <a href="author.html#806">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] flash sound
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20flash%20sound&In-Reply-To=063B4D00-6F05-49D8-852D-1A7346590661%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000307.html">
+   <LINK REL="Next"  HREF="000308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] flash sound</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20flash%20sound&In-Reply-To=063B4D00-6F05-49D8-852D-1A7346590661%40spamfreemail.de"
+       TITLE="[zfs-discuss] flash sound">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Tue Mar 11 14:26:35 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000307.html">[zfs-discuss] flash sound
+</A></li>
+        <LI>Next message: <A HREF="000308.html">[zfs-discuss] Fwd:  flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#306">[ date ]</a>
+              <a href="thread.html#306">[ thread ]</a>
+              <a href="subject.html#306">[ subject ]</a>
+              <a href="author.html#306">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok i *think* i know why, but i don't know how to fix this
+
+my zfs setup
+
+NAME                 USED  AVAIL  REFER  MOUNTPOINT
+hometank            59,4G   301G  8,01M  /Users
+hometank/ruebezahl  59,4G   301G  59,4G  /Users/ruebezahl
+
+osx is seeing some differences here, for example my home folder is no  
+longer called homefolder but hometank
+but it logs in correctly and uses hometank/ruebezahl as home
+also my homefolder is viewed as an alias, and if  open it it takes me  
+to my zfs volume...
+maybe this confuses the flash player, i tried a reinstall but it won't  
+let me because it says it can't create a new folder inside my  
+preferences folder
+permissions are correct, and it touches a file called version.txt.
+for some odd reason it won't create the new folder
+maybe flash player is confused by the way osx  links to my homefolder  
+because it is stored on a zfs volume ?
+
+earliere my homefolder was directly on hometank
+(hometank/ruebezahl did not exist back than, flash player worked)
+
+
+hmmmmm
+
+
+On 11.03.2008, at 22:13, Franz Schmalzl wrote:
+
+&gt;<i> it is indeed ;-)
+</I>&gt;<i>
+</I>&gt;<i> as you say, flash player should not even notice the underlaying fs
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> i'm gonna play around a bit and keep you posted
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> bizarro.  This is nothing I've ever encountered.  I'm not sure how  
+</I>&gt;&gt;<i> flash player would have anything directly to do with the  
+</I>&gt;&gt;<i> filesystem.... weird
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i> On Mar 11, 2008, at 2:04 PM, Franz Schmalzl wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ok strange things happen around here...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> since my conversion to a homefolder on zfs, sound in flash player  
+</I>&gt;&gt;&gt;<i> does
+</I>&gt;&gt;&gt;<i> not work anymore....
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> how is this even related to the underlying fielsystem ?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000307.html">[zfs-discuss] flash sound
+</A></li>
+	<LI>Next message: <A HREF="000308.html">[zfs-discuss] Fwd:  flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#306">[ date ]</a>
+              <a href="thread.html#306">[ thread ]</a>
+              <a href="subject.html#306">[ subject ]</a>
+              <a href="author.html#306">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

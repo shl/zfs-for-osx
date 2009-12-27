@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] using OpenCL for ZFS checksumming possible?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20using%20OpenCL%20for%20ZFS%20checksumming%20possible%3F&In-Reply-To=50125.124.168.36.189.1213110887.squirrel%40webmail.amsi.org.au">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000634.html">
+   <LINK REL="Next"  HREF="000654.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] using OpenCL for ZFS checksumming possible?</H1>
+    <B>Edvard Wendelin</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20using%20OpenCL%20for%20ZFS%20checksumming%20possible%3F&In-Reply-To=50125.124.168.36.189.1213110887.squirrel%40webmail.amsi.org.au"
+       TITLE="[zfs-discuss] using OpenCL for ZFS checksumming possible?">edvard at evisec.com
+       </A><BR>
+    <I>Tue Jun 10 08:54:48 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000634.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+        <LI>Next message: <A HREF="000654.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#635">[ date ]</a>
+              <a href="thread.html#635">[ thread ]</a>
+              <a href="subject.html#635">[ subject ]</a>
+              <a href="author.html#635">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+
+I haven't looked into the details of OpenCL but my initial reaction is  
+that  OpenCL will be used mostly for parallel floating point problems  
+like video decoding, particle simulations and other massively parallel  
+algorithms. If OpenCL will be anything like CUDA (<A HREF="http://www.nvidia.com/object/cuda_home.html">http://www.nvidia.com/object/cuda_home.html</A> 
+) there will also be a latency associated with transferring data on  
+the bus to the GPU-memory which has to be taken into account.
+
+Another way to speed up the checksum calculations would be to use SIMD  
+instructions which I think would be better suited for this kind of  
+problem.
+
+Then again I might be completely wrong!
+
+kind regards,
+Edvard
+
+On 10 jun 2008, at 17.14, <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">raoul at amsi.org.au</A> wrote:
+
+&gt;<i> I'm hoping SHA256 is used as there doesn't seem to be any mention of
+</I>&gt;<i> fletcher associated with OpenCL/Botan.
+</I>&gt;<i>
+</I>&gt;<i> Looking at:
+</I>&gt;<i> <A HREF="http://www.opensolaris.org/os/community/zfs/source/;jsessionid=2686F92391554A5B939B93197A2B443C">http://www.opensolaris.org/os/community/zfs/source/;jsessionid=2686F92391554A5B939B93197A2B443C</A>
+</I>&gt;<i>
+</I>&gt;<i> which algorithm is actually used for ZFS checksums? fletcher.c or  
+</I>&gt;<i> sha256.c ?
+</I>&gt;<i> (I'm hoping the latter)
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000634.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+	<LI>Next message: <A HREF="000654.html">[zfs-discuss] using OpenCL for ZFS checksumming possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#635">[ date ]</a>
+              <a href="thread.html#635">[ thread ]</a>
+              <a href="subject.html#635">[ subject ]</a>
+              <a href="author.html#635">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

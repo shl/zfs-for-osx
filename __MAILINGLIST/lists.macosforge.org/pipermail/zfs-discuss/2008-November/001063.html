@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS mountpoint in limbo
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20mountpoint%20in%20limbo&In-Reply-To=%3C8BB8224C-FF08-4FC4-8E86-7C39B95401A7%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001062.html">
+   <LINK REL="Next"  HREF="001077.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS mountpoint in limbo</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20mountpoint%20in%20limbo&In-Reply-To=%3C8BB8224C-FF08-4FC4-8E86-7C39B95401A7%40apple.com%3E"
+       TITLE="[zfs-discuss] ZFS mountpoint in limbo">ndellofano at apple.com
+       </A><BR>
+    <I>Sun Nov 16 23:40:05 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001062.html">[zfs-discuss] ZFS mountpoint in limbo
+</A></li>
+        <LI>Next message: <A HREF="001077.html">[zfs-discuss] ZFS mountpoint in limbo
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1063">[ date ]</a>
+              <a href="thread.html#1063">[ thread ]</a>
+              <a href="subject.html#1063">[ subject ]</a>
+              <a href="author.html#1063">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think you are confusing what the mountpoint is with whether or not  
+the filesystem is actually mounted.  These are two separate issues.   
+The mountpoint is where the filesystem is mounted, but is not an  
+indicator of whether  the filesystem is mounted currently or not.  See  
+example below:
+
+[locals-macbook-pro-91 23:31] % zfs list
+NAME                          USED  AVAIL  REFER  MOUNTPOINT
+pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/pixie_dust/ 
+solaris
+pixie_dust/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">solaris at 10_23_07</A>   620K      -  2.95G  -
+&lt;~&gt;
+
+[locals-macbook-pro-91 23:31] % sudo zfs unmount pixie_dust/solaris
+
+&lt;~&gt;
+[locals-macbook-pro-91 23:32] % zfs list
+NAME                          USED  AVAIL  REFER  MOUNTPOINT
+pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/pixie_dust/ 
+solaris
+pixie_dust/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">solaris at 10_23_07</A>   620K      -  2.95G  -
+
+&lt;~&gt;
+[locals-macbook-pro-91 23:33] % zfs get mounted
+NAME                         			PROPERTY  	 
+VALUE                        SOURCE
+pixie_dust                      		mounted         	 
+yes                          -
+pixie_dust/solaris           		mounted      		 
+no                           -
+pixie_dust/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">solaris at 10_23_07</A>  mounted   		-                            -
+
+The mountpoint stays the same, the mounted property however does not.   
+If you wish to know what is mounted currently, do a 'zfs get mounted'  
+and that will tell you.  Remember that in ZFS in unmounting a  
+filesystem, the filesystem is still in the ZFS namespace and ZFS still  
+knows it's there even if it's currently unmounted.  It doesn't drop  
+off the cliff into nonexistence like it does in a traditional UNIX  
+filesystem.
+
+hope this helps,
+Noel
+
+On Nov 16, 2008, at 1:36 PM, Matthew Rezny wrote:
+
+&gt;<i> Yes, I was able to do a sudo zpool export -f ZFSextern before doing  
+</I>&gt;<i> sudo reboot. However, that doesn't address the issue of why the file  
+</I>&gt;<i> system could not be simply unmounted. There is some error there that  
+</I>&gt;<i> could perhaps come up in other scenarios, such as when rearranging  
+</I>&gt;<i> mountpoints where one might want some umounted but others to remain  
+</I>&gt;<i> mounted in the same pool.
+</I>&gt;<i>
+</I>&gt;<i> On Nov 15, 2008, at 7:20 AM, Jonathan Edwards wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Nov 14, 2008, at 8:57 PM, Matthew Rezny wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I have had very good results with ZFS across a large array on my  
+</I>&gt;&gt;&gt;<i> dual G5. I recently started using ZFS on a single external drive  
+</I>&gt;&gt;&gt;<i> on my MacBook Pro via eSATA. I have trouble with logout/reboot  
+</I>&gt;&gt;&gt;<i> hanging recently, which happened when attempting to install  
+</I>&gt;&gt;&gt;<i> software updates that required a reboot. Before doing I hard  
+</I>&gt;&gt;&gt;<i> reboot, I attempted to unmount the ZFS volumes and ran into one  
+</I>&gt;&gt;&gt;<i> that is mounted but claims not to be, as shown below.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> $ sudo zfs list
+</I>&gt;&gt;&gt;<i> NAME                         USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;&gt;&gt;<i> ZFSextern                   3.23G   270G   274K  /Volumes/ZFSextern
+</I>&gt;&gt;&gt;<i> ZFSextern/Virtual_Machines  3.23G   270G  3.23G  /Volumes/ 
+</I>&gt;&gt;&gt;<i> ZFSextern/Virtual_Machines
+</I>&gt;&gt;&gt;<i> $ sudo zfs umount ZFSextern/Virtual_Machines
+</I>&gt;&gt;&gt;<i> cannot unmount 'ZFSextern/Virtual_Machines': not currently mounted
+</I>&gt;&gt;&gt;<i> $ sudo zfs umount ZFSextern
+</I>&gt;&gt;&gt;<i> cannot unmount '/Volumes/ZFSextern': Resource busy
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> i typically just export the pool before i reboot on my MBP .. make  
+</I>&gt;&gt;<i> sure you shut down everything that is accessing the pool and then:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ sudo zpool export ZFSextern
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> or
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> $ sudo zpool export -f ZFSextern
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001062.html">[zfs-discuss] ZFS mountpoint in limbo
+</A></li>
+	<LI>Next message: <A HREF="001077.html">[zfs-discuss] ZFS mountpoint in limbo
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1063">[ date ]</a>
+              <a href="thread.html#1063">[ thread ]</a>
+              <a href="subject.html#1063">[ subject ]</a>
+              <a href="author.html#1063">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

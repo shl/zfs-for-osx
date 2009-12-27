@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zpool export
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20export&In-Reply-To=F83178A0-83FB-48CD-85C3-ED664C01FBCF%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000229.html">
+   <LINK REL="Next"  HREF="000216.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zpool export</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20export&In-Reply-To=F83178A0-83FB-48CD-85C3-ED664C01FBCF%40apple.com"
+       TITLE="[zfs-discuss] zpool export">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Fri Feb 29 08:36:50 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000229.html">[zfs-discuss] zpool export
+</A></li>
+        <LI>Next message: <A HREF="000216.html">[zfs-discuss] Using Mirror for Automatic Backup?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#236">[ date ]</a>
+              <a href="thread.html#236">[ thread ]</a>
+              <a href="subject.html#236">[ subject ]</a>
+              <a href="author.html#236">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 29.02.2008, at 02:47, No&#235;l Dellofano wrote:
+
+&gt;<i> We are working on trying to change the system so things like this  
+</I>&gt;<i> are streamlined more.  And you can just do a 'zpool export' instead  
+</I>&gt;<i> of unmounting and then exporting.  The unmount happens automatically  
+</I>&gt;<i> as part of the export.  But yes, this is a bit confusing for  
+</I>&gt;<i> external drives especially since you tend to want to remove them  
+</I>&gt;<i> easily or they may get bumped out.  We're working on improving this  
+</I>&gt;<i> behavior.
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>
+
+thanks for the info!
+
+another question
+
+export as normal user strangely does not work for me, sudo is needed
+altough the mountpoint belongs to the normal user
+(unmounting the volume via the gui also needs an admin password)
+mounting as normal user works tough
+
+
+thanks for your answer
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Feb 24, 2008, at 8:59 AM, Franz Schmalzl wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> i have to do a zpool export after unmounting a pool, i know
+</I>&gt;&gt;<i> (kernel panic when replugging the underlaying device if i don't)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> are there plans to change this behaviour ?
+</I>&gt;&gt;<i> (maybe an automatic export )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> regards
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000229.html">[zfs-discuss] zpool export
+</A></li>
+	<LI>Next message: <A HREF="000216.html">[zfs-discuss] Using Mirror for Automatic Backup?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#236">[ date ]</a>
+              <a href="thread.html#236">[ thread ]</a>
+              <a href="subject.html#236">[ subject ]</a>
+              <a href="author.html#236">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

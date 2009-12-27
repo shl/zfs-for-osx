@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] First time user: Some questions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3Ca037f7360903020850k5132bc71q7818833514886cf3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001457.html">
+   <LINK REL="Next"  HREF="001459.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] First time user: Some questions</H1>
+    <B>John Hendy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3Ca037f7360903020850k5132bc71q7818833514886cf3%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] First time user: Some questions">jw.hendy at gmail.com
+       </A><BR>
+    <I>Mon Mar  2 08:50:58 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001457.html">[zfs-discuss] First time user: Some questions
+</A></li>
+        <LI>Next message: <A HREF="001459.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1458">[ date ]</a>
+              <a href="thread.html#1458">[ thread ]</a>
+              <a href="subject.html#1458">[ subject ]</a>
+              <a href="author.html#1458">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the continued input and bash translation!
+Re the logout procedure... the only info I've found was here:
+<A HREF="http://www.bombich.com/mactips/loginhooks.html">http://www.bombich.com/mactips/loginhooks.html</A>
+
+I don't know that this will do things after the home filesystem is
+unmounted. Since as another user I was able to unmount my main user's
+filesystem and export the pool, then reboot and import the pool from FreeBSD
+successfully, I thought if I could repeat that procedure at logout, it might
+work...
+
+All I did was follow the instructions at the referenced site above with a
+script something like:
+
+#!/bin/sh
+sudo diskutil umount /Volumes/pool
+sudo zpool export pool
+exit 0
+
+But I'm not sure on that... I cant' look at my script right now as I'm at
+work.
+
+It hung at logout forever using this script. It could very well have been my
+poor scripting knowledge that did it, though. I'll try yours and see if that
+works.
+
+Thanks again,
+John
+
+On Mon, Mar 2, 2009 at 10:01 AM, Harald Hanche-Olsen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hanche at math.ntnu.no</A>&gt;wrote:
+
+&gt;<i> + John Hendy &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jw.hendy at gmail.com</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i> &gt; What if my pool (and the filesystem on it) holds my user folder? I
+</I>&gt;<i> &gt; have been unsuccessful in unmounting/exporting it, as it's in use
+</I>&gt;<i> &gt; whenever I'm logged on.
+</I>&gt;<i>
+</I>&gt;<i> Good question. I find lots of information on developper.apple.com
+</I>&gt;<i> about the login and startup procedure, but very little on shutdown and
+</I>&gt;<i> logout. And that is when you want to run cleanup scripts.
+</I>&gt;<i>
+</I>&gt;<i> &gt; - What would I have to change to use this as a bash script, if you'd
+</I>&gt;<i> &gt; be able to offer that info...
+</I>&gt;<i>
+</I>&gt;<i> Oh, well, I wasn't going to do that, but here is a quick-n-dirty
+</I>&gt;<i> translation. It even works in a simple case, but may not be
+</I>&gt;<i> sufficiently robust. Again, there needs to be a literal TAB character
+</I>&gt;<i> before the word &quot;yes&quot;.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> #!/bin/sh
+</I>&gt;<i> if [ $# -ne 1 ]; then
+</I>&gt;<i>  echo Usage: $0 '&lt;pool&gt;' &gt;&amp;2
+</I>&gt;<i>  exit 1
+</I>&gt;<i> fi
+</I>&gt;<i> if [ &quot;`id -u`&quot; -ne 0 ]; then
+</I>&gt;<i>  echo Running under sudo ...
+</I>&gt;<i>  exec sudo $0 &quot;$@&quot;
+</I>&gt;<i> fi
+</I>&gt;<i> for mp in \
+</I>&gt;<i>  `zfs list -Hrt filesystem -o mountpoint,mounted -S name $1 |\
+</I>&gt;<i>    sed -ne 's|  yes||p'`; do
+</I>&gt;<i>    echo Unmounting $mp
+</I>&gt;<i>     diskutil unmount $mp || exit 1
+</I>&gt;<i> done
+</I>&gt;<i> echo Exporting $1
+</I>&gt;<i> zpool export $1
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; - Do you think I could run this at logout successfully (as a logout
+</I>&gt;<i> hook)?
+</I>&gt;<i>
+</I>&gt;<i> Only if the logout hook runs after all your other processes are
+</I>&gt;<i> shutdown, so that the home filesystem is not busy. I don't know if it
+</I>&gt;<i> does, or if there is a way to run a script at that time. On freebsd
+</I>&gt;<i> there is /etc/rc.shutdown, but osx doesn't seem to have anything like
+</I>&gt;<i> it.
+</I>&gt;<i>
+</I>&gt;<i> - Harald
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090302/31464e88/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090302/31464e88/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001457.html">[zfs-discuss] First time user: Some questions
+</A></li>
+	<LI>Next message: <A HREF="001459.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1458">[ date ]</a>
+              <a href="thread.html#1458">[ thread ]</a>
+              <a href="subject.html#1458">[ subject ]</a>
+              <a href="author.html#1458">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

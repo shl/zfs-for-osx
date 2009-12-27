@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs and panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20and%20panics&In-Reply-To=F4858F03-AFA3-47F9-97FF-0648D67E5EF2%40sun.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000608.html">
+   <LINK REL="Next"  HREF="000611.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs and panics</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20and%20panics&In-Reply-To=F4858F03-AFA3-47F9-97FF-0648D67E5EF2%40sun.com"
+       TITLE="[zfs-discuss] zfs and panics">ndellofano at apple.com
+       </A><BR>
+    <I>Wed May 28 16:19:29 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000608.html">[zfs-discuss] zfs and panics
+</A></li>
+        <LI>Next message: <A HREF="000611.html">[zfs-discuss] new bits! zfs-117
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#609">[ date ]</a>
+              <a href="thread.html#609">[ thread ]</a>
+              <a href="subject.html#609">[ subject ]</a>
+              <a href="author.html#609">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Bill,
+
+can you tell me what you're doing that causes the panics?  Are they  
+seemingly random or the result of something?
+Also what zfs bits are you running?  Can you send me a zpool status,  
+and a zpool history for your pool?
+
+thanks!
+Noel
+
+On May 28, 2008, at 10:52 AM, Bill Winnett wrote:
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Recently(last week or so), I have been getting panics on a regular  
+</I>&gt;<i> basis.  Does the below signature give any clues?
+</I>&gt;<i> How can one get more detailed stack traces?
+</I>&gt;<i>
+</I>&gt;<i> thanks,
+</I>&gt;<i> -bill w.
+</I>&gt;<i>
+</I>&gt;<i> ---
+</I>&gt;<i> Wed May 28 13:43:05 2008
+</I>&gt;<i> panic(cpu 0 caller 0x001A83A6): Double fault at 0x00c5a33c, thread: 
+</I>&gt;<i> 0x7fad998, trapno:0x8, err:0x0),registers:
+</I>&gt;<i> CR0: 0x80010033, CR2: 0x68627fd8, CR3: 0x01269000, CR4: 0x00000660
+</I>&gt;<i> EAX: 0x00048e5f, EBX: 0x07e3f4c0, ECX: 0x07c73800, EDX: 0x07e82e00
+</I>&gt;<i> ESP: 0x68627fe0, EBP: 0x68628028, ESI: 0x00000000, EDI: 0x07c738b8
+</I>&gt;<i> EFL: 0x00010246, EIP: 0x00c5a33c
+</I>&gt;<i>
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x4eae28 : 0x12b0f7 (0x4581f4 0x4eae5c 0x133230 0x0)
+</I>&gt;<i> 0x4eae78 : 0x1a83a6 (0x4611a4 0xc5a33c 0x7fad998 0x8)
+</I>&gt;<i> 0x4eaf58 : 0x19fc73 (0x4eaf70 0x0 0x0 0x0)
+</I>&gt;<i> 0x68628028 : 0xc5a65b (0x7e82e00 0x48e60 0x0 0x1)
+</I>&gt;<i> 0x68628058 : 0xc55ceb (0x7e82e00 0x48e60 0x0 0xcbc8e0)
+</I>&gt;<i> 0x686280b8 : 0xc8ba11 (0x7a6ef50 0x48e60 0x0 0x0)
+</I>&gt;<i> 0x68628168 : 0xc942af (0x6862831c 0x0 0x0 0x6862831c)
+</I>&gt;<i> 0x68628338 : 0xc8ac20 (0x7d0d5da8 0x202 0x68628368 0x7ec3230)
+</I>&gt;<i> 0x68628378 : 0xc34fd2 (0x7d0d5da8 0x1 0x686283c8 0x7ec3230)
+</I>&gt;<i> 0x686283b8 : 0x1f3eb1 (0x686283d4 0x8 0x686283dc 0x0)
+</I>&gt;<i> 0x686283f8 : 0x1db45f (0x7ea2290 0x7ea5144 0x0 0x2)
+</I>&gt;<i> 0x68628448 : 0x1db67b (0x7ea2290 0x1 0x68628478 0x19d4b1)
+</I>&gt;<i> 0x68628498 : 0x1dd2e6 (0x0 0x4f43c0 0x68628538 0x7dbe0188)
+</I>&gt;<i> 0x68628518 : 0xc8b924 (0x0 0x34 0x6862854c 0x7dbe0114)
+</I>&gt;<i> 0x68628598 : 0xc8bd39 (0x7c73908 0x0 0x200 0x0)
+</I>&gt;<i> 0x68628648 : 0xc942af (0x686287fc 0x0 0x0 0x686287fc)
+</I>&gt;<i> 	Backtrace continues...
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0xc2d000-&gt;0xce8fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: Finder
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9C7010
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+</I>&gt;<i> root:xnu-1228.4.31~1/RELEASE_I386
+</I>&gt;<i> System model name: iMac7,1 (Mac-F4238CC8)
+</I>&gt;<i> ----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080528/3e7ddc38/attachment.htm">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080528/3e7ddc38/attachment.htm</A> 
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000608.html">[zfs-discuss] zfs and panics
+</A></li>
+	<LI>Next message: <A HREF="000611.html">[zfs-discuss] new bits! zfs-117
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#609">[ date ]</a>
+              <a href="thread.html#609">[ thread ]</a>
+              <a href="subject.html#609">[ subject ]</a>
+              <a href="author.html#609">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

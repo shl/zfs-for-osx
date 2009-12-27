@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=24423687-6BA1-47C6-B3AD-E79F38DF824D%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000346.html">
+   <LINK REL="Next"  HREF="000347.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz</H1>
+    <B>Kane Dijkman</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=24423687-6BA1-47C6-B3AD-E79F38DF824D%40apple.com"
+       TITLE="[zfs-discuss] raidz">kane at inius.com
+       </A><BR>
+    <I>Wed Mar 19 12:05:33 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000346.html">[zfs-discuss] raidz
+</A></li>
+        <LI>Next message: <A HREF="000347.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#348">[ date ]</a>
+              <a href="thread.html#348">[ thread ]</a>
+              <a href="subject.html#348">[ subject ]</a>
+              <a href="author.html#348">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>What happens if the user does not format the disk for ZFS first? Is  
+there a way to tell? I believe the last time I setup my raidz I  
+assumed that it would format any disks that needed to be formatted as  
+part of the creation process.
+
+Reading through <A HREF="http://trac.macosforge.org/projects/zfs/wiki/get_the_party_started">http://trac.macosforge.org/projects/zfs/wiki/get_the_party_started</A> 
+  for instructions I did not get the impression that it is required to  
+manually format each disk for ZFS if they are already GPT. Is this  
+wrong?
+
+If I take a disk that was formatted GPT, but with JHFS+, and add it to  
+a raidz I am creating will there be a problem?
+
+Kane
+
+
+On Mar 19, 2008, at 11:50 AM, No&#235;l Dellofano wrote:
+&gt;<i> Hey Franz,
+</I>&gt;<i>
+</I>&gt;<i> Can you refresh my memory of which two corruptions you're referring
+</I>&gt;<i> to?  There was a raidz bug that existed pre zfs-102A drop so I think a
+</I>&gt;<i> few people experienced corruption due to that.  Currently though,
+</I>&gt;<i> there are no bugs which would cause raidz data loss at all.
+</I>&gt;<i>
+</I>&gt;<i> The only other thing I can think of to mention is some people had
+</I>&gt;<i> either failed to format their disk for ZFS first (diskutil
+</I>&gt;<i> partitionDisk ZFS...) or they created their pool using 'disk2' instead
+</I>&gt;<i> of 'disk2s2', and because of the way diskutil works that will cause
+</I>&gt;<i> confusion on bringup such that the drive isn't brought up properly,
+</I>&gt;<i> causing people to be unable to import their pools.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Mar 19, 2008, at 11:01 AM, Franz Schmalzl wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> hi noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> did find the cause of the corrupted raidz arrays mentioned earlier
+</I>&gt;&gt;<i> by two people?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> i'm planning to build a raidz in near future and i'd like to know if
+</I>&gt;&gt;<i> there are any bugs which could end up in a data loss...
+</I>&gt;&gt;<i> since i won't have any backup of the raid array
+</I>&gt;&gt;<i> ( not enough harddrives here..)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> best regards
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> franz schmalzl
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+
+---------------------------------------------------------------------------------
+If life gives you lemons, squeeze the juice into a watergun and shoot  
+other people in the eyes.
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000346.html">[zfs-discuss] raidz
+</A></li>
+	<LI>Next message: <A HREF="000347.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#348">[ date ]</a>
+              <a href="thread.html#348">[ thread ]</a>
+              <a href="subject.html#348">[ subject ]</a>
+              <a href="author.html#348">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

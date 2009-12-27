@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3CADA6A1DA-03BB-498E-A54B-ECC715FA5D86%40designlifecycle.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001560.html">
+   <LINK REL="Next"  HREF="001565.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation</H1>
+    <B>Alex Bowden</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3CADA6A1DA-03BB-498E-A54B-ECC715FA5D86%40designlifecycle.com%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation">alex at designlifecycle.com
+       </A><BR>
+    <I>Tue May  5 16:00:14 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001560.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+        <LI>Next message: <A HREF="001565.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1562">[ date ]</a>
+              <a href="thread.html#1562">[ thread ]</a>
+              <a href="subject.html#1562">[ subject ]</a>
+              <a href="author.html#1562">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+&gt;<i> It is a reasonable interpretation, until (and if) you realize that
+</I>&gt;<i> doing so will overwrite the partition table you just created. At which
+</I>&gt;<i> point it doesn't seem very reasonable at all, does it? But I can
+</I>&gt;<i> certainly understand how you reached this conclusion.
+</I>&gt;<i>
+</I>
+That assumes what you already know or believe ZFS does with the item  
+it is given.
+
+If you give it a partition it can clearly only use that partition.
+
+If you give it complete disk with a GPT label on it,  then it is quite  
+at liberty to just use those parts of the disk that are intended for it.
+
+isn't that what the gpt add command in your FreeBSD example did?
+
+This is the Unix world where root and swap partitions have known how  
+not to stomp on the boot block for 40 years.
+
+	8^)
+
+
+
+On 5 May 2009, at 20:42, Harald Hanche-Olsen wrote:
+
+&gt;<i> + Alex Bowden &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex at designlifecycle.com</A>&gt;:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Because the Apple GPT implementation reserves a 200MB EFI slice.
+</I>&gt;&gt;<i> [...]
+</I>&gt;&gt;<i> So in this case, giving ZFS disk2s2 only gives it 98% of the disk.
+</I>&gt;&gt;<i> Not the whole disk.
+</I>&gt;<i>
+</I>&gt;<i> I'll grant you that the &quot;getting started&quot; document is highly
+</I>&gt;<i> misleading on this point. This is one reason I prefer to use FreeBSD
+</I>&gt;<i> for partitioning and zpool creation:
+</I>&gt;<i>
+</I>&gt;<i> #; gpt create -f da2
+</I>&gt;<i> #; gpt add -t 6a898cc3-1dd2-11b2-99a6-080020736631 da2
+</I>&gt;<i> #; zpool create poolname da2p1
+</I>&gt;<i>
+</I>&gt;<i> (that long argument is the uuid that os x recognizes as signifying a
+</I>&gt;<i> zfs partition).
+</I>&gt;<i>
+</I>&gt;&gt;<i> Now I do believe that giving it 100% of the available partition
+</I>&gt;&gt;<i> space after GPT takes its bit, may well kick in the whole disk
+</I>&gt;&gt;<i> optimisations which is why I asked that question.
+</I>&gt;<i>
+</I>&gt;<i> There are a whole lot of heuristics that could be used for deciding
+</I>&gt;<i> whether to go for whole disk optimisation. For example, one could look
+</I>&gt;<i> to see if there are more than one active filesystem living on the
+</I>&gt;<i> disk. If this is the method used, it doesn't matter if there are other
+</I>&gt;<i> partitions.
+</I>&gt;<i>
+</I>&gt;&gt;<i> When the getting started says for best results give it the whole
+</I>&gt;&gt;<i> disk, the correct interpretation is disk2.
+</I>&gt;<i>
+</I>&gt;<i> It is a reasonable interpretation, until (and if) you realize that
+</I>&gt;<i> doing so will overwrite the partition table you just created. At which
+</I>&gt;<i> point it doesn't seem very reasonable at all, does it? But I can
+</I>&gt;<i> certainly understand how you reached this conclusion.
+</I>&gt;<i>
+</I>&gt;<i> - Harald
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001560.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+	<LI>Next message: <A HREF="001565.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1562">[ date ]</a>
+              <a href="thread.html#1562">[ thread ]</a>
+              <a href="subject.html#1562">[ subject ]</a>
+              <a href="author.html#1562">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

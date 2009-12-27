@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RAID-Z not re-mounting on reboot
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=77DCF6BD-D149-485B-B647-4BA90F9FAAF1%40macnews.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000428.html">
+   <LINK REL="Next"  HREF="000461.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RAID-Z not re-mounting on reboot</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RAID-Z%20not%20re-mounting%20on%20reboot&In-Reply-To=77DCF6BD-D149-485B-B647-4BA90F9FAAF1%40macnews.de"
+       TITLE="[zfs-discuss] RAID-Z not re-mounting on reboot">ndellofano at apple.com
+       </A><BR>
+    <I>Thu Apr 10 13:53:44 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000428.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+        <LI>Next message: <A HREF="000461.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#456">[ date ]</a>
+              <a href="thread.html#456">[ thread ]</a>
+              <a href="subject.html#456">[ subject ]</a>
+              <a href="author.html#456">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, so I'll add this to the wiki too since it seems there is a lot of  
+conflicting information out there :)
+
+So, the deal is you MUST use the diskutil command to partition your  
+drive first as a ZFS disk BEFORE you create the pool.  I can't stress  
+this enough.  Otherwise with the way the system works, all kinds of  
+weird things can occur. Namely, if you fail to label the drive before  
+creating the pool, then you're pool won't import on boot.  Also, your  
+drives will and can be misidentified by diskutil, and therefore your  
+pool or pieces of it may just not come up on boot either.
+
+If you want more detail read on:
+So in Solaris, these two steps the labeling of the drive and the pool  
+creation are done all at once, which I agree is just rad.  However,  
+because of the way Mac OSX works, diskutil needs to do the labeling of  
+the drive.  As Linus I'm sure would agree, it is a &quot;rampant layerying  
+violation&quot; for ZFS to call the diskutil code, cause they are above us  
+in the stack (let alone just not a good idea anyway and would be  
+disaster).  So, that leaves us with a two step process for now.
+1) use diskutil to label your drive for ZFS
+2) create your pool
+
+ZFS is still aware that if given the disk0s2 slice of a drive that it  
+has the whole drive and thus all the goodness that comes with giving  
+ZFS the whole drive will still occur and you'll be set.  It's just two  
+steps instead of one.
+For more info on how the lables are layed out on the drive you can see  
+this thread:
+
+<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/2008-March/000363.html">http://lists.macosforge.org/pipermail/zfs-discuss/2008-March/000363.html</A>
+
+also, there is no way to fix this once you've failed to do it.  You'll  
+have to zpool destroy the pool, wipe the drive, and then use diskutil  
+to create the ZFS partition.  Sucks I know, but is the only way it  
+works.  In the future hopefully we'll have this all in one fancy step,  
+however for now, you need both :)
+
+let me know if you have any questions on this,
+Noel
+
+
+On Apr 8, 2008, at 12:45 PM, Ralf Bertling wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i> not currently, unless you have a set of slightly larger disks  
+</I>&gt;<i> available.
+</I>&gt;<i> If you use the whole disks the data partitions are slightly larger  
+</I>&gt;<i> and right now ZFS is unable to replace devices by smaller ones, so  
+</I>&gt;<i> you have to back up your data, destroy the pool and start ove with a  
+</I>&gt;<i> new one..
+</I>&gt;<i> The sad part is that for Solaris, it is actually recommended to use  
+</I>&gt;<i> whole disks. It should be relatively simple to prevent this from  
+</I>&gt;<i> happening in the mac os x port.
+</I>&gt;<i> Tha ability to shrink pools will hopefully come some day (I could  
+</I>&gt;<i> not,however, find a ZFS roadmap anywhere on the net so far.
+</I>&gt;<i>
+</I>&gt;<i> Hope this helps,	ralf
+</I>&gt;<i> Am 08.04.2008 um 16:55 schrieb <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A> 
+</I>&gt;<i> :
+</I>&gt;&gt;<i> Hi Maarten,
+</I>&gt;&gt;<i> i'm not sure. That was one of the reasons I joined the list. :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mon, Apr 7, 2008 at 11:36 PM, Maarten Billemont  
+</I>&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">lhunath at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Can this be done after creating a ZFS pool on the disk too without  
+</I>&gt;&gt;<i> loosing the pool?
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000428.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+	<LI>Next message: <A HREF="000461.html">[zfs-discuss] RAID-Z not re-mounting on reboot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#456">[ date ]</a>
+              <a href="thread.html#456">[ thread ]</a>
+              <a href="subject.html#456">[ subject ]</a>
+              <a href="author.html#456">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

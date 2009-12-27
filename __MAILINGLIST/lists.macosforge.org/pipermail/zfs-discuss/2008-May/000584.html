@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20anyone%20else%20observing%20ZFS%20transfers%20pausing%20briefly%3F&In-Reply-To=50332.124.168.74.59.1210256910.squirrel%40webmail.amsi.org.au">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000583.html">
+   <LINK REL="Next"  HREF="000582.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] anyone else observing ZFS transfers pausing briefly?</H1>
+    <B>ruebezahl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20anyone%20else%20observing%20ZFS%20transfers%20pausing%20briefly%3F&In-Reply-To=50332.124.168.74.59.1210256910.squirrel%40webmail.amsi.org.au"
+       TITLE="[zfs-discuss] anyone else observing ZFS transfers pausing briefly?">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Fri May  9 04:47:55 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000583.html">[zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+</A></li>
+        <LI>Next message: <A HREF="000582.html">[zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#584">[ date ]</a>
+              <a href="thread.html#584">[ thread ]</a>
+              <a href="subject.html#584">[ subject ]</a>
+              <a href="author.html#584">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>same thing here....
+
+
+On 08.05.2008, at 16:28, <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">raoul at amsi.org.au</A> wrote:
+
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I have a ZFS test rig at home to play around with.
+</I>&gt;<i> It's actually an old AND 500/132 case with a Digital Audio mobo  
+</I>&gt;<i> inside.
+</I>&gt;<i> (was fun to build)
+</I>&gt;<i> My pool consists of 8 x 250GB drives as a raidz, which equates to  
+</I>&gt;<i> about
+</I>&gt;<i> 1.55TB capacity.
+</I>&gt;<i> Each drive is in a removable caddy and have a green LED for power  
+</I>&gt;<i> and red
+</I>&gt;<i> LED for activity.
+</I>&gt;<i>
+</I>&gt;<i> I'm noticing that all transfers to or from the pool seem to pause  
+</I>&gt;<i> for a
+</I>&gt;<i> brief couple of seconds, and then resume.
+</I>&gt;<i> i.e. I would see the red LEDs of all 8 drives go crazy for say,  
+</I>&gt;<i> approx 2-3
+</I>&gt;<i> seconds, then a pause of 1-2 seconds and then more LED craziness...
+</I>&gt;<i>
+</I>&gt;<i> The Finder progress bar also suggests this trend as I see the
+</I>&gt;<i> &quot;data-copied&quot; value, pause congruently with the red LEDs of each  
+</I>&gt;<i> drive.
+</I>&gt;<i>
+</I>&gt;<i> So.
+</I>&gt;<i>
+</I>&gt;<i> Is this normal?
+</I>&gt;<i>
+</I>&gt;<i> Is anyone else seeing this behaviour?
+</I>&gt;<i>
+</I>&gt;<i> Can others comment that have used BSD or Solaris?
+</I>&gt;<i>
+</I>&gt;<i> I also conducted earlier testing with 5 x 250GB drives and noticed the
+</I>&gt;<i> same thing.
+</I>&gt;<i>
+</I>&gt;<i> I've transferred ~ 900GB to the pool and it &quot;scrubs&quot; up fine. (took  
+</I>&gt;<i> 7 hours!)
+</I>&gt;<i> I noticed that while scrubbing, that the pulsation I'm experiencing  
+</I>&gt;<i> does
+</I>&gt;<i> not happen at all.
+</I>&gt;<i> It's only data reading/writing that I'm noticing this &quot;pause&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Specs are:
+</I>&gt;<i> DA G4, 1.33GHz DP
+</I>&gt;<i> 1GB RAM
+</I>&gt;<i> 2 x ACARD 6885M PCI (configured as &quot;jbod&quot;)
+</I>&gt;<i> 8 x 250GB (not all the same manufacturer though) PATA drives.
+</I>&gt;<i> MacOS X Server 10.5.2 (9C31)
+</I>&gt;<i>
+</I>&gt;<i> Below is a terminal dump of the 8 drive pool I created:
+</I>&gt;<i> Please note that I haven't created any &quot;nested&quot; pools.
+</I>&gt;<i> I basically just have the &quot;white disk image&quot; icon on my desktop and am
+</I>&gt;<i> sharing a single folder folder called LoungeRoomMac.
+</I>&gt;<i>
+</I>&gt;<i> --- Terminal Dump ---
+</I>&gt;<i>
+</I>&gt;<i> bigbox:~ badmin$ diskutil list
+</I>&gt;<i> /dev/disk0
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk0
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk0s1
+</I>&gt;<i>   2:                        ZFS                         232.6 Gi    
+</I>&gt;<i> disk0s2
+</I>&gt;<i> /dev/disk1
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk1
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk1s1
+</I>&gt;<i>   2:                        ZFS 			             232.6 Gi   disk1s2
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *233.8 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk2s1
+</I>&gt;<i>   2:                        ZFS 			             233.4 Gi   disk2s2
+</I>&gt;<i> /dev/disk3
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk3
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk3s1
+</I>&gt;<i>   2:                        ZFS                         232.6 Gi    
+</I>&gt;<i> disk3s2
+</I>&gt;<i> /dev/disk4
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk4
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk4s1
+</I>&gt;<i>   2:                        ZFS 			             232.6 Gi   disk4s2
+</I>&gt;<i> /dev/disk5
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *233.8 Gi    
+</I>&gt;<i> disk5
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk5s1
+</I>&gt;<i>   2:                        ZFS 			             233.4 Gi   disk5s2
+</I>&gt;<i> /dev/disk6
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk6
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk6s1
+</I>&gt;<i>   2:                        ZFS 			             232.6 Gi   disk6s2
+</I>&gt;<i> /dev/disk7
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk7
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk7s1
+</I>&gt;<i>   2:                        ZFS                         232.6 Gi    
+</I>&gt;<i> disk7s2
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> bigbox:~ badmin$ diskutil partitiondisk /dev/disk0 GPTFormat ZFS
+</I>&gt;<i> %noformat% 100%
+</I>&gt;<i> Started partitioning on disk disk0
+</I>&gt;<i> Creating partition map
+</I>&gt;<i> [ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+</I>&gt;<i> Finished partitioning on disk disk0
+</I>&gt;<i> /dev/disk0
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk0
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk0s1
+</I>&gt;<i>   2:                        ZFS                         232.6 Gi    
+</I>&gt;<i> disk0s2
+</I>&gt;<i>
+</I>&gt;<i> [... I Formated all of them the same way, being disk0 through to  
+</I>&gt;<i> disk7 ...]
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> bigbox:~ badmin$ diskutil list
+</I>&gt;<i> /dev/disk0
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk0
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk0s1
+</I>&gt;<i>   2:                        ZFS                         232.6 Gi    
+</I>&gt;<i> disk0s2
+</I>&gt;<i> /dev/disk1
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk1
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk1s1
+</I>&gt;<i>   2:                        ZFS 			             232.6 Gi   disk1s2
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *233.8 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk2s1
+</I>&gt;<i>   2:                        ZFS 			             233.4 Gi   disk2s2
+</I>&gt;<i> /dev/disk3
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk3
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk3s1
+</I>&gt;<i>   2:                        ZFS                         232.6 Gi    
+</I>&gt;<i> disk3s2
+</I>&gt;<i> /dev/disk4
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk4
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk4s1
+</I>&gt;<i>   2:                        ZFS 			             232.6 Gi   disk4s2
+</I>&gt;<i> /dev/disk5
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *233.8 Gi    
+</I>&gt;<i> disk5
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk5s1
+</I>&gt;<i>   2:                        ZFS 			             233.4 Gi   disk5s2
+</I>&gt;<i> /dev/disk6
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk6
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk6s1
+</I>&gt;<i>   2:                        ZFS 			             232.6 Gi   disk6s2
+</I>&gt;<i> /dev/disk7
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk7
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk7s1
+</I>&gt;<i>   2:                        ZFS                         232.6 Gi    
+</I>&gt;<i> disk7s2
+</I>&gt;<i>
+</I>&gt;<i> bigbox:~ badmin$ sudo zpool create bigboxraidz raidz /dev/disk0s2
+</I>&gt;<i> /dev/disk1s2 /dev/disk2s2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+</I>&gt;<i> /dev/disk6s2 /dev/disk7s2
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> bigbox:~ badmin$ zpool status bigboxraidz
+</I>&gt;<i>  pool: bigboxraidz
+</I>&gt;<i> state: ONLINE
+</I>&gt;<i> status: The pool is formatted using an older on-disk format.  The  
+</I>&gt;<i> pool can
+</I>&gt;<i> 	still be used, but some features are unavailable.
+</I>&gt;<i> action: Upgrade the pool using 'zpool upgrade'.  Once this is done,  
+</I>&gt;<i> the
+</I>&gt;<i> 	pool will no longer be accessible on older software versions.
+</I>&gt;<i> scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i> 	bigboxraidz  ONLINE       0     0     0
+</I>&gt;<i> 	  raidz1     ONLINE       0     0     0
+</I>&gt;<i> 	    disk0s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk1s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk2s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk3s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk4s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk5s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk6s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk7s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i> bigbox:~ badmin$
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> bigbox:~ badmin$ zpool upgrade bigboxraidz
+</I>&gt;<i> This system is currently running ZFS pool version 8.
+</I>&gt;<i>
+</I>&gt;<i> Successfully upgraded 'bigboxraidz' from version 6 to version 8
+</I>&gt;<i> bigbox:~ badmin$
+</I>&gt;<i>
+</I>&gt;<i> --- Terminal Dump ---
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Raoul,
+</I>&gt;<i> Australia.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000583.html">[zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+</A></li>
+	<LI>Next message: <A HREF="000582.html">[zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#584">[ date ]</a>
+              <a href="thread.html#584">[ thread ]</a>
+              <a href="subject.html#584">[ subject ]</a>
+              <a href="author.html#584">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

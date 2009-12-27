@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic during diff (Assertion failure: zap_hash(zap,	name) ==   hash failed, 0 == 0)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic%20during%20diff%20%28Assertion%20failure%3A%20zap_hash%28zap%2C%0A%09name%29%20%3D%3D%20%20%20hash%20failed%2C%200%20%3D%3D%200%29&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000867.html">
+   <LINK REL="Next"  HREF="000869.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic during diff (Assertion failure: zap_hash(zap,	name) ==   hash failed, 0 == 0)</H1>
+    <B>Christian He&#223;mann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic%20during%20diff%20%28Assertion%20failure%3A%20zap_hash%28zap%2C%0A%09name%29%20%3D%3D%20%20%20hash%20failed%2C%200%20%3D%3D%200%29&In-Reply-To="
+       TITLE="[zfs-discuss] Panic during diff (Assertion failure: zap_hash(zap,	name) ==   hash failed, 0 == 0)">zfs at hessmann.de
+       </A><BR>
+    <I>Tue Sep 23 15:21:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000867.html">[zfs-discuss] 10.5.5 update broke ZFS group ACLs
+</A></li>
+        <LI>Next message: <A HREF="000869.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up Mac OS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#868">[ date ]</a>
+              <a href="thread.html#868">[ thread ]</a>
+              <a href="subject.html#868">[ subject ]</a>
+              <a href="author.html#868">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Morning everyone,
+
+
+I'm looking at some snapshots of a (backup) filesystem right now and  
+delete them if they do not contain anything important.
+To do this, I clone the snapshots and compare them via diff:
+
+diff -qr clone115 clone116 | grep -v -e 'DS_Store' | sort &gt;  
+20080430121525.20080430151525.txt
+
+To speed things up, I compare up to 15 clones in parallel. Takes about  
+5 hours to finish, but that's fine.
+While this worked out fine the last ~120 clones, I finally got a very  
+interesting Kernel Panic a few minutes ago, which seems to be quite  
+similar to what Bill Winnett mentioned around March and is tracked in &lt;<A HREF="rdar://problem/5694099">rdar://problem/5694099</A> 
+ &gt;:
+
+======
+Tue Sep 23 23:52:09 2008
+panic(cpu 0 caller 0x00BD7962): &quot;zap_hash(zap, name) == hash failed, 0  
+== 0&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/ 
+zfs/zap_micro.c:117
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x561b36b8 : 0x12b0fa (0x4592a4 0x561b36ec 0x133243 0x0)
+0x561b3708 : 0xbd7962 (0xc3edd8 0xc3edbc 0x0 0xc17d7c)
+0x561b37b8 : 0xbd8499 (0x0 0x0 0x0 0x0)
+0x561b3818 : 0xc013f1 (0x1c88c4c0 0x435b 0x0 0x6b32aa0)
+0x561b3898 : 0xc01654 (0x561b38cc 0x39e09db8 0x561b3958 0x561b38c8)
+0x561b38e8 : 0xb9f3bc (0x39e09db8 0x561b3958 0x561b3df4 0x6)
+0x561b3998 : 0x1f2ea2 (0x561b39b8 0x2 0x561b39e8 0x44fe8e)
+0x561b39e8 : 0x1d49b4 (0x5a77d00 0x561b3df4 0x561b3f08 0x1c990e84)
+0x561b3a78 : 0x1d5739 (0x561b3ddc 0x100 0x561b3dfc 0x0)
+0x561b3b38 : 0x1e434d (0x561b3ddc 0x202 0x561b3ba8 0x14343c)
+0x561b3d88 : 0x1e4771 (0xbfffe614 0x0 0x0 0x0)
+0x561b3f48 : 0x1e480a (0xbfffe614 0x0 0x0 0x0)
+0x561b3f78 : 0x3ddde2 (0x4faf2b0 0x1c990d80 0x1c990dc4 0x0)
+0x561b3fc8 : 0x19f2c3 (0x430db80 0x0 0x1a20b5 0x430db80)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffe788
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xb9b000-&gt;0xc66fff
+
+BSD process name corresponding to current thread: diff
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;  
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: Macmini2,1 (Mac-F4208EAA)
+======
+
+The Filesystem is a RAID.Z which lives on 3 external FW drives (750GB  
+each). It is 99-100% full (&lt; 2GB left).
+
+Can I be of any further assistance to narrow down the problem?
+
+
+Best regards,
+
+Christian
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000867.html">[zfs-discuss] 10.5.5 update broke ZFS group ACLs
+</A></li>
+	<LI>Next message: <A HREF="000869.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up Mac OS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#868">[ date ]</a>
+              <a href="thread.html#868">[ thread ]</a>
+              <a href="subject.html#868">[ subject ]</a>
+              <a href="author.html#868">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

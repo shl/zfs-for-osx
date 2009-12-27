@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] DiskManagement setuid-tool failure on zfs disks
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20DiskManagement%20setuid-tool%20failure%20on%20zfs%20disks&In-Reply-To=%3C2F84F764-75A3-4C31-8ACA-23A456F01849%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001280.html">
+   <LINK REL="Next"  HREF="001293.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] DiskManagement setuid-tool failure on zfs disks</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20DiskManagement%20setuid-tool%20failure%20on%20zfs%20disks&In-Reply-To=%3C2F84F764-75A3-4C31-8ACA-23A456F01849%40mac.com%3E"
+       TITLE="[zfs-discuss] DiskManagement setuid-tool failure on zfs disks">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Sun Jan 11 08:35:56 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001280.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+        <LI>Next message: <A HREF="001293.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1283">[ date ]</a>
+              <a href="thread.html#1283">[ thread ]</a>
+              <a href="subject.html#1283">[ subject ]</a>
+              <a href="author.html#1283">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Can anyone tell me why diskutil is giving this error
+on my zfs disks.
+All works fine. ( did a scrub yesterday )
+I first noticed this error by using winclone.
+
+Thanks,
+
+Dirk
+
+
+diskutil list disk0
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *232.9 Gi    
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS osx                     80.0 Gi     
+disk0s2
+    3:                  Apple_HFS empty                   10.0 Gi     
+disk0s3
+    4:       Microsoft Basic Data windowsXP               116.7 Gi    
+disk0s4
+
+Macintosh:~ schelfd$ diskutil list disk1
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk1
+
+DiskManagement setuid-tool failure
+
+Macintosh:~ schelfd$ diskutil list disk2
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk2
+
+DiskManagement setuid-tool failure
+
+Macintosh:~ schelfd$ diskutil list disk3
+/dev/disk3
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk3
+
+DiskManagement setuid-tool failure
+
+Macintosh:~ schelfd$ diskutil list disk4
+/dev/disk4
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *233.8 Gi    
+disk4
+    1:                        EFI                         200.0 Mi    
+disk4s1
+    2:                  Apple_HFS bootOSX                 233.4 Gi    
+disk4s2
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090111/69d63a2a/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090111/69d63a2a/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001280.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+	<LI>Next message: <A HREF="001293.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1283">[ date ]</a>
+              <a href="thread.html#1283">[ thread ]</a>
+              <a href="subject.html#1283">[ subject ]</a>
+              <a href="author.html#1283">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

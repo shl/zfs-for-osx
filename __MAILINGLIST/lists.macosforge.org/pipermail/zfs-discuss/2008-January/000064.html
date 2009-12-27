@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] don't rename a clone or Bad Things Happen
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20don%27t%20rename%20a%20clone%20or%20Bad%20Things%20Happen&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000066.html">
+   <LINK REL="Next"  HREF="000065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] don't rename a clone or Bad Things Happen</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20don%27t%20rename%20a%20clone%20or%20Bad%20Things%20Happen&In-Reply-To="
+       TITLE="[zfs-discuss] don't rename a clone or Bad Things Happen">bwaters at nrao.edu
+       </A><BR>
+    <I>Wed Jan 23 16:20:40 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000066.html">[zfs-discuss] &quot;no pools available&quot; after crash
+</A></li>
+        <LI>Next message: <A HREF="000065.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#64">[ date ]</a>
+              <a href="thread.html#64">[ thread ]</a>
+              <a href="subject.html#64">[ subject ]</a>
+              <a href="author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+zfs-102A read/write
+
+zfs clone tank/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">myDisk at mySnapshot</A> tank/myDisk__mySnapshot
+
+(good)
+
+/usr/local/bin/rsync-3.0 -avEx /Volumes/192.168.168.23/exported-nfs- 
+disk/  /Volumes/tank/myDisk__mySnapshot
+
+(ok)
+
+zfs rename tank/myDisk__mySnapshot tank/myDisk__newStuff
+
+POOF! -- all CPUs go to 100% utilization and just stay there. Mouse  
+stops moving. Cats and dogs move in together. Machine locked up tight,  
+no apparent disk activity. I go help someone with another computer,  
+come back 15 minutes later, turn off the power.
+
+
+
+
+Wed Jan 23 17:09:09 2008
+panic(cpu 2 caller 0x00EAFC73): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/zfs_kext/zfs/ 
+dnode_sync.c line 397: pass &lt; 100&quot;@/Volumes/pixie_dust/home/ndellofano/ 
+zfs-work/wiki/zfs-102A/zfs_kext/zfs/dnode_sync.c:397
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x8111fb28 : 0x12b0e1 (0x456e30 0x8111fb5c 0x13321a 0x0)
+0x8111fb78 : 0xeafc73 (0xf1b400 0xf1abf4 0x18d 0xf1b3f4)
+0x8111fc98 : 0xea872d (0x264f54b0 0x1 0x111fcf8 0x0)
+0x8111fcd8 : 0xe85f0a (0x29dccda0 0x1 0x1 0x21a4ed86)
+0x8111fd28 : 0x1f0448 (0xc95e000 0x0 0x15b6ece4 0x1d2c69)
+0x8111fd58 : 0x1decb4 (0xc95e000 0x0 0x15b6ece4 0x1f4d49)
+0x8111fda8 : 0x1def88 (0xc95e000 0x0 0x1 0x15b6ece4)
+0x8111fdd8 : 0x1df12d (0xc95e000 0x0 0x15b6ece4 0x0)
+0x8111ff78 : 0x3dbcab (0xbc03a00 0x15b6ebe0 0x15b6ec24 0x0)
+0x8111ffc8 : 0x19f084 (0xbce2d40 0x0 0x1a20b5 0xbce2d40)
+0xbfffdd58 : 0x9d2e8181 (0xe5b5d417 0xb7c37690 0xb610702b 0xca42c4d2)
+Backtrace terminated-invalid frame pointer 0x15e5b8e6
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xe84000-&gt;0xf4ffff
+
+BSD process name corresponding to current thread: zfs
+
+Mac OS version:
+9C16
+
+Kernel version:
+Darwin Kernel Version 9.2.0: Tue Jan  8 10:59:40 PST 2008;  
+root:xnu-1228.3.7~1/RELEASE_I386
+System model name: MacPro1,1 (Mac-F4208DC8)
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000066.html">[zfs-discuss] &quot;no pools available&quot; after crash
+</A></li>
+	<LI>Next message: <A HREF="000065.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#64">[ date ]</a>
+              <a href="thread.html#64">[ thread ]</a>
+              <a href="subject.html#64">[ subject ]</a>
+              <a href="author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

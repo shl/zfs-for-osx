@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Nightly crash (again)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Nightly%20crash%20%28again%29&In-Reply-To=%3C20090709.013737.229392053.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001694.html">
+   <LINK REL="Next"  HREF="001700.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Nightly crash (again)</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Nightly%20crash%20%28again%29&In-Reply-To=%3C20090709.013737.229392053.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] Nightly crash (again)">hanche at math.ntnu.no
+       </A><BR>
+    <I>Wed Jul  8 16:37:37 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001694.html">[zfs-discuss] Nightly crash (again)
+</A></li>
+        <LI>Next message: <A HREF="001700.html">[zfs-discuss] netatalk build instructions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1695">[ date ]</a>
+              <a href="thread.html#1695">[ thread ]</a>
+              <a href="subject.html#1695">[ subject ]</a>
+              <a href="author.html#1695">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt;:
+
+&gt;<i> OK, so it's definitely ZFS that's causing these crashes. Here's what
+</I>&gt;<i> the zpool history looks like at this stage:
+</I>&gt;<i> 
+</I>&gt;<i> 2009-07-09.00:02:44 zpool scrub Data
+</I>&gt;<i> 2009-07-09.00:02:44 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2009-07-09T00</A>:02
+</I>&gt;<i> 2009-07-09.00:02:45 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-2009-07-09</A>
+</I>&gt;<i> 
+</I>&gt;<i> So it seems to be a combination of a zfs snapshot and zpool being
+</I>&gt;<i> kicked off at the same time.
+</I>
+Yeah, probably a bad idea. There is a known bug in zfs:
+
+  <A HREF="http://bugs.opensolaris.org/view_bug.do?bug_id=6343667">http://bugs.opensolaris.org/view_bug.do?bug_id=6343667</A>
+  Synopsis: scrub/resilver has to start over when a snapshot is taken
+
+This is fixed in zfs version 10 or so, I believe.
+
+  <A HREF="http://blogs.sun.com/ahrens/entry/new_scrub_code">http://blogs.sun.com/ahrens/entry/new_scrub_code</A>
+
+While a panic is certainly more dramatic than having to restart a
+scrub, the two might well be related. Conceivably, there might be a
+race condition where the need to restart the scrub is not detected in
+time if the snapshot is started immediately after the scrub.
+
+- Harald
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001694.html">[zfs-discuss] Nightly crash (again)
+</A></li>
+	<LI>Next message: <A HREF="001700.html">[zfs-discuss] netatalk build instructions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1695">[ date ]</a>
+              <a href="thread.html#1695">[ thread ]</a>
+              <a href="subject.html#1695">[ subject ]</a>
+              <a href="author.html#1695">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

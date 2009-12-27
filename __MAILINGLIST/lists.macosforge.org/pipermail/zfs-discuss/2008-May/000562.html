@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zpool re-import?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20re-import%3F&In-Reply-To=586B0945-63C3-4829-979B-5A1F26E7B574%40universe42.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000561.html">
+   <LINK REL="Next"  HREF="000563.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zpool re-import?</H1>
+    <B>Matt Snow</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20re-import%3F&In-Reply-To=586B0945-63C3-4829-979B-5A1F26E7B574%40universe42.com"
+       TITLE="[zfs-discuss] zpool re-import?">mattsnow at gmail.com
+       </A><BR>
+    <I>Sat May  3 22:58:15 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000561.html">[zfs-discuss] zpool re-import?
+</A></li>
+        <LI>Next message: <A HREF="000563.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#562">[ date ]</a>
+              <a href="thread.html#562">[ thread ]</a>
+              <a href="subject.html#562">[ subject ]</a>
+              <a href="author.html#562">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It's most likely the disklabels. When I did initial testing with a USB drive
+using the entire drive I saw similar behavior. The key is to use the command
+line diskutil to create the GPT/ZFS labels. e.g. diskutil partitiondisk
+/dev/disk2 GPTFormat ZFS %noformat% 100%
+
+This did the trick for me. I also noticed that OSX did not always like
+the USB enclosure I was using. once I plugged the disk in to the
+onboard SATA controller things worked much better.
+
+..Matt
+
+
+On Sat, May 3, 2008 at 8:13 PM, Brett Koonce &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">koonce at universe42.com</A>&gt; wrote:
+
+&gt;<i> I've been debating moving some of my storage to ZFS and toward that end
+</I>&gt;<i> I've been playing around with the 111 build.  I put an old hard drive into
+</I>&gt;<i> an external USB/firewire enclosure, split it into five partitions and then
+</I>&gt;<i> created a 4-slice RAID-Z.  Then I copied/deleted some data, replaced one of
+</I>&gt;<i> the partitions with the spare, ran several scrub operations, did a handful
+</I>&gt;<i> of imports/exports to test the system.  The only times I managed to crash
+</I>&gt;<i> things were once by hitting zpool status -v repeatedly during a resliver and
+</I>&gt;<i> the other by plugging the drive into a vanilla leopard machine only to
+</I>&gt;<i> remember too late that the read-only implementation doesn't support zpool
+</I>&gt;<i> export.  It did mount, though. ;-)
+</I>&gt;<i>
+</I>&gt;<i> All was well until I decided to play around with things again today.
+</I>&gt;<i>  zpool import -f repeatedly insists &quot;no pools available to import&quot;.  I tried
+</I>&gt;<i> &quot;zfs mount -a;  zfs volinit&quot; to no avail.  I deleted /etc/zfs/zpool.cache
+</I>&gt;<i> but cannot seem to reinit it.  I reinstalled 111, then 102A, then 111 again
+</I>&gt;<i> with the same results.  The only remaining thing I can think of is that
+</I>&gt;<i> because I split the drive in disk utility proper, the partition map has HFS
+</I>&gt;<i> as the labeling scheme which may be messing with things, like so:
+</I>&gt;<i>
+</I>&gt;<i> /dev/disk1
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *28.6 Gi    disk1
+</I>&gt;<i>   1:                        EFI                         200.0 Mi   disk1s1
+</I>&gt;<i>   2:                  Apple_HFS                         5.7 Gi     disk1s2
+</I>&gt;<i>   3:                  Apple_HFS                         5.7 Gi     disk1s3
+</I>&gt;<i>   4:                  Apple_HFS                         5.7 Gi     disk1s4
+</I>&gt;<i>   5:                  Apple_HFS                         5.7 Gi     disk1s5
+</I>&gt;<i>   6:                  Apple_HFS                         4.9 Gi     disk1s6
+</I>&gt;<i>
+</I>&gt;<i> If anybody has any suggestions on how to resurrect the volume, please let
+</I>&gt;<i> me know.  The hard drive is marginal and the data meaningless.  But I would
+</I>&gt;<i> like to know how to solve this problem before entrusting the system further.
+</I>&gt;<i>  Thanks in advance,
+</I>&gt;<i>
+</I>&gt;<i> -Brett Koonce
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080503/dc96b755/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080503/dc96b755/attachment-0001.html</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000561.html">[zfs-discuss] zpool re-import?
+</A></li>
+	<LI>Next message: <A HREF="000563.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#562">[ date ]</a>
+              <a href="thread.html#562">[ thread ]</a>
+              <a href="subject.html#562">[ subject ]</a>
+              <a href="author.html#562">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

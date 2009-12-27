@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Filename conventions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Filename%20conventions&In-Reply-To=20080316141312.C39732268BE%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000343.html">
+   <LINK REL="Next"  HREF="000333.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Filename conventions</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Filename%20conventions&In-Reply-To=20080316141312.C39732268BE%40lists.macosforge.org"
+       TITLE="[zfs-discuss] Filename conventions">i_see at macnews.de
+       </A><BR>
+    <I>Sun Mar 16 07:41:55 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000343.html">[zfs-discuss] can't delete from full volume
+</A></li>
+        <LI>Next message: <A HREF="000333.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#332">[ date ]</a>
+              <a href="thread.html#332">[ thread ]</a>
+              <a href="subject.html#332">[ subject ]</a>
+              <a href="author.html#332">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+I had similar problems when copying my iTunes Library,
+it seemed to happen extremely often (but not always) for Folder names  
+that contained special characters (such as &#246;&#228;&#252;&#223;). The Finde than did  
+not copy Files and subfolders reliably ,sometimes issuing eror  
+messages, sometimes not.
+This does appear to be a Finder rather then a ZFS issue though,as  
+using cp-R generally worked well on the same Folders.
+I would guess there are some assumptions about Filename-storage in  
+Finder that are not true for ZFS, particulary I would ahve a look at  
+the length computation, if I had access to Finder's source code ;-)
+
+Hope this helps to narrow down the bug.
+As a workaround,you can always store an HFS+-formatted image on your  
+ZFS Volume, for me that works well with all applications so far.
+Am 16.03.2008 um 15:13 schrieb <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>:
+
+&gt;<i> Von: Eric A Hulteen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">eric at hulteen.com</A>&gt;
+</I>&gt;<i> Datum: 16. M&#228;rz 2008 00:12:05 MEZ
+</I>&gt;<i> An: <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> Betreff: Re: [zfs-discuss] Filename conventions
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  What character constraints does ZFS have that Mac OS Extended  
+</I>&gt;<i> (Journaled) does not?
+</I>&gt;<i>
+</I>&gt;<i>  I'm trying to back up (copy) Mac OS X files to ZFS.  I tried to use  
+</I>&gt;<i> a NAS device for this but ran into trouble because files with  
+</I>&gt;<i> Macintosh-legal characters in their names couldn't be copied to SMB  
+</I>&gt;<i> volumes.  I assumed that this wouldn't be a problem with ZFS, but  
+</I>&gt;<i> unfortunately it appears that is.
+</I>&gt;<i>
+</I>&gt;<i>  I was copying a folder to a ZFS pool (5 x 1TB, raidz2) and I got a  
+</I>&gt;<i> Finder error (i.e., the file &quot;05 Not This Time.mp3&quot; can't be coped  
+</I>&gt;<i> because the name is &quot;too long&quot; or contains &quot;characters the disk  
+</I>&gt;<i> cannot display&quot;).  I tried again (35 MB total) and the Finder's  
+</I>&gt;<i> &quot;Copy&quot; window stayed open for four hours (reporting &quot;Estimating time  
+</I>&gt;<i> remaining...&quot;).  I was unable to quit/stop the Copy and had to Force  
+</I>&gt;<i> Quit the Finder (which failed and I had to hold the Power button for  
+</I>&gt;<i> eight seconds).
+</I>&gt;<i>
+</I>&gt;<i>  I don't see how the names could be &quot;too long&quot;. The files have no  
+</I>&gt;<i> more than 24 characters in their names (so even if every character  
+</I>&gt;<i> was four bytes it still wouldn't be too long).  The files are French  
+</I>&gt;<i> music titles that were looked up at CDDB when I ripped a music CD  
+</I>&gt;<i> (and there are no more than two or three accented characters per  
+</I>&gt;<i> title).  These are the folder and filenames:
+</I>&gt;<i>
+</I>&gt;<i> Jazz a?? La Franc??aise (parent folder, a.k.a. &quot;Jazz\ a\314\200\ La\  
+</I>&gt;<i> Franc\314\247aise&quot;)
+</I>&gt;<i>    01 A La Franc??aise.mp3
+</I>&gt;<i>    02 Garnerama.mp3
+</I>&gt;<i>    03 Bach To Swing.mp3
+</I>&gt;<i>    04 Etude In Blue.mp3
+</I>&gt;<i>    05 Not This Time.mp3
+</I>&gt;<i>    06 Blue Kiss From Brazil.mp3
+</I>&gt;<i>    07 Fiance??es En Folie.mp3
+</I>&gt;<i>
+</I>&gt;<i>  Is the limit on the whole pathname?
+</I>&gt;<i>
+</I>&gt;<i> /Volumes/Kate_backup_372/2008/2008_03_08/katemcjones/Music/iTunes/ 
+</I>&gt;<i> iTunes Music/Claude Bolling Trio/Jazz &#224; La Fran&#231;aise/05 Not This  
+</I>&gt;<i> Time.mp3
+</I>&gt;<i>
+</I>&gt;<i> Eric
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000343.html">[zfs-discuss] can't delete from full volume
+</A></li>
+	<LI>Next message: <A HREF="000333.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#332">[ date ]</a>
+              <a href="thread.html#332">[ thread ]</a>
+              <a href="subject.html#332">[ subject ]</a>
+              <a href="author.html#332">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS new bits on the wiki
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20new%20bits%20on%20the%20wiki&In-Reply-To=51231C1E-F7F5-4848-9305-A47AB6180F38%40asgaard.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000502.html">
+   <LINK REL="Next"  HREF="000507.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS new bits on the wiki</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20new%20bits%20on%20the%20wiki&In-Reply-To=51231C1E-F7F5-4848-9305-A47AB6180F38%40asgaard.org"
+       TITLE="[zfs-discuss] ZFS new bits on the wiki">lists at loveturtle.net
+       </A><BR>
+    <I>Fri Apr 18 06:30:22 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000502.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+        <LI>Next message: <A HREF="000507.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#503">[ date ]</a>
+              <a href="thread.html#503">[ thread ]</a>
+              <a href="subject.html#503">[ subject ]</a>
+              <a href="author.html#503">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think that account already exists, it's called &quot;root&quot; :-P
+It has root access and a home dir in /var/root!
+
+Cheers!
+
+Christopher LILJENSTOLPE wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i> A good precaution when frobbing a Unix machine.  Have an account that 
+</I>&gt;<i> relies on NOTHING that is not shipping bog standard stuff, and that 
+</I>&gt;<i> can get to root status (via sudo or what-have-you).  In the case of 
+</I>&gt;<i> home directories on &quot;enhanced file systems&quot; I would recommend that 
+</I>&gt;<i> that bail-out account has a homedir set to /tmp, or some such....
+</I>&gt;<i>
+</I>&gt;<i>     Chris
+</I>&gt;<i>
+</I>&gt;<i> On 16 Apr 2008, at 13.38, Boyd Waters wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Yay, new bits!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I installed the binary by using the instructions on the Wiki.. &quot;sudo 
+</I>&gt;&gt;<i> cp zfs /usr/sbin/zfs&quot; etc.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This causes a problem, because the files were owned by me 
+</I>&gt;&gt;<i> (bwaters:staff) and not root:wheel.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> MAKE SURE THE NEW BITS ARE OWNED BY root:wheel BEFORE YOU INSTALL THEM!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If it's too late, and you need to recover from this, here's how I did 
+</I>&gt;&gt;<i> it:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On reboot, Leopard marked everything zfs with com.apple.quarantine 
+</I>&gt;&gt;<i> xattr and refused to load it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Since my home directory is now on the ZFS volume, things got 
+</I>&gt;&gt;<i> interesting! :-)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1) I logged into the console by entering &quot;&gt;console&quot; as the username.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2) Logged in as me; the console login allowed me to log in even 
+</I>&gt;&gt;<i> though it could not find my home directory.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3) sudo -i  to &quot;log in&quot; as root and cd to /var/root
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 4) find /usr/sbin/z{pool,fs} /System/Library/Extensions/zfs.kext 
+</I>&gt;&gt;<i> /System/Library/Filesystems/zfs.fs | xargs xattr -d com.apple.quarantine
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 5) find /usr/sbin/z{pool,fs} /System/Library/Extensions/zfs.kext 
+</I>&gt;&gt;<i> /System/Library/Filesystems/zfs.fs | xargs chown root:wheel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 6) reboot
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 16, 2008, at 12:37 PM, No&#235;l Dellofano wrote:
+</I>&gt;&gt;&gt;<i> Hey everyone,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks for you patience!  Just a heads up that I posted new bits on 
+</I>&gt;&gt;&gt;<i> the wiki today.  The latest drop is zfs-111.  Fixes in this rev are:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/4873926">rdar://problem/4873926</A>&gt; make mmap'd pages for zfs play nice
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5290357">rdar://problem/5290357</A>&gt; copyfile(3) fails on symlinks on ZFS
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5687660">rdar://problem/5687660</A>&gt; zfs send won't die
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5659137">rdar://problem/5659137</A>&gt; No negative namecache for ZFS
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5285605">rdar://problem/5285605</A>&gt; zfs should tune the number of threads it 
+</I>&gt;&gt;&gt;<i> initially generates
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5653782">rdar://problem/5653782</A>&gt; zio_checksum_sha256() incorrect if buffer 
+</I>&gt;&gt;&gt;<i> size not a multiple of 64
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5727711">rdar://problem/5727711</A>&gt; zfs panic when swap file resides on zfs
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5735151">rdar://problem/5735151</A>&gt; Fix zfs build targets
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5756450">rdar://problem/5756450</A>&gt; need to fix Leopard only build target due 
+</I>&gt;&gt;&gt;<i> to symbol change
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5795082">rdar://problem/5795082</A>&gt; ZFS should remove its kqueue support
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="rdar://problem/5853667">rdar://problem/5853667</A>&gt; define MAX_UPL_TRANSFER for open source builds
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've also put all this on the website and I've also left zfs-102A up 
+</I>&gt;&gt;&gt;<i> at the bottom under 'Past Revisions' incase anyone was dependent on 
+</I>&gt;&gt;&gt;<i> that for anything.
+</I>&gt;&gt;&gt;<i> Things to note:
+</I>&gt;&gt;&gt;<i> - This build *is* mmap coherent, so your mmap programs should be 
+</I>&gt;&gt;&gt;<i> much happier and working.
+</I>&gt;&gt;&gt;<i> - the build process has been changed. With the fix of 5795082, 
+</I>&gt;&gt;&gt;<i> kqueues are no longer needed in ZFS since they've moved up to the 
+</I>&gt;&gt;&gt;<i> VFS layer.  So all you need to do to build is choose the 
+</I>&gt;&gt;&gt;<i> &quot;Leopard_Release&quot; config under the build menu and you're good to 
+</I>&gt;&gt;&gt;<i> go.  No more flags to mess with.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> let me know if you have any problems with the website or downloading 
+</I>&gt;&gt;&gt;<i> the bits.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> thanks!
+</I>&gt;&gt;&gt;<i> Noel
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - ---
+</I>&gt;<i> &#26446;&#26607;&#30591;
+</I>&gt;<i> Check my PGP key here:
+</I>&gt;<i> <A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJICEp7AAoJEGmx2Mt/+Iw/ncsH/1zA3xr0nENGi2Ti3Ozs67GO
+</I>&gt;<i> fkwZjc/DdwL40OrLWv5N6/msJLKTEoBRZesaE/qz7TKhdbeJ63TWW3zOvj9jDdOC
+</I>&gt;<i> 27Ps0j1ht2HxGMGL8PAMNCUar1DzhKmek96wJqJLKMiqmmenp53+ftXq+fNDuMJI
+</I>&gt;<i> kRN+u8mALOj8azq1wZSGmtGNgyrcvFr+w9AGmcA/wTcMflZgufHTH4zlbAqi/eEc
+</I>&gt;<i> /vxpRHp5ctRbNpvcPJ845sZc9aNI4PTTvL+knFFEWA/e6GuiPh1U3mBp3AT/n8E6
+</I>&gt;<i> PRe0a7tFEDhaIxP6fJg2UDBa30Y7HtYpV7ww0lqX3j8d8wA8YtczNdCgOC5728o=
+</I>&gt;<i> =M3Pr
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000502.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+	<LI>Next message: <A HREF="000507.html">[zfs-discuss] ZFS new bits on the wiki
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#503">[ date ]</a>
+              <a href="thread.html#503">[ thread ]</a>
+              <a href="subject.html#503">[ subject ]</a>
+              <a href="author.html#503">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

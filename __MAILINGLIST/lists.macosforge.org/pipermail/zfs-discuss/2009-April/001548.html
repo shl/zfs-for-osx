@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Oh, God, I lost every thing after a reboot !!!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Oh%2C%20God%2C%20I%20lost%20every%20thing%20after%20a%20reboot%20%21%21%21&In-Reply-To=%3C636fd28e0904291257j75dad09fy6f8d7ff8e12ffee3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001547.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Oh, God, I lost every thing after a reboot !!!</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Oh%2C%20God%2C%20I%20lost%20every%20thing%20after%20a%20reboot%20%21%21%21&In-Reply-To=%3C636fd28e0904291257j75dad09fy6f8d7ff8e12ffee3%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Oh, God, I lost every thing after a reboot !!!">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Wed Apr 29 12:57:58 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001547.html">[zfs-discuss] Oh, God, I lost every thing after a reboot !!!
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1548">[ date ]</a>
+              <a href="thread.html#1548">[ thread ]</a>
+              <a href="subject.html#1548">[ subject ]</a>
+              <a href="author.html#1548">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Apr 29, 2009 at 8:44 PM, Teng Yao &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">koolcoy at gmail.com</A>&gt; wrote&gt; Hi,
+&gt;<i> I downloaded zfs-119- binary from zfs.macforge.org, and installed as the how
+</I>&gt;<i> to said. I also rebooted. Mount, umount, create, destroy, everything seemed
+</I>&gt;<i> to be ok. So I moved all my data to the pool. But after another reboot,
+</I>&gt;<i> everything changed. I cannot mount my zfs file systems, and&#160; &quot;zpool list&quot;
+</I>&gt;<i> says &quot;no pools available&quot;.
+</I>&gt;<i> Is this a bug or I did something wrong? How can I get my data?
+</I>&gt;<i> btw: I have two hard drives, Mac is installed in /dev/disk1s2, Windows XP
+</I>&gt;<i> installed in /dev/disk1s1.&#160; The pool was created with command &quot;zpool create
+</I>&gt;<i> Pool /dev/disk0&quot;
+</I>
+<A HREF="http://zfs.macosforge.org/trac/wiki/get_the_party_started">http://zfs.macosforge.org/trac/wiki/get_the_party_started</A>
+
+The documentation suggested /dev/disk0s2 would have been better,
+rather than /dev/disk0, as otherwise ti doesn't mount on boot. That
+sounds like what's happened here.
+
+What does 'diskutil list' show?
+
+Alex
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001547.html">[zfs-discuss] Oh, God, I lost every thing after a reboot !!!
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1548">[ date ]</a>
+              <a href="thread.html#1548">[ thread ]</a>
+              <a href="subject.html#1548">[ subject ]</a>
+              <a href="author.html#1548">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

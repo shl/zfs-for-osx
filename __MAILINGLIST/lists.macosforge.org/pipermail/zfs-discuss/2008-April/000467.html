@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS on an XServe RAID
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20on%20an%20XServe%20RAID&In-Reply-To=A30DC84845CE2241A2900B68D6111099F09CA6%40D1VS1.D1.USA.NET">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000462.html">
+   <LINK REL="Next"  HREF="000480.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS on an XServe RAID</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20on%20an%20XServe%20RAID&In-Reply-To=A30DC84845CE2241A2900B68D6111099F09CA6%40D1VS1.D1.USA.NET"
+       TITLE="[zfs-discuss] ZFS on an XServe RAID">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Apr 11 15:28:11 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000462.html">[zfs-discuss] ZFS on an XServe RAID
+</A></li>
+        <LI>Next message: <A HREF="000480.html">[zfs-discuss] ZFS on an XServe RAID
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#467">[ date ]</a>
+              <a href="thread.html#467">[ thread ]</a>
+              <a href="subject.html#467">[ subject ]</a>
+              <a href="author.html#467">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Awesome!  So I'd definitely recommend converting all the disks to JBOD  
+and letting ZFS do all the raid work since then we can do end to end  
+checksums and can heal any corrupted blocks we detect.  As to the  
+configuration, it really depends on what you want to do with the  
+machine.  What do you use it for? are you more interested in  
+performance or replication and safety?
+How much space do you need to get out of the machine?
+
+We have an Xraid here at work that I've configured, and the drives in  
+it are really old so I don't trust them, hence I went for extreme  
+replication (it's a server and extreme perf isn't dire).  I did a pool  
+of two groups of raidz-2 (6 drives each) and then added a hotspare to  
+each group.
+
+Most generally I'd say you'd be good with configuring a pool with 2  
+groups of raidz's (7 -250GB in one and 7- 700GB in the other), with  
+that you'll get good performance with still some replication while  
+only losing 950GB overall for replication cost (parity).  If you  
+wanted to be more cautious, you could also do the same config but use  
+raidz2 instead raidz so that you could withstand more disk failures,  
+but you'll lose more storage to your parity.  There's a ton on  
+configs, which really depend on your workload, preference, perfomance  
+needs, and storage needs.  I'd recommend checking out the best  
+practices guide which has a section on how to consider configuring  
+your pool:
+
+<A HREF="http://www.solarisinternals.com/wiki/index.php/ZFS_Best_Practices_Guide">http://www.solarisinternals.com/wiki/index.php/ZFS_Best_Practices_Guide</A>
+
+Roch Bourbonnais of Sun also has a blog on when or when not to use  
+raidz:
+<A HREF="http://blogs.sun.com/roch/entry/when_to_and_not_to">http://blogs.sun.com/roch/entry/when_to_and_not_to</A>
+
+and please feel free to ask me as well if you have more questions  
+about a config too.  It just really depends on what you need to use it  
+for :)
+
+Noel
+
+
+On Apr 11, 2008, at 2:23 PM, Vaughn, Benjamin [WHQSE] wrote:
+
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i>   I currently have an XServe RAID box with all 14 drive slots filled  
+</I>&gt;<i> (left side is 250GB, right side is 700GB disks.)  In the future when  
+</I>&gt;<i> ZFS is more stable and enterprise friendly, how would be the best  
+</I>&gt;<i> way to deploy ZFS?  Convert all the disks to JBOD and have RAIDZ do  
+</I>&gt;<i> the raiding, or let the XServe RAID do RAID5 and put ZFS on that?
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the info,
+</I>&gt;<i> Ben
+</I>&gt;<i>
+</I>&gt;<i> Benjamin Vaughn
+</I>&gt;<i> Project Manager - Computer Investigations and Systems Integrity
+</I>&gt;<i> United Airlines Corporate Security - OPCSE
+</I>&gt;<i> +1 847 700 9505 Office
+</I>&gt;<i> +1 630 329 7629 Mobile
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">Ben.Vaughn at united.com</A>
+</I>&gt;<i> P Please consider the environment before printing this e-mail.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080411/5fec2eb0/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080411/5fec2eb0/attachment-0001.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000462.html">[zfs-discuss] ZFS on an XServe RAID
+</A></li>
+	<LI>Next message: <A HREF="000480.html">[zfs-discuss] ZFS on an XServe RAID
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#467">[ date ]</a>
+              <a href="thread.html#467">[ thread ]</a>
+              <a href="subject.html#467">[ subject ]</a>
+              <a href="author.html#467">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

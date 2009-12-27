@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%09ZFS%3F&In-Reply-To=811351A0-5021-455B-9EEC-021E9455F357%40netgate.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000264.html">
+   <LINK REL="Next"  HREF="000267.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?</H1>
+    <B>Brett Ault-McCoy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%09ZFS%3F&In-Reply-To=811351A0-5021-455B-9EEC-021E9455F357%40netgate.com"
+       TITLE="[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?">btm at pobox.com
+       </A><BR>
+    <I>Tue Mar  4 14:53:20 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000264.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put	on	ZFS?
+</A></li>
+        <LI>Next message: <A HREF="000267.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#265">[ date ]</a>
+              <a href="thread.html#265">[ thread ]</a>
+              <a href="subject.html#265">[ subject ]</a>
+              <a href="author.html#265">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>All I know is that a 'zfs snapshot -r ZFSPool' on my 733MHz G4 takes &lt;1
+second but when TimeMachine starts up cpu usage goes to 100% for several
+minutes and the machine becomes completely unusable.
+Definitely *not* the same.
+
+++Brett;
+
+
+On Tue, Mar 4, 2008 at 6:45 PM, Jim Thompson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jim at netgate.com</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i> On Mar 4, 2008, at 5:25 AM, Brett Ault-McCoy wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; TimeMachine != zfs snapshots.  A full scan of the filesystem has to
+</I>&gt;<i> &gt; be done to find what's changed,
+</I>&gt;<i>
+</I>&gt;<i> Well,... no.   Time Machine leverages the FSEvents framework.    It
+</I>&gt;<i> does have to do a full scan within a directory that is reported to
+</I>&gt;<i> have changed, but this does not equate to a &quot;full scan of the
+</I>&gt;<i> filesystem&quot;, except in the degenerate case.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080304/81b6dd67/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080304/81b6dd67/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000264.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put	on	ZFS?
+</A></li>
+	<LI>Next message: <A HREF="000267.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#265">[ date ]</a>
+              <a href="thread.html#265">[ thread ]</a>
+              <a href="subject.html#265">[ subject ]</a>
+              <a href="author.html#265">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

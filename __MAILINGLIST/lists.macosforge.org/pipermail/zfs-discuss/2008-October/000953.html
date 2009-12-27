@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Flash L2ARC and Separate SLOG
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Flash%20L2ARC%20and%20Separate%20SLOG&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000954.html">
+   <LINK REL="Next"  HREF="000955.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Flash L2ARC and Separate SLOG</H1>
+    <B>Abelian Group</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Flash%20L2ARC%20and%20Separate%20SLOG&In-Reply-To="
+       TITLE="[zfs-discuss] Flash L2ARC and Separate SLOG">abelian.group at yahoo.com
+       </A><BR>
+    <I>Sat Oct 11 13:36:31 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000954.html">[zfs-discuss] ideal drive array
+</A></li>
+        <LI>Next message: <A HREF="000955.html">[zfs-discuss] novice question - where is zfs targeted?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#953">[ date ]</a>
+              <a href="thread.html#953">[ thread ]</a>
+              <a href="subject.html#953">[ subject ]</a>
+              <a href="author.html#953">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+    Anybody working on incorporating the Open Solaris Flash L2ARC code that Adam Leventhal is working on and Brendan Gregg discussed here:
+    
+     <A HREF="http://blogs.sun.com/brendan/entry/test">http://blogs.sun.com/brendan/entry/test</A>
+
+    Also, I tried to create separate mirrored ZILs ( Intent Logs) using:
+
+           zpool create poolname device1 device2 device3 device4 log mirror device5 device6 mirror device7 device8
+
+          It didn't work. Any suggestions. 
+
+          This is a nice article concerning Sun's plans for Flash in its servers ( for those who haven't read about it). 
+
+ <A HREF="http://mags.acm.org/communications/200807/?pg=49">http://mags.acm.org/communications/200807/?pg=49</A>
+
+
+          Would be interesting to get the L2ARC and ZIL running on mac. 
+
+Thanks
+
+
+      
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081011/48327bf2/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081011/48327bf2/attachment.html</A> 
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000954.html">[zfs-discuss] ideal drive array
+</A></li>
+	<LI>Next message: <A HREF="000955.html">[zfs-discuss] novice question - where is zfs targeted?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#953">[ date ]</a>
+              <a href="thread.html#953">[ thread ]</a>
+              <a href="subject.html#953">[ subject ]</a>
+              <a href="author.html#953">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

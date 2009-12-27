@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CF03CAF93-B4D9-4607-BBD4-7AAC5D771CE1%40umn.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001620.html">
+   <LINK REL="Next"  HREF="001622.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Carl Magnuson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CF03CAF93-B4D9-4607-BBD4-7AAC5D771CE1%40umn.edu%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">magnu213 at umn.edu
+       </A><BR>
+    <I>Wed Jun 10 08:31:33 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001620.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001622.html">[zfs-discuss]  Apple's ZFS implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1621">[ date ]</a>
+              <a href="thread.html#1621">[ thread ]</a>
+              <a href="subject.html#1621">[ subject ]</a>
+              <a href="author.html#1621">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jun 10, 2009, at 9:11 AM, Jonathan Edwards wrote:
+&gt;&gt;<i> my guess is that disk8 is the faulted device which is still being  
+</I>&gt;&gt;<i> held by the pool or something else .. you can try doing a diskutil  
+</I>&gt;&gt;<i> eject /dev/disk8s2, but i'm guessing you'll have a problem here as  
+</I>&gt;&gt;<i> well ..
+</I>
+It looks like it is ejecting the disks:
+
+g5:~ bobcat$ diskutil eject /dev/disk8s2
+Disk /dev/disk8s2 ejected
+g5:~ bobcat$ diskutil eject /dev/disk8
+Disk /dev/disk8 ejected
+g5:~ bobcat$ diskutil eject /dev/disk7
+Disk /dev/disk7 ejected
+g5:~ bobcat$ diskutil eject /dev/disk7s2
+Disk /dev/disk7s2 ejected
+
+
+&gt;<i> what about the other one?  can you do either a
+</I>&gt;<i> # zpool replace cpool disk8s2 disk7s2
+</I>&gt;<i> or
+</I>&gt;<i> # zpool replace cpool 13962824586312699565 disk7s2
+</I>&gt;<i> (for the one that was previously disk9s2)
+</I>
+However when I try and replace them:
+
+g5:~ bobcat$ zpool replace cpool 13962824586312699565 disk7s2
+cannot replace 13962824586312699565 with disk7s2: disk7s2 is busy
+g5:~ bobcat$ zpool replace cpool 1751454142452109774 disk8s2
+cannot replace 1751454142452109774 with disk8s2: disk8s2 is busy
+
+Seems like I am having the same issue with both drives.
+
+Carl
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001620.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001622.html">[zfs-discuss]  Apple's ZFS implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1621">[ date ]</a>
+              <a href="thread.html#1621">[ thread ]</a>
+              <a href="subject.html#1621">[ subject ]</a>
+              <a href="author.html#1621">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

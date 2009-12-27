@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS pool requires root privileges to access
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20pool%20requires%20root%20privileges%20to%20access&In-Reply-To=48F8BAAF.1030703%40sun.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000986.html">
+   <LINK REL="Next"  HREF="000985.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS pool requires root privileges to access</H1>
+    <B>Andrew Webber</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20pool%20requires%20root%20privileges%20to%20access&In-Reply-To=48F8BAAF.1030703%40sun.com"
+       TITLE="[zfs-discuss] ZFS pool requires root privileges to access">andy at aligature.com
+       </A><BR>
+    <I>Fri Oct 17 09:48:08 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000986.html">[zfs-discuss] ZFS pool requires root privileges to access
+</A></li>
+        <LI>Next message: <A HREF="000985.html">[zfs-discuss] error compiling ZFS source
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#987">[ date ]</a>
+              <a href="thread.html#987">[ thread ]</a>
+              <a href="subject.html#987">[ subject ]</a>
+              <a href="author.html#987">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Why not just chroot -R and be done with it?
+
+
+
+On Fri, Oct 17, 2008 at 12:17 PM, Todd E. Moore &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Todd.Moore at sun.com</A>&gt; wrote:
+&gt;<i> Additional Information after continuing to tinker:
+</I>&gt;<i>
+</I>&gt;<i> After importing the zpool, if I use &quot;root&quot; to manually 'chmod' the file
+</I>&gt;<i> permissions on the zpool's mount point, then non-privilege users can  access
+</I>&gt;<i> the pool.  This alone doesn't solve the problem since all files in the pool
+</I>&gt;<i> need to be similarly updated.
+</I>&gt;<i> If I create the zpool on OpenSolaris (using -o version=6 for compatiblity),
+</I>&gt;<i> the Mac OS/X system is able to mount the volume but the default user/group
+</I>&gt;<i> is &quot;root:wheel&quot;.  Attempts to alter the permissions using &quot;Finder&quot;, copy
+</I>&gt;<i> files into the pool, and unmount/export the pool result in a 'busy' device
+</I>&gt;<i> message from &quot;Finder&quot; during the unmount which necessitates a system reboot
+</I>&gt;<i> (system hang/crash if attempt to simply remove the USB device).
+</I>&gt;<i> Thinking that the issue may be related to &quot;xattr&quot;, I attempted to disable
+</I>&gt;<i> &quot;xattr&quot; on the pool using 'zfs set xattr=off'.  This did not alter the
+</I>&gt;<i> behavior in any way.
+</I>&gt;<i>
+</I>&gt;<i> Todd E. Moore wrote:
+</I>&gt;<i>
+</I>&gt;<i> Issue:  Privileged (root) account required to access zpool imported from Mac
+</I>&gt;<i> OS/X.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Just installed b119 bits onto my OS/X 10.5.5 system today in an attempt to
+</I>&gt;<i> share VirtualBox disk image files between my Mac and my OpenSolaris (2008.11
+</I>&gt;<i> b99) laptop.
+</I>&gt;<i>
+</I>&gt;<i> Install worked well and I was able to create ZFS pools (v6 or v8) on USB
+</I>&gt;<i> memory sticks and drives on the Mac without issue.  Unmounted the
+</I>&gt;<i> volume/pool, exported the pool, attached the drive to the laptop, and
+</I>&gt;<i> performed the zpool import.  I learned that the uid/gid from the user
+</I>&gt;<i> account on the Mac gets embedded in the pool and the system attempts to use
+</I>&gt;<i> that information when mounting the filesystem.  In this case, I created
+</I>&gt;<i> user/group accounts called &quot;leopard&quot; on the OpenSolaris side.
+</I>&gt;<i>
+</I>&gt;<i> As 'root' user, I can see the pools mounted in /.
+</I>&gt;<i> drwxr-xr-x   4 leopard leopard       5 2008-10-17 01:39 a1g_pool
+</I>&gt;<i> drwxr-xrwx   5 leopard leopard       8 2008-10-16 17:02 a4g_pool
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> If I run the same 'ls' command as a normal, unprivileged user, the output is
+</I>&gt;<i> a lot different -
+</I>&gt;<i> ??????????   ? ?    ?          ?                ? a1g_pool
+</I>&gt;<i> ??????????   ? ?    ?          ?                ? a4g_pool
+</I>&gt;<i>
+</I>&gt;<i> A quick Google search turned up similar mentions of this issue over the past
+</I>&gt;<i> 6 months with sharing pools with FreeBSD and others, but no resolutions.  I
+</I>&gt;<i> tried changing ACL-related properties, but I think the issue is more basic
+</I>&gt;<i> and intrinsic to the settings of the base pool.
+</I>&gt;<i>
+</I>&gt;<i> Below is also a list of the settings reported from a 'zfs get all a1g_pool'
+</I>&gt;<i> command -
+</I>&gt;<i>
+</I>&gt;<i> NAME      PROPERTY              VALUE                  SOURCE
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  type                  filesystem             -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  creation              Fri Oct 17  1:39 2008  -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  used                  314K                   -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  available             952M                   -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  referenced            270K                   -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  compressratio         1.00x                  -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  mounted               yes                    -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  quota                 none                   default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  reservation           none                   default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  recordsize            128K                   default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  mountpoint            /a1g_pool              default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  sharenfs              off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  checksum              on                     default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  compression           off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  atime                 on                     default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  devices               on                     default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  exec                  on                     default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  setuid                on                     default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  readonly              off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  zoned                 off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  snapdir               hidden                 default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  aclmode               groupmask              default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  aclinherit            restricted             default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  canmount              on                     default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  shareiscsi            off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  xattr                 on                     default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  copies                1                      default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  version               1                      -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  utf8only              off                    -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  normalization         none                   -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  casesensitivity       sensitive              -
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  vscan                 off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  nbmand                off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  sharesmb              off                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  refquota              none                   default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  refreservation        none                   default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  primarycache          all                    default
+</I>&gt;<i>
+</I>&gt;<i> a1g_pool  secondarycache        all                    default
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Todd E. Moore
+</I>&gt;<i> Sun Microsystems Incorporated
+</I>&gt;<i> 443.516.4002
+</I>&gt;<i> AIM: toddmoore72462
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000986.html">[zfs-discuss] ZFS pool requires root privileges to access
+</A></li>
+	<LI>Next message: <A HREF="000985.html">[zfs-discuss] error compiling ZFS source
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#987">[ date ]</a>
+              <a href="thread.html#987">[ thread ]</a>
+              <a href="subject.html#987">[ subject ]</a>
+              <a href="author.html#987">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

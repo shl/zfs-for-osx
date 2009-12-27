@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Finder eject vs. multiple pools
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Finder%20eject%20vs.%20multiple%20pools&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000846.html">
+   <LINK REL="Next"  HREF="000843.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Finder eject vs. multiple pools</H1>
+    <B>Brian Pinkerton</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Finder%20eject%20vs.%20multiple%20pools&In-Reply-To="
+       TITLE="[zfs-discuss] Finder eject vs. multiple pools">bplist at thinkpink.com
+       </A><BR>
+    <I>Thu Sep 11 10:54:57 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000846.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue	possible?
+</A></li>
+        <LI>Next message: <A HREF="000843.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#835">[ date ]</a>
+              <a href="thread.html#835">[ thread ]</a>
+              <a href="subject.html#835">[ subject ]</a>
+              <a href="author.html#835">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>After doing some backups today from a couple of ZFS file systems on a  
+&quot;permanent&quot; pool, I tried using the Finder to eject the backup disks  
+(a couple of 1TB drives with a single striped ZFS pool) and got the  
+Finder message:
+
+	The device containing &quot;Backup2&quot; also contains 5 other volumes that  
+will not be ejected.  Are you sure...
+
+Looks like the Finder somehow considers all ZFS filesystems to be on  
+the same device, even if they're on completely separate devices/pools.
+
+I wasn't brave enough to just say &quot;yes&quot;, but &quot;zfs export -f Backup2&quot;  
+worked just fine. :)
+
+bri
+
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000846.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue	possible?
+</A></li>
+	<LI>Next message: <A HREF="000843.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#835">[ date ]</a>
+              <a href="thread.html#835">[ thread ]</a>
+              <a href="subject.html#835">[ subject ]</a>
+              <a href="author.html#835">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

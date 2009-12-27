@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Re: Timing out
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20Timing%20out&In-Reply-To=eb3e47ad0804161503o11b6abd6l46f980df6cb12164%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000497.html">
+   <LINK REL="Next"  HREF="000498.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Re: Timing out</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20Timing%20out&In-Reply-To=eb3e47ad0804161503o11b6abd6l46f980df6cb12164%40mail.gmail.com"
+       TITLE="[zfs-discuss] Re: Timing out">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Apr 18 15:48:42 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000497.html">[zfs-discuss] Re: Timing out
+</A></li>
+        <LI>Next message: <A HREF="000498.html">[zfs-discuss] Version Verification
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#510">[ date ]</a>
+              <a href="thread.html#510">[ thread ]</a>
+              <a href="subject.html#510">[ subject ]</a>
+              <a href="author.html#510">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yeah I think we still have some weirdness happening on large  
+directories it seems :(  I've filed
+
+&lt;<A HREF="rdar://problem/5875044">rdar://problem/5875044</A>&gt; chown -R on very large folders(300+GB) hangs
+
+  to track this guy.  I'll try and see if I can repro...
+
+Thanks!!
+Noel
+
+On Apr 16, 2008, at 3:03 PM, james sansbury wrote:
+
+&gt;<i> Still occuring in the latest build (ZFS 103)... :(
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Jan 24, 2008 at 10:13 AM, james sansbury &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">q0rban at gmail.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;<i> ***This is a repost of a previous message posted in the wrong  
+</I>&gt;<i> thread.  Please reply to this post.  Apologies.***
+</I>&gt;<i>
+</I>&gt;<i> First, some details as to what I'm working with.  I have a raid-z  
+</I>&gt;<i> pool that I created on Solaris 10, then upgraded to OpenSolaris  
+</I>&gt;<i> Nevada (upgraded the pool as well), and then just today took the  
+</I>&gt;<i> plunge and exported it to try and import into Leopard (ZFS 102a).
+</I>&gt;<i>
+</I>&gt;<i> Everything seemed to go very smoothly, until I needed to change  
+</I>&gt;<i> ownership on some very large folders (300+GB).  A chown -Rv user  
+</I>&gt;<i> folder seemed to work fine for about 2 minutes and then it hung.  I  
+</I>&gt;<i> tried to break out of the process.  Nothing.  I tried to open  
+</I>&gt;<i> another terminal and force unmount the pool.  Nothing.  I tried to  
+</I>&gt;<i> eject the drives in Disk Utility.  Nothing.  So then after waiting  
+</I>&gt;<i> another 10 minutes or so I just unplugged the drives.  Nothing.
+</I>&gt;<i>
+</I>&gt;<i> I tried to shutdown and it wouldn't shut down so I just powered off,  
+</I>&gt;<i> booted up, tried everything again with all the same results, except  
+</I>&gt;<i> that this time I tried plugging back in the drives and letting it  
+</I>&gt;<i> sit.  By doing this I was at least able to get a kernel panic out of  
+</I>&gt;<i> it! ;) [I now realize from another post that this kernel panic is  
+</I>&gt;<i> most likely due to unplugging the drives hot, so I won't be  
+</I>&gt;<i> reposting the kernel panic info.]
+</I>&gt;<i>
+</I>&gt;<i> I am also able to replicate all of this in finder with pretty much  
+</I>&gt;<i> any process (copy, move, etc.), provided the process takes long  
+</I>&gt;<i> enough.
+</I>&gt;<i>
+</I>&gt;<i> I may try this again today, leave the drives alone, and just let it  
+</I>&gt;<i> sit to see if I can get some sort of dump/panic; something to work  
+</I>&gt;<i> with at least.
+</I>&gt;<i>
+</I>&gt;<i> -James
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i>
+</I>&gt;<i> &quot;A society in which consumption has to be
+</I>&gt;<i> artificially stimulated in order to keep production
+</I>&gt;<i> going is a society founded on trash and waste,
+</I>&gt;<i> and such a society is a house built upon sand.&quot;
+</I>&gt;<i>
+</I>&gt;<i> -- Dorothy Sayers _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080418/a10e52f1/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080418/a10e52f1/attachment-0001.html</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000497.html">[zfs-discuss] Re: Timing out
+</A></li>
+	<LI>Next message: <A HREF="000498.html">[zfs-discuss] Version Verification
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#510">[ date ]</a>
+              <a href="thread.html#510">[ thread ]</a>
+              <a href="subject.html#510">[ subject ]</a>
+              <a href="author.html#510">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

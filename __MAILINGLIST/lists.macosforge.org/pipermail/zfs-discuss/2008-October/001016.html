@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] unrelated question....
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20unrelated%20question....&In-Reply-To=%3CDB1172A4-A891-4E72-A6B5-CBECC93BAF13%40re.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001015.html">
+   <LINK REL="Next"  HREF="001017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] unrelated question....</H1>
+    <B>Werner Donn&#233;</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20unrelated%20question....&In-Reply-To=%3CDB1172A4-A891-4E72-A6B5-CBECC93BAF13%40re.be%3E"
+       TITLE="[zfs-discuss] unrelated question....">werner.donne at re.be
+       </A><BR>
+    <I>Thu Oct 23 13:34:09 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001015.html">[zfs-discuss] unrelated question....
+</A></li>
+        <LI>Next message: <A HREF="001017.html">[zfs-discuss] unrelated question....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1016">[ date ]</a>
+              <a href="thread.html#1016">[ thread ]</a>
+              <a href="subject.html#1016">[ subject ]</a>
+              <a href="author.html#1016">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Dillon,
+
+The following command-line will give you the amount of bytes consumed by
+all of your snapshots:
+
+zfs list -t snapshot -H -o used | sed 's/K/*1024/' | sed 's/M/ 
+*1024*1024/' |
+sed 's/G/*1024*1024*1024/' | sed 's/^/a+=/' | awk '{ print $0 } END  
+{ print &quot;a&quot;
+}' | bc
+
+Best regards,
+
+Werner.
+
+On 23 Oct 2008, at 21:07, Dillon Kass wrote:
+
+&gt;<i> Hey guys, I was wondering...This doesn't really have anything to do  
+</I>&gt;<i> with zfs on mac osx but I figured that I would throw this out there  
+</I>&gt;<i> since some of you are smart :-)
+</I>&gt;<i>
+</I>&gt;<i> Does anyone know how to get the total snapshot usage for an entire  
+</I>&gt;<i> pool?
+</I>&gt;<i>
+</I>&gt;<i> My desktop has 20 snapshots, I can just look at them and add them  
+</I>&gt;<i> up...
+</I>&gt;<i>
+</I>&gt;<i> but my home fileserver has 206 snapshots...looking at them one by  
+</I>&gt;<i> one is way less practical.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+--
+Werner Donn&#233;  --  Re                                     <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+Engelbeekstraat 8                                               <A HREF="http://www.re.be">http://www.re.be</A>
+BE-3300 Tienen
+tel: (+32) 486 425803	e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+
+
+
+
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001015.html">[zfs-discuss] unrelated question....
+</A></li>
+	<LI>Next message: <A HREF="001017.html">[zfs-discuss] unrelated question....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1016">[ date ]</a>
+              <a href="thread.html#1016">[ thread ]</a>
+              <a href="subject.html#1016">[ subject ]</a>
+              <a href="author.html#1016">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

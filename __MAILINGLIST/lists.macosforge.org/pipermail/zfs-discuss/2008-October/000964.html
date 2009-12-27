@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Faulted%20Drives%2C%0A%09fixed%20by%20export/import...%20but%20what%20causes%20it%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000960.html">
+   <LINK REL="Next"  HREF="000965.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?</H1>
+    <B>Jason Richard McNeil</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Faulted%20Drives%2C%0A%09fixed%20by%20export/import...%20but%20what%20causes%20it%3F&In-Reply-To="
+       TITLE="[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?">jason at jasonrm.net
+       </A><BR>
+    <I>Tue Oct 14 22:40:00 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000960.html">[zfs-discuss] data loss with ZFS as scratch disk
+</A></li>
+        <LI>Next message: <A HREF="000965.html">[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#964">[ date ]</a>
+              <a href="thread.html#964">[ thread ]</a>
+              <a href="subject.html#964">[ subject ]</a>
+              <a href="author.html#964">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As I mentioned in my previous email, I've only had one issue outside  
+of the well known issues on the wiki.
+
+I've held off on this one for a bit thinking that it might just be me  
+and doing something wrong, but it's happening enough that it is, well  
+frankly starting to scare me. I think that it only happens when I  
+either restart or cold boot after a while. I have almost constant read/ 
+write to the pool, and I run scrubs rather frequently, but unless I'm  
+recovering from the following issues, I never have had an error.
+
+General system info:
+Mac Pro , 2.66GHz CPU , 6GB MEM
+2 - 500GB Internal Drives (not part of the pool, RAID1)
+2 - 500GB Internal Drives
+4 - 640GB External Drives in a FirmTek SeriTek/5PM enclosure connected  
+to a Highpoint RocketRAID 2314
+
+Cold boot. I'm quite certain that all the external drives are powered  
+up and spinning before I turn on my system, and here is the symptom  
+that I see.
+
+   pool: Indigo
+  state: DEGRADED
+status: One or more devices could not be used because the label is  
+missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+  scrub: resilver completed with 0 errors on Sat Oct 11 01:30:46 2008
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	Indigo                    DEGRADED     0     0     0
+	  mirror                  DEGRADED     0     0     0
+	    4541104571258798197   FAULTED      0     0     0  was /dev/disk5s2
+	    disk6s2               ONLINE       0     0     0
+	  mirror                  DEGRADED     0     0     0
+	    disk5s2               ONLINE       0     0     0
+	    18432184791024237345  FAULTED      0     0     0  was /dev/disk6s2
+	  mirror                  ONLINE       0     0     0
+	    disk0s2               ONLINE       0     0     0
+	    disk3s2               ONLINE       0     0     0
+
+errors: No known data errors
+
+I am wondering if this is either an issue that is with how the  
+HighPoint controller is working, or some larger issue.
+
+The above was one of the first times that it has &quot;misplaced&quot; two  
+drives, as usually it's only one that it is unable to find.
+When it has been only one I have tried various forms of zfs replace  
+(sudo, unmounting, force-unmounting). It returns an error saying the  
+destination drive is already in use.
+
+Best solution I have found so far, is to log off all users, SSH in and  
+force a unmount, do an export, then import and it has come back every  
+time so far. I do have to do a scrub, but it only finds checksum  
+errors, which, considering that it comes up without a drive and  
+activity happens while missing a drive or two, it makes sense to me so  
+far.
+
+Any ideas of what to try?
+
+Also, I don't have auto-login set, but I do have apache2 using a  
+directory of one of the mountpoints as the document root. The odd  
+thing is, that sometimes I will reboot and no issues at all, so I  
+haven't found an exact cause yet. The HighPoint controller does  
+consider the drives to be volumes, that I then &quot;export&quot; each drive  
+volume from the controller as JBOD (total of 4 volumes, one per disk).  
+Only based on the fact that the expect drive ID's are high enough to  
+be on the controller, I'm suspecting some sort of delay there...
+If no one else is seeing this, then maybe it is just a odd combo of  
+drives, controller, DISK-&gt;JBOD-&gt;slices, idk, something funny.
+
+Sorry for writing a novel, but I'm try to error on the side of too  
+much info... of course, please let me know what most basic I've  
+forgotten to include. ;)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081014/6fe373d7/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081014/6fe373d7/attachment.html</A> 
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000960.html">[zfs-discuss] data loss with ZFS as scratch disk
+</A></li>
+	<LI>Next message: <A HREF="000965.html">[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#964">[ date ]</a>
+              <a href="thread.html#964">[ thread ]</a>
+              <a href="subject.html#964">[ subject ]</a>
+              <a href="author.html#964">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

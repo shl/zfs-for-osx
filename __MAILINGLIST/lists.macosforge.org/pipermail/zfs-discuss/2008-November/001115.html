@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Automatic scrub?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Automatic%20scrub%3F&In-Reply-To=%3C636fd28e0811291243s492b5e4j59df6d4928a7a05e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001114.html">
+   <LINK REL="Next"  HREF="001116.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Automatic scrub?</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Automatic%20scrub%3F&In-Reply-To=%3C636fd28e0811291243s492b5e4j59df6d4928a7a05e%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Automatic scrub?">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Sat Nov 29 12:43:21 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001114.html">[zfs-discuss] Automatic scrub?
+</A></li>
+        <LI>Next message: <A HREF="001116.html">[zfs-discuss] Automatic scrub?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1115">[ date ]</a>
+              <a href="thread.html#1115">[ thread ]</a>
+              <a href="subject.html#1115">[ subject ]</a>
+              <a href="author.html#1115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Nov 29, 2008 at 7:44 PM, Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt; wrote:
+&gt;<i> Nope, no errors in any scrub done so far, nor anything else noticeable. I
+</I>&gt;<i> truncated the message for brevity.
+</I>&gt;<i> The question was &quot;why is it doing this scrub&quot; when I hadn't asked it to. It
+</I>&gt;<i> had just finished doing a set of snapshots/destroys, but no scrubs.
+</I>&gt;<i> Alex
+</I>
+It's still having a good old scrub to itself ...
+
+mini:~ alex$ zpool status Data
+  pool: Data
+ state: ONLINE
+ scrub: scrub in progress, 46.37% done, 0h46m to go
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	Data         ONLINE       0     0     0
+	  mirror     ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+A thought occurs; I'm doing a daily scrub and it looks like a scrub
+will take 1:30 or so. But I'm doing snapshots (and corresponding
+destroys) hourly. I wonder if it doesn't have time to finish the
+nightly scrub between 00:00 and 01:00, and thus at 01:00 re-starts the
+scrubbing, ad infinitum?
+
+mini:~ alex$ zpool history Data
+ ...
+2008-11-29.00:00:00 zpool scrub Data
+2008-11-29.00:00:01 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-2008-11-29</A>
+2008-11-29.00:00:01 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-29T00</A>:00
+2008-11-29.00:00:19 zfs destroy -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-27T23</A>:00
+2008-11-29.00:00:19 zfs destroy -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-2008-11-21</A>
+2008-11-29.01:00:02 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-29T01</A>:00
+2008-11-29.01:00:06 zfs destroy -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-28T00</A>:00
+2008-11-29.02:00:01 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-29T02</A>:00
+2008-11-29.02:00:06 zfs destroy -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-28T01</A>:00
+2008-11-29.03:00:03 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-29T03</A>:00
+ ...
+
+Alex
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001114.html">[zfs-discuss] Automatic scrub?
+</A></li>
+	<LI>Next message: <A HREF="001116.html">[zfs-discuss] Automatic scrub?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1115">[ date ]</a>
+              <a href="thread.html#1115">[ thread ]</a>
+              <a href="subject.html#1115">[ subject ]</a>
+              <a href="author.html#1115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

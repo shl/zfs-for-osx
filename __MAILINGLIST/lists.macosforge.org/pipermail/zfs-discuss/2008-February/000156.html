@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS mmap bug with PHP?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000155.html">
+   <LINK REL="Next"  HREF="000166.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS mmap bug with PHP?</H1>
+    <B>B&#233;rczi G&#225;bor</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To="
+       TITLE="[zfs-discuss] ZFS mmap bug with PHP?">gabor at berczi.be
+       </A><BR>
+    <I>Fri Feb 15 13:12:16 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000155.html">[zfs-discuss]  Data Integrity
+</A></li>
+        <LI>Next message: <A HREF="000166.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#156">[ date ]</a>
+              <a href="thread.html#156">[ thread ]</a>
+              <a href="subject.html#156">[ subject ]</a>
+              <a href="author.html#156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>See the attached PHP code. Its functionality:
+
+- unlinks test.cfg
+- creates test.cfg with the content &quot;test&quot;
+- lists the file with file_get_contents()
+- adds an X509 certificate with OpenSSL
+- lists the file again
+- lists the file again
+- lists the file again
+
+The thing is: on HFS+ it works as it should, but on ZFS all subsequent  
+file listings contain only &quot;test&quot; - the initial content. DTrace  
+notices the opening of the file every time - so this looks like to be  
+a very bad low-level problem.
+
+Output:
+
+File contents:testDone.Attaching new CERT into test.cfgFile contents,  
+second try:testDone.File contents, third try:testDone.File contents,  
+fourth try:testDone.The file should now contain an X509 cert, but PHP  
+can't see it :(
+
+What the..?
+
+-- 
+Gabucino
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: zfsphp.tar
+Type: application/x-tar
+Size: 10240 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080215/937ecd36/attachment-0001.tar">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080215/937ecd36/attachment-0001.tar</A> 
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000155.html">[zfs-discuss]  Data Integrity
+</A></li>
+	<LI>Next message: <A HREF="000166.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#156">[ date ]</a>
+              <a href="thread.html#156">[ thread ]</a>
+              <a href="subject.html#156">[ subject ]</a>
+              <a href="author.html#156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

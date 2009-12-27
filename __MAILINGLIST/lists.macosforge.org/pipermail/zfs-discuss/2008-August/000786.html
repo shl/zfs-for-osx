@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] case-insensitivity as a filesystem option?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20case-insensitivity%20as%20a%20filesystem%20option%3F&In-Reply-To=610AFC7B-5738-4FF2-B667-CAEFEB186BF7%40asgaard.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000790.html">
+   <LINK REL="Next"  HREF="000787.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] case-insensitivity as a filesystem option?</H1>
+    <B>Scott Palmer</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20case-insensitivity%20as%20a%20filesystem%20option%3F&In-Reply-To=610AFC7B-5738-4FF2-B667-CAEFEB186BF7%40asgaard.org"
+       TITLE="[zfs-discuss] case-insensitivity as a filesystem option?">swpalmer at gmail.com
+       </A><BR>
+    <I>Fri Aug 15 19:33:45 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000790.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+        <LI>Next message: <A HREF="000787.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#786">[ date ]</a>
+              <a href="thread.html#786">[ thread ]</a>
+              <a href="subject.html#786">[ subject ]</a>
+              <a href="author.html#786">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oops yes.. bad typo on my part.
+
+I will  expand on my rant in an effort to see if I can state my case  
+in a way that will make someone &quot;tend to agree with me&quot; :-)
+
+Case SENSITIVE filesystems are brain-dead poo.
+Next we will force other computer-isms on the end users for example:  
+you can't start a file name with a number, only letters, underscores  
+or a dollar sign,  no punctuation in them, etc. -- oh and just forget  
+about putting SPACES in them - that's just nuts!  It just doesn't make  
+any sense.  If you used a physical filing cabinet you wouldn't expect  
+to label the file folders with case sensitivity.
+
+I think case-sensitive filesystems are ridiculous - and perhaps more  
+to the point, very un-mac-like.  These things are supposed to be easy  
+to use, allowing different files with a name that differs only by case  
+is unnatural for people.  It is natural for the machine of course  
+which leads to the only people that prefer it are people that are  
+thinking like programmers.
+
+The Mac platform is already ahead of others by allowing things like  
+slashes in the filenames, it would be silly to take a step BACKWARDS  
+and force the nuisance of case-sensitivity on the users.  Just as all  
+displayable characters should be allowed in filenames - including the  
+path separators (which programmers should deal with using escape  
+sequences - just like when using a command line you have to escape  
+spaces or put quotes your filename)
+
+In other words everybody should fix their case-sensitivity issues  
+(e.g. geeks that use capital .C for C++ files and lowercase .c for C  
+files, programmers that sort names/files as if 'a' comes after 'Z',  
+etc.).  That's what the regular folk want.   Case-sensitivity in this  
+context only makes sense to the sort of people that would be  
+subscribed to this list.. not your grandma.
+
+(I should of course make sure to clarify that I want a case- 
+preserving, case-insensitve filesystem. not some through-back to MS-DOS)
+
+Sorry Jordan - I had all the above written before your post came  
+through... if anyone cares they can reply off-list.  For now I'm just  
+glad that ZFS will have the option and I hope Apple does the right  
+thing and makes case-insensitivity the default when they ship RW ZFS.
+
+Regards,
+
+Scott
+
+On 15-Aug-08, at 10:02 PM, Christopher LILJENSTOLPE wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i> I think, then, you mean that case-SENSITIVE file systems suck, in  
+</I>&gt;<i> your opinion.  You want the filesystem to not care what the case is  
+</I>&gt;<i> in the naming, correct?  That is case-insensitivity, which is what  
+</I>&gt;<i> you have today with HFS+, FAT, FAT32, and NTFS.....
+</I>&gt;<i>
+</I>&gt;<i> I don't tend to agree with you, however.....
+</I>&gt;<i>
+</I>&gt;<i> 	Chris
+</I>&gt;<i>
+</I>&gt;<i> On 15 Aug 2008, at 18.18, Scott Palmer wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 15-Aug-08, at 6:38 PM, Nathan wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Fri, Aug 15, 2008 at 2:10 PM, Lorenzo Perone
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lopez.on.the.lists at yellowspace.net</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hi list,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I was just wondering wether implementing an OSX-specific option for
+</I>&gt;&gt;&gt;&gt;<i> case-insensitivity on certain filesystems would be a mess to do?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Just a thought... all those Adobe apps don't like case-insensitive
+</I>&gt;&gt;&gt;&gt;<i> HFS, and maybe some others too, so zfs is a no-go for them right  
+</I>&gt;&gt;&gt;&gt;<i> now.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Alright, after all, Adobe could start linking libraries
+</I>&gt;&gt;&gt;&gt;<i> while preserving case..
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> (Resending with Reply-to-all)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &lt;opinion&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I would much rather Apple just used the regular case-sensitivity in
+</I>&gt;&gt;&gt;<i> ZFS, AND remove case-insensitivity from HFS+.  And make ZFS the
+</I>&gt;&gt;&gt;<i> default filesystem in Snow Leopard.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Then everybody would just fix their case-insensitivity issues for  
+</I>&gt;&gt;&gt;<i> the
+</I>&gt;&gt;&gt;<i> new OS release and Windows would be the last remaining modern
+</I>&gt;&gt;&gt;<i> operating system that doesn't have real case sensitivity.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &lt;/opinion&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ~ Nathan
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;Another_opinion&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Case-insensitive filesystems SUCK. They are VERY user unfriendly.   
+</I>&gt;&gt;<i> If I name a file &quot;green&quot;  I shouldn't have to explain the case of  
+</I>&gt;&gt;<i> the letters I used. The file's name is &quot;green&quot; or &quot;Green&quot; or  
+</I>&gt;&gt;<i> &quot;GREEN&quot; because all of that spells green.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When you tell people you're name is Nathan do you tell them to  
+</I>&gt;&gt;<i> spell it with a capital N or you won't know that they are talking  
+</I>&gt;&gt;<i> referring to you?  It's not a perfect example because we know the  
+</I>&gt;&gt;<i> rules for proper names are to use a capital letter, but it still  
+</I>&gt;&gt;<i> makes the point.  Distinguishing files by the case of the letters  
+</I>&gt;&gt;<i> is a very computer-ish, almost primitive thing to do.  The only  
+</I>&gt;&gt;<i> reason case sensitive filesystems exist is because people didn't  
+</I>&gt;&gt;<i> put the effort or CPU cycles towards making the machine respond  
+</I>&gt;&gt;<i> intelligently.  We are beyond that now.  Filenames are not to be  
+</I>&gt;&gt;<i> treated the same as variable names in C code ... they are intended  
+</I>&gt;&gt;<i> for the end user, not tech-heads.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Scott
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;/Another_opinion&gt;_______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> - ---
+</I>&gt;<i> &#26446;&#26607;&#30591;
+</I>&gt;<i> Check my PGP key here:
+</I>&gt;<i> <A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJIpjUfAAoJEGmx2Mt/+Iw/cZsH/2gd4LysTuto0KtfurObDX5C
+</I>&gt;<i> n80RTurjAjDC2EByaH5KaVYcLyo+ug04/fsbUMGia3itOXpd6fHs1WSWdYiX/lvc
+</I>&gt;<i> NGFhGWT9JmgKMDlK7jeZ2FJH/sOrYBTZm5GpCj79gEqyqvfgSY0dhq5+an3a8jhD
+</I>&gt;<i> soo8Q8viB8QXwXpE+HQ+j10r4OJtD1eemiJ1c5xOCmNO/r3pwhi92U/tAVZqKrCA
+</I>&gt;<i> 9xGwmghEhvhYKJ9x3jVeF3yJbVgTu3nJpWMUprWEl3Crp8QGqOjdUmM4PpbZFz0Z
+</I>&gt;<i> YodX5z7wAO/sGIJpJrrb2wNeXs01G2S9Bf+TZo0NljjOyShBE4UDDWkFqP1TQr0=
+</I>&gt;<i> =hwBo
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080815/4762be8e/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080815/4762be8e/attachment.bin</A> 
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000790.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+	<LI>Next message: <A HREF="000787.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#786">[ date ]</a>
+              <a href="thread.html#786">[ thread ]</a>
+              <a href="subject.html#786">[ subject ]</a>
+              <a href="author.html#786">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

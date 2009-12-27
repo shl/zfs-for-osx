@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Expanding a Raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Expanding%20a%20Raidz&In-Reply-To=%3CC33D988C-9184-4C35-B1A8-09FCA44848B0%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001213.html">
+   <LINK REL="Next"  HREF="001215.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Expanding a Raidz</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Expanding%20a%20Raidz&In-Reply-To=%3CC33D988C-9184-4C35-B1A8-09FCA44848B0%40mac.com%3E"
+       TITLE="[zfs-discuss] Expanding a Raidz">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Mon Dec 22 03:16:46 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001213.html">[zfs-discuss] Expanding a Raidz
+</A></li>
+        <LI>Next message: <A HREF="001215.html">[zfs-discuss] ZFS Hybrid Storage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1211">[ date ]</a>
+              <a href="thread.html#1211">[ thread ]</a>
+              <a href="subject.html#1211">[ subject ]</a>
+              <a href="author.html#1211">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>remember if you do this with disks with real data on them,
+you have to do a scrub after each replace.!!!!
+Dirk
+On 22 Dec 2008, at 12:06, Paul Grave wrote:
+
+&gt;<i> Thanks. That's all it needed:
+</I>&gt;<i>
+</I>&gt;<i> zpool scrub pool
+</I>&gt;<i> zpool list pool
+</I>&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;<i> ALTROOT
+</I>&gt;<i> pool                    622M    621K    621M     0%  ONLINE     -
+</I>&gt;<i>
+</I>&gt;<i> Nice!
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Paul Grave
+</I>&gt;<i> email: mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">paul at stomer.net</A>
+</I>&gt;<i> web: <A HREF="http://paulgrave.eu">http://paulgrave.eu</A>
+</I>&gt;<i>
+</I>&gt;<i> On 22 Dec 2008, at 11:00, Dirk Schelfhout wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Did you let it resilver after each replace ?
+</I>&gt;&gt;<i> I believe I did a scrub after each replace. can;t remember.
+</I>&gt;&gt;<i> On 22 Dec 2008, at 11:23, Paul Grave wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I came across this post while looking for solutions to the problem  
+</I>&gt;&gt;&gt;<i> of expanding a raidz:
+</I>&gt;&gt;&gt;<i> <A HREF="http://mail.opensolaris.org/pipermail/zfs-discuss/2005-November/029698.html">http://mail.opensolaris.org/pipermail/zfs-discuss/2005-November/029698.html</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I followed the instructions like so:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> mkfile 80m disk1 disk2 disk3 disk4
+</I>&gt;&gt;&gt;<i> mkfile 160m disk5 disk6 disk7 disk8
+</I>&gt;&gt;&gt;<i> zpool create -f pool raidz /Users/paul/disk1 /Users/paul/disk2 / 
+</I>&gt;&gt;&gt;<i> Users/paul/disk3 /Users/paul/disk4
+</I>&gt;&gt;&gt;<i> zpool upgrade pool # I tried without upgrading and had the same  
+</I>&gt;&gt;&gt;<i> results
+</I>&gt;&gt;&gt;<i> zpool list pool
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;&gt;&gt;<i> ALTROOT
+</I>&gt;&gt;&gt;<i> pool                    302M    534K    301M     0%  ONLINE     -
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> then:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> zpool replace pool /Users/paul/disk1 /Users/paul/disk5
+</I>&gt;&gt;&gt;<i> zpool replace pool /Users/paul/disk2 /Users/paul/disk6
+</I>&gt;&gt;&gt;<i> zpool replace pool /Users/paul/disk3 /Users/paul/disk7
+</I>&gt;&gt;&gt;<i> zpool replace pool /Users/paul/disk4 /Users/paul/disk8
+</I>&gt;&gt;&gt;<i> zpool list pool
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;&gt;&gt;<i> ALTROOT
+</I>&gt;&gt;&gt;<i> pool                    302M    543K    301M     0%  ONLINE     -
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> According to the above mention mailing list post, I should be  
+</I>&gt;&gt;&gt;<i> seeing:
+</I>&gt;&gt;&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;&gt;&gt;<i> ALTROOT
+</I>&gt;&gt;&gt;<i> pool                    622M    262K    622M     0%  ONLINE     -
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am I missing something?  Or is ZFS on the Mac missing something?   
+</I>&gt;&gt;&gt;<i> Or is the author of the original mailing-list post mistaken?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Paul Grave
+</I>&gt;&gt;&gt;<i> email: mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">paul at stomer.net</A>
+</I>&gt;&gt;&gt;<i> web: <A HREF="http://paulgrave.eu">http://paulgrave.eu</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Paul Grave
+</I>&gt;&gt;&gt;<i> email: mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">paul at stomer.net</A>
+</I>&gt;&gt;&gt;<i> web: <A HREF="http://paulgrave.eu">http://paulgrave.eu</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001213.html">[zfs-discuss] Expanding a Raidz
+</A></li>
+	<LI>Next message: <A HREF="001215.html">[zfs-discuss] ZFS Hybrid Storage
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1211">[ date ]</a>
+              <a href="thread.html#1211">[ thread ]</a>
+              <a href="subject.html#1211">[ subject ]</a>
+              <a href="author.html#1211">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

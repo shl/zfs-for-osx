@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS on Mac OS X in production use?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20on%20Mac%20OS%20X%20in%20production%20use%3F&In-Reply-To=DC597AFE-B67E-497A-96DB-BB55AB7C6EBD%40electricteaparty.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000532.html">
+   <LINK REL="Next"  HREF="000535.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS on Mac OS X in production use?</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20on%20Mac%20OS%20X%20in%20production%20use%3F&In-Reply-To=DC597AFE-B67E-497A-96DB-BB55AB7C6EBD%40electricteaparty.net"
+       TITLE="[zfs-discuss] ZFS on Mac OS X in production use?">zorg at sogeeky.net
+       </A><BR>
+    <I>Mon Apr 21 15:41:11 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000532.html">[zfs-discuss] ZFS on Mac OS X in production use?
+</A></li>
+        <LI>Next message: <A HREF="000535.html">[zfs-discuss] weird zfs thread synchronization issue?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#533">[ date ]</a>
+              <a href="thread.html#533">[ thread ]</a>
+              <a href="subject.html#533">[ subject ]</a>
+              <a href="author.html#533">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good to know!
+
+On Apr 21, 2008, at 3:01 PM, Adrian Thornton &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">canadrian at electricteaparty.net</A> 
+ &gt; wrote:
+
+&gt;<i> I can also attest to being able to grow a raidz by replacing all of  
+</I>&gt;<i> the disks with bigger disks.  i.e. you can increase raidz capacity  
+</I>&gt;<i> by replacing four existing 320gb disks with four 750gb disks, but  
+</I>&gt;<i> you can not increase capacity by adding a fifth disk to a four-disk  
+</I>&gt;<i> raidz.
+</I>&gt;<i>
+</I>&gt;<i> On Apr 21, 2008, at 15:12 , Mr. Zorg wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I think the fact that the read/write drivers are still beta should  
+</I>&gt;&gt;<i> be answer enough to your first question. That said, some people are  
+</I>&gt;&gt;<i> using it in &quot;production&quot; environments, but its suitability for that  
+</I>&gt;&gt;<i> depends greatly on your intended usage and whether or not any of  
+</I>&gt;&gt;<i> the known limitations are important to you.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As for growing the pool. Yes, you've got it correct. You can add  
+</I>&gt;&gt;<i> more disks, raidz, or mirrors to a pool just fine. But as you say,  
+</I>&gt;&gt;<i> you can't grow a raidz.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 21, 2008, at 1:58 PM, David Miller &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">millerdc at fusion.gat.com</A>&gt;  
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It would appear there are a few people on this list using ZFS 
+</I>&gt;&gt;&gt;<i> +Leopard in production. Is ZFS under Mac OS X really ready to be  
+</I>&gt;&gt;&gt;<i> used for production file storage and backups?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I also had a question about pools. is a pool the total size of  
+</I>&gt;&gt;&gt;<i> storage you have in the pool? I know you can't grow a raidz by  
+</I>&gt;&gt;&gt;<i> adding another disk but could you add multiple raidz's to a pool?  
+</I>&gt;&gt;&gt;<i> for example could I do this
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> zpool create tank raidz disk2 disk3 disk4
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Then later add another raidz to the tank pool to increase the  
+</I>&gt;&gt;&gt;<i> storage of that filesystem? if so could I also add mirrors to the  
+</I>&gt;&gt;&gt;<i> pool?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks
+</I>&gt;&gt;&gt;<i> David.
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000532.html">[zfs-discuss] ZFS on Mac OS X in production use?
+</A></li>
+	<LI>Next message: <A HREF="000535.html">[zfs-discuss] weird zfs thread synchronization issue?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#533">[ date ]</a>
+              <a href="thread.html#533">[ thread ]</a>
+              <a href="subject.html#533">[ subject ]</a>
+              <a href="author.html#533">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

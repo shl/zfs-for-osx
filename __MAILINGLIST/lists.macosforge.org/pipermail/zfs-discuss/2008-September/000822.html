@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-discuss Digest, Vol 9, Issue 5
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-discuss%20Digest%2C%20Vol%209%2C%20Issue%205&In-Reply-To=mailman.9.1220882411.30496.zfs-discuss%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000819.html">
+   <LINK REL="Next"  HREF="000823.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-discuss Digest, Vol 9, Issue 5</H1>
+    <B>Shuman, Chris</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-discuss%20Digest%2C%20Vol%209%2C%20Issue%205&In-Reply-To=mailman.9.1220882411.30496.zfs-discuss%40lists.macosforge.org"
+       TITLE="[zfs-discuss] zfs-discuss Digest, Vol 9, Issue 5">cshuman at nordam.com
+       </A><BR>
+    <I>Mon Sep  8 10:08:07 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000819.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+        <LI>Next message: <A HREF="000823.html">[zfs-discuss] Serious Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#822">[ date ]</a>
+              <a href="thread.html#822">[ thread ]</a>
+              <a href="subject.html#822">[ subject ]</a>
+              <a href="author.html#822">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Before I show the history I will let you all know I did get this issue
+fixed last night based off of Harald's suggestion to try and reverse
+everything. The history does not show all that happened as none of the &quot;
+cannot unmount '/Volumes': Resource busy&quot; errors are shown.
+
+I'm positive by now that the screw up had nothing to do with ZFS and
+everything to do with me :)  If that is not the case and there is other
+information I can get from my system to help, just let me know.
+
+Thanks for helping me through this everybody.
+
+History:
+2008-08-06.18:48:40 zfs set canmount=off zdata/home
+2008-08-06.18:53:39 zfs set canmount=off zdata/home/anika
+2008-08-06.18:53:45 zfs set canmount=off zdata/home/chris
+2008-08-06.18:53:50 zfs set canmount=off zdata/home/jaren
+2008-08-06.18:53:57 zfs set canmount=off zdata/home/severin
+2008-08-06.18:54:04 zfs set canmount=off zdata/home/test
+2008-08-06.18:54:11 zfs set canmount=off zdata/home/test/Desktop
+2008-08-06.18:54:17 zfs set canmount=off zdata/home/test/Documents
+2008-08-06.18:54:25 zfs set canmount=off zdata/home/test/Downloads
+2008-08-06.18:54:32 zfs set canmount=off zdata/home/test/Library
+2008-08-06.18:54:39 zfs set canmount=off zdata/home/test/Movies
+2008-08-06.18:54:44 zfs set canmount=off zdata/home/test/Pictures
+2008-08-06.18:54:52 zfs set canmount=off zdata/home/test/Public
+2008-08-06.18:54:57 zfs set canmount=off zdata/home/test/Sites
+2008-08-07.19:53:56 zfs set canmount=on zdata/home
+2008-08-07.19:55:04 zfs set mountpoint=/Volumes/ zdata/home
+2008-08-07.19:56:00 zfs set canmount=off zdata/home
+2008-08-10.21:30:10 zpool scrub zdata
+2008-08-16.16:54:47 zpool import -f 14165958316872700719
+2008-08-17.06:57:25 zpool import -f 14165958316872700719
+2008-08-18.11:36:44 zpool import -f 14165958316872700719
+2008-08-21.20:09:19 zpool import -f 14165958316872700719
+2008-08-27.16:34:24 zpool import -f 14165958316872700719
+2008-09-05.19:49:39 zfs set canmount=on zdata/home
+2008-09-05.19:51:28 zfs set canmount=on zdata/home/severin
+2008-09-05.19:51:45 zfs set canmount=on zdata/home
+2008-09-05.19:51:50 zfs set canmount=on zdata/home/anika
+2008-09-05.19:51:55 zfs set canmount=on zdata/home/chris
+2008-09-05.19:51:59 zfs set canmount=on zdata/home/jaren
+2008-09-05.19:52:03 zfs set canmount=on zdata/home/severin
+2008-09-05.19:52:09 zfs set canmount=on zdata/home/test
+2008-09-05.19:52:15 zfs set canmount=on zdata/home/test/Desktop
+2008-09-05.19:52:20 zfs set canmount=on zdata/home/test/Documents
+2008-09-05.19:52:29 zfs set canmount=on zdata/home/test/Downloads
+2008-09-05.19:52:36 zfs set canmount=on zdata/home/test/Library
+2008-09-05.19:52:43 zfs set canmount=on zdata/home/test/Movies
+2008-09-05.19:53:01 zfs set canmount=on zdata/home/test/Music
+2008-09-05.19:53:07 zfs set canmount=on zdata/home/test/Pictures
+2008-09-05.19:53:13 zfs set canmount=on zdata/home/test/Public
+2008-09-05.19:53:17 zfs set canmount=on zdata/home/test/Sites
+2008-09-05.19:54:36 zfs set mountpoint=/Volumes/ zdata/home
+2008-09-05.19:54:46 zfs set mountpoint=/Volumes/ zdata/home/anika
+2008-09-05.19:54:53 zfs set mountpoint=/Volumes/ zdata/home/chris
+2008-09-05.19:54:56 zfs set mountpoint=/Volumes/ zdata/home/jaren
+2008-09-05.19:55:00 zfs set mountpoint=/Volumes/ zdata/home/severin
+2008-09-05.19:55:04 zfs set mountpoint=/Volumes/ zdata/home/test
+2008-09-05.19:55:12 zfs set mountpoint=/Volumes/ zdata/home/test/Desktop
+2008-09-05.19:55:16 zfs set mountpoint=/Volumes/
+zdata/home/test/Documents
+2008-09-05.19:55:24 zfs set mountpoint=/Volumes/
+zdata/home/test/Downloads
+2008-09-05.19:55:31 zfs set mountpoint=/Volumes/ zdata/home/test/Library
+2008-09-05.19:55:37 zfs set mountpoint=/Volumes/ zdata/home/test/Movies
+2008-09-05.19:55:44 zfs set mountpoint=/Volumes/ zdata/home/test/Music
+2008-09-05.19:55:49 zfs set mountpoint=/Volumes/
+zdata/home/test/Pictures
+2008-09-05.19:55:55 zfs set mountpoint=/Volumes/ zdata/home/test/Public
+2008-09-05.19:56:01 zfs set mountpoint=/Volumes/ zdata/home/test/Sites
+2008-09-05.20:07:08 zpool import -f 14165958316872700719
+2008-09-05.21:10:37 zfs create zdata/junk
+2008-09-06.09:02:51 zpool import -f 14165958316872700719
+2008-09-06.09:12:18 zpool import -f 14165958316872700719
+2008-09-06.22:42:01 zpool import -f 14165958316872700719
+2008-09-07.16:49:26 zfs set canmount=off zdata/junk
+2008-09-07.16:50:05 zfs set mountpoint=/Volumes/zdata/junk zdata/junk
+2008-09-07.21:54:32 zfs set mountpoint=/Volumes/zdata/home/test/Sites
+zdata/home/test/Sites
+2008-09-07.21:55:18 zfs set mountpoint=/Volumes/zdata/home/test/Public
+zdata/home/test/Public
+2008-09-07.21:55:58 zfs set mountpoint=/Volumes/zdata/home/test/Pictures
+zdata/home/test/Pictures
+2008-09-07.21:56:29 zfs set mountpoint=/Volumes/zdata/home/test/Music
+zdata/home/test/Music
+2008-09-07.21:56:55 zfs set mountpoint=/Volumes/zdata/home/test/Movies
+zdata/home/test/Movies
+2008-09-07.21:57:16 zfs set mountpoint=/Volumes/zdata/home/test/Library
+zdata/home/test/Library
+2008-09-07.21:57:46 zfs set
+mountpoint=/Volumes/zdata/home/test/Downloads zdata/home/test/Downloads
+2008-09-07.22:03:19 zpool import -f 14165958316872700719
+2008-09-07.22:06:46 zfs set canmount=off zdata/home/test/Downloads
+2008-09-07.22:06:57 zfs set canmount=off zdata/home/test/Library
+2008-09-07.22:07:03 zfs set canmount=off zdata/home/test/Movies
+2008-09-07.22:07:09 zfs set canmount=off zdata/home/test/Music
+2008-09-07.22:07:18 zfs set canmount=off zdata/home/test/Pictures
+2008-09-07.22:07:22 zfs set canmount=off zdata/home/test/Public
+2008-09-07.22:07:27 zfs set canmount=off zdata/home/test/Sites
+2008-09-07.22:07:34 zfs set canmount=off zdata/junk
+2008-09-07.22:09:36 zfs set mountpoint=/Volumes/zdata/home zdata/home
+2008-09-07.22:09:47 zfs set mountpoint=/Volumes/zdata/home
+zdata/home/anika
+2008-09-07.22:09:52 zfs set mountpoint=/Volumes/zdata/home
+zdata/home/chris
+2008-09-07.22:09:55 zfs set mountpoint=/Volumes/zdata/home
+zdata/home/jaren
+2008-09-07.22:10:01 zfs set mountpoint=/Volumes/zdata/home
+zdata/home/severin
+2008-09-07.22:10:07 zfs set mountpoint=/Volumes/zdata/home
+zdata/home/test
+2008-09-07.22:10:14 zfs set mountpoint=/Volumes/zdata/home
+zdata/home/test/Desktop
+2008-09-07.22:10:46 zfs set
+mountpoint=/Volumes/zdata/home/test/Documents zdata/home/test/Documents
+2008-09-07.22:11:10 zfs set mountpoint=/Volumes/zdata/home/test/Desktop
+zdata/home/test/Desktop
+2008-09-07.22:12:16 zfs set mountpoint=/Volumes/zdata/home/anika
+zdata/home/anika
+2008-09-07.22:12:31 zfs set mountpoint=/Volumes/zdata/home/chris
+zdata/home/chris
+2008-09-07.22:12:49 zfs set mountpoint=/Volumes/zdata/home/jaren
+zdata/home/jaren
+2008-09-07.22:13:06 zfs set mountpoint=/Volumes/zdata/home/severin
+zdata/home/severin
+2008-09-07.22:13:46 zfs set mountpoint=/Volumes/zdata/home/test
+zdata/home/test
+2008-09-07.22:15:22 zfs set canmount=on zdata/home
+2008-09-07.22:15:27 zfs set canmount=on zdata/home/anika
+2008-09-07.22:15:31 zfs set canmount=on zdata/home/chris
+2008-09-07.22:15:36 zfs set canmount=on zdata/home/jaren
+2008-09-07.22:15:42 zfs set canmount=on zdata/home/severin
+2008-09-07.22:15:48 zfs set canmount=on zdata/home/test
+2008-09-07.22:15:52 zfs set canmount=on zdata/home/test/Desktop
+2008-09-07.22:15:58 zfs set canmount=on zdata/home/test/Documents
+2008-09-07.22:16:09 zfs set canmount=on zdata/home/test/Downloads
+2008-09-07.22:16:24 zfs set canmount=on zdata/home/test/Library
+2008-09-07.22:16:30 zfs set canmount=on zdata/home/test/Movies
+2008-09-07.22:16:51 zfs set canmount=on zdata/home/test/Music
+2008-09-07.22:16:56 zfs set canmount=on zdata/home/test/Pictures
+2008-09-07.22:17:04 zfs set canmount=on zdata/home/test/Public
+2008-09-07.22:17:09 zfs set canmount=on zdata/home/test/Sites
+2008-09-07.22:17:19 zfs set canmount=on zdata/junk
+2008-09-07.22:18:42 zpool import -f 14165958316872700719
+
+
+This message is intended only for the named recipient(s). If you are not one of the named recipients, you have received this message in error. Please notify the sender immediately and delete the message (along with its attachments) in a way so that no image of it is retrievable or accessible from the computer where this message has been displayed or from any network to which such computer is connected. Any use or disclosure of this message or its contents/attachments by anyone other than the intended recipient(s) is expressly prohibited and could result in civil or criminal liability.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000819.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+	<LI>Next message: <A HREF="000823.html">[zfs-discuss] Serious Problems with ZFS on Intel Mac Pro Copying	Hundreds of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#822">[ date ]</a>
+              <a href="thread.html#822">[ thread ]</a>
+              <a href="subject.html#822">[ subject ]</a>
+              <a href="author.html#822">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

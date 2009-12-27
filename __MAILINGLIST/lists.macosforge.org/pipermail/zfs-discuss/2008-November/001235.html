@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20panics&In-Reply-To=%3C8762A9FB-2508-451C-87A2-DEB0D2E6A396%40cs.ucsb.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001097.html">
+   <LINK REL="Next"  HREF="001090.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs panics</H1>
+    <B>William Robertson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20panics&In-Reply-To=%3C8762A9FB-2508-451C-87A2-DEB0D2E6A396%40cs.ucsb.edu%3E"
+       TITLE="[zfs-discuss] zfs panics">nullptr at gmail.com
+       </A><BR>
+    <I>Tue Nov 25 08:47:31 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001097.html">[zfs-discuss] zfs panics
+</A></li>
+        <LI>Next message: <A HREF="001090.html">[zfs-discuss] ZFS and nested NFS exports (and crontab for backup)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1235">[ date ]</a>
+              <a href="thread.html#1235">[ thread ]</a>
+              <a href="subject.html#1235">[ subject ]</a>
+              <a href="author.html#1235">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Boyd (and list),
+
+Thanks for the help!  It looks like it actually is a problem with the  
+SATA adapter.  I set up an HFS+-based RAID and managed to reproduce  
+the crashes.  The vendor has acknowledged that there are known issues  
+with the SiI chipset.
+
+Sorry for the false alarm.
+
+-- Wil
+
+On Nov 22, 2008, at 13:34, Boyd Waters wrote:
+&gt;<i> First:
+</I>&gt;<i>
+</I>&gt;<i> Are you exporting your ZFS pool before ejecting the (external) volume?
+</I>&gt;<i>
+</I>&gt;<i> Before ejecting the disk, do
+</I>&gt;<i>
+</I>&gt;<i> $ sudo zfs -f pool
+</I>&gt;<i>
+</I>&gt;<i> where &quot;pool&quot; is the name of your ZFS pool. Maybe that will sort  
+</I>&gt;<i> things out?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Second:
+</I>&gt;<i>
+</I>&gt;<i> Can you post your kernel stack trace from the panic? That would help  
+</I>&gt;<i> a lot.
+</I>&gt;<i>
+</I>&gt;<i> When you reboot, you should see a crash report window. There are  
+</I>&gt;<i> three sections to that text area: the third section holds the stack  
+</I>&gt;<i> trace. You can copy that text and paste it in an email reply.
+</I>&gt;<i>
+</I>&gt;<i> Alternatively, you can open the Console utility in /Applications/ 
+</I>&gt;<i> Utilities/Console, on the left side of the window is the Log List.  
+</I>&gt;<i> In that list under LOG FILES, you'll see /Library/Logs: open the  
+</I>&gt;<i> PanicReporter section. Click on the most recent panic report and  
+</I>&gt;<i> select its text in the text area on the right. Copy it into an  
+</I>&gt;<i> email...
+</I>&gt;<i>
+</I>&gt;<i> Or just from a Bash prompt, something like
+</I>&gt;<i> # cat /Library/Logs/*.panic | mail -s &quot;crash reports&quot; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>
+</I>&gt;<i> (why does a gui make things complicated?)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Finally:
+</I>&gt;<i>
+</I>&gt;<i> FWIW, I've used an ExpressCard Sil3132 eSATA adapter with a raidz1  
+</I>&gt;<i> on an external enclosure, and I don't recall any more stability  
+</I>&gt;<i> issues that with my Mac Pro's &quot;native&quot; internal raidz.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hope that helps!
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001097.html">[zfs-discuss] zfs panics
+</A></li>
+	<LI>Next message: <A HREF="001090.html">[zfs-discuss] ZFS and nested NFS exports (and crontab for backup)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1235">[ date ]</a>
+              <a href="thread.html#1235">[ thread ]</a>
+              <a href="subject.html#1235">[ subject ]</a>
+              <a href="author.html#1235">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

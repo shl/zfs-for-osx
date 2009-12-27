@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CDF65EB55-1B27-423F-9073-5D25CA32A7BA%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001914.html">
+   <LINK REL="Next"  HREF="001916.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>Dominic Giampaolo</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CDF65EB55-1B27-423F-9073-5D25CA32A7BA%40apple.com%3E"
+       TITLE="[zfs-discuss] must watch.">dbg at apple.com
+       </A><BR>
+    <I>Sat Oct 10 15:22:03 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001914.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001916.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1915">[ date ]</a>
+              <a href="thread.html#1915">[ thread ]</a>
+              <a href="subject.html#1915">[ subject ]</a>
+              <a href="author.html#1915">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;&gt;<i> If you watch the video that started this thread, you'll see that this
+</I>&gt;&gt;<i> is one of the upcoming features of ZFS. Basically, they plan to  
+</I>&gt;&gt;<i> keep a
+</I>&gt;&gt;<i> backlog of &#252;berblocks so that, if the latest one is no good, you can
+</I>&gt;&gt;<i> go back and use an earlier one. You'll lose recently written data, of
+</I>&gt;&gt;<i> course, but your entire pool won't be gone the way it can happen now.
+</I>&gt;<i>
+</I>&gt;<i> Indeed, which would be reassuring, except Dominic said:
+</I>&gt;<i>
+</I>&gt;<i> &quot;Last, I do not believe that the crash protection scheme used
+</I>&gt;<i> by ZFS can ever work reliably on drives that drop the flush
+</I>&gt;<i>
+</I>If the ZFS guys keep a pool of uberblocks then they
+will be able to recover.  Of course I'm not sure how
+you make it automatic... that is, unless you walked
+the entire fs you wouldn't know if some of the on-disk
+structures were corrupt and walking the entire fs is
+not practical (i.e. it's the moral equivalent of fsck).
+
+If you don't walk the entire fs then you run the risk
+of making changes to the file system, discovering it
+is corrupt and then having to revert to a prior version
+in one of the saved uberblocks (which you hopefully did
+not lose by that point).  Then you would lose the changes
+you made recently.
+
+Unless I'm missing something this seems sub-optimal to
+me.
+
+
+--dominic
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001914.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001916.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1915">[ date ]</a>
+              <a href="thread.html#1915">[ thread ]</a>
+              <a href="subject.html#1915">[ subject ]</a>
+              <a href="author.html#1915">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

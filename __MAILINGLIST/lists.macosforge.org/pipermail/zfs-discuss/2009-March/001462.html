@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] crash report - plugged in external FW drive with zfs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20crash%20report%20-%20plugged%20in%20external%20FW%20drive%20with%20zfs&In-Reply-To=%3C0272E803-E332-4716-93A2-1C067BA9DC4A%40baumann.name%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001460.html">
+   <LINK REL="Next"  HREF="001463.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] crash report - plugged in external FW drive with zfs</H1>
+    <B>Tilman Baumann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20crash%20report%20-%20plugged%20in%20external%20FW%20drive%20with%20zfs&In-Reply-To=%3C0272E803-E332-4716-93A2-1C067BA9DC4A%40baumann.name%3E"
+       TITLE="[zfs-discuss] crash report - plugged in external FW drive with zfs">tilman at baumann.name
+       </A><BR>
+    <I>Fri Mar 13 04:09:48 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001460.html">[zfs-discuss] Questions from an amateur re: created pool,	then a file system then a 	ZIL and got kernel panics
+</A></li>
+        <LI>Next message: <A HREF="001463.html">[zfs-discuss] crash report - plugged in external FW drive with	zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1462">[ date ]</a>
+              <a href="thread.html#1462">[ thread ]</a>
+              <a href="subject.html#1462">[ subject ]</a>
+              <a href="author.html#1462">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have just had my first zfs crash on ppc osx after I formated my  
+first drive yesterday.
+
+btw. is there a good way do unmount external zfs drives?
+Finder did not unmount my sub filesystem (how are they called?) and I  
+could not unmount the root fs since it was busy.
+I then used zfs umount foo/bar on the command line and some (long)  
+time later finder was fine with ejecting the root fs.
+That is too much hassle for a external drive. Is there any way to  
+optimise that?
+
+
+And here the crash report:
+Sadly not much of a back trace.
+Installed from zfs-119bin.tgz
+
+
+Copy and pasted from apples crash reporter. (I guess I should not send  
+them zfs related bugs since it is not their build)
+====
+Fri Mar 13 11:53:05 2009
+panic(cpu 0 caller 0x3CAD955C): &quot;ZFS: I/O failure (write on &lt;unknown&gt;  
+off 0: zio 0x573e990 [L0 persistent error log] 4000L/400P  
+DVA[0]=&lt;0:1f000:400&gt; DVA[1]=&lt;0:1c0015800:400&gt; DVA[2]=&lt;0:380001000:400&gt;  
+fletcher4 lzjb BE contiguous birth=2609 fill=1  
+cksum=6388ba9048:42743f05e9fb:181420cfad1336:6326ea09a518acd): error &quot;  
+&quot;6&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/ 
+zio.c:918
+Latest stack backtrace for cpu 0:
+       Backtrace:
+          0x0009BCF0 0x0009C694 0x00029EA0 0x3CAD955C 0x3CAD4FEC  
+0x3CAD5510 0x3CAD55C4 0x3CAD4FEC
+          0x3CAD8ACC 0x3CAD4FEC 0x3CB20068 0x3CAD4770 0x3CB4D018  
+0x000B0E54
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x3cabd000-&gt;0x3cba6fff
+Proceeding back via exception chain:
+    Exception state (sv=0x3c049500)
+       PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;  
+DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000 (Unknown)
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:39:01 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_PPC
+System model name: PowerBook5,4
+
+System details:
+Model: PowerBook5,4, BootROM 4.8.6f0, 1 processor, PowerPC G4  (1.1),  
+1.33 GHz, 2 GB
+Graphics: kHW_ATIrv360M11Item, ATY,RV360M11, spdisplays_agp_device, 64  
+MB
+Memory Module: SODIMM0/J25LOWER, 1 GB, DDR SDRAM, PC2700U-25330
+Memory Module: SODIMM1/J25UPPER, 1 GB, DDR SDRAM, PC2700U-25330
+AirPort: spairport_wireless_card_type_airport_extreme (0x14E4, 0x4E),  
+Broadcom BCM43xx 1.0 (4.170.25.8)
+Modem: Jump, V.92, Version 1.0
+Bluetooth: Version 2.1.3f8, 2 service, 1 devices, 1 incoming serial  
+ports
+Network Service: Ethernet, Ethernet, en0
+Network Service: Ethernet (en2), Ethernet, en2
+PCI Card: TXN,PCIXXXX-00, cardbus, PC Card
+Parallel ATA Device: MATSHITACD-RW  CW-8123
+Parallel ATA Device: WDC WD1600BEVE-22WZT0, 149,05 GB
+USB Device: Bluetooth USB Host Controller, (null) mA
+FireWire Device: FreeAgent FW, Seagate, 800mbit_speed
+FireWire Device: LaCie Hard Drive FireWire+, LaCie Group SA,  
+400mbit_speed
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001460.html">[zfs-discuss] Questions from an amateur re: created pool,	then a file system then a 	ZIL and got kernel panics
+</A></li>
+	<LI>Next message: <A HREF="001463.html">[zfs-discuss] crash report - plugged in external FW drive with	zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1462">[ date ]</a>
+              <a href="thread.html#1462">[ thread ]</a>
+              <a href="subject.html#1462">[ subject ]</a>
+              <a href="author.html#1462">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

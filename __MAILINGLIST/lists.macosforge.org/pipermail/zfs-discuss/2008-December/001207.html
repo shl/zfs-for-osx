@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] snapshots
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C1E557182-D5EC-4AEB-A502-DB4928AB299B%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001206.html">
+   <LINK REL="Next"  HREF="001237.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] snapshots</H1>
+    <B>Robert Gordon</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C1E557182-D5EC-4AEB-A502-DB4928AB299B%40mac.com%3E"
+       TITLE="[zfs-discuss] snapshots">macrbg at mac.com
+       </A><BR>
+    <I>Sat Dec 20 17:43:20 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001206.html">[zfs-discuss] snapshots
+</A></li>
+        <LI>Next message: <A HREF="001237.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1207">[ date ]</a>
+              <a href="thread.html#1207">[ thread ]</a>
+              <a href="subject.html#1207">[ subject ]</a>
+              <a href="author.html#1207">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+IIRC this is a known issue that the Apple Z-Team are addressing; there  
+are issues (in the version of ZFS we are using) since this is a beta  
+preview... If i had to guess, i would say that 1st QTR next year we  
+will see something more integrated and stable... but again this would  
+be a guess, since i work for storspeed not apple .. ;-)
+
+
+Robert..
+
+
+On Dec 20, 2008, at 4:01 PM, Franz Schmalzl wrote:
+
+&gt;<i> Yes I have the same issue,
+</I>&gt;<i>
+</I>&gt;<i> My zpool ist mounted at /Users
+</I>&gt;<i>
+</I>&gt;<i> altough /Users does not show up in the finder anymore...
+</I>&gt;<i> when issuing a ls -al it's there
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> noel ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> cheers
+</I>&gt;<i>
+</I>&gt;<i> franz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 20.12.2008, at 22:19, John McAdams wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I gave that a try
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sparky:~ johnemac$ zfs set mountpoint=/Volumes/AVClub reflection/ 
+</I>&gt;&gt;<i> AVClub
+</I>&gt;&gt;<i> sparky:~ johnemac$ ls -la /Volumes/
+</I>&gt;&gt;<i> total 14
+</I>&gt;&gt;<i> drwxrwxrwt@  7 root      admin   238 Dec 20 16:16 .
+</I>&gt;&gt;<i> drwxrwxr-t  33 root      admin  1190 Dec 16 08:45 ..
+</I>&gt;&gt;<i> drwxr-xr-x   3 johnemac  staff     3 Dec 20 16:14 AVClub
+</I>&gt;&gt;<i> drwxrwxr-t  29 root      admin  1054 Dec 17 09:10 Snow Leopard
+</I>&gt;&gt;<i> lrwxr-xr-x   1 root      admin     1 Dec 20 15:13 Sparky HD -&gt; /
+</I>&gt;&gt;<i> drwxrwxr-x@ 16 johnemac  staff   612 Dec 18 09:54 macie320
+</I>&gt;&gt;<i> drwxr-xr-x@  5 johnemac  staff     6 Dec 20 16:16 reflection
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I can write to it if I go to /Volumes, but it still doesn't appear  
+</I>&gt;&gt;<i> on the Desktop or in the Sidebar.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for the help. I can use if from here.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- jmca
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Dec 20, 2008, at 3:47 PM, Franz Schmalzl wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> try adjusting the mountpoint property
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> zfs set mountpoint=mountpoint pool/filesystem
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> franz
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 20.12.2008, at 21:34, John McAdams wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Could someone remind me how to get the ZFS FS to mount? I can  
+</I>&gt;&gt;&gt;&gt;<i> create one just fine using zfs create reflection/Music.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I see my Music FS under the reflection pool, but clicking on it  
+</I>&gt;&gt;&gt;&gt;<i> and issuing zfs mount commands don't work. I believe this has  
+</I>&gt;&gt;&gt;&gt;<i> been covered before but I can't find the thread.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks,
+</I>&gt;&gt;&gt;&gt;<i> -- jmca
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Dec 20, 2008, at 3:02 PM, Richard McClellan wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On Dec 20, 2008, at 11:46 , Boyd Waters wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> On Dec 20, 2008, at 12:23 PM, Richard McClellan wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> What is your snapshot command aliased to?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Very good question, very sorry I didn't show that:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> $ cat $(which snapshot)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> #! /bin/bash
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> zfs snapshot pool/bwaters@$(date +%FT%T)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hmm.  The command looks fine and works for me.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Others that have encountered this error (dataset busy) manually  
+</I>&gt;&gt;&gt;&gt;&gt;<i> umount/mount the filesystem and snapshots started working  
+</I>&gt;&gt;&gt;&gt;&gt;<i> again.  Check this out: <A HREF="http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html">http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 		Rich
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001206.html">[zfs-discuss] snapshots
+</A></li>
+	<LI>Next message: <A HREF="001237.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1207">[ date ]</a>
+              <a href="thread.html#1207">[ thread ]</a>
+              <a href="subject.html#1207">[ subject ]</a>
+              <a href="author.html#1207">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

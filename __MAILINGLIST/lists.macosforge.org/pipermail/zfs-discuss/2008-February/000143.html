@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] staggered spin-up on external enclosure
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20staggered%20spin-up%20on%20external%20enclosure&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000142.html">
+   <LINK REL="Next"  HREF="000144.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] staggered spin-up on external enclosure</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20staggered%20spin-up%20on%20external%20enclosure&In-Reply-To="
+       TITLE="[zfs-discuss] staggered spin-up on external enclosure">bwaters at nrao.edu
+       </A><BR>
+    <I>Sun Feb 10 19:58:56 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000142.html">[zfs-discuss] Problem compacting EyeTV program on ZFS
+</A></li>
+        <LI>Next message: <A HREF="000144.html">[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay symbol
+	binding failed on Os X 10.5 
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#143">[ date ]</a>
+              <a href="thread.html#143">[ thread ]</a>
+              <a href="subject.html#143">[ subject ]</a>
+              <a href="author.html#143">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Howdy all.
+
+A couple of days ago I had to move my big computer to the other side  
+of the office, so I turned it off for the first time in a while.
+
+It booted up just fine, and my ZFS raid (hosted on a four-disk  
+external SATA enclosure) showed up OK. But during a big file transfer,  
+I noticed that the activity light on the fourth disk in the array  
+wasn't showing any activity. Uh, oh...
+
+Sure enough, &quot;zpool status&quot; showed that disk as faulted or failed or  
+whatever, and suggested that I replace the volume.
+
+But I suspected a timing issue with the drives: the enclosure doesn't  
+spin all the drives up at the same time, but does them one at a time,  
+in order to manage the current draw on the power supply.
+
+After my (successful) file transfer, I did a snapshot of the file  
+system, then rebooted. Since everything was already powered up, I kept  
+my fingers crossed.
+
+Sure enough, ZFS saw all four disks upon reboot, and &quot;zpool status&quot;  
+showed that it was busy resilvering (in order to get the RAID  
+synchronized with the large updated bits that had occurred during the  
+impaired state).
+
+Two hours later, and everything is just fine.
+
+I like ZFS!
+
+  - boyd
+
+
+PS:
+
+This thing
+  <A HREF="http://www.addonics.com/products/raid_system/mst4.asp">http://www.addonics.com/products/raid_system/mst4.asp</A>
+
+is better than buttered toast! I got the one with the hardware port  
+multiplier, and got the host controller
+<A HREF="http://www.addonics.com/products/host_controller/adsa3gpx1-2em.asp">http://www.addonics.com/products/host_controller/adsa3gpx1-2em.asp</A>
+and their funky eSATA cable
+(AASA2SA100C)
+
+
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000142.html">[zfs-discuss] Problem compacting EyeTV program on ZFS
+</A></li>
+	<LI>Next message: <A HREF="000144.html">[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay symbol
+	binding failed on Os X 10.5 
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#143">[ date ]</a>
+              <a href="thread.html#143">[ thread ]</a>
+              <a href="subject.html#143">[ subject ]</a>
+              <a href="author.html#143">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

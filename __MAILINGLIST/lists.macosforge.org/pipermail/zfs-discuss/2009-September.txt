@@ -1,0 +1,3662 @@
+From alex at designlifecycle.com  Tue Sep  1 05:43:44 2009
+From: alex at designlifecycle.com (Alex Bowden)
+Date: Tue, 1 Sep 2009 13:43:44 +0100
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <67631ed30908311336v438875c2x7cf839499c3ea42e@mail.gmail.com>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>
+	<4A993DCC.30707@tidalwave.it>
+	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>
+	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<67631ed30908311336v438875c2x7cf839499c3ea42e@mail.gmail.com>
+Message-ID: <47A68CEE-0789-4E4C-B69B-1BC6B0D7EF8B@designlifecycle.com>
+
+
+On 31 Aug 2009, at 21:36, Nathan Florea wrote:
+
+> On Mon, Aug 31, 2009 at 1:01 PM, Dillon Kass <lists at loveturtle.net>  
+> wrote:
+> Who cares though?
+>
+> Well, I still do.  I've had a mirrored zpool in production since  
+> 2008-04-21 and I haven't had any major problems with it (there have  
+> been a couple of annoyances I've reported here).  I don't have the  
+> option of moving to FreeBSD or OpenSolaris, so as long as ZFS  
+> continues to work well for me under OS X, I intend to keep using  
+> it.  Once ZFS is officially killed and they release something that  
+> isn't HFS, I'll move on, but until then, I enjoy working with ZFS.
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+I agree.
+
+I am running a heavy PVR (a TV to the uninitiated) that uses a raidz1  
+zpool as its data store.
+
+This is often receiving multiple (up to 4) video streams while playing  
+another one.  I know of no alternative software raid5 solution that  
+could deal with this load.  Low to medium cost hardware raid5  
+solutions on SATA generally seems to be able to throw your data away  
+even without a disk failure!
+
+Once past the inadequate Mac usage notes, this system has worked  
+without any fault.  It goes to sleep, it wakes up, it gets hammered,  
+it gets killed by a power glitch, it gets rebooted, its fine every time.
+
+No ZFS means no upgrade.  There is no adequate disk management for  
+windows and no adequate video software on Solaris.
+
+But Apple will release either ZFS,  or another solution that provides  
+the same capability, in time.  Because they're not stupid.
+
+I suspect it just requires
+	1)	resolution of any political issues when/if anyone actually  
+completes the purchase of Sun
+	2)	a Mac GUI for ZFS that would allow the average user to safely  
+operate ZFS without generating an unacceptable support load.
+and ZFS will return
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090901/330c4dc6/attachment.html>
+
+From s at avoidant.org  Tue Sep  1 05:51:35 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Tue, 1 Sep 2009 15:51:35 +0300
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9C2C09.1030507@loveturtle.net>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+Message-ID: <F0EB5641-D561-4646-9A3D-684A42860504@avoidant.org>
+
+On 31/08/2009, at 23:01, Dillon Kass wrote:
+
+> Who cares though? I also pulled those out of 10a286 and tried them  
+> on some later builds and while they did work it was still buggy.  
+> Buggy isn't necessarily bad but with no updates you're just running  
+> some dead end buggy nonsense. I got tired of running the dead end  
+> buggy 119 stuff last year...I'm sure everyone else did too, why  
+> start again?
+
+Not everyone, no.  I'm actually using zfs on OS X and happy with it.   
+My problem now is that the SiI drivers for my eSATA ExpressCard aren't  
+supported in Snow Leopard.  I have seen some reports that they will  
+work with the 32-bit kernel and I plan to try it this weekend.  I  
+figure my best chance is a clean install of SL, clean install of SiI  
+driver, and the 10a286 ZFS driver.  If it all goes horribly wrong, I  
+restore from Time Machine and no harm done except time spent learning  
+it doesn't work.
+
+> You know what works really well? NFS! Make a fileserver.
+
+Why are you still on this mailing list if you gave up a year ago.  I  
+want to learn what works, what problems people are having, etc.  Not  
+hear "NFS!"  and "fileserver".
+
+Have you ever tried editing video over NFS?
+
+I'm not trying to be antagonistic, but your attitude is not helpful.   
+This is the ZFS on OSX mailing list.
+
+--sambo
+
+
+From s at avoidant.org  Tue Sep  1 05:58:22 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Tue, 1 Sep 2009 15:58:22 +0300
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9C2C09.1030507@loveturtle.net>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+Message-ID: <9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+
+On 31/08/2009, at 23:01, Dillon Kass wrote:
+
+> Who cares though? I also pulled those out of 10a286 and tried them  
+> on some later builds and while they did work it was still buggy.  
+> Buggy isn't necessarily bad but with no updates you're just running  
+> some dead end buggy nonsense. I got tired of running the dead end  
+> buggy 119 stuff last year...I'm sure everyone else did too, why  
+> start again?
+
+Not everyone, no.  I'm actually using zfs on OS X and happy with it.   
+My problem now is that the SiI drivers for my eSATA ExpressCard aren't  
+supported in Snow Leopard.  I have seen some reports that they will  
+work with the 32-bit kernel and I plan to try it this weekend.  I  
+figure my best chance is a clean install of SL, clean install of SiI  
+driver, and the 10a286 ZFS driver.  If it all goes horribly wrong, I  
+restore from Time Machine and no harm done except time spent learning  
+it doesn't work.
+
+> You know what works really well? NFS! Make a fileserver.
+
+Why are you still on this mailing list if you gave up a year ago.  I  
+want to learn what works, what problems people are having, etc.  Not  
+hear "NFS!"  and "fileserver".
+
+Have you ever tried editing video over NFS?
+
+I'm not trying to be antagonistic, but your attitude is not helpful.   
+This is the ZFS on OSX mailing list.
+
+--sambo
+
+
+From lists at loveturtle.net  Tue Sep  1 06:45:17 2009
+From: lists at loveturtle.net (Dillon Kass)
+Date: Tue, 01 Sep 2009 09:45:17 -0400
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+Message-ID: <4A9D256D.9070905@loveturtle.net>
+
+sammy ominsky wrote:
+>
+> Why are you still on this mailing list if you gave up a year ago.  I 
+> want to learn what works, what problems people are having, etc.  Not 
+> hear "NFS!"  and "fileserver".
+Well, NFS and fileservers do work. :-)
+
+I didn't say I gave up. When I give up I'll unsubscribe. I'm still on 
+the list because I'm hoping there will be another release.
+>
+> Have you ever tried editing video over NFS?
+No, but on gige nfs is pretty fast.
+>
+> I'm not trying to be antagonistic, but your attitude is not helpful.  
+> This is the ZFS on OSX mailing list.
+Sure, but all of these issues have already been beaten to death on this 
+list and with no updates in sight we're really just rehashing the same 
+topics. Not that it's a problem, we can talk about how we can't empty 
+the Trash for ever..
+
+I don't really think it's my attitude that's not helpful, I think my 
+attitude is realistic. Realism is always helpful. I think what is 
+unhelpful is the fact that even after release we can't just get a 
+straight answer about what is going on. What's so hard about apple just 
+saying
+"hey guys, the project is dead"
+or
+"hey guys, the project isn't dead but there will be no releases for a 
+long time"
+or
+"hey guys, the project isn't dead and there will be a release soon"
+or
+"hey guys, we don't even know what we're going to do yet"
+
+as opposed to the silence we have now? THAT isn't helpful and that 
+actually affects you. My realism doesn't sway the project in any way so 
+I don't think it's the problem here.
+
+From melliott at ncsa.uiuc.edu  Tue Sep  1 13:22:56 2009
+From: melliott at ncsa.uiuc.edu (Matt Elliott)
+Date: Tue, 1 Sep 2009 15:22:56 -0500
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9D256D.9070905@loveturtle.net>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+Message-ID: <941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+
+When running with the bits from 10A286 I get the following when trying  
+to import my pool
+
+# sudo zpool import -a
+Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+"pool_guid", &theguid) == 0), function pool_active, file /SourceCache/ 
+zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line 371.
+Abort trap
+
+I guess I'm waiting till more communication from Apple before  
+upgrading more systems to 10.6.
+
+
+
+From s at avoidant.org  Tue Sep  1 13:44:44 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Tue, 1 Sep 2009 23:44:44 +0300
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9D256D.9070905@loveturtle.net>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+Message-ID: <E224C33B-E397-40F2-86E5-392A7A93E0C6@avoidant.org>
+
+On 01/09/2009, at 16:45, Dillon Kass wrote:
+
+> Well, NFS and fileservers do work. :-)
+
+That they do, and I use them!  But not on my desktop, and not for  
+video :)
+
+> Sure, but all of these issues have already been beaten to death on  
+> this list and with no updates in sight we're really just rehashing  
+> the same topics. Not that it's a problem, we can talk about how we  
+> can't empty the Trash for ever..
+
+True.  but now we have new things to talk about!  I'm going to try  
+getting SL to work with the zfs I torrented from the post yesterday.   
+I'll report my results here for the group.  That's constructive, yes?
+
+
+> I don't really think it's my attitude that's not helpful, I think my  
+> attitude is realistic.
+
+My mother-in-law says the same thing.  Everyone else calls her a  
+pessimist.
+
+
+>  I think what is unhelpful is the fact that even after release we  
+> can't just get a straight answer about what is going on.
+
+That would be nice, but this is Apple, and it's how things are done  
+there.  We have choices.  I choose to do my work on a Mac running OS  
+X.  Unfortunately, with terabytes of video, ZFS is my best choice.  In  
+fact, it's my only choice if I don't want to constantly swap out drives.
+
+I'm also lamenting the fact that SiI 3132 drivers aren't supported.   
+I've seen reports of them working with the 32-bit kernel, and i plan  
+to try it and see.  But going to a different OS isn't a choice I plan  
+to make.
+
+
+
+> What's so hard about apple just saying
+> "hey guys, the project is dead"
+
+Ask Steve Jobs.  Let me know what he says. sjobs at apple.com
+
+
+--sambo
+
+From ndellofano at apple.com  Tue Sep  1 16:23:07 2009
+From: ndellofano at apple.com (=?iso-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 1 Sep 2009 16:23:07 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>
+	<4A993412.9060406@tidalwave.it>
+	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>
+	<4A993DCC.30707@tidalwave.it>
+	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>
+	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+Message-ID: <0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+
+that was a regression in that build due to a bug in zpool import.   
+Don't panic, you're pool is fine :)
+
+Noel
+
+On Sep 1, 2009, at 1:22 PM, Matt Elliott wrote:
+
+> When running with the bits from 10A286 I get the following when  
+> trying to import my pool
+>
+> # sudo zpool import -a
+> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+> "pool_guid", &theguid) == 0), function pool_active, file / 
+> SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line  
+> 371.
+> Abort trap
+>
+> I guess I'm waiting till more communication from Apple before  
+> upgrading more systems to 10.6.
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From mattsnow at gmail.com  Tue Sep  1 16:25:44 2009
+From: mattsnow at gmail.com (Matt Snow)
+Date: Tue, 1 Sep 2009 16:25:44 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+	<0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+Message-ID: <6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+
+No?l lives! I knew you would come back. :)
+
+2009/9/1 No?l Dellofano <ndellofano at apple.com>
+
+> that was a regression in that build due to a bug in zpool import.  Don't
+> panic, you're pool is fine :)
+>
+> Noel
+>
+>
+> On Sep 1, 2009, at 1:22 PM, Matt Elliott wrote:
+>
+>  When running with the bits from 10A286 I get the following when trying to
+>> import my pool
+>>
+>> # sudo zpool import -a
+>> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config, "pool_guid",
+>> &theguid) == 0), function pool_active, file
+>> /SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line 371.
+>> Abort trap
+>>
+>> I guess I'm waiting till more communication from Apple before upgrading
+>> more systems to 10.6.
+>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090901/07b76698/attachment.html>
+
+From ndellofano at apple.com  Tue Sep  1 16:42:09 2009
+From: ndellofano at apple.com (=?iso-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 1 Sep 2009 16:42:09 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+	<0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+	<6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+Message-ID: <1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+
+I may not answer sometimes but I'm usually watching :)  Makes me sound  
+like some awesome Sci Fi character.... sweet :)
+
+Oh and for the record, the Mac OSX port of ZFS is it's own port all  
+together, and not based on the BSD port in any way.
+
+Also, the Trash not emptying bug was due to an iterator issue (ZFS  
+counts '.' and '..' as items) and not a Finder issue.
+
+Noel
+
+On Sep 1, 2009, at 4:25 PM, Matt Snow wrote:
+
+> No?l lives! I knew you would come back. :)
+>
+> 2009/9/1 No?l Dellofano <ndellofano at apple.com>
+> that was a regression in that build due to a bug in zpool import.   
+> Don't panic, you're pool is fine :)
+>
+> Noel
+>
+>
+> On Sep 1, 2009, at 1:22 PM, Matt Elliott wrote:
+>
+> When running with the bits from 10A286 I get the following when  
+> trying to import my pool
+>
+> # sudo zpool import -a
+> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+> "pool_guid", &theguid) == 0), function pool_active, file / 
+> SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line  
+> 371.
+> Abort trap
+>
+> I guess I'm waiting till more communication from Apple before  
+> upgrading more systems to 10.6.
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090901/67a2cc95/attachment-0001.html>
+
+From alex.blewitt at gmail.com  Tue Sep  1 16:42:57 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 2 Sep 2009 00:42:57 +0100
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+	<0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+	<6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+Message-ID: <0DF1A87C-4BF9-4B9B-AF92-906EEA903165@gmail.com>
+
+Hi No?l, glad you're still here ...
+
+Sent from my (new) iPhone
+
+On 2 Sep 2009, at 00:25, Matt Snow <mattsnow at gmail.com> wrote:
+
+> No?l lives! I knew you would come back. :)
+>
+> 2009/9/1 No?l Dellofano <ndellofano at apple.com>
+> that was a regression in that build due to a bug in zpool import.   
+> Don't panic, you're pool is fine :)
+>
+> Noel
+>
+>
+> On Sep 1, 2009, at 1:22 PM, Matt Elliott wrote:
+>
+> When running with the bits from 10A286 I get the following when  
+> trying to import my pool
+>
+> # sudo zpool import -a
+> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+> "pool_guid", &theguid) == 0), function pool_active, file / 
+> SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line  
+> 371.
+> Abort trap
+>
+> I guess I'm waiting till more communication from Apple before  
+> upgrading more systems to 10.6.
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090902/7450ef3c/attachment-0001.html>
+
+From melliott at ncsa.illinois.edu  Tue Sep  1 13:22:01 2009
+From: melliott at ncsa.illinois.edu (Matt Elliott)
+Date: Tue, 1 Sep 2009 15:22:01 -0500
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9D256D.9070905@loveturtle.net>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+Message-ID: <084DEE7A-DDB8-4708-B184-CE4EB4B276E7@ncsa.illinois.edu>
+
+When running with the bits from 10A286 I get the following when trying  
+to import my pool
+
+# sudo zpool import -a
+Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+"pool_guid", &theguid) == 0), function pool_active, file /SourceCache/ 
+zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line 371.
+Abort trap
+
+I guess I'm waiting till more communication from Apple before  
+upgrading more systems to 10.6.
+
+
+
+From hanche at math.ntnu.no  Tue Sep  1 17:29:26 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Tue, 01 Sep 2009 20:29:26 -0400 (EDT)
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <0DF1A87C-4BF9-4B9B-AF92-906EEA903165@gmail.com>
+References: <0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+	<6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+	<0DF1A87C-4BF9-4B9B-AF92-906EEA903165@gmail.com>
+Message-ID: <20090901.202926.38928990.hanche@math.ntnu.no>
+
++ Alex Blewitt <alex.blewitt at gmail.com>:
+
+> Hi No?l, glad you're still here ...
+
+So am I, but I find it most interesting to notice that she is not
+talking about what we all want to know - the future of ZFS on OS X.
+Sometimes silence can say more than words, but I can't quite figure
+out what this particular silence is saying to loudly.
+
+- Harald
+
+From lists at loveturtle.net  Tue Sep  1 17:44:07 2009
+From: lists at loveturtle.net (Dillon Kass)
+Date: Tue, 01 Sep 2009 20:44:07 -0400
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>	<4A9D256D.9070905@loveturtle.net>	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>	<0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>	<6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+	<1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+Message-ID: <4A9DBFD7.4090502@loveturtle.net>
+
+No?l Dellofano wrote:
+> I may not answer sometimes but I'm usually watching :)  Makes me sound 
+> like some awesome Sci Fi character.... sweet :)
+>
+But the question on everyones mind is if you can answer the million 
+dollar question?
+
+From byron at mac.com  Tue Sep  1 17:57:54 2009
+From: byron at mac.com (Byron Servies)
+Date: Tue, 01 Sep 2009 17:57:54 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9DBFD7.4090502@loveturtle.net>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+	<0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+	<6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+	<1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+	<4A9DBFD7.4090502@loveturtle.net>
+Message-ID: <41DA7116-3C91-45F5-B98E-279C2030293A@mac.com>
+
+
+On Sep 1, 2009, at 5:44 PM, Dillon Kass wrote:
+
+> No?l Dellofano wrote:
+>> I may not answer sometimes but I'm usually watching :)  Makes me  
+>> sound like some awesome Sci Fi character.... sweet :)
+>>
+> But the question on everyones mind is if you can answer the million  
+> dollar question?
+
+Not if he wants to keep his job.
+
+Me, I just hope there is a real reason, and not what I suspect: that a  
+crusty old cabal of hfs engineers cannot see that their 25 year old  
+baby is obsolete.  But, they have been around so long, and are so  
+deeply entrenched, that nobody can tell them "no" when they come up  
+with yet another half-baked solution.
+
+Resource forks?  Resource fork compression? A centralized catalog?  In  
+2009?  Seriously?
+
+I would be much more  comfortable with reasons dealing with the  
+complexity of having the OS and all the associated frameworks work  
+with all the ZFS features in a wiz-bang way.  I can easily see how  
+that would take a really long time with a small team.
+
+Byron
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2409 bytes
+Desc: not available
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090901/c557f352/attachment.bin>
+
+From hanche at math.ntnu.no  Tue Sep  1 19:53:08 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Tue, 01 Sep 2009 22:53:08 -0400 (EDT)
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <41DA7116-3C91-45F5-B98E-279C2030293A@mac.com>
+References: <1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+	<4A9DBFD7.4090502@loveturtle.net>
+	<41DA7116-3C91-45F5-B98E-279C2030293A@mac.com>
+Message-ID: <20090901.225308.193800457.hanche@math.ntnu.no>
+
++ Byron Servies <byron at mac.com>:
+
+> 
+> On Sep 1, 2009, at 5:44 PM, Dillon Kass wrote:
+> 
+> > No?l Dellofano wrote:
+> >> I may not answer sometimes but I'm usually watching :) Makes me sound
+> >> like some awesome Sci Fi character.... sweet :)
+> >>
+> > But the question on everyones mind is if you can answer the million
+> > dollar question?
+> 
+> Not if he wants to keep his job.
+
+Methinks you got the wrong gender. Better hurry up and apologize.  8-)
+
+- Harald
+
+From byron at mac.com  Tue Sep  1 20:12:24 2009
+From: byron at mac.com (Byron Servies)
+Date: Tue, 01 Sep 2009 20:12:24 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <20090901.225308.193800457.hanche@math.ntnu.no>
+References: <1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+	<4A9DBFD7.4090502@loveturtle.net>
+	<41DA7116-3C91-45F5-B98E-279C2030293A@mac.com>
+	<20090901.225308.193800457.hanche@math.ntnu.no>
+Message-ID: <96CE374B-BC0E-49D2-9141-498C5C6F1714@mac.com>
+
+
+On Sep 1, 2009, at 7:53 PM, Harald Hanche-Olsen wrote:
+
+> + Byron Servies <byron at mac.com>:
+>
+>>
+>> On Sep 1, 2009, at 5:44 PM, Dillon Kass wrote:
+>>
+>>> No?l Dellofano wrote:
+>>>> I may not answer sometimes but I'm usually watching :) Makes me  
+>>>> sound
+>>>> like some awesome Sci Fi character.... sweet :)
+>>>>
+>>> But the question on everyones mind is if you can answer the million
+>>> dollar question?
+>>
+>> Not if he wants to keep his job.
+>
+> Methinks you got the wrong gender. Better hurry up and apologize.  8-)
+
+You are right, I am wrong, I am sorry.
+
+Byron
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2409 bytes
+Desc: not available
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090901/17e311a3/attachment-0001.bin>
+
+From jason at jasonrm.net  Tue Sep  1 21:20:18 2009
+From: jason at jasonrm.net (Jason Richard McNeil)
+Date: Tue, 1 Sep 2009 21:20:18 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <20090901.202926.38928990.hanche@math.ntnu.no>
+References: <0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+	<6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+	<0DF1A87C-4BF9-4B9B-AF92-906EEA903165@gmail.com>
+	<20090901.202926.38928990.hanche@math.ntnu.no>
+Message-ID: <5B3D4B55-5BA2-4BFF-9686-A17B0727C419@jasonrm.net>
+
+Unless I'm getting my No?l's confused, it looks like she's been  
+working with ZFS for a long time [1], so the fact that she's still  
+writing from an Apple address should give us all a lot of hope that  
+ZFS isn't forever gone. My thought is, what other filesystem is a  
+filesystem guru going to work on at Apple? HFS+? That sounds like a  
+painful daily job after working on one of the most advanced  
+filesystems in recent time. ;-)
+
+So for now, or until I need to boot fully 64-bit, I'll be using the  
+old SL beta bits with hope that something new will come "soon".
+
+--jasonrm
+
+[1] - http://blogs.sun.com/dellofano/entry/late_night_zfs_fuel
+
+On Sep 1, 2009, at 5:29 PM, Harald Hanche-Olsen wrote:
+
+> + Alex Blewitt <alex.blewitt at gmail.com>:
+>
+>> Hi No?l, glad you're still here ...
+>
+> So am I, but I find it most interesting to notice that she is not
+> talking about what we all want to know - the future of ZFS on OS X.
+> Sometimes silence can say more than words, but I can't quite figure
+> out what this particular silence is saying to loudly.
+>
+> - Harald
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From dev-lists at thefloreas.com  Tue Sep  1 22:39:36 2009
+From: dev-lists at thefloreas.com (Nathan Florea)
+Date: Tue, 1 Sep 2009 22:39:36 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+	<0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+	<6879ebc80909011625j73536845r45d787ff47575df7@mail.gmail.com>
+	<1B3831EF-3AFE-478B-8DB7-DA14594A36C3@apple.com>
+Message-ID: <67631ed30909012239o2af76f98uef834a81cb956928@mail.gmail.com>
+
+Really, that's all you're going to give us?  Well, at least you're not
+fired.  That alone says a lot.  I guess the waiting game continues...
+
+2009/9/1 No?l Dellofano <ndellofano at apple.com>
+
+> I may not answer sometimes but I'm usually watching :)  Makes me sound like
+> some awesome Sci Fi character.... sweet :)
+> Oh and for the record, the Mac OSX port of ZFS is it's own port all
+> together, and not based on the BSD port in any way.
+>
+> Also, the Trash not emptying bug was due to an iterator issue (ZFS counts
+> '.' and '..' as items) and not a Finder issue.
+>
+> Noel
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090901/14f4c03e/attachment.html>
+
+From dev-lists at thefloreas.com  Tue Sep  1 22:41:31 2009
+From: dev-lists at thefloreas.com (Nathan Florea)
+Date: Tue, 1 Sep 2009 22:41:31 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+	<941E5D24-55C1-452A-8CD9-EAF73E341A75@ncsa.uiuc.edu>
+	<0DAF4D9E-1E71-47A1-9026-4D35C6CAC292@apple.com>
+Message-ID: <67631ed30909012241o6296d916ha24e8e8cc0170001@mail.gmail.com>
+
+I guess that means you should get the bits from 10a222....  :)
+
+2009/9/1 No?l Dellofano <ndellofano at apple.com>
+
+> that was a regression in that build due to a bug in zpool import.  Don't
+> panic, you're pool is fine :)
+>
+> Noel
+>
+>
+> On Sep 1, 2009, at 1:22 PM, Matt Elliott wrote:
+>
+>  When running with the bits from 10A286 I get the following when trying to
+>> import my pool
+>>
+>> # sudo zpool import -a
+>> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config, "pool_guid",
+>> &theguid) == 0), function pool_active, file
+>> /SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line 371.
+>> Abort trap
+>>
+>> I guess I'm waiting till more communication from Apple before upgrading
+>> more systems to 10.6.
+>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090901/3fa71de8/attachment.html>
+
+From fabrizio.giudici at tidalwave.it  Wed Sep  2 03:04:55 2009
+From: fabrizio.giudici at tidalwave.it (Fabrizio Giudici)
+Date: Wed, 02 Sep 2009 12:04:55 +0200
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9D256D.9070905@loveturtle.net>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net>
+Message-ID: <4A9E4347.3050603@tidalwave.it>
+
+For the record, MacRumors blogged about the issue:
+
+http://www.macrumors.com/2009/09/01/lack-of-zfs-file-system-support-in-snow-leopard-due-to-licensing-issues/
+
+
+"But then a couple of sources came in with a new angle: that Sun's 
+licensing demands killed the deal. Sun prefers the CDDL [Common 
+Development and Distribution License] and may have asked for some extra 
+protections, including patent indemnification, that caused Apple to 
+reconsider the business risk of ZFS."
+
+
+My point is that is Apple pulling our legs. There could really be issues 
+of this type, but nothing changed in the CDDL license since when ZFS was 
+open sourced; and note that there's no reference in Oracle possibly 
+changing this in a more restrictive way. I can't believe that the legal 
+office of Apple discovered some issues only now. It rather seem an 
+indirect way to put pressure on Sun / Oracle to release the thing under 
+GPL. BTW, I don't question that - I'd be happy if ZFS was GPLled, as it 
+would go into Linux kernel (*) - only that I don't like byzantine talk. 
+Also, to be pointed out that these are only rumors, even though coming 
+from a reasonably reputable source, and no official statements.
+
+(*) But ZFS in Linux could bring more points to switching even more work 
+from Mac OS X to Linux, in my perspective.
+
+-- 
+Fabrizio Giudici - Java Architect, Project Manager
+Tidalwave s.a.s. - "We make Java work. Everywhere."
+weblogs.java.net/blog/fabriziogiudici - www.tidalwave.it/blog
+Fabrizio.Giudici at tidalwave.it - mobile: +39 348.150.6941
+
+
+From alex.blewitt at gmail.com  Wed Sep  2 04:10:24 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 2 Sep 2009 12:10:24 +0100
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9E4347.3050603@tidalwave.it>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net> <4A9E4347.3050603@tidalwave.it>
+Message-ID: <0F01983C-C99B-4FF0-97A0-4DA577EAC428@gmail.com>
+
+If that was the deal, Apple would have never shipped a RO kext in the  
+first place. There's nothing different between the RO and RW kexts in  
+licensing terms, only functionality. I think it is someone making  
+stuff up, unfortunately.
+
+It might be legal related, but possible more due to the change of  
+entity than anything else.
+
+Alex
+
+On Sep 2, 2009, at 11:04, Fabrizio Giudici wrote:
+
+> For the record, MacRumors blogged about the issue:
+>
+> http://www.macrumors.com/2009/09/01/lack-of-zfs-file-system-support-in-snow-leopard-due-to-licensing-issues/
+>
+>
+> "But then a couple of sources came in with a new angle: that Sun's  
+> licensing demands killed the deal. Sun prefers the CDDL [Common  
+> Development and Distribution License] and may have asked for some  
+> extra protections, including patent indemnification, that caused  
+> Apple to reconsider the business risk of ZFS."
+>
+>
+> My point is that is Apple pulling our legs. There could really be  
+> issues of this type, but nothing changed in the CDDL license since  
+> when ZFS was open sourced; and note that there's no reference in  
+> Oracle possibly changing this in a more restrictive way. I can't  
+> believe that the legal office of Apple discovered some issues only  
+> now. It rather seem an indirect way to put pressure on Sun / Oracle  
+> to release the thing under GPL. BTW, I don't question that - I'd be  
+> happy if ZFS was GPLled, as it would go into Linux kernel (*) - only  
+> that I don't like byzantine talk. Also, to be pointed out that these  
+> are only rumors, even though coming from a reasonably reputable  
+> source, and no official statements.
+>
+> (*) But ZFS in Linux could bring more points to switching even more  
+> work from Mac OS X to Linux, in my perspective.
+>
+> -- 
+> Fabrizio Giudici - Java Architect, Project Manager
+> Tidalwave s.a.s. - "We make Java work. Everywhere."
+> weblogs.java.net/blog/fabriziogiudici - www.tidalwave.it/blog
+> Fabrizio.Giudici at tidalwave.it - mobile: +39 348.150.6941
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From james at themacplace.co.uk  Wed Sep  2 04:13:12 2009
+From: james at themacplace.co.uk (James Relph)
+Date: Wed, 2 Sep 2009 12:13:12 +0100
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9E4347.3050603@tidalwave.it>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net> <4A9E4347.3050603@tidalwave.it>
+Message-ID: <BBC5A2FE-A9EB-49DD-92F1-F7C567BC053F@themacplace.co.uk>
+
+> My point is that is Apple pulling our legs. There could really be  
+> issues of this type, but nothing changed in the CDDL license since  
+> when ZFS was open sourced
+
+I think the licensing issue is a red herring.  I'm sure the CDDL is  
+more appealing for Apple anyway, and with Oracle buying up Sun you've  
+got to think that that creates less problems.  Ellison is an former  
+Apple board member and Jobs took the photographs at Ellison's wedding,  
+so you would assume that that would make any licensing/legal problems  
+easier to solve (worst case; "I'll get my boss to ring your boss").   
+The NetApp lawsuit again seems an unlikely cause as Sun have already  
+invalidated most of NetApps claims, so again you would think as that  
+case progresses (generally positively for Sun) that becomes even less  
+of a problem.
+
+I'm guessing it's a support issue.  There wasn't a good GUI for  
+getting ZFS setup, and there are a lot of third party apps out there  
+that could have problems with a new filesystem, even on the server  
+side.  Furthermore, if you include it as a big feature then people  
+will expect a GUI.  Even if you don't have a GUI and include it as  
+command line tools, you'll have people using it possibly inadvisably  
+and not quite aware of how different ZFS is to managing HFS+ volumes.
+
+Apple wanted Snow Leopard out, but didn't want the headache of an  
+officially included ZFS, because then they have to support it.  If  
+someone has to go and download and install ZFS separately, it gets  
+Apple off the hook as far as problems go.  Saying "I downloaded this  
+new filesystem, installed it, and lost all my data" is much easier to  
+deal with from Apple's point of view than "I used this new filesystem  
+you included in SL, and now my data is gone".
+
+I'm expecting a new build to pop up on MacOSforge at some point, and  
+the delay doesn't surprise me too much.
+
+I tend to be over-optimistic at times though :-)
+
+
+James Relph
+ACSA 10.5
+
+www.themacplace.co.uk
+
+
+From tysonedwards at mac.com  Wed Sep  2 07:25:20 2009
+From: tysonedwards at mac.com (Tyson Edwards)
+Date: Wed, 02 Sep 2009 08:25:20 -0600
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+Message-ID: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+
+I've been doing a lot of digging around inside of Snow Leopard, and  
+while ZFS is very much gone, it looks very much like it was a last  
+minute removal.
+
+I know, a lot of you are thinking "duh!", except this is not based on  
+the documentation that Apple continues to publish.
+
+There are major references to ZFS all over the place, including in  
+Disk Utility.
+
+It appears that if the ZFSManager.framework existed within Snow  
+Leopard, Disk Utility would gain the ability to manage a ZFS Volume.
+
+/System/Library/PrivateFrameworks/ZFSManager.framework
+
+Of interest is that Time Machine does not make any reference to ZFS,  
+but it does make reference to HFS.
+
+This is all speculation though, based mostly on a read through some of  
+the de-compiled Disk Utility code. Not really like reading through pre- 
+compiled code is the easiest of reads, but that is what I believe to  
+have found thus far.
+
+Unfortunately, this Private Framework never made it's way into a  
+release from what I am told, not even within the 10a286 build that  
+some of you have mentioned as having the dylibs, kext, fs and  
+executable files to have ZFS v11 make a return to the GM release. I  
+have not personally investigated this myself as I let my ADC  
+subscription lapse quite some time ago.
+
+So, I guess what interests us most is a bit of clarification,  
+hopefully from someone at Apple.
+Namely, will an updated build of ZFS be made available here on  
+MacOSForge, the Developer Connection or any other location that  
+someone could go if they felt inclined to get a working Snow Leopard  
+install with ZFS support?
+
+If so, will this ZFS implementation make use of these existing hooks  
+within Snow Leopard or will we be using the command-line only  
+utilities and the non-kernel linked modules?
+
+~Tyson Edwards
+
+From dev-lists at thefloreas.com  Wed Sep  2 08:23:42 2009
+From: dev-lists at thefloreas.com (Nathan Florea)
+Date: Wed, 2 Sep 2009 08:23:42 -0700
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <4A9E4347.3050603@tidalwave.it>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>
+	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>
+	<4A99831F.9020907@tidalwave.it>
+	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>
+	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>
+	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>
+	<4A9C2C09.1030507@loveturtle.net>
+	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>
+	<4A9D256D.9070905@loveturtle.net> <4A9E4347.3050603@tidalwave.it>
+Message-ID: <67631ed30909020823t728c8fc0mf4c1d33fe8837060@mail.gmail.com>
+
+On Wed, Sep 2, 2009 at 3:04 AM, Fabrizio Giudici <
+fabrizio.giudici at tidalwave.it> wrote:
+
+> For the record, MacRumors blogged about the issue:
+>
+>
+> http://www.macrumors.com/2009/09/01/lack-of-zfs-file-system-support-in-snow-leopard-due-to-licensing-issues/
+>
+>
+> "But then a couple of sources came in with a new angle: that Sun's
+> licensing demands killed the deal. Sun prefers the CDDL [Common Development
+> and Distribution License] and may have asked for some extra protections,
+> including patent indemnification, that caused Apple to reconsider the
+> business risk of ZFS."
+>
+
+That is a quote from a StorageMojo post and it makes no sense.  I'd
+recommend you read the comments to the original post:
+http://storagemojo.com/2009/08/31/why-did-apple-drop-zfs/#comments
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090902/b387a617/attachment.html>
+
+From alex.blewitt at gmail.com  Wed Sep  2 08:36:45 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 2 Sep 2009 16:36:45 +0100
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+In-Reply-To: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+References: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+Message-ID: <8DF3B2FF-E818-4E02-B98E-8444B7B64F8C@gmail.com>
+
+You're not the first to ask that question ... as yet, still no answer  
+though.
+
+On Sep 2, 2009, at 15:25, Tyson Edwards wrote:
+
+> I've been doing a lot of digging around inside of Snow Leopard, and  
+> while ZFS is very much gone, it looks very much like it was a last  
+> minute removal.
+>
+> I know, a lot of you are thinking "duh!", except this is not based  
+> on the documentation that Apple continues to publish.
+>
+> There are major references to ZFS all over the place, including in  
+> Disk Utility.
+>
+> It appears that if the ZFSManager.framework existed within Snow  
+> Leopard, Disk Utility would gain the ability to manage a ZFS Volume.
+>
+> /System/Library/PrivateFrameworks/ZFSManager.framework
+>
+> Of interest is that Time Machine does not make any reference to ZFS,  
+> but it does make reference to HFS.
+>
+> This is all speculation though, based mostly on a read through some  
+> of the de-compiled Disk Utility code. Not really like reading  
+> through pre-compiled code is the easiest of reads, but that is what  
+> I believe to have found thus far.
+>
+> Unfortunately, this Private Framework never made it's way into a  
+> release from what I am told, not even within the 10a286 build that  
+> some of you have mentioned as having the dylibs, kext, fs and  
+> executable files to have ZFS v11 make a return to the GM release. I  
+> have not personally investigated this myself as I let my ADC  
+> subscription lapse quite some time ago.
+>
+> So, I guess what interests us most is a bit of clarification,  
+> hopefully from someone at Apple.
+> Namely, will an updated build of ZFS be made available here on  
+> MacOSForge, the Developer Connection or any other location that  
+> someone could go if they felt inclined to get a working Snow Leopard  
+> install with ZFS support?
+>
+> If so, will this ZFS implementation make use of these existing hooks  
+> within Snow Leopard or will we be using the command-line only  
+> utilities and the non-kernel linked modules?
+>
+> ~Tyson Edwards
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From nancejk at phys.washington.edu  Wed Sep  2 08:36:32 2009
+From: nancejk at phys.washington.edu (Jared Nance)
+Date: Wed, 2 Sep 2009 08:36:32 -0700
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+In-Reply-To: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+References: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+Message-ID: <20090902153632.GA25999@gauss.hsd1.wa.comcast.net>
+
+> /System/Library/PrivateFrameworks/ZFSManager.framework
+>
+> Of interest is that Time Machine does not make any reference to ZFS, but 
+> it does make reference to HFS.
+
+I am tempted to wonder if this wouldn't just be an avoidance of reduplication
+of effort on apple's part.  one of the amazing features of zfs is the ability
+to create and export zvols that are backed by zpools - in fact, that is how i
+manage my backups at home.  simply create a zvol on top of my ZFS raidz1,
+export it over iscsi, format it as hfs+, and use time machine to back up to it.
+
+so why teach TM to speak ZFS when ZFS doesn't mind HFS+?
+
+
+From caronni at gmail.com  Wed Sep  2 08:39:21 2009
+From: caronni at gmail.com (Germano Caronni)
+Date: Wed, 2 Sep 2009 17:39:21 +0200
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+In-Reply-To: <20090902153632.GA25999@gauss.hsd1.wa.comcast.net>
+References: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com> 
+	<20090902153632.GA25999@gauss.hsd1.wa.comcast.net>
+Message-ID: <327b821f0909020839n35c69a52jb144adb5e0aa94ea@mail.gmail.com>
+
+zfs-119 at least has no suggestion of support for zvols. Not sure about
+later versions.
+And who needs time machine, when I can just _send_ an incremental _snapshot_
+;-)
+(Yes, it has a fancy UI, I know)
+
+Germano
+
+On Wed, Sep 2, 2009 at 17:36, Jared Nance <nancejk at phys.washington.edu>wrote:
+
+> > /System/Library/PrivateFrameworks/ZFSManager.framework
+> >
+> > Of interest is that Time Machine does not make any reference to ZFS, but
+> > it does make reference to HFS.
+>
+> I am tempted to wonder if this wouldn't just be an avoidance of
+> reduplication
+> of effort on apple's part.  one of the amazing features of zfs is the
+> ability
+> to create and export zvols that are backed by zpools - in fact, that is how
+> i
+> manage my backups at home.  simply create a zvol on top of my ZFS raidz1,
+> export it over iscsi, format it as hfs+, and use time machine to back up to
+> it.
+>
+> so why teach TM to speak ZFS when ZFS doesn't mind HFS+?
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090902/4787b0a3/attachment.html>
+
+From nancejk at phys.washington.edu  Wed Sep  2 08:43:54 2009
+From: nancejk at phys.washington.edu (Jared Nance)
+Date: Wed, 2 Sep 2009 08:43:54 -0700
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+In-Reply-To: <327b821f0909020839n35c69a52jb144adb5e0aa94ea@mail.gmail.com>
+References: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+	<20090902153632.GA25999@gauss.hsd1.wa.comcast.net>
+	<327b821f0909020839n35c69a52jb144adb5e0aa94ea@mail.gmail.com>
+Message-ID: <20090902154354.GB25999@gauss.hsd1.wa.comcast.net>
+
+Ahh, silly me - spoiled by the opensolaris implementation.  
+
+and too true about the snapshots - one of the features i had really looked
+forward to in SL.
+
+On Wed, Sep 02, 2009 at 05:39:21PM +0200, Germano Caronni wrote:
+> zfs-119 at least has no suggestion of support for zvols. Not sure about
+> later versions.
+> And who needs time machine, when I can just _send_ an incremental _snapshot_
+> ;-)
+> (Yes, it has a fancy UI, I know)
+> 
+> Germano
+> 
+> On Wed, Sep 2, 2009 at 17:36, Jared Nance <nancejk at phys.washington.edu>wrote:
+> 
+> > > /System/Library/PrivateFrameworks/ZFSManager.framework
+> > >
+> > > Of interest is that Time Machine does not make any reference to ZFS, but
+> > > it does make reference to HFS.
+> >
+> > I am tempted to wonder if this wouldn't just be an avoidance of
+> > reduplication
+> > of effort on apple's part.  one of the amazing features of zfs is the
+> > ability
+> > to create and export zvols that are backed by zpools - in fact, that is how
+> > i
+> > manage my backups at home.  simply create a zvol on top of my ZFS raidz1,
+> > export it over iscsi, format it as hfs+, and use time machine to back up to
+> > it.
+> >
+> > so why teach TM to speak ZFS when ZFS doesn't mind HFS+?
+> >
+> > _______________________________________________
+> > zfs-discuss mailing list
+> > zfs-discuss at lists.macosforge.org
+> > http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> >
+
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From greggwon at gmail.com  Wed Sep  2 09:51:18 2009
+From: greggwon at gmail.com (Gregg Wonderly)
+Date: Wed, 02 Sep 2009 11:51:18 -0500
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <BBC5A2FE-A9EB-49DD-92F1-F7C567BC053F@themacplace.co.uk>
+References: <3C769456-5A87-4790-8E6B-D11681344230@gmail.com>	<5B299B73-1D2B-47B5-86B2-06F18F6D995F@me.com>	<4A993412.9060406@tidalwave.it>	<674D02B6-A447-4ADD-AD88-4520CED05761@pixelmilk.com>	<4A993DCC.30707@tidalwave.it>	<1e30a6d10908291003v53c5dfe3r858551c22876b439@mail.gmail.com>	<33CB04F8-9D15-413A-9DCC-3389FC169842@gmail.com>	<4A99831F.9020907@tidalwave.it>	<F84B23A0-EEF0-4129-8BC7-E3E3B0C96B35@gmail.com>	<67631ed30908311121m3444339ct124a97ff33f132f0@mail.gmail.com>	<67631ed30908311226l5d203d6ev918012c47a09cfe0@mail.gmail.com>	<4A9C2C09.1030507@loveturtle.net>	<9359FD94-E236-4488-984C-0B0332CF43EF@avoidant.org>	<4A9D256D.9070905@loveturtle.net>
+	<4A9E4347.3050603@tidalwave.it>
+	<BBC5A2FE-A9EB-49DD-92F1-F7C567BC053F@themacplace.co.uk>
+Message-ID: <4A9EA286.7020706@gmail.com>
+
+James Relph wrote:
+> I'm expecting a new build to pop up on MacOSforge at some point, and 
+> the delay doesn't surprise me too much.
+>
+
+Taking it out of snowleopard completely makes it much easier for the 
+MacOSforge site to actually be able to support what people have because 
+they will have had to download and install something from there to get 
+it, and this will make it more likely that they know how to get, know 
+that it's not a product (yet) etc.
+
+GW
+
+From ksh at ironsoftware.de  Sun Sep  6 02:46:14 2009
+From: ksh at ironsoftware.de (Christian Kendi)
+Date: Sun, 6 Sep 2009 11:46:14 +0200
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+In-Reply-To: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+References: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+Message-ID: <7C538FB9-C207-43AE-9E9E-4536027B03CA@ironsoftware.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> Unfortunately, this Private Framework never made it's way into a  
+> release from what I am told, not even within the 10a286 build that  
+> some of you have mentioned as having the dylibs, kext, fs and  
+> executable files to have ZFS v11 make a return to the GM release. I  
+> have not personally investigated this myself as I let my ADC  
+> subscription lapse quite some time ago.
+Can someone provide the ZFS v11 implementation with the dylibs, kext,  
+fs and executable files out of the 10a286 build?
+
+I want to migrate to snow leopard soon, but so far im running ZFS in  
+every instance and that would mean i couldn't access anything  
+afterwards.
+
+El Sep 2, 2009, a las 4:25 PM, Tyson Edwards escribi?:
+
+> I've been doing a lot of digging around inside of Snow Leopard, and  
+> while ZFS is very much gone, it looks very much like it was a last  
+> minute removal.
+>
+> I know, a lot of you are thinking "duh!", except this is not based  
+> on the documentation that Apple continues to publish.
+>
+> There are major references to ZFS all over the place, including in  
+> Disk Utility.
+>
+> It appears that if the ZFSManager.framework existed within Snow  
+> Leopard, Disk Utility would gain the ability to manage a ZFS Volume.
+>
+> /System/Library/PrivateFrameworks/ZFSManager.framework
+>
+> Of interest is that Time Machine does not make any reference to ZFS,  
+> but it does make reference to HFS.
+>
+> This is all speculation though, based mostly on a read through some  
+> of the de-compiled Disk Utility code. Not really like reading  
+> through pre-compiled code is the easiest of reads, but that is what  
+> I believe to have found thus far.
+>
+> Unfortunately, this Private Framework never made it's way into a  
+> release from what I am told, not even within the 10a286 build that  
+> some of you have mentioned as having the dylibs, kext, fs and  
+> executable files to have ZFS v11 make a return to the GM release. I  
+> have not personally investigated this myself as I let my ADC  
+> subscription lapse quite some time ago.
+>
+> So, I guess what interests us most is a bit of clarification,  
+> hopefully from someone at Apple.
+> Namely, will an updated build of ZFS be made available here on  
+> MacOSForge, the Developer Connection or any other location that  
+> someone could go if they felt inclined to get a working Snow Leopard  
+> install with ZFS support?
+>
+> If so, will this ZFS implementation make use of these existing hooks  
+> within Snow Leopard or will we be using the command-line only  
+> utilities and the non-kernel linked modules?
+>
+> ~Tyson Edwards
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFKo4Tmp+9ff145KVIRAvz+AJ90VOY7P6SVjG3wmlttgO1iOHYi/wCeMDrY
+Ra+STl6WDzKNVlqyGQQBeRw=
+=Xv2e
+-----END PGP SIGNATURE-----
+
+From kona8lend at gmail.com  Sun Sep  6 07:04:15 2009
+From: kona8lend at gmail.com (Kona Blend)
+Date: Sun, 6 Sep 2009 10:04:15 -0400
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+In-Reply-To: <7C538FB9-C207-43AE-9E9E-4536027B03CA@ironsoftware.de>
+References: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+	<7C538FB9-C207-43AE-9E9E-4536027B03CA@ironsoftware.de>
+Message-ID: <E31CD03C-4C1D-4733-B2B1-25C42E641C2C@gmail.com>
+
+I'd much rather see ZFS source bits for Snow Leopard available
+via a public svn repo. The current repo is only being used for
+code-drops and doesn't seem to be geared for any public
+contributions either.
+
+Maybe something like llvm's growing community. One can dream.
+
+--kb
+
+On Sep 6, 2009, at 5:46 AM, Christian Kendi wrote:
+
+>> Unfortunately, this Private Framework never made it's way into a  
+>> release from what I am told, not even within the 10a286 build that  
+>> some of you have mentioned as having the dylibs, kext, fs and  
+>> executable files to have ZFS v11 make a return to the GM release. I  
+>> have not personally investigated this myself as I let my ADC  
+>> subscription lapse quite some time ago.
+> Can someone provide the ZFS v11 implementation with the dylibs,  
+> kext, fs and executable files out of the 10a286 build?
+
+
+From baronda.2 at osu.edu  Mon Sep  7 07:19:14 2009
+From: baronda.2 at osu.edu (Silas Baronda)
+Date: Mon, 7 Sep 2009 10:19:14 -0400
+Subject: [zfs-discuss] Snow Leopard ZFS Research
+In-Reply-To: <E31CD03C-4C1D-4733-B2B1-25C42E641C2C@gmail.com>
+References: <1F699B15-904A-409B-972F-E4E82DE6EE0B@mac.com>
+	<7C538FB9-C207-43AE-9E9E-4536027B03CA@ironsoftware.de>
+	<E31CD03C-4C1D-4733-B2B1-25C42E641C2C@gmail.com>
+Message-ID: <3977537a0909070719i27151929yf5f49f57e2449267@mail.gmail.com>
+
+On Sun, Sep 6, 2009 at 10:04 AM, Kona Blend<kona8lend at gmail.com> wrote:
+> I'd much rather see ZFS source bits for Snow Leopard available
+> via a public svn repo. The current repo is only being used for
+> code-drops and doesn't seem to be geared for any public
+> contributions either.
+
+Last time I looked I couldn't even check code out from the repo.  The
+only way to get code was through the download page.
+
+>
+> Maybe something like llvm's growing community. One can dream.
+>
+> --kb
+>
+> On Sep 6, 2009, at 5:46 AM, Christian Kendi wrote:
+>
+>>> Unfortunately, this Private Framework never made it's way into a release
+>>> from what I am told, not even within the 10a286 build that some of you have
+>>> mentioned as having the dylibs, kext, fs and executable files to have ZFS
+>>> v11 make a return to the GM release. I have not personally investigated this
+>>> myself as I let my ADC subscription lapse quite some time ago.
+>>
+>> Can someone provide the ZFS v11 implementation with the dylibs, kext, fs
+>> and executable files out of the 10a286 build?
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From alexandre.dufour at gmail.com  Tue Sep  8 05:22:27 2009
+From: alexandre.dufour at gmail.com (Alexandre Dufour)
+Date: Tue, 8 Sep 2009 14:22:27 +0200
+Subject: [zfs-discuss] Oracle takeover: ZFS vs BTRFS ?
+Message-ID: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+
+Hello list,
+
+Sorry if my first post here seems slightly off-topic, but like you I'm  
+asking myself a million questions regarding Apple's removing ZFS  
+support from Snow Leopard.
+
+A lot has been discussed on the Sun-Oracle takeover, and through it  
+the (technical/political/licensing/you-figure) reasons why ZFS was  
+scrubbed out. Now if I look at what Oracle has been doing for the past  
+few years, it looks like they've been building up BTRFS with similar  
+features as ZFS (though both systems aren't identical). It seems to me  
+the only major difference to date is that ZFS is actually "used",  
+while BTRfs is still "not ready for production use".
+
+Has anyone been nosing around BTRFS lately ? Could this be the "ZFS  
+killer" (silenced by Oracle to promote BTRFS) ? And the million dollar  
+question: if ZFS is out for the count, can we hope to find a 'hidden'  
+ZFS behind BRTFS with OS X support some time later ? The current  
+support is very limited, but then again it doesn't look too stable yet.
+
+Thanks for your insights
+
+Alexandre Dufour
+
+From Jonathan.Edwards at Sun.COM  Tue Sep  8 06:11:24 2009
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Tue, 08 Sep 2009 09:11:24 -0400
+Subject: [zfs-discuss] Oracle takeover: ZFS vs BTRFS ?
+In-Reply-To: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+References: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+Message-ID: <587A4D74-8A62-4106-A91C-18851B99B857@sun.com>
+
+
+On Sep 8, 2009, at 8:22 AM, Alexandre Dufour wrote:
+
+> Hello list,
+>
+> Sorry if my first post here seems slightly off-topic, but like you  
+> I'm asking myself a million questions regarding Apple's removing ZFS  
+> support from Snow Leopard.
+>
+> A lot has been discussed on the Sun-Oracle takeover, and through it  
+> the (technical/political/licensing/you-figure) reasons why ZFS was  
+> scrubbed out. Now if I look at what Oracle has been doing for the  
+> past few years, it looks like they've been building up BTRFS with  
+> similar features as ZFS (though both systems aren't identical). It  
+> seems to me the only major difference to date is that ZFS is  
+> actually "used", while BTRfs is still "not ready for production use".
+>
+> Has anyone been nosing around BTRFS lately ? Could this be the "ZFS  
+> killer" (silenced by Oracle to promote BTRFS) ? And the million  
+> dollar question: if ZFS is out for the count, can we hope to find a  
+> 'hidden' ZFS behind BRTFS with OS X support some time later ? The  
+> current support is very limited, but then again it doesn't look too  
+> stable yet.
+>
+
+we (peons) don't have any word on that .. keep in mind though, that  
+btrfs is on a completely different kernel and as you point to - it has  
+a little ways to go to match some of the feature/functionality that's  
+been stable for a while now on ZFS
+
+filesystems are really complementary if you have devices to put them  
+on - so IMHO it's in Oracle's best interest to keep development going  
+on both - especially now becoming the default root filesystem for  
+Solaris/OpenSolaris
+
+---
+.je
+
+From fabrizio.giudici at tidalwave.it  Tue Sep  8 06:50:42 2009
+From: fabrizio.giudici at tidalwave.it (fabrizio.giudici at tidalwave.it)
+Date: Tue, 08 Sep 2009 14:50:42 +0100
+Subject: [zfs-discuss] Oracle takeover: ZFS vs BTRFS ?
+Message-ID: <4aa66132.349.349f.1719585140@webmaildh4.aruba.it>
+
+> we (peons) don't have any word on that .. keep in mind
+> though, that   btrfs is on a completely different kernel
+> and as you point to - it has   a little ways to go to
+> match some of the feature/functionality that's   been
+> stable for a while now on ZFS
+
+I'd add that not only we peons, but most of the people from
+Sun itself don't know about Oracle plans - and the few that
+know IMHO can't talk because of U.S. laws concerning
+corporate acquisitions. Thus, I'd be surprised that Apple
+knew something.
+
+My opinion is that Oracle will drop BTRFS. BTRFS was to be
+delivered by 2008 and a year later isn't production ready,
+while ZFS is stable and used on Solaris since a few time - I
+mean, ZFS has already got a reputation. Since Oracle agreed
+to gpl BTRFS, I think they will just relicense ZFS to GPL
+too and keep on with it (this means that ZFS will be usable
+in Linux too). 
+
+There are many products that seems duplicated in Oracle and
+Sun stacks, and some have got reason to co-exist at least
+for a few time, until they eventually merge. But I don't see
+the reason for maintaining two different filesystems, given
+that license issues are removed and that one is not
+production ready.
+
+-- 
+f.g.
+
+-- 
+Fabrizio Giudici, Ph.D. - Java Architect, Project Manager
+Tidalwave s.a.s. - "We make Java work. Everywhere."
+weblogs.java.net/blog/fabriziogiudici -
+www.tidalwave.it/blog
+Fabrizio.Giudici at tidalwave.it - mobile: +39 348.150.6941
+
+
+
+From toby at telegraphics.com.au  Tue Sep  8 09:06:42 2009
+From: toby at telegraphics.com.au (Toby Thain)
+Date: Tue, 8 Sep 2009 12:06:42 -0400
+Subject: [zfs-discuss] Oracle takeover: ZFS vs BTRFS ?
+In-Reply-To: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+References: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+Message-ID: <E1884053-41C2-4410-A31E-7BFC9161546D@telegraphics.com.au>
+
+
+On 8-Sep-09, at 8:22 AM, Alexandre Dufour wrote:
+
+> Hello list,
+>
+> Sorry if my first post here seems slightly off-topic, but like you  
+> I'm asking myself a million questions regarding Apple's removing  
+> ZFS support from Snow Leopard.
+>
+> A lot has been discussed on the Sun-Oracle takeover, and through it  
+> the (technical/political/licensing/you-figure) reasons why ZFS was  
+> scrubbed out. Now if I look at what Oracle has been doing for the  
+> past few years, it looks like they've been building up BTRFS with  
+> similar features as ZFS (though both systems aren't identical). It  
+> seems to me the only major difference to date is that ZFS is  
+> actually "used", while BTRfs is still "not ready for production use".
+>
+> Has anyone been nosing around BTRFS lately ? Could this be the "ZFS  
+> killer" (silenced by Oracle to promote BTRFS) ?
+
+I see no basis for that idea whatsoever. ZFS is worth a great deal to  
+Oracle. As of now it has practically zero competition, is state-of- 
+the-art technology, and has a great deal of positive mindshare and a  
+growing expert community.
+
+--T
+
+> And the million dollar question: if ZFS is out for the count, can  
+> we hope to find a 'hidden' ZFS behind BRTFS with OS X support some  
+> time later ? The current support is very limited, but then again it  
+> doesn't look too stable yet.
+>
+> Thanks for your insights
+>
+> Alexandre Dufour
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From richard.elling at gmail.com  Tue Sep  8 09:31:48 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Tue, 8 Sep 2009 09:31:48 -0700
+Subject: [zfs-discuss] Oracle takeover: ZFS vs BTRFS ?
+In-Reply-To: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+References: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+Message-ID: <A8229972-52A6-403C-B5D7-04092EA671A0@gmail.com>
+
+On Sep 8, 2009, at 5:22 AM, Alexandre Dufour wrote:
+> Hello list,
+>
+> Sorry if my first post here seems slightly off-topic, but like you  
+> I'm asking myself a million questions regarding Apple's removing ZFS  
+> support from Snow Leopard.
+>
+> A lot has been discussed on the Sun-Oracle takeover, and through it  
+> the (technical/political/licensing/you-figure) reasons why ZFS was  
+> scrubbed out. Now if I look at what Oracle has been doing for the  
+> past few years, it looks like they've been building up BTRFS with  
+> similar features as ZFS (though both systems aren't identical). It  
+> seems to me the only major difference to date is that ZFS is  
+> actually "used", while BTRfs is still "not ready for production use".
+>
+> Has anyone been nosing around BTRFS lately ? Could this be the "ZFS  
+> killer" (silenced by Oracle to promote BTRFS) ? And the million  
+> dollar question: if ZFS is out for the count, can we hope to find a  
+> 'hidden' ZFS behind BRTFS with OS X support some time later ? The  
+> current support is very limited, but then again it doesn't look too  
+> stable yet.
+
+My comments are here (and no, I am not a Sun employee and I don't  
+consider
+myself a peon... just an armchair strategist :-)
+http://richardelling.blogspot.com/2009/08/whither-btrfs.html
+
+  -- richard
+
+
+From lists at loveturtle.net  Tue Sep  8 10:01:08 2009
+From: lists at loveturtle.net (Dillon Kass)
+Date: Tue, 08 Sep 2009 13:01:08 -0400
+Subject: [zfs-discuss] Oracle takeover: ZFS vs BTRFS ?
+In-Reply-To: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+References: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+Message-ID: <4AA68DD4.70909@loveturtle.net>
+
+Alexandre Dufour wrote:
+> Hello list,
+>
+> Sorry if my first post here seems slightly off-topic
+Ironically, it would seem the only subject that is off topic would be 
+the subject for which this list was created for....
+Kind of makes you wonder why this list still exists? :-)
+
+From alexandre.dufour at gmail.com  Tue Sep  8 10:35:42 2009
+From: alexandre.dufour at gmail.com (Alexandre Dufour)
+Date: Tue, 8 Sep 2009 19:35:42 +0200
+Subject: [zfs-discuss] Oracle takeover: ZFS vs BTRFS ?
+In-Reply-To: <4AA68DD4.70909@loveturtle.net>
+References: <23C66674-2BC2-4127-B469-40C0268C85A8@gmail.com>
+	<4AA68DD4.70909@loveturtle.net>
+Message-ID: <1CD077DF-F8C2-4DE7-AAB2-858F461F689E@gmail.com>
+
+> Dillon Kass wrote:
+>
+>> Alexandre Dufour wrote:
+>>
+>> Sorry if my first post here seems slightly off-topic
+> Ironically, it would seem the only subject that is off topic would  
+> be the subject for which this list was created for....
+> Kind of makes you wonder why this list still exists? :-)
+
+"zfs-discuss to be renamed zfs-legacy", rumors say
+nailed it :-)
+
+Thanks for all the answers btw. Coincidently I ran into one of our  
+netadm this afternoon, and he was basically moaning about the same  
+very thing. He's just seeing here (yet) a(nother) BSD vs GPL kids-in-a- 
+playground fight, except the (financial) losers are in the  
+(technically) lead.
+
+From charlienail at gmail.com  Thu Sep 10 16:40:51 2009
+From: charlienail at gmail.com (Eren)
+Date: Thu, 10 Sep 2009 19:40:51 -0400
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <mailman.25.1252418403.3810.zfs-discuss@lists.macosforge.org>
+References: <mailman.25.1252418403.3810.zfs-discuss@lists.macosforge.org>
+Message-ID: <15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+
+i hope this is the proper venue for my question:
+
+ever since i installed 10.6 and installed zfs-119 on top to access my  
+zfs pool i've had to mount it manually after each boot by running  
+'sudo zpool import -f [pool]'
+I don't understand why this is, the pool used to be mounted on boot  
+under leopard and i was using the same version of zfs from macosforge.  
+is there a way to make this automatic again like it used to be?
+
+if it is of any help i am still getting the warning message on boot  
+telling me that my data has not been touched but will be inacessible,  
+i don't mind clicking this away each boot but it's really annoying to  
+run a sudo terminal command each time and type my password...
+
+
+
+From dmz+lists at tffenterprises.com  Thu Sep 10 17:24:46 2009
+From: dmz+lists at tffenterprises.com (Daniel M. Zimmerman)
+Date: Thu, 10 Sep 2009 17:24:46 -0700
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+References: <mailman.25.1252418403.3810.zfs-discuss@lists.macosforge.org>
+	<15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+Message-ID: <879E258B2DFEDFF214A6D2A0@whitestar.local>
+
+
+
+--On 10 September 2009 19:40:51 -0400 Eren <charlienail at gmail.com> wrote:
+
+> i hope this is the proper venue for my question:
+>
+> ever since i installed 10.6 and installed zfs-119 on top to access my zfs
+> pool i've had to mount it manually after each boot by running 'sudo zpool
+> import -f [pool]'
+
+I have a similar situation, but with the 10A286 bits that are out there in 
+the cloud... The pool will actually mount whenever I run the "zfs" or 
+"zpool" command, regardless of the options I use. I use "zpool list", and 
+wrote myself a little launch daemon to run that at boot time. It's so 
+small, I've included it below:
+
+---begin launch daemon---
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-
+//Apple//DTD PLIST 1.0//EN" 
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>my.organization.zfs</string>
+  <key>OnDemand</key>
+  <false/>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/sbin/zpool</string>
+    <string>list</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>UserName</key>
+  <string>root</string>
+</dict>
+</plist>
+---end launch daemon---
+
+(as a side note, the 10A286 bits seem to only work with the 32-bit kernel - 
+at least on my 2008 Xserve)
+
+-Dan
+
+------------------------------------------------------------------
+Daniel M. Zimmerman                                TFF Enterprises
+1900 Commerce St. Box 358426   http://www.tffenterprises.com/~dmz/
+Tacoma, WA  98402  USA                      dmz at tffenterprises.com
+
+From hanche at math.ntnu.no  Thu Sep 10 18:33:36 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Thu, 10 Sep 2009 21:33:36 -0400 (EDT)
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+References: <mailman.25.1252418403.3810.zfs-discuss@lists.macosforge.org>
+	<15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+Message-ID: <20090910.213336.261171533.hanche@math.ntnu.no>
+
++ Eren <charlienail at gmail.com>:
+
+> ever since i installed 10.6 and installed zfs-119 on top to access my
+> zfs pool i've had to mount it manually after each boot by running
+> 'sudo zpool import -f [pool]'
+
+You're a brave person.
+
+> I don't understand why this is, the pool used to be mounted on boot
+> under leopard and i was using the same version of zfs from
+> macosforge.
+
+I guess you haven't followed this mailing list lately, or you would
+have known that ZFS support was dropped from 10.6. I am pretty sure
+that the code to notice the presence of a ZFS filesystem on an
+attached device was not part of the zfs-119 bits. With that part gone
+from 10.6, I think the most likely answer to your question ...
+
+> is there a way to make this automatic again like it used to be?
+
+... is no, at least not easily.
+
+But I find it interesting to learn that zfs-119 still works on 10.6.
+
+- Harald
+
+From charlienail at gmail.com  Thu Sep 10 20:38:53 2009
+From: charlienail at gmail.com (charlienail)
+Date: Thu, 10 Sep 2009 23:38:53 -0400
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <20090910.213336.261171533.hanche@math.ntnu.no>
+References: <mailman.25.1252418403.3810.zfs-discuss@lists.macosforge.org>
+	<15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+	<20090910.213336.261171533.hanche@math.ntnu.no>
+Message-ID: <8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+
+i was under the impression that installing various versions of zfs
+(119 or the from the SL beta before it was removed) would be no
+different than using zfs under leopard.
+
+i'm not sure what you mean by 'the code to notice the presence of a
+ZFS filesystem on an attached device.' OS X definitely notices the
+presence of ZFS, it is marked ZFS in disk utility and i get a warning
+that the partition is no longer supported before i mount it.
+
+my use of zfs at this point involves read access to a video library
+that's on a raidz pool, i've been watching all my shows and movies
+without error except for the automounting which i haven't found
+mentioned anywhere else.
+
+thanks for the tip owen, i'm going to give it a try.
+
+daniel, i tried zpool list from the terminal and it doesn't find any
+pools. perhaps because i haven't been exporting the pool before
+shutting down?
+
+2009/9/10 Harald Hanche-Olsen <hanche at math.ntnu.no>:
+> + Eren <charlienail at gmail.com>:
+>
+>> ever since i installed 10.6 and installed zfs-119 on top to access my
+>> zfs pool i've had to mount it manually after each boot by running
+>> 'sudo zpool import -f [pool]'
+>
+> You're a brave person.
+>
+>> I don't understand why this is, the pool used to be mounted on boot
+>> under leopard and i was using the same version of zfs from
+>> macosforge.
+>
+> I guess you haven't followed this mailing list lately, or you would
+> have known that ZFS support was dropped from 10.6. I am pretty sure
+> that the code to notice the presence of a ZFS filesystem on an
+> attached device was not part of the zfs-119 bits. With that part gone
+> from 10.6, I think the most likely answer to your question ...
+>
+>> is there a way to make this automatic again like it used to be?
+>
+> ... is no, at least not easily.
+>
+> But I find it interesting to learn that zfs-119 still works on 10.6.
+>
+> - Harald
+>
+
+From geoff.flarity at gmail.com  Thu Sep 10 20:53:16 2009
+From: geoff.flarity at gmail.com (Geoff Flarity)
+Date: Thu, 10 Sep 2009 23:53:16 -0400
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+References: <mailman.25.1252418403.3810.zfs-discuss@lists.macosforge.org>
+	<15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+	<20090910.213336.261171533.hanche@math.ntnu.no>
+	<8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+Message-ID: <49499a2b0909102053y3cca5d33v8cd4c57ed9ce9950@mail.gmail.com>
+
+Hi,
+
+I just joined the mailing list. You may be interested to know that I just
+setup a 4 disk usb raidz array under snow leopard. I've noticed the
+automount problem as well as other glitches. Each time I reboot I need to
+run 'zpool import -f <pool name>'. Its annoying but its been working so far.
+Here's my post with some more info:
+
+http://onlinevillage.blogspot.com/2009/09/opensource-drobo-replacement-on-mac-os.html
+
+I realize that zfs support has been officially dropped, but I'm hoping the
+project is continuing?
+
+Cheers,
+Geoff
+
+
+On Thu, Sep 10, 2009 at 11:38 PM, charlienail <charlienail at gmail.com> wrote:
+
+> i was under the impression that installing various versions of zfs
+> (119 or the from the SL beta before it was removed) would be no
+> different than using zfs under leopard.
+>
+> i'm not sure what you mean by 'the code to notice the presence of a
+> ZFS filesystem on an attached device.' OS X definitely notices the
+> presence of ZFS, it is marked ZFS in disk utility and i get a warning
+> that the partition is no longer supported before i mount it.
+>
+> my use of zfs at this point involves read access to a video library
+> that's on a raidz pool, i've been watching all my shows and movies
+> without error except for the automounting which i haven't found
+> mentioned anywhere else.
+>
+> thanks for the tip owen, i'm going to give it a try.
+>
+> daniel, i tried zpool list from the terminal and it doesn't find any
+> pools. perhaps because i haven't been exporting the pool before
+> shutting down?
+>
+> 2009/9/10 Harald Hanche-Olsen <hanche at math.ntnu.no>:
+> > + Eren <charlienail at gmail.com>:
+> >
+> >> ever since i installed 10.6 and installed zfs-119 on top to access my
+> >> zfs pool i've had to mount it manually after each boot by running
+> >> 'sudo zpool import -f [pool]'
+> >
+> > You're a brave person.
+> >
+> >> I don't understand why this is, the pool used to be mounted on boot
+> >> under leopard and i was using the same version of zfs from
+> >> macosforge.
+> >
+> > I guess you haven't followed this mailing list lately, or you would
+> > have known that ZFS support was dropped from 10.6. I am pretty sure
+> > that the code to notice the presence of a ZFS filesystem on an
+> > attached device was not part of the zfs-119 bits. With that part gone
+> > from 10.6, I think the most likely answer to your question ...
+> >
+> >> is there a way to make this automatic again like it used to be?
+> >
+> > ... is no, at least not easily.
+> >
+> > But I find it interesting to learn that zfs-119 still works on 10.6.
+> >
+> > - Harald
+> >
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090910/fd89be4b/attachment.html>
+
+From dmz+lists at tffenterprises.com  Thu Sep 10 22:28:12 2009
+From: dmz+lists at tffenterprises.com (Daniel M. Zimmerman)
+Date: Thu, 10 Sep 2009 22:28:12 -0700
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+References: <mailman.25.1252418403.3810.zfs-discuss@lists.macosforge.org>
+	<15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+	<20090910.213336.261171533.hanche@math.ntnu.no>
+	<8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+Message-ID: <BF850C47641DF70577141DD8@whitestar.local>
+
+
+
+--On 10 September 2009 23:38:53 -0400 charlienail <charlienail at gmail.com> 
+wrote:
+
+> i was under the impression that installing various versions of zfs
+> (119 or the from the SL beta before it was removed) would be no
+> different than using zfs under leopard.
+>
+> i'm not sure what you mean by 'the code to notice the presence of a
+> ZFS filesystem on an attached device.' OS X definitely notices the
+> presence of ZFS, it is marked ZFS in disk utility and i get a warning
+> that the partition is no longer supported before i mount it.
+
+Moreover, in Mac OS X Server 10.6, Server Admin sees mounted ZFS volumes, 
+and you can share them. This, again, is with the 10A286 bits, not 119.
+
+> my use of zfs at this point involves read access to a video library
+> that's on a raidz pool, i've been watching all my shows and movies
+> without error except for the automounting which i haven't found
+> mentioned anywhere else.
+>
+> thanks for the tip owen, i'm going to give it a try.
+>
+> daniel, i tried zpool list from the terminal and it doesn't find any
+> pools. perhaps because i haven't been exporting the pool before
+> shutting down?
+
+It's most likely because you're running with different bits than I am... As 
+I said, I'm using the 10A286 bits. I have never exported my pool; when I 
+shut down or reboot, I pretty much just shut down or reboot.
+
+I'm currently debating whether to risk updating to 10.6.1... :)
+
+-Dan
+
+------------------------------------------------------------------
+Daniel M. Zimmerman                                TFF Enterprises
+1900 Commerce St. Box 358426   http://www.tffenterprises.com/~dmz/
+Tacoma, WA  98402  USA                      dmz at tffenterprises.com
+
+From hanche at math.ntnu.no  Fri Sep 11 04:05:36 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 11 Sep 2009 07:05:36 -0400 (EDT)
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+References: <15B5A7C1-92E0-48DA-A5D6-3DCE29192B94@gmail.com>
+	<20090910.213336.261171533.hanche@math.ntnu.no>
+	<8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+Message-ID: <20090911.070536.100711461.hanche@math.ntnu.no>
+
++ charlienail <charlienail at gmail.com>:
+
+> i was under the impression that installing various versions of zfs
+> (119 or the from the SL beta before it was removed) would be no
+> different than using zfs under leopard.
+
+The installation bit should be the same. The question was whether it
+would work at all. Back when we were told that future versions of ZFS
+would not work on Leopard, we were told that this was because because
+of changes in the kernel. It was guessed (at least I guessed) that
+this meant the 119 bits would not work on Snow Leopard, though that
+doesn't follow logically - it's just a not totally unreasonable guess.
+
+> i'm not sure what you mean by 'the code to notice the presence of a
+> ZFS filesystem on an attached device.'
+
+I really meant the automounting part. I don't know what triggers it,
+but am guessing configd.
+
+> OS X definitely notices the presence of ZFS, it is marked ZFS in
+> disk utility
+
+Yeah, it would be stupid of them to rip out every bit of recognition
+of ZFS. There is no reason why disk utility shouldn't recognize all
+sorts of stuff, whether it's supported or not. It gives users useful
+information, after all.
+
+- Harald
+
+From hanche at math.ntnu.no  Fri Sep 11 04:07:47 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 11 Sep 2009 07:07:47 -0400 (EDT)
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <BF850C47641DF70577141DD8@whitestar.local>
+References: <20090910.213336.261171533.hanche@math.ntnu.no>
+	<8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+	<BF850C47641DF70577141DD8@whitestar.local>
+Message-ID: <20090911.070747.117552215.hanche@math.ntnu.no>
+
++ "Daniel M. Zimmerman" <dmz+lists at tffenterprises.com>:
+
+> I'm currently debating whether to risk updating to 10.6.1... :)
+
+That's not likely to involve serious changes to the kernel, is it?
+Ripping functionality out of the kernel is more likely to happen with
+(major) upgrades than with (minor) updates.
+
+- Harald
+
+From dmz+lists at tffenterprises.com  Fri Sep 11 13:40:15 2009
+From: dmz+lists at tffenterprises.com (Daniel M. Zimmerman)
+Date: Fri, 11 Sep 2009 13:40:15 -0700
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <20090911.070747.117552215.hanche@math.ntnu.no>
+References: <20090910.213336.261171533.hanche@math.ntnu.no>
+	<8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com>
+	<BF850C47641DF70577141DD8@whitestar.local>
+	<20090911.070747.117552215.hanche@math.ntnu.no>
+Message-ID: <1BE1D798433F1AA5AF2374B9@d-128-208-244-210.dhcp4.washington.edu>
+
+
+
+--On 11 September 2009 7:07:47 -0400 Harald Hanche-Olsen 
+<hanche at math.ntnu.no> wrote:
+
+> + "Daniel M. Zimmerman" <dmz+lists at tffenterprises.com>:
+>
+>> I'm currently debating whether to risk updating to 10.6.1... :)
+>
+> That's not likely to involve serious changes to the kernel, is it?
+> Ripping functionality out of the kernel is more likely to happen with
+> (major) upgrades than with (minor) updates.
+
+And, indeed, the bits are still working with 10.6.1, as is my workaround 
+for mounting the pool at boot time.
+
+-Dan
+
+------------------------------------------------------------------
+Daniel M. Zimmerman                                TFF Enterprises
+1900 Commerce St. Box 358426   http://www.tffenterprises.com/~dmz/
+Tacoma, WA  98402  USA                      dmz at tffenterprises.com
+
+From ksh at ironsoftware.de  Sun Sep 13 10:43:29 2009
+From: ksh at ironsoftware.de (Christian Kendi)
+Date: Sun, 13 Sep 2009 19:43:29 +0200
+Subject: [zfs-discuss] ZFS performance / tuning
+Message-ID: <DFC0ECE6-5E16-41D7-A697-3962F06A53E7@ironsoftware.de>
+
+Hi,
+
+im using ZFS now for almost a year and noticed horrible performance.
+While i was recently reading the zfs-discuss on Solaris, i noticed an  
+interesting thread which led to:
+http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6859997
+
+The impact on my system with 60 files of 8MB size:
+ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o > / 
+dev/null)
+real	4m48.844s
+user	0m2.023s
+sys	0m1.738s
+
+  -- SECOND RUN --
+ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o > / 
+dev/null)
+real	10m46.641s
+user	0m1.951s
+sys	0m2.083s
+
+As the issue posted first results due to a bug in the zfs_prefetch  
+routing i just disabled to
+
+int zfs_prefetch_disable = 1;
+does the trick.
+
+After doing my mods i get:
+ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o > / 
+dev/null)
+real	2m46.938s
+user	0m2.159s
+sys	0m1.944s
+ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o > / 
+dev/null)
+real	3m56.672s
+user	0m2.121s
+sys	0m1.949s
+ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o > / 
+dev/null)
+real	2m43.478s
+user	0m2.179s
+sys	0m1.929s
+
+After doing research for almost two month I found one of my problems  
+to be the limitation of the ARC cache.
+My system was eating too much memory for the ARC and the rest of the  
+app memory was swapped.
+I cut down the original ARC cache from 2/3 to 1/8. I just have 2GB of  
+RAM and my applications need most of it.
+
+old:	zfs_arc_max = (zfs_footprint.maximum / 3) * 2;
+new:	zfs_arc_max = (zfs_footprint.maximum / 8);
+
+Another thing that helped me was changing the block size and  
+checksumming of my Cache.
+home/ksh/Caches  checksum       off                        local
+
+About Cache i dont care about data integrity. Furthermore observing  
+read/writes with dtrace
+Safari reads/write most of the time 1024 bytes to/from Cache.db file.  
+I changed the recordsize to:
+home/ksh/Caches  recordsize     1K                         local
+
+
+Normally this sort of consultation is very expensive :) but as we're  
+all in the same boat, you'll
+find the modified zfs-119 zfs.kext here:
+http://www.ironsoftware.de/public/zfs.kext.tgz
+
+It would be nice to know if you all experience the same zfs_prefetch  
+behavior on the 10.6 bits.
+
+
+Saludos
+
+---
+Christian Kendi
+Iron Software
+Gemeinschaftsstr. 2b
+85435 Erding, Germany
+mailto: ksh at ironsoftware.de
+us mobile: +1-321-507-0653
+mobile: +49 (0) 177 / 55 - 31 33 7
+phone: +49 (0) 89 42 09 56 319
+spain: +34 (637) 12 43 49
+*****************************************
+Geschaeftsfuehrer: Christian Kendi
+Steuernr: 114/235/50572 * Amtsgericht: Erding
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090913/46b16262/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: Mensaje firmado digitalmente
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090913/46b16262/attachment.bin>
+
+From lhunath at gmail.com  Tue Sep 15 12:30:30 2009
+From: lhunath at gmail.com (Maarten Billemont)
+Date: Tue, 15 Sep 2009 21:30:30 +0200
+Subject: [zfs-discuss] The cat is out of the bag
+Message-ID: <1AAC3E83-E149-40B3-8C1A-7FE906744F63@gmail.com>
+
+So, I'm getting that too; does that mean I should expect my pools to  
+remain completely unaccessible, both as rw and as ro, on SL, until  
+anything new pops up?  Or is there a way to work around this?
+
+On 02 Sep 2009, at 01:23, No?l Dellofano wrote:
+
+> that was a regression in that build due to a bug in zpool import.   
+> Don't panic, you're pool is fine :)
+>
+> Noel
+>
+> On Sep 1, 2009, at 1:22 PM, Matt Elliott wrote:
+>
+>> When running with the bits from 10A286 I get the following when  
+>> trying to import my pool
+>>
+>> # sudo zpool import -a
+>> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+>> "pool_guid", &theguid) == 0), function pool_active, file / 
+>> SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line  
+>> 371.
+>> Abort trap
+>>
+>> I guess I'm waiting till more communication from Apple before  
+>> upgrading more systems to 10.6.
+>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090915/526a4bbd/attachment.html>
+
+From s at avoidant.org  Tue Sep 15 12:43:30 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Tue, 15 Sep 2009 22:43:30 +0300
+Subject: [zfs-discuss] The cat is out of the bag
+In-Reply-To: <1AAC3E83-E149-40B3-8C1A-7FE906744F63@gmail.com>
+References: <1AAC3E83-E149-40B3-8C1A-7FE906744F63@gmail.com>
+Message-ID: <D037224F-D4ED-4A6E-8D3D-1B5CF051BEEA@avoidant.org>
+
+I went back to 119, and have had no problems since.
+
+As a side point, I found that the Sonnet driver for their SiI3132- 
+based eSATA ExpressCard is far more stable than SiI's reference  
+driver.  Unfortunately, it gives me only one of the two ports, but  
+that's better than none.
+
+--sambo
+
+On 15/09/2009, at 22:30, Maarten Billemont wrote:
+
+> So, I'm getting that too; does that mean I should expect my pools to  
+> remain completely unaccessible, both as rw and as ro, on SL, until  
+> anything new pops up?  Or is there a way to work around this?
+>
+> On 02 Sep 2009, at 01:23, No?l Dellofano wrote:
+>
+>> that was a regression in that build due to a bug in zpool import.   
+>> Don't panic, you're pool is fine :)
+>>
+>> Noel
+>>
+>> On Sep 1, 2009, at 1:22 PM, Matt Elliott wrote:
+>>
+>>> When running with the bits from 10A286 I get the following when  
+>>> trying to import my pool
+>>>
+>>> # sudo zpool import -a
+>>> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+>>> "pool_guid", &theguid) == 0), function pool_active, file / 
+>>> SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c,  
+>>> line 371.
+>>> Abort trap
+>>>
+>>> I guess I'm waiting till more communication from Apple before  
+>>> upgrading more systems to 10.6.
+>>>
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From alvinmoonesq at gmail.com  Tue Sep 15 18:19:57 2009
+From: alvinmoonesq at gmail.com (alvin moon)
+Date: Tue, 15 Sep 2009 20:19:57 -0500
+Subject: [zfs-discuss] Has anyone had any luck with ZFS 119 or the 10A286
+	binaries in SL 64-bit mode?
+Message-ID: <a0838430909151819l4eee9459vda9bc6c2e70ea869@mail.gmail.com>
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090915/87200578/attachment.html>
+
+From jason at jasonrm.net  Tue Sep 15 19:52:42 2009
+From: jason at jasonrm.net (Jason Richard McNeil)
+Date: Tue, 15 Sep 2009 19:52:42 -0700
+Subject: [zfs-discuss] Has anyone had any luck with ZFS 119 or the
+	10A286 binaries in SL 64-bit mode?
+In-Reply-To: <a0838430909151819l4eee9459vda9bc6c2e70ea869@mail.gmail.com>
+References: <a0838430909151819l4eee9459vda9bc6c2e70ea869@mail.gmail.com>
+Message-ID: <3630E0A3-4E33-4799-A07C-C423EC53B189@jasonrm.net>
+
+Negative... well, at least I'm pretty sure I haven't...
+
+I tried to recompile the zfs-119 src to try and get 64-bit, but I was  
+unable... or at least I'm sure I was unable to mount my pools. See now  
+that I'm thinking about it, it might have been that because my pools  
+are in the new ZFS format as I created them with the 10A286 binaries  
+which support newer zfs revs (rev 11 I think?) however I didn't keep  
+track of when I was in 64-bit or 32-bit mode. There was a LOT of  
+restarting, holding down keys and nvram changes so it is a bit of a  
+blur, but I don't think I was able to get either zfs-119 (binaries &  
+source) or 10A286 binaries loaded anytime while I was in 64-bit mode.
+
+For certain I've had no joy with the 10A286 binaries in 64-bit mode.
+
+In all of my messing around I didn't lose any data so you should be  
+safe (as safe as you ever can be running these ZFS bits) to play around.
+
+Make sure you completely remove any and all ZFS files before you copy  
+new version (either old or new) as any lingering ZFS files gave me  
+lots of trouble and repeated kernel panics even when browsing HFS+  
+volumes.
+
+--jasonrm
+
+On Sep 15, 2009, at 6:19 PM, alvin moon wrote:
+
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ksh at ironsoftware.de  Wed Sep 16 03:26:28 2009
+From: ksh at ironsoftware.de (Christian Kendi)
+Date: Wed, 16 Sep 2009 12:26:28 +0200
+Subject: [zfs-discuss] ZFS performance / tuning
+In-Reply-To: <DFC0ECE6-5E16-41D7-A697-3962F06A53E7@ironsoftware.de>
+References: <DFC0ECE6-5E16-41D7-A697-3962F06A53E7@ironsoftware.de>
+Message-ID: <75728DFB-219D-494F-A4F1-991B51E57D79@ironsoftware.de>
+
+Well,
+
+i just fixed the bug from the opensolaris source code.
+
+ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o > / 
+dev/null)
+real	1m38.292s
+user	0m1.824s
+sys	0m1.573s
+
+Reconsidering the 10minutes before all the patches, this is a  
+tremendous performance bug.
+Considering i will go in 7 days to snow leopard, there is now way  
+living with this bug.
+
+Can anyone provide benchmarks on this with the SL bits?
+
+
+---
+Christian Kendi
+Iron Software
+Gemeinschaftsstr. 2b
+85435 Erding, Germany
+mailto: ksh at ironsoftware.de
+us mobile: +1-321-507-0653
+mobile: +49 (0) 177 / 55 - 31 33 7
+phone: +49 (0) 89 42 09 56 319
+spain: +34 (637) 12 43 49
+*****************************************
+Geschaeftsfuehrer: Christian Kendi
+Steuernr: 114/235/50572 * Amtsgericht: Erding
+
+El Sep 13, 2009, a las 7:43 PM, Christian Kendi escribi?:
+
+> Hi,
+>
+> im using ZFS now for almost a year and noticed horrible performance.
+> While i was recently reading the zfs-discuss on Solaris, i noticed  
+> an interesting thread which led to:
+> http://bugs.opensolaris.org/bugdatabase/view_bug.do?bug_id=6859997
+>
+> The impact on my system with 60 files of 8MB size:
+> ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o  
+> > /dev/null)
+> real	4m48.844s
+> user	0m2.023s
+> sys	0m1.738s
+>
+>  -- SECOND RUN --
+> ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o  
+> > /dev/null)
+> real	10m46.641s
+> user	0m1.951s
+> sys	0m2.083s
+>
+> As the issue posted first results due to a bug in the zfs_prefetch  
+> routing i just disabled to
+>
+> int zfs_prefetch_disable = 1;
+> does the trick.
+>
+> After doing my mods i get:
+> ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o  
+> > /dev/null)
+> real	2m46.938s
+> user	0m2.159s
+> sys	0m1.944s
+> ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o  
+> > /dev/null)
+> real	3m56.672s
+> user	0m2.121s
+> sys	0m1.949s
+> ksh at kshs-Computer:~/zfscachetest $ time (find . | cpio -C 32256 -o  
+> > /dev/null)
+> real	2m43.478s
+> user	0m2.179s
+> sys	0m1.929s
+>
+> After doing research for almost two month I found one of my problems  
+> to be the limitation of the ARC cache.
+> My system was eating too much memory for the ARC and the rest of the  
+> app memory was swapped.
+> I cut down the original ARC cache from 2/3 to 1/8. I just have 2GB  
+> of RAM and my applications need most of it.
+>
+> old:	zfs_arc_max = (zfs_footprint.maximum / 3) * 2;
+> new:	zfs_arc_max = (zfs_footprint.maximum / 8);
+>
+> Another thing that helped me was changing the block size and  
+> checksumming of my Cache.
+> home/ksh/Caches  checksum       off                        local
+>
+> About Cache i dont care about data integrity. Furthermore observing  
+> read/writes with dtrace
+> Safari reads/write most of the time 1024 bytes to/from Cache.db  
+> file. I changed the recordsize to:
+> home/ksh/Caches  recordsize     1K                         local
+>
+>
+> Normally this sort of consultation is very expensive :) but as we're  
+> all in the same boat, you'll
+> find the modified zfs-119 zfs.kext here:
+> http://www.ironsoftware.de/public/zfs.kext.tgz
+>
+> It would be nice to know if you all experience the same zfs_prefetch  
+> behavior on the 10.6 bits.
+>
+>
+> Saludos
+>
+> ---
+> Christian Kendi
+> Iron Software
+> Gemeinschaftsstr. 2b
+> 85435 Erding, Germany
+> mailto: ksh at ironsoftware.de
+> us mobile: +1-321-507-0653
+> mobile: +49 (0) 177 / 55 - 31 33 7
+> phone: +49 (0) 89 42 09 56 319
+> spain: +34 (637) 12 43 49
+> *****************************************
+> Geschaeftsfuehrer: Christian Kendi
+> Steuernr: 114/235/50572 * Amtsgericht: Erding
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090916/df9016df/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: Mensaje firmado digitalmente
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090916/df9016df/attachment-0001.bin>
+
+From ryanwalklin at gmail.com  Wed Sep 16 20:57:22 2009
+From: ryanwalklin at gmail.com (Ryan Walklin)
+Date: Thu, 17 Sep 2009 15:57:22 +1200
+Subject: [zfs-discuss] 10a286 binaries on 10.6
+Message-ID: <9B8E398B-7DAC-4A0C-AE34-360351345EDC@gmail.com>
+
+Hi All,
+
+Thanks to the efforts of this list, I've been able to get my RAID-Z  
+(4x500GB) up and running on Snow Leopard using the 10a286 ZFS  
+binaries. I needed to change the ownership of each of my filesystems  
+to ryan:staff as opposed to root:wheel, and use a launchd plist to run  
+the command "zfs mount -a" at boot.
+
+Looking forward to a formal solution from Apple (ie updated source on  
+macosforge etc, or at least an official statement of intent) but in  
+the meantime at least I have access to my data. And emptying the trash  
+works!
+
+Thanks again,
+
+Ryan
+
+From kona8lend at gmail.com  Wed Sep 16 21:07:50 2009
+From: kona8lend at gmail.com (Kona Blend)
+Date: Thu, 17 Sep 2009 00:07:50 -0400
+Subject: [zfs-discuss] 10a286 binaries on 10.6
+In-Reply-To: <9B8E398B-7DAC-4A0C-AE34-360351345EDC@gmail.com>
+References: <9B8E398B-7DAC-4A0C-AE34-360351345EDC@gmail.com>
+Message-ID: <1283673E-990A-450A-8A77-DDEB3960B4BD@gmail.com>
+
+Hi Ryan,
+
+Can you confirm if this is 32-bit kernel or 64-bit kernel?
+
+--kb
+
+On Sep 16, 2009, at 11:57 PM, Ryan Walklin wrote:
+
+> Hi All,
+>
+> Thanks to the efforts of this list, I've been able to get my RAID-Z  
+> (4x500GB) up and running on Snow Leopard using the 10a286 ZFS  
+> binaries. I needed to change the ownership of each of my filesystems  
+> to ryan:staff as opposed to root:wheel, and use a launchd plist to  
+> run the command "zfs mount -a" at boot.
+>
+> Looking forward to a formal solution from Apple (ie updated source  
+> on macosforge etc, or at least an official statement of intent) but  
+> in the meantime at least I have access to my data. And emptying the  
+> trash works!
+>
+> Thanks again,
+>
+> Ryan
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ryanwalklin at gmail.com  Wed Sep 16 21:15:44 2009
+From: ryanwalklin at gmail.com (Ryan Walklin)
+Date: Thu, 17 Sep 2009 16:15:44 +1200
+Subject: [zfs-discuss] 10a286 binaries on 10.6
+In-Reply-To: <1283673E-990A-450A-8A77-DDEB3960B4BD@gmail.com>
+References: <9B8E398B-7DAC-4A0C-AE34-360351345EDC@gmail.com>
+	<1283673E-990A-450A-8A77-DDEB3960B4BD@gmail.com>
+Message-ID: <E53D320B-B79C-401B-9AD0-CE60B92D4C37@gmail.com>
+
+32-bit. There's a few missing symbols when run 64-bit, despite the  
+libs being compiled 64-bit. I wasn't too worried given that the  
+userspace is 64-bit.
+
+Ryan
+
+
+On 17/09/2009, at 4:07 PM, Kona Blend <kona8lend at gmail.com> wrote:
+
+> Hi Ryan,
+>
+> Can you confirm if this is 32-bit kernel or 64-bit kernel?
+>
+> --kb
+>
+> On Sep 16, 2009, at 11:57 PM, Ryan Walklin wrote:
+>
+>> Hi All,
+>>
+>> Thanks to the efforts of this list, I've been able to get my RAID-Z  
+>> (4x500GB) up and running on Snow Leopard using the 10a286 ZFS  
+>> binaries. I needed to change the ownership of each of my  
+>> filesystems to ryan:staff as opposed to root:wheel, and use a  
+>> launchd plist to run the command "zfs mount -a" at boot.
+>>
+>> Looking forward to a formal solution from Apple (ie updated source  
+>> on macosforge etc, or at least an official statement of intent) but  
+>> in the meantime at least I have access to my data. And emptying the  
+>> trash works!
+>>
+>> Thanks again,
+>>
+>> Ryan
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From james at themacplace.co.uk  Thu Sep 17 02:48:02 2009
+From: james at themacplace.co.uk (James Relph)
+Date: Thu, 17 Sep 2009 10:48:02 +0100
+Subject: [zfs-discuss] 10a286 binaries on 10.6
+In-Reply-To: <9B8E398B-7DAC-4A0C-AE34-360351345EDC@gmail.com>
+References: <9B8E398B-7DAC-4A0C-AE34-360351345EDC@gmail.com>
+Message-ID: <2E8D4CA0-B0D6-42F0-BB72-6188559ACC33@themacplace.co.uk>
+
+> or at least an official statement of intent
+
+That would be good, I cannot understand for the life of me why they  
+don't just come out and say why.  It's not like the existence of ZFS  
+is a big secret and it's already out in production environments on  
+other systems so why can't someone at Apple just announce what's going  
+on!  That's almost more annoying than the lack of any info, the fact  
+that there doesn't appear to be any reason for them not to give out  
+any info.
+
+
+James Relph
+ACSA 10.5
+
+www.themacplace.co.uk
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090917/36c1942b/attachment.html>
+
+From s at avoidant.org  Thu Sep 17 13:45:13 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Thu, 17 Sep 2009 23:45:13 +0300
+Subject: [zfs-discuss] Disk speeds
+Message-ID: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+
+Hi all,
+
+I mentioned the other day that I got my raidz back up and running  
+happy on Snow leopard.  Today I saw a hard disk benchmark app I  
+thought I'd try.  The results are interesting.
+
+System specs:
+
+MBP 2.4GHz C2D
+4GB RAM
+Mac OS X 10.6.1
+internal 250GB 5400rpm SATA disk - [zefat] (system disk)
+
+zfs-119 using the optimized kext from Christian Kendi
+SiI3132- based eSATA ExpressCard - Addonics SATA port multiplier
+(Using the Sonnet SiI3132 driver even though the card isn't Sonnet- 
+branded.)
+5x1TB 7200rpm SATA disks raidz1 - [geniza]
+
+Using http://www.unscale.com/DST.html for the benchmark.
+
+My results: http://avoidant.org/disktest.png
+
+The geniza on the left is using Christian's first posted kext, the one  
+on the right is with his second, after patching for the Sun mailing  
+list bug.  I suspect the numbers on the left are skewed by the cache.
+
+Oh, Christian, here are your numbers (60 8MB files, using your second  
+posted kext):
+
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+983051 blocks
+real	0m8.761s
+user	0m0.125s
+sys	0m1.087s
+
+Second run:
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+983051 blocks
+real	0m8.462s
+user	0m0.108s
+sys	0m1.331s
+
+
+--sambo
+
+From bplist at thinkpink.com  Thu Sep 17 14:46:54 2009
+From: bplist at thinkpink.com (Brian Pinkerton)
+Date: Thu, 17 Sep 2009 14:46:54 -0700
+Subject: [zfs-discuss] 10a286 binaries on 10.6
+In-Reply-To: <2E8D4CA0-B0D6-42F0-BB72-6188559ACC33@themacplace.co.uk>
+References: <9B8E398B-7DAC-4A0C-AE34-360351345EDC@gmail.com>
+	<2E8D4CA0-B0D6-42F0-BB72-6188559ACC33@themacplace.co.uk>
+Message-ID: <676DB287-BD89-499C-B226-2143807B3E77@thinkpink.com>
+
+>> or at least an official statement of intent
+>
+> That would be good, I cannot understand for the life of me why they  
+> don't just come out and say why.  It's not like the existence of ZFS  
+> is a big secret and it's already out in production environments on  
+> other systems so why can't someone at Apple just announce what's  
+> going on!  That's almost more annoying than the lack of any info,  
+> the fact that there doesn't appear to be any reason for them not to  
+> give out any info.
+
+Yeah.  Absent such a statement from Apple, does anyone have a  
+recommendation for a good, low-power OpenSolaris box?  I've got 9TB of  
+ZFS that I want to move over (gee, it doesn't even sound that big  
+anymore!)
+
+bri
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090917/7ccd8ec4/attachment.html>
+
+From andy at aligature.com  Thu Sep 17 20:08:24 2009
+From: andy at aligature.com (Andy Webber)
+Date: Thu, 17 Sep 2009 23:08:24 -0400
+Subject: [zfs-discuss] volume not automounting since 10.6
+In-Reply-To: <1BE1D798433F1AA5AF2374B9@d-128-208-244-210.dhcp4.washington.edu>
+References: <20090910.213336.261171533.hanche@math.ntnu.no> 
+	<8dfb5c790909102038h5142efbfkfc30311a013125c9@mail.gmail.com> 
+	<BF850C47641DF70577141DD8@whitestar.local>
+	<20090911.070747.117552215.hanche@math.ntnu.no> 
+	<1BE1D798433F1AA5AF2374B9@d-128-208-244-210.dhcp4.washington.edu>
+Message-ID: <60b50dc10909172008q7661e9aby300d975b6844af0d@mail.gmail.com>
+
+After hearing good things about zfs working on 10.6 (and doing some testing
+on my own) I decided to upgrade to Snow Leopard tonight.  I had been
+previously using the 119 bits for as long as I can remember without any
+crashes.  In my limited playing around, I couldn't get the 10A286 bits to
+work at all.  So, I've decided to stick with the 119 bits until something
+newer (hopefully) gets released by our friends at Apple.
+I took Daniel's advice and created a launchd daemon to auto-import my pool
+on login.  I had some troubles with the launchd running my command over and
+over logging an error when the pool is already imported.  Here's an update
+plist for those who are interested.  Take particular note of the
+LaunchOnlyOnce key.
+
+<---------------------- Start plist file ------------------------>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "
+http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>ServiceDescription</key>
+<string>ZFS Auto mount</string>
+ <key>Label</key>
+<string>com.test.zfs</string>
+<key>Program</key>
+ <string>/usr/sbin/zpool</string>
+<key>ProgramArguments</key>
+ <array>
+<string>/usr/sbin/zpool</string>
+<string>import</string>
+ <string>-f</string>
+<string>lake</string>
+</array>
+ <key>RunAtLoad</key>
+<true/>
+<key>LaunchOnlyOnce</key>
+ <true/>
+
+<key>UserName</key>
+<string>root</string>
+</dict>
+</plist>
+<---------------------- End plist file ------------------------>
+
+
+On Fri, Sep 11, 2009 at 4:40 PM, Daniel M. Zimmerman <
+dmz+lists at tffenterprises.com <dmz%2Blists at tffenterprises.com>> wrote:
+
+>
+>
+> --On 11 September 2009 7:07:47 -0400 Harald Hanche-Olsen <
+> hanche at math.ntnu.no> wrote:
+>
+>  + "Daniel M. Zimmerman" <dmz+lists at tffenterprises.com<dmz%2Blists at tffenterprises.com>
+>> >:
+>>
+>>  I'm currently debating whether to risk updating to 10.6.1... :)
+>>>
+>>
+>> That's not likely to involve serious changes to the kernel, is it?
+>> Ripping functionality out of the kernel is more likely to happen with
+>> (major) upgrades than with (minor) updates.
+>>
+>
+> And, indeed, the bits are still working with 10.6.1, as is my workaround
+> for mounting the pool at boot time.
+>
+> -Dan
+>
+> ------------------------------------------------------------------
+> Daniel M. Zimmerman                                TFF Enterprises
+> 1900 Commerce St. Box 358426   http://www.tffenterprises.com/~dmz/
+> Tacoma, WA  98402  USA                      dmz at tffenterprises.com
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090917/80cd2f98/attachment.html>
+
+From fabrizio.giudici at tidalwave.it  Thu Sep 17 23:27:20 2009
+From: fabrizio.giudici at tidalwave.it (Fabrizio Giudici)
+Date: Fri, 18 Sep 2009 08:27:20 +0200
+Subject: [zfs-discuss] Configuring a ZFS filesystem as a "ram disk"?
+Message-ID: <4AB32848.3010203@tidalwave.it>
+
+For optimizing some work, it would be nice if some selected directories 
+in my pool were cached by a great amount of RAM - even better if it was 
+possible to have them to commit on the hard disk very seldom, even 
+never. Is it possible to do this with ZFS on Leopard?
+
+-- 
+Fabrizio Giudici - Java Architect, Project Manager
+Tidalwave s.a.s. - "We make Java work. Everywhere."
+weblogs.java.net/blog/fabriziogiudici - www.tidalwave.it/blog
+Fabrizio.Giudici at tidalwave.it - mobile: +39 348.150.6941
+
+
+From ksh at ironsoftware.de  Sun Sep 20 17:50:59 2009
+From: ksh at ironsoftware.de (Christian Kendi)
+Date: Mon, 21 Sep 2009 02:50:59 +0200
+Subject: [zfs-discuss] Disk speeds
+In-Reply-To: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+References: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+Message-ID: <612C550B-0C41-426F-8487-87711F08B84C@ironsoftware.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi sammy,
+
+> The geniza on the left is using Christian's first posted kext, the  
+> one on the right is with his second, after patching for the Sun  
+> mailing list bug.  I suspect the numbers on the left are skewed by  
+> the cache.
+
+I did not get the part which one about the second kext. I never  
+pusblished the code fixed kext. Therefore you where running the same  
+test twice.
+Here is the link to the code patched one. This one actually fixed the  
+bug and does not disable the prefetch routing:
+http://www.ironsoftware.de/public/ksh_zfs_cp.kext.tgz
+
+> Oh, Christian, here are your numbers (60 8MB files, using your  
+> second posted kext):
+>
+> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+> 983051 blocks
+> real	0m8.761s
+> user	0m0.125s
+> sys	0m1.087s
+>
+> Second run:
+> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+> 983051 blocks
+> real	0m8.462s
+> user	0m0.108s
+> sys	0m1.331s
+
+My question was rather concerning the zfs-10a286 bits. But good to  
+know that my zfs-119 once work with 10.6.
+The major failure you did here was to use only 60 8MB files. You have  
+a 4GB RAM. To trigger the bug you should use at least use 512 files.
+I suggest you just use 2000 files and test it again with the 10a286  
+bits. In order to verify the bug you have to use the original zfs.kext  
+first and afterwards
+my modifications.
+
+Greets
+Chris.
+
+
+El 17/09/2009, a las 22:45, sammy ominsky escribi?:
+
+> Hi all,
+>
+> I mentioned the other day that I got my raidz back up and running  
+> happy on Snow leopard.  Today I saw a hard disk benchmark app I  
+> thought I'd try.  The results are interesting.
+>
+> System specs:
+>
+> MBP 2.4GHz C2D
+> 4GB RAM
+> Mac OS X 10.6.1
+> internal 250GB 5400rpm SATA disk - [zefat] (system disk)
+>
+> zfs-119 using the optimized kext from Christian Kendi
+> SiI3132- based eSATA ExpressCard - Addonics SATA port multiplier
+> (Using the Sonnet SiI3132 driver even though the card isn't Sonnet- 
+> branded.)
+> 5x1TB 7200rpm SATA disks raidz1 - [geniza]
+>
+> Using http://www.unscale.com/DST.html for the benchmark.
+>
+> My results: http://avoidant.org/disktest.png
+>
+> The geniza on the left is using Christian's first posted kext, the  
+> one on the right is with his second, after patching for the Sun  
+> mailing list bug.  I suspect the numbers on the left are skewed by  
+> the cache.
+>
+> Oh, Christian, here are your numbers (60 8MB files, using your  
+> second posted kext):
+>
+> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+> 983051 blocks
+> real	0m8.761s
+> user	0m0.125s
+> sys	0m1.087s
+>
+> Second run:
+> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+> 983051 blocks
+> real	0m8.462s
+> user	0m0.108s
+> sys	0m1.331s
+>
+>
+> --sambo
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFKts3zp+9ff145KVIRAhjxAJ9mmPfnlvu29CwbbvrGC/Ji2wv2iwCgi5Jm
+DdbqXcZX6xPxw6Zk6fCUOT8=
+=Xy+P
+-----END PGP SIGNATURE-----
+
+From james-zfsosx at jrv.org  Sun Sep 20 19:08:28 2009
+From: james-zfsosx at jrv.org (James R. Van Artsdalen)
+Date: Sun, 20 Sep 2009 21:08:28 -0500
+Subject: [zfs-discuss] Disk speeds
+In-Reply-To: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+References: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+Message-ID: <4AB6E01C.9050709@jrv.org>
+
+sammy ominsky wrote:
+> (Using the Sonnet SiI3132 driver even though the card isn't
+> Sonnet-branded.)
+> 5x1TB 7200rpm SATA disks raidz1 - [geniza]
+
+The 3132 is slow and peaks at around 140 MB/s bandwidth.  It will not be
+able to keep up with those disks.
+
+The 3124 is much faster.  A PCI-e card using a 3124 will unfortunately
+be more expensive than one with a 3132 since it needs to include a PCI
+serial-to-parallel bridge chip (the 3124 is a PCI-X chip).
+
+From s at avoidant.org  Sun Sep 20 23:35:24 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Mon, 21 Sep 2009 09:35:24 +0300
+Subject: [zfs-discuss] Disk speeds
+In-Reply-To: <612C550B-0C41-426F-8487-87711F08B84C@ironsoftware.de>
+References: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+	<612C550B-0C41-426F-8487-87711F08B84C@ironsoftware.de>
+Message-ID: <098EA756-3D36-485B-87A0-309A5D8F5B6D@avoidant.org>
+
+On 21/09/2009, at 03:50, Christian Kendi wrote:
+
+> I did not get the part which one about the second kext. I never  
+> pusblished the code fixed kext. Therefore you where running the same  
+> test twice.
+
+Interesting.  I think then, that I ran the first test with the stock  
+119, and the second with your kext.
+
+> Here is the link to the code patched one. This one actually fixed  
+> the bug and does not disable the prefetch routing:
+> http://www.ironsoftware.de/public/ksh_zfs_cp.kext.tgz
+
+Running that one now.
+
+
+> My question was rather concerning the zfs-10a286 bits. But good to  
+> know that my zfs-119 once work with 10.6.
+
+I gave up on 10a286 because it does this:
+
+zefat:~ sambo$ zpool import -f geniza
+Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+"pool_guid", &theguid) == 0), function pool_active, file /SourceCache/ 
+zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line 371.
+Abort trap
+
+Thoughts?  The advice here on the list was to go back to 119.
+
+> The major failure you did here was to use only 60 8MB files. You  
+> have a 4GB RAM. To trigger the bug you should use at least use 512  
+> files.
+> I suggest you just use 2000 files and test it again with the 10a286  
+> bits. In order to verify the bug you have to use the original  
+> zfs.kext first and afterwards
+> my modifications.
+
+This is with 2000 8MB files:
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+32768355 blocks
+real	4m57.183s
+user	0m3.919s
+sys	0m33.403s
+
+and your kext:
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+32768355 blocks
+real	2m45.003s
+user	0m2.926s
+sys	0m20.218s
+
+HOWEVER!  The first one took a very long time to actually produce that  
+result!  It sat and sat and sat, until I went to bed, and when I woke  
+up this morning it said it had taken 4m57.183.  Yours was actual  
+time.  Both were done right after a fresh reboot.
+
+Also, fresh disk speed test.  On the left is stock 119, on the right  
+is yours:
+
+http://avoidant.org/ckext.png
+
+--sambo
+
+
+From s at avoidant.org  Sun Sep 20 23:41:00 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Mon, 21 Sep 2009 09:41:00 +0300
+Subject: [zfs-discuss] Disk speeds
+In-Reply-To: <4AB6E01C.9050709@jrv.org>
+References: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+	<4AB6E01C.9050709@jrv.org>
+Message-ID: <30BC585A-D851-4F8D-AC0D-23A768E65863@avoidant.org>
+
+On 21/09/2009, at 05:08, James R. Van Artsdalen wrote:
+
+> The 3132 is slow and peaks at around 140 MB/s bandwidth.  It will  
+> not be
+> able to keep up with those disks.
+
+It's also very, very cheap.
+
+
+> The 3124 is much faster.  A PCI-e card using a 3124 will unfortunately
+> be more expensive than one with a 3132 since it needs to include a PCI
+> serial-to-parallel bridge chip (the 3124 is a PCI-X chip).
+
+Note please that I said "ExpressCard", not PCI-Express (yes, I know  
+the technology is the same, but the devices are a different form  
+factor).  This is on a laptop.  I haven't seen any 3124-based  
+ExpressCards.
+
+--sambo
+
+From ksh at ironsoftware.de  Mon Sep 21 06:21:26 2009
+From: ksh at ironsoftware.de (Christian Kendi)
+Date: Mon, 21 Sep 2009 15:21:26 +0200
+Subject: [zfs-discuss] Disk speeds
+In-Reply-To: <098EA756-3D36-485B-87A0-309A5D8F5B6D@avoidant.org>
+References: <BACEEE95-0D86-4508-BE18-80116D00DE54@avoidant.org>
+	<612C550B-0C41-426F-8487-87711F08B84C@ironsoftware.de>
+	<098EA756-3D36-485B-87A0-309A5D8F5B6D@avoidant.org>
+Message-ID: <DFFD49D7-C71D-4862-9C39-097D65D27669@ironsoftware.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+El 21/09/2009, a las 8:35, sammy ominsky escribi?:
+
+> On 21/09/2009, at 03:50, Christian Kendi wrote:
+>
+>> I did not get the part which one about the second kext. I never  
+>> pusblished the code fixed kext. Therefore you where running the  
+>> same test twice.
+>
+> Interesting.  I think then, that I ran the first test with the stock  
+> 119, and the second with your kext.
+>
+>> Here is the link to the code patched one. This one actually fixed  
+>> the bug and does not disable the prefetch routing:
+>> http://www.ironsoftware.de/public/ksh_zfs_cp.kext.tgz
+>
+> Running that one now.
+>
+>
+>> My question was rather concerning the zfs-10a286 bits. But good to  
+>> know that my zfs-119 once work with 10.6.
+>
+> I gave up on 10a286 because it does this:
+>
+> zefat:~ sambo$ zpool import -f geniza
+> Assertion failed: (nvlist_lookup_uint64(zhp->zpool_config,  
+> "pool_guid", &theguid) == 0), function pool_active, file / 
+> SourceCache/zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line  
+> 371.
+> Abort trap
+>
+> Thoughts?  The advice here on the list was to go back to 119.
+Well, did you replace the 119 binaries as well with those from the  
+10a286 bits?
+
+>
+>> The major failure you did here was to use only 60 8MB files. You  
+>> have a 4GB RAM. To trigger the bug you should use at least use 512  
+>> files.
+>> I suggest you just use 2000 files and test it again with the 10a286  
+>> bits. In order to verify the bug you have to use the original  
+>> zfs.kext first and afterwards
+>> my modifications.
+>
+> This is with 2000 8MB files:
+> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+> 32768355 blocks
+> real	4m57.183s
+> user	0m3.919s
+> sys	0m33.403s
+>
+> and your kext:
+> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o > /dev/null)
+> 32768355 blocks
+> real	2m45.003s
+> user	0m2.926s
+> sys	0m20.218s
+
+This now looks like a working zfs :)
+
+>
+> HOWEVER!  The first one took a very long time to actually produce  
+> that result!  It sat and sat and sat, until I went to bed, and when  
+> I woke up this morning it said it had taken 4m57.183.  Yours was  
+> actual time.  Both were done right after a fresh reboot.
+>
+> Also, fresh disk speed test.  On the left is stock 119, on the right  
+> is yours:
+>
+> http://avoidant.org/ckext.png
+Wow, incredible improvement. The screenshot looks impressive.
+
+>
+> --sambo
+
+Greets
+Chris
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFKt33Wp+9ff145KVIRAvxmAKCZeNQHqqJZ3Nno4Tm5o9z1tVMugQCeOiIv
+276BP9oPsDKutkuQcM5U4Gg=
+=bEIc
+-----END PGP SIGNATURE-----
+
+From jason at jasonrm.net  Tue Sep 22 01:58:06 2009
+From: jason at jasonrm.net (Jason Richard McNeil)
+Date: Tue, 22 Sep 2009 01:58:06 -0700
+Subject: [zfs-discuss] Installing Windows 7 in VMware & VirtualBox causing
+	kernel panics
+Message-ID: <72A337FC-4C02-48CB-8D70-3BF9CA52FCBA@jasonrm.net>
+
+Maybe I'm wanting too much, but I really can't stand the idea of going  
+back to HFS+ after having the pleasure of ZFS. Snapshots every 10  
+minutes, checksums, filesystem level compression are all features that  
+I just can't bear to loose... however... at what cost? I can do most  
+of my day-to-day tasks just fine, but when I try and use Windows 7  
+either in VMware or VirtualBox and have the virtual machines HD on a  
+ZFS filesystem, kernel panic.
+
+I can run Ubuntu 9.04 64-bit in VMware and stress the diskIO for over  
+an hour using fsx ( a version similar to the one apple hosts at fstools.macosforge.org 
+  ) with no issues at all, but as soon as I try and install Windows 7  
+(i don't like it either, but some software I need for school is  
+windows only) it gets to the extracting files section of the install  
+and I pretty much have a guaranteed kernel panic. Heavy usage inside  
+of a working Windows VM installed on another system will also cause  
+similar issues. (Although I keep referring only to Windows 7, but I  
+have had the same issue installing/using XP as well.) I've tried it  
+with compression on/off/gzip, checksum on/off/sha256 (which seems to  
+just crash the system without reason even when idle if not on?), atime  
+on/off, even VM inside of a DMG on a ZFS filesystem, all still leads  
+to kernel panics.
+
+I am running the 10a286 beta bits and because I created my pool with  
+this version, my zpool version is 11 and unmountable by the older 119  
+so I can't test out if this same behavior exists in 119. I also have  
+this identical issue on my (identical software setup) Mac Pro when  
+running on ZFS filesystems.
+
+Mostly just wanting my issues to be public record in case others have  
+similar issues... and a little hope that Noel might have pity on those  
+of us who are wanting some more refined bits. :-)
+
+Maybe someday I'll be wise enough to stop trying out new technologies  
+that are this addictive...
+
+Tue Sep 22 01:27:00 2009
+panic(cpu 0 caller 0x2a6ac2): Kernel trap at 0x57d5a27c, type 14=page  
+fault, registers:
+CR0: 0x8001003b, CR2: 0x3120b1e8, CR3: 0x00100000, CR4: 0x000006e0
+EAX: 0x57e7db10, EBX: 0x00020000, ECX: 0x3122b1e8, EDX: 0x3120b1e8
+CR2: 0x3120b1e8, EBP: 0x8091be88, ESI: 0x00020000, EDI: 0x00000000
+EFL: 0x00010287, EIP: 0x57d5a27c, CS:  0x00000008, DS:  0x0df30010
+Error code: 0x00000000
+
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x8091bc58 : 0x21acfa (0x5ce650 0x8091bc8c 0x223156 0x0)
+0x8091bca8 : 0x2a6ac2 (0x590a50 0x57d5a27c 0xe 0x590c1a)
+0x8091bd88 : 0x29c968 (0x8091bda0 0x57e6ee50 0x8091be88 0x57d5a27c)
+0x8091bd98 : 0x57d5a27c (0xe 0x48 0x80910010 0xffff0010)
+0x8091be88 : 0x57d5e659 (0x3 0x3120b1e8 0x20000 0x0)
+0x8091bf28 : 0x57d5aeed (0x7747940 0xd61ca 0x8091bf58 0x57db1510)
+0x8091bf58 : 0x57dcc017 (0x7747940 0x84da280 0x1b9b23 0x57e07fa0)
+0x8091bfc8 : 0x29c68c (0x7055cf8 0x0 0x10 0x80d83a4)
+       Kernel Extensions in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x57d42000->0x57e88fff
+             dependency: com.apple.iokit.IOStorageFamily(1.6)@0x50eed000
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+10B504
+
+Kernel version:
+Darwin Kernel Version 10.0.0: Fri Jul 31 22:47:34 PDT 2009;  
+root:xnu-1456.1.25~1/RELEASE_I386
+System model name: MacBookPro5,1 (Mac-F42D86C8)
+
+From jasonbelec at rogers.com  Tue Sep 29 12:24:54 2009
+From: jasonbelec at rogers.com (Jason Belec)
+Date: Tue, 29 Sep 2009 12:24:54 -0700 (PDT)
+Subject: [zfs-discuss] Snapshots under os x
+Message-ID: <110703.23107.qm@web88105.mail.re2.yahoo.com>
+
+Anyone able to point me to some useful info? Examples?
+
+Much appreciated.
+
+Jason
+
+
+
+
+From hanche at math.ntnu.no  Tue Sep 29 15:56:51 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Tue, 29 Sep 2009 18:56:51 -0400 (EDT)
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <110703.23107.qm@web88105.mail.re2.yahoo.com>
+References: <110703.23107.qm@web88105.mail.re2.yahoo.com>
+Message-ID: <20090929.185651.174684793.hanche@math.ntnu.no>
+
++ Jason Belec <jasonbelec at rogers.com>:
+
+> Anyone able to point me to some useful info? Examples?
+
+http://opensolaris.org/os/community/zfs/ should have some info.
+
+Beware that zfs on the mac does not support the .zfs directory.
+To use a snapshot, you need to create a clone from it and read from
+the clone instead. Of course, you may destroy the clone after you're
+done. I use a convention for this: Replace the @ in the snapshot name
+by _ to get the clone name.
+
+Also, you cannot send and receive snapshots to and from pipes. You
+need to store them as files.
+
+It's hard to be more specific without specific questions.
+
+- Harald
+
+From jasonbelec at rogers.com  Tue Sep 29 16:42:27 2009
+From: jasonbelec at rogers.com (Jason Belec)
+Date: Tue, 29 Sep 2009 19:42:27 -0400
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <4AC266D1.6070605@gmail.com>
+References: <110703.23107.qm@web88105.mail.re2.yahoo.com>
+	<4AC266D1.6070605@gmail.com>
+Message-ID: <0499AABF-E498-417D-B5F4-DE81DF2BA3CF@rogers.com>
+
+Thank your for this insight, I will play around a bit.
+
+and
+
+Thank you to Michael, been doing that all day, just wanted some real  
+user feedback. ;)
+
+Thanks Harald, yes I saw this and ran tests, nice that it works and a  
+way exists, setting up testing in the morning.
+
+Much appreciated everyone. So far tests have been impressive.
+
+Jason
+
+
+
+
+On 2009-09-29, at 3:58 PM, X Bytor wrote:
+
+> I have this script run once an hour via cron (or whatever) so I have  
+> snapshots for the past 24 hours on this drive.
+> Remember to disable this script if you're going to scrub the disk or  
+> the scrub will keep restarting.
+>
+> -X
+>
+> #!/bin/bash
+> #
+> # This is the hourly snapshot for /Volumes/zdrive
+> #
+> now=`date '+%H'`
+>
+> #echo Skipping snapshot for scrub
+> #exit 0
+>
+> echo Snapshot on zdrive@${now}
+>
+> # Destroy the one from yesterday
+> zfs destroy zdrive@$now  > /dev/null 2>& 1
+>
+> zfs snapshot zdrive@$now
+>
+> exit 0
+>
+> # EOF
+>
+
+
+From alex.blewitt at gmail.com  Wed Sep 30 06:26:11 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 30 Sep 2009 14:26:11 +0100
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <20090929.185651.174684793.hanche@math.ntnu.no>
+References: <110703.23107.qm@web88105.mail.re2.yahoo.com>
+	<20090929.185651.174684793.hanche@math.ntnu.no>
+Message-ID: <648B81BF-89D0-486B-B863-0FB376717853@gmail.com>
+
+
+
+Sent from my (new) iPhone
+
+On 29 Sep 2009, at 23:56, Harald Hanche-Olsen <hanche at math.ntnu.no>  
+wrote:
+
+> + Jason Belec <jasonbelec at rogers.com>:
+>
+>> Anyone able to point me to some useful info? Examples?
+
+I wrote this up a while ago and has saved my bacon a couple of times:
+
+http://alblue.blogspot.com/2008/11/crontab-generated-zfs-snapshots.html
+
+However, note that since 10.5.8 cron (aka launchd) seems to be more  
+multi-process than before and it's fairly easy to kernel panic if you  
+have two snapshots concurrently or a scrub and a snapshot. I've since  
+adjusted this to run at defined intervals past the hour (instead of on  
+the hour) and haven't seen any problems since.
+
+> Also, you cannot send and receive snapshots to and from pipes. You
+> need to store them as files.
+
+You can mkfifo a virtual file, get one zfs send > fifo and then zfs  
+recv < fifo if you don't have storage space to store an entire  
+snapshot. I believe the writing process will block after some small  
+buffer though so the processes need to be concurrently running.
+
+Also, I'd add that at the current time, the ZFS project on Mac seems  
+to be abandoned, so if setting up a new store you might be better off  
+with OpenSolaris.
+>
+
+
+Alex
+
+From jasonbelec at rogers.com  Wed Sep 30 07:16:28 2009
+From: jasonbelec at rogers.com (Jason Belec)
+Date: Wed, 30 Sep 2009 07:16:28 -0700 (PDT)
+Subject: [zfs-discuss] Snapshots under os x
+Message-ID: <212549.64058.qm@web88108.mail.re2.yahoo.com>
+
+Excellent insight, thank you. 
+
+As for being abandoned for the Mac, not quite. Since I work alot in corporate environments and develop new technologies I'm willing to play some. 
+
+So far I'm really impressed with the latest MacForge download and my franken-test to push limits under OS X 10.6.1.
+
+Really appreciate the info from everyone.
+
+Jason
+Sent from my iPhone
+
+On 2009-09-30, at 9:26 AM, Alex Blewitt <alex.blewitt at gmail.com> wrote:
+
+
+
+Sent from my (new) iPhone
+
+On 29 Sep 2009, at 23:56, Harald Hanche-Olsen <hanche at math.ntnu.no> wrote:
+
++ Jason Belec <jasonbelec at rogers.com>:
+
+Anyone able to point me to some useful info? Examples?
+
+I wrote this up a while ago and has saved my bacon a couple of times:
+
+http://alblue.blogspot.com/2008/11/crontab-generated-zfs-snapshots.html
+
+However, note that since 10.5.8 cron (aka launchd) seems to be more multi-process than before and it's fairly easy to kernel panic if you have two snapshots concurrently or a scrub and a snapshot. I've since adjusted this to run at defined intervals past the hour (instead of on the hour) and haven't seen any problems since.
+
+Also, you cannot send and receive snapshots to and from pipes. You
+need to store them as files.
+
+You can mkfifo a virtual file, get one zfs send > fifo and then zfs recv < fifo if you don't have storage space to store an entire snapshot. I believe the writing process will block after some small buffer though so the processes need to be concurrently running.
+
+Also, I'd add that at the current time, the ZFS project on Mac seems to be abandoned, so if setting up a new store you might be better off with OpenSolaris.
+
+
+
+Alex
+_______________________________________________
+zfs-discuss mailing list
+zfs-discuss at lists.macosforge.org
+http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+
+From dirkschelfhout at mac.com  Wed Sep 30 07:48:06 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Wed, 30 Sep 2009 16:48:06 +0200
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <212549.64058.qm@web88108.mail.re2.yahoo.com>
+References: <212549.64058.qm@web88108.mail.re2.yahoo.com>
+Message-ID: <78BA7BFE-3B22-4584-8F4F-B3B713524B20@mac.com>
+
+
+On 30 Sep 2009, at 16:16, Jason Belec wrote:
+
+> So far I'm really impressed with the latest MacForge download and my  
+> franken-test to push limits under OS X 10.6.1.
+
+you meant macosforge I guess.
+what do you mean latest ?
+I just checked , its still the old stuff.
+not updated since what ? early 2009 ?
+
+I am moving my data to opensolaris.
+
+Dirk
+
+From jasonbelec at rogers.com  Wed Sep 30 13:06:00 2009
+From: jasonbelec at rogers.com (Jason Belec)
+Date: Wed, 30 Sep 2009 16:06:00 -0400
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <78BA7BFE-3B22-4584-8F4F-B3B713524B20@mac.com>
+References: <212549.64058.qm@web88108.mail.re2.yahoo.com>
+	<78BA7BFE-3B22-4584-8F4F-B3B713524B20@mac.com>
+Message-ID: <2EB4B241-5DA3-4E9A-B79C-09EC39D1DB8E@rogers.com>
+
+Well OS X server is still going to have ZFS. So ZFS is still coming,  
+just to a smaller group initially.
+
+I will probably grab opensolaris as well and run it in parallel, sure  
+won't hurt.
+
+The snapshot info provided seems to be working after I converted to  
+Launchd. Will explore the snapshots starting tomorrow. ;)
+
+Now to get MySQL up and move a 500GB database in for fun...
+
+Thanks again.
+Jason
+
+
+
+On 2009-09-30, at 10:48 AM, Dirk Schelfhout wrote:
+
+>
+> On 30 Sep 2009, at 16:16, Jason Belec wrote:
+>
+>> So far I'm really impressed with the latest MacForge download and  
+>> my franken-test to push limits under OS X 10.6.1.
+>
+> you meant macosforge I guess.
+> what do you mean latest ?
+> I just checked , its still the old stuff.
+> not updated since what ? early 2009 ?
+>
+> I am moving my data to opensolaris.
+>
+> Dirk
+
+
+From alex.blewitt at gmail.com  Wed Sep 30 13:11:44 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 30 Sep 2009 21:11:44 +0100
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <2EB4B241-5DA3-4E9A-B79C-09EC39D1DB8E@rogers.com>
+References: <212549.64058.qm@web88108.mail.re2.yahoo.com>
+	<78BA7BFE-3B22-4584-8F4F-B3B713524B20@mac.com>
+	<2EB4B241-5DA3-4E9A-B79C-09EC39D1DB8E@rogers.com>
+Message-ID: <636fd28e0909301311wf24165ft9f413b5e9b951a87@mail.gmail.com>
+
+On Wed, Sep 30, 2009 at 9:06 PM, Jason Belec <jasonbelec at rogers.com> wrote:
+> Well OS X server is still going to have ZFS. So ZFS is still coming, just to
+> a smaller group initially.
+
+No, it doesn't. Wiped off the face of the planet.
+
+http://alblue.blogspot.com/2009/06/farewell-zfs-we-hardly-knew-ye.html
+
+Maybe later ...
+
+From jasonbelec at rogers.com  Wed Sep 30 13:12:53 2009
+From: jasonbelec at rogers.com (Jason Belec)
+Date: Wed, 30 Sep 2009 16:12:53 -0400
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <20090929.185651.174684793.hanche@math.ntnu.no>
+References: <110703.23107.qm@web88105.mail.re2.yahoo.com>
+	<20090929.185651.174684793.hanche@math.ntnu.no>
+Message-ID: <B0F50387-9A4B-4042-9E59-07D526468516@rogers.com>
+
+Harald, running the snapshots trying the script from the link you  
+posted here. How does one know what they are named in order to clone  
+them? Or did I miss something really obvious?
+
+Thanks,
+Jason
+
+
+On 2009-09-29, at 6:56 PM, Harald Hanche-Olsen wrote:
+
+> + Jason Belec <jasonbelec at rogers.com>:
+>
+>> Anyone able to point me to some useful info? Examples?
+>
+> http://opensolaris.org/os/community/zfs/ should have some info.
+>
+> Beware that zfs on the mac does not support the .zfs directory.
+> To use a snapshot, you need to create a clone from it and read from
+> the clone instead. Of course, you may destroy the clone after you're
+> done. I use a convention for this: Replace the @ in the snapshot name
+> by _ to get the clone name.
+>
+> Also, you cannot send and receive snapshots to and from pipes. You
+> need to store them as files.
+>
+> It's hard to be more specific without specific questions.
+>
+> - Harald
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From jasonbelec at rogers.com  Wed Sep 30 13:14:26 2009
+From: jasonbelec at rogers.com (Jason Belec)
+Date: Wed, 30 Sep 2009 16:14:26 -0400
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <636fd28e0909301311wf24165ft9f413b5e9b951a87@mail.gmail.com>
+References: <212549.64058.qm@web88108.mail.re2.yahoo.com>
+	<78BA7BFE-3B22-4584-8F4F-B3B713524B20@mac.com>
+	<2EB4B241-5DA3-4E9A-B79C-09EC39D1DB8E@rogers.com>
+	<636fd28e0909301311wf24165ft9f413b5e9b951a87@mail.gmail.com>
+Message-ID: <BDDC94F6-6D81-423F-9B67-FE345FC97FB5@rogers.com>
+
+Hahahah, I stand corrected, again...
+
+Thanks Alex.
+
+
+On 2009-09-30, at 4:11 PM, Alex Blewitt wrote:
+
+> On Wed, Sep 30, 2009 at 9:06 PM, Jason Belec <jasonbelec at rogers.com>  
+> wrote:
+>> Well OS X server is still going to have ZFS. So ZFS is still  
+>> coming, just to
+>> a smaller group initially.
+>
+> No, it doesn't. Wiped off the face of the planet.
+>
+> http://alblue.blogspot.com/2009/06/farewell-zfs-we-hardly-knew-ye.html
+>
+> Maybe later ...
+
+
+From hanche at math.ntnu.no  Wed Sep 30 15:34:58 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Wed, 30 Sep 2009 18:34:58 -0400 (EDT)
+Subject: [zfs-discuss] Snapshots under os x
+In-Reply-To: <B0F50387-9A4B-4042-9E59-07D526468516@rogers.com>
+References: <110703.23107.qm@web88105.mail.re2.yahoo.com>
+	<20090929.185651.174684793.hanche@math.ntnu.no>
+	<B0F50387-9A4B-4042-9E59-07D526468516@rogers.com>
+Message-ID: <20090930.183458.141037587.hanche@math.ntnu.no>
+
++ Jason Belec <jasonbelec at rogers.com>:
+
+> Harald, running the snapshots trying the script from the link you
+> posted here. How does one know what they are named in order to clone
+> them? Or did I miss something really obvious?
+
+"zfs list" will show you all filesystems, snapshots, and clones.
+Add "-t snapshot" to get snapshots only. Add -r and the name of a
+filesystem to restrict the listing to that filesystem and its
+descendants. And so on.
+
+If you want to use the output of "zfs list" (or many other zpool and
+zfs subcommand), make sure to use the -H flag to get easily parseable
+output. And there is an option -o to list what properties you want.
+There's a whole truckload of information you can get with "zfs list"
+and "zfs get". RTFM for the details.
+
+- Harald
+
+From alvinmoon at kargapoltsevamoon.com  Tue Sep 15 18:17:18 2009
+From: alvinmoon at kargapoltsevamoon.com (Alvin Moon)
+Date: Wed, 16 Sep 2009 01:17:18 -0000
+Subject: [zfs-discuss] Has anyone had any luck with ZFS 119 or the 10A286
+	binaries in SL 64-bit mode?
+Message-ID: <DD807C46-9D6E-4FE4-B2B1-B8F3C278EE5E@kargapoltsevamoon.com>
+
+I'm using the 10A286 binaries in SL 32-bit mode with no real problems  
+(the only problem is that I am always reminded on boot-up that SL  
+can't read ZFS formatted disks -- despite which, SL fully recognizes  
+my pool). 
+  
+

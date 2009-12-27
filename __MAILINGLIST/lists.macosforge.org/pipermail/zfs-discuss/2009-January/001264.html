@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS panics quite easily
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3CF16630DA-7978-4870-8E9D-F9DF27F9E9E6%40chipmunk-app.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001262.html">
+   <LINK REL="Next"  HREF="001265.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS panics quite easily</H1>
+    <B>Ruotger Skupin</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3CF16630DA-7978-4870-8E9D-F9DF27F9E9E6%40chipmunk-app.com%3E"
+       TITLE="[zfs-discuss] ZFS panics quite easily">lists at chipmunk-app.com
+       </A><BR>
+    <I>Tue Jan  6 02:22:54 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001262.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+        <LI>Next message: <A HREF="001265.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1264">[ date ]</a>
+              <a href="thread.html#1264">[ thread ]</a>
+              <a href="subject.html#1264">[ subject ]</a>
+              <a href="author.html#1264">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hm, seems like both documents explicitly say that &quot;failmode = wait&quot; is  
+the default value, which makes way more sense than &quot;panic&quot; if you ask  
+me.
+
+Am 06.01.2009 um 03:02 schrieb Todd Moore:
+
+&gt;<i>
+</I>&gt;<i> The setting is enabled/disabled on a pool by pool basis as it is a  
+</I>&gt;<i> property of the pool.  The setting is called &quot;failmode&quot; with values  
+</I>&gt;<i> of &quot;continue&quot;, &quot;wait&quot;, or &quot;panic&quot;.  I haven't found a lot of  
+</I>&gt;<i> information on the OpenSolaris site, but this is information from  
+</I>&gt;<i> the PSARC case -
+</I>&gt;<i> <A HREF="http://jp.opensolaris.org/os/community/arc/caselog/2007/261/commitment-materials/zpool-1m/;jsessionid=B1DA8B4D9E8DAF56AC99AA8D265979B1">http://jp.opensolaris.org/os/community/arc/caselog/2007/261/commitment-materials/zpool-1m/;jsessionid=B1DA8B4D9E8DAF56AC99AA8D265979B1</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The feature made it into Solaris 10 10/08 and the information in the  
+</I>&gt;<i> &quot;What's New&quot; includes an example output of the property -
+</I>&gt;<i> <A HREF="http://docs.sun.com/app/docs/doc/817-0547/ghgdx?l=en&amp;a=view">http://docs.sun.com/app/docs/doc/817-0547/ghgdx?l=en&amp;a=view</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Maarten Billemont wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Could you refer us where this option is documented and/or how to  
+</I>&gt;&gt;<i> set it?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 05 Jan 2009, at 15:43, Todd Moore wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   The default behavior is still to panic the system, but there is  
+</I>&gt;&gt;&gt;<i> now an option to raise an error condition and log it for a sys  
+</I>&gt;&gt;&gt;<i> admin to address.
+</I>&gt;&gt;&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090106/bd3ff941/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090106/bd3ff941/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001262.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+	<LI>Next message: <A HREF="001265.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1264">[ date ]</a>
+              <a href="thread.html#1264">[ thread ]</a>
+              <a href="subject.html#1264">[ subject ]</a>
+              <a href="author.html#1264">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

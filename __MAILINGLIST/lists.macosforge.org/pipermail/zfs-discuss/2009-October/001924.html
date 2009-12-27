@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Pool gone after Kernel Panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Pool%20gone%20after%20Kernel%20Panic&In-Reply-To=%3C9A610B49-404C-4218-B369-337B7F4D2E04%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001922.html">
+   <LINK REL="Next"  HREF="001925.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Pool gone after Kernel Panic</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Pool%20gone%20after%20Kernel%20Panic&In-Reply-To=%3C9A610B49-404C-4218-B369-337B7F4D2E04%40gmail.com%3E"
+       TITLE="[zfs-discuss] Pool gone after Kernel Panic">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Sun Oct 11 12:22:24 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001922.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+        <LI>Next message: <A HREF="001925.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1924">[ date ]</a>
+              <a href="thread.html#1924">[ thread ]</a>
+              <a href="subject.html#1924">[ subject ]</a>
+              <a href="author.html#1924">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Your disk is hosed. Please stop using it. ZFS is telling you this  
+where other file systems are blindly ignoring it.
+
+I believe that there were reported problems automatically mounting a  
+ZFS drive on Snow Leopard with some of the bits. I'm using Mac OSX  
+10.5 with the 119 build, and provided that you follow the instructions  
+(which it looks like you used) then it should mount on startup. Others  
+have put in a cron type job that mounts the disk after the system has  
+been running for a bit with zpool import Backup, or zpool import -f  
+Backup.
+
+But honestly, a backup with that many disk errors isn't much of a  
+backup. zpool scrub will tell you how bad the problem is; but you  
+clearly know that already.
+
+Alex
+
+On Oct 11, 2009, at 18:35, mano vasilakis wrote:
+
+&gt;<i> I am having a problem with an external firewire enclosure and data  
+</I>&gt;<i> corruption. It seems ok for abit using Time Machine but the  
+</I>&gt;<i> corruption eventually gets so bad that even Disk Warrior cant  
+</I>&gt;<i> recover the drive. Initial copy to the drive is ok. DW shows no  
+</I>&gt;<i> corruption. But after a few days its messed up so bad that DW takes  
+</I>&gt;<i> a week to fix the 2+ TB on the volume. After a few weeks the drive  
+</I>&gt;<i> becomes unrecoverable.
+</I>&gt;<i>
+</I>&gt;<i> So I chose to try out a simple single drive ZFS partition to see if  
+</I>&gt;<i> I could avoid the data errors that eventually take the drive out. I  
+</I>&gt;<i> use rsync to copy the data over and then check the status of the  
+</I>&gt;<i> pool using zpool status. I get a message that there are 1700+ files  
+</I>&gt;<i> with corruption and to use the -v option to get details. Problem is  
+</I>&gt;<i> when I choose zpool status -v I get a kernel panic. When I reboot  
+</I>&gt;<i> the ZFS drive is there but the pool is gone.
+</I>&gt;<i>
+</I>&gt;<i> Setup instructions I used:
+</I>&gt;<i> 1. diskutil list
+</I>&gt;<i> 2. diskutil partitiondisk /dev/disk# GPTFormat ZFS %noformat% 100%
+</I>&gt;<i> 3. sudo zpool create Backup /dev/disk#s#
+</I>&gt;<i> 4. zfs set compression=on Backup
+</I>&gt;<i> 5. sudo chown -R me:staff /Volumes/Backup
+</I>&gt;<i> 6. zfs get compression Backup
+</I>&gt;<i> 7. zpool upgrade
+</I>&gt;<i> 8. zpool status
+</I>&gt;<i>
+</I>&gt;<i> Everything is good at this point. Files copy over just fine. Except  
+</I>&gt;<i> for the few files that I mentioned that are corrupt. When I try to  
+</I>&gt;<i> get more info using zpool list -v the machine panics and I loose my  
+</I>&gt;<i> pool, Backup. After reboot zpool list states there are no pools.
+</I>&gt;<i> diskutil list shows disk4s2 but no zfs commands bring up the old pool.
+</I>&gt;<i>
+</I>&gt;<i> Is this normal behavior to loose the pool after a kernel panic? Is  
+</I>&gt;<i> there a command I can use to revive the pool? I'm comfortable with  
+</I>&gt;<i> command line but I'm real new to ZFS. (obviously)
+</I>&gt;<i> Any help would be appreciated.
+</I>&gt;<i> Mano
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001922.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+	<LI>Next message: <A HREF="001925.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1924">[ date ]</a>
+              <a href="thread.html#1924">[ thread ]</a>
+              <a href="subject.html#1924">[ subject ]</a>
+              <a href="author.html#1924">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

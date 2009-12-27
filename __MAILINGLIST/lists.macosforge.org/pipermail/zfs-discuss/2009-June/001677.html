@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Removing ZFS USB device
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Removing%20ZFS%20USB%20device&In-Reply-To=%3C55531A0A-BB0E-4FF4-B8E4-AB33341951D4%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001675.html">
+   <LINK REL="Next"  HREF="001678.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Removing ZFS USB device</H1>
+    <B>Atze de Vries</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Removing%20ZFS%20USB%20device&In-Reply-To=%3C55531A0A-BB0E-4FF4-B8E4-AB33341951D4%40gmail.com%3E"
+       TITLE="[zfs-discuss] Removing ZFS USB device">the.atz at gmail.com
+       </A><BR>
+    <I>Fri Jun 26 04:48:52 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001675.html">[zfs-discuss] strange behavior once pool is destroyed
+</A></li>
+        <LI>Next message: <A HREF="001678.html">[zfs-discuss] Removing ZFS USB device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1677">[ date ]</a>
+              <a href="thread.html#1677">[ thread ]</a>
+              <a href="subject.html#1677">[ subject ]</a>
+              <a href="author.html#1677">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello All,
+
+I have a problem. My zfs volume ran out of diskspace. Removing files  
+gives the (strange) error, 'No space left on device' . The only thing  
+i could do is use my usbdisk to add some space to the zfs-pool. I've  
+deleted some stuff and now have plenty of diskspace.
+I want to remove my usbstick from the zpool.
+
+Using:
+zpool remove DataStore /dev/disk3 gives:
+cannot remove /dev/disk3: only inactive hot spares can be removed
+
+and using
+zpool offline DataStore /dev/disk3 gives:
+cannot offline /dev/disk3: no valid replicas
+
+
+i also tried to export the pool, remove the usbstick from my Mac and  
+then import the pool again, but this gives also an error.
+
+Can anybody help?
+
+
+Greetinx Atze
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090626/8fd4deeb/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090626/8fd4deeb/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001675.html">[zfs-discuss] strange behavior once pool is destroyed
+</A></li>
+	<LI>Next message: <A HREF="001678.html">[zfs-discuss] Removing ZFS USB device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1677">[ date ]</a>
+              <a href="thread.html#1677">[ thread ]</a>
+              <a href="subject.html#1677">[ subject ]</a>
+              <a href="author.html#1677">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

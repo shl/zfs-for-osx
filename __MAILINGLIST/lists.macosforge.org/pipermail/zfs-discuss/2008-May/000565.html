@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Where's the self healing?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=6879ebc80805041110u206392dfx128dd411cc394126%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000564.html">
+   <LINK REL="Next"  HREF="000566.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Where's the self healing?</H1>
+    <B>Scott Palmer</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=6879ebc80805041110u206392dfx128dd411cc394126%40mail.gmail.com"
+       TITLE="[zfs-discuss] Where's the self healing?">swpalmer at gmail.com
+       </A><BR>
+    <I>Sun May  4 12:20:42 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000564.html">[zfs-discuss] Where's the self healing?
+</A></li>
+        <LI>Next message: <A HREF="000566.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#565">[ date ]</a>
+              <a href="thread.html#565">[ thread ]</a>
+              <a href="subject.html#565">[ subject ]</a>
+              <a href="author.html#565">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 4-May-08, at 2:10 PM, Matt Snow wrote:
+
+&gt;<i> the disk number doesn't matter. if you reboot your system the zpool  
+</I>&gt;<i> will be properly imported regardless of the disk. you could try  
+</I>&gt;<i> exporting the pool then re-importing it and that should work without  
+</I>&gt;<i> rebooting.
+</I>&gt;<i>
+</I>&gt;<i> you will need to run a 'zpool scrub tank' to kick off a resilver of  
+</I>&gt;<i> the disk mirror. Even on Solaris you have to manually kick off pool  
+</I>&gt;<i> resilvers. I thought I remembered seeing something about 'auto  
+</I>&gt;<i> resilvering' on the opensolaris forums but I can't find it. It could  
+</I>&gt;<i> be i'm thinking of 3ware's auto-rebuild.
+</I>&gt;<i>
+</I>&gt;<i> zpool replace is for when you have a drive assigned as a spare.
+</I>&gt;<i>  e.g.
+</I>&gt;<i> zpool create tank mirror disk1s2 disk2s2 spare disk3s2
+</I>&gt;<i>    or if you add another firewire/sata disk
+</I>&gt;<i> zpool add tank spare disk3s2
+</I>&gt;<i>
+</I>&gt;<i> hope this helps.
+</I>&gt;<i>
+</I>&gt;<i> ..Matt
+</I>
+
+It does.  Though I was under the impression that I wouldn't need to  
+manually kick off the healing.  I think it was someone blogging about  
+how wonderful it was to use ZFS on their (Solaris) laptop so that they  
+would automatically get a backup by plugging in their external drive  
+when they get back from a trip.
+
+I tried &quot;zpool scrub tank&quot; *before* rebooting, and that finally caused  
+the status to transition from online to:
+
+scott-palmers-imac:~ scott$ zpool status -xv
+   pool: tank
+  state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas  
+exist for
+	the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-2Q">http://www.sun.com/msg/ZFS-8000-2Q</A>
+  scrub: resilver in progress, 0.10% done, 0h33m to go
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         DEGRADED     0     0     0
+	  mirror     DEGRADED     0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  UNAVAIL  8.37K 43.2K     0  cannot open
+
+errors: No known data errors
+
+
+I don't understand why ZFS didn't enter that state automatically when  
+I powered down the drive in the first place.
+
+Though no resilvering appears to be happening yet.. despite the  
+&quot;resilver in progress, 0.10% done, 0h33m to go&quot;  After some time the  
+status still states:
+
+scott-palmers-imac:~ scott$ zpool status -xv
+   pool: tank
+  state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas  
+exist for
+	the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-2Q">http://www.sun.com/msg/ZFS-8000-2Q</A>
+  scrub: resilver completed with 0 errors on Sun May  4 14:26:21 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         DEGRADED     0     0     0
+	  mirror     DEGRADED     0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  UNAVAIL  8.37K 43.2K     0  cannot open
+
+errors: No known data errors
+
+
+I have to get ZFS to see the &quot;new&quot; device somehow.  Considering all  
+the scalability fuss about adding drives to a live ZFS pool I find it  
+hard to believe that a reboot is truly needed.
+
+Using the 'action' from the above status output I tried just for kicks:
+
+scott-palmers-imac:~ scott$ zpool online tank disk3s2
+cannot online disk3s2: no such device in pool
+
+which is what I expected.
+
+The zpool man page doesn't mention spares in relation to &quot;replace&quot; (or  
+&quot;attach&quot;, &quot;detach&quot;), that's why I thought it would be the right thing  
+to do.:
+
+        zpool replace [-f] pool old_device [new_device]
+
+            Replaces  old_device with new_device. This is equivalent  
+to attach-
+            ing new_device, waiting for it  to  resilver,  and  then   
+detaching
+            old_device.
+
+
+I decided to manually do the attach/detach in two steps and it appears  
+to work.  I didn't need to add the device as a spare.  Though this  
+time I gave the entire device to ZFS instead of the single ZFS slice  
+that was on it.  I suspect that wasn't the right thing to do.. since  
+ZFS probably wouldn't see the old slice that belonged to the mirror in  
+the first place when I did it that way.
+
+
+Scott
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080504/cab65388/smime.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080504/cab65388/smime.bin</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000564.html">[zfs-discuss] Where's the self healing?
+</A></li>
+	<LI>Next message: <A HREF="000566.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#565">[ date ]</a>
+              <a href="thread.html#565">[ thread ]</a>
+              <a href="subject.html#565">[ subject ]</a>
+              <a href="author.html#565">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

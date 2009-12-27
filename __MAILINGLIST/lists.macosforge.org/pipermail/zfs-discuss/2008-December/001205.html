@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] snapshots
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C7FCA3F04-8BF5-45E9-A663-6D4D85A80E3C%40tekserve.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001204.html">
+   <LINK REL="Next"  HREF="001206.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] snapshots</H1>
+    <B>John McAdams</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C7FCA3F04-8BF5-45E9-A663-6D4D85A80E3C%40tekserve.com%3E"
+       TITLE="[zfs-discuss] snapshots">johnemac at tekserve.com
+       </A><BR>
+    <I>Sat Dec 20 13:19:10 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001204.html">[zfs-discuss] snapshots
+</A></li>
+        <LI>Next message: <A HREF="001206.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1205">[ date ]</a>
+              <a href="thread.html#1205">[ thread ]</a>
+              <a href="subject.html#1205">[ subject ]</a>
+              <a href="author.html#1205">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I gave that a try
+
+sparky:~ johnemac$ zfs set mountpoint=/Volumes/AVClub reflection/AVClub
+sparky:~ johnemac$ ls -la /Volumes/
+total 14
+drwxrwxrwt@  7 root      admin   238 Dec 20 16:16 .
+drwxrwxr-t  33 root      admin  1190 Dec 16 08:45 ..
+drwxr-xr-x   3 johnemac  staff     3 Dec 20 16:14 AVClub
+drwxrwxr-t  29 root      admin  1054 Dec 17 09:10 Snow Leopard
+lrwxr-xr-x   1 root      admin     1 Dec 20 15:13 Sparky HD -&gt; /
+drwxrwxr-x@ 16 johnemac  staff   612 Dec 18 09:54 macie320
+drwxr-xr-x@  5 johnemac  staff     6 Dec 20 16:16 reflection
+
+
+I can write to it if I go to /Volumes, but it still doesn't appear on  
+the Desktop or in the Sidebar.
+
+Thanks for the help. I can use if from here.
+
+-- jmca
+
+On Dec 20, 2008, at 3:47 PM, Franz Schmalzl wrote:
+
+&gt;<i> try adjusting the mountpoint property
+</I>&gt;<i>
+</I>&gt;<i> zfs set mountpoint=mountpoint pool/filesystem
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> franz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 20.12.2008, at 21:34, John McAdams wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Could someone remind me how to get the ZFS FS to mount? I can  
+</I>&gt;&gt;<i> create one just fine using zfs create reflection/Music.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I see my Music FS under the reflection pool, but clicking on it and  
+</I>&gt;&gt;<i> issuing zfs mount commands don't work. I believe this has been  
+</I>&gt;&gt;<i> covered before but I can't find the thread.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> -- jmca
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Dec 20, 2008, at 3:02 PM, Richard McClellan wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Dec 20, 2008, at 11:46 , Boyd Waters wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Dec 20, 2008, at 12:23 PM, Richard McClellan wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> What is your snapshot command aliased to?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Very good question, very sorry I didn't show that:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> $ cat $(which snapshot)
+</I>&gt;&gt;&gt;&gt;<i> #! /bin/bash
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> zfs snapshot pool/bwaters@$(date +%FT%T)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hmm.  The command looks fine and works for me.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Others that have encountered this error (dataset busy) manually  
+</I>&gt;&gt;&gt;<i> umount/mount the filesystem and snapshots started working again.   
+</I>&gt;&gt;&gt;<i> Check this out: <A HREF="http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html">http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 		Rich
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081220/28ef9ac8/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081220/28ef9ac8/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001204.html">[zfs-discuss] snapshots
+</A></li>
+	<LI>Next message: <A HREF="001206.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1205">[ date ]</a>
+              <a href="thread.html#1205">[ thread ]</a>
+              <a href="subject.html#1205">[ subject ]</a>
+              <a href="author.html#1205">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

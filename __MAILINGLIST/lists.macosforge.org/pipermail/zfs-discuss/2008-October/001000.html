@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Now zpool status is giving me a kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181340y244f87a9r46f2a290541ba529%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000999.html">
+   <LINK REL="Next"  HREF="001001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Now zpool status is giving me a kernel panic</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181340y244f87a9r46f2a290541ba529%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Now zpool status is giving me a kernel panic">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Sat Oct 18 13:40:04 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000999.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+        <LI>Next message: <A HREF="001001.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1000">[ date ]</a>
+              <a href="thread.html#1000">[ thread ]</a>
+              <a href="subject.html#1000">[ subject ]</a>
+              <a href="author.html#1000">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmmmmm....curiouser and curiouser.
+
+I disconnected one of the disks in the raidz, booted into single user and
+did a zpool import. This time zpool status did not crash and gave me a
+correct pool status (i.e., the disk has a FAULTED state and the raidz1 and
+the pool itself are DEGRADED). So now that I have access to the system we
+come back to my previous question. How do I completely remove the raidz from
+the pool? The mirror is enough to hold the current data so it *SHOULD* be
+somehow possible to move all the data into the mirror.
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mario at tumbolia</A> ~ 1 % zpool status
+  pool: phlogiston
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing
+or
+        invalid.  Sufficient replicas exist for the pool to continue
+        functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+ scrub: resilver completed with 0 errors on Sat Oct 18 22:32:59 2008
+config:
+
+        NAME                      STATE     READ WRITE CKSUM
+        phlogiston                DEGRADED     0     0     0
+          mirror                  ONLINE       0     0     0
+            disk3s2               ONLINE       0     0     0
+            disk4s2               ONLINE       0     0     0
+          raidz1                  DEGRADED     0     0     0
+            disk1s2               ONLINE       0     0     0
+            16293508939705988688  FAULTED      0     0     0  was
+/dev/disk1s2
+            disk2s2               ONLINE       0     0     0
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mario at tumbolia</A> ~ 2 % df -H
+Filesystem     Size   Used  Avail Capacity  Mounted on
+/dev/disk0s2   120G    80G    39G    68%    /
+devfs          117k   117k     0B   100%    /dev
+fdesc          1.0k   1.0k     0B   100%    /dev
+phlogiston     2.0T   966G   1.0T    50%    /Volumes/phlogiston
+
+According to the df's I did before creating the raidz, I have about 983G in
+the mirror.
+
+On Sat, Oct 18, 2008 at 10:25 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+
+&gt;<i> If the problem is with the raidz, is there any way of telling ZFS not to
+</I>&gt;<i> look for it and just make do with the mirror? The data I have all fits in
+</I>&gt;<i> the mirror and I haven't (yet) written anything into the disks since adding
+</I>&gt;<i> the raidz, so I imagine it's possible that the data is still just in the
+</I>&gt;<i> mirror and the raidz is still empty. One can hope. The problem right now is
+</I>&gt;<i> that if I do an import without connecting the raidz drives it (obviously)
+</I>&gt;<i> fails because the raidz isn't present.
+</I>&gt;<i>
+</I>&gt;<i> AARRRGGGHHHH!!!!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/ed682bcc/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/ed682bcc/attachment.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000999.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+	<LI>Next message: <A HREF="001001.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1000">[ date ]</a>
+              <a href="thread.html#1000">[ thread ]</a>
+              <a href="subject.html#1000">[ subject ]</a>
+              <a href="author.html#1000">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

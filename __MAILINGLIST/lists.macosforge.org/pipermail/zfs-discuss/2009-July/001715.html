@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] globalsan
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20globalsan&In-Reply-To=%3C8751E00E-26F4-4F6E-A819-1DC643EF364E%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001714.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] globalsan</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20globalsan&In-Reply-To=%3C8751E00E-26F4-4F6E-A819-1DC643EF364E%40sun.com%3E"
+       TITLE="[zfs-discuss] globalsan">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Thu Jul 23 13:08:13 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001714.html">[zfs-discuss] globalsan
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1715">[ date ]</a>
+              <a href="thread.html#1715">[ thread ]</a>
+              <a href="subject.html#1715">[ subject ]</a>
+              <a href="author.html#1715">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>oh .. also use build 113 or higher .. dan maslowski had the answer:
+<A HREF="http://opensolaris.org/jive/thread.jspa?threadID=96863&amp;tstart=89">http://opensolaris.org/jive/thread.jspa?threadID=96863&amp;tstart=89</A>
+
+btw - if you setup your publisher to pkg.opensolaris.org/dev and  
+update .. resist going to 118 - there's some broken-ness around FCOE  
+that can make it more difficult to boot (have to hack an SMF  
+manifest), and 119 will be broken too .. 120 should be more stable  
+when it comes out, or 117 should be fine.
+
+On Jul 23, 2009, at 3:41 PM, Jonathan Edwards wrote:
+
+&gt;<i> you've got a COMSTAR iSCSI LUN presented off an opensolaris host to  
+</I>&gt;<i> a mac globalsan initiator?
+</I>&gt;<i>
+</I>&gt;<i> what's the backing store here, and are you using CHAP or no?
+</I>&gt;<i>
+</I>&gt;<i> On Jul 23, 2009, at 12:32 PM, Dirk Schelfhout wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I got it connected to opensolaris.
+</I>&gt;&gt;<i> a 100 g disk shows up in disk utility.
+</I>&gt;&gt;<i> No matter what I try , I can't format this disk. ( yes I read I  
+</I>&gt;&gt;<i> have to choose apple partition and no journaling )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can anyone point me in the right direction ?
+</I>&gt;&gt;<i> The disks do spin up on the opensolaris system when I try to format  
+</I>&gt;&gt;<i> the 100g disk.
+</I>&gt;&gt;<i> I am a complete newbie to this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Dirk
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> These Are the errors that show up in console :
+</I>&gt;&gt;<i> tail /var/log/system.log
+</I>&gt;&gt;<i> Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 beginning  
+</I>&gt;&gt;<i> recovery
+</I>&gt;&gt;<i> Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 completing  
+</I>&gt;&gt;<i> recovery
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 connection  
+</I>&gt;&gt;<i> to target &quot;iqn.1986-03.com.sun:02:42826d54-6355-c26c-bc49- 
+</I>&gt;&gt;<i> bea7b4064318&quot; in state 4 failed with error 1301 (task has taken too  
+</I>&gt;&gt;<i> long to complete)
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 beginning  
+</I>&gt;&gt;<i> recovery
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition failed for  
+</I>&gt;&gt;<i> disk SUN COMSTAR Media  Input/output error
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 completing  
+</I>&gt;&gt;<i> recovery
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook kernel[0]: disk2: I/O error.
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition complete.
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook Disk Utility[13553]:
+</I>&gt;&gt;<i> Jul 23 18:14:53 intelBook Disk Utility[13553]: Error with  
+</I>&gt;&gt;<i> partition: Input/output error
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001714.html">[zfs-discuss] globalsan
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1715">[ date ]</a>
+              <a href="thread.html#1715">[ thread ]</a>
+              <a href="subject.html#1715">[ subject ]</a>
+              <a href="author.html#1715">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

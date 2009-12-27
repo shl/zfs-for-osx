@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Fwd: flash sound
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Fwd%3A%20flash%20sound&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000310.html">
+   <LINK REL="Next"  HREF="000314.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Fwd: flash sound</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Fwd%3A%20flash%20sound&In-Reply-To="
+       TITLE="[zfs-discuss] Fwd: flash sound">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Tue Mar 11 16:58:44 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000310.html">[zfs-discuss] flash sound
+</A></li>
+        <LI>Next message: <A HREF="000314.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#311">[ date ]</a>
+              <a href="thread.html#311">[ thread ]</a>
+              <a href="subject.html#311">[ subject ]</a>
+              <a href="author.html#311">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+&gt;<i> not immediately, other then nested filesystems in zfs pools are  
+</I>&gt;<i> still confusing Finder and the upper layers since they aren't really  
+</I>&gt;<i> sure how to handle them.  My guess is this has somethign to do with  
+</I>&gt;<i> that problem that upper layers where the flash is trying to run.  I  
+</I>&gt;<i> will add this information to the bug I have tracking issues like  
+</I>&gt;<i> this with userland and nested filesystems.
+</I>
+yap, that was my first guess too..
+
+it's not just flash by the way, firefox is confused to ( whon  
+installing addons e.g.)
+
+as you said.. osx doesn't handle it the best way at the moment
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> apologies for the weirdnes.... still getting stuff like this  
+</I>&gt;<i> hammered out..
+</I>&gt;<i>
+</I>
+no problem :)
+
+kind regards
+franz
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mar 11, 2008, at 3:26 PM, Franz Schmalzl wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ok this is very odd, but i have got the solution
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> again my zfs setup
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> NAME                 USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;&gt;&gt;<i> hometank            58,4G   302G  16,6M  /Users
+</I>&gt;&gt;&gt;<i> hometank/ruebezahl  58,4G   302G  58,4G  /Users/ruebezahl
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> when my homefolder is storden in a zfs filesystem inside my zpool
+</I>&gt;&gt;&gt;<i> flash sound is not working
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> when my homefolder is stored on the root of my zpool it works
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ( i tried with a test user, first created his homefolder on the  
+</I>&gt;&gt;&gt;<i> root of hometank ---&gt; flash sound worked; then created another zfs  
+</I>&gt;&gt;&gt;<i> filesystem and created a new user inside ---&gt; sound was gone )
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> noel, can you explain ?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000310.html">[zfs-discuss] flash sound
+</A></li>
+	<LI>Next message: <A HREF="000314.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#311">[ date ]</a>
+              <a href="thread.html#311">[ thread ]</a>
+              <a href="subject.html#311">[ subject ]</a>
+              <a href="author.html#311">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

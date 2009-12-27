@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] strange behavior once pool is destroyed
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20strange%20behavior%20once%20pool%20is%20destroyed&In-Reply-To=%3C4A3F9366.1050305%40phys.washington.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001673.html">
+   <LINK REL="Next"  HREF="001677.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] strange behavior once pool is destroyed</H1>
+    <B>Jared Nance</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20strange%20behavior%20once%20pool%20is%20destroyed&In-Reply-To=%3C4A3F9366.1050305%40phys.washington.edu%3E"
+       TITLE="[zfs-discuss] strange behavior once pool is destroyed">nancejk at phys.washington.edu
+       </A><BR>
+    <I>Mon Jun 22 07:21:26 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001673.html">[zfs-discuss] strange behavior once pool is destroyed
+</A></li>
+        <LI>Next message: <A HREF="001677.html">[zfs-discuss] Removing ZFS USB device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1675">[ date ]</a>
+              <a href="thread.html#1675">[ thread ]</a>
+              <a href="subject.html#1675">[ subject ]</a>
+              <a href="author.html#1675">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Jonathan-
+Thanks for the reply - very useful information for the future.  Of
+course I usually learn the hard way! 
+
+Yes, the pool d1 'exists', although what really happened was a format
+with diskutil where I named the ZFS volume.  After doing that, I could
+no longer create pools, but 'zpool status' would kernel panic my system. 
+
+Thanks for all the help.
+Jared N
+
+
+Jonathan Edwards wrote:
+&gt;<i> no need to zero the whole disk .. you can use gpt(8) to destroy the
+</I>&gt;<i> EFI label ..
+</I>&gt;<i> then you probably want to relabel with the procedures on the
+</I>&gt;<i> macosforge page
+</I>&gt;<i>
+</I>&gt;<i> it appears that on disk4 you had a pool named d1 still on it
+</I>&gt;<i> (btw - you can still import destroyed pools with a zpool import -D
+</I>&gt;<i> &lt;pool&gt;)
+</I>&gt;<i>
+</I>&gt;<i> now if you wanted to force creation - just use create -f &lt;newpool&gt;
+</I>&gt;<i>
+</I>&gt;<i> On Jun 21, 2009, at 5:52 PM, Jared Nance wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi Dirk-
+</I>&gt;&gt;<i> Yes, I think you are right - I just stumbled across a post some time ago
+</I>&gt;&gt;<i> by one of the engineers who indicated that unlike Solaris, OSX ZFS does
+</I>&gt;&gt;<i> -not- use zpool.cache to track label names... Hence my problem.  I am
+</I>&gt;&gt;<i> currently zeroing the entire drive to avoid any issues.  I will let the
+</I>&gt;&gt;<i> list know how this goes...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jared N
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Dirk Schelfhout wrote:
+</I>&gt;&gt;&gt;<i> I believe you have to use dd to wipe the drive at certain points.
+</I>&gt;&gt;&gt;<i> look for it in the archives of the list.
+</I>&gt;&gt;&gt;<i> Dirk
+</I>&gt;&gt;&gt;<i> On 21 Jun 2009, at 22:45, Jared Nance wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Hi All-
+</I>&gt;&gt;&gt;&gt;<i> First of all, thanks in advance for any light you can shed on this
+</I>&gt;&gt;&gt;&gt;<i> subject.  My ZFS installation on OSX is behaving very strangely
+</I>&gt;&gt;&gt;&gt;<i> after I
+</I>&gt;&gt;&gt;&gt;<i> have destroyed a RAIDZ-1.  The setup is 3 external drives connected by
+</I>&gt;&gt;&gt;&gt;<i> USB (used to be FW800, but a low quality cable was causing many
+</I>&gt;&gt;&gt;&gt;<i> issues),
+</I>&gt;&gt;&gt;&gt;<i> RAIDZed.  I played around for a while, and eventually realized I could
+</I>&gt;&gt;&gt;&gt;<i> use a clean sweep.  So, I destroyed the pool, formatted the drives,
+</I>&gt;&gt;&gt;&gt;<i> and
+</I>&gt;&gt;&gt;&gt;<i> all of a sudden, ZFS refuses to re-create a pool of any kind of out
+</I>&gt;&gt;&gt;&gt;<i> these drives.  Furthermore, a disk label that I applied as an HFS+
+</I>&gt;&gt;&gt;&gt;<i> volume label seems to be quite persistent - no matter how many wipes I
+</I>&gt;&gt;&gt;&gt;<i> do, I cannot change the name.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Diskutil report:
+</I>&gt;&gt;&gt;&gt;<i> /dev/disk0
+</I>&gt;&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;&gt;<i>  0:      GUID_partition_scheme                        *111.8 Gi  
+</I>&gt;&gt;&gt;&gt;<i> disk0
+</I>&gt;&gt;&gt;&gt;<i>  1:                        EFI                         200.0 Mi
+</I>&gt;&gt;&gt;&gt;<i> disk0s1
+</I>&gt;&gt;&gt;&gt;<i>  2:                  Apple_HFS Macintosh HD            111.5 Gi
+</I>&gt;&gt;&gt;&gt;<i> disk0s2
+</I>&gt;&gt;&gt;&gt;<i> /dev/disk1
+</I>&gt;&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;&gt;<i>  0:      GUID_partition_scheme                        *596.2 Gi  
+</I>&gt;&gt;&gt;&gt;<i> disk1
+</I>&gt;&gt;&gt;&gt;<i>  1:                        EFI                         200.0 Mi
+</I>&gt;&gt;&gt;&gt;<i> disk1s1
+</I>&gt;&gt;&gt;&gt;<i>  2:                 Apple_RAID                         595.9 Gi
+</I>&gt;&gt;&gt;&gt;<i> disk1s2
+</I>&gt;&gt;&gt;&gt;<i>  3:                 Apple_Boot Boot OSX                128.0 Mi
+</I>&gt;&gt;&gt;&gt;<i> disk1s3
+</I>&gt;&gt;&gt;&gt;<i> /dev/disk2
+</I>&gt;&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;&gt;<i>  0:      GUID_partition_scheme                        *596.2 Gi  
+</I>&gt;&gt;&gt;&gt;<i> disk2
+</I>&gt;&gt;&gt;&gt;<i>  1:                        EFI                         200.0 Mi
+</I>&gt;&gt;&gt;&gt;<i> disk2s1
+</I>&gt;&gt;&gt;&gt;<i>  2:                 Apple_RAID                         595.9 Gi
+</I>&gt;&gt;&gt;&gt;<i> disk2s2
+</I>&gt;&gt;&gt;&gt;<i>  3:                 Apple_Boot Boot OSX                128.0 Mi
+</I>&gt;&gt;&gt;&gt;<i> disk2s3
+</I>&gt;&gt;&gt;&gt;<i> /dev/disk3
+</I>&gt;&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;&gt;<i>  0:                  Apple_HFS deepfreeze             *595.9 Gi  
+</I>&gt;&gt;&gt;&gt;<i> disk3
+</I>&gt;&gt;&gt;&gt;<i> /dev/disk4
+</I>&gt;&gt;&gt;&gt;<i>  #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;&gt;&gt;<i>  0:      GUID_partition_scheme                        *596.2 Gi  
+</I>&gt;&gt;&gt;&gt;<i> disk4
+</I>&gt;&gt;&gt;&gt;<i>  1:                        EFI                         200.0 Mi
+</I>&gt;&gt;&gt;&gt;<i> disk4s1
+</I>&gt;&gt;&gt;&gt;<i>  2:                        ZFS d1                      595.9 Gi
+</I>&gt;&gt;&gt;&gt;<i> disk4s2
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> If I try to create a simple pool of one drive:
+</I>&gt;&gt;&gt;&gt;<i> heaviside-2% zpool create testpool /dev/disk4s2
+</I>&gt;&gt;&gt;&gt;<i> cannot create 'testpool': one or more vdevs refer to the same device
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Using any other drive results in the same issue.  Does anybody know
+</I>&gt;&gt;&gt;&gt;<i> what's going on?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Jared Nance
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001673.html">[zfs-discuss] strange behavior once pool is destroyed
+</A></li>
+	<LI>Next message: <A HREF="001677.html">[zfs-discuss] Removing ZFS USB device
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1675">[ date ]</a>
+              <a href="thread.html#1675">[ thread ]</a>
+              <a href="subject.html#1675">[ subject ]</a>
+              <a href="author.html#1675">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20kernel%20panic&In-Reply-To=%3C0285D98A-8459-4B68-B924-022826512AE4%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001043.html">
+   <LINK REL="Next"  HREF="001045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs kernel panic</H1>
+    <B>Petite Abeille</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20kernel%20panic&In-Reply-To=%3C0285D98A-8459-4B68-B924-022826512AE4%40gmail.com%3E"
+       TITLE="[zfs-discuss] zfs kernel panic">petite.abeille at gmail.com
+       </A><BR>
+    <I>Mon Nov 10 11:35:28 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001043.html">[zfs-discuss] zfs directory names with umlaut O's (i.e. ?),	cause goofy behavior with finder.
+</A></li>
+        <LI>Next message: <A HREF="001045.html">[zfs-discuss] ZFS vs. Seagate 1.5TB drives?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1044">[ date ]</a>
+              <a href="thread.html#1044">[ thread ]</a>
+              <a href="subject.html#1044">[ subject ]</a>
+              <a href="author.html#1044">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+Not sure if this is the appropriate place to report such thing, but  
+every now and then I'm getting the following kernel panic while  
+creating a bunch of directories:
+
+panic(cpu 0 caller 0x0019E034): &quot;trying to interlock destroyed mutex  
+0x19160fb8&quot;@/SourceCache/xnu/xnu-1228.7.58/osfmk/i386/locks_i386.c:1760
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x79a978d8 : 0x12b0fa (0x459234 0x79a9790c 0x133243 0x0)
+0x79a97928 : 0x19e034 (0x460f54 0x19160fb8 0x937f900 0xf711e00)
+0x79a97948 : 0x19b108 (0x19160fb8 0x293 0x79a97978 0x5afc110b)
+0x79a97958 : 0x5afc110b (0x19160fb8 0x0 0x1 0x19160f80)
+0x79a97978 : 0x5afa44c2 (0x19160fb8 0x1e343580 0x4 0x7dcad030)
+0x79a979a8 : 0x5afa6df6 (0xd3cfb00 0x69d0020 0x0 0x2eefcb90)
+0x79a97a48 : 0x5afa6f0d (0x19160f80 0x69d0020 0x8 0x0)
+0x79a97aa8 : 0x5afa3908 (0x19160f80 0x69d0020 0x8 0x0)
+0x79a97b08 : 0x5afcc976 (0x76ae0b0 0xd596ad 0x0 0x69d0020)
+0x79a97b88 : 0x5af6ae63 (0x1a12e000 0x7be0ef78 0x1e343580 0x1)
+0x79a97c08 : 0x1f3a83 (0x79a97c24 0x0 0x0 0x0)
+0x79a97c58 : 0x1dbc89 (0xf4800e0 0x79a97e4c 0x79a97e24 0x79a97e8c)
+0x79a97cb8 : 0x1e70d9 (0xf4800e0 0x79a97e4c 0x79a97e24 0x79a97e8c)
+0x79a97e68 : 0x1e7302 (0x79a97e8c 0xfeaa7430 0x1 0x0)
+0x79a97f78 : 0x3ddd6e (0x7072310 0x80fc220 0x80fc264 0x685c0c0)
+0x79a97fc8 : 0x19f3b3 (0x803e440 0x0 0x10 0x803e440)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x5af66000-&gt;0x5b031fff
+
+BSD process name corresponding to current thread: lua
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBook3,1 (Mac-F22788C8)
+
+HTH.
+
+Cheers,
+
+--
+PA.
+<A HREF="http://alt.textdrive.com/nanoki/">http://alt.textdrive.com/nanoki/</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001043.html">[zfs-discuss] zfs directory names with umlaut O's (i.e. ?),	cause goofy behavior with finder.
+</A></li>
+	<LI>Next message: <A HREF="001045.html">[zfs-discuss] ZFS vs. Seagate 1.5TB drives?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1044">[ date ]</a>
+              <a href="thread.html#1044">[ thread ]</a>
+              <a href="subject.html#1044">[ subject ]</a>
+              <a href="author.html#1044">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

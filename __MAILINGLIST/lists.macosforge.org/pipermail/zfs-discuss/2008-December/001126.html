@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Possible Mirror a stripe (or raidz) pool? Or	Replicate to separate pool?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Possible%20Mirror%20a%20stripe%20%28or%20raidz%29%20pool%3F%20Or%0A%09Replicate%20to%20separate%20pool%3F&In-Reply-To=%3Cf8207d190812011839h3a1a21d6v1e3b2bb0b6077b6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001123.html">
+   <LINK REL="Next"  HREF="001128.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Possible Mirror a stripe (or raidz) pool? Or	Replicate to separate pool?</H1>
+    <B>Aaron Berland</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Possible%20Mirror%20a%20stripe%20%28or%20raidz%29%20pool%3F%20Or%0A%09Replicate%20to%20separate%20pool%3F&In-Reply-To=%3Cf8207d190812011839h3a1a21d6v1e3b2bb0b6077b6%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Possible Mirror a stripe (or raidz) pool? Or	Replicate to separate pool?">fruitboi at gmail.com
+       </A><BR>
+    <I>Mon Dec  1 18:39:45 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001123.html">[zfs-discuss] Places home icon showing as pool name,	not user name
+</A></li>
+        <LI>Next message: <A HREF="001128.html">[zfs-discuss] Possible Mirror a stripe (or raidz) pool? Or	Replicate to separate pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1126">[ date ]</a>
+              <a href="thread.html#1126">[ thread ]</a>
+              <a href="subject.html#1126">[ subject ]</a>
+              <a href="author.html#1126">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi All,
+
+I've totally fallen in love with ZFS.  I started on OpenSolaris and have
+migrated to using it on OS X.  As we all have seen things aren't quite there
+yet with OS X / Finder integration and there are definitely bugs with
+interaction with DiskUtility.
+
+Anyway, I am trying to figure out the best way to backup or replicate (yes,
+I know the difference) my storage pool. I have 4x 320GB Seagate 7200.10
+drives.  I also have 3x  Seagate 250 GB USB drives.  These have given me
+nothing but headache and won't stay connected, so they have been deemed
+unreliable for ZFS (sigh - I was hoping to use these as a backup for the
+main pool.)
+
+Is it possible to mirror a raidz or striped pool to a single device
+effectively?
+Is it better to replicate the original pool to a separate pool?  If so, what
+is the best way?  Snapshots and send/recv are still a little taboo for me
+:<i>-/
+</I>
+I would like to pickup a 1TB drive and increase my storage space and
+redundancy by:
+a. converting the raidz pool to a striped pool and mirror it onto the 1TB
+drive (3x320 stripe + 1TB mirror of the stripe)
+b. Keep the raidz pool as is and do replication of that pool onto the 1TB
+drive as a separate 1 drive zfs &quot;pool&quot;
+c. Go crazy and use NexentaSTOR on a VM to export the storage with iSCSI and
+have a real HFS+ volume on the Mac (I actually did this, but performance is
+abysmal.  Average of 5MB/s writes and peaks at about 20MB/s.  Reads are no
+faster.)
+
+Since snapshots aren't fully baked in OS X yet, I think the easiest thing
+would be option a.  (Feedback welcome! I haven't played with snapshots yet)
+but I can't figure how to do a mirror of a stripe.
+
+I'm also considering buying another small SATA drive for OS X so I would
+have 4x 320GB for a raidz pool.
+
+Basically my question is: what is a good, simple backup or replication plan
+for this scenario?
+
+Thoughts?
+Aaron
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081201/2225c91a/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081201/2225c91a/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001123.html">[zfs-discuss] Places home icon showing as pool name,	not user name
+</A></li>
+	<LI>Next message: <A HREF="001128.html">[zfs-discuss] Possible Mirror a stripe (or raidz) pool? Or	Replicate to separate pool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1126">[ date ]</a>
+              <a href="thread.html#1126">[ thread ]</a>
+              <a href="subject.html#1126">[ subject ]</a>
+              <a href="author.html#1126">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

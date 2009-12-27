@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] USB and Firewire Performance Problem Question...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3CF9EC227E-6813-4E38-B01E-9E725B8119FE%40me.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001543.html">
+   <LINK REL="Next"  HREF="001545.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] USB and Firewire Performance Problem Question...</H1>
+    <B>David Reed</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3CF9EC227E-6813-4E38-B01E-9E725B8119FE%40me.com%3E"
+       TITLE="[zfs-discuss] USB and Firewire Performance Problem Question...">david.reed at me.com
+       </A><BR>
+    <I>Mon Apr 27 19:17:21 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001543.html">[zfs-discuss] This looks wrong ...
+</A></li>
+        <LI>Next message: <A HREF="001545.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1544">[ date ]</a>
+              <a href="thread.html#1544">[ thread ]</a>
+              <a href="subject.html#1544">[ subject ]</a>
+              <a href="author.html#1544">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the suggestions.  Not wanting to be without a good reason  
+for the performance problem (especially given it's not clearly a disk/ 
+disk interface related problem because it's the same USB disk driver  
+for HFS+ and ZFS), I recompiled the source for zfs-119 with ZFS_DEBUG  
+turned on.
+
+I notice the following in the error logs when the &quot;pause&quot; occurs (as  
+best as I can tell based on occurrence count and lots of repeated  
+trials - doing a tail -f on syslog has a slight pause from &quot;reality&quot;)...
+
+Apr 27 22:08:51 david kernel[0]: zvec_func[4]: error 17
+
+That ties back to a section of code in zfs_ioctl.c.  Any ideas on what  
+the error actually means?
+
+         /*
+          * Ensure that all pool/dataset names are valid before we  
+pass down to
+          * the lower layers.
+          */
+         if (error == 0) {
+                 zc-&gt;zc_name[sizeof (zc-&gt;zc_name) - 1] = '\0';
+                 switch (zfs_ioc_vec[vec].zvec_namecheck) {
+                 case POOL_NAME:
+                         if (pool_namecheck(zc-&gt;zc_name, NULL, NULL) ! 
+= 0)
+                                 error = EINVAL;
+                         break;
+
+                 case DATASET_NAME:
+                         if (dataset_namecheck(zc-&gt;zc_name, NULL,  
+NULL) != 0)
+                                 error = EINVAL;
+                         break;
+
+                 case NO_NAME:
+                         break;
+                 }
+         }
+
+         if (error == 0) {
+                 error = zfs_ioc_vec[vec].zvec_func(zc);
+                 if (error == 0) {
+                         if (zfs_ioc_vec[vec].zvec_his_log == B_TRUE)
+                                 zfs_log_history(zc);
+                 } else {
+#ifdef ZFS_DEBUG
+                         printf(&quot;zvec_func[%d]: error %d\n&quot;, vec,  
+error);
+#endif
+                 }
+         }
+
+
+On Apr 23, 2009, at 6:35 PM, David Reed wrote:
+
+&gt;<i> Thanks Richard.  Anyone have any idea if similar settings exist for  
+</I>&gt;<i> the OS X implementation?  I ran a strings on the kernel extension  
+</I>&gt;<i> and didn't see this one...
+</I>&gt;<i>
+</I>&gt;<i> -david
+</I>&gt;<i>
+</I>&gt;<i> On Apr 23, 2009, at 4:07 PM, Richard Elling  
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">richard.elling at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> David Reed wrote:
+</I>&gt;&gt;&gt;<i> An update if it helps anyone with ideas....
+</I>&gt;&gt;&gt;<i> Writing a different set of file sizes to the disks don't show the  
+</I>&gt;&gt;&gt;<i> problem (at least not as acutely).   So if I'm copying lots of  
+</I>&gt;&gt;&gt;<i> smaller files (&lt; 1M) I don't see the hit.  It seems to be related  
+</I>&gt;&gt;&gt;<i> (right now) to the file sizes.  Copying a lot of 2.8Mish files  
+</I>&gt;&gt;&gt;<i> seems to show the worst behavior.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Any ideas?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'd suspect buffer overrun on the disk side.  If so, then the  
+</I>&gt;&gt;<i> behaviour
+</I>&gt;&gt;<i> would be something like:
+</I>&gt;&gt;<i>  spit out some data
+</I>&gt;&gt;<i>  wait for a timeout
+</I>&gt;&gt;<i>  re-spit out data that was dropped by the storage
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Solaris, you can change the zfs_vdev_max_pending which
+</I>&gt;&gt;<i> would allow finer control of this. Indeed, there are devices which
+</I>&gt;&gt;<i> require you to do this, or risk the porpoising behaviour I described.
+</I>&gt;&gt;<i> <A HREF="http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29">http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- richard
+</I>&gt;&gt;<i>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001543.html">[zfs-discuss] This looks wrong ...
+</A></li>
+	<LI>Next message: <A HREF="001545.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1544">[ date ]</a>
+              <a href="thread.html#1544">[ thread ]</a>
+              <a href="subject.html#1544">[ subject ]</a>
+              <a href="author.html#1544">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

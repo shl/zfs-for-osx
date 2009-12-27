@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20silent%20death&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000679.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs silent death</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20silent%20death&In-Reply-To="
+       TITLE="[zfs-discuss] zfs silent death">caronni at gmail.com
+       </A><BR>
+    <I>Tue Jul  1 02:53:15 PDT 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000679.html">[zfs-discuss] zfs silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#677">[ date ]</a>
+              <a href="thread.html#677">[ thread ]</a>
+              <a href="subject.html#677">[ subject ]</a>
+              <a href="author.html#677">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I recently installed zfs-117 on a brand new, fully patched MacPro. Then I
+created 3 100GB files on the native file system, and put them into a simple
+zpool. Finally I instantiated zfs on it, with compression enabled. So far so
+good.
+
+My next operation was an rsync --archive -H --sparse from a remote machine.
+This was supposed to copy in about 260GB of data in ca. 900'000 files,
+however the machine stopped responding after copying in about 70GB. When I
+say 'stopped responding' I mean that all applications became unresponsive
+(spinning color ball). Mouse still active. Pressing the power button and
+waiting a minute or two would yield a suspended mac. After resume, all
+applications would still be dead.
+
+I power-cycled the mac, and restarted the rsync process. This time, it was
+able to go through a very few files, before dying again. Again, the entire
+machine was stuck.
+
+No log messages, no kernel messages, no dump -- the machine just being
+unresponsive. This was reproducable several times.
+
+Fine, I thought. Let's try a real disk instead of files. Took a 1TB disk
+(internal), nuked everything on it, and used diskutil to create a zpool on
+with the disk in it, and then a zfs file system.
+
+Same operation, same behaviour. After the third or fourth try, the system
+would not reboot anymore, instead getting stuck on a light-blue display.
+Frustrated, I booted from DVD, and nuked the ZFS experiment, giving up for
+now.
+
+
+Any recommendations on how to proceed with this issue? Should I file a
+ticket in <A HREF="http://zfs.macosforge.org/trac/newticket">http://zfs.macosforge.org/trac/newticket</A> ? Is this a known issue
+(I think not?), or is there a way I can gather more information for
+debugging purposes? I understand this incarnation of ZFS is work in progress
+-- and if I can help by providing useful information I'll gladly do so.
+
+Germano
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080701/d041368a/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080701/d041368a/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000679.html">[zfs-discuss] zfs silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#677">[ date ]</a>
+              <a href="thread.html#677">[ thread ]</a>
+              <a href="subject.html#677">[ subject ]</a>
+              <a href="author.html#677">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

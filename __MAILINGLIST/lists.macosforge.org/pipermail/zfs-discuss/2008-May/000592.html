@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] my first zfs panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=037D2079-7D34-4841-91D8-D32A81ACE18F%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000591.html">
+   <LINK REL="Next"  HREF="000593.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] my first zfs panic</H1>
+    <B>Scott Palmer</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=037D2079-7D34-4841-91D8-D32A81ACE18F%40mac.com"
+       TITLE="[zfs-discuss] my first zfs panic">swpalmer at gmail.com
+       </A><BR>
+    <I>Sat May 10 05:37:46 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000591.html">[zfs-discuss] my first zfs panic
+</A></li>
+        <LI>Next message: <A HREF="000593.html">[zfs-discuss] my first zfs panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#592">[ date ]</a>
+              <a href="thread.html#592">[ thread ]</a>
+              <a href="subject.html#592">[ subject ]</a>
+              <a href="author.html#592">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 10-May-08, at 2:54 AM, Trevor Talbot wrote:
+
+&gt;<i> On May 9, 2008, at 2:04 PM, Andrei Dorofeev wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On Fri, May 9, 2008 at 1:17 PM, Scott Palmer &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">swpalmer at gmail.com</A>&gt;  
+</I>&gt;&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> The OS X kernel is 32-bit? (If so, Apple is doing some seriously  
+</I>&gt;&gt;&gt;<i> weaselly marketing.  I mean, more than expected :-) )
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> How do 64-bit drivers work?  According to this page (<A HREF="http://www.apple.com/macosx/technology/64bit.html">http://www.apple.com/macosx/technology/64bit.html</A> 
+</I>&gt;&gt;&gt;<i> ) on the Apple website it is possible to have 64-bit drivers, so  
+</I>&gt;&gt;&gt;<i> the next questions is why can't ZFS be one of them?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You [can't] have 64-bit drivers and 32-bit base kernel sharing the  
+</I>&gt;&gt;<i> same 32-bit virtual address space.  Even though this web page says  
+</I>&gt;&gt;<i> &quot;drivers&quot;, it probably refers to usermode drivers (like USB  
+</I>&gt;&gt;<i> printers, etc).
+</I>&gt;<i>
+</I>&gt;<i> While the kernel VM environment is 32bit, device drivers can work  
+</I>&gt;<i> with 64bit physical addresses. When dealing with appropriate  
+</I>&gt;<i> hardware, a 64bit-aware driver is able to avoid some intermediate  
+</I>&gt;<i> buffering that affects performance, especially when doing large I/O  
+</I>&gt;<i> on behalf of a process.
+</I>&gt;<i>
+</I>&gt;<i> That doesn't help ZFS at all, since it needs access to the entire  
+</I>&gt;<i> cache within the kernel's limited VM space.
+</I>
+I know that on other operating systems you can adjust the size of the  
+kernel VM space.  Is there an adjustable parameter that can give the  
+kernel more VM space?
+
+Is the VM space of the kernel shared with 32 bit applications?  I.e.  
+the upper 1GB of VM space for all processes is mapped to the kernel?
+
+I know this is off-topic so feel free to point me to the right place  
+for this info.
+
+Thanks,
+
+Scott
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080510/e9c68fee/smime.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080510/e9c68fee/smime.bin</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000591.html">[zfs-discuss] my first zfs panic
+</A></li>
+	<LI>Next message: <A HREF="000593.html">[zfs-discuss] my first zfs panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#592">[ date ]</a>
+              <a href="thread.html#592">[ thread ]</a>
+              <a href="subject.html#592">[ subject ]</a>
+              <a href="author.html#592">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

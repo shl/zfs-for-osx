@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] 2x panic()
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%202x%20panic%28%29&In-Reply-To=%3CD8C5B29A-9842-4EBB-9B44-32C210197081%40ironsoftware.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001251.html">
+   <LINK REL="Next"  HREF="001302.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] 2x panic()</H1>
+    <B>Christian Kendi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%202x%20panic%28%29&In-Reply-To=%3CD8C5B29A-9842-4EBB-9B44-32C210197081%40ironsoftware.de%3E"
+       TITLE="[zfs-discuss] 2x panic()">ksh at ironsoftware.de
+       </A><BR>
+    <I>Mon Jan  5 15:14:14 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001251.html">[zfs-discuss] 2x panic()
+</A></li>
+        <LI>Next message: <A HREF="001302.html">[zfs-discuss] Kernel panic when plugging in USB SSD drive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1260">[ date ]</a>
+              <a href="thread.html#1260">[ thread ]</a>
+              <a href="subject.html#1260">[ subject ]</a>
+              <a href="author.html#1260">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+some more:
+
+Mon Jan  5 17:08:03 2009
+panic(cpu 1 caller 0x357F4CD9): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c  
+line 1004: zp-&gt;z_dbuf_held == 0&quot;@/Volumes/pixie_dust/home/ndellofano/ 
+zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c:1004
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x3d2b34c8 : 0x12b4f3 (0x45b13c 0x3d2b34fc 0x1335e4 0x0)
+0x3d2b3518 : 0x357f4cd9 (0x3584e0ec 0x3584dc6c 0x3ec 0x3584dd3c)
+0x3d2b3558 : 0x3579f15b (0x378e90e0 0x1 0x3d2b3598 0xc503c20)
+0x3d2b3598 : 0x1f3f4b (0x3d2b35b4 0x216 0x3d2b35bc 0x4f9f40)
+0x3d2b35d8 : 0x1db4b5 (0x73cb490 0xc781e44 0x0 0x0)
+0x3d2b3628 : 0x1db6d1 (0x73cb490 0x1 0x3d2b3658 0x19eb5b)
+0x3d2b3678 : 0x1dd283 (0x0 0x4f93c0 0x108 0x1)
+0x3d2b36e8 : 0x357f65a0 (0x0 0x34 0x3d2b371c 0x3b9c53ac)
+0x3d2b3768 : 0x357f69b0 (0x3b9c53a8 0x0 0x600 0x0)
+0x3d2b3818 : 0x357fd48a (0x3d2b38c8 0x0 0x0 0x3d2b38c8)
+0x3d2b3898 : 0x357fd654 (0x3d2b38cc 0x36e6b8f0 0x3d2b3958 0x3d2b38c8)
+0x3d2b38e8 : 0x3579b3bc (0x36e6b8f0 0x3d2b3958 0x3d2b3df4 0x0)
+0x3d2b3998 : 0x1f2c7d (0x3d2b39b8 0x2 0x3d2b39e8 0x451c8a)
+0x3d2b39e8 : 0x1d464c (0x6cdf640 0x3d2b3df4 0x3d2b3f08 0xc781e44)
+0x3d2b3a78 : 0x1d53d1 (0x3d2b3ddc 0x100 0x3d2b3dfc 0x0)
+0x3d2b3b38 : 0x1e4060 (0x3d2b3ddc 0x0 0x0 0x0)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x35797000-&gt;0x35862fff
+
+BSD process name corresponding to current thread: du
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_I386
+System model name: MacBook1,1 (Mac-F4208CC8)
+
+
+Cheers,
+Chris.
+
+El Jan 3, 2009, a las 1:32 PM, Christian Kendi escribi&#243;:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Happy new year.
+</I>&gt;<i>
+</I>&gt;<i> Some bug reports:
+</I>&gt;<i>
+</I>&gt;<i> Fri Jan  2 14:12:10 2009
+</I>&gt;<i> panic(cpu 1 caller 0x34506CD9): &quot;[ZFS]: assertion failed in /Volumes/ 
+</I>&gt;<i> pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c  
+</I>&gt;<i> line 1004: zp-&gt;z_dbuf_held == 0&quot;@/Volumes/pixie_dust/home/ndellofano/ 
+</I>&gt;<i> zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c:1004
+</I>&gt;<i> Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x35dc3568 : 0x12b4f3 (0x45b13c 0x35dc359c 0x1335e4 0x0)
+</I>&gt;<i> 0x35dc35b8 : 0x34506cd9 (0x345600ec 0x3455fc6c 0x3ec 0x3455fd3c)
+</I>&gt;<i> 0x35dc35f8 : 0x344b115b (0x34447a60 0x1 0x35dc3648 0x142198)
+</I>&gt;<i> 0x35dc3638 : 0x1f3f4b (0x35dc3654 0x212 0x35dc365c 0x4f9f40)
+</I>&gt;<i> 0x35dc3678 : 0x1db4b5 (0x9ff6f80 0x47d95e4 0x0 0x0)
+</I>&gt;<i> 0x35dc36c8 : 0x1db6d1 (0x9ff6f80 0x1 0x35dc36f8 0x19eb5b)
+</I>&gt;<i> 0x35dc3718 : 0x1dd283 (0x0 0x4f93c0 0x45b0e290 0x0)
+</I>&gt;<i> 0x35dc3788 : 0x31f7f6 (0x0 0x34 0x35dc37dc 0xb254e4c)
+</I>&gt;<i> 0x35dc3828 : 0x327dec (0x3ea9804 0x57ecb50 0x35dc3f08 0x35dc3968)
+</I>&gt;<i> 0x35dc3998 : 0x1f2c7d (0x35dc39b8 0x2 0x35dc39e8 0x451c8a)
+</I>&gt;<i> 0x35dc39e8 : 0x1d464c (0x57ecb50 0x35dc3df4 0x35dc3f08 0x47d95e4)
+</I>&gt;<i> 0x35dc3a78 : 0x1d53d1 (0x35dc3ddc 0x100 0x35dc3dfc 0x0)
+</I>&gt;<i> 0x35dc3b38 : 0x1e4060 (0x35dc3ddc 0x0 0x0 0x0)
+</I>&gt;<i> 0x35dc3d88 : 0x1e468f (0xb0080648 0x0 0x0 0x0)
+</I>&gt;<i> 0x35dc3f48 : 0x1e4772 (0xb0080648 0x0 0x0 0x0)
+</I>&gt;<i> 0x35dc3f78 : 0x3df460 (0x47790e4 0x47d94e0 0x47d9524 0x0)
+</I>&gt;<i> 	Backtrace continues...
+</I>&gt;<i>      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>         com.apple.filesystems.zfs(8.0)@0x344a9000-&gt;0x34574fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: mdworker
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9G55
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+</I>&gt;<i> root:xnu-1228.9.59~1/RELEASE_I386
+</I>&gt;<i> System model name: MacBook1,1 (Mac-F4208CC8)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Fri Jan  2 16:35:14 2009
+</I>&gt;<i> panic(cpu 0 caller 0x46234D21): &quot;ZFS: I/O failure (write on  
+</I>&gt;<i> &lt;unknown&gt; off 0: zio 0x536f018 [L0 ZFS plain file] e400L/e400P  
+</I>&gt;<i> DVA[0]=&lt;0:140e690800:e400&gt; fletcher2 uncompressed LE contiguous  
+</I>&gt;<i> birth=136477 fill=1  
+</I>&gt;<i> cksum 
+</I>&gt;<i> = 
+</I>&gt;<i> 26480848a9950102 
+</I>&gt;<i> :75a84d27a14d1500:c7913a1e15fb05f2:82b8944c975b836d): error &quot; &quot;5&quot;@/ 
+</I>&gt;<i> Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/ 
+</I>&gt;<i> zio.c:918
+</I>&gt;<i> Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x4781be38 : 0x12b4f3 (0x45b13c 0x4781be6c 0x1335e4 0x0)
+</I>&gt;<i> 0x4781be88 : 0x46234d21 (0x462a46b0 0x462a46a4 0x462a0400 0x462d1670)
+</I>&gt;<i> 0x4781bf08 : 0x462313fb (0x536f018 0x590 0x4781bf28 0x4627818a)
+</I>&gt;<i> 0x4781bf48 : 0x462904a6 (0x536f018 0x4e18080 0x9e70f 0x462b95f4)
+</I>&gt;<i> 0x4781bfc8 : 0x1a017c (0x47d6470 0x0 0x1a30b5 0x829f2e8)
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0
+</I>&gt;<i>      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>         com.apple.filesystems.zfs(8.0)@0x4621d000-&gt;0x462e8fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9G55
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+</I>&gt;<i> root:xnu-1228.9.59~1/RELEASE_I386
+</I>&gt;<i> System model name: MacBook1,1 (Mac-F4208CC8)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Chris.
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.7 (Darwin)
+</I>&gt;<i>
+</I>&gt;<i> iD8DBQFJX69Ip+9ff145KVIRApBRAKCYy7YDWlxn9Lpe+ezQY4saZzKGIwCglpBT
+</I>&gt;<i> niAj8UaYdEQNXSmsf1vXJ98=
+</I>&gt;<i> =GcIS
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090105/07b464d0/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090105/07b464d0/attachment-0001.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: Mensaje firmado digitalmente
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090105/07b464d0/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090105/07b464d0/attachment-0001.bin</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001251.html">[zfs-discuss] 2x panic()
+</A></li>
+	<LI>Next message: <A HREF="001302.html">[zfs-discuss] Kernel panic when plugging in USB SSD drive
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1260">[ date ]</a>
+              <a href="thread.html#1260">[ thread ]</a>
+              <a href="subject.html#1260">[ subject ]</a>
+              <a href="author.html#1260">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

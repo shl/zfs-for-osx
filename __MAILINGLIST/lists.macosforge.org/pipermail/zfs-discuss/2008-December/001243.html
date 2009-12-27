@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Permissions are not enabled on the disk (-9973)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Permissions%20are%20not%20enabled%20on%20the%20disk%20%28-9973%29&In-Reply-To=%3C9E9379C7-E489-48A0-88D1-DCCA4CE4CAB4%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001239.html">
+   <LINK REL="Next"  HREF="001244.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Permissions are not enabled on the disk (-9973)</H1>
+    <B>Charles Darwin</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Permissions%20are%20not%20enabled%20on%20the%20disk%20%28-9973%29&In-Reply-To=%3C9E9379C7-E489-48A0-88D1-DCCA4CE4CAB4%40gmail.com%3E"
+       TITLE="[zfs-discuss] Permissions are not enabled on the disk (-9973)">darwinskernel at gmail.com
+       </A><BR>
+    <I>Tue Dec 30 04:09:43 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001239.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+        <LI>Next message: <A HREF="001244.html">[zfs-discuss] Permissions are not enabled on the disk (-9973)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1243">[ date ]</a>
+              <a href="thread.html#1243">[ thread ]</a>
+              <a href="subject.html#1243">[ subject ]</a>
+              <a href="author.html#1243">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>$ diskutil list |grep ZFS
+    3:                        ZFS neo                     81.3 Gi     
+disk0s3
+$ diskutil repairPermissions /dev/disk0s3
+Permissions are not enabled on the disk.
+Error encountered attempting to verify/repair permissions on disk0s3  
+neo: Permissions are not enabled on the disk (-9973)
+
+Any help is highly appreciated.
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001239.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+	<LI>Next message: <A HREF="001244.html">[zfs-discuss] Permissions are not enabled on the disk (-9973)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1243">[ date ]</a>
+              <a href="thread.html#1243">[ thread ]</a>
+              <a href="subject.html#1243">[ subject ]</a>
+              <a href="author.html#1243">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

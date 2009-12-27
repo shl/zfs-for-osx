@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Zpools went away - completely
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Zpools%20went%20away%20-%20completely&In-Reply-To=3E6FDC69-FBE4-4F65-8DFB-5571BD38492C%40asgaard.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000545.html">
+   <LINK REL="Next"  HREF="000511.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Zpools went away - completely</H1>
+    <B>Christopher LILJENSTOLPE</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Zpools%20went%20away%20-%20completely&In-Reply-To=3E6FDC69-FBE4-4F65-8DFB-5571BD38492C%40asgaard.org"
+       TITLE="[zfs-discuss] Zpools went away - completely">cdl at asgaard.org
+       </A><BR>
+    <I>Wed Apr 23 17:21:21 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000545.html">[zfs-discuss] Zpools went away - completely
+</A></li>
+        <LI>Next message: <A HREF="000511.html">[zfs-discuss] ZFS on Darwin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#547">[ date ]</a>
+              <a href="thread.html#547">[ thread ]</a>
+              <a href="subject.html#547">[ subject ]</a>
+              <a href="author.html#547">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Greetings,
+
+	Ok, I completely blew away everything but the read-only stuff, and  
+then installed 111.  It now works, and the pools came back.  Something  
+got queered by the upgrade.  Not sure what happened.
+
+	Chris
+
+On 23 Apr 2008, at 08.06, Christopher LILJENSTOLPE wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i> Greetings,
+</I>&gt;<i>
+</I>&gt;<i> 	There is a zpool.cache file there, and I can't import with an import.
+</I>&gt;<i>
+</I>&gt;<i> 	Chris
+</I>&gt;<i>
+</I>&gt;<i> On 19 Apr 2008, at 13.44, Jonathan Edwards wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> the cache file might have disappeared (/etc/zfs/zpool.cache)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> can you import them with a zpool import &lt;pool&gt;?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 19, 2008, at 11:14 AM, Christopher LILJENSTOLPE wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;&gt;&gt;<i> Hash: SHA1
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Yup, I did.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 	Chris
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 19 Apr 2008, at 00.37, Mr. Zorg wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Did you chown the files after dropping them in?  I could see  
+</I>&gt;&gt;&gt;&gt;<i> where that may cause what you're seeing. I had no problems.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Apr 18, 2008, at 6:32 PM, Christopher LILJENSTOLPE &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">cdl at asgaard.org</A> 
+</I>&gt;&gt;&gt;&gt;<i> &gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hash: SHA1
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Gretings,
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I just upgraded to the new release from 102A and had one 3x1TB  
+</I>&gt;&gt;&gt;&gt;&gt;<i> raidz pool on my 10.5 PPC server.  After I removed the files/ 
+</I>&gt;&gt;&gt;&gt;&gt;<i> dirs that 110 would over-write, I dropped the new 110 build  
+</I>&gt;&gt;&gt;&gt;&gt;<i> files in, and rebooted.  When the system came back, no pools or  
+</I>&gt;&gt;&gt;&gt;&gt;<i> filesystems built on them mounted, and a zpool list or zfs list  
+</I>&gt;&gt;&gt;&gt;&gt;<i> showed no pools found.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Fighting back some panic, I ripped out the 110 load, and pulled  
+</I>&gt;&gt;&gt;&gt;&gt;<i> the 102A files down and re-installed them.  Rebooted, and still,  
+</I>&gt;&gt;&gt;&gt;&gt;<i> no pools.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I have things backed up, but I'm &quot;concerned&quot; about pools that  
+</I>&gt;&gt;&gt;&gt;&gt;<i> just vanish in the night....
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Chris
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> iQEcBAEBAgAGBQJICUuuAAoJEGmx2Mt/+Iw/fKQH/if+dB97wiDMS/mxtU2nc6vy
+</I>&gt;&gt;&gt;&gt;&gt;<i> lMFoH7r5Wc8zHf6cX8aEWebxSDSnloA9K1V1nZBuXc7Vi2OJRxiyiI0/uLF+MPqO
+</I>&gt;&gt;&gt;&gt;&gt;<i> APh5evK/23iVfN/BUXY5elrPrkBnK53SV8Mf9QOi1kjM1WwH3YLy2mwjbl57f1zA
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hm+ea5NW7hl69CXrwHQmJK/qkPYyQnOU3Tf4Fns79m+dzyeHnd9gowd6NY0mduOH
+</I>&gt;&gt;&gt;&gt;&gt;<i> jX0w76mrFR8vGSslk1aVrHtUVCgyOsgcmZzBk/HfdnF0caNGdvN1POL3LRexWCRq
+</I>&gt;&gt;&gt;&gt;&gt;<i> 3EpeRlDQbxNfEmPMzhiVstGxsnlzRlYp8Bz+Pc/T2Z8WCFu8+dY7CrbdIBH36rw=
+</I>&gt;&gt;&gt;&gt;&gt;<i> =6qFq
+</I>&gt;&gt;&gt;&gt;&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> - ---
+</I>&gt;&gt;&gt;<i> &#26446;&#26607;&#30591;
+</I>&gt;&gt;&gt;<i> Check my PGP key here:
+</I>&gt;&gt;&gt;<i> <A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> iQEcBAEBAgAGBQJICgxPAAoJEGmx2Mt/+Iw/RM8H/1oTx7lloI3CZ35db2AewYKD
+</I>&gt;&gt;&gt;<i> E8tePxsDZitrdzK0pw4w1HNEAgnSy1+avBE+0p89eIdO6WFcSzf5kHiQEXcmie6m
+</I>&gt;&gt;&gt;<i> 1x1yiu7m4UzNZDwvFtCU+Uo/E4msMjyvjDXhjsaxEUsO2pDXq7v3BV3D8SaA5zn8
+</I>&gt;&gt;&gt;<i> GXJtq/Paa8MpJK5sgKeskHrbIbVJkvnLZI8BrMUO2ZNWxe18d6PBafpXpjCLE8rC
+</I>&gt;&gt;&gt;<i> h2NSY0U+1a6GWXj465O8PgRCbdd+tFBzq29M1HymZIgxFzMIPFKli7zvB1uNEx9E
+</I>&gt;&gt;&gt;<i> 3rkUPofzIr+lcBlQif8j084cW5t8EhyEo+v/9fHo4MEsRrudRhd3m+xztceIuiA=
+</I>&gt;&gt;&gt;<i> =b/WE
+</I>&gt;&gt;&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - ---
+</I>&gt;<i> &#26446;&#26607;&#30591;
+</I>&gt;<i> Check my PGP key here:
+</I>&gt;<i> <A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJID1CIAAoJEGmx2Mt/+Iw/4xAH+QG6dP6GvVJ04JBdH0w6gQ0A
+</I>&gt;<i> IhJsSCiVHHVWhA6N1x5OO3mPf+kBRAP3IOegQHEKOQbdbM6zZL4vZEZkYDXm6sAh
+</I>&gt;<i> 6286HJwRLQMVflfg4ZFAYKKYq7f+HoyQW8Hq3zd954ZMmd8eeFlTj6eMvurkjSzW
+</I>&gt;<i> /fEwTSKxQklOFi2Hktis1csp03mNTt8r1Md94QbGSXO4+Ul6Nwm7722np91aebkU
+</I>&gt;<i> 6S88Zf38cesl9TMpxQFbFThR8rsfPS04w+8UZZsp5gdqpwd3oEQKSGED/48w1D3I
+</I>&gt;<i> uWfBtPwtyxYxNv5AyJmHbaK7zYo8CBVCjVx1zSX8PwctiWVtDMs3IgEHusX99Cs=
+</I>&gt;<i> =AuTp
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+- ---
+&#26446;&#26607;&#30591;
+Check my PGP key here:
+<A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJID9KBAAoJEGmx2Mt/+Iw/pQAH/RicvZWURoWJHz4yvlcFphY5
+qb0Kc69f60v03swneruELgqhXhsKwz7iollKhEdaZNzhY1HlgZYHmt7jAkhSZaPP
+9ylSBMy/awL1eFLAX1qZ0LL8x5hooE1EaY4kmtr1KNfbBOkwVBDjX5eL/RmPKo23
+QQOyAfwxT0DGNAyBcqyaP2PDHdx1b5kTWnutGRG3x0t+HDl1M2qrCVwKU2EsswIm
+g9SBdk6HOT6nu0otuL1QmccH3yhLmu/Tij3HYq6xXHnY8U3E+QXZZafAWIKVqgE7
+j+lVov5ygGGUgOi35N++DhcJ+DpM7tan/HVga4B+yX6voMOzkAWukV2GQFPKjlA=
+=C+iz
+-----END PGP SIGNATURE-----
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000545.html">[zfs-discuss] Zpools went away - completely
+</A></li>
+	<LI>Next message: <A HREF="000511.html">[zfs-discuss] ZFS on Darwin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#547">[ date ]</a>
+              <a href="thread.html#547">[ thread ]</a>
+              <a href="subject.html#547">[ subject ]</a>
+              <a href="author.html#547">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

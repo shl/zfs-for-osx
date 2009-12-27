@@ -1,0 +1,4391 @@
+From cdl at asgaard.org  Thu May  1 07:56:27 2008
+From: cdl at asgaard.org (Christopher LILJENSTOLPE)
+Date: Thu May  1 07:53:20 2008
+Subject: [zfs-discuss] Resolution to AFP export
+Message-ID: <8238E242-258A-4858-9958-60A51F2B4943@asgaard.org>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+After two further reboots, AFP just started exporting the ZFS FS's  
+correctly.  No errors in the logs either on the failure, or after the  
+reboots.  Strange....
+
+	Chris
+
+- ---
+???
+Check my PGP key here:
+http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCB67593B
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJIGdobAAoJEGmx2Mt/+Iw/FOoH/R9DvXlvgDgznVhH3XHKePd6
+wr4I2wWrz+FYEX6htzl4iaX/OBLpKVFW56JlXNSOwELOhWBrfmnHg2bWNpqmO3M2
+QZBHqgwJRm5sPWcvQPaPd8tWKSbIZ5uILETo5BW+1hc1l6VAXNoknSMC4jqZdxrm
+HzzvIGxYWevXfDcWXST/fCr+TJCos2h2cHF+BJdhTmF7hsCS0r4G45eoCoApjoiH
+wY7Uy6fdvXb1mGBP6N1GbGF3cEb3JxVcvMK5zvZ65uRrXKbkEbaKk0/pR6YJdoUd
+fyGSW1tYdjNp344mHDDGxMa44Do6GNc3tvFYjzT0UHrqAFtfaoQwqu+Ul4n1BX4=
+=h8Cq
+-----END PGP SIGNATURE-----
+From ndellofano at apple.com  Thu May  1 10:06:01 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu May  1 10:04:14 2008
+Subject: [zfs-discuss] zfs 2xUSB2 disk mirrored hang
+In-Reply-To: <E225BF66-2A4C-4CB9-8433-39FB076EFC18@sogeeky.net>
+References: <45C1732A-5884-469B-847D-F83AAFAF3C30@uk-businessdirectory.co.uk>
+	<E225BF66-2A4C-4CB9-8433-39FB076EFC18@sogeeky.net>
+Message-ID: <DB6BAED2-9052-48A4-BFA5-9DC3EB064A3C@apple.com>
+
+compression is fully functional :)
+
+Noel
+
+
+On Apr 19, 2008, at 9:32 AM, Mr. Zorg wrote:
+
+> I don't believe compression is functional yet. Additionally, there  
+> are known issues copying or operating on large directories. Try  
+> breaking your copy into smaller chunks.
+>
+> On Apr 19, 2008, at 2:26 AM, Philip Worrall <phil_w@uk-businessdirectory.co.uk 
+> > wrote:
+>
+>> Hi
+>>
+>> Ive been playing with ZFS and bought to 250GB USB2 disks to use  
+>> with it.
+>>
+>> zpool create tank mirror /dev/disk3 /dev/disk4
+>>
+>> zfs set compression=on tank
+>>
+>> cp -R archievedFiles /Volumes/tank
+>>
+>> then after a few GB of copying the hard drives stop and in dmesg I  
+>> find.
+>>
+>>
+>> USBF:    26455.368    [0x2b4b300] The IOUSBFamily is having trouble  
+>> enumerating a USB device that has been plugged in.  It will keep  
+>> retrying.  (Port 3 of hub @ location: 0xfd000000)
+>> USBF:    26459.  3    [0x2b4b300] The IOUSBFamily was not able to  
+>> enumerate a device.
+>> zfs_context_init: footprint.maximum=357913941,  
+>> footprint.target=102711296
+>> kobj_open_file: "/etc/zfs/zpool.cache", err 0 from vnode_open
+>> zfs_module_start: memory footprint 1283968 (kalloc 1283968, kernel 0)
+>>
+>>
+>> The system doesn't lock up but the copy and scrub processes just  
+>> hang.
+>>
+>> I've not unplugged or otherwise done anything to the two USB2 disks  
+>> plugged in. They are both new and are self powered.
+>>
+>> Any suggestions?
+>>
+>> phil worrall
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss@lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+
+From ndellofano at apple.com  Thu May  1 10:40:48 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu May  1 10:39:01 2008
+Subject: [zfs-discuss] Can't export a ZFS FS via AFP
+In-Reply-To: <E868F846-19B7-4887-92A3-F76BD50B70CA@asgaard.org>
+References: <E868F846-19B7-4887-92A3-F76BD50B70CA@asgaard.org>
+Message-ID: <EB495500-0A8A-4876-A05B-3AE1AB15ABB6@apple.com>
+
+> tank/parent/child.  /parent and /parent/child are mounted in / 
+> Volumes.  tank is not.  One interesting datapoint is that these  
+> don't show up as mounted file systems or drives in finder.  And  
+> since /Volumes don't show up in finder, normally, I have to do a  
+> goto to get to them via the finder.  That's a side issue, however.
+
+
+So the zfs filesystems createed under a zfs pool currently have the  
+VFS property MNT_DONTBROWSE on them which is why they don't show up in  
+Finder.  We did this initially since turning on the flag, the  
+filesystems show up on your desktop as well which was initially  
+confusing a number of people and cluttering up desktops.  We're trying  
+to come up with a better solution with the Finder peeps for a middle  
+ground on this.
+
+> In server admin, I can't get the sharing manager to see /Volumes/ 
+> parent/child to make it a sharepoint under afp.  I can do so using  
+> the sharing cli.
+>
+> If I make parent/child a sharepoint using sharing, I can see it on a  
+> client, I am unable to browse to it, and a connect to server afp://server/child 
+>  (the sharepoint) fails.
+>
+> On the sharing manager in serveradmin, once I've used sharing to  
+> share parent/child out, I can see child as a share, but any attempt  
+> to click on it is rejected (the next sharepoint is selected,  
+> instead).  Any ideas?
+
+The share issues you're seeing we've also seen some of.  There's  
+something bizarro going on with the Server admin share manager so we  
+have an open bug on this.  I'll add the other two cases you've  
+mentioned to the bug as well.  thanks!
+
+Noel
+
+On Apr 30, 2008, at 8:14 PM, Christopher LILJENSTOLPE wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Greetings,
+>
+> 	I have a tank where I've created a number of zfs file systems under  
+> 10.5.2 server with build 111.  Something like
+>
+> tank/parent/child.  /parent and /parent/child are mounted in / 
+> Volumes.  tank is not.  One interesting datapoint is that these  
+> don't show up as mounted file systems or drives in finder.  And  
+> since /Volumes don't show up in finder, normally, I have to do a  
+> goto to get to them via the finder.  That's a side issue, however.
+>
+> In server admin, I can't get the sharing manager to see /Volumes/ 
+> parent/child to make it a sharepoint under afp.  I can do so using  
+> the sharing cli.
+>
+> If I make parent/child a sharepoint using sharing, I can see it on a  
+> client, I am unable to browse to it, and a connect to server afp://server/child 
+>  (the sharepoint) fails.
+>
+> On the sharing manager in serveradmin, once I've used sharing to  
+> share parent/child out, I can see child as a share, but any attempt  
+> to click on it is rejected (the next sharepoint is selected,  
+> instead).  Any ideas?
+>
+> 	Chris
+>
+> - ---
+> ???
+> Check my PGP key here:
+> http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCB67593B
+>
+>
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQEcBAEBAgAGBQJIGTWzAAoJEGmx2Mt/+Iw/ol4H/jSZiySzA5vns1+rwM6tVFB5
+> lF09Q/3+TqTXL8nirj1x9SI6wIP2wvWymQoKcsx+8xj2PSdglpMwq1CP53NaIwRe
+> CRVljCFcDNr3xstjP9wDOx9bkyGLs3H0KB4CG9s40EVEYl1ieuUUvoQvIy1f1EWv
+> uOWYk4LLn6wwr2767rhYSKIjR/CSmtO2mV+bhDIVc6zXe5CYycLFWH8hq3ZCcOkQ
+> zDnln303rjzjzgzwsyUcbsQMFJDPd7WqKDAnXayLZZm8cY2fCn75d9O9HcCJf5Mh
+> DlrUBdpU4r8fGU4fzf8Wo7xcrv+VAMR7vof8auXfbsBF8xnJaJG6W+gVn6mf3fU=
+> =eLOl
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+
+From lists at loveturtle.net  Thu May  1 12:22:45 2008
+From: lists at loveturtle.net (Dillon Kass)
+Date: Thu May  1 12:19:29 2008
+Subject: [zfs-discuss] Can't export a ZFS FS via AFP
+In-Reply-To: <EB495500-0A8A-4876-A05B-3AE1AB15ABB6@apple.com>
+References: <E868F846-19B7-4887-92A3-F76BD50B70CA@asgaard.org>
+	<EB495500-0A8A-4876-A05B-3AE1AB15ABB6@apple.com>
+Message-ID: <481A1885.7010305@loveturtle.net>
+
+No?l Dellofano wrote:
+>
+> So the zfs filesystems createed under a zfs pool currently have the 
+> VFS property MNT_DONTBROWSE on them which is why they don't show up in 
+> Finder.  We did this initially since turning on the flag, the 
+> filesystems show up on your desktop as well which was initially 
+> confusing a number of people and cluttering up desktops.  We're trying 
+> to come up with a better solution with the Finder peeps for a middle 
+> ground on this.
+in the mean time it would be nice if this was a zfs tunable that could 
+be enabled or disabled on a per fs basis! i sure would love to enable 
+this for my home dir so that it would show up SOMEWHERE in finder since 
+it seems there's no way to drag a zfs over to the "Places" section in 
+finder :-(
+From quension at mac.com  Thu May  1 20:16:01 2008
+From: quension at mac.com (Trevor Talbot)
+Date: Thu May  1 20:12:46 2008
+Subject: [zfs-discuss] Can't export a ZFS FS via AFP
+In-Reply-To: <481A1885.7010305@loveturtle.net>
+References: <E868F846-19B7-4887-92A3-F76BD50B70CA@asgaard.org>
+	<EB495500-0A8A-4876-A05B-3AE1AB15ABB6@apple.com>
+	<481A1885.7010305@loveturtle.net>
+Message-ID: <63FF8112-5C03-47B5-B80C-B7AB4FECA172@mac.com>
+
+On May 1, 2008, at 12:22 PM, Dillon Kass wrote:
+
+> No?l Dellofano wrote:
+
+>> So the zfs filesystems createed under a zfs pool currently have the  
+>> VFS property MNT_DONTBROWSE on them which is why they don't show up  
+>> in Finder.  We did this initially since turning on the flag, the  
+>> filesystems show up on your desktop as well which was initially  
+>> confusing a number of people and cluttering up desktops.  We're  
+>> trying to come up with a better solution with the Finder peeps for  
+>> a middle ground on this.
+
+> in the mean time it would be nice if this was a zfs tunable that  
+> could be enabled or disabled on a per fs basis! i sure would love to  
+> enable this for my home dir so that it would show up SOMEWHERE in  
+> finder since it seems there's no way to drag a zfs over to the  
+> "Places" section in finder :-(
+
+I experimented with turning it off myself, but they all showed up as  
+the pool name (component before the first /), so it was less useful  
+than you might think. I never went as far as figuring out why.
+
+From lopez.on.the.lists at yellowspace.net  Fri May  2 07:17:44 2008
+From: lopez.on.the.lists at yellowspace.net (Lorenzo Perone)
+Date: Fri May  2 07:14:28 2008
+Subject: [zfs-discuss] Can't export a ZFS FS via AFP
+In-Reply-To: <63FF8112-5C03-47B5-B80C-B7AB4FECA172@mac.com>
+References: <E868F846-19B7-4887-92A3-F76BD50B70CA@asgaard.org>
+	<EB495500-0A8A-4876-A05B-3AE1AB15ABB6@apple.com>
+	<481A1885.7010305@loveturtle.net>
+	<63FF8112-5C03-47B5-B80C-B7AB4FECA172@mac.com>
+Message-ID: <3E2E4A8B-F208-454C-8ED1-F86422D688D2@yellowspace.net>
+
+On 02.05.2008, at 05:16, Trevor Talbot wrote:
+> ...  they all showed up as the pool name (component before the  
+> first /), so it was less useful than you might think. I never went  
+> as far as figuring out why.
+
+That's exactly what's happening to me right now with 111. Didn't turn  
+any flag on or off besides the mountpoint. Any hints on how to see the  
+correct name (and path in the window title) in Finder? Since volume  
+icons seem to work, I can live with this issue for some time, but  
+especially whent trying to share the zfs filesystems over afp it gets  
+weird...
+
+Regards,
+
+Lorenzo
+
+
+From swpalmer at gmail.com  Sat May  3 11:34:25 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Sat May  3 11:31:03 2008
+Subject: [zfs-discuss] mdls can't see ZFS pools?
+Message-ID: <A0342799-CDF9-437D-B04D-089DFC1AF8E8@GMAIL.COM>
+
+I just installed ZFS 111 last night and am just learning... this may  
+already be well known, but I thought I would mention it , since it  
+wasn't listed on the web page as a known issue.
+It appears my ZFS pool (partitions from two firewire drives mirrored)  
+is invisible to the "mdls" command.
+
+Is this part of the problem with Spotlight, etc.?
+
+Here's an example:
+scott-palmers-imac:/ scott$  ls -l /Volumes/
+total 11
+drwxrwxr-x  11 scott  staff  442  2 May 22:50 Backups
+lrwxr-xr-x   1 root   admin    1  2 May 20:52 Macintosh HD -> /
+drwxr-xrwx@  4 scott  staff    5  2 May 22:15 tank
+scott-palmers-imac:/ scott$  zpool list
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+tank                    152G    160K    152G     0%  ONLINE     -
+scott-palmers-imac:/ scott$ zpool status
+   pool: tank
+  state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool  
+can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+	pool will no longer be accessible on older software versions.
+  scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         ONLINE       0     0     0
+	  mirror     ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+
+errors: No known data errors
+scott-palmers-imac:/ scott$ mdls /Volumes/tank/
+mdls: could not find /Volumes/tank/.
+scott-palmers-imac:/ scott$ mdls /Volumes/Backups/
+kMDItemContentCreationDate     = 2008-05-02 22:12:33 -0400
+kMDItemContentModificationDate = 2008-05-02 22:12:41 -0400
+kMDItemContentType             = "public.volume"
+...
+
+Regards,
+
+Scott
+
+P.S. Where is the best source for reading up on how to use ZFS?  
+(something more in-depth than the man pages for 'zfs' and 'zpool') I  
+keep reading about nested filesystems and things and I don't quite get  
+what they are exactly and why I want them?  Are they sort of like  
+partitioning the root ZFS filesystem?
+From mattsnow at gmail.com  Sat May  3 14:36:32 2008
+From: mattsnow at gmail.com (Matt Snow)
+Date: Sat May  3 14:33:10 2008
+Subject: [zfs-discuss] mdls can't see ZFS pools?
+In-Reply-To: <A0342799-CDF9-437D-B04D-089DFC1AF8E8@GMAIL.COM>
+References: <A0342799-CDF9-437D-B04D-089DFC1AF8E8@GMAIL.COM>
+Message-ID: <6879ebc80805031436g22dae85fgec80545ded2fd624@mail.gmail.com>
+
+For more information on ZFS I would poke around here:
+http://opensolaris.org/os/community/zfs/
+
+..Matt
+
+On Sat, May 3, 2008 at 11:34 AM, Scott Palmer <swpalmer@gmail.com> wrote:
+
+> I just installed ZFS 111 last night and am just learning... this may
+> already be well known, but I thought I would mention it , since it wasn't
+> listed on the web page as a known issue.
+> It appears my ZFS pool (partitions from two firewire drives mirrored) is
+> invisible to the "mdls" command.
+>
+> Is this part of the problem with Spotlight, etc.?
+>
+> Here's an example:
+> scott-palmers-imac:/ scott$  ls -l /Volumes/
+> total 11
+> drwxrwxr-x  11 scott  staff  442  2 May 22:50 Backups
+> lrwxr-xr-x   1 root   admin    1  2 May 20:52 Macintosh HD -> /
+> drwxr-xrwx@  4 scott  staff    5  2 May 22:15 tank
+> scott-palmers-imac:/ scott$  zpool list
+> NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+> tank                    152G    160K    152G     0%  ONLINE     -
+> scott-palmers-imac:/ scott$ zpool status
+>  pool: tank
+>  state: ONLINE
+> status: The pool is formatted using an older on-disk format.  The pool can
+>        still be used, but some features are unavailable.
+> action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+>        pool will no longer be accessible on older software versions.
+>  scrub: none requested
+> config:
+>
+>        NAME         STATE     READ WRITE CKSUM
+>        tank         ONLINE       0     0     0
+>          mirror     ONLINE       0     0     0
+>            disk1s2  ONLINE       0     0     0
+>            disk2s2  ONLINE       0     0     0
+>
+> errors: No known data errors
+> scott-palmers-imac:/ scott$ mdls /Volumes/tank/
+> mdls: could not find /Volumes/tank/.
+> scott-palmers-imac:/ scott$ mdls /Volumes/Backups/
+> kMDItemContentCreationDate     = 2008-05-02 22:12:33 -0400
+> kMDItemContentModificationDate = 2008-05-02 22:12:41 -0400
+> kMDItemContentType             = "public.volume"
+> ...
+>
+> Regards,
+>
+> Scott
+>
+> P.S. Where is the best source for reading up on how to use ZFS? (something
+> more in-depth than the man pages for 'zfs' and 'zpool') I keep reading about
+> nested filesystems and things and I don't quite get what they are exactly
+> and why I want them?  Are they sort of like partitioning the root ZFS
+> filesystem?
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080503/a2fb9a98/attachment.html
+From koonce at universe42.com  Sat May  3 20:13:44 2008
+From: koonce at universe42.com (Brett Koonce)
+Date: Sat May  3 20:10:22 2008
+Subject: [zfs-discuss] zpool re-import?
+Message-ID: <586B0945-63C3-4829-979B-5A1F26E7B574@universe42.com>
+
+I've been debating moving some of my storage to ZFS and toward that  
+end I've been playing around with the 111 build.  I put an old hard  
+drive into an external USB/firewire enclosure, split it into five  
+partitions and then created a 4-slice RAID-Z.  Then I copied/deleted  
+some data, replaced one of the partitions with the spare, ran several  
+scrub operations, did a handful of imports/exports to test the  
+system.  The only times I managed to crash things were once by hitting  
+zpool status -v repeatedly during a resliver and the other by plugging  
+the drive into a vanilla leopard machine only to remember too late  
+that the read-only implementation doesn't support zpool export.  It  
+did mount, though. ;-)
+
+All was well until I decided to play around with things again today.   
+zpool import -f repeatedly insists "no pools available to import".  I  
+tried "zfs mount -a;  zfs volinit" to no avail.  I deleted /etc/zfs/ 
+zpool.cache but cannot seem to reinit it.  I reinstalled 111, then  
+102A, then 111 again with the same results.  The only remaining thing  
+I can think of is that because I split the drive in disk utility  
+proper, the partition map has HFS as the labeling scheme which may be  
+messing with things, like so:
+
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *28.6 Gi     
+disk1
+    1:                        EFI                         200.0 Mi    
+disk1s1
+    2:                  Apple_HFS                         5.7 Gi      
+disk1s2
+    3:                  Apple_HFS                         5.7 Gi      
+disk1s3
+    4:                  Apple_HFS                         5.7 Gi      
+disk1s4
+    5:                  Apple_HFS                         5.7 Gi      
+disk1s5
+    6:                  Apple_HFS                         4.9 Gi      
+disk1s6
+
+If anybody has any suggestions on how to resurrect the volume, please  
+let me know.  The hard drive is marginal and the data meaningless.   
+But I would like to know how to solve this problem before entrusting  
+the system further.  Thanks in advance,
+
+-Brett Koonce
+From mattsnow at gmail.com  Sat May  3 22:58:15 2008
+From: mattsnow at gmail.com (Matt Snow)
+Date: Sat May  3 22:55:11 2008
+Subject: [zfs-discuss] zpool re-import?
+In-Reply-To: <586B0945-63C3-4829-979B-5A1F26E7B574@universe42.com>
+References: <586B0945-63C3-4829-979B-5A1F26E7B574@universe42.com>
+Message-ID: <6879ebc80805032258l18ac665le867dcfedd77412d@mail.gmail.com>
+
+It's most likely the disklabels. When I did initial testing with a USB drive
+using the entire drive I saw similar behavior. The key is to use the command
+line diskutil to create the GPT/ZFS labels. e.g. diskutil partitiondisk
+/dev/disk2 GPTFormat ZFS %noformat% 100%
+
+This did the trick for me. I also noticed that OSX did not always like
+the USB enclosure I was using. once I plugged the disk in to the
+onboard SATA controller things worked much better.
+
+..Matt
+
+
+On Sat, May 3, 2008 at 8:13 PM, Brett Koonce <koonce@universe42.com> wrote:
+
+> I've been debating moving some of my storage to ZFS and toward that end
+> I've been playing around with the 111 build.  I put an old hard drive into
+> an external USB/firewire enclosure, split it into five partitions and then
+> created a 4-slice RAID-Z.  Then I copied/deleted some data, replaced one of
+> the partitions with the spare, ran several scrub operations, did a handful
+> of imports/exports to test the system.  The only times I managed to crash
+> things were once by hitting zpool status -v repeatedly during a resliver and
+> the other by plugging the drive into a vanilla leopard machine only to
+> remember too late that the read-only implementation doesn't support zpool
+> export.  It did mount, though. ;-)
+>
+> All was well until I decided to play around with things again today.
+>  zpool import -f repeatedly insists "no pools available to import".  I tried
+> "zfs mount -a;  zfs volinit" to no avail.  I deleted /etc/zfs/zpool.cache
+> but cannot seem to reinit it.  I reinstalled 111, then 102A, then 111 again
+> with the same results.  The only remaining thing I can think of is that
+> because I split the drive in disk utility proper, the partition map has HFS
+> as the labeling scheme which may be messing with things, like so:
+>
+> /dev/disk1
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *28.6 Gi    disk1
+>   1:                        EFI                         200.0 Mi   disk1s1
+>   2:                  Apple_HFS                         5.7 Gi     disk1s2
+>   3:                  Apple_HFS                         5.7 Gi     disk1s3
+>   4:                  Apple_HFS                         5.7 Gi     disk1s4
+>   5:                  Apple_HFS                         5.7 Gi     disk1s5
+>   6:                  Apple_HFS                         4.9 Gi     disk1s6
+>
+> If anybody has any suggestions on how to resurrect the volume, please let
+> me know.  The hard drive is marginal and the data meaningless.  But I would
+> like to know how to solve this problem before entrusting the system further.
+>  Thanks in advance,
+>
+> -Brett Koonce
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080503/dc96b755/attachment-0001.html
+From swpalmer at gmail.com  Sun May  4 10:11:54 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Sun May  4 10:08:30 2008
+Subject: [zfs-discuss] Where's the self healing?
+Message-ID: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+
+While testing my mirrored pool I decided to unplug the power for one  
+of the firewire drives while I was updating some data on the  
+filesystem.  I expected the pool status/health to change from "ONLINE"  
+to "DEGRADED" it did not.  Both drives in the mirror remained listed  
+as "ONLINE".  But then I noticed "zpool status" saying:
+
+scott-palmers-imac:~ scott$ zpool status
+   pool: tank
+  state: ONLINE
+status: One or more devices has experienced an unrecoverable error.  An
+	attempt was made to correct the error.  Applications are unaffected.
+action: Determine if the device needs to be replaced, and clear the  
+errors
+	using 'zpool clear' or replace the device with 'zpool replace'.
+    see: http://www.sun.com/msg/ZFS-8000-9P
+  scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         ONLINE       0     0     0
+	  mirror     ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  ONLINE   6.43K 33.9K     0
+
+errors: No known data errors
+
+
+Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+
+After I finished writing my data, I powered on the other drive.  But  
+that changed nothing.  That status never changed.  I expected a  
+"resilver".
+
+I noticed that  after powering on the drive it appears as disk3, not  
+disk2... does that mean that ZFS isn't seeing it?
+
+What am I missing?  Wasn't I testing exactly the sort of thing that  
+ZFS is supposed handle automatically?
+
+It looks like I will need to run "zpool replace" to force the  
+resilver. Right?
+
+Scott
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080504/d8deef09/smime.bin
+From mattsnow at gmail.com  Sun May  4 11:10:30 2008
+From: mattsnow at gmail.com (Matt Snow)
+Date: Sun May  4 11:07:00 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+Message-ID: <6879ebc80805041110u206392dfx128dd411cc394126@mail.gmail.com>
+
+the disk number doesn't matter. if you reboot your system the zpool will be
+properly imported regardless of the disk. you could try exporting the pool
+then re-importing it and that should work without rebooting.
+
+you will need to run a 'zpool scrub tank' to kick off a resilver of the disk
+mirror. Even on Solaris you have to manually kick off pool resilvers. I
+thought I remembered seeing something about 'auto resilvering' on the
+opensolaris forums but I can't find it. It could be i'm thinking of 3ware's
+auto-rebuild.
+
+zpool replace is for when you have a drive assigned as a spare.
+ e.g.
+zpool create tank mirror disk1s2 disk2s2 spare disk3s2
+   or if you add another firewire/sata disk
+zpool add tank spare disk3s2
+
+hope this helps.
+
+..Matt
+
+On Sun, May 4, 2008 at 10:11 AM, Scott Palmer <swpalmer@gmail.com> wrote:
+
+> While testing my mirrored pool I decided to unplug the power for one of
+> the firewire drives while I was updating some data on the filesystem.  I
+> expected the pool status/health to change from "ONLINE" to "DEGRADED" it did
+> not.  Both drives in the mirror remained listed as "ONLINE".  But then I
+> noticed "zpool status" saying:
+>
+> scott-palmers-imac:~ scott$ zpool status
+>  pool: tank
+>  state: ONLINE
+> status: One or more devices has experienced an unrecoverable error.  An
+>        attempt was made to correct the error.  Applications are
+> unaffected.
+> action: Determine if the device needs to be replaced, and clear the errors
+>        using 'zpool clear' or replace the device with 'zpool replace'.
+>   see: http://www.sun.com/msg/ZFS-8000-9P
+>  scrub: none requested
+> config:
+>
+>        NAME         STATE     READ WRITE CKSUM
+>        tank         ONLINE       0     0     0
+>          mirror     ONLINE       0     0     0
+>            disk1s2  ONLINE       0     0     0
+>            disk2s2  ONLINE   6.43K 33.9K     0
+>
+> errors: No known data errors
+>
+>
+> Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+>
+> After I finished writing my data, I powered on the other drive.  But that
+> changed nothing.  That status never changed.  I expected a "resilver".
+>
+> I noticed that  after powering on the drive it appears as disk3, not
+> disk2... does that mean that ZFS isn't seeing it?
+>
+> What am I missing?  Wasn't I testing exactly the sort of thing that ZFS is
+> supposed handle automatically?
+>
+> It looks like I will need to run "zpool replace" to force the resilver.
+> Right?
+>
+> Scott
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080504/9263d46a/attachment.html
+From swpalmer at gmail.com  Sun May  4 12:20:42 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Sun May  4 12:17:16 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <6879ebc80805041110u206392dfx128dd411cc394126@mail.gmail.com>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+	<6879ebc80805041110u206392dfx128dd411cc394126@mail.gmail.com>
+Message-ID: <77229456-AC10-4485-878E-DDE93729F555@gmail.com>
+
+
+On 4-May-08, at 2:10 PM, Matt Snow wrote:
+
+> the disk number doesn't matter. if you reboot your system the zpool  
+> will be properly imported regardless of the disk. you could try  
+> exporting the pool then re-importing it and that should work without  
+> rebooting.
+>
+> you will need to run a 'zpool scrub tank' to kick off a resilver of  
+> the disk mirror. Even on Solaris you have to manually kick off pool  
+> resilvers. I thought I remembered seeing something about 'auto  
+> resilvering' on the opensolaris forums but I can't find it. It could  
+> be i'm thinking of 3ware's auto-rebuild.
+>
+> zpool replace is for when you have a drive assigned as a spare.
+>  e.g.
+> zpool create tank mirror disk1s2 disk2s2 spare disk3s2
+>    or if you add another firewire/sata disk
+> zpool add tank spare disk3s2
+>
+> hope this helps.
+>
+> ..Matt
+
+
+It does.  Though I was under the impression that I wouldn't need to  
+manually kick off the healing.  I think it was someone blogging about  
+how wonderful it was to use ZFS on their (Solaris) laptop so that they  
+would automatically get a backup by plugging in their external drive  
+when they get back from a trip.
+
+I tried "zpool scrub tank" *before* rebooting, and that finally caused  
+the status to transition from online to:
+
+scott-palmers-imac:~ scott$ zpool status -xv
+   pool: tank
+  state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas  
+exist for
+	the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+    see: http://www.sun.com/msg/ZFS-8000-2Q
+  scrub: resilver in progress, 0.10% done, 0h33m to go
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         DEGRADED     0     0     0
+	  mirror     DEGRADED     0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  UNAVAIL  8.37K 43.2K     0  cannot open
+
+errors: No known data errors
+
+
+I don't understand why ZFS didn't enter that state automatically when  
+I powered down the drive in the first place.
+
+Though no resilvering appears to be happening yet.. despite the  
+"resilver in progress, 0.10% done, 0h33m to go"  After some time the  
+status still states:
+
+scott-palmers-imac:~ scott$ zpool status -xv
+   pool: tank
+  state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas  
+exist for
+	the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+    see: http://www.sun.com/msg/ZFS-8000-2Q
+  scrub: resilver completed with 0 errors on Sun May  4 14:26:21 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         DEGRADED     0     0     0
+	  mirror     DEGRADED     0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  UNAVAIL  8.37K 43.2K     0  cannot open
+
+errors: No known data errors
+
+
+I have to get ZFS to see the "new" device somehow.  Considering all  
+the scalability fuss about adding drives to a live ZFS pool I find it  
+hard to believe that a reboot is truly needed.
+
+Using the 'action' from the above status output I tried just for kicks:
+
+scott-palmers-imac:~ scott$ zpool online tank disk3s2
+cannot online disk3s2: no such device in pool
+
+which is what I expected.
+
+The zpool man page doesn't mention spares in relation to "replace" (or  
+"attach", "detach"), that's why I thought it would be the right thing  
+to do.:
+
+        zpool replace [-f] pool old_device [new_device]
+
+            Replaces  old_device with new_device. This is equivalent  
+to attach-
+            ing new_device, waiting for it  to  resilver,  and  then   
+detaching
+            old_device.
+
+
+I decided to manually do the attach/detach in two steps and it appears  
+to work.  I didn't need to add the device as a spare.  Though this  
+time I gave the entire device to ZFS instead of the single ZFS slice  
+that was on it.  I suspect that wasn't the right thing to do.. since  
+ZFS probably wouldn't see the old slice that belonged to the mirror in  
+the first place when I did it that way.
+
+
+Scott
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080504/cab65388/smime.bin
+From lists at loveturtle.net  Mon May  5 09:22:12 2008
+From: lists at loveturtle.net (Dillon Kass)
+Date: Mon May  5 09:19:00 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+Message-ID: <481F3434.6010406@loveturtle.net>
+
+Scott Palmer wrote:
+> While testing my mirrored pool I decided to unplug the power for one 
+> of the firewire drives while I was updating some data on the 
+> filesystem.  I expected the pool status/health to change from "ONLINE" 
+> to "DEGRADED" it did not.  Both drives in the mirror remained listed 
+> as "ONLINE".  But then I noticed "zpool status" saying:
+>
+> scott-palmers-imac:~ scott$ zpool status
+>   pool: tank
+>  state: ONLINE
+> status: One or more devices has experienced an unrecoverable error.  An
+>     attempt was made to correct the error.  Applications are unaffected.
+> action: Determine if the device needs to be replaced, and clear the 
+> errors
+>     using 'zpool clear' or replace the device with 'zpool replace'.
+>    see: http://www.sun.com/msg/ZFS-8000-9P
+>  scrub: none requested
+> config:
+>
+>     NAME         STATE     READ WRITE CKSUM
+>     tank         ONLINE       0     0     0
+>       mirror     ONLINE       0     0     0
+>         disk1s2  ONLINE       0     0     0
+>         disk2s2  ONLINE   6.43K 33.9K     0
+>
+> errors: No known data errors
+>
+>
+> Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+>
+It did heal, What you're seeing here is just notification that there is 
+a problem with disk2. You could either use zpool scrub to search the 
+entire disk for more errors, or you could just run zpool clear to reset 
+the error counters. That's why the state was still "online", because it 
+did perform "self healing". Pull the disk out and you'll see "state: 
+degraded" because that is something it can't self-heal.
+From jason at jasonrm.net  Mon May  5 10:54:41 2008
+From: jason at jasonrm.net (Jason R. McNeil)
+Date: Mon May  5 10:50:39 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+Message-ID: <481F49E1.9090700@jasonrm.net>
+
+Scott Palmer wrote:
+> scott-palmers-imac:~ scott$ zpool status
+>   pool: tank
+>  state: ONLINE
+> status: One or more devices has experienced an unrecoverable error.  An
+>     attempt was made to correct the error.  Applications are unaffected.
+> action: Determine if the device needs to be replaced, and clear the errors
+>     using 'zpool clear' or replace the device with 'zpool replace'.
+>    see: http://www.sun.com/msg/ZFS-8000-9P
+>  scrub: none requested
+> config:
+> 
+>     NAME         STATE     READ WRITE CKSUM
+>     tank         ONLINE       0     0     0
+>       mirror     ONLINE       0     0     0
+>         disk1s2  ONLINE       0     0     0
+>         disk2s2  ONLINE   6.43K 33.9K     0
+> 
+> errors: No known data errors
+> 
+
+> 
+> Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+> 
+
+> Scott
+> 
+
+Scott,
+   The error message needs to be read a certain way. The "unrecoverable
+error" is correct, but realize that it is only referring to ZFS being
+aware that there was a problem with the underlying hardware. Reading
+further note that "applications are unaffected", implying that ZFS is
+still confident that all your data is correct, despite the hardware
+problems.
+
+   Also, when watching the ZFS self-healing videos and such online I
+recall that ZFS doesn't do background checks (excluding a scrub) that
+all the devices are still there or that the data is correct. For
+example, if you dd zero's randomly across a mirror, ZFS will report that
+everything is good until it reads the data in, realizes that one of the
+mirrors is bad, and will use whichever mirror it need to in order to
+pass the checksums.
+
+   I can't say exactly why after thousands of errors it didn't flag the
+pool as degraded, but never was ZFS uncertain about the data integrity
+on the remaining drive, hence, applications being unaffected. It could
+be an artifact of the Mac OS X implementation vs the Sun implementation.
+
+   As far as replacing the drive and having to go through a few steps, I
+will say that it isn't as easy as it could be, particularly on the Mac.
+Personally, I found that restarting my system was best when doing drive
+changes, but that might be caused by the highpoint RAID card I am using
+which has horrid hot-swap support.
+
+Jason R. M.
+From swpalmer at gmail.com  Mon May  5 10:59:54 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Mon May  5 10:56:20 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <481F3434.6010406@loveturtle.net>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+	<481F3434.6010406@loveturtle.net>
+Message-ID: <6ff274f40805051059n4e505c5yfcf70428cc4fa629@mail.gmail.com>
+
+On Mon, May 5, 2008 at 12:22 PM, Dillon Kass <lists@loveturtle.net> wrote:
+
+> Scott Palmer wrote:
+>
+> > While testing my mirrored pool I decided to unplug the power for one of
+> > the firewire drives while I was updating some data on the filesystem.  I
+> > expected the pool status/health to change from "ONLINE" to "DEGRADED" it did
+> > not.  Both drives in the mirror remained listed as "ONLINE".  But then I
+> > noticed "zpool status" saying:
+> >
+> > scott-palmers-imac:~ scott$ zpool status
+> >  pool: tank
+> >  state: ONLINE
+> > status: One or more devices has experienced an unrecoverable error.  An
+> >    attempt was made to correct the error.  Applications are unaffected.
+> > action: Determine if the device needs to be replaced, and clear the
+> > errors
+> >    using 'zpool clear' or replace the device with 'zpool replace'.
+> >   see: http://www.sun.com/msg/ZFS-8000-9P
+> >  scrub: none requested
+> > config:
+> >
+> >    NAME         STATE     READ WRITE CKSUM
+> >    tank         ONLINE       0     0     0
+> >      mirror     ONLINE       0     0     0
+> >        disk1s2  ONLINE       0     0     0
+> >        disk2s2  ONLINE   6.43K 33.9K     0
+> >
+> > errors: No known data errors
+> >
+> >
+> > Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+> >
+> >  It did heal, What you're seeing here is just notification that there is
+> a problem with disk2. You could either use zpool scrub to search the entire
+> disk for more errors, or you could just run zpool clear to reset the error
+> counters. That's why the state was still "online", because it did perform
+> "self healing". Pull the disk out and you'll see "state: degraded" because
+> that is something it can't self-heal.
+
+
+Really?
+What do those read/write numbers mean listed next to disk2s2?
+Why does it still list disk2s2 as being in the pool when diskutil indicates
+there is no such thing as disk2 in the system at that point?  (The drive
+showed up as disk3 when it was powered on.)
+
+The status information is certainly not clear about what happened.  I didn't
+observe any period where disk2s2 was being resilvered... as it would need to
+be since there was new data on disk1... but maybe that just happened too
+quickly to notice?
+
+Why didn't I see "state: degraded" while disk2 was powered off?
+
+
+Regards,
+
+Scott
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080505/f95e6e81/attachment.html
+From swpalmer at gmail.com  Mon May  5 11:13:54 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Mon May  5 11:17:42 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <481F49E1.9090700@jasonrm.net>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+	<481F49E1.9090700@jasonrm.net>
+Message-ID: <6ff274f40805051113v37f0b9dei3e16465d4f5661b5@mail.gmail.com>
+
+On Mon, May 5, 2008 at 1:54 PM, Jason R. McNeil <jason@jasonrm.net> wrote:
+
+> Scott Palmer wrote:
+>
+> > scott-palmers-imac:~ scott$ zpool status
+> >  pool: tank
+> >  state: ONLINE
+> > status: One or more devices has experienced an unrecoverable error.  An
+> >    attempt was made to correct the error.  Applications are unaffected.
+> > action: Determine if the device needs to be replaced, and clear the
+> > errors
+> >    using 'zpool clear' or replace the device with 'zpool replace'.
+> >   see: http://www.sun.com/msg/ZFS-8000-9P
+> >  scrub: none requested
+> > config:
+> >
+> >    NAME         STATE     READ WRITE CKSUM
+> >    tank         ONLINE       0     0     0
+> >      mirror     ONLINE       0     0     0
+> >        disk1s2  ONLINE       0     0     0
+> >        disk2s2  ONLINE   6.43K 33.9K     0
+> >
+> > errors: No known data errors
+>
+>
+
+> Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+> >
+>
+> Scott,
+>  The error message needs to be read a certain way. The "unrecoverable
+> error" is correct, but realize that it is only referring to ZFS being
+> aware that there was a problem with the underlying hardware. Reading
+> further note that "applications are unaffected", implying that ZFS is
+> still confident that all your data is correct, despite the hardware
+> problems.
+
+
+I realize that ZFS was happily using the other drive in the mirror and the
+data was still there.  But certainly the condition should have read
+"degraded" since the protection of a mirror was NOT in place at that time.
+The powered down drive certainly should NOT have read as ONLINE.  I
+shouldn't have to manually take the drive off-line if it isn't even
+accessible.  (E.g. normally for a mounted volume, OS X will raise a stink
+that you've disconnected a device that wasn't properly unmounted.. I
+understand that there should be no in-you-face pop-up -- but simply mention
+this because it indicates at some level the system should be aware of the
+missing drive pretty much immediately.)
+
+
+Also, when watching the ZFS self-healing videos and such online I
+> recall that ZFS doesn't do background checks (excluding a scrub) that
+> all the devices are still there or that the data is correct. For
+> example, if you dd zero's randomly across a mirror, ZFS will report that
+> everything is good until it reads the data in, realizes that one of the
+> mirrors is bad, and will use whichever mirror it need to in order to
+> pass the checksums.
+
+
+That's strange.. it's not exactly a "background" check that is needed since
+the writes are obviously failing.  Is it so disconnected that ZFS isn't
+being told of the physical write errors - in the same manner that it is
+returning success to the application level?
+
+
+I can't say exactly why after thousands of errors it didn't flag the
+> pool as degraded,
+
+
+Right... Do you agree that it should have?
+
+
+Scott
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080505/80849087/attachment.html
+From jason at jasonrm.net  Mon May  5 11:45:31 2008
+From: jason at jasonrm.net (Jason R. McNeil)
+Date: Mon May  5 11:41:30 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <6ff274f40805051113v37f0b9dei3e16465d4f5661b5@mail.gmail.com>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>
+	<481F49E1.9090700@jasonrm.net>
+	<6ff274f40805051113v37f0b9dei3e16465d4f5661b5@mail.gmail.com>
+Message-ID: <481F55CB.5040804@jasonrm.net>
+
+Scott Palmer wrote:
+> 
+> On Mon, May 5, 2008 at 1:54 PM, Jason R. McNeil <jason@jasonrm.net 
+> <mailto:jason@jasonrm.net>> wrote:
+> 
+>     Scott Palmer wrote:
+> 
+>         scott-palmers-imac:~ scott$ zpool status
+>          pool: tank
+>          state: ONLINE
+>         status: One or more devices has experienced an unrecoverable error.  An
+>            attempt was made to correct the error.  Applications are unaffected.
+>         action: Determine if the device needs to be replaced, and clear the errors
+>            using 'zpool clear' or replace the device with 'zpool replace'.
+>           see: http://www.sun.com/msg/ZFS-8000-9P
+>          scrub: none requested
+>         config:
+> 
+>            NAME         STATE     READ WRITE CKSUM
+>            tank         ONLINE       0     0     0
+>              mirror     ONLINE       0     0     0
+>                disk1s2  ONLINE       0     0     0
+>                disk2s2  ONLINE   6.43K 33.9K     0
+> 
+>         errors: No known data errors
+> 
+>  
+> 
+>         Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+> 
+> 
+>     Scott,
+>      The error message needs to be read a certain way. The "unrecoverable
+>     error" is correct, but realize that it is only referring to ZFS being
+>     aware that there was a problem with the underlying hardware. Reading
+>     further note that "applications are unaffected", implying that ZFS is
+>     still confident that all your data is correct, despite the hardware
+>     problems.
+> 
+> 
+> I realize that ZFS was happily using the other drive in the mirror and the data 
+> was still there.  But certainly the condition should have read "degraded" since 
+> the protection of a mirror was NOT in place at that time.  The powered down 
+> drive certainly should NOT have read as ONLINE.  I shouldn't have to manually 
+> take the drive off-line if it isn't even accessible.  (E.g. normally for a 
+> mounted volume, OS X will raise a stink that you've disconnected a device that 
+> wasn't properly unmounted.. I understand that there should be no in-you-face 
+> pop-up -- but simply mention this because it indicates at some level the system 
+> should be aware of the missing drive pretty much immediately.)
+> 
+I agree that ZFS should have behaved differently after the drive 
+removal. Again, I'll float the idea that this is due to something odd 
+with the implementation of ZFS on Mac OS X.
+> 
+>     Also, when watching the ZFS self-healing videos and such online I
+>     recall that ZFS doesn't do background checks (excluding a scrub) that
+>     all the devices are still there or that the data is correct. For
+>     example, if you dd zero's randomly across a mirror, ZFS will report that
+>     everything is good until it reads the data in, realizes that one of the
+>     mirrors is bad, and will use whichever mirror it need to in order to
+>     pass the checksums.
+> 
+> 
+> That's strange.. it's not exactly a "background" check that is needed since the 
+> writes are obviously failing.  Is it so disconnected that ZFS isn't being told 
+> of the physical write errors - in the same manner that it is returning success 
+> to the application level?
+Seems to be that ZFS isn't aware of what is going on with the actual 
+hardware, although ZFS is still going to produce good data so long as 
+there are sufficient replicas of the data (either mirrored, raidz1, 
+etc), but there does need to be some communication to ZFS when a drive 
+is removed, and that doesn't seem to be working.
+> 
+> 
+>     I can't say exactly why after thousands of errors it didn't flag the
+>     pool as degraded,
+> 
+> 
+> Right... Do you agree that it should have?
+
+My initial thought is that even one error should flag a degraded status, 
+at a minimum on the drive itself, but overall I would expect the pool to 
+be flagged as well as this would be a clear case when there is no longer 
+guaranteed redundancy.
+
+I was mostly concerned that you were thinking that ZFS was losing your 
+data, but now I'm understanding better your actual concern.
+It is about the lack of ZFS correctly noticing that a drive has been 
+physically removed, and in fact still shows up as ONLINE.
+Even if we have to do the whole zpool replace dance, I imagine that ZFS 
+needs to be aware when a drops out.
+
+I didn't see anything on the Trac that seemed related, so I don't know 
+if this is just "expected" behavior still for the beta, or an unreported 
+bug.
+
+Jason R. M.
+From lists at loveturtle.net  Mon May  5 13:16:19 2008
+From: lists at loveturtle.net (Dillon Kass)
+Date: Mon May  5 13:12:45 2008
+Subject: [zfs-discuss] Where's the self healing?
+In-Reply-To: <6ff274f40805051059n4e505c5yfcf70428cc4fa629@mail.gmail.com>
+References: <C22EF067-09D4-4833-BB5E-9AFA10F6CFAA@gmail.com>	
+	<481F3434.6010406@loveturtle.net>
+	<6ff274f40805051059n4e505c5yfcf70428cc4fa629@mail.gmail.com>
+Message-ID: <481F6B13.9040804@loveturtle.net>
+
+Sorry, I just skimmed your message and missed the part where you powered 
+it off. I thought you were just talking about it's behavior when it 
+detected checksum mismatches.
+
+ZFS just isn't fully implemented on osx and it didn't know the drive was 
+gone. That's too bad :-(
+
+btw, make sure you switch that disk back to zfs s2 slice or else it may 
+not correctly be detected at boot, you may have to run the diskutil 
+partitiondisk stuff again for zfs.
+From boydwaters at mac.com  Fri May  2 08:21:46 2008
+From: boydwaters at mac.com (Boyd Waters)
+Date: Mon May  5 17:44:11 2008
+Subject: [zfs-discuss] Can't export a ZFS FS via AFP
+In-Reply-To: <63FF8112-5C03-47B5-B80C-B7AB4FECA172@mac.com>
+References: <E868F846-19B7-4887-92A3-F76BD50B70CA@asgaard.org>
+	<EB495500-0A8A-4876-A05B-3AE1AB15ABB6@apple.com>
+	<481A1885.7010305@loveturtle.net>
+	<63FF8112-5C03-47B5-B80C-B7AB4FECA172@mac.com>
+Message-ID: <1E59F367-CBBE-4E9F-AB82-6A10FBA77FD7@mac.com>
+
+On 02.05.2008, at 05:16, Trevor Talbot wrote:
+> ...  they all showed up as the pool name (component before the  
+> first /), so it was less useful than you might think. I never went  
+> as far as figuring out why.
+
+That's exactly what's happening to me right now with 111. Didn't turn  
+any flag on or off besides the mountpoint. Any hints on how to see the  
+correct name (and path in the window title) in Finder? Since volume  
+icons seem to work, I can live with this issue for some time, but  
+especially whent trying to share the zfs filesystems over afp it gets  
+weird...
+
+Regards,
+
+Lorenzo
+
+
+_______________________________________________
+zfs-discuss mailing list
+zfs-discuss@lists.macosforge.org
+http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+From donaciano2000 at gmail.com  Mon May  5 17:01:05 2008
+From: donaciano2000 at gmail.com (Donald Campbell II)
+Date: Mon May  5 17:44:14 2008
+Subject: [zfs-discuss] ZFS expandabliity update
+Message-ID: <4985fad0805051701o14af43dey9c3427854c15363a@mail.gmail.com>
+
+I've been lurking here and other places waiting for a feature addition that
+would allow me to use ZFS and as well as many other home users. I'm sure
+it's been discussed plenty of times how the ZFS devs are focused on
+enterprise needs and the need to add a single disk at a time is not a high
+priority for them as it is for home users.
+
+It's definitely a feature I'm sure Apple would love to have added however.
+There's a nice blog post I recently stumbled accross by a Sun dev that
+outlines how it could be added, but that sadly they don't have the internal
+resources to make it high priority for now. I thought some here would find
+the post interesting and helpful in maybe adding this.
+
+http://blogs.sun.com/ahl/entry/expand_o_matic_raid_z
+
+Pardon me if this is old news, I didn't see any mention of it on this list
+so I thought I'd add it.
+
+-DC
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080505/4bac8f34/attachment.html
+From btm at pobox.com  Mon May  5 18:53:07 2008
+From: btm at pobox.com (Brett Ault-McCoy)
+Date: Mon May  5 18:49:36 2008
+Subject: [zfs-discuss] zfs and Finder and Sharing difficulties
+In-Reply-To: <OF46F80977.258FE3FE-ON85257439.005D301A-85257439.005E852B@MCKINSEY.COM>
+References: <OF46F80977.258FE3FE-ON85257439.005D301A-85257439.005E852B@MCKINSEY.COM>
+Message-ID: <7bccd8dc0805051853i782f684dh67eeef8ee4263d0f@mail.gmail.com>
+
+Nope, nothing wrong.  That's how it all acts for me as well.  OS X may be a
+Unix system underneath, but the GUI layer makes a lot of assumptions and
+doesn't fully grok the intracacies of Unix (it's similar in that way to most
+people), and winds up doing bizarre things when something is slightly out of
+the ordinary (again, similar to most people).
+
+++Brett;
+
+
+On Mon, Apr 28, 2008 at 10:12 AM, <Alexander_Niemeyer@mckinsey.com> wrote:
+
+>
+> Hi all! Long-time lurker and always enjoy the good conversations.
+>
+> I was wondering whether other folks had similar issues with zfs and the
+> Finder as well as sharing.
+>
+> Setup: zfs-111, one pool with 4 filesystems on it (RAIDZ of 4 hard drives)
+>
+> Through the command line everything is smooth. Through the Finder,
+> numerous troubles
+> - Finder does not recognize the path of the filesystems. E.g., filesystem
+> tank/Backups will be shown as an alias in Finder view tank. Once clicking on
+> Backups, the listed path just shows tank. Also, none of the filesystems can
+> be moved into the Places column (as they are shown as aliases)
+> - Moving from filesystem to filesystem does not work. Everything gets
+> copied fine, but Finder says the items are in use at the source and cannot
+> be deleted
+> - Sharing this pool shows 5 separate shares (as seen from a Macbook): the
+> pool tank and each of the 4 file systems as tank1, tank2, ... tank4, not the
+> real names of the filesystems (e.g., Backups)
+>
+> Since this topic has not shown up on the list, am I doing something
+> obviously wrong?
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080505/ed8e5db0/attachment-0001.html
+From dorofeev at gmail.com  Thu May  8 13:56:32 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Thu May  8 13:52:43 2008
+Subject: [zfs-discuss] my first zfs panic
+Message-ID: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+
+Hi -
+
+I just started using ZFS on my MacPro today and created
+raidz pool with three 750G drives.  I hit the following panic
+while copying files onto one of the filesystems that were
+created on this pool.
+
+-----------------
+Thu May  8 13:47:42 2008
+panic(cpu 1 caller 0x87DC11CF): "zfs: vmem_alloc couldn't alloc 131072
+bytes\n"@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x943bb9c8 : 0x12b0f7 (0x4581f4 0x943bb9fc 0x133230 0x0)
+0x943bba18 : 0x87dc11cf (0x87e0dbc0 0x20000 0x20000 0x87dbfefa)
+0x943bba48 : 0x87ddbb1b (0x87e1fba0 0x20000 0x0 0x87dbff74)
+0x943bbaa8 : 0x87d77c16 (0x1b1cc800 0x0 0x943bbaf8 0x8d41a828)
+0x943bbac8 : 0x87d81e43 (0x20000 0x0 0x87e18c30 0x87dbfefa)
+0x943bbb48 : 0x87d82696 (0x1b1cc000 0x0 0x943bbb78 0x87d9267c)
+0x943bbb88 : 0x87d88796 (0xe248000 0x20000 0x8d41a828 0x0)
+0x943bbbd8 : 0x87d8ecf9 (0x8d41a828 0x2151ef00 0x20000 0x0)
+0x943bbc58 : 0x87d68848 (0xf7554f0 0x8cfa 0x0 0x943bbebc)
+0x943bbd78 : 0x1f6131 (0x943bbdac 0x246 0x943bbdd8 0x1da207)
+0x943bbdd8 : 0x1ec98f (0x1631fdd0 0x943bbebc 0x811 0x943bbf54)
+0x943bbe68 : 0x38b3ca (0xc507840 0x943bbebc 0x1 0x943bbf54)
+0x943bbf18 : 0x38b53b (0x943bbf54 0xc507840 0x19bec000 0x0)
+0x943bbf78 : 0x3dcf13 (0xc528060 0x1a2d9a40 0x1a2d9a84 0x1a2dd998)
+0x943bbfc8 : 0x19f1c3 (0xf742a20 0x0 0x1a20b5 0xc6bc7d8)
+0xb04b9838 : 0xffffffff (0xffffffff 0xffb8b8b8 0xffc0c0c0 0xffc8c8c8)
+	Backtrace continues...
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x87d65000->0x87e20fff
+
+BSD process name corresponding to current thread: Finder
+----------------------
+I have 8G of RAM and kinda surprised that we couldn't allocate just 128K.
+Hi Noel! :) Would you like to see the crashdump from this panic
+or is this a known problem already?
+
+Thanks,
+-Andrei
+From Jonathan.Edwards at Sun.COM  Thu May  8 14:31:18 2008
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Thu May  8 14:27:46 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+Message-ID: <5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+
+hrmm .. sounds suspiciously like a 32bit kmem_alloc() sort of problem
+
+
+On May 8, 2008, at 1:56 PM, Andrei Dorofeev wrote:
+
+> Hi -
+>
+> I just started using ZFS on my MacPro today and created
+> raidz pool with three 750G drives.  I hit the following panic
+> while copying files onto one of the filesystems that were
+> created on this pool.
+>
+> -----------------
+> Thu May  8 13:47:42 2008
+> panic(cpu 1 caller 0x87DC11CF): "zfs: vmem_alloc couldn't alloc 131072
+> bytes\n"@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x943bb9c8 : 0x12b0f7 (0x4581f4 0x943bb9fc 0x133230 0x0)
+> 0x943bba18 : 0x87dc11cf (0x87e0dbc0 0x20000 0x20000 0x87dbfefa)
+> 0x943bba48 : 0x87ddbb1b (0x87e1fba0 0x20000 0x0 0x87dbff74)
+> 0x943bbaa8 : 0x87d77c16 (0x1b1cc800 0x0 0x943bbaf8 0x8d41a828)
+> 0x943bbac8 : 0x87d81e43 (0x20000 0x0 0x87e18c30 0x87dbfefa)
+> 0x943bbb48 : 0x87d82696 (0x1b1cc000 0x0 0x943bbb78 0x87d9267c)
+> 0x943bbb88 : 0x87d88796 (0xe248000 0x20000 0x8d41a828 0x0)
+> 0x943bbbd8 : 0x87d8ecf9 (0x8d41a828 0x2151ef00 0x20000 0x0)
+> 0x943bbc58 : 0x87d68848 (0xf7554f0 0x8cfa 0x0 0x943bbebc)
+> 0x943bbd78 : 0x1f6131 (0x943bbdac 0x246 0x943bbdd8 0x1da207)
+> 0x943bbdd8 : 0x1ec98f (0x1631fdd0 0x943bbebc 0x811 0x943bbf54)
+> 0x943bbe68 : 0x38b3ca (0xc507840 0x943bbebc 0x1 0x943bbf54)
+> 0x943bbf18 : 0x38b53b (0x943bbf54 0xc507840 0x19bec000 0x0)
+> 0x943bbf78 : 0x3dcf13 (0xc528060 0x1a2d9a40 0x1a2d9a84 0x1a2dd998)
+> 0x943bbfc8 : 0x19f1c3 (0xf742a20 0x0 0x1a20b5 0xc6bc7d8)
+> 0xb04b9838 : 0xffffffff (0xffffffff 0xffb8b8b8 0xffc0c0c0 0xffc8c8c8)
+> 	Backtrace continues...
+>      Kernel loadable modules in backtrace (with dependencies):
+>         com.apple.filesystems.zfs(8.0)@0x87d65000->0x87e20fff
+>
+> BSD process name corresponding to current thread: Finder
+> ----------------------
+> I have 8G of RAM and kinda surprised that we couldn't allocate just  
+> 128K.
+> Hi Noel! :) Would you like to see the crashdump from this panic
+> or is this a known problem already?
+>
+> Thanks,
+> -Andrei
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+
+From dorofeev at gmail.com  Thu May  8 14:41:42 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Thu May  8 14:37:55 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+Message-ID: <a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+
+Yeah, that was the bug that many people hit on Solaris at some point.
+I thought Mac OS X 10.5 kernel was 64-bit.
+
+- Andrei
+
+On Thu, May 8, 2008 at 2:31 PM, Jonathan Edwards
+<Jonathan.Edwards@sun.com> wrote:
+> hrmm .. sounds suspiciously like a 32bit kmem_alloc() sort of problem
+>
+>
+> On May 8, 2008, at 1:56 PM, Andrei Dorofeev wrote:
+>
+>> Hi -
+>>
+>> I just started using ZFS on my MacPro today and created
+>> raidz pool with three 750G drives.  I hit the following panic
+>> while copying files onto one of the filesystems that were
+>> created on this pool.
+>>
+>> -----------------
+>> Thu May  8 13:47:42 2008
+>> panic(cpu 1 caller 0x87DC11CF): "zfs: vmem_alloc couldn't alloc 131072
+>> bytes\n"@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+>> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+>> 0x943bb9c8 : 0x12b0f7 (0x4581f4 0x943bb9fc 0x133230 0x0)
+>> 0x943bba18 : 0x87dc11cf (0x87e0dbc0 0x20000 0x20000 0x87dbfefa)
+>> 0x943bba48 : 0x87ddbb1b (0x87e1fba0 0x20000 0x0 0x87dbff74)
+>> 0x943bbaa8 : 0x87d77c16 (0x1b1cc800 0x0 0x943bbaf8 0x8d41a828)
+>> 0x943bbac8 : 0x87d81e43 (0x20000 0x0 0x87e18c30 0x87dbfefa)
+>> 0x943bbb48 : 0x87d82696 (0x1b1cc000 0x0 0x943bbb78 0x87d9267c)
+>> 0x943bbb88 : 0x87d88796 (0xe248000 0x20000 0x8d41a828 0x0)
+>> 0x943bbbd8 : 0x87d8ecf9 (0x8d41a828 0x2151ef00 0x20000 0x0)
+>> 0x943bbc58 : 0x87d68848 (0xf7554f0 0x8cfa 0x0 0x943bbebc)
+>> 0x943bbd78 : 0x1f6131 (0x943bbdac 0x246 0x943bbdd8 0x1da207)
+>> 0x943bbdd8 : 0x1ec98f (0x1631fdd0 0x943bbebc 0x811 0x943bbf54)
+>> 0x943bbe68 : 0x38b3ca (0xc507840 0x943bbebc 0x1 0x943bbf54)
+>> 0x943bbf18 : 0x38b53b (0x943bbf54 0xc507840 0x19bec000 0x0)
+>> 0x943bbf78 : 0x3dcf13 (0xc528060 0x1a2d9a40 0x1a2d9a84 0x1a2dd998)
+>> 0x943bbfc8 : 0x19f1c3 (0xf742a20 0x0 0x1a20b5 0xc6bc7d8)
+>> 0xb04b9838 : 0xffffffff (0xffffffff 0xffb8b8b8 0xffc0c0c0 0xffc8c8c8)
+>>        Backtrace continues...
+>>     Kernel loadable modules in backtrace (with dependencies):
+>>        com.apple.filesystems.zfs(8.0)@0x87d65000->0x87e20fff
+>>
+>> BSD process name corresponding to current thread: Finder
+>> ----------------------
+>> I have 8G of RAM and kinda surprised that we couldn't allocate just 128K.
+>> Hi Noel! :) Would you like to see the crashdump from this panic
+>> or is this a known problem already?
+>>
+>> Thanks,
+>> -Andrei
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss@lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>
+>
+From ndellofano at apple.com  Fri May  9 00:21:50 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Fri May  9 00:18:02 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+Message-ID: <9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+
+yep, Jonathan gets the prize :)
+OSX kernel is in fact 32 bit so yeah, you're hitting the issue that  
+while you have 8GB of ram ZFS can use at most 4GB (32bit), and out of  
+that we're lucky if we can use 1 GB or so (we have to share with  
+everyone else that needs kernel space too).
+
+That being said though, panics suck and we need to tune the arc_max  
+limits more accordingly so all your kernel memory doesn't get eaten  
+up.  We haven't done too much testing on any machine over 2GB ram so  
+it's quite possible something is amiss in the code if your physmem >  
+virtual mem.  I'm opening a bug on this.
+
+Sorry Andrei!  I"ll go check it out, and get back to you with a  
+suitable workaround.
+
+Noel
+
+On May 8, 2008, at 2:41 PM, Andrei Dorofeev wrote:
+
+> Yeah, that was the bug that many people hit on Solaris at some point.
+> I thought Mac OS X 10.5 kernel was 64-bit.
+>
+> - Andrei
+>
+> On Thu, May 8, 2008 at 2:31 PM, Jonathan Edwards
+> <Jonathan.Edwards@sun.com> wrote:
+>> hrmm .. sounds suspiciously like a 32bit kmem_alloc() sort of problem
+>>
+>>
+>> On May 8, 2008, at 1:56 PM, Andrei Dorofeev wrote:
+>>
+>>> Hi -
+>>>
+>>> I just started using ZFS on my MacPro today and created
+>>> raidz pool with three 750G drives.  I hit the following panic
+>>> while copying files onto one of the filesystems that were
+>>> created on this pool.
+>>>
+>>> -----------------
+>>> Thu May  8 13:47:42 2008
+>>> panic(cpu 1 caller 0x87DC11CF): "zfs: vmem_alloc couldn't alloc  
+>>> 131072
+>>> bytes\n"@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+>>> Backtrace, Format - Frame : Return Address (4 potential args on  
+>>> stack)
+>>> 0x943bb9c8 : 0x12b0f7 (0x4581f4 0x943bb9fc 0x133230 0x0)
+>>> 0x943bba18 : 0x87dc11cf (0x87e0dbc0 0x20000 0x20000 0x87dbfefa)
+>>> 0x943bba48 : 0x87ddbb1b (0x87e1fba0 0x20000 0x0 0x87dbff74)
+>>> 0x943bbaa8 : 0x87d77c16 (0x1b1cc800 0x0 0x943bbaf8 0x8d41a828)
+>>> 0x943bbac8 : 0x87d81e43 (0x20000 0x0 0x87e18c30 0x87dbfefa)
+>>> 0x943bbb48 : 0x87d82696 (0x1b1cc000 0x0 0x943bbb78 0x87d9267c)
+>>> 0x943bbb88 : 0x87d88796 (0xe248000 0x20000 0x8d41a828 0x0)
+>>> 0x943bbbd8 : 0x87d8ecf9 (0x8d41a828 0x2151ef00 0x20000 0x0)
+>>> 0x943bbc58 : 0x87d68848 (0xf7554f0 0x8cfa 0x0 0x943bbebc)
+>>> 0x943bbd78 : 0x1f6131 (0x943bbdac 0x246 0x943bbdd8 0x1da207)
+>>> 0x943bbdd8 : 0x1ec98f (0x1631fdd0 0x943bbebc 0x811 0x943bbf54)
+>>> 0x943bbe68 : 0x38b3ca (0xc507840 0x943bbebc 0x1 0x943bbf54)
+>>> 0x943bbf18 : 0x38b53b (0x943bbf54 0xc507840 0x19bec000 0x0)
+>>> 0x943bbf78 : 0x3dcf13 (0xc528060 0x1a2d9a40 0x1a2d9a84 0x1a2dd998)
+>>> 0x943bbfc8 : 0x19f1c3 (0xf742a20 0x0 0x1a20b5 0xc6bc7d8)
+>>> 0xb04b9838 : 0xffffffff (0xffffffff 0xffb8b8b8 0xffc0c0c0  
+>>> 0xffc8c8c8)
+>>>       Backtrace continues...
+>>>    Kernel loadable modules in backtrace (with dependencies):
+>>>       com.apple.filesystems.zfs(8.0)@0x87d65000->0x87e20fff
+>>>
+>>> BSD process name corresponding to current thread: Finder
+>>> ----------------------
+>>> I have 8G of RAM and kinda surprised that we couldn't allocate  
+>>> just 128K.
+>>> Hi Noel! :) Would you like to see the crashdump from this panic
+>>> or is this a known problem already?
+>>>
+>>> Thanks,
+>>> -Andrei
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss@lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>>
+>>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+
+From raoul at amsi.org.au  Thu May  8 07:28:30 2008
+From: raoul at amsi.org.au (raoul@amsi.org.au)
+Date: Fri May  9 00:29:39 2008
+Subject: [zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+Message-ID: <50332.124.168.74.59.1210256910.squirrel@webmail.amsi.org.au>
+
+Hello,
+
+I have a ZFS test rig at home to play around with.
+It's actually an old AND 500/132 case with a Digital Audio mobo inside. 
+(was fun to build)
+My pool consists of 8 x 250GB drives as a raidz, which equates to about
+1.55TB capacity.
+Each drive is in a removable caddy and have a green LED for power and red
+LED for activity.
+
+I'm noticing that all transfers to or from the pool seem to pause for a
+brief couple of seconds, and then resume.
+i.e. I would see the red LEDs of all 8 drives go crazy for say, approx 2-3
+seconds, then a pause of 1-2 seconds and then more LED craziness...
+
+The Finder progress bar also suggests this trend as I see the
+"data-copied" value, pause congruently with the red LEDs of each drive.
+
+So.
+
+Is this normal?
+
+Is anyone else seeing this behaviour?
+
+Can others comment that have used BSD or Solaris?
+
+I also conducted earlier testing with 5 x 250GB drives and noticed the
+same thing.
+
+I've transferred ~ 900GB to the pool and it "scrubs" up fine. (took 7 hours!)
+I noticed that while scrubbing, that the pulsation I'm experiencing does
+not happen at all.
+It's only data reading/writing that I'm noticing this "pause".
+
+Specs are:
+DA G4, 1.33GHz DP
+1GB RAM
+2 x ACARD 6885M PCI (configured as "jbod")
+8 x 250GB (not all the same manufacturer though) PATA drives.
+MacOS X Server 10.5.2 (9C31)
+
+Below is a terminal dump of the 8 drive pool I created:
+Please note that I haven't created any "nested" pools.
+I basically just have the "white disk image" icon on my desktop and am
+sharing a single folder folder called LoungeRoomMac.
+
+--- Terminal Dump ---
+
+bigbox:~ badmin$ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+/dev/disk1
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                        ZFS 			             232.6 Gi   disk1s2
+/dev/disk2
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                        ZFS 			             233.4 Gi   disk2s2
+/dev/disk3
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk3
+   1:                        EFI                         200.0 Mi   disk3s1
+   2:                        ZFS                         232.6 Gi   disk3s2
+/dev/disk4
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk4
+   1:                        EFI                         200.0 Mi   disk4s1
+   2:                        ZFS 			             232.6 Gi   disk4s2
+/dev/disk5
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk5
+   1:                        EFI                         200.0 Mi   disk5s1
+   2:                        ZFS 			             233.4 Gi   disk5s2
+/dev/disk6
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk6
+   1:                        EFI                         200.0 Mi   disk6s1
+   2:                        ZFS 			             232.6 Gi   disk6s2
+/dev/disk7
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk7
+   1:                        EFI                         200.0 Mi   disk7s1
+   2:                        ZFS                         232.6 Gi   disk7s2
+
+
+bigbox:~ badmin$ diskutil partitiondisk /dev/disk0 GPTFormat ZFS
+%noformat% 100%
+Started partitioning on disk disk0
+Creating partition map
+[ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+Finished partitioning on disk disk0
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+
+[... I Formated all of them the same way, being disk0 through to disk7 ...]
+
+
+bigbox:~ badmin$ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+/dev/disk1
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                        ZFS 			             232.6 Gi   disk1s2
+/dev/disk2
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                        ZFS 			             233.4 Gi   disk2s2
+/dev/disk3
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk3
+   1:                        EFI                         200.0 Mi   disk3s1
+   2:                        ZFS                         232.6 Gi   disk3s2
+/dev/disk4
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk4
+   1:                        EFI                         200.0 Mi   disk4s1
+   2:                        ZFS 			             232.6 Gi   disk4s2
+/dev/disk5
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk5
+   1:                        EFI                         200.0 Mi   disk5s1
+   2:                        ZFS 			             233.4 Gi   disk5s2
+/dev/disk6
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk6
+   1:                        EFI                         200.0 Mi   disk6s1
+   2:                        ZFS 			             232.6 Gi   disk6s2
+/dev/disk7
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk7
+   1:                        EFI                         200.0 Mi   disk7s1
+   2:                        ZFS                         232.6 Gi   disk7s2
+
+bigbox:~ badmin$ sudo zpool create bigboxraidz raidz /dev/disk0s2
+/dev/disk1s2 /dev/disk2s2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+/dev/disk6s2 /dev/disk7s2
+
+
+bigbox:~ badmin$ zpool status bigboxraidz
+  pool: bigboxraidz
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+	pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	bigboxraidz  ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	    disk6s2  ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+
+errors: No known data errors
+bigbox:~ badmin$
+
+
+bigbox:~ badmin$ zpool upgrade bigboxraidz
+This system is currently running ZFS pool version 8.
+
+Successfully upgraded 'bigboxraidz' from version 6 to version 8
+bigbox:~ badmin$
+
+--- Terminal Dump ---
+
+Regards,
+
+Raoul,
+Australia.
+
+
+
+
+From raoul at amsi.org.au  Thu May  8 07:30:18 2008
+From: raoul at amsi.org.au (raoul@amsi.org.au)
+Date: Fri May  9 00:29:39 2008
+Subject: [zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+Message-ID: <50348.124.168.74.59.1210257018.squirrel@webmail.amsi.org.au>
+
+Hello,
+
+I have a ZFS test rig at home to play around with.
+It's actually an old AND 500/132 case with a Digital Audio mobo inside. 
+(was fun to build)
+My pool consists of 8 x 250GB drives as a raidz, which equates to about
+1.55TB capacity.
+Each drive is in a removable caddy and have a green LED for power and red
+LED for activity.
+
+I'm noticing that all transfers to or from the pool seem to pause for a
+brief couple of seconds, and then resume.
+i.e. I would see the red LEDs of all 8 drives go crazy for say, approx 2-3
+seconds, then a pause of 1-2 seconds and then more LED craziness...
+
+The Finder progress bar also suggests this trend as I see the
+"data-copied" value, pause congruently with the red LEDs of each drive.
+
+So.
+
+Is this normal?
+
+Is anyone else seeing this behaviour?
+
+Can others comment that have used BSD or Solaris?
+
+I also conducted earlier testing with 5 x 250GB drives and noticed the
+same thing.
+
+I've transferred ~ 900GB to the pool and it "scrubs" up fine. (took 7 hours!)
+I noticed that while scrubbing, that the pulsation I'm experiencing does
+not happen at all.
+It's only data reading/writing that I'm noticing this "pause".
+
+Specs are:
+DA G4, 1.33GHz DP
+1GB RAM
+2 x ACARD 6885M PCI (configured as "jbod")
+8 x 250GB (not all the same manufacturer though) PATA drives.
+MacOS X Server 10.5.2 (9C31)
+
+Below is a terminal dump of the 8 drive pool I created:
+Please note that I haven't created any "nested" pools.
+I basically just have the "white disk image" icon on my desktop and am
+sharing a single folder folder called LoungeRoomMac.
+
+--- Terminal Dump ---
+
+bigbox:~ badmin$ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+/dev/disk1
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                        ZFS 			             232.6 Gi   disk1s2
+/dev/disk2
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                        ZFS 			             233.4 Gi   disk2s2
+/dev/disk3
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk3
+   1:                        EFI                         200.0 Mi   disk3s1
+   2:                        ZFS                         232.6 Gi   disk3s2
+/dev/disk4
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk4
+   1:                        EFI                         200.0 Mi   disk4s1
+   2:                        ZFS 			             232.6 Gi   disk4s2
+/dev/disk5
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk5
+   1:                        EFI                         200.0 Mi   disk5s1
+   2:                        ZFS 			             233.4 Gi   disk5s2
+/dev/disk6
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk6
+   1:                        EFI                         200.0 Mi   disk6s1
+   2:                        ZFS 			             232.6 Gi   disk6s2
+/dev/disk7
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk7
+   1:                        EFI                         200.0 Mi   disk7s1
+   2:                        ZFS                         232.6 Gi   disk7s2
+
+
+bigbox:~ badmin$ diskutil partitiondisk /dev/disk0 GPTFormat ZFS
+%noformat% 100%
+Started partitioning on disk disk0
+Creating partition map
+[ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+Finished partitioning on disk disk0
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+
+[... I Formated all of them the same way, being disk0 through to disk7 ...]
+
+
+bigbox:~ badmin$ diskutil list
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                        ZFS                         232.6 Gi   disk0s2
+/dev/disk1
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                        ZFS 			             232.6 Gi   disk1s2
+/dev/disk2
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                        ZFS 			             233.4 Gi   disk2s2
+/dev/disk3
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk3
+   1:                        EFI                         200.0 Mi   disk3s1
+   2:                        ZFS                         232.6 Gi   disk3s2
+/dev/disk4
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk4
+   1:                        EFI                         200.0 Mi   disk4s1
+   2:                        ZFS 			             232.6 Gi   disk4s2
+/dev/disk5
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *233.8 Gi   disk5
+   1:                        EFI                         200.0 Mi   disk5s1
+   2:                        ZFS 			             233.4 Gi   disk5s2
+/dev/disk6
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk6
+   1:                        EFI                         200.0 Mi   disk6s1
+   2:                        ZFS 			             232.6 Gi   disk6s2
+/dev/disk7
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *232.9 Gi   disk7
+   1:                        EFI                         200.0 Mi   disk7s1
+   2:                        ZFS                         232.6 Gi   disk7s2
+
+bigbox:~ badmin$ sudo zpool create bigboxraidz raidz /dev/disk0s2
+/dev/disk1s2 /dev/disk2s2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+/dev/disk6s2 /dev/disk7s2
+
+
+bigbox:~ badmin$ zpool status bigboxraidz
+  pool: bigboxraidz
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+	pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	bigboxraidz  ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	    disk6s2  ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+
+errors: No known data errors
+bigbox:~ badmin$
+
+
+bigbox:~ badmin$ zpool upgrade bigboxraidz
+This system is currently running ZFS pool version 8.
+
+Successfully upgraded 'bigboxraidz' from version 6 to version 8
+bigbox:~ badmin$
+
+--- Terminal Dump ---
+
+Regards,
+
+Raoul,
+Australia.
+
+
+From ndellofano at apple.com  Fri May  9 00:43:06 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Fri May  9 00:39:15 2008
+Subject: [zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+In-Reply-To: <50332.124.168.74.59.1210256910.squirrel@webmail.amsi.org.au>
+References: <50332.124.168.74.59.1210256910.squirrel@webmail.amsi.org.au>
+Message-ID: <8C0CF3BD-92BF-4E22-AC83-EEA523E7AB54@apple.com>
+
+It could be that what you're witnessing is ZFS's transactional IO  
+syncing.  Basically we write to disk (ie sync a transaction group)  
+every five seconds, hence this likely explains your crazy drive light  
+issue.
+
+To actually see what's going on down there, I'd recommend running this  
+on the command line in a terminal window:
+
+  #sudo zpool iostat bigboxraidz 1
+
+
+This will give you all the specs on what I/O ZFS is doing every  
+second.  How many reads, how many writes, and the size of each  
+respectively. And will keep going until you ctl-C it.
+
+Noel
+
+On May 8, 2008, at 7:28 AM, raoul@amsi.org.au wrote:
+
+> Hello,
+>
+> I have a ZFS test rig at home to play around with.
+> It's actually an old AND 500/132 case with a Digital Audio mobo  
+> inside.
+> (was fun to build)
+> My pool consists of 8 x 250GB drives as a raidz, which equates to  
+> about
+> 1.55TB capacity.
+> Each drive is in a removable caddy and have a green LED for power  
+> and red
+> LED for activity.
+>
+> I'm noticing that all transfers to or from the pool seem to pause  
+> for a
+> brief couple of seconds, and then resume.
+> i.e. I would see the red LEDs of all 8 drives go crazy for say,  
+> approx 2-3
+> seconds, then a pause of 1-2 seconds and then more LED craziness...
+>
+> The Finder progress bar also suggests this trend as I see the
+> "data-copied" value, pause congruently with the red LEDs of each  
+> drive.
+>
+> So.
+>
+> Is this normal?
+>
+> Is anyone else seeing this behaviour?
+>
+> Can others comment that have used BSD or Solaris?
+>
+> I also conducted earlier testing with 5 x 250GB drives and noticed the
+> same thing.
+>
+> I've transferred ~ 900GB to the pool and it "scrubs" up fine. (took  
+> 7 hours!)
+> I noticed that while scrubbing, that the pulsation I'm experiencing  
+> does
+> not happen at all.
+> It's only data reading/writing that I'm noticing this "pause".
+>
+> Specs are:
+> DA G4, 1.33GHz DP
+> 1GB RAM
+> 2 x ACARD 6885M PCI (configured as "jbod")
+> 8 x 250GB (not all the same manufacturer though) PATA drives.
+> MacOS X Server 10.5.2 (9C31)
+>
+> Below is a terminal dump of the 8 drive pool I created:
+> Please note that I haven't created any "nested" pools.
+> I basically just have the "white disk image" icon on my desktop and am
+> sharing a single folder folder called LoungeRoomMac.
+>
+> --- Terminal Dump ---
+>
+> bigbox:~ badmin$ diskutil list
+> /dev/disk0
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk0
+>   1:                        EFI                         200.0 Mi    
+> disk0s1
+>   2:                        ZFS                         232.6 Gi    
+> disk0s2
+> /dev/disk1
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk1
+>   1:                        EFI                         200.0 Mi    
+> disk1s1
+>   2:                        ZFS 			             232.6 Gi   disk1s2
+> /dev/disk2
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk2
+>   1:                        EFI                         200.0 Mi    
+> disk2s1
+>   2:                        ZFS 			             233.4 Gi   disk2s2
+> /dev/disk3
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk3
+>   1:                        EFI                         200.0 Mi    
+> disk3s1
+>   2:                        ZFS                         232.6 Gi    
+> disk3s2
+> /dev/disk4
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk4
+>   1:                        EFI                         200.0 Mi    
+> disk4s1
+>   2:                        ZFS 			             232.6 Gi   disk4s2
+> /dev/disk5
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk5
+>   1:                        EFI                         200.0 Mi    
+> disk5s1
+>   2:                        ZFS 			             233.4 Gi   disk5s2
+> /dev/disk6
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk6
+>   1:                        EFI                         200.0 Mi    
+> disk6s1
+>   2:                        ZFS 			             232.6 Gi   disk6s2
+> /dev/disk7
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk7
+>   1:                        EFI                         200.0 Mi    
+> disk7s1
+>   2:                        ZFS                         232.6 Gi    
+> disk7s2
+>
+>
+> bigbox:~ badmin$ diskutil partitiondisk /dev/disk0 GPTFormat ZFS
+> %noformat% 100%
+> Started partitioning on disk disk0
+> Creating partition map
+> [ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+> Finished partitioning on disk disk0
+> /dev/disk0
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk0
+>   1:                        EFI                         200.0 Mi    
+> disk0s1
+>   2:                        ZFS                         232.6 Gi    
+> disk0s2
+>
+> [... I Formated all of them the same way, being disk0 through to  
+> disk7 ...]
+>
+>
+> bigbox:~ badmin$ diskutil list
+> /dev/disk0
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk0
+>   1:                        EFI                         200.0 Mi    
+> disk0s1
+>   2:                        ZFS                         232.6 Gi    
+> disk0s2
+> /dev/disk1
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk1
+>   1:                        EFI                         200.0 Mi    
+> disk1s1
+>   2:                        ZFS 			             232.6 Gi   disk1s2
+> /dev/disk2
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk2
+>   1:                        EFI                         200.0 Mi    
+> disk2s1
+>   2:                        ZFS 			             233.4 Gi   disk2s2
+> /dev/disk3
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk3
+>   1:                        EFI                         200.0 Mi    
+> disk3s1
+>   2:                        ZFS                         232.6 Gi    
+> disk3s2
+> /dev/disk4
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk4
+>   1:                        EFI                         200.0 Mi    
+> disk4s1
+>   2:                        ZFS 			             232.6 Gi   disk4s2
+> /dev/disk5
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk5
+>   1:                        EFI                         200.0 Mi    
+> disk5s1
+>   2:                        ZFS 			             233.4 Gi   disk5s2
+> /dev/disk6
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk6
+>   1:                        EFI                         200.0 Mi    
+> disk6s1
+>   2:                        ZFS 			             232.6 Gi   disk6s2
+> /dev/disk7
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk7
+>   1:                        EFI                         200.0 Mi    
+> disk7s1
+>   2:                        ZFS                         232.6 Gi    
+> disk7s2
+>
+> bigbox:~ badmin$ sudo zpool create bigboxraidz raidz /dev/disk0s2
+> /dev/disk1s2 /dev/disk2s2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+> /dev/disk6s2 /dev/disk7s2
+>
+>
+> bigbox:~ badmin$ zpool status bigboxraidz
+>  pool: bigboxraidz
+> state: ONLINE
+> status: The pool is formatted using an older on-disk format.  The  
+> pool can
+> 	still be used, but some features are unavailable.
+> action: Upgrade the pool using 'zpool upgrade'.  Once this is done,  
+> the
+> 	pool will no longer be accessible on older software versions.
+> scrub: none requested
+> config:
+>
+> 	NAME         STATE     READ WRITE CKSUM
+> 	bigboxraidz  ONLINE       0     0     0
+> 	  raidz1     ONLINE       0     0     0
+> 	    disk0s2  ONLINE       0     0     0
+> 	    disk1s2  ONLINE       0     0     0
+> 	    disk2s2  ONLINE       0     0     0
+> 	    disk3s2  ONLINE       0     0     0
+> 	    disk4s2  ONLINE       0     0     0
+> 	    disk5s2  ONLINE       0     0     0
+> 	    disk6s2  ONLINE       0     0     0
+> 	    disk7s2  ONLINE       0     0     0
+>
+> errors: No known data errors
+> bigbox:~ badmin$
+>
+>
+> bigbox:~ badmin$ zpool upgrade bigboxraidz
+> This system is currently running ZFS pool version 8.
+>
+> Successfully upgraded 'bigboxraidz' from version 6 to version 8
+> bigbox:~ badmin$
+>
+> --- Terminal Dump ---
+>
+> Regards,
+>
+> Raoul,
+> Australia.
+>
+>
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+
+From franzschmalzl at spamfreemail.de  Fri May  9 04:47:55 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Fri May  9 04:44:36 2008
+Subject: [zfs-discuss] anyone else observing ZFS transfers pausing briefly?
+In-Reply-To: <50332.124.168.74.59.1210256910.squirrel@webmail.amsi.org.au>
+References: <50332.124.168.74.59.1210256910.squirrel@webmail.amsi.org.au>
+Message-ID: <16377BDE-BB12-42EE-8CFB-EEEF8826C281@spamfreemail.de>
+
+same thing here....
+
+
+On 08.05.2008, at 16:28, raoul@amsi.org.au wrote:
+
+> Hello,
+>
+> I have a ZFS test rig at home to play around with.
+> It's actually an old AND 500/132 case with a Digital Audio mobo  
+> inside.
+> (was fun to build)
+> My pool consists of 8 x 250GB drives as a raidz, which equates to  
+> about
+> 1.55TB capacity.
+> Each drive is in a removable caddy and have a green LED for power  
+> and red
+> LED for activity.
+>
+> I'm noticing that all transfers to or from the pool seem to pause  
+> for a
+> brief couple of seconds, and then resume.
+> i.e. I would see the red LEDs of all 8 drives go crazy for say,  
+> approx 2-3
+> seconds, then a pause of 1-2 seconds and then more LED craziness...
+>
+> The Finder progress bar also suggests this trend as I see the
+> "data-copied" value, pause congruently with the red LEDs of each  
+> drive.
+>
+> So.
+>
+> Is this normal?
+>
+> Is anyone else seeing this behaviour?
+>
+> Can others comment that have used BSD or Solaris?
+>
+> I also conducted earlier testing with 5 x 250GB drives and noticed the
+> same thing.
+>
+> I've transferred ~ 900GB to the pool and it "scrubs" up fine. (took  
+> 7 hours!)
+> I noticed that while scrubbing, that the pulsation I'm experiencing  
+> does
+> not happen at all.
+> It's only data reading/writing that I'm noticing this "pause".
+>
+> Specs are:
+> DA G4, 1.33GHz DP
+> 1GB RAM
+> 2 x ACARD 6885M PCI (configured as "jbod")
+> 8 x 250GB (not all the same manufacturer though) PATA drives.
+> MacOS X Server 10.5.2 (9C31)
+>
+> Below is a terminal dump of the 8 drive pool I created:
+> Please note that I haven't created any "nested" pools.
+> I basically just have the "white disk image" icon on my desktop and am
+> sharing a single folder folder called LoungeRoomMac.
+>
+> --- Terminal Dump ---
+>
+> bigbox:~ badmin$ diskutil list
+> /dev/disk0
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk0
+>   1:                        EFI                         200.0 Mi    
+> disk0s1
+>   2:                        ZFS                         232.6 Gi    
+> disk0s2
+> /dev/disk1
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk1
+>   1:                        EFI                         200.0 Mi    
+> disk1s1
+>   2:                        ZFS 			             232.6 Gi   disk1s2
+> /dev/disk2
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk2
+>   1:                        EFI                         200.0 Mi    
+> disk2s1
+>   2:                        ZFS 			             233.4 Gi   disk2s2
+> /dev/disk3
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk3
+>   1:                        EFI                         200.0 Mi    
+> disk3s1
+>   2:                        ZFS                         232.6 Gi    
+> disk3s2
+> /dev/disk4
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk4
+>   1:                        EFI                         200.0 Mi    
+> disk4s1
+>   2:                        ZFS 			             232.6 Gi   disk4s2
+> /dev/disk5
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk5
+>   1:                        EFI                         200.0 Mi    
+> disk5s1
+>   2:                        ZFS 			             233.4 Gi   disk5s2
+> /dev/disk6
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk6
+>   1:                        EFI                         200.0 Mi    
+> disk6s1
+>   2:                        ZFS 			             232.6 Gi   disk6s2
+> /dev/disk7
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk7
+>   1:                        EFI                         200.0 Mi    
+> disk7s1
+>   2:                        ZFS                         232.6 Gi    
+> disk7s2
+>
+>
+> bigbox:~ badmin$ diskutil partitiondisk /dev/disk0 GPTFormat ZFS
+> %noformat% 100%
+> Started partitioning on disk disk0
+> Creating partition map
+> [ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+> Finished partitioning on disk disk0
+> /dev/disk0
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk0
+>   1:                        EFI                         200.0 Mi    
+> disk0s1
+>   2:                        ZFS                         232.6 Gi    
+> disk0s2
+>
+> [... I Formated all of them the same way, being disk0 through to  
+> disk7 ...]
+>
+>
+> bigbox:~ badmin$ diskutil list
+> /dev/disk0
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk0
+>   1:                        EFI                         200.0 Mi    
+> disk0s1
+>   2:                        ZFS                         232.6 Gi    
+> disk0s2
+> /dev/disk1
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk1
+>   1:                        EFI                         200.0 Mi    
+> disk1s1
+>   2:                        ZFS 			             232.6 Gi   disk1s2
+> /dev/disk2
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk2
+>   1:                        EFI                         200.0 Mi    
+> disk2s1
+>   2:                        ZFS 			             233.4 Gi   disk2s2
+> /dev/disk3
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk3
+>   1:                        EFI                         200.0 Mi    
+> disk3s1
+>   2:                        ZFS                         232.6 Gi    
+> disk3s2
+> /dev/disk4
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk4
+>   1:                        EFI                         200.0 Mi    
+> disk4s1
+>   2:                        ZFS 			             232.6 Gi   disk4s2
+> /dev/disk5
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *233.8 Gi    
+> disk5
+>   1:                        EFI                         200.0 Mi    
+> disk5s1
+>   2:                        ZFS 			             233.4 Gi   disk5s2
+> /dev/disk6
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk6
+>   1:                        EFI                         200.0 Mi    
+> disk6s1
+>   2:                        ZFS 			             232.6 Gi   disk6s2
+> /dev/disk7
+>   #:                       TYPE NAME                    SIZE
+> IDENTIFIER
+>   0:      GUID_partition_scheme                        *232.9 Gi    
+> disk7
+>   1:                        EFI                         200.0 Mi    
+> disk7s1
+>   2:                        ZFS                         232.6 Gi    
+> disk7s2
+>
+> bigbox:~ badmin$ sudo zpool create bigboxraidz raidz /dev/disk0s2
+> /dev/disk1s2 /dev/disk2s2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+> /dev/disk6s2 /dev/disk7s2
+>
+>
+> bigbox:~ badmin$ zpool status bigboxraidz
+>  pool: bigboxraidz
+> state: ONLINE
+> status: The pool is formatted using an older on-disk format.  The  
+> pool can
+> 	still be used, but some features are unavailable.
+> action: Upgrade the pool using 'zpool upgrade'.  Once this is done,  
+> the
+> 	pool will no longer be accessible on older software versions.
+> scrub: none requested
+> config:
+>
+> 	NAME         STATE     READ WRITE CKSUM
+> 	bigboxraidz  ONLINE       0     0     0
+> 	  raidz1     ONLINE       0     0     0
+> 	    disk0s2  ONLINE       0     0     0
+> 	    disk1s2  ONLINE       0     0     0
+> 	    disk2s2  ONLINE       0     0     0
+> 	    disk3s2  ONLINE       0     0     0
+> 	    disk4s2  ONLINE       0     0     0
+> 	    disk5s2  ONLINE       0     0     0
+> 	    disk6s2  ONLINE       0     0     0
+> 	    disk7s2  ONLINE       0     0     0
+>
+> errors: No known data errors
+> bigbox:~ badmin$
+>
+>
+> bigbox:~ badmin$ zpool upgrade bigboxraidz
+> This system is currently running ZFS pool version 8.
+>
+> Successfully upgraded 'bigboxraidz' from version 6 to version 8
+> bigbox:~ badmin$
+>
+> --- Terminal Dump ---
+>
+> Regards,
+>
+> Raoul,
+> Australia.
+>
+>
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+
+From jbsnyder at gmail.com  Fri May  9 06:17:57 2008
+From: jbsnyder at gmail.com (James Snyder)
+Date: Fri May  9 06:14:06 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+Message-ID: <33644d3c0805090617g305ecf0fw51d18f317ffd5cce@mail.gmail.com>
+
+Is there a way to externally tune  the target sizes for the arc?  I
+understand that ZFS is designed to grow in proportion to however it is being
+used, but I've found that in certain situations that I end up in situations
+where I'm paging a lot while running a virtual machine, partially as a
+result of the large arc size.
+
+Also, I am DEFINITELY still having some weirdness with compiles and other
+situations where a huge number of files are flying around where doing an ls
+in a directory may indicate that a file is present, but then doing an ls on
+the file listed directly indicates that it isn't present.  Sometimes this
+limbo resolves itself a bit later.  Noel, have you seen anything like this.
+I haven't worked up a test case that reproduces it reliably, but I've had it
+happen numerous times while doing compiles out of MacPorts, as well as
+dealing with git and other things.  Re-running whatever command failed
+(make, or whatever) a few times later sometimes eventually gets a cleared up
+situation.
+
+On Fri, May 9, 2008 at 2:21 AM, No?l Dellofano <ndellofano@apple.com> wrote:
+
+> yep, Jonathan gets the prize :)
+> OSX kernel is in fact 32 bit so yeah, you're hitting the issue that while
+> you have 8GB of ram ZFS can use at most 4GB (32bit), and out of that we're
+> lucky if we can use 1 GB or so (we have to share with everyone else that
+> needs kernel space too).
+>
+> That being said though, panics suck and we need to tune the arc_max limits
+> more accordingly so all your kernel memory doesn't get eaten up.  We haven't
+> done too much testing on any machine over 2GB ram so it's quite possible
+> something is amiss in the code if your physmem > virtual mem.  I'm opening a
+> bug on this.
+>
+> Sorry Andrei!  I"ll go check it out, and get back to you with a suitable
+> workaround.
+>
+> Noel
+>
+>
+> On May 8, 2008, at 2:41 PM, Andrei Dorofeev wrote:
+>
+>  Yeah, that was the bug that many people hit on Solaris at some point.
+>> I thought Mac OS X 10.5 kernel was 64-bit.
+>>
+>> - Andrei
+>>
+>> On Thu, May 8, 2008 at 2:31 PM, Jonathan Edwards
+>> <Jonathan.Edwards@sun.com> wrote:
+>>
+>>> hrmm .. sounds suspiciously like a 32bit kmem_alloc() sort of problem
+>>>
+>>>
+>>> On May 8, 2008, at 1:56 PM, Andrei Dorofeev wrote:
+>>>
+>>>  Hi -
+>>>>
+>>>> I just started using ZFS on my MacPro today and created
+>>>> raidz pool with three 750G drives.  I hit the following panic
+>>>> while copying files onto one of the filesystems that were
+>>>> created on this pool.
+>>>>
+>>>> -----------------
+>>>> Thu May  8 13:47:42 2008
+>>>> panic(cpu 1 caller 0x87DC11CF): "zfs: vmem_alloc couldn't alloc 131072
+>>>> bytes\n"@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+>>>> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+>>>> 0x943bb9c8 : 0x12b0f7 (0x4581f4 0x943bb9fc 0x133230 0x0)
+>>>> 0x943bba18 : 0x87dc11cf (0x87e0dbc0 0x20000 0x20000 0x87dbfefa)
+>>>> 0x943bba48 : 0x87ddbb1b (0x87e1fba0 0x20000 0x0 0x87dbff74)
+>>>> 0x943bbaa8 : 0x87d77c16 (0x1b1cc800 0x0 0x943bbaf8 0x8d41a828)
+>>>> 0x943bbac8 : 0x87d81e43 (0x20000 0x0 0x87e18c30 0x87dbfefa)
+>>>> 0x943bbb48 : 0x87d82696 (0x1b1cc000 0x0 0x943bbb78 0x87d9267c)
+>>>> 0x943bbb88 : 0x87d88796 (0xe248000 0x20000 0x8d41a828 0x0)
+>>>> 0x943bbbd8 : 0x87d8ecf9 (0x8d41a828 0x2151ef00 0x20000 0x0)
+>>>> 0x943bbc58 : 0x87d68848 (0xf7554f0 0x8cfa 0x0 0x943bbebc)
+>>>> 0x943bbd78 : 0x1f6131 (0x943bbdac 0x246 0x943bbdd8 0x1da207)
+>>>> 0x943bbdd8 : 0x1ec98f (0x1631fdd0 0x943bbebc 0x811 0x943bbf54)
+>>>> 0x943bbe68 : 0x38b3ca (0xc507840 0x943bbebc 0x1 0x943bbf54)
+>>>> 0x943bbf18 : 0x38b53b (0x943bbf54 0xc507840 0x19bec000 0x0)
+>>>> 0x943bbf78 : 0x3dcf13 (0xc528060 0x1a2d9a40 0x1a2d9a84 0x1a2dd998)
+>>>> 0x943bbfc8 : 0x19f1c3 (0xf742a20 0x0 0x1a20b5 0xc6bc7d8)
+>>>> 0xb04b9838 : 0xffffffff (0xffffffff 0xffb8b8b8 0xffc0c0c0 0xffc8c8c8)
+>>>>      Backtrace continues...
+>>>>   Kernel loadable modules in backtrace (with dependencies):
+>>>>      com.apple.filesystems.zfs(8.0)@0x87d65000->0x87e20fff
+>>>>
+>>>> BSD process name corresponding to current thread: Finder
+>>>> ----------------------
+>>>> I have 8G of RAM and kinda surprised that we couldn't allocate just
+>>>> 128K.
+>>>> Hi Noel! :) Would you like to see the crashdump from this panic
+>>>> or is this a known problem already?
+>>>>
+>>>> Thanks,
+>>>> -Andrei
+>>>> _______________________________________________
+>>>> zfs-discuss mailing list
+>>>> zfs-discuss@lists.macosforge.org
+>>>> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>>>>
+>>>
+>>>
+>>>  _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss@lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss@lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo/zfs-discuss
+>
+
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+jbsnyder@gmail.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080509/2a5621ed/attachment.html
+From swpalmer at gmail.com  Fri May  9 13:17:48 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Fri May  9 13:13:57 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+Message-ID: <6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+
+On Fri, May 9, 2008 at 3:21 AM, No?l Dellofano <ndellofano@apple.com> wrote:
+
+> yep, Jonathan gets the prize :)
+> OSX kernel is in fact 32 bit so yeah,
+
+
+
+Slightly off-topic...
+
+The OS X kernel is 32-bit? (If so, Apple is doing some seriously weaselly
+marketing.  I mean, more than expected :-) )
+
+How do 64-bit drivers work?  According to this page (
+http://www.apple.com/macosx/technology/64bit.html) on the Apple website it
+is possible to have 64-bit drivers, so the next questions is why can't ZFS
+be one of them?
+
+Scott
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080509/92106a4e/attachment.html
+From Jonathan.Edwards at Sun.COM  Fri May  9 13:51:39 2008
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Fri May  9 13:47:54 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+	<6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+Message-ID: <E434E98C-DE19-404F-B5C7-1626D2737EA0@sun.com>
+
+
+On May 9, 2008, at 1:17 PM, Scott Palmer wrote:
+
+>
+>
+> On Fri, May 9, 2008 at 3:21 AM, No?l Dellofano  
+> <ndellofano@apple.com> wrote:
+> yep, Jonathan gets the prize :)
+> OSX kernel is in fact 32 bit so yeah,
+>
+>
+> Slightly off-topic...
+>
+> The OS X kernel is 32-bit? (If so, Apple is doing some seriously  
+> weaselly marketing.  I mean, more than expected :-) )
+>
+> How do 64-bit drivers work?  According to this page (http://www.apple.com/macosx/technology/64bit.html 
+> ) on the Apple website it is possible to have 64-bit drivers, so the  
+> next questions is why can't ZFS be one of them?
+
+see here:
+http://lists.apple.com/archives/Darwin-kernel/2006/Feb/msg00012.html
+
+methinks we've still got a 32bit kernel address space and 64bit  
+process address space regardless of the chip architecture ..
+
+---
+.je
+From dorofeev at gmail.com  Fri May  9 14:04:27 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Fri May  9 14:00:34 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+	<6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+Message-ID: <a782ada90805091404t15ca6a14o1dba6d1bf0977644@mail.gmail.com>
+
+On Fri, May 9, 2008 at 1:17 PM, Scott Palmer <swpalmer@gmail.com> wrote:
+> The OS X kernel is 32-bit? (If so, Apple is doing some seriously weaselly
+> marketing.  I mean, more than expected :-) )
+>
+> How do 64-bit drivers work?  According to this page
+> (http://www.apple.com/macosx/technology/64bit.html) on the Apple website it
+> is possible to have 64-bit drivers, so the next questions is why can't ZFS
+> be one of them?
+
+You can have 64-bit drivers and 32-bit base kernel sharing
+the same 32-bit virtual address space.  Even though this web page says
+"drivers", it probably refers to usermode drivers (like USB printers, etc).
+
+Speaking of 64-bit, is Apple working on 64-bit kernel port?  I imagine we
+won't see this at least until 10.6, but it would be nice to know since
+pretty much every other kernel is 64-bit by now.
+
+Thanks,
+- Andrei
+From dorofeev at gmail.com  Fri May  9 14:11:08 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Fri May  9 14:07:16 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <a782ada90805091404t15ca6a14o1dba6d1bf0977644@mail.gmail.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+	<6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+	<a782ada90805091404t15ca6a14o1dba6d1bf0977644@mail.gmail.com>
+Message-ID: <a782ada90805091411p75560277j20702677d24d39ed@mail.gmail.com>
+
+> You can have 64-bit drivers and 32-bit base kernel sharing
+
+Sorry, "can" above should have obviously been "can't".
+
+- Andrei
+From bwaters at nrao.edu  Fri May  9 15:05:21 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Fri May  9 15:02:12 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+Message-ID: <720F2682-4686-41E4-A324-DBCF9314777C@nrao.edu>
+
+Whoa! Duuude!
+
+Is that what I'm seeing here? I have
+
+bwaters@galatea ~ $ sysctl hw.physmem
+hw.physmem: 2147483648
+
+bwaters@galatea ~ $ sysctl hw.memsize
+hw.memsize: 7516192768
+
+
+Note that hw.physmem is NOT EQUAL TO the actual memory size if you've  
+got more than 2GB of RAM.
+
+bwaters@galatea ~ $ vm_stat
+Mach Virtual Memory Statistics: (page size of 4096 bytes)
+Pages free:                  1330519.
+Pages active:                 265433.
+Pages inactive:                22712.
+Pages wired down:             207631.
+"Translation faults":        4098126.
+Pages copy-on-write:           65416.
+Pages zero filled:           2580530.
+Pages reactivated:                 4.
+Pageins:                      176266.
+Pageouts:                          0.
+Object cache: 33789 hits of 76045 lookups (44% hit rate)
+
+
+and my recurring crash is
+
+Fri May  9 15:52:42 2008
+panic(cpu 1 caller 0x8B6851CF): "zfs: vmem_alloc couldn't alloc 20480  
+bytes\n"@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x83073968 : 0x12b0fa (0x459294 0x8307399c 0x133243 0x0)
+0x830739b8 : 0x8b6851cf (0x8b6d1bc0 0x5000 0x5000 0x8b683efa)
+0x830739e8 : 0x8b69fb1b (0x8b6e3ba0 0x5000 0x0 0x13017a)
+0x83073a48 : 0x8b63bc16 (0xc71be00 0x0 0x0 0x0)
+0x83073a68 : 0x8b645e43 (0x2200 0x0 0x8b6dcc30 0xa6a53c)
+0x83073ae8 : 0x8b646696 (0xc727a00 0x0 0x83073b28 0x0)
+0x83073b28 : 0x8b648f2f (0xcf62800 0x2200 0xfe7f2e60 0x0)
+0x83073bb8 : 0x8b64c889 (0xfe7f2e60 0xea6a328 0x1 0x4c3d)
+0x83073bd8 : 0x8b652d0a (0xfe7f2e60 0x16db7300 0x21c7 0x0)
+0x83073c58 : 0x8b62c848 (0x11f0e200 0x4c3d 0x0 0x83073ebc)
+0x83073d78 : 0x1f6492 (0x83073dac 0x246 0x83073dd8 0x1da55f)
+0x83073dd8 : 0x1ecd0d (0x17466640 0x83073ebc 0x1 0x83073f54)
+0x83073e68 : 0x38c229 (0xc38ec40 0x83073ebc 0x0 0x83073f54)
+0x83073f18 : 0x38c521 (0x83073f54 0xc38ec40 0x4374000 0x0)
+0x83073f78 : 0x3dddda (0xc6e2560 0x173d31a0 0x173d31e4 0x380569)
+0x83073fc8 : 0x19f2b3 (0x1e366ea0 0x0 0x1a20b5 0xc6d34f0)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x8b629000->0x8b6e4fff
+
+BSD process name corresponding to current thread: rsync
+
+Mac OS version:
+9D23
+
+Kernel version:
+Darwin Kernel Version 9.3.0: Thu Apr 17 00:09:25 PDT 2008;  
+root:xnu-1228.5.16~2/RELEASE_I386
+System model name: MacPro1,1 (Mac-F4208DC8)
+
+
+
+On May 9, 2008, at 1:21 AM, No?l Dellofano wrote:
+
+>
+> That being said though, panics suck and we need to tune the arc_max  
+> limits more accordingly so all your kernel memory doesn't get eaten  
+> up.  We haven't done too much testing on any machine over 2GB ram so  
+> it's quite possible something is amiss in the code if your physmem >  
+> virtual mem.  I'm opening a bug on this.
+
+From quension at mac.com  Fri May  9 23:54:35 2008
+From: quension at mac.com (Trevor Talbot)
+Date: Fri May  9 23:50:45 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <a782ada90805091404t15ca6a14o1dba6d1bf0977644@mail.gmail.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+	<6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+	<a782ada90805091404t15ca6a14o1dba6d1bf0977644@mail.gmail.com>
+Message-ID: <037D2079-7D34-4841-91D8-D32A81ACE18F@mac.com>
+
+On May 9, 2008, at 2:04 PM, Andrei Dorofeev wrote:
+
+> On Fri, May 9, 2008 at 1:17 PM, Scott Palmer <swpalmer@gmail.com>  
+> wrote:
+
+>> The OS X kernel is 32-bit? (If so, Apple is doing some seriously  
+>> weaselly marketing.  I mean, more than expected :-) )
+>>
+>> How do 64-bit drivers work?  According to this page (http://www.apple.com/macosx/technology/64bit.html 
+>> ) on the Apple website it is possible to have 64-bit drivers, so  
+>> the next questions is why can't ZFS be one of them?
+>
+> You [can't] have 64-bit drivers and 32-bit base kernel sharing the  
+> same 32-bit virtual address space.  Even though this web page says  
+> "drivers", it probably refers to usermode drivers (like USB  
+> printers, etc).
+
+While the kernel VM environment is 32bit, device drivers can work with  
+64bit physical addresses. When dealing with appropriate hardware, a  
+64bit-aware driver is able to avoid some intermediate buffering that  
+affects performance, especially when doing large I/O on behalf of a  
+process.
+
+That doesn't help ZFS at all, since it needs access to the entire  
+cache within the kernel's limited VM space.
+
+From swpalmer at gmail.com  Sat May 10 05:37:46 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Sat May 10 05:33:55 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <037D2079-7D34-4841-91D8-D32A81ACE18F@mac.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+	<6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+	<a782ada90805091404t15ca6a14o1dba6d1bf0977644@mail.gmail.com>
+	<037D2079-7D34-4841-91D8-D32A81ACE18F@mac.com>
+Message-ID: <C46C878A-1299-459A-8F47-C392735294C8@gmail.com>
+
+
+On 10-May-08, at 2:54 AM, Trevor Talbot wrote:
+
+> On May 9, 2008, at 2:04 PM, Andrei Dorofeev wrote:
+>
+>> On Fri, May 9, 2008 at 1:17 PM, Scott Palmer <swpalmer@gmail.com>  
+>> wrote:
+>
+>>> The OS X kernel is 32-bit? (If so, Apple is doing some seriously  
+>>> weaselly marketing.  I mean, more than expected :-) )
+>>>
+>>> How do 64-bit drivers work?  According to this page (http://www.apple.com/macosx/technology/64bit.html 
+>>> ) on the Apple website it is possible to have 64-bit drivers, so  
+>>> the next questions is why can't ZFS be one of them?
+>>
+>> You [can't] have 64-bit drivers and 32-bit base kernel sharing the  
+>> same 32-bit virtual address space.  Even though this web page says  
+>> "drivers", it probably refers to usermode drivers (like USB  
+>> printers, etc).
+>
+> While the kernel VM environment is 32bit, device drivers can work  
+> with 64bit physical addresses. When dealing with appropriate  
+> hardware, a 64bit-aware driver is able to avoid some intermediate  
+> buffering that affects performance, especially when doing large I/O  
+> on behalf of a process.
+>
+> That doesn't help ZFS at all, since it needs access to the entire  
+> cache within the kernel's limited VM space.
+
+I know that on other operating systems you can adjust the size of the  
+kernel VM space.  Is there an adjustable parameter that can give the  
+kernel more VM space?
+
+Is the VM space of the kernel shared with 32 bit applications?  I.e.  
+the upper 1GB of VM space for all processes is mapped to the kernel?
+
+I know this is off-topic so feel free to point me to the right place  
+for this info.
+
+Thanks,
+
+Scott
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080510/e9c68fee/smime.bin
+From quension at mac.com  Sat May 10 07:11:44 2008
+From: quension at mac.com (Trevor Talbot)
+Date: Sat May 10 07:08:00 2008
+Subject: [zfs-discuss] my first zfs panic
+In-Reply-To: <C46C878A-1299-459A-8F47-C392735294C8@gmail.com>
+References: <a782ada90805081356q468c2b66q6efae74ff043b862@mail.gmail.com>
+	<5CBCB9B2-D480-4EE9-A6E0-588DC0500263@sun.com>
+	<a782ada90805081441i701f05c7ma49bd229719285b2@mail.gmail.com>
+	<9AD5FEE0-A888-45AF-8E17-829D839F8AA5@apple.com>
+	<6ff274f40805091317y2e0bda57wbaba9c4f2c5152e5@mail.gmail.com>
+	<a782ada90805091404t15ca6a14o1dba6d1bf0977644@mail.gmail.com>
+	<037D2079-7D34-4841-91D8-D32A81ACE18F@mac.com>
+	<C46C878A-1299-459A-8F47-C392735294C8@gmail.com>
+Message-ID: <9443781F-B230-43B5-954B-96848E3746DC@mac.com>
+
+On May 10, 2008, at 5:37 AM, Scott Palmer wrote:
+
+> On 10-May-08, at 2:54 AM, Trevor Talbot wrote:
+
+>> While the kernel VM environment is 32bit, device drivers can work  
+>> with 64bit physical addresses. When dealing with appropriate  
+>> hardware, a 64bit-aware driver is able to avoid some intermediate  
+>> buffering that affects performance, especially when doing large I/O  
+>> on behalf of a process.
+>>
+>> That doesn't help ZFS at all, since it needs access to the entire  
+>> cache within the kernel's limited VM space.
+>
+> I know that on other operating systems you can adjust the size of  
+> the kernel VM space.  Is there an adjustable parameter that can give  
+> the kernel more VM space?
+>
+> Is the VM space of the kernel shared with 32 bit applications?  I.e.  
+> the upper 1GB of VM space for all processes is mapped to the kernel?
+
+No; OS X is a bit unique in that the kernel has its own private 32bit  
+VM space, not shared with userland. I don't know how that 4GB space is  
+divided up (some parts are always reserved for particular purposes),  
+but I'm not aware of any tunables that would affect the size of the  
+cache ZFS is able to create.
+
+This doesn't mean there aren't any, I just haven't researched enough  
+to know.
+
+From jbsnyder at gmail.com  Sun May 11 18:40:06 2008
+From: jbsnyder at gmail.com (James Snyder)
+Date: Sun May 11 18:36:03 2008
+Subject: [zfs-discuss] simpler approach for reproducing files-in-limbo
+	problem
+Message-ID: <33644d3c0805111840w51eb869v6b0805bb43f06a16@mail.gmail.com>
+
+I've been able to reproduce the issue I've been having with files sometimes
+going into something of a limbo state, using bonnie++'s create/stat/delete
+files routine.
+I don't get a failure every time, but if I kickstart a few of them with the
+following options, I usually get a failure after a few tries:
+
+bonnie++ -b -n 100 -s 0
+
+Output:
+Create files in sequential order...done.
+Stat files in sequential order...done.
+Delete files in sequential order...done.
+Create files in random order...Can't change to directory ./Bonnie.86484
+Cleaning up test directory after error.
+Bonnie: drastic I/O error (rmdir): No such file or directory
+
+If I check after the failure:
+
+ls -al Bonnie.86484
+total 36
+drwx------   2 jsnyder  staff    2 May 11 20:31 .
+drwxr-xr-x@ 65 jsnyder  staff  107 May 11 20:35 ..
+
+so the file is there, but it couldn't change to it, or delete it after that
+failed...
+
+Generally the failure happens on the "create files in random order" stage..
+
+Can anyone else reproduce this issue, or is it just me :-)
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+jbsnyder@gmail.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080511/12b1f6c4/attachment.html
+From jbsnyder at gmail.com  Mon May 12 05:13:26 2008
+From: jbsnyder at gmail.com (James Snyder)
+Date: Mon May 12 05:09:22 2008
+Subject: [zfs-discuss] Re: simpler approach for reproducing files-in-limbo
+	problem
+In-Reply-To: <33644d3c0805111840w51eb869v6b0805bb43f06a16@mail.gmail.com>
+References: <33644d3c0805111840w51eb869v6b0805bb43f06a16@mail.gmail.com>
+Message-ID: <33644d3c0805120513l2a46878cgba883d1e66d73be0@mail.gmail.com>
+
+This command alone is currently giving me that failure consistently now:
+bonnie++ -b -n 50 -s 0 -x 100
+
+On Sun, May 11, 2008 at 8:40 PM, James Snyder <jbsnyder@gmail.com> wrote:
+
+> I've been able to reproduce the issue I've been having with files
+> sometimes going into something of a limbo state, using bonnie++'s
+> create/stat/delete files routine.
+> I don't get a failure every time, but if I kickstart a few of them with
+> the following options, I usually get a failure after a few tries:
+>
+> bonnie++ -b -n 100 -s 0
+>
+> Output:
+> Create files in sequential order...done.
+> Stat files in sequential order...done.
+> Delete files in sequential order...done.
+> Create files in random order...Can't change to directory ./Bonnie.86484
+> Cleaning up test directory after error.
+> Bonnie: drastic I/O error (rmdir): No such file or directory
+>
+> If I check after the failure:
+>
+> ls -al Bonnie.86484
+> total 36
+> drwx------   2 jsnyder  staff    2 May 11 20:31 .
+> drwxr-xr-x@ 65 jsnyder  staff  107 May 11 20:35 ..
+>
+> so the file is there, but it couldn't change to it, or delete it after
+> that failed...
+>
+> Generally the failure happens on the "create files in random order"
+> stage..
+>
+> Can anyone else reproduce this issue, or is it just me :-)
+>
+>
+> --
+> James Snyder
+> Biomedical Engineering
+> Northwestern University
+> jbsnyder@gmail.com
+>
+
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+jbsnyder@gmail.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080512/91c8ed80/attachment-0001.html
+From zfs at hessmann.de  Tue May 13 03:08:20 2008
+From: zfs at hessmann.de (=?ISO-8859-1?Q?Christian_He=DFmann?=)
+Date: Tue May 13 03:04:15 2008
+Subject: [zfs-discuss] panic while listing snapshots
+Message-ID: <4D614C80-3E23-4C01-8788-8FDADD50EF50@hessmann.de>
+
+Good morning,
+
+
+not quite reproducible, but at least twice in 14 days.
+
+Specific processes running during that time:
+
+- rsync (3.0.0) from OS X client to RAID.Z on panic'd Mini (to  
+filesystem with Snapshots)
+- Playing movie in Quicktime from encrypted sparsebundle on RAID.Z
+- zfs list -t snapshot
+
+The last one seems to produce this panic:
+
+====
+Sun May 11 21:19:07 2008
+panic(cpu 1 caller 0x0019DE45): "trying to interlock destroyed mutex  
+0xd5d8f60"@/SourceCache/xnu/xnu-1228.4.31/osfmk/i386/locks_i386.c:1760
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x3be1be28 : 0x12b0f7 (0x4581f4 0x3be1be5c 0x133230 0x0)
+0x3be1be78 : 0x19de45 (0x45ff10 0xd5d8f60 0x3be1bea8 0xbb1efa)
+0x3be1be98 : 0x19b54a (0xd5d8f60 0x216 0x3be1bee8 0xb75b30)
+0x3be1bea8 : 0xb75b30 (0xd5d8f60 0x3be1bec8 0x19a8a3 0x5beb1dc4)
+0x3be1bee8 : 0xb77715 (0x5beb1dc4 0x0 0xc0ba80 0x147d9cf0)
+0x3be1bf08 : 0xb71670 (0x147d96f0 0x147d9cf0 0x3be1bf28 0x189eef4e)
+0x3be1bf28 : 0xb71be3 (0xc0b8c8 0xc0b8c8 0x5a2afd9 0xbdd005)
+0x3be1bfc8 : 0x19eadc (0x0 0x0 0x1a20b5 0x3c503c8)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xb57000->0xc12fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9C7010
+
+Kernel version:
+Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+root:xnu-1228.4.31~1/RELEASE_I386
+System model name: Macmini2,1 (Mac-F4208EAA)
+====
+
+
+Best regards,
+
+Christian
+From karl.gyllstrom at gmail.com  Wed May 14 07:13:22 2008
+From: karl.gyllstrom at gmail.com (Karl Gyllstrom)
+Date: Wed May 14 07:09:16 2008
+Subject: [zfs-discuss] Keynote issues
+Message-ID: <CA202577-2F15-4498-AF74-1AD052724494@gmail.com>
+
+I'm getting some weird Keynote behavior that I believe may be due to  
+ZFS.  When dropping images from other file locations, there is a  
+tendency for the image link to break, and show up as an 'X'd' box when  
+later opening the presentation.  When I dig around the index file  
+(which is just a huge xml file), the file locations seem to be  
+correct ... they're just not getting loaded correctly.  If this is an  
+interesting problem I'll try to poke around and figure out the  
+conditions in which this is predictable.
+
+I've moved the presentations to a non-zfs volume and I don't see the  
+problem.  Also, there isn't much on Google for this problem, so I  
+think it may be peculiar to zfs.
+From alex.blewitt at gmail.com  Wed May 14 15:37:33 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed May 14 15:33:20 2008
+Subject: [zfs-discuss] Keynote issues
+In-Reply-To: <CA202577-2F15-4498-AF74-1AD052724494@gmail.com>
+References: <CA202577-2F15-4498-AF74-1AD052724494@gmail.com>
+Message-ID: <636fd28e0805141537j5ba24dccnb1fb3cb6e3756ef0@mail.gmail.com>
+
+On Wed, May 14, 2008 at 3:13 PM, Karl Gyllstrom
+<karl.gyllstrom@gmail.com> wrote:
+> I'm getting some weird Keynote behavior that I believe may be due to ZFS.
+>  When dropping images from other file locations, there is a tendency for the
+> image link to break, and show up as an 'X'd' box when later opening the
+> presentation.  When I dig around the index file (which is just a huge xml
+> file), the file locations seem to be correct ... they're just not getting
+> loaded correctly.  If this is an interesting problem I'll try to poke around
+> and figure out the conditions in which this is predictable.
+>
+> I've moved the presentations to a non-zfs volume and I don't see the
+> problem.  Also, there isn't much on Google for this problem, so I think it
+> may be peculiar to zfs.
+
+I wonder whether Keynote stores any previews of the image as extended
+attributes, and that it doesn't think that ZFS is an xattr-aware
+system. You could use 'xattr' to see what the attributes are of the
+image on your AFS system and on the ZFS system to see what the
+difference is. You might also find an AppleDouble (._foo.jpg) file in
+the ZFS directory if copied in there by e.g. the Finder, and then when
+Keynote tries to load it, it might not be able to.
+
+You should be able to use 'cp' from Terminal to copy the image and
+preserve resource/extended attributes from AFS to ZFS; you might see
+if that fixes the issue.
+
+Alex
+From lopez.on.the.lists at yellowspace.net  Thu May 15 05:31:42 2008
+From: lopez.on.the.lists at yellowspace.net (Lorenzo Perone)
+Date: Thu, 15 May 2008 14:31:42 +0200
+Subject: [zfs-discuss] simpler approach for reproducing files-in-limbo
+	problem
+In-Reply-To: <33644d3c0805120513l2a46878cgba883d1e66d73be0@mail.gmail.com>
+References: <33644d3c0805111840w51eb869v6b0805bb43f06a16@mail.gmail.com>
+	<33644d3c0805120513l2a46878cgba883d1e66d73be0@mail.gmail.com>
+Message-ID: <0AA9F52A-B242-43C3-8957-2FA1A1341542@yellowspace.net>
+
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080515/2e78d189/attachment.htm 
+
+From jbsnyder at gmail.com  Thu May 15 14:52:13 2008
+From: jbsnyder at gmail.com (James Snyder)
+Date: Thu, 15 May 2008 16:52:13 -0500
+Subject: [zfs-discuss] simpler approach for reproducing files-in-limbo
+	problem
+In-Reply-To: <0AA9F52A-B242-43C3-8957-2FA1A1341542@yellowspace.net>
+References: <33644d3c0805111840w51eb869v6b0805bb43f06a16@mail.gmail.com>
+	<33644d3c0805120513l2a46878cgba883d1e66d73be0@mail.gmail.com>
+	<0AA9F52A-B242-43C3-8957-2FA1A1341542@yellowspace.net>
+Message-ID: <33644d3c0805151452j695ddb54x66f59a8ff7bf8bc5@mail.gmail.com>
+
+Interesting.  I've generally given up if it doesn't get it within the first
+10-20 iterations, so I'm unsure about the prevalence of occurrence if it's
+left to run longer.
+
+I haven't come up with any better way to reproducing the problem.
+
+On Thu, May 15, 2008 at 7:31 AM, Lorenzo Perone <
+lopez.on.the.lists at yellowspace.net> wrote:
+
+>
+> On 12.05.2008, at 14:13, James Snyder wrote:
+>
+> This command alone is currently giving me that failure consistently now:
+>
+>
+> bonnie++ -b -n 50 -s 0 -x 100
+>
+>
+> Can anyone else reproduce this issue, or is it just me :-)
+>
+>
+> Hello James,
+>
+> that's what I get. on my first attempt to run bonnie++ -b -n 50 -s 0 -x 100
+> it broke up almost immediately with a :
+>
+> Create files in random order...Can't change to directory ./Bonnie.2419
+> Cleaning up test directory after error.
+> Bonnie: drastic I/O error (rmdir): No such file or directory
+>
+> the subsequent run I started, has reached its 30th iteration without
+> any more problems - still running now... but gotta go so I'll let it
+> do the other 70 tonight maybe ..
+>
+> using a MacBookPro2,2 (Core2Duo 2.1GHz) with
+> 4GB RAM and a 199G zpool made out of one partition of the internal 320GB
+> sata 2.5" disk.
+>
+> Regards,
+>
+> Lorenzo
+>
+
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+jbsnyder at gmail.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080515/6572c62a/attachment.htm 
+
+From lopez.on.the.lists at yellowspace.net  Fri May 16 01:48:36 2008
+From: lopez.on.the.lists at yellowspace.net (Lorenzo Perone)
+Date: Fri, 16 May 2008 10:48:36 +0200
+Subject: [zfs-discuss] simpler approach for reproducing files-in-limbo
+	problem
+In-Reply-To: <33644d3c0805151452j695ddb54x66f59a8ff7bf8bc5@mail.gmail.com>
+References: <33644d3c0805111840w51eb869v6b0805bb43f06a16@mail.gmail.com>
+	<33644d3c0805120513l2a46878cgba883d1e66d73be0@mail.gmail.com>
+	<0AA9F52A-B242-43C3-8957-2FA1A1341542@yellowspace.net>
+	<33644d3c0805151452j695ddb54x66f59a8ff7bf8bc5@mail.gmail.com>
+Message-ID: <DB4EAFEF-EC39-475F-AC71-E65D8ACE121D@yellowspace.net>
+
+
+On 15.05.2008, at 23:52, James Snyder wrote:
+
+> Interesting.  I've generally given up if it doesn't get it within  
+> the first 10-20 iterations, so I'm unsure about the prevalence of  
+> occurrence if it's left to run longer.
+>
+> I haven't come up with any better way to reproducing the problem.
+>
+> the subsequent run I started, has reached its 30th iteration without
+> any more problems - still running now... but gotta go so I'll let it
+> do the other 70 tonight maybe ..
+
+it went thru all 100 iterations here without problems :/
+strange that the problem occurred on my first run yesterday,
+and then never again. tried to stress that volume with other
+operations at the same time, but it keeps working fine...
+
+
+
+Regards,
+
+Lorenzo
+
+From franzschmalzl at spamfreemail.de  Wed May 21 07:28:54 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Wed, 21 May 2008 16:28:54 +0200
+Subject: [zfs-discuss] names
+Message-ID: <2CC26CA5-AF44-41F8-A3EF-D280F596B22C@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+i'm having some issues here...
+
+
+look at that
+
+at first, i always have to reimport a pool after kicking off my  
+external raidz because one always fails to get mounted, after a  
+reimport things are fine again
+
+
+
+ruebezahl at jrg ~ % zpool status
+   pool: raidtank
+  state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas  
+exist for
+	the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+    see: http://www.sun.com/msg/ZFS-8000-2Q
+  scrub: resilver completed with 0 errors on Wed May 21 16:24:12 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	raidtank     DEGRADED     0     0     0
+	  raidz1     DEGRADED     0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk5s2  UNAVAIL      0     0     0  cannot open
+
+errors: No known data errors
+
+
+
+But now i'm experiencing this issue:
+
+
+
+
+ruebezahl at jrg ~ % sudo zpool export -f raidtank
+Password:
+cannot open '/Volumes/raidtank/': invalid character '/' in pool name
+
+
+What does that mean?
+
+
+
+renaming does not work:
+
+
+1 ruebezahl at jrg ~ % zfs rename
+missing source dataset argument
+usage:
+	rename <filesystem|volume|snapshot> <filesystem|volume|snapshot>
+	rename -p <filesystem|volume> <filesystem|volume>
+	rename -r <snapshot> <snapshot>
+For the property list, run: zfs set|get
+2 ruebezahl at jrg ~ % man zfs
+ruebezahl at jrg ~ % zfs rename raidtank tankraid
+cannot open '/Volumes/raidtank/': invalid dataset name
+1 ruebezahl at jrg ~ % sudo zfs rename raidtank tankraid
+cannot open '/Volumes/raidtank/': invalid dataset name
+1 ruebezahl at jrg ~ % sudo zfs rename raidtank  
+tankraid                        :(
+
+
+
+
+help is very appreciated...
+
+
+regards
+
+franz
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJINDGmAAoJEP8ZopU3Bhmt1xwH/RLLYHPHYfLAbEz5cTfiTAXE
+IzvLjRS48BtpTmiTtqf/IMaFIJYPSlIMW968voaTltdIlnE3jGo8d98gguLEOBu3
+fGeXm2gCswXZ+ec5JZ4SrqE3AzzOrjiaYA5QvdutnFiWigNPjwySfeywsRVX0SPI
+gYwZPnHAuz1N85i3ak/Bc2SQOB6e+2WPQX8YY4ThBkl/XehUs1mvD0RPTkTLyvms
+1Pre9DS/QwLbwtMdHhepWp0ElIoQxdp3XXuuEpET0syvk53oWMuF2qwAkkOPGIm4
+aIlX9DwTkJeczRc827qKf4FkHzXuf4MVYTe9U+0bFz6hxv3A03MQK2XXnjOniCM=
+=w5tP
+-----END PGP SIGNATURE-----
+
+From franzschmalzl at spamfreemail.de  Wed May 21 07:31:18 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Wed, 21 May 2008 16:31:18 +0200
+Subject: [zfs-discuss] name
+Message-ID: <E6B70158-8375-45CB-9FD0-07428DCA6BF9@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+never mind, solved it
+
+for some odd reasen i had an alias in my .zshrc that replaced raidtank  
+with raidtank/
+
+must have been drunk somewhen... :)
+
+
+lg
+
+franz
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJINDI2AAoJEP8ZopU3BhmtbaUH/jFjN8Z1bcKGvyVnL8sQYkGS
+p44C6GjtM1hmDcuzUJPbjEk3MHke5/eQmsuAbzrv7AaN/ciQS4joJmYYLIhhcH1L
+rydGzMzP/aCP2ygfz8WnEwK+//iQuSi/bE4930Aqk+L5AwbsbeXQRziXtX3eTzAa
+kcY9/qUgHUuM8Is34LQ4l05DnzxELbki/HZEV2c/114lAvKrlCvAMSI+Uh1Nr9Qo
+6qPWc9mCtXPWvc8jBk1Um+QQZNk5lGO9vczQDJK+EeQAJLO67yIqPrQau3XFN10g
+b23ucfhbzmh+Vs/wfuFQSrVJffz2G6XnojysESZatBZNrAhhlGKMvjkS7TdJ6hY=
+=Ct0B
+-----END PGP SIGNATURE-----
+
+From franzschmalzl at spamfreemail.de  Wed May 21 07:56:59 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Wed, 21 May 2008 16:56:59 +0200
+Subject: [zfs-discuss] the third
+Message-ID: <974D1846-8036-44AC-94DE-FE116E19FB3F@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+to keep spamming at this list, i have another question :)
+
+
+   pool: raidtank
+  state: ONLINE
+status: One or more devices has experienced an unrecoverable error.  An
+	attempt was made to correct the error.  Applications are unaffected.
+action: Determine if the device needs to be replaced, and clear the  
+errors
+	using 'zpool clear' or replace the device with 'zpool replace'.
+    see: http://www.sun.com/msg/ZFS-8000-9P
+  scrub: scrub in progress, 2,89% done, 4h46m to go
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	raidtank     ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0    20
+
+
+i get these quite often lately...
+
+no I/O errors only checksum errors, and only on this disk
+
+what might this be? bit rot, faulty controller?
+
+any ideas?
+
+best regards
+
+franz
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJINDg7AAoJEP8ZopU3BhmtMH8IAIvoayOyvhFkHxLJlmblIJ46
+f+ZFmEckwh9EzBdFZO2xUHC6P85PDi541wJypyy8SwbaLWO6xBoeaGBCUtU7Y/9u
+lDuxOAK2tc2iY2na0INU3uACyMcGWsbM5SsvIo1KjbOTG7d4DVRT+Gvq8m4eqnOr
+LQ1/8fPmsepr597YVQGYz6GL4WbtnSd6FwwhYa0JEbgmuympboPSJH6+R3lbRT5P
+4hI7WGy/nA0qQqYArQeHAlsjYtVslLSJjOvMT9osa2dCbpLUIzbQKhXYvR9xCt2f
+pe/WJdNT2UjNWpHtvqiUVPLxQ1rzJMs4c0zhci8jNDLChdND13w00zhphTp/7cI=
+=iE+P
+-----END PGP SIGNATURE-----
+
+From ndellofano at apple.com  Wed May 21 14:35:11 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 21 May 2008 14:35:11 -0700
+Subject: [zfs-discuss] name
+In-Reply-To: <E6B70158-8375-45CB-9FD0-07428DCA6BF9@spamfreemail.de>
+References: <E6B70158-8375-45CB-9FD0-07428DCA6BF9@spamfreemail.de>
+Message-ID: <7AA0674F-B268-4B6C-AABD-C0B94E21F1E1@apple.com>
+
+> must have been drunk somewhen... :)
+
+sweet, then at least I'm not the only one :)
+
+As a side note, the rename thing you mentioned on the pool is  
+something i've been meaning to add to the FAQ (along with a ton of  
+other stuff).
+You can only use zfs rename on a zfs filesystem, but NOT on the zfs  
+pool.   Pools are handled slightly differently since they are container 
++fs all in one.  Hence to rename a pool you need to do
+
+#zpool export -f raidtank
+#zpool import raidtank mynewraid
+
+That will rename the pool to 'mynewraid'.  This is something we're  
+working on integrating (i.e. so you can just rename your pool via  
+Finder instead).
+
+Noel :)
+
+On May 21, 2008, at 7:31 AM, ruebezahl wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> never mind, solved it
+>
+> for some odd reasen i had an alias in my .zshrc that replaced raidtank
+> with raidtank/
+>
+> must have been drunk somewhen... :)
+>
+>
+> lg
+>
+> franz
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.8 (Darwin)
+>
+> iQEcBAEBAgAGBQJINDI2AAoJEP8ZopU3BhmtbaUH/jFjN8Z1bcKGvyVnL8sQYkGS
+> p44C6GjtM1hmDcuzUJPbjEk3MHke5/eQmsuAbzrv7AaN/ciQS4joJmYYLIhhcH1L
+> rydGzMzP/aCP2ygfz8WnEwK+//iQuSi/bE4930Aqk+L5AwbsbeXQRziXtX3eTzAa
+> kcY9/qUgHUuM8Is34LQ4l05DnzxELbki/HZEV2c/114lAvKrlCvAMSI+Uh1Nr9Qo
+> 6qPWc9mCtXPWvc8jBk1Um+QQZNk5lGO9vczQDJK+EeQAJLO67yIqPrQau3XFN10g
+> b23ucfhbzmh+Vs/wfuFQSrVJffz2G6XnojysESZatBZNrAhhlGKMvjkS7TdJ6hY=
+> =Ct0B
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From raoul at amsi.org.au  Thu May 22 19:19:08 2008
+From: raoul at amsi.org.au (Raoul Callaghan)
+Date: Fri, 23 May 2008 12:19:08 +1000
+Subject: [zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+Message-ID: <93F2F1E1-B6D4-485D-9F30-5AD9AAFC632C@amsi.org.au>
+
+Hi Noel,
+
+Thank you for the zpool iostats command.  Very nice to see what's  
+actually
+going on.
+I ran the command, but it has raised another question that I'm  
+scratching
+my head over, here is some sample output of iostat.
+
+
+#sudo zpool iostat bigboxraidz 1
+
+                 capacity     operations    bandwidth
+pool          used  avail   read  write   read  write
+-----------  -----  -----  -----  -----  -----  -----
+bigboxraidz   880G   980G      6     19   601K  1.43M
+bigboxraidz   880G   980G    320      0  39.8M      0
+bigboxraidz   880G   980G    269      0  33.4M      0
+bigboxraidz   880G   980G    254    116  30.3M  1.52M
+bigboxraidz   880G   980G    274      0  33.9M      0
+bigboxraidz   880G   980G    339      0  41.9M      0
+bigboxraidz   880G   980G    304      0  37.5M      0
+bigboxraidz   880G   980G    330      0  40.5M      0
+bigboxraidz   880G   980G    247    137  30.1M  1.22M
+bigboxraidz   880G   980G    320      0  39.8M      0
+bigboxraidz   880G   980G    312      0  38.5M      0
+bigboxraidz   880G   980G    330      0  41.0M      0
+bigboxraidz   880G   980G    313      0  38.7M      0
+bigboxraidz   880G   980G    207    209  24.6M  2.14M
+
+Using a MacPro, the stats above were observed by mounting the share
+"LoungeRoomMac" which resides on the bigboxraidz pool via Appleshare
+(gigabit).
+
+So, I understand that the zpool is being read at an average of around
+30MB/sec...
+
+But when I look at actual network transfer speeds via MenuMeters for
+example, it only shows a transfer speed of approximately 3-5MB/sec..
+
+This I don't understand.
+
+iostat is saying 30MB/sec reads, but Menumeters is only showing 5Mb/sec
+maximum. (the 5Mb/sec is about right when calculating the time it took  
+to
+transfer a 1GB VOB file)
+
+I have a screenshot of this at: http://homepage.mac.com/tangles/zfs.html
+
+Cheers,
+
+Raoul
+
+
+
+ >It could be that what you're witnessing is ZFS's transactional IO
+ >syncing.  Basically we write to disk (ie sync a transaction group)
+ >every five seconds, hence this likely explains your crazy drive light
+ >issue.
+ >
+ >To actually see what's going on down there, I'd recommend running this
+ >on the command line in a terminal window:
+ >
+ >  #sudo zpool iostat bigboxraidz 1
+ >
+ >
+ >This will give you all the specs on what I/O ZFS is doing every
+ >second.  How many reads, how many writes, and the size of each
+ >respectively. And will keep going until you ctl-C it.
+ >
+ >Noel
+
+
+
+
+From hanche at math.ntnu.no  Wed May 28 02:40:40 2008
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Wed, 28 May 2008 11:40:40 +0200 (CEST)
+Subject: [zfs-discuss] Best procedure for unmounting
+Message-ID: <20080528.114040.33703212.hanche@math.ntnu.no>
+
+I have a memory stick with this structure:
+
+; zpool list
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+zetastick2             3.84G    118M   3.73G     2%  ONLINE     -
+; zfs list
+NAME                        USED  AVAIL  REFER  MOUNTPOINT
+zetastick2                  118M  3.67G  69.5K  /Volumes/zetastick2
+zetastick2/n81              117M  3.67G   116M  /Volumes/zetastick2/n81
+zetastick2/n81 at 2008-05-27  1.70M      -   117M  -
+
+The best procedure I have managed to come up with for unmounting all
+this is
+
+; zfs unmount /Volumes/zetastick2/n81
+; diskutil unmount /Volumes/zetastick2
+ ... which produces a GUI prompt for admin password
+; zpool export zetastick2
+
+In principle, I thought only the final step should be needed, as zpool
+export will take care of all unmounting. And indeed, it does unmount
+zetastick2/n81, after which it complains:
+
+cannot unmount '/Volumes/zetastick2': Resource busy
+
+I get the same using "zfs unmount /Volumes/zetastick2".
+
+Maybe fseventsd is at the root of the problem:
+
+; sudo lsof +f -- /Volumes/zetastick2
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/zetastick2/.fseventsd/0000000000efd051
+
+Perhaps diskutil takes care of telling fseventsd to back off.
+
+
+So am I doing something wrong? Is unmounting supposed to be this
+difficult? Or is it just a bug and the beta nature of zfs support on
+the mac that bites? Will things improve? Should I file a bug report?
+(I am using the latest zfs software, btw.)
+
+- Harald
+
+PS. Yes, I know; in practice, having more than one filesystem in a
+pool on a memory stick is probably silly. But I am experimenting in
+preparation for using bigger disks.
+
+From William.Winnett at Sun.COM  Wed May 28 10:52:10 2008
+From: William.Winnett at Sun.COM (Bill Winnett)
+Date: Wed, 28 May 2008 13:52:10 -0400
+Subject: [zfs-discuss] zfs and panics
+Message-ID: <F4858F03-AFA3-47F9-97FF-0648D67E5EF2@sun.com>
+
+
+
+Recently(last week or so), I have been getting panics on a regular  
+basis.  Does the below signature give any clues?
+How can one get more detailed stack traces?
+
+thanks,
+-bill w.
+
+---
+Wed May 28 13:43:05 2008
+panic(cpu 0 caller 0x001A83A6): Double fault at 0x00c5a33c, thread: 
+0x7fad998, trapno:0x8, err:0x0),registers:
+CR0: 0x80010033, CR2: 0x68627fd8, CR3: 0x01269000, CR4: 0x00000660
+EAX: 0x00048e5f, EBX: 0x07e3f4c0, ECX: 0x07c73800, EDX: 0x07e82e00
+ESP: 0x68627fe0, EBP: 0x68628028, ESI: 0x00000000, EDI: 0x07c738b8
+EFL: 0x00010246, EIP: 0x00c5a33c
+
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x4eae28 : 0x12b0f7 (0x4581f4 0x4eae5c 0x133230 0x0)
+0x4eae78 : 0x1a83a6 (0x4611a4 0xc5a33c 0x7fad998 0x8)
+0x4eaf58 : 0x19fc73 (0x4eaf70 0x0 0x0 0x0)
+0x68628028 : 0xc5a65b (0x7e82e00 0x48e60 0x0 0x1)
+0x68628058 : 0xc55ceb (0x7e82e00 0x48e60 0x0 0xcbc8e0)
+0x686280b8 : 0xc8ba11 (0x7a6ef50 0x48e60 0x0 0x0)
+0x68628168 : 0xc942af (0x6862831c 0x0 0x0 0x6862831c)
+0x68628338 : 0xc8ac20 (0x7d0d5da8 0x202 0x68628368 0x7ec3230)
+0x68628378 : 0xc34fd2 (0x7d0d5da8 0x1 0x686283c8 0x7ec3230)
+0x686283b8 : 0x1f3eb1 (0x686283d4 0x8 0x686283dc 0x0)
+0x686283f8 : 0x1db45f (0x7ea2290 0x7ea5144 0x0 0x2)
+0x68628448 : 0x1db67b (0x7ea2290 0x1 0x68628478 0x19d4b1)
+0x68628498 : 0x1dd2e6 (0x0 0x4f43c0 0x68628538 0x7dbe0188)
+0x68628518 : 0xc8b924 (0x0 0x34 0x6862854c 0x7dbe0114)
+0x68628598 : 0xc8bd39 (0x7c73908 0x0 0x200 0x0)
+0x68628648 : 0xc942af (0x686287fc 0x0 0x0 0x686287fc)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xc2d000->0xce8fff
+
+BSD process name corresponding to current thread: Finder
+
+Mac OS version:
+9C7010
+
+Kernel version:
+Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+root:xnu-1228.4.31~1/RELEASE_I386
+System model name: iMac7,1 (Mac-F4238CC8)
+----
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080528/32d017eb/attachment-0001.htm 
+
+From ndellofano at apple.com  Wed May 28 16:19:29 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 28 May 2008 16:19:29 -0700
+Subject: [zfs-discuss] zfs and panics
+In-Reply-To: <F4858F03-AFA3-47F9-97FF-0648D67E5EF2@sun.com>
+References: <F4858F03-AFA3-47F9-97FF-0648D67E5EF2@sun.com>
+Message-ID: <E1E27598-B473-45C2-9D48-2448BF631F90@apple.com>
+
+Hey Bill,
+
+can you tell me what you're doing that causes the panics?  Are they  
+seemingly random or the result of something?
+Also what zfs bits are you running?  Can you send me a zpool status,  
+and a zpool history for your pool?
+
+thanks!
+Noel
+
+On May 28, 2008, at 10:52 AM, Bill Winnett wrote:
+
+>
+>
+> Recently(last week or so), I have been getting panics on a regular  
+> basis.  Does the below signature give any clues?
+> How can one get more detailed stack traces?
+>
+> thanks,
+> -bill w.
+>
+> ---
+> Wed May 28 13:43:05 2008
+> panic(cpu 0 caller 0x001A83A6): Double fault at 0x00c5a33c, thread: 
+> 0x7fad998, trapno:0x8, err:0x0),registers:
+> CR0: 0x80010033, CR2: 0x68627fd8, CR3: 0x01269000, CR4: 0x00000660
+> EAX: 0x00048e5f, EBX: 0x07e3f4c0, ECX: 0x07c73800, EDX: 0x07e82e00
+> ESP: 0x68627fe0, EBP: 0x68628028, ESI: 0x00000000, EDI: 0x07c738b8
+> EFL: 0x00010246, EIP: 0x00c5a33c
+>
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x4eae28 : 0x12b0f7 (0x4581f4 0x4eae5c 0x133230 0x0)
+> 0x4eae78 : 0x1a83a6 (0x4611a4 0xc5a33c 0x7fad998 0x8)
+> 0x4eaf58 : 0x19fc73 (0x4eaf70 0x0 0x0 0x0)
+> 0x68628028 : 0xc5a65b (0x7e82e00 0x48e60 0x0 0x1)
+> 0x68628058 : 0xc55ceb (0x7e82e00 0x48e60 0x0 0xcbc8e0)
+> 0x686280b8 : 0xc8ba11 (0x7a6ef50 0x48e60 0x0 0x0)
+> 0x68628168 : 0xc942af (0x6862831c 0x0 0x0 0x6862831c)
+> 0x68628338 : 0xc8ac20 (0x7d0d5da8 0x202 0x68628368 0x7ec3230)
+> 0x68628378 : 0xc34fd2 (0x7d0d5da8 0x1 0x686283c8 0x7ec3230)
+> 0x686283b8 : 0x1f3eb1 (0x686283d4 0x8 0x686283dc 0x0)
+> 0x686283f8 : 0x1db45f (0x7ea2290 0x7ea5144 0x0 0x2)
+> 0x68628448 : 0x1db67b (0x7ea2290 0x1 0x68628478 0x19d4b1)
+> 0x68628498 : 0x1dd2e6 (0x0 0x4f43c0 0x68628538 0x7dbe0188)
+> 0x68628518 : 0xc8b924 (0x0 0x34 0x6862854c 0x7dbe0114)
+> 0x68628598 : 0xc8bd39 (0x7c73908 0x0 0x200 0x0)
+> 0x68628648 : 0xc942af (0x686287fc 0x0 0x0 0x686287fc)
+> 	Backtrace continues...
+>       Kernel loadable modules in backtrace (with dependencies):
+>          com.apple.filesystems.zfs(8.0)@0xc2d000->0xce8fff
+>
+> BSD process name corresponding to current thread: Finder
+>
+> Mac OS version:
+> 9C7010
+>
+> Kernel version:
+> Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+> root:xnu-1228.4.31~1/RELEASE_I386
+> System model name: iMac7,1 (Mac-F4238CC8)
+> ----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080528/3e7ddc38/attachment.htm 
+
+From ndellofano at apple.com  Wed May 28 16:45:50 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 28 May 2008 16:45:50 -0700
+Subject: [zfs-discuss] Best procedure for unmounting
+In-Reply-To: <20080528.114040.33703212.hanche@math.ntnu.no>
+References: <20080528.114040.33703212.hanche@math.ntnu.no>
+Message-ID: <D36E3C55-23D0-49A2-A230-BF570FC5570B@apple.com>
+
+> In principle, I thought only the final step should be needed, as zpool
+> export will take care of all unmounting. And indeed, it does unmount
+> zetastick2/n81, after which it complains:
+>
+> cannot unmount '/Volumes/zetastick2': Resource busy
+>
+> I get the same using "zfs unmount /Volumes/zetastick2".
+>
+> Maybe fseventsd is at the root of the problem:
+>
+> ; sudo lsof +f -- /Volumes/zetastick2
+> COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+> fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/ 
+> zetastick2/.fseventsd/0000000000efd051
+
+Yes, you are completely correct here.
+
+
+> ; sudo lsof +f -- /Volumes/zetastick2
+> COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+> fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/ 
+> zetastick2/.fseventsd/0000000000efd051
+>
+> Perhaps diskutil takes care of telling fseventsd to back off.
+
+
+You are correct again here too.  Diskutil basically signals fseventsd  
+to backoff  and then calls for the unmount.
+
+So for now, I recommend you just do a 'zpool export -f mypool'  which  
+will unmount as expected (the force signals fseventsd to stop).
+So we're currently discussing internally the best way to solve this  
+problem for real, since obviously, it's not a good idea to always have  
+to force unmount your filesystems, cause that basically makes regular  
+unmount pretty useless.
+But you didn't do anything wrong, this is a known issue we are working  
+on :)
+
+Noel
+
+
+On May 28, 2008, at 2:40 AM, Harald Hanche-Olsen wrote:
+
+> I have a memory stick with this structure:
+>
+> ; zpool list
+> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+> ALTROOT
+> zetastick2             3.84G    118M   3.73G     2%  ONLINE     -
+> ; zfs list
+> NAME                        USED  AVAIL  REFER  MOUNTPOINT
+> zetastick2                  118M  3.67G  69.5K  /Volumes/zetastick2
+> zetastick2/n81              117M  3.67G   116M  /Volumes/zetastick2/ 
+> n81
+> zetastick2/n81 at 2008-05-27  1.70M      -   117M  -
+>
+> The best procedure I have managed to come up with for unmounting all
+> this is
+>
+> ; zfs unmount /Volumes/zetastick2/n81
+> ; diskutil unmount /Volumes/zetastick2
+> ... which produces a GUI prompt for admin password
+> ; zpool export zetastick2
+>
+> In principle, I thought only the final step should be needed, as zpool
+> export will take care of all unmounting. And indeed, it does unmount
+> zetastick2/n81, after which it complains:
+>
+> cannot unmount '/Volumes/zetastick2': Resource busy
+>
+> I get the same using "zfs unmount /Volumes/zetastick2".
+>
+> Maybe fseventsd is at the root of the problem:
+>
+> ; sudo lsof +f -- /Volumes/zetastick2
+> COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+> fseventsd  40 root    8u   REG  45,15        0   18 /Volumes/ 
+> zetastick2/.fseventsd/0000000000efd051
+>
+> Perhaps diskutil takes care of telling fseventsd to back off.
+>
+>
+> So am I doing something wrong? Is unmounting supposed to be this
+> difficult? Or is it just a bug and the beta nature of zfs support on
+> the mac that bites? Will things improve? Should I file a bug report?
+> (I am using the latest zfs software, btw.)
+>
+> - Harald
+>
+> PS. Yes, I know; in practice, having more than one filesystem in a
+> pool on a memory stick is probably silly. But I am experimenting in
+> preparation for using bigger disks.
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ndellofano at apple.com  Thu May 29 14:00:20 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 29 May 2008 14:00:20 -0700
+Subject: [zfs-discuss] new bits! zfs-117
+Message-ID: <7796DEBE-0816-46A6-BBB1-40C9F0586162@apple.com>
+
+Hey everyone,
+
+I just posted new binaries on the site for zfs-117.  Fixes included in  
+this rev are:
+
+<rdar://problem/5906090> ZFS should support fcntl(2) F_FULLFSYNC
+<rdar://problem/5405396> zfs needs getdirentriesattr(2) API support  
+for improved Finder performance
+<rdar://problem/5001636> ZFS does not support chflags(2)
+<rdar://problem/5606366> ZFS uses too much wired memory (need auto  
+slab layer tuing)
+<rdar://problem/5923100> implement vop_preallocate for ZFS
+
+
+These fix a number of things.  The preallocate fix fixes the issues we  
+were having with installing Firefox plugins and the like on ZFS  
+volumes, so that all is happy now.  The "ZFS uses too much wired  
+memory"  fix should fix our problems with panicking rsyncs and deep  
+directory traversals.  Getdirentriesattr is used wildly by Finder so  
+that helps clear up more issues as well.
+
+Please download and try them out.  As always let me know if you have  
+any issues, panicks, etc.  Especially let me know if you are still  
+getting zalloc panics with rsyncs and ditto and the like.
+
+Also, there's a bug we've just pinned down with running VMwareFusion  
+on ZFS.  For some reason it's producing double fault panics.  If  
+you're getting these, the only current workaround I have for you is to  
+uninstall VMwareFusion.  I'm actively working on this bug, so if you  
+are having issues I feel your pain.  Sit tight.
+
+Oh, and apologies the source isn't posted yet.  Quite frankly it's  
+gotten messy and I'm cleaning it up so its actually readable, so hang  
+on, it will be posted soon after I clean it up a bit.
+
+thanks everyone!!
+Noel :)
+
+
+
+From bwaters at nrao.edu  Thu May 29 15:21:14 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Thu, 29 May 2008 16:21:14 -0600
+Subject: [zfs-discuss] new bits! zfs-117
+In-Reply-To: <7796DEBE-0816-46A6-BBB1-40C9F0586162@apple.com>
+References: <7796DEBE-0816-46A6-BBB1-40C9F0586162@apple.com>
+Message-ID: <2E574DEA-C1B4-4FC9-8B26-AD40D8F1AF64@nrao.edu>
+
+On May 29, 2008, at 3:00 PM, No?l Dellofano wrote:
+
+> Especially let me know if you are still
+> getting zalloc panics with rsyncs and ditto and the like.
+>
+> Also, there's a bug we've just pinned down with running VMwareFusion
+> on ZFS.  For some reason it's producing double fault panics.  If
+> you're getting these, the only current workaround I have for you is to
+> uninstall VMwareFusion.  I'm actively working on this bug, so if you
+> are having issues I feel your pain.  Sit tight.
+
+
+YEEE-HAAWWW!
+
+I will be sure to flog these new bits with insane rsync/ditto  
+traversals, and report any panics!
+
+Do you want kernel panic reports from VMWareFusion, or do you have  
+that one nailed down?
+
+
+   - boyd
+
+
+Boyd Waters
+Scientific Programmer
+National Radio Astronomy Observatory
+Socorro, New Mexico
+
+
+From dorofeev at gmail.com  Thu May 29 15:51:01 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Thu, 29 May 2008 15:51:01 -0700
+Subject: [zfs-discuss] new bits! zfs-117
+In-Reply-To: <2E574DEA-C1B4-4FC9-8B26-AD40D8F1AF64@nrao.edu>
+References: <7796DEBE-0816-46A6-BBB1-40C9F0586162@apple.com>
+	<2E574DEA-C1B4-4FC9-8B26-AD40D8F1AF64@nrao.edu>
+Message-ID: <a782ada90805291551m6193d33cu2c546a9586a54931@mail.gmail.com>
+
+Just curious...
+
+I am using Fusion and ZFS but haven't hit this panic.
+Does it require putting VMs on ZFS volume?  My VMs
+still live on HFS+, maybe that's why I don't see it?
+
+- Andrei
+
+On Thu, May 29, 2008 at 3:21 PM, Boyd Waters <bwaters at nrao.edu> wrote:
+> Do you want kernel panic reports from VMWareFusion, or do you have
+> that one nailed down?
+>
+>
+>   - boyd
+>
+>
+> Boyd Waters
+> Scientific Programmer
+> National Radio Astronomy Observatory
+> Socorro, New Mexico
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From ndellofano at apple.com  Fri May 30 00:32:07 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Fri, 30 May 2008 00:32:07 -0700
+Subject: [zfs-discuss] new bits! zfs-117
+In-Reply-To: <2E574DEA-C1B4-4FC9-8B26-AD40D8F1AF64@nrao.edu>
+References: <7796DEBE-0816-46A6-BBB1-40C9F0586162@apple.com>
+	<2E574DEA-C1B4-4FC9-8B26-AD40D8F1AF64@nrao.edu>
+Message-ID: <322DC79F-5539-4EE0-802F-99ECD52F6339@apple.com>
+
+I've got a few backtraces so I'm going to symbollicate them and see.   
+I'm assuming they will all be the same, since they all are Double  
+fault panics so I'll hope we've got a consistent code path issue to  
+track down.  If it's some weirdo corruption bug though I may need more  
+traces so I'll keep you posted.  Thanks for the offer!!
+and thanks for the testing!!!
+
+Noel :)
+
+On May 29, 2008, at 3:21 PM, Boyd Waters wrote:
+
+> On May 29, 2008, at 3:00 PM, No?l Dellofano wrote:
+>
+>> Especially let me know if you are still
+>> getting zalloc panics with rsyncs and ditto and the like.
+>>
+>> Also, there's a bug we've just pinned down with running VMwareFusion
+>> on ZFS.  For some reason it's producing double fault panics.  If
+>> you're getting these, the only current workaround I have for you is  
+>> to
+>> uninstall VMwareFusion.  I'm actively working on this bug, so if you
+>> are having issues I feel your pain.  Sit tight.
+>
+>
+> YEEE-HAAWWW!
+>
+> I will be sure to flog these new bits with insane rsync/ditto  
+> traversals, and report any panics!
+>
+> Do you want kernel panic reports from VMWareFusion, or do you have  
+> that one nailed down?
+>
+>
+>  - boyd
+>
+>
+> Boyd Waters
+> Scientific Programmer
+> National Radio Astronomy Observatory
+> Socorro, New Mexico
+>
+
+
+From ndellofano at apple.com  Fri May 30 00:35:20 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Fri, 30 May 2008 00:35:20 -0700
+Subject: [zfs-discuss] new bits! zfs-117
+In-Reply-To: <a782ada90805291551m6193d33cu2c546a9586a54931@mail.gmail.com>
+References: <7796DEBE-0816-46A6-BBB1-40C9F0586162@apple.com>
+	<2E574DEA-C1B4-4FC9-8B26-AD40D8F1AF64@nrao.edu>
+	<a782ada90805291551m6193d33cu2c546a9586a54931@mail.gmail.com>
+Message-ID: <D29609DC-2597-43C5-867E-C1C897417420@apple.com>
+
+You know at this point I'm honestly not sure.  The one guy that it's  
+happened to most recently was doing TM backups to a sparse image on a  
+zfs volume.  He'd been doing it for months and all of a sudden, it  
+decided to panic, then hit the panic a few times within the next day.   
+I'm not sure what triggered it so suddenly since nothing in his config  
+changed so it seems like it might be some type of threshold bug or  
+something.  I'm trying to check out the stack and get more info.   
+Maybe this is some edge case that we eventually hit.
+
+Noel
+
+On May 29, 2008, at 3:51 PM, Andrei Dorofeev wrote:
+
+> Just curious...
+>
+> I am using Fusion and ZFS but haven't hit this panic.
+> Does it require putting VMs on ZFS volume?  My VMs
+> still live on HFS+, maybe that's why I don't see it?
+>
+> - Andrei
+>
+> On Thu, May 29, 2008 at 3:21 PM, Boyd Waters <bwaters at nrao.edu> wrote:
+>> Do you want kernel panic reports from VMWareFusion, or do you have
+>> that one nailed down?
+>>
+>>
+>>  - boyd
+>>
+>>
+>> Boyd Waters
+>> Scientific Programmer
+>> National Radio Astronomy Observatory
+>> Socorro, New Mexico
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+
+
+From zfs-discuss at openhealth.org  Sat May 31 09:13:43 2008
+From: zfs-discuss at openhealth.org (Jonathan Borden)
+Date: Sat, 31 May 2008 12:13:43 -0400
+Subject: [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+Message-ID: <7a0bc8420805310913w504d70fasf234f4935cb0a0d8@mail.gmail.com>
+
+Sigh ...
+
+Doing something in the Finder ... trying to give permissions to access
+a networked zfs pool and filesystem ... asked the finder to
+recursively give read+write and the permissions on the filesytem
+symbolic link are now hosed and I am not sure how to fix them.
+
+they read (via ls -l):
+
+drw-r--r--  26 jonathanborden  staff  33 Apr 15 19:06 Photos
+
+I created a new filesystem in the same pool which lists as:
+
+drwxr-xr-x   2 root            wheel   2 May 31 11:54 Test
+
+I can't do a chmod or chown to change the permissions on
+reflect/Photos ... what should I do ... perhaps I am just using the
+wrong flags for chmod and chown (tried sudo chown -v root:wheel Photos
+... and it wouldn't give me permission to do that)
+
+TIA
+
+Jonathan
+
+From zfs-discuss at openhealth.org  Sat May 31 18:36:51 2008
+From: zfs-discuss at openhealth.org (Jonathan Borden)
+Date: Sat, 31 May 2008 21:36:51 -0400
+Subject: [zfs-discuss] zfs-117: Compacting in EyeTV over network now works.
+Message-ID: <7a0bc8420805311836u232abbffn513de4f808842db4@mail.gmail.com>
+
+Using a remote ZFS filesystem as the EyeTV Archive.
+
+Compacting (i.e. edit in place) of the video files hadn't worked. It now does.
+
+Jonathan
+
+From zfs-discuss at openhealth.org  Sat May 31 18:40:41 2008
+From: zfs-discuss at openhealth.org (Jonathan Borden)
+Date: Sat, 31 May 2008 21:40:41 -0400
+Subject: [zfs-discuss] zfs-117: remote filesystem names still wrong in Finder
+Message-ID: <7a0bc8420805311840y29978501x45ecc1dc7b93aad2@mail.gmail.com>
+
+In my Finder when browsing the machine that holds the ZFS pools I still get:
+
+gene
+gene1
+gene2
+gene3
+
+reflect
+reflect1
+reflect2
+
+tank
+tank1
+tank2
+tank3
+
+Ideally the filesystems should be listed by their name rather than
+enumerated. I.e. the new bits haven't fixed this issue.
+
+Jonathan
+
+From raoul at amsi.org.au  Thu May 15 07:00:37 2008
+From: raoul at amsi.org.au (raoul at amsi.org.au)
+Date: Thu, 15 May 2008 14:00:37 -0000
+Subject: [zfs-discuss] Anyone else observing ZFS transfers pausing
+	briefly?
+In-Reply-To: <50348.124.168.74.59.1210257018.squirrel@webmail.amsi.org.au>
+References: <50348.124.168.74.59.1210257018.squirrel@webmail.amsi.org.au>
+Message-ID: <50090.124.168.8.132.1210860290.squirrel@webmail.amsi.org.au>
+
+
+Hi Noel,
+
+Thank you for the zpool iostats command.  Very nice to see what's actually
+going on.
+I ran the command, but it has raised another question that I'm scratching
+my head over, here is some sample output of iostat.
+
+
+#sudo zpool iostat bigboxraidz 1
+
+                capacity     operations    bandwidth
+pool          used  avail   read  write   read  write
+-----------  -----  -----  -----  -----  -----  -----
+bigboxraidz   880G   980G      6     19   601K  1.43M
+bigboxraidz   880G   980G    320      0  39.8M      0
+bigboxraidz   880G   980G    269      0  33.4M      0
+bigboxraidz   880G   980G    254    116  30.3M  1.52M
+bigboxraidz   880G   980G    274      0  33.9M      0
+bigboxraidz   880G   980G    339      0  41.9M      0
+bigboxraidz   880G   980G    304      0  37.5M      0
+bigboxraidz   880G   980G    330      0  40.5M      0
+bigboxraidz   880G   980G    247    137  30.1M  1.22M
+bigboxraidz   880G   980G    320      0  39.8M      0
+bigboxraidz   880G   980G    312      0  38.5M      0
+bigboxraidz   880G   980G    330      0  41.0M      0
+bigboxraidz   880G   980G    313      0  38.7M      0
+bigboxraidz   880G   980G    207    209  24.6M  2.14M
+
+Using a MacPro, the stats above were observed by mounting the share
+"LoungeRoomMac" which resides on the bigboxraidz pool via Appleshare
+(gigabit).
+
+So, I understand that the zpool is being read at an average of around
+30MB/sec...
+
+But when I look at actual network transfer speeds via MenuMeters for
+example, it only shows a transfer speed of approximately 3-5MB/sec..
+
+This I don't understand.
+
+iostat is saying 30MB/sec reads, but Menumeters is only showing 5Mb/sec
+maximum. (the 5Mb/sec is about right when calculating the time it took to
+transfer a 1GB VOB file)
+
+I have a screenshot of this at: http://homepage.mac.com/tangles/zfs.html
+
+Cheers,
+
+Raoul
+
+
+
+>It could be that what you're witnessing is ZFS's transactional IO
+>syncing.  Basically we write to disk (ie sync a transaction group)
+>every five seconds, hence this likely explains your crazy drive light
+>issue.
+>
+>To actually see what's going on down there, I'd recommend running this
+>on the command line in a terminal window:
+>
+>  #sudo zpool iostat bigboxraidz 1
+>
+>
+>This will give you all the specs on what I/O ZFS is doing every
+>second.  How many reads, how many writes, and the size of each
+>respectively. And will keep going until you ctl-C it.
+>
+>Noel
+
+
+
+

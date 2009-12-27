@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] cannot create snapshot - dataset is busy
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20create%20snapshot%20-%20dataset%20is%20busy&In-Reply-To=%3CD8DB9AE5-8A51-4FFD-ADEB-61A54C7EB4E3%40nrao.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001099.html">
+   <LINK REL="Next"  HREF="001102.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] cannot create snapshot - dataset is busy</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20create%20snapshot%20-%20dataset%20is%20busy&In-Reply-To=%3CD8DB9AE5-8A51-4FFD-ADEB-61A54C7EB4E3%40nrao.edu%3E"
+       TITLE="[zfs-discuss] cannot create snapshot - dataset is busy">bwaters at nrao.edu
+       </A><BR>
+    <I>Mon Nov 24 09:40:50 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001099.html">[zfs-discuss] cannot create snapshot - dataset is busy
+</A></li>
+        <LI>Next message: <A HREF="001102.html">[zfs-discuss] Panic on large move
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1100">[ date ]</a>
+              <a href="thread.html#1100">[ thread ]</a>
+              <a href="subject.html#1100">[ subject ]</a>
+              <a href="author.html#1100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Nov 24, 2008, at 3:01 AM, Alex Blewitt wrote:
+
+&gt;<i> Was there a scrub occurring at the time on the pool?
+</I>
+
+Good question, but no...
+
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool status pool
+   pool: pool
+  state: ONLINE
+  scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	pool         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+
+???
+
+cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-11-24T10</A>:39:21': dataset is  
+busy
+
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001099.html">[zfs-discuss] cannot create snapshot - dataset is busy
+</A></li>
+	<LI>Next message: <A HREF="001102.html">[zfs-discuss] Panic on large move
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1100">[ date ]</a>
+              <a href="thread.html#1100">[ thread ]</a>
+              <a href="subject.html#1100">[ subject ]</a>
+              <a href="author.html#1100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

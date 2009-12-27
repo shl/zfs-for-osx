@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0808040655i5242aba2q827d91cf8be83728%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000737.html">
+   <LINK REL="Next"  HREF="000751.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0808040655i5242aba2q827d91cf8be83728%40mail.gmail.com"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">caronni at gmail.com
+       </A><BR>
+    <I>Mon Aug  4 09:01:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000737.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+        <LI>Next message: <A HREF="000751.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#739">[ date ]</a>
+              <a href="thread.html#739">[ thread ]</a>
+              <a href="subject.html#739">[ subject ]</a>
+              <a href="author.html#739">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Here some specifics on the silent death. This should be a lot of fun for you
+@ Apple ;-)
+
+rsync 3.0.3 also fails. Having interspersed lots of sync() and sleep() in
+that one, I finally got to see a partially copied dev tree. Funnily enough,
+the major numbers of all devices on zfs are zero. That certainly is a
+problem, and probably / hopefully it is related to the deadlock. The machine
+dies at disk0s2 (my root volume). Trying to reproduce this manually:
+
+bash-3.2# pwd
+/Volumes/z
+bash-3.2# mknod disk0 b 14 0
+bash-3.2# sync
+bash-3.2# ls -al
+total 80
+[...]
+brw-r--r--  1 root     staff    0,   0 Aug  4 17:03 disk0
+bash-3.2# sync
+bash-3.2# mknod disk0s1 b 14 1
+bash-3.2# sync
+bash-3.2# ls -al
+total 81
+[...]
+brw-r--r--  1 root     staff    0,   0 Aug  4 17:03 disk0
+brw-r--r--  1 root     staff    0,   1 Aug  4 17:04 disk0s1
+bash-3.2# sync
+bash-3.2# mknod disk0s2 b 14 2
+bash-3.2# sync
+[the world comes to an end]
+
+
+The output of 'stat' agrees that the major is indeed 0. Checking back on my
+big repository confirms that all devices (char and block) in it now have a
+major of '0'. I'm so happy that I still have the originals ;-)
+
+
+I hope this helps. I looked a bit at the source code to zfs_mknode and
+friends, but did not feel like poking randomly. Also, a pity that there are
+no zfs dtrace probes around (ie dtrace -l does not list any). Is there a
+good way to get them into the kernel? I'm guessing it would just involve
+using the 'Debug' target and copying things to the right location -- but
+maybe you can tell me? Obviously, what I wanted to do was dtrace on
+zfs_mknode and then print out the arguments to the function to see if the
+problem is above or below.
+
+Germano
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080804/660a8c2f/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080804/660a8c2f/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000737.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+	<LI>Next message: <A HREF="000751.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#739">[ date ]</a>
+              <a href="thread.html#739">[ thread ]</a>
+              <a href="subject.html#739">[ subject ]</a>
+              <a href="author.html#739">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] 10.5.5 update broke ZFS group ACLs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%2010.5.5%20update%20broke%20ZFS%20group%20ACLs&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000865.html">
+   <LINK REL="Next"  HREF="000868.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] 10.5.5 update broke ZFS group ACLs</H1>
+    <B>Brad Allred</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%2010.5.5%20update%20broke%20ZFS%20group%20ACLs&In-Reply-To="
+       TITLE="[zfs-discuss] 10.5.5 update broke ZFS group ACLs">Brad.Allred at ForEveryBody.com
+       </A><BR>
+    <I>Tue Sep 23 12:26:59 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000865.html">[zfs-discuss] first impression: wow!
+</A></li>
+        <LI>Next message: <A HREF="000868.html">[zfs-discuss] Panic during diff (Assertion failure: zap_hash(zap,	name) ==   hash failed, 0 == 0)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#867">[ date ]</a>
+              <a href="thread.html#867">[ thread ]</a>
+              <a href="subject.html#867">[ subject ]</a>
+              <a href="author.html#867">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>after updating to 10.5.5 server our Active directory group ACLs  
+stopped working (ZFS 119); the entries are still there but the group  
+name shows up as a long and cryptic hex string. I tried recursively  
+removing ACLs on the ZFS share and reapplying fresh ones, but the same  
+thing happened. I also noticed that chmod wasn't traversing down the  
+entire way, it would go a few folders down then stop. I am still able  
+to apply Active Directory user ACLs, but this is a huge pain.
+Could somebody kindly post any necessary steps to get my group ACLs  
+working again? Is there an impending update to the Mac ZFS binaries  
+that will improve ZFS ACLs?
+
+I posted a while back about ZFS ACL inheritance not working at all,  
+that is still the case and would like to know if this is known and if  
+there is anyway to enable it.
+I tried changing some settings using the ZFS command; the settings  
+stuck, but there is no change in behavior regarding ACL inheritance.
+
+here is the out put of a zfs get all:
+
+NAME      PROPERTY       VALUE                  SOURCE
+Graphics  type           filesystem             -
+Graphics  creation       Tue May 20 10:50 2008  -
+Graphics  used           1.07T                  -
+Graphics  available      956G                   -
+Graphics  referenced     1.07T                  -
+Graphics  compressratio  1.00x                  -
+Graphics  mounted        yes                    -
+Graphics  quota          none                   default
+Graphics  reservation    none                   default
+Graphics  recordsize     128K                   default
+Graphics  mountpoint     /Volumes/Graphics      default
+Graphics  sharenfs       off                    default
+Graphics  checksum       on                     default
+Graphics  compression    off                    default
+Graphics  atime          on                     default
+Graphics  devices        on                     default
+Graphics  exec           on                     default
+Graphics  setuid         on                     default
+Graphics  readonly       off                    default
+Graphics  zoned          off                    default
+Graphics  snapdir        hidden                 default
+Graphics  aclmode        passthrough            local
+Graphics  aclinherit     passthrough            local
+Graphics  canmount       on                     default
+Graphics  shareiscsi     off                    default
+Graphics  xattr          on                     default
+Graphics  copies         1                      default
+Graphics  version        1                      -
+
+as you can see the aclmode and inherit are set to &quot;passthrough&quot;,  
+according to the Apple zfs man page (<A HREF="http://developer.apple.com/documentation/Darwin/Reference/Manpages/man8/zfs.8.html">http://developer.apple.com/documentation/Darwin/Reference/Manpages/man8/zfs.8.html</A> 
+) this should do what I desire. Am I missing something?
+
+I would really love this to work like it should
+what settings, if any, do i need to set/unset with the zfs command?
+should I be applying the ACLs using something other than server admin?  
+If so how do I go about it?
+
+thank you for you hard work on what I'm sure will be a killer file  
+system come july of next year.
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000865.html">[zfs-discuss] first impression: wow!
+</A></li>
+	<LI>Next message: <A HREF="000868.html">[zfs-discuss] Panic during diff (Assertion failure: zap_hash(zap,	name) ==   hash failed, 0 == 0)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#867">[ date ]</a>
+              <a href="thread.html#867">[ thread ]</a>
+              <a href="subject.html#867">[ subject ]</a>
+              <a href="author.html#867">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

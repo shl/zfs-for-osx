@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-10a286 ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C1B0A04DD-5C61-4B26-9C9B-DF0F8637242C%40yellowspace.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001969.html">
+   <LINK REL="Next"  HREF="001961.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-10a286 ?</H1>
+    <B>Lorenzo Perone</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C1B0A04DD-5C61-4B26-9C9B-DF0F8637242C%40yellowspace.net%3E"
+       TITLE="[zfs-discuss] zfs-10a286 ?">lopez.on.the.lists at yellowspace.net
+       </A><BR>
+    <I>Tue Oct 20 04:57:47 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001969.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+        <LI>Next message: <A HREF="001961.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1970">[ date ]</a>
+              <a href="thread.html#1970">[ thread ]</a>
+              <a href="subject.html#1970">[ subject ]</a>
+              <a href="author.html#1970">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi David,
+
+yep - we all here licked blood and now try hard to get some more...
+
+On 20.10.2009, at 13:24, David Ritchie wrote:
+
+&gt;<i> So now I'm wondering what to do:-
+</I>&gt;<i>
+</I>&gt;<i> 1. If I didn't need to run Mac OS X at all I'd probably just run  
+</I>&gt;<i> Solaris or FreeBSD on my machine and be done with it, but I really  
+</I>&gt;<i> DO want to use Mac OS X
+</I>
+same here... at least for the desktops
+
+&gt;<i> 2. I could set up a file server and access my home directory from  
+</I>&gt;<i> it. What would performance be like? Can I get spotlight to work?
+</I>
+afaik, for spotlight to work on network shares, it has to be supported  
+on the
+server side (mac os x server does this since 10.5). afaik, netatalk does
+not support spotlight yet. so this won't work unless you hack your local
+spotlight to index network shares as well, if that's possible at all,  
+since
+I don't know if the kernel actually produces &quot;file modified&quot; events et  
+al
+for network shares (i think not)..
+
+&gt;<i> 3. I could have a file server for backup, run my home directory and  
+</I>&gt;<i> everything locally on HFS and just use the file server to access  
+</I>&gt;<i> backups and snapshots - similar to what I'm doing now but with  
+</I>&gt;<i> easier access to snapshots
+</I>
+I'm doing it like this for a local fileserver: it rsyncs its stuff on  
+a sparse
+disk image which is located on a FreeBSD-backed ZFS pool and shared to  
+the
+Mac over NFS (a script mounts the sparse image from the shared volume,
+makes the rsync, and detaches it again). The zfs dataset is  
+snapshotted daily.
+As you can probably imagine, performance **cks, 'cause it's really a  
+layering
+party - but still viable for nightly backups and way more reliable and  
+compatible
+than sharing the backup volume itself over NFS. to recover stuff I  
+have to export
+the .zfs snapshot to another NFS share and mount the image on it. Had  
+the case a
+few times,  it works without problems, just make sure you wrap it  
+around a script
+to make it more handy..
+
+&gt;<i> 4. I could carry on as I am, maybe not upgrade to SL yet. Not very  
+</I>&gt;<i> convenient access to snapshots (unless I clone every snapshot)
+</I>
+Dunno about you, but despite it being fairly stable in my experience  
+XFS-119 was
+far from fast on my (RIP) zfs pools on mac os x...
+
+&gt;<i> 5. I could use iSCSI to mount a ZFS backed disk image and store my  
+</I>&gt;<i> home on that. That would give me spotlight and the reliability  
+</I>&gt;<i> advantages of ZFS (scrubbing, checksums &amp;c) but not very convenient  
+</I>&gt;<i> access to snapshots - it would involve mounting a snapshot to look  
+</I>&gt;<i> for stuff I presume
+</I>
+Since I was curious too, I tried this with a virtualbox running
+nexenta and a sparse zvol on it shared over iscsi, formatted and mounted
+on the mac.  Actually it surprised me: on a MacBook Pro 2.1GHz it still
+copied files  with over 12MB/s sustained data rate - and that was from
+virtualbox on the same machine to the mounted zvol and vice-versa.
+So that sounds fine, it's just being dependant on an third party  
+commercial
+iSCSI initiator (i used the GlobalSAN one) that made me back up a
+little... but I might be overcareful on that front - still I'd welcome
+built-in OSX-iSCSI..
+
+&gt;<i> 6. I could use a ZFS file server for Time machine backups and thus  
+</I>&gt;<i> use TM instead of snapshots to get historical data (presumably it  
+</I>&gt;<i> would use disk images). Currently I have another disk which TM is  
+</I>&gt;<i> backing up to as well.
+</I>
+I wouldn't do this - after all You're doing the same thing twice here ;)
+
+&gt;<i> So on the whole it might be better, now, to migrate my main file  
+</I>&gt;<i> store to another system and access it over GigE, but there just seem  
+</I>&gt;<i> to be niggling issues with that. What are other peoples thoughts on  
+</I>&gt;<i> this matter? I really like ZFS.
+</I>
+For that matter, HAMMERfs (dragonflybsd) could even outperform it from  
+some
+points of view (snapshotting, replication and data retention  
+policies)... ;)
+
+
+Regards,
+
+Lorenzo
+
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001969.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+	<LI>Next message: <A HREF="001961.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1970">[ date ]</a>
+              <a href="thread.html#1970">[ thread ]</a>
+              <a href="subject.html#1970">[ subject ]</a>
+              <a href="author.html#1970">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

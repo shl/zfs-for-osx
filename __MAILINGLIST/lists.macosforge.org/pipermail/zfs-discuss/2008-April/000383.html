@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panics&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000449.html">
+   <LINK REL="Next"  HREF="000388.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panics</H1>
+    <B>Joe Dunn</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panics&In-Reply-To="
+       TITLE="[zfs-discuss] Kernel Panics">me at joedunn.com
+       </A><BR>
+    <I>Thu Apr  3 18:58:36 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000449.html">[zfs-discuss] Some More on Firefox
+</A></li>
+        <LI>Next message: <A HREF="000388.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#383">[ date ]</a>
+              <a href="thread.html#383">[ thread ]</a>
+              <a href="subject.html#383">[ subject ]</a>
+              <a href="author.html#383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Guys
+
+Just wondering how often you experience kernel panics from the zfs-101a
+install? I just got my second of the night, here it is below
+
+Thu Apr  3 21:49:15 2008
+panic(cpu 0 caller 0x345AFDEC): &quot;ZFS: I/O failure (write on &lt;unknown&gt; off 0:
+zio 0x5448ee0 [L0 ZFS plain file] 20000L/20000P DVA[0]=&lt;0:8b10c80000:20000&gt;
+fletcher2 uncompressed LE contiguous birth=18742 fill=1
+cksum=3d6e6c81d83ac4fc:a6bdb8401f61f4b8:a44578ca38daf3f:cb762ce2540a4cf):
+error &quot;
+&quot;6&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/zfs_kext/zfs/zio.c:918
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x3453be48 : 0x12b0f7 (0x4581f4 0x3453be7c 0x133230 0x0)
+0x3453be98 : 0x345afdec (0x3461db90 0x3461db84 0x34619690 0x3464c6ec)
+0x3453bf18 : 0x345ac4c0 (0x5448ee0 0x176 0x3453bf38 0x345f3267)
+0x3453bf58 : 0x3460b0b0 (0x5448ee0 0x1 0x34656110 0x90f5b30)
+0x3453bfc8 : 0x19eadc (0x90f5b30 0x0 0x1a20b5 0xafa1128)
+Backtrace terminated-invalid frame pointer 0
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x34598000-&gt;0x34663fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9C7010
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080403/7ad4b3c1/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080403/7ad4b3c1/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000449.html">[zfs-discuss] Some More on Firefox
+</A></li>
+	<LI>Next message: <A HREF="000388.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#383">[ date ]</a>
+              <a href="thread.html#383">[ thread ]</a>
+              <a href="subject.html#383">[ subject ]</a>
+              <a href="author.html#383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

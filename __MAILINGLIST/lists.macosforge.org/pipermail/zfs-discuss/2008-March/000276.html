@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] how to emulate zfs send | zfs recv
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20how%20to%20emulate%20zfs%20send%20%7C%20zfs%20recv&In-Reply-To=7bccd8dc0803060439j5ed8bd36rb960a9ec9337e18a%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000275.html">
+   <LINK REL="Next"  HREF="000277.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] how to emulate zfs send | zfs recv</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20how%20to%20emulate%20zfs%20send%20%7C%20zfs%20recv&In-Reply-To=7bccd8dc0803060439j5ed8bd36rb960a9ec9337e18a%40mail.gmail.com"
+       TITLE="[zfs-discuss] how to emulate zfs send | zfs recv">jbsnyder at gmail.com
+       </A><BR>
+    <I>Thu Mar  6 06:08:16 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000275.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+        <LI>Next message: <A HREF="000277.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#276">[ date ]</a>
+              <a href="thread.html#276">[ thread ]</a>
+              <a href="subject.html#276">[ subject ]</a>
+              <a href="author.html#276">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zetaback has incorporated support for using FIFOs on Mac OS X systems.
+ It's not just a wrapper though it's set up as something you would run
+from a cron or launchd process on any type of server with perl
+installed, you can set full and incremental backup intervals, and
+specify patterns for which pools and filesystems to include.  It is
+server-side driven for the scheduling, though, with an agent script
+that runs on whatever machines you are backing up with ZFS
+filesystems.  I'm thinking about adding a few features I'd like, but
+haven't gotten around to it yet.
+
+One thing of note that the author didn't have issues with, but I did,
+was that the suggested way of running it is to enable root on your OS
+X hosts and have your server do passwordless (or you could always do
+passworded if you wanted to do things manually) logins.  For some
+reason I couldn't get to to run appropriately as root and had to use
+my user account on my OS X client machine to run the zetaback agent.
+To make this work, since my home is on ZFS and it makes a fifo
+wherever the home directory is I modified the zetaback_agent script to
+make the fifo in /tmp.  If you make the fifo on the ZFS filesystem
+you're backing up for some reason the fifo just accumulates the send
+buffer and things don't work properly.
+
+You can find zetaback here:
+<A HREF="https://labs.omniti.com/trac/zetaback">https://labs.omniti.com/trac/zetaback</A>
+
+For the fifo path change, look for this in zetaback_agent:
+my $fifo = &quot;zetaback_${$}_${FULL}${BASE}.fifo&quot;;
+
+change it to:
+my $fifo = &quot;/tmp/zetaback_${$}_${FULL}${BASE}.fifo&quot;;
+
+Ultimately though, I really hope that piping works in the near future
+:<i>-) I'd like to drive backups from the client end so that firewalls
+</I>and varying network locations wouldn't be as much of a problem save
+for the link speed.
+
+On Thu, Mar 6, 2008 at 6:39 AM, Brett Ault-McCoy &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">btm at pobox.com</A>&gt; wrote:
+&gt;<i> One thing I would really, really like to have in zfs for Mac OS X is the
+</I>&gt;<i> ability to pipe the output of zfs send to zfs recv.  Having to write it to a
+</I>&gt;<i> file and then read from that file is painful.  It's okay for small
+</I>&gt;<i> incremental snapshots, but is painful for full filesystem copies.  So, a
+</I>&gt;<i> workaround until the support is there is to use a fifo.  If you do something
+</I>&gt;<i> like:
+</I>&gt;<i>
+</I>&gt;<i>   mkfifo /tmp/zfsfifo
+</I>&gt;<i>   zfs recv -v -d NewPool &lt; /tmp/zfsfifo
+</I>&gt;<i>   zfs send OldPool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Filesystem at snapshot</A> &gt; /tmp/zfsfifo
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> the output from send will be piped into the input to recv.  You'll need to
+</I>&gt;<i> run the two commands in different windows, or run the recv in the
+</I>&gt;<i> background.  I'm thinking of writing a wrapper script of some sort to handle
+</I>&gt;<i> creating the fifo and running the send and recv commands to make this easy.
+</I>&gt;<i> Something like:
+</I>&gt;<i>
+</I>&gt;<i>    zsr [-vi] OldPool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Filesystem at snapshot</A> NewPool[/Filesystem])
+</I>&gt;<i>
+</I>&gt;<i> If anyone already knows of something similar I'd love to hear about it.
+</I>&gt;<i> Bonus points for making it work via an ssh pipe (ie. connecting the read
+</I>&gt;<i> side of the fifo to an ssh process that sends the data to a fifo on a remote
+</I>&gt;<i> machine and runs a zfs recv command on it to read from the fifo to make it
+</I>&gt;<i> easy to copy snapshots to a remote host.
+</I>&gt;<i>
+</I>&gt;<i> ++brett;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>  zfs-discuss mailing list
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000275.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+	<LI>Next message: <A HREF="000277.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#276">[ date ]</a>
+              <a href="thread.html#276">[ thread ]</a>
+              <a href="subject.html#276">[ subject ]</a>
+              <a href="author.html#276">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

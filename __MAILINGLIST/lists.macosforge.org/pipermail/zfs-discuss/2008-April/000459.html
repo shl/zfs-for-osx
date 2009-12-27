@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Status of ZFS on Mac OS X?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=380A13C9-ECB6-4FC0-9E49-C3D21FB9FB81%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000457.html">
+   <LINK REL="Next"  HREF="000399.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Status of ZFS on Mac OS X?</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=380A13C9-ECB6-4FC0-9E49-C3D21FB9FB81%40apple.com"
+       TITLE="[zfs-discuss] Status of ZFS on Mac OS X?">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Thu Apr 10 14:52:06 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000457.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+        <LI>Next message: <A HREF="000399.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#459">[ date ]</a>
+              <a href="thread.html#459">[ thread ]</a>
+              <a href="subject.html#459">[ subject ]</a>
+              <a href="author.html#459">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Apr 10, 2008 at 9:55 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+&gt;<i> Hehe, I'm owner of the list and am from the &quot;mothership&quot; here at Apple :)
+</I>&gt;<i>
+</I>&gt;<i> So I can't make any statements about timelines, roadmaps and things of that
+</I>&gt;<i> nature, but if you have specific questions on stuff or bugs I can hopefully
+</I>&gt;<i> help you out.  As of right now, I'm concentrating on getting snapshot
+</I>&gt;<i> browsing (known as .zfs) up and running, which it is up and running, but,
+</I>&gt;<i> um, well less then stable :)  My partner in crime, Don Brady, is working on
+</I>&gt;<i> ZFS booting among other things.
+</I>
+This is great news! The lack of a .zfs is a bit odd, and difficult to
+demonstrate to naysayers how useful the idea of snapshots can be until
+you've actually seen the .zfs in action.
+
+Quick bit of feedback about .zfs - the 'rsync' program has an -C or
+--cvs-exclude, which sets an exclude list to ignore certain
+directories:
+
+              The exclude list is initialized to:
+
+              RCS SCCS CVS  CVS.adm  RCSLOG  cvslog.*  tags  TAGS  .make.state
+              .nse_depinfo  *~ #* .#* ,* _$* *$ *.old *.bak *.BAK *.orig *.rej
+              .del-* *.a *.olb *.o *.obj *.so *.exe *.Z *.elc *.ln core .svn/
+
+I see that it's got .svn/ in there; I think a great addition would be
+.zfs/ so that when you're rsync'ing across multiple directories you
+don't get accidental snapshots carried with you.
+
+And as for ZFS booting ... well, when that happens I'm not going back!
+
+&gt;<i> We're also trying to mow through panics as
+</I>&gt;<i> they come up (we don't have many other than ones that all seem to be related
+</I>&gt;<i> to traversing large data heirarchies) which we are still trying to nail
+</I>&gt;<i> down.
+</I>
+I've seen more than a few panics but mostly these are related to
+taking out the underling disks. It's a bit annoying to have a panic -
+it will be great when we have the 'failmode' property that means we
+can fail a little more elegantly than a system shutdown.
+
+&gt;<i> On the whole though, I'd give it a go.  If you've  got something specific let me know.  Feedback is always awesome.
+</I>
+I speak for myself here, but I'm sure that the others on the list will
+agree that you guys are doing a great job in bringing a great file
+system to the Mac. Here's looking forward to His Jobness announcing
+that everyone should test on ZFS in WWDC because it's going to be the
+new default file system for the future. (Oh wait, Jonathan Schwartz
+already said that.)
+
+Seriously, you're doing a great service to the Mac community, and I
+applaud you :-)
+
+Alex
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000457.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+	<LI>Next message: <A HREF="000399.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#459">[ date ]</a>
+              <a href="thread.html#459">[ thread ]</a>
+              <a href="subject.html#459">[ subject ]</a>
+              <a href="author.html#459">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Handbrake on ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Handbrake%20on%20ZFS&In-Reply-To=6DFAF372-EFF8-4E58-8B23-69F1161DD807%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000409.html">
+   <LINK REL="Next"  HREF="000412.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Handbrake on ZFS</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Handbrake%20on%20ZFS&In-Reply-To=6DFAF372-EFF8-4E58-8B23-69F1161DD807%40gmail.com"
+       TITLE="[zfs-discuss] Handbrake on ZFS">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Mon Apr  7 00:57:52 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000409.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+        <LI>Next message: <A HREF="000412.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I presume it's a local, rather than networked share? I've found that  
+ZFS over NFS doesn't like locking on my setup. That fails when  
+extended attributes are set (e.g. via xattr). It might be doing the  
+same thing with Handbrake.
+
+Alex.
+
+On Apr 7, 2008, at 07:47, Sean Hafeez wrote:
+
+&gt;<i> I goofed - you can ignore the system log. That is from the DVD  
+</I>&gt;<i> ripper prg, not the Handbrake encoder. So no errors there. It just  
+</I>&gt;<i> does not work. Does not seem to like something on ZFS.
+</I>&gt;<i>
+</I>&gt;<i> -Sean
+</I>&gt;<i>
+</I>&gt;<i> On Apr 6, 2008, at 10:49 PM, Joe Dunn wrote:
+</I>&gt;&gt;<i> What version of handbrake? Might be something to tell the handbrake  
+</I>&gt;&gt;<i> developer about. I see this message listed on apple's website
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/DeprecationAppendix/AppendixADeprecatedAPI.html">http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/DeprecationAppendix/AppendixADeprecatedAPI.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Seems like that got rid of that in 10.4.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I could be totally wrong, and if so hopefully someone smarter then  
+</I>&gt;&gt;<i> me points it out :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Joe
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sun, Apr 6, 2008 at 11:08 PM, Sean Hafeez &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">sah.list at gmail.com</A>&gt;  
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> RAIDZ
+</I>&gt;&gt;<i> Here is the output from the Handbrake GUI
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [20:03:36] hb_init: checking cpu count
+</I>&gt;&gt;<i> [20:03:36] hb_init: starting libhb thread
+</I>&gt;&gt;<i> [20:03:36] thread b0147000 started (&quot;libhb&quot;)
+</I>&gt;&gt;<i> [20:04:05] macgui: trying to open video_ts folder (parent directory  
+</I>&gt;&gt;<i> chosen)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Then it just stops like I never pointed it to the DVD image.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is the system.log:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Apr  6 20:00:03 rioja MacTheRipper[661]: MTR: DVDCopyTileVobX (ts)1  
+</I>&gt;&gt;<i> (v)4
+</I>&gt;&gt;<i> Apr  6 20:03:09 rioja MacTheRipper[661]: MTR: copyContent
+</I>&gt;&gt;<i> Apr  6 20:03:11 rioja MacTheRipper[661]: we got here
+</I>&gt;&gt;<i> Apr  6 20:03:11 rioja MacTheRipper[661]: MTR: resetUI_state
+</I>&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: extractMethod
+</I>&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: getDiskSize
+</I>&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: DVDFreeTitlesInfo
+</I>&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: DVDFreeTitleSetInfo
+</I>&gt;&gt;<i> Apr  6 20:03:22 rioja MacTheRipper[661]: MTR: popupControl
+</I>&gt;&gt;<i> Apr  6 20:03:31 rioja MacTheRipper[661]: MTR: savePrefs
+</I>&gt;&gt;<i> Apr  6 20:04:05 rioja HandBrake[734]: *** +[NSString  
+</I>&gt;&gt;<i> stringWithCString:]: NULL cString
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> zpool list:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;&gt;<i> ALTROOT
+</I>&gt;&gt;<i> data2                  1.16T    672G    518G    56%  ONLINE     -
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Sean
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 6, 2008, at 8:04 AM, Joe Dunn wrote:
+</I>&gt;&gt;&gt;<i> Hi Sean
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Is the volume mirrored or in raidz configuration? Anything in your  
+</I>&gt;&gt;&gt;<i> syslog about what is happening?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Cheers
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Joe
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Sun, Apr 6, 2008 at 2:20 AM, Sean Hafeez &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">sah.list at gmail.com</A>&gt;  
+</I>&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;<i> So I have been ripping my DVDs to watch on my AppleTV. In the past  
+</I>&gt;&gt;&gt;<i> I have stored the files to be converted with Handbrake on my RAID  
+</I>&gt;&gt;&gt;<i> box. I switched that box over to ZFS a few weeks ago. Handbrake  
+</I>&gt;&gt;&gt;<i> seems to choke on the files when trying to open them now. If I  
+</I>&gt;&gt;&gt;<i> copy them over to an HFS+ volume it works just fine.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/86905a80/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/86905a80/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000409.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+	<LI>Next message: <A HREF="000412.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

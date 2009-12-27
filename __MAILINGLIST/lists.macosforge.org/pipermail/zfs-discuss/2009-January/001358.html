@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] I lost 500GB of backup data in zfs!!!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C490E2E5D-4E09-4507-AB6B-1462FCDF1E9C%40charter.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001357.html">
+   <LINK REL="Next"  HREF="001359.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] I lost 500GB of backup data in zfs!!!</H1>
+    <B>Sterling Garwood</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C490E2E5D-4E09-4507-AB6B-1462FCDF1E9C%40charter.net%3E"
+       TITLE="[zfs-discuss] I lost 500GB of backup data in zfs!!!">slgarwood at charter.net
+       </A><BR>
+    <I>Thu Jan 22 17:20:52 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001357.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+        <LI>Next message: <A HREF="001359.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1358">[ date ]</a>
+              <a href="thread.html#1358">[ thread ]</a>
+              <a href="subject.html#1358">[ subject ]</a>
+              <a href="author.html#1358">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jan 22, 2009, at 8:07 PM, Sterling Garwood wrote:
+
+&gt;<i> 1. kext is loaded (and its NOT the Apple read-only one)
+</I>&gt;<i> 2. nope ... no pools listed
+</I>&gt;<i> 3. nope ...
+</I>&gt;<i>
+</I>&gt;<i> I tried the attach trick (I thought that's what it did too) but it  
+</I>&gt;<i> did not show up as a mirror ... just a concatenated set of drives  
+</I>&gt;<i> (the total pool storage was the sum of both drives added together).
+</I>&gt;<i> I think something stepped on the first part of the disk (partition  
+</I>&gt;<i> table, etc) ... on all zfs drives. Maybe a bug, maybe a stray cosmic  
+</I>&gt;<i> ray (Apple Powermac memory is not ECCd AFAIK).
+</I>&gt;<i> I'll try and see if I can somehow hex dump a bit of one drive and  
+</I>&gt;<i> see whats what...
+</I>&gt;<i>
+</I>&gt;<i> On Jan 22, 2009, at 7:50 PM, Jonathan Edwards wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> you might be okay .. it really depends on where the zfs label is on  
+</I>&gt;&gt;<i> the drive:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1) make sure the zfs kext is loaded
+</I>&gt;&gt;<i> # kextstat | grep zfs
+</I>&gt;&gt;<i> 2) check to see if you can see your pools
+</I>&gt;&gt;<i> # zpool list
+</I>&gt;&gt;<i> 3) check to see if you can import your pools
+</I>&gt;&gt;<i> # sudo import [-f] &lt;pool&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> btw - if you have an existing unmirrored single disk pool (eg:  
+</I>&gt;&gt;<i> mypool say on disk3) you can make it a mirrored pool (to say disk4)  
+</I>&gt;&gt;<i> with something like:
+</I>&gt;&gt;<i> # zpool attach mypool disk3 disk4
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> hth
+</I>&gt;&gt;<i> Jonathan
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 22, 2009, at 7:09 PM, Mr. Zorg wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> At steps 1 and 4, did you format the disks EXACTLY as described in  
+</I>&gt;&gt;&gt;<i> the wiki?  If not, that's likely the cause of your woes.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Jan 22, 2009, at 4:02 PM, Sterling Garwood  
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">slgarwood at charter.net</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I am running the currently available Mac zfs drop from the mac  
+</I>&gt;&gt;&gt;&gt;<i> developers site - says its 119.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The sequence of events across the whole day is
+</I>&gt;&gt;&gt;&gt;<i> (I already had a pool with 2 internal drives in it called 'mypool')
+</I>&gt;&gt;&gt;&gt;<i> 1. create pool on 1st Firewire 500 GB drive called zfsstg..  
+</I>&gt;&gt;&gt;&gt;<i> worked ok
+</I>&gt;&gt;&gt;&gt;<i> 2. Copied all 500 GB data from a HFS+ drive to the above pool -  
+</I>&gt;&gt;&gt;&gt;<i> worked ok
+</I>&gt;&gt;&gt;&gt;<i> 3. Reformatted the HFS+ Firewire drive and add it as 2nd Firewire  
+</I>&gt;&gt;&gt;&gt;<i> 500 GB drive to zfsstg pool (what I really wanted to do was  
+</I>&gt;&gt;&gt;&gt;<i> create a mirror but I forgot the magic 'mirror' word :-)
+</I>&gt;&gt;&gt;&gt;<i> 4. create another pool called 'remove' on another external (USB)  
+</I>&gt;&gt;&gt;&gt;<i> 500GB drive.
+</I>&gt;&gt;&gt;&gt;<i> 5. copied zfsstg to remove  ... copy worked ok. DId several 'ls - 
+</I>&gt;&gt;&gt;&gt;<i> al' to check ... same number of files etc....
+</I>&gt;&gt;&gt;&gt;<i> 6. then noticed a software update was pending so since I was  
+</I>&gt;&gt;&gt;&gt;<i> gonna reboot anyway let it install.
+</I>&gt;&gt;&gt;&gt;<i> I was planning on powering down both Firewire drives, rebooting,  
+</I>&gt;&gt;&gt;&gt;<i> powering them up 1 at a time and reformatting, then creating a  
+</I>&gt;&gt;&gt;&gt;<i> zfs mirror. I then planned on copying pool 'remove' to the new  
+</I>&gt;&gt;&gt;&gt;<i> mirror.
+</I>&gt;&gt;&gt;&gt;<i> 7. upon reboot got error messages that all zfs pool drives were  
+</I>&gt;&gt;&gt;&gt;<i> 'unknown format' including the 2 internal drives in the pool I  
+</I>&gt;&gt;&gt;&gt;<i> hadn't touched all day.... &lt;sigh&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001357.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+	<LI>Next message: <A HREF="001359.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1358">[ date ]</a>
+              <a href="thread.html#1358">[ thread ]</a>
+              <a href="subject.html#1358">[ subject ]</a>
+              <a href="author.html#1358">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

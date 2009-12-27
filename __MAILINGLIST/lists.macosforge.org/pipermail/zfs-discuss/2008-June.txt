@@ -1,0 +1,2657 @@
+From lhunath at gmail.com  Sun Jun  1 09:59:02 2008
+From: lhunath at gmail.com (Maarten Billemont)
+Date: Sun, 01 Jun 2008 18:59:02 +0200
+Subject: [zfs-discuss] Kernel Panic while opening directory;
+ since then on every zpool import.
+Message-ID: <op.ub2xgndxl9e6nm@myst.lan>
+
+While opening a directory in ''Path Finder'' on my ZFS fs the kernel  
+paniced.  I rebooted and did a new zpool import on the fs (it is located  
+on an external hard drive) which triggered the following panic with the  
+same message as the first one I described (I lost the details for that one  
+as a result of the latter panic).
+
+Sun Jun  1 18:48:01 2008
+panic(cpu 1 caller 0x34B00AF9): "ZFS: bad checksum (read on <unknown> off  
+0: zio 0x5725998 [L1 ZFS plain file] 4000L/400P DVA[0]=<0:90032fc00:400>  
+DVA[1]=<0:22266de800:400> fletcher4 lzjb LE contiguous birth=361645 fill=2  
+cksum=5b071f0f0c:3c0463dd46e8:151936455654ac:5392fefbe1c5a3f): error "  
+"88"@/Users/local/zfs-111/zfs_kext/zfs/zio.c:918
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x34673e38 : 0x12b0fa (0x459294 0x34673e6c 0x133243 0x0)
+0x34673e88 : 0x34b00af9 (0x34b6c8f0 0x34b6c8d4 0x34b692b8 0x34b90330)
+0x34673f08 : 0x34afd1cd (0x5725998 0x11 0x34673f28 0x34b43f74)
+0x34673f48 : 0x34b5c18e (0x5725998 0xb7ea180 0x1f1bd 0x34b7cf74)
+0x34673fc8 : 0x19ebdc (0x5f73ce8 0x0 0x1a20b5 0x4241ba0)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x34ae9000->0x34ba4fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9D34
+
+Kernel version:
+Darwin Kernel Version 9.3.0: Fri May 23 00:49:16 PDT 2008;  
+root:xnu-1228.5.18~1/RELEASE_I386
+System model name: MacBookPro3,1 (Mac-F4238BC8)
+
+From ndellofano at apple.com  Mon Jun  2 11:03:00 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 2 Jun 2008 11:03:00 -0700
+Subject: [zfs-discuss] zfs-117: remote filesystem names still wrong in
+	Finder
+In-Reply-To: <7a0bc8420805311840y29978501x45ecc1dc7b93aad2@mail.gmail.com>
+References: <7a0bc8420805311840y29978501x45ecc1dc7b93aad2@mail.gmail.com>
+Message-ID: <9720F36C-618D-4ECC-8CC4-FA52523D577C@apple.com>
+
+Are you on 9D34?  Or another release?  I do know we are still having  
+issues with properly representing ZFS filesystems in Finder.  However  
+on my machine, where i have a pool with 2 ZFS filesystems in it,  
+Finder shows my pool and the names of my ZFS filesystems in it, except  
+it represents my filesystems as alias's which is annoying and we're  
+still wroking to fix this issue.  What Leopard are you on? Do you have  
+any other options/mounts set on your ZFS filesystem?
+
+Noel
+
+On May 31, 2008, at 6:40 PM, Jonathan Borden wrote:
+
+> In my Finder when browsing the machine that holds the ZFS pools I  
+> still get:
+>
+> gene
+> gene1
+> gene2
+> gene3
+>
+> reflect
+> reflect1
+> reflect2
+>
+> tank
+> tank1
+> tank2
+> tank3
+>
+> Ideally the filesystems should be listed by their name rather than
+> enumerated. I.e. the new bits haven't fixed this issue.
+>
+> Jonathan
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From scot.stevenson at gmail.com  Mon Jun  2 13:05:10 2008
+From: scot.stevenson at gmail.com (Scot Stevenson)
+Date: Mon, 2 Jun 2008 22:05:10 +0200
+Subject: [zfs-discuss] Suggestion: An external tool for RAID-Z expansion
+Message-ID: <7f6206af0806021305u2aaece2clf907ed057bdd5c49@mail.gmail.com>
+
+Hi there,
+
+In May, Donald Campbell II delurked on this list to suggest that Apple
+might want to take a long look at including a much-requested feature
+in ZFS, even though Sun itself is too focused on the enterprise to
+care: The ability to add one disk at a time to configurations such as
+RAID-Z. I'd like to follow him into the sunlight to second that. For
+us normal people with normal budgets, this is a show-stopper.
+
+However, I was wondering if it might be easier for Apple to provide an
+external tool to do this first instead of trying to include it as an
+intrinsic feature of ZFS. That is, include a utility that you use by
+taking the existing RAID (or pool or whatever) offline to add the
+drive. This would be decidedly less cool, but it would avoid breaking
+with Sun, wouldn't make the ZFS code itself more complex, and would
+give Apple's ZFS an advantage over ZFS on Solaris or OpenBSD.
+
+For the record, I think Sun is making a serious mistake by shrugging
+this feature off as unimportant. I just put together a home server
+(the usual storage for iMovies of the kids chasing the cat), and I
+played around with Solaris for a while during the planing stage. Yes,
+ZFS made me drool, but in the end, I picked Ubuntu because you can
+expand Linux RAID-5 systems with mdadm but can't "grow" RAID-Z systems
+with Solaris.
+
+Anyway. Thanks for the great work porting ZFS, there are a lot of
+people out here just dying to get it running on their Macs, even
+without RAID.
+
+Y, Scot
+
+-- 
+Scot W. Stevenson - scot.stevenson at gmail.com - Germany
+AIM: scotwiste - Homepage: http://www.possum.in-berlin.de
+Blog USA Erkl?rt: http://usaerklaert.wordpress.com
+
+From jim at netgate.com  Mon Jun  2 13:44:43 2008
+From: jim at netgate.com (Jim Thompson)
+Date: Mon, 2 Jun 2008 10:44:43 -1000
+Subject: [zfs-discuss] Suggestion: An external tool for RAID-Z expansion
+In-Reply-To: <7f6206af0806021305u2aaece2clf907ed057bdd5c49@mail.gmail.com>
+References: <7f6206af0806021305u2aaece2clf907ed057bdd5c49@mail.gmail.com>
+Message-ID: <312191B5-CB0D-4C37-9AB1-175A508E4442@netgate.com>
+
+its not that its unimportant, its that its really hard to do while  
+maintaining the structural integrity of RAID-Z.
+
+On Jun 2, 2008, at 10:05 AM, Scot Stevenson wrote:
+
+> Hi there,
+>
+> In May, Donald Campbell II delurked on this list to suggest that Apple
+> might want to take a long look at including a much-requested feature
+> in ZFS, even though Sun itself is too focused on the enterprise to
+> care: The ability to add one disk at a time to configurations such as
+> RAID-Z. I'd like to follow him into the sunlight to second that. For
+> us normal people with normal budgets, this is a show-stopper.
+>
+> However, I was wondering if it might be easier for Apple to provide an
+> external tool to do this first instead of trying to include it as an
+> intrinsic feature of ZFS. That is, include a utility that you use by
+> taking the existing RAID (or pool or whatever) offline to add the
+> drive. This would be decidedly less cool, but it would avoid breaking
+> with Sun, wouldn't make the ZFS code itself more complex, and would
+> give Apple's ZFS an advantage over ZFS on Solaris or OpenBSD.
+>
+> For the record, I think Sun is making a serious mistake by shrugging
+> this feature off as unimportant. I just put together a home server
+> (the usual storage for iMovies of the kids chasing the cat), and I
+> played around with Solaris for a while during the planing stage. Yes,
+> ZFS made me drool, but in the end, I picked Ubuntu because you can
+> expand Linux RAID-5 systems with mdadm but can't "grow" RAID-Z systems
+> with Solaris.
+>
+> Anyway. Thanks for the great work porting ZFS, there are a lot of
+> people out here just dying to get it running on their Macs, even
+> without RAID.
+>
+> Y, Scot
+>
+> -- 
+> Scot W. Stevenson - scot.stevenson at gmail.com - Germany
+> AIM: scotwiste - Homepage: http://www.possum.in-berlin.de
+> Blog USA Erkl?rt: http://usaerklaert.wordpress.com
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From zfs at hessmann.de  Mon Jun  2 13:57:40 2008
+From: zfs at hessmann.de (=?ISO-8859-1?Q?Christian_He=DFmann?=)
+Date: Mon, 2 Jun 2008 22:57:40 +0200
+Subject: [zfs-discuss] zfs-117: remote filesystem names still wrong in
+	Finder
+In-Reply-To: <9720F36C-618D-4ECC-8CC4-FA52523D577C@apple.com>
+References: <7a0bc8420805311840y29978501x45ecc1dc7b93aad2@mail.gmail.com>
+	<9720F36C-618D-4ECC-8CC4-FA52523D577C@apple.com>
+Message-ID: <290B62A5-F534-4E1E-B2A3-E432ABD6C5B3@hessmann.de>
+
+Noel,
+
+
+>> In my Finder when browsing the machine that holds the ZFS pools I
+>> still get:
+>> gene
+>> gene1
+>> gene2
+>> gene3
+[...]
+> Are you on 9D34?  Or another release?  I do know we are still having
+> issues with properly representing ZFS filesystems in Finder.  However
+> on my machine, where i have a pool with 2 ZFS filesystems in it,
+> Finder shows my pool and the names of my ZFS filesystems in it,
+
+
+I think he's talking about browsing a remote machine via AFP. I've got  
+the same result, but I think that's a known issue, isn't it?
+
+
+Best regards,
+
+Christian
+
+From ndellofano at apple.com  Mon Jun  2 17:05:35 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 2 Jun 2008 17:05:35 -0700
+Subject: [zfs-discuss] zfs-117: remote filesystem names still wrong in
+	Finder
+In-Reply-To: <290B62A5-F534-4E1E-B2A3-E432ABD6C5B3@hessmann.de>
+References: <7a0bc8420805311840y29978501x45ecc1dc7b93aad2@mail.gmail.com>
+	<9720F36C-618D-4ECC-8CC4-FA52523D577C@apple.com>
+	<290B62A5-F534-4E1E-B2A3-E432ABD6C5B3@hessmann.de>
+Message-ID: <DD6655C0-3ADA-4F5A-833F-3BF779B94AD4@apple.com>
+
+ahhhhh, sorry, I missed the AFP part, thanks :)
+
+Yes this is a known issue and goes in our basket of tricks with trying  
+to get better integrated with Finder.  It's not a small task so we're  
+going at it piece by piece.  Sorry for the inconvenience, it's coming.
+
+Noel
+
+On Jun 2, 2008, at 1:57 PM, Christian He?mann wrote:
+
+> Noel,
+>
+>
+>>> In my Finder when browsing the machine that holds the ZFS pools I
+>>> still get:
+>>> gene
+>>> gene1
+>>> gene2
+>>> gene3
+> [...]
+>> Are you on 9D34?  Or another release?  I do know we are still having
+>> issues with properly representing ZFS filesystems in Finder.  However
+>> on my machine, where i have a pool with 2 ZFS filesystems in it,
+>> Finder shows my pool and the names of my ZFS filesystems in it,
+>
+>
+> I think he's talking about browsing a remote machine via AFP. I've  
+> got the same result, but I think that's a known issue, isn't it?
+>
+>
+> Best regards,
+>
+> Christian
+
+
+From info at martin-hauser.net  Mon Jun  2 23:49:49 2008
+From: info at martin-hauser.net (Martin Hauser)
+Date: Tue, 3 Jun 2008 08:49:49 +0200
+Subject: [zfs-discuss] indestructable phantom folders with zfs-117
+Message-ID: <C245D44E-DCFB-4FAB-9C64-D026A6BA774A@martin-hauser.net>
+
+Hello List,
+
+I've had a quite confusing problem, which I was not able to reproduce.  
+I had a set of subfolders like
+
+rootfolder:
+FolderA
+FolderB
+
+FolderB:
+FileA
+FileB
+
+on attempting a rm -rf rootfolder and then doing an ls in the folder  
+containing rootfolder, i noticed rootfolder still being there. Now  
+attempting to 'ls rootfolder' yanked a still existing rootfolder/ 
+FolderB entry. Trying to ls rootfolder/FolderB however just said 'no  
+such file or directory'. Same went for rm -r on the rootfolder and on  
+FolderB. The solution that got it fixed was to make 'mkdir rootfolder/ 
+FolderB and rm -rf again.
+
+I'm just writing because I think i've seen it being the cause of some  
+macports installations to fail on first attempt and I think it's not  
+intended behaviour in any way.
+
+kind regards
+
+Martin Hauser
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080603/5f167b57/attachment.p7s 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080603/5f167b57/attachment.sig 
+
+From lopez.on.the.lists at yellowspace.net  Tue Jun  3 03:34:48 2008
+From: lopez.on.the.lists at yellowspace.net (Lorenzo Perone)
+Date: Tue, 3 Jun 2008 12:34:48 +0200
+Subject: [zfs-discuss] zfs-117: remote filesystem names still wrong in
+	Finder
+In-Reply-To: <9720F36C-618D-4ECC-8CC4-FA52523D577C@apple.com>
+References: <7a0bc8420805311840y29978501x45ecc1dc7b93aad2@mail.gmail.com>
+	<9720F36C-618D-4ECC-8CC4-FA52523D577C@apple.com>
+Message-ID: <D4D18568-6ED5-462E-9A8B-F2D622B23BD8@yellowspace.net>
+
+Hi,
+
+I'm on 9D34 + zfs-117, but still have the name problem in the Finder:
+no matter where on the Finder (be it in the window title
+or on the shortcuts bar on the left of Finder windows),
+all zfs filesystems have the name of the pool.
+In my case I set some mountpoints manually. Can this be the cause?
+
+(in any case, also the filesystems on the default mountpoint
+/Volumes/<pool>/<fs> show up with the pool's name).
+Here's my zfs list (some filesystems/shapshots omitted):
+
+
+NAME                            USED  AVAIL  REFER  MOUNTPOINT
+Zorro                           121G  74,4G   109K  /Volumes/Zorro
+Zorro/Downloads                15,4G  74,4G  15,4G  /Downloads
+Zorro/Movies                   10,1G  74,4G  10,1G  /Movies
+Zorro/Music                    1011M  74,4G  1011M  /Music
+Zorro/VirtualPCs               39,3G  74,4G  38,4G  /VirtualPCs
+Zorro/Work                      791M  74,4G   791M  /Volumes/Zorro/Work
+Zorro/isos                     18,0G  74,4G  18,0G  /Volumes/Zorro/isos
+Zorro/lopez                    10,8G  74,4G  10,1G  /lopez
+Zorro/opt                      9,22G  74,4G  9,22G  /opt
+
+As an example, here's a
+
+[zeta:~] root# zfs get all Zorro/Movies
+
+NAME          PROPERTY       VALUE                 SOURCE
+Zorro/Movies  type           filesystem            -
+Zorro/Movies  creation       Do Apr 17 21:09 2008  -
+Zorro/Movies  used           10,1G                 -
+Zorro/Movies  available      74,4G                 -
+Zorro/Movies  referenced     10,1G                 -
+Zorro/Movies  compressratio  1.00x                 -
+Zorro/Movies  mounted        yes                   -
+Zorro/Movies  quota          none                  default
+Zorro/Movies  reservation    none                  default
+Zorro/Movies  recordsize     128K                  default
+Zorro/Movies  mountpoint     /Movies               local
+Zorro/Movies  sharenfs       off                   default
+Zorro/Movies  checksum       on                    default
+Zorro/Movies  compression    off                   default
+Zorro/Movies  atime          on                    default
+Zorro/Movies  devices        on                    default
+Zorro/Movies  exec           on                    default
+Zorro/Movies  setuid         on                    default
+Zorro/Movies  readonly       off                   default
+Zorro/Movies  zoned          off                   default
+Zorro/Movies  snapdir        hidden                default
+Zorro/Movies  aclmode        groupmask             default
+Zorro/Movies  aclinherit     secure                default
+Zorro/Movies  canmount       on                    default
+Zorro/Movies  shareiscsi     off                   default
+Zorro/Movies  xattr          on                    default
+Zorro/Movies  copies         1                     default
+Zorro/Movies  version        2                     -
+
+
+If there's anything I can test/do/post to help debugging I'll be
+glad to do it.
+
+Apart from those Finder problems* everything else works like a
+charm. That is: my filevault home, watching movies, using
+eyetv, making copies, using parallels virtual machines, building/
+using macports in /opt...
+
+*annoying but, for now, sort of solved by using icons.
+For that part: the Finder seems to recognize them as volumes
+somehow, since applying an icon saves a  .VolumeIcon.icns in it.. :
+
+Thanx for the newest bits and for Your continued feedback to the list!
+
+Regards,
+
+Lorenzo
+
+On 02.06.2008, at 20:03, No?l Dellofano wrote:
+
+> Are you on 9D34?  Or another release?  I do know we are still having
+> issues with properly representing ZFS filesystems in Finder.  However
+> on my machine, where i have a pool with 2 ZFS filesystems in it,
+> Finder shows my pool and the names of my ZFS filesystems in it, except
+> it represents my filesystems as alias's which is annoying and we're
+> still wroking to fix this issue.  What Leopard are you on? Do you have
+> any other options/mounts set on your ZFS filesystem?
+>
+> Noel
+>
+> On May 31, 2008, at 6:40 PM, Jonathan Borden wrote:
+>
+>> In my Finder when browsing the machine that holds the ZFS pools I
+>> still get:
+>>
+>> gene
+>> gene1
+>> gene2
+>> gene3
+>> ...
+
+
+From jbsnyder at gmail.com  Tue Jun  3 06:11:21 2008
+From: jbsnyder at gmail.com (James Snyder)
+Date: Tue, 3 Jun 2008 09:11:21 -0400
+Subject: [zfs-discuss] indestructable phantom folders with zfs-117
+In-Reply-To: <C245D44E-DCFB-4FAB-9C64-D026A6BA774A@martin-hauser.net>
+References: <C245D44E-DCFB-4FAB-9C64-D026A6BA774A@martin-hauser.net>
+Message-ID: <33644d3c0806030611q3178ce3fo403f7c3a80c4495a@mail.gmail.com>
+
+This sounds precisely like "limbo" issues I have been having.  I've
+had it happen with with MacPorts, but it seems to also happen with
+some frequency with certain bonnie++ runs (see other posts on the
+list).
+
+
+
+On Tue, Jun 3, 2008 at 2:49 AM, Martin Hauser <info at martin-hauser.net> wrote:
+> Hello List,
+>
+> I've had a quite confusing problem, which I was not able to reproduce. I had
+> a set of subfolders like
+>
+> rootfolder:
+> FolderA
+> FolderB
+>
+> FolderB:
+> FileA
+> FileB
+>
+> on attempting a rm -rf rootfolder and then doing an ls in the folder
+> containing rootfolder, i noticed rootfolder still being there. Now
+> attempting to 'ls rootfolder' yanked a still existing rootfolder/FolderB
+> entry. Trying to ls rootfolder/FolderB however just said 'no such file or
+> directory'. Same went for rm -r on the rootfolder and on FolderB. The
+> solution that got it fixed was to make 'mkdir rootfolder/FolderB and rm -rf
+> again.
+>
+> I'm just writing because I think i've seen it being the cause of some
+> macports installations to fail on first attempt and I think it's not
+> intended behaviour in any way.
+>
+> kind regards
+>
+> Martin Hauser
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+>
+
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+jbsnyder at gmail.com
+PGP: http://fanplastic.org/key.txt
+
+From ndellofano at apple.com  Tue Jun  3 17:28:37 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 3 Jun 2008 17:28:37 -0700
+Subject: [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+In-Reply-To: <7a0bc8420805310913w504d70fasf234f4935cb0a0d8@mail.gmail.com>
+References: <7a0bc8420805310913w504d70fasf234f4935cb0a0d8@mail.gmail.com>
+Message-ID: <6C8F5C4D-24FA-42DC-A709-BE7FE71315E5@apple.com>
+
+So somehow you've unset the 'x' bit on your Photos folder which is the  
+crux of the problem.  So I would recommend as root in the terminal  
+doing:
+
+# find Photos -type dir | xargs chmod ugo+x
+
+which should reset the 'x' bit on Photos and everything contained  
+therein so you should be able to access everything again.
+So in your setup reflect is your pool and Photos is a filesystem  
+within that pool?  And you used Finder to change permissions on the  
+filesystem Photos and it did this?
+
+Noel
+
+
+On May 31, 2008, at 9:13 AM, Jonathan Borden wrote:
+
+> Sigh ...
+>
+> Doing something in the Finder ... trying to give permissions to access
+> a networked zfs pool and filesystem ... asked the finder to
+> recursively give read+write and the permissions on the filesytem
+> symbolic link are now hosed and I am not sure how to fix them.
+>
+> they read (via ls -l):
+>
+> drw-r--r--  26 jonathanborden  staff  33 Apr 15 19:06 Photos
+>
+> I created a new filesystem in the same pool which lists as:
+>
+> drwxr-xr-x   2 root            wheel   2 May 31 11:54 Test
+>
+> I can't do a chmod or chown to change the permissions on
+> reflect/Photos ... what should I do ... perhaps I am just using the
+> wrong flags for chmod and chown (tried sudo chown -v root:wheel Photos
+> ... and it wouldn't give me permission to do that)
+>
+> TIA
+>
+> Jonathan
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From dirkschelfhout at mac.com  Tue Jun  3 17:42:56 2008
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Wed, 04 Jun 2008 02:42:56 +0200
+Subject: [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+In-Reply-To: <6C8F5C4D-24FA-42DC-A709-BE7FE71315E5@apple.com>
+References: <7a0bc8420805310913w504d70fasf234f4935cb0a0d8@mail.gmail.com>
+	<6C8F5C4D-24FA-42DC-A709-BE7FE71315E5@apple.com>
+Message-ID: <D0855D91-9868-4268-A590-25F75BBCE5B4@mac.com>
+
+strange,
+Am i missing something here ?
+Why would the x bit prevent a chmod or chown ?
+maybe my unix skills are waning.
+Dirk
+On 04 Jun 2008, at 02:28, No?l Dellofano wrote:
+
+> So somehow you've unset the 'x' bit on your Photos folder which is the
+> crux of the problem.  So I would recommend as root in the terminal
+> doing:
+>
+> # find Photos -type dir | xargs chmod ugo+x
+>
+> which should reset the 'x' bit on Photos and everything contained
+> therein so you should be able to access everything again.
+> So in your setup reflect is your pool and Photos is a filesystem
+> within that pool?  And you used Finder to change permissions on the
+> filesystem Photos and it did this?
+>
+> Noel
+>
+>
+> On May 31, 2008, at 9:13 AM, Jonathan Borden wrote:
+>
+>> Sigh ...
+>>
+>> Doing something in the Finder ... trying to give permissions to  
+>> access
+>> a networked zfs pool and filesystem ... asked the finder to
+>> recursively give read+write and the permissions on the filesytem
+>> symbolic link are now hosed and I am not sure how to fix them.
+>>
+>> they read (via ls -l):
+>>
+>> drw-r--r--  26 jonathanborden  staff  33 Apr 15 19:06 Photos
+>>
+>> I created a new filesystem in the same pool which lists as:
+>>
+>> drwxr-xr-x   2 root            wheel   2 May 31 11:54 Test
+>>
+>> I can't do a chmod or chown to change the permissions on
+>> reflect/Photos ... what should I do ... perhaps I am just using the
+>> wrong flags for chmod and chown (tried sudo chown -v root:wheel  
+>> Photos
+>> ... and it wouldn't give me permission to do that)
+>>
+>> TIA
+>>
+>> Jonathan
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From cdl at asgaard.org  Tue Jun  3 20:27:56 2008
+From: cdl at asgaard.org (Christopher LILJENSTOLPE)
+Date: Tue, 3 Jun 2008 20:27:56 -0700
+Subject: [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+In-Reply-To: <D0855D91-9868-4268-A590-25F75BBCE5B4@mac.com>
+References: <7a0bc8420805310913w504d70fasf234f4935cb0a0d8@mail.gmail.com>
+	<6C8F5C4D-24FA-42DC-A709-BE7FE71315E5@apple.com>
+	<D0855D91-9868-4268-A590-25F75BBCE5B4@mac.com>
+Message-ID: <5BC55CC6-C22A-4E16-9D1B-1D9BA5B5A035@asgaard.org>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+For directories, x sets the permissions to traverse the directory (and  
+act on it's constituent parts).
+
+	Chris
+
+On 03 Jun 2008, at 17.42, Dirk Schelfhout wrote:
+
+> strange, consituant
+> Am i missing something here ?
+> Why would the x bit prevent a chmod or chown ?
+> maybe my unix skills are waning.
+> Dirk
+> On 04 Jun 2008, at 02:28, No?l Dellofano wrote:
+>
+>> So somehow you've unset the 'x' bit on your Photos folder which is  
+>> the
+>> crux of the problem.  So I would recommend as root in the terminal
+>> doing:
+>>
+>> # find Photos -type dir | xargs chmod ugo+x
+>>
+>> which should reset the 'x' bit on Photos and everything contained
+>> therein so you should be able to access everything again.
+>> So in your setup reflect is your pool and Photos is a filesystem
+>> within that pool?  And you used Finder to change permissions on the
+>> filesystem Photos and it did this?
+>>
+>> Noel
+>>
+>>
+>> On May 31, 2008, at 9:13 AM, Jonathan Borden wrote:
+>>
+>>> Sigh ...
+>>>
+>>> Doing something in the Finder ... trying to give permissions to
+>>> access
+>>> a networked zfs pool and filesystem ... asked the finder to
+>>> recursively give read+write and the permissions on the filesytem
+>>> symbolic link are now hosed and I am not sure how to fix them.
+>>>
+>>> they read (via ls -l):
+>>>
+>>> drw-r--r--  26 jonathanborden  staff  33 Apr 15 19:06 Photos
+>>>
+>>> I created a new filesystem in the same pool which lists as:
+>>>
+>>> drwxr-xr-x   2 root            wheel   2 May 31 11:54 Test
+>>>
+>>> I can't do a chmod or chown to change the permissions on
+>>> reflect/Photos ... what should I do ... perhaps I am just using the
+>>> wrong flags for chmod and chown (tried sudo chown -v root:wheel
+>>> Photos
+>>> ... and it wouldn't give me permission to do that)
+>>>
+>>> TIA
+>>>
+>>> Jonathan
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+- ---
+???
+Check my PGP key here:
+http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCB67593B
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJIRgu8AAoJEGmx2Mt/+Iw/2woH/RdfGgHSco43WY4i9Rcjgx8d
+zX/Bgu0PnjicUM+oDnF62uFBQDqo4pDHmB+P9XdKv48/IDsD3rRIUrQFpTUEnYIw
++wfscemGsFbKsCg77W81nugf4oAXAZ77AK5jZx3xyFJ/hfuNFKu2YFgtjDYoDVt9
+/ptas0yfGKqoGuFYGSWIe6uaIjruxp6fsf5V3kJaKjoJTMBP3I0dLdpjEzGAWFD2
+FNSKdLIs8VaDdjG1FS9hyADJqm3xv6qJLGUuHqPqz5O+lUJw0SHPBhHT1RtO8YTg
+rrdXhRmxGundc+3MabXAI6Z7bLzw/T+/LUHm1XJ7TCtjoplyP1O0JmPD6QBs1QQ=
+=8q5O
+-----END PGP SIGNATURE-----
+
+From bwaters at nrao.edu  Tue Jun  3 23:14:12 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Wed, 4 Jun 2008 00:14:12 -0600
+Subject: [zfs-discuss] zfs-117: Hosed my permissions to access filesystem
+In-Reply-To: <6C8F5C4D-24FA-42DC-A709-BE7FE71315E5@apple.com>
+References: <7a0bc8420805310913w504d70fasf234f4935cb0a0d8@mail.gmail.com>
+	<6C8F5C4D-24FA-42DC-A709-BE7FE71315E5@apple.com>
+Message-ID: <C768011F-9620-4469-9E12-9DC21878716B@nrao.edu>
+
+
+On Jun 3, 2008, at 6:28 PM, No?l Dellofano wrote:
+
+> So I would recommend as root in the terminal
+> doing:
+>
+> # find Photos -type dir | xargs chmod ugo+x
+
+
+Or maybe,
+
+# find Photos -type dir -print0 | xargs -0 chmod ugo+x
+
+
+Those pesky files with spaces in them... this works around that (uses  
+NUL (0) for terminator).
+
+
+
+From cdl at asgaard.org  Fri Jun  6 22:05:25 2008
+From: cdl at asgaard.org (Christopher LILJENSTOLPE)
+Date: Fri, 6 Jun 2008 22:05:25 -0700
+Subject: [zfs-discuss] Sharing help
+Message-ID: <240FB794-EBAA-438E-B2A2-FBB653372208@asgaard.org>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Greetings,
+
+	Ok - I seem to have forgotten something, or something has changed  
+between 10.5.2 server and 10.5.3 server (and 111 and 117).  On my  
+server at home, I have exported a ZFS filesystem via AFS.  That was  
+setup under 10.5.2 and 111.  I now have a new filesystem (in the same  
+tank) that I want to export.  The system is now at 10.5.3 and 117.   
+However, I am experiencing the same problem that others have  
+mentioned.  I can't browse to the ZFS tank in the sharing  
+configuration for server.  If I add it via the sharing cli, it shows  
+up in the sharing configuration on ServerAdmin, but I can't select it  
+(when I try, another share gets selected).  Any ideas on how I might  
+have done it before?  I can't find my notes :(
+
+	Chris
+
+- ---
+???
+Check my PGP key here:
+http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCB67593B
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJIShcVAAoJEGmx2Mt/+Iw/r7sH/1dWN77vCK0khI5GNSpnJO0C
+rOPwae40hJvFgD3sjaQLekbgMZt0YOSufDmAWb+APxVX8WZCm73EkUKY11uR8Lx7
+/xmYS6nx8zwLN7YWK/9lFA96PIQOv34/UFJIiyXwgh/drmWUpWNIW1JJETDehQqi
+ep9ygtfqnnIkn3V34mP13tTM6nDpLrH7YSn9cSbggdM8uy7NVDD5p1k5LJ9YO9N/
+s2TwTjUxqSAIYGYnYjaMHM1p6jLvjT3cwtBexFODjHE5oOB5bc6fIL0zGN1ZeR35
+Iw4AooN4dft2hng2tC+deMAvTF5CXeVWsDHr6H9m1SLR5oeoZzp/BrsCCfEjXHo=
+=s4wu
+-----END PGP SIGNATURE-----
+
+From raoul at amsi.org.au  Tue Jun 10 07:52:00 2008
+From: raoul at amsi.org.au (raoul at amsi.org.au)
+Date: Wed, 11 Jun 2008 00:52:00 +1000 (EST)
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+Message-ID: <49983.124.168.36.189.1213109520.squirrel@webmail.amsi.org.au>
+
+Hello,
+
+I saw this today:
+http://www.apple.com/server/macosx/snowleopard/
+
+Down the bottom there is a mention of ZFS and right next to it is OpenCL.
+I wondered if GPUs could be used off-load ZFS checksums from the CPU?
+
+Cheers,
+
+
+From raoul at amsi.org.au  Tue Jun 10 08:14:47 2008
+From: raoul at amsi.org.au (raoul at amsi.org.au)
+Date: Wed, 11 Jun 2008 01:14:47 +1000 (EST)
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+Message-ID: <50125.124.168.36.189.1213110887.squirrel@webmail.amsi.org.au>
+
+I'm hoping SHA256 is used as there doesn't seem to be any mention of
+fletcher associated with OpenCL/Botan.
+
+Looking at:
+http://www.opensolaris.org/os/community/zfs/source/;jsessionid=2686F92391554A5B939B93197A2B443C
+
+which algorithm is actually used for ZFS checksums? fletcher.c or sha256.c ?
+(I'm hoping the latter)
+
+Cheers,
+
+
+From edvard at evisec.com  Tue Jun 10 08:54:48 2008
+From: edvard at evisec.com (Edvard Wendelin)
+Date: Tue, 10 Jun 2008 17:54:48 +0200
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+In-Reply-To: <50125.124.168.36.189.1213110887.squirrel@webmail.amsi.org.au>
+References: <50125.124.168.36.189.1213110887.squirrel@webmail.amsi.org.au>
+Message-ID: <1651DE2E-2749-4C20-A33E-79A837E88C77@evisec.com>
+
+Hi!
+
+I haven't looked into the details of OpenCL but my initial reaction is  
+that  OpenCL will be used mostly for parallel floating point problems  
+like video decoding, particle simulations and other massively parallel  
+algorithms. If OpenCL will be anything like CUDA (http://www.nvidia.com/object/cuda_home.html 
+) there will also be a latency associated with transferring data on  
+the bus to the GPU-memory which has to be taken into account.
+
+Another way to speed up the checksum calculations would be to use SIMD  
+instructions which I think would be better suited for this kind of  
+problem.
+
+Then again I might be completely wrong!
+
+kind regards,
+Edvard
+
+On 10 jun 2008, at 17.14, raoul at amsi.org.au wrote:
+
+> I'm hoping SHA256 is used as there doesn't seem to be any mention of
+> fletcher associated with OpenCL/Botan.
+>
+> Looking at:
+> http://www.opensolaris.org/os/community/zfs/source/;jsessionid=2686F92391554A5B939B93197A2B443C
+>
+> which algorithm is actually used for ZFS checksums? fletcher.c or  
+> sha256.c ?
+> (I'm hoping the latter)
+>
+> Cheers,
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From jbsnyder at gmail.com  Tue Jun 10 08:57:15 2008
+From: jbsnyder at gmail.com (James Snyder)
+Date: Tue, 10 Jun 2008 10:57:15 -0500
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+In-Reply-To: <49983.124.168.36.189.1213109520.squirrel@webmail.amsi.org.au>
+References: <49983.124.168.36.189.1213109520.squirrel@webmail.amsi.org.au>
+Message-ID: <33644d3c0806100857i287a928ci4a60d60db5f1d89f@mail.gmail.com>
+
+I'm glad to see that ZFS has been declared as an official feature for
+OS X Server.  Does this suggest any hints on direction with
+bootability as well as support in client?  I don't see any mention on
+the client-side of things.  Not that I'm worried, just curious :-)
+
+I also understand that the whole thing is a year off at this point and
+therefore "things change."
+
+Best.
+
+-jsnyder
+
+On Tue, Jun 10, 2008 at 9:52 AM,  <raoul at amsi.org.au> wrote:
+> Hello,
+>
+> I saw this today:
+> http://www.apple.com/server/macosx/snowleopard/
+>
+> Down the bottom there is a mention of ZFS and right next to it is OpenCL.
+> I wondered if GPUs could be used off-load ZFS checksums from the CPU?
+>
+> Cheers,
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+jbsnyder at gmail.com
+PGP: http://fanplastic.org/key.txt
+
+From jonmoog at xtechllc.com  Thu Jun 12 09:33:09 2008
+From: jonmoog at xtechllc.com (Jon Moog)
+Date: Thu, 12 Jun 2008 11:33:09 -0500
+Subject: [zfs-discuss] Weird device identifier
+Message-ID: <65746D3B-552F-4B42-A4E0-B77934F7DB79@xtechllc.com>
+
+I made a raidz out of 8 disks for testing. At some point one of the  
+disks went into a degraded state apparently getting confused with  
+another of the disks. The odd and from what i can tell invalid device  
+name of 2357556960025778596 seems to prevent replacing the disk in the  
+set. The reference says was /dev/disk9s2 but that device name is in  
+the set and online probably after a reboot having been assigned a new  
+device name.
+
+Has anyone seen this or can anyone suggest how to repair the problem?
+
+Thanks
+
+-Jon
+
+
+sh-3.2# zpool status
+   pool: Archive
+  state: DEGRADED
+status: One or more devices could not be used because the label is  
+missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+    see: http://www.sun.com/msg/ZFS-8000-4J
+  scrub: resilver completed with 0 errors on Thu Jun 12 11:24:09 2008
+config:
+
+	NAME                     STATE     READ WRITE CKSUM
+	Archive                  DEGRADED     0     0     0
+	  raidz1                 DEGRADED     0     0     0
+	    disk1s2              ONLINE       0     0     0
+	    disk2s2              ONLINE       0     0     0
+	    disk3s2              ONLINE       0     0     0
+	    disk0s2              ONLINE       0     0     0
+	    disk10s2             ONLINE       0     0     0
+	    2357556960025778596  FAULTED      0     0     0  was /dev/disk9s2
+	    disk9s2              ONLINE       0     0     0
+	    disk8s2              ONLINE       0     0     0
+
+errors: No known data errors
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1852 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080612/e96253ab/attachment.p7s 
+
+From jonmoog at xtechllc.com  Thu Jun 12 14:10:32 2008
+From: jonmoog at xtechllc.com (Jon Moog)
+Date: Thu, 12 Jun 2008 16:10:32 -0500
+Subject: [zfs-discuss] Weird device identifier
+In-Reply-To: <485183AF.6050805@jasonrm.net>
+References: <65746D3B-552F-4B42-A4E0-B77934F7DB79@xtechllc.com>
+	<485183AF.6050805@jasonrm.net>
+Message-ID: <F7273102-B653-4CB3-B1B2-6CC924A646BC@xtechllc.com>
+
+
+On Jun 12, 2008, at 3:14 PM, Jason R. McNeil wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Jon Moog wrote:
+> | I made a raidz out of 8 disks for testing. At some point one of the
+> | disks went into a degraded state apparently getting confused with
+> | another of the disks. The odd and from what i can tell invalid  
+> device
+> | name of 2357556960025778596 seems to prevent replacing the disk in  
+> the
+> | set. The reference says was /dev/disk9s2 but that device name is  
+> in the
+> | set and online probably after a reboot having been assigned a new  
+> device
+> | name.
+> |
+> | Has anyone seen this or can anyone suggest how to repair the  
+> problem?
+> |
+>
+> I don't know if this is the same thing I encountered just last night,
+> hence the off list, but when you do a "diskutil list" does that drive
+> show up still, and more importantly, does it still show there being a
+> disk9s2 with the type ZFS?
+>
+
+The disk still shows up and is listed as having a ZFS partition at s2  
+as expected. OS X has a habit of changing the dev disk number across  
+reboots so it is hard to say which slice was really missing. As you  
+can see from the zpool status the missing disk9 is reported online in  
+another slice, but one of 8 is AWOL.
+
+> What I did was reformat doing the following...
+> diskutil partitiondisk /dev/disk9 GPTFormat ZFS %noformat% 100%
+> rebooted to make sure that everything saw the disk9s2 slice (for  
+> lack of
+> a better word right now), and let ZFS do a scrub, it had to rebuild a
+> little of the drive, but it discovered quickly that the majority of  
+> the
+> data was still there.
+>
+
+I could partition the device that is an orphan however it doesn't help  
+me replace the slice in the raidz since it has a bogus identifier.
+
+> That was my case anyhow... wish you the best, cause it my case
+> everything worked out great, but I was rather concerned for a while.
+> Still not certain what caused it thou, maybe my HighPoint  
+> controller, I
+> don't really know...
+
+The issue seems to be a bit more benign that I expected since after a  
+reboot everything was showing up again. I think it might be a race  
+condition with the devices showing up at various times on boot.  
+Sometimes the pool is degraded, sometimes it is okay. A scrub easily  
+updates the slice that was offline.
+
+>
+> On another note, please don't think that I'm trying to tell you how to
+> setup your system, but for more than 5 drives raidz2 is recommended,  
+> so
+> if you are already aware, then you know what you are doing and you can
+> ignore me ;) I myself and running 5 raidz1, so i'm breaking the "rule"
+> too, just not as much :)
+
+In this case the 8 devices are each 10 TB raid 6 hardware devices. The  
+raidz of the raid 6 hardware devices gives a usable space of 70 TB  
+with better than average reliability. The issue with 8 devices in this  
+case is more than likely a performance one and not of particular  
+concern in this application. I would be happy to provide more  
+technical details if there is any interest.
+
+>
+> Jason R. M.
+> jason at jasonrm.net
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.9 (MingW32)
+>
+> iEYEARECAAYFAkhRg68ACgkQTtcjahlzEWYt2ACgsiKZTJy0cvLOJu8i52gASq8R
+> hi0An2OPfX0J0Zub2xA61TfhSJynGp6a
+> =4NdF
+> -----END PGP SIGNATURE-----
+>
+
+Thanks
+
+-Jon
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1852 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080612/54b35726/attachment.p7s 
+
+From werner.donne at re.be  Sun Jun 15 04:59:39 2008
+From: werner.donne at re.be (=?ISO-8859-1?Q?Werner_Donn=E9?=)
+Date: Sun, 15 Jun 2008 13:59:39 +0200
+Subject: [zfs-discuss] Degraded pool because of missing or invalid label
+Message-ID: <86B68BE8-6A4B-4EC9-B590-8E86AAE73C7A@re.be>
+
+Hi,
+
+I have a pool on a set of three USB-disks. It is attached to a Mac Mini
+running with Mac OS X 10.5.3 and ZFS 111. Currently the pool is  
+degraded.
+Zpool status produces the following:
+
+   pool: re
+  state: DEGRADED
+status: One or more devices could not be used because the label is  
+missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+    see: http://www.sun.com/msg/ZFS-8000-4J
+  scrub: resilver completed with 0 errors on Sun Jun 15 13:23:39 2008
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	re                        DEGRADED     0     0     0
+	  raidz1                  DEGRADED     0     0     0
+	    disk1s2               ONLINE       0     0     0
+	    disk2s2               ONLINE       0     0     0
+	    11495588248848248386  FAULTED      0     0     0  was /dev/disk1s2
+
+errors: No known data errors
+
+I'm not able to perform any actions because the faulted disk doesn't
+have a proper name, just a number. I don't think by the way the disk
+itself is faulted, because it is only a few months old and it is being
+contacted during the boot cycle. I rather suspect the USB-link, though
+I have no prove for it.
+
+This is the second time it happens. The first time the disk came back
+after a strange sequence of events. At some point I power off the disk
+and back on. The OS froze because of this. After a reboot there was no
+pool anymore. Then I did a shutdown and powered off everything. After
+the boot all three disks were online again, but the day after I was
+again in the same situation.
+
+I have also tried switching the USB-ports as well as removing the USB- 
+hub.
+It doesn't change anything.
+
+Does anyone have an idea about what causes this and how I can recover
+from the situation?
+
+Best regards,
+
+Werner.
+--
+Werner Donn?  --  Re                                     http://www.pincette.biz
+Engelbeekstraat 8                                               http://www.re.be
+BE-3300 Tienen
+tel: (+32) 486 425803	e-mail: werner.donne at re.be
+
+
+
+
+
+
+From timothy.wilson87 at gmail.com  Sun Jun 15 21:18:21 2008
+From: timothy.wilson87 at gmail.com (Timothy Wilson)
+Date: Mon, 16 Jun 2008 14:18:21 +1000
+Subject: [zfs-discuss] Compatibility with other systems?
+Message-ID: <d68fb1480806152118r2482f5ccn57b2ff390c6a0477@mail.gmail.com>
+
+Hello guys,
+
+First of all, a big thank you for porting ZFS to OS X! It works a treat :)
+
+However, I'm having some difficulty in importing a zpool into
+OpenSolaris. I made my RAIDz zpool in Leopard successfully. It works
+really well! However, when I try to import back to Solaris it fails in
+a weird way. Here's output from the Solaris console:
+
+root at gateway:/# zpool import bigstore
+cannot import 'bigstore': pool may be in use from other system
+use '-f' to import anyway
+root at gateway:/# zpool import -f bigstore
+cannot import 'bigstore': no such pool or dataset
+root at gateway:/#
+
+Of course I will ask this question on the OpenSolaris list too, but I
+was wondering if anyone else had the same problems. Is it a known bug?
+
+The zpool 'bigstore' is version 8, whereas OpenSolaris is up to
+version 10, so there's no problem there (I only need to import one
+way). Both systems are 64 bit. I can't think of any other information
+that might be relevant, but please let me know if I should provide
+more information!
+
+Kind regards,
+Timothy.
+
+From jon at halfpast.net  Mon Jun 16 17:38:19 2008
+From: jon at halfpast.net (Jon Moog)
+Date: Mon, 16 Jun 2008 19:38:19 -0500
+Subject: [zfs-discuss] Tracking random failures on a ZFS volume
+Message-ID: <B99DA273-7FF4-4161-9B29-564BD1F4A25C@halfpast.net>
+
+I have noticed that there have been a number of references to this  
+list for odd behavior surrounding directory creation/deletion.  
+Specifically MacPorts build failures and trouble with phantom  
+directories that won't allow themselves to be deleted.
+
+Adding to that list is another odd occurrence that seems to be  
+related. In a rather full directory hierarchy I have found that doing  
+an rm -rf will sometimes generate the following:
+
+rm: AddOns/FuBar_TopScoreFu/Libs: Directory not empty
+rm: AddOns/FuBar_TopScoreFu: Directory not empty
+rm: AddOns: Directory not empty
+
+Odd since the force option shouldn't generate many complaints and of  
+course the recurse option should be getting children before parents.
+
+Doing the same rm -rf a second time a bit later succeeds fine.
+
+I first noticed this when trying to remove the contents of .Trashes.  
+In that case a couple of repeated (rather impatiently) rm -rf got the  
+same errors. Manually checking each of the directories with ls, then  
+repeating the rm -rf worked fine.
+
+I can see this being a problem with any utility that rapidly creates  
+and destroys directories/files and isn't diligent about testing for  
+errors.
+
+So two questions. Is this a known issue? If it isn't is there anything  
+specific that might help track it down from a debugging perspective  
+that I could provide.
+
+Thanks
+
+-Jon
+
+
+From dorofeev at gmail.com  Mon Jun 16 17:55:44 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Mon, 16 Jun 2008 17:55:44 -0700
+Subject: [zfs-discuss] Tracking random failures on a ZFS volume
+In-Reply-To: <B99DA273-7FF4-4161-9B29-564BD1F4A25C@halfpast.net>
+References: <B99DA273-7FF4-4161-9B29-564BD1F4A25C@halfpast.net>
+Message-ID: <a782ada90806161755r255a8af7p16e53fc374681f58@mail.gmail.com>
+
+I've seeing very similar problems with "rm -rf" failing in some cases.
+Looks like we might be getting stale reference counts on some files or
+directories.
+
+I've also noticed that sometimes copying directory off of HFS+ volume
+onto ZFS volume where directory with the same name have existed
+previously but was removed can fail. It doesn't happen always, but the
+workaround that seems to work is to just copy it again and then it
+succeeds.
+
+We need to come up with simple to reproduce tests for these kind
+of failures and send them to Apple ZFS folks.
+
+- Andrei
+
+On Mon, Jun 16, 2008 at 5:38 PM, Jon Moog <jon at halfpast.net> wrote:
+> I have noticed that there have been a number of references to this
+> list for odd behavior surrounding directory creation/deletion.
+> Specifically MacPorts build failures and trouble with phantom
+> directories that won't allow themselves to be deleted.
+>
+> Adding to that list is another odd occurrence that seems to be
+> related. In a rather full directory hierarchy I have found that doing
+> an rm -rf will sometimes generate the following:
+>
+> rm: AddOns/FuBar_TopScoreFu/Libs: Directory not empty
+> rm: AddOns/FuBar_TopScoreFu: Directory not empty
+> rm: AddOns: Directory not empty
+>
+> Odd since the force option shouldn't generate many complaints and of
+> course the recurse option should be getting children before parents.
+>
+> Doing the same rm -rf a second time a bit later succeeds fine.
+>
+> I first noticed this when trying to remove the contents of .Trashes.
+> In that case a couple of repeated (rather impatiently) rm -rf got the
+> same errors. Manually checking each of the directories with ls, then
+> repeating the rm -rf worked fine.
+>
+> I can see this being a problem with any utility that rapidly creates
+> and destroys directories/files and isn't diligent about testing for
+> errors.
+>
+> So two questions. Is this a known issue? If it isn't is there anything
+> specific that might help track it down from a debugging perspective
+> that I could provide.
+>
+> Thanks
+>
+> -Jon
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From bwaters at nrao.edu  Mon Jun 16 21:42:23 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Mon, 16 Jun 2008 22:42:23 -0600
+Subject: [zfs-discuss] iphone fails to sync contacts (it's a spotlight thing)
+Message-ID: <833FB9A0-7278-4AD2-B907-02EFBF01B39A@nrao.edu>
+
+We all know that Spotlight doesn't understand how to traverse ZFS  
+filesystems as yet.
+
+I ran into an unexpected side-effect of this, which is that my Address  
+Book contacts would not synchronize with dotMac (via sync services) or  
+my iPhone (via iTunes)  after I moved my $HOME to a ZFS filesystem.
+
+So as a work-around, for the moment I have my ~/Library on an HFS+J  
+filesystem, and my $HOME on a ZFS pool, and a symlink called "Library"  
+at ~/Library that points to the directory on the HFS+J.
+
+That works fine.
+
+be careful out there, and keep those cards and letters coming!
+
+
+
+
+
+From info at martin-hauser.net  Mon Jun 16 23:33:01 2008
+From: info at martin-hauser.net (Martin Hauser)
+Date: Tue, 17 Jun 2008 08:33:01 +0200
+Subject: [zfs-discuss] Tracking random failures on a ZFS volume
+In-Reply-To: <a782ada90806161755r255a8af7p16e53fc374681f58@mail.gmail.com>
+References: <B99DA273-7FF4-4161-9B29-564BD1F4A25C@halfpast.net>
+	<a782ada90806161755r255a8af7p16e53fc374681f58@mail.gmail.com>
+Message-ID: <8136811B-C4A5-421B-A903-313D336C51EA@martin-hauser.net>
+
+I've seen and reportet that one before, but it doesn't help to  
+reproduce them. They only happen occassionally.
+
+For you folks being troubled by undeleteable directories... locate the  
+file that prevents a directory from being deleted (normally do an ls - 
+la directory  ) and then do a 'touch directory/bad_file'. The problem,  
+as it seems to me is not the directory itself but haven a file that is  
+already deleted but not gone already. By touch'ing it you recreate an  
+empty file in place and then can delete it normally. This nothing more  
+then a bad
+workaround but it enables you to continue working without stale  
+directories.
+
+As far as reproducing, I assume the only way doing it, is applying  
+some randomized function create names and then using touch and mkdir  
+to create abitrary directory structures... which in turn must lead to  
+a broken file sooner or later if done often enough.
+
+Martin
+
+On Jun 17, 2008, at 02:55 AM, Andrei Dorofeev wrote:
+
+> I've seeing very similar problems with "rm -rf" failing in some cases.
+> Looks like we might be getting stale reference counts on some files or
+> directories.
+>
+> I've also noticed that sometimes copying directory off of HFS+ volume
+> onto ZFS volume where directory with the same name have existed
+> previously but was removed can fail. It doesn't happen always, but the
+> workaround that seems to work is to just copy it again and then it
+> succeeds.
+>
+> We need to come up with simple to reproduce tests for these kind
+> of failures and send them to Apple ZFS folks.
+>
+> - Andrei
+>
+> On Mon, Jun 16, 2008 at 5:38 PM, Jon Moog <jon at halfpast.net> wrote:
+>> I have noticed that there have been a number of references to this
+>> list for odd behavior surrounding directory creation/deletion.
+>> Specifically MacPorts build failures and trouble with phantom
+>> directories that won't allow themselves to be deleted.
+>>
+>> Adding to that list is another odd occurrence that seems to be
+>> related. In a rather full directory hierarchy I have found that doing
+>> an rm -rf will sometimes generate the following:
+>>
+>> rm: AddOns/FuBar_TopScoreFu/Libs: Directory not empty
+>> rm: AddOns/FuBar_TopScoreFu: Directory not empty
+>> rm: AddOns: Directory not empty
+>>
+>> Odd since the force option shouldn't generate many complaints and of
+>> course the recurse option should be getting children before parents.
+>>
+>> Doing the same rm -rf a second time a bit later succeeds fine.
+>>
+>> I first noticed this when trying to remove the contents of .Trashes.
+>> In that case a couple of repeated (rather impatiently) rm -rf got the
+>> same errors. Manually checking each of the directories with ls, then
+>> repeating the rm -rf worked fine.
+>>
+>> I can see this being a problem with any utility that rapidly creates
+>> and destroys directories/files and isn't diligent about testing for
+>> errors.
+>>
+>> So two questions. Is this a known issue? If it isn't is there  
+>> anything
+>> specific that might help track it down from a debugging perspective
+>> that I could provide.
+>>
+>> Thanks
+>>
+>> -Jon
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080617/9241619a/attachment.p7s 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080617/9241619a/attachment.sig 
+
+From lists at durin42.com  Tue Jun 17 08:06:31 2008
+From: lists at durin42.com (Augie Fackler)
+Date: Tue, 17 Jun 2008 10:06:31 -0500
+Subject: [zfs-discuss] Tracking random failures on a ZFS volume
+In-Reply-To: <8136811B-C4A5-421B-A903-313D336C51EA@martin-hauser.net>
+References: <B99DA273-7FF4-4161-9B29-564BD1F4A25C@halfpast.net>
+	<a782ada90806161755r255a8af7p16e53fc374681f58@mail.gmail.com>
+	<8136811B-C4A5-421B-A903-313D336C51EA@martin-hauser.net>
+Message-ID: <1EA23BBE-E12C-4082-A4FE-2FEB15A05C69@durin42.com>
+
+I've also had good luck renaming the misbehaving directory (or any dir  
+higher in the hierarchy) and then renaming it back.
+
+On Jun 17, 2008, at 1:33 AM, Martin Hauser wrote:
+
+> I've seen and reportet that one before, but it doesn't help to  
+> reproduce them. They only happen occassionally.
+>
+> For you folks being troubled by undeleteable directories... locate  
+> the file that prevents a directory from being deleted (normally do  
+> an ls -la directory  ) and then do a 'touch directory/bad_file'. The  
+> problem, as it seems to me is not the directory itself but haven a  
+> file that is already deleted but not gone already. By touch'ing it  
+> you recreate an empty file in place and then can delete it normally.  
+> This nothing more then a bad
+> workaround but it enables you to continue working without stale  
+> directories.
+>
+> As far as reproducing, I assume the only way doing it, is applying  
+> some randomized function create names and then using touch and mkdir  
+> to create abitrary directory structures... which in turn must lead  
+> to a broken file sooner or later if done often enough.
+>
+> Martin
+>
+> On Jun 17, 2008, at 02:55 AM, Andrei Dorofeev wrote:
+>
+>> I've seeing very similar problems with "rm -rf" failing in some  
+>> cases.
+>> Looks like we might be getting stale reference counts on some files  
+>> or
+>> directories.
+>>
+>> I've also noticed that sometimes copying directory off of HFS+ volume
+>> onto ZFS volume where directory with the same name have existed
+>> previously but was removed can fail. It doesn't happen always, but  
+>> the
+>> workaround that seems to work is to just copy it again and then it
+>> succeeds.
+>>
+>> We need to come up with simple to reproduce tests for these kind
+>> of failures and send them to Apple ZFS folks.
+>>
+>> - Andrei
+>>
+>> On Mon, Jun 16, 2008 at 5:38 PM, Jon Moog <jon at halfpast.net> wrote:
+>>> I have noticed that there have been a number of references to this
+>>> list for odd behavior surrounding directory creation/deletion.
+>>> Specifically MacPorts build failures and trouble with phantom
+>>> directories that won't allow themselves to be deleted.
+>>>
+>>> Adding to that list is another odd occurrence that seems to be
+>>> related. In a rather full directory hierarchy I have found that  
+>>> doing
+>>> an rm -rf will sometimes generate the following:
+>>>
+>>> rm: AddOns/FuBar_TopScoreFu/Libs: Directory not empty
+>>> rm: AddOns/FuBar_TopScoreFu: Directory not empty
+>>> rm: AddOns: Directory not empty
+>>>
+>>> Odd since the force option shouldn't generate many complaints and of
+>>> course the recurse option should be getting children before parents.
+>>>
+>>> Doing the same rm -rf a second time a bit later succeeds fine.
+>>>
+>>> I first noticed this when trying to remove the contents of .Trashes.
+>>> In that case a couple of repeated (rather impatiently) rm -rf got  
+>>> the
+>>> same errors. Manually checking each of the directories with ls, then
+>>> repeating the rm -rf worked fine.
+>>>
+>>> I can see this being a problem with any utility that rapidly creates
+>>> and destroys directories/files and isn't diligent about testing for
+>>> errors.
+>>>
+>>> So two questions. Is this a known issue? If it isn't is there  
+>>> anything
+>>> specific that might help track it down from a debugging perspective
+>>> that I could provide.
+>>>
+>>> Thanks
+>>>
+>>> -Jon
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From swpalmer at gmail.com  Tue Jun 17 16:49:56 2008
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Tue, 17 Jun 2008 19:49:56 -0400
+Subject: [zfs-discuss] Kernel panic
+Message-ID: <CE733B80-3B36-4BE3-BBFB-079C39C36CF3@gmail.com>
+
+I wasn't paying any attention when it happened.. but I saw the notice  
+that the OS rebooted because of a panic.  Here is the info in the  
+report I sent to Apple (not sure if that did any good), running ZFS-117:
+
+Mon Jun 16 18:10:29 2008
+panic(cpu 1 caller 0x001DBC35): "vnode_put(0x6908c70): iocount < 1"@/ 
+SourceCache/xnu/xnu-1228.5.18/bsd/vfs/vfs_subr.c:3581
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x54dc7d78 : 0x12b0fa (0x459294 0x54dc7dac 0x133243 0x0)
+0x54dc7dc8 : 0x1dbc35 (0x467400 0x6908c70 0x54dc7e08 0x648e7532)
+0x54dc7de8 : 0x1dbce6 (0x6908c70 0x851bba0 0xf461dc7e 0x7c27140)
+0x54dc7e08 : 0x648b730b (0x6908c70 0x6491a2e4 0x0 0x0)
+0x54dc7f58 : 0x648a00a2 (0x7c27000 0x9b715 0x0 0x1a236f)
+0x54dc7fc8 : 0x19ebdc (0x6b20e00 0x0 0x1a20b5 0x87c7c80)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x6486f000->0x6493afff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9D34
+
+Kernel version:
+Darwin Kernel Version 9.3.0: Fri May 23 00:49:16 PDT 2008;  
+root:xnu-1228.5.18~1/RELEASE_I386
+System model name: iMac7,1 (Mac-F4238CC8)
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1937 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080617/99a69d93/attachment.p7s 
+
+From bwaters at nrao.edu  Tue Jun 17 17:38:03 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Tue, 17 Jun 2008 18:38:03 -0600
+Subject: [zfs-discuss] Kernel panic
+In-Reply-To: <CE733B80-3B36-4BE3-BBFB-079C39C36CF3@gmail.com>
+References: <CE733B80-3B36-4BE3-BBFB-079C39C36CF3@gmail.com>
+Message-ID: <EE0FFFEC-1975-476D-86CF-4802E1B4EA7C@nrao.edu>
+
+I got this same crash, it was the last thing as I as shutting down.
+
+I tried to send a crash report to Apple, but I pasted the system  
+configuration in there, it was truncated at 4000 characters. If we  
+need the System Profiler report, just let me know..
+
+
+On Jun 17, 2008, at 5:49 PM, Scott Palmer wrote:
+
+> I wasn't paying any attention when it happened.. but I saw the  
+> notice that the OS rebooted because of a panic.  Here is the info in  
+> the report I sent to Apple (not sure if that did any good), running  
+> ZFS-117:
+>
+> Mon Jun 16 18:10:29 2008
+> panic(cpu 1 caller 0x001DBC35): "vnode_put(0x6908c70): iocount < 1"@/ 
+> SourceCache/xnu/xnu-1228.5.18/bsd/vfs/vfs_subr.c:3581
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x54dc7d78 : 0x12b0fa (0x459294 0x54dc7dac 0x133243 0x0)
+> 0x54dc7dc8 : 0x1dbc35 (0x467400 0x6908c70 0x54dc7e08 0x648e7532)
+> 0x54dc7de8 : 0x1dbce6 (0x6908c70 0x851bba0 0xf461dc7e 0x7c27140)
+> 0x54dc7e08 : 0x648b730b (0x6908c70 0x6491a2e4 0x0 0x0)
+> 0x54dc7f58 : 0x648a00a2 (0x7c27000 0x9b715 0x0 0x1a236f)
+> 0x54dc7fc8 : 0x19ebdc (0x6b20e00 0x0 0x1a20b5 0x87c7c80)
+> Backtrace terminated-invalid frame pointer 0
+>      Kernel loadable modules in backtrace (with dependencies):
+>         com.apple.filesystems.zfs(8.0)@0x6486f000->0x6493afff
+
+
+From byron at mac.com  Tue Jun 17 20:44:12 2008
+From: byron at mac.com (Byron Servies)
+Date: Tue, 17 Jun 2008 20:44:12 -0700
+Subject: [zfs-discuss] Cannot shut down with 117
+Message-ID: <5F98E8D4-A454-448C-B8D3-E6096748DEA9@mac.com>
+
+Hi,
+
+After installing 117 binaries I was able to shut down, but over the  
+weekend something changed and I can no longer shut the machine down.   
+I left it for several hours without it coming unstuck and used the  
+power button to turn the machine off, since it would not respond  
+otherwise.  While I have sent the crash report in to Apple, I thought  
+I would report it here as well (see below).
+
+Over the weekend I changed some networking settings, started some  
+screen sharing for the first time, and shared a directory.  Though I  
+have since turned the file sharing off and reset my network, I still  
+cannot shut down.  The machine sleeps just fine, however.
+
+Hope this helps, and thanks for making ZFS available,
+
+Byron
+
+Sun Jun 15 06:26:25 2008
+panic(cpu 0 caller 0x001DBC35): "vnode_put(0x704cc70): iocount < 1"@/ 
+SourceCache/xnu/xnu-1228.5.18/bsd/vfs/vfs_subr.c:3581
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x5c2dbd78 : 0x12b0fa (0x459294 0x5c2dbdac 0x133243 0x0)
+0x5c2dbdc8 : 0x1dbc35 (0x467400 0x704cc70 0x5c2dbe08 0xbf8532)
+0x5c2dbde8 : 0x1dbce6 (0x704cc70 0x7a189c0 0xfb4c322b 0x7dc5140)
+0x5c2dbe08 : 0xbc830b (0x704cc70 0xc2b2e4 0x0 0x0)
+0x5c2dbf58 : 0xbb10a2 (0x7dc5000 0x21d1a3 0x0 0x6dd2140)
+0x5c2dbfc8 : 0x19ebdc (0x7dc6c00 0x0 0x1a20b5 0x7dcc7d8)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xb80000->0xc4bfff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9D34
+
+Kernel version:
+Darwin Kernel Version 9.3.0: Fri May 23 00:49:16 PDT 2008;  
+root:xnu-1228.5.18~1/RELEASE_I386
+System model name: MacPro1,1 (Mac-F4208DC8)
+
+From ndellofano at apple.com  Wed Jun 18 11:55:57 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 18 Jun 2008 11:55:57 -0700
+Subject: [zfs-discuss] Cannot shut down with 117
+In-Reply-To: <5F98E8D4-A454-448C-B8D3-E6096748DEA9@mac.com>
+References: <5F98E8D4-A454-448C-B8D3-E6096748DEA9@mac.com>
+Message-ID: <54680D88-FE4D-48A0-A819-D99769AB7824@apple.com>
+
+You are not alone.  A few other people at WWDC saw this too.   
+Curiously, we haven't changed any of the refcounting stuff in the past  
+few builds (since 111) so I'm not sure what's up.  I"ve opened a bug  
+on this and am taking a look.
+
+thanks for the heads up, I"ll try and fix it asap.
+
+Noel
+
+On Jun 17, 2008, at 8:44 PM, Byron Servies wrote:
+
+> Hi,
+>
+> After installing 117 binaries I was able to shut down, but over the
+> weekend something changed and I can no longer shut the machine down.
+> I left it for several hours without it coming unstuck and used the
+> power button to turn the machine off, since it would not respond
+> otherwise.  While I have sent the crash report in to Apple, I thought
+> I would report it here as well (see below).
+>
+> Over the weekend I changed some networking settings, started some
+> screen sharing for the first time, and shared a directory.  Though I
+> have since turned the file sharing off and reset my network, I still
+> cannot shut down.  The machine sleeps just fine, however.
+>
+> Hope this helps, and thanks for making ZFS available,
+>
+> Byron
+>
+> Sun Jun 15 06:26:25 2008
+> panic(cpu 0 caller 0x001DBC35): "vnode_put(0x704cc70): iocount < 1"@/
+> SourceCache/xnu/xnu-1228.5.18/bsd/vfs/vfs_subr.c:3581
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x5c2dbd78 : 0x12b0fa (0x459294 0x5c2dbdac 0x133243 0x0)
+> 0x5c2dbdc8 : 0x1dbc35 (0x467400 0x704cc70 0x5c2dbe08 0xbf8532)
+> 0x5c2dbde8 : 0x1dbce6 (0x704cc70 0x7a189c0 0xfb4c322b 0x7dc5140)
+> 0x5c2dbe08 : 0xbc830b (0x704cc70 0xc2b2e4 0x0 0x0)
+> 0x5c2dbf58 : 0xbb10a2 (0x7dc5000 0x21d1a3 0x0 0x6dd2140)
+> 0x5c2dbfc8 : 0x19ebdc (0x7dc6c00 0x0 0x1a20b5 0x7dcc7d8)
+> Backtrace terminated-invalid frame pointer 0
+>       Kernel loadable modules in backtrace (with dependencies):
+>          com.apple.filesystems.zfs(8.0)@0xb80000->0xc4bfff
+>
+> BSD process name corresponding to current thread: kernel_task
+>
+> Mac OS version:
+> 9D34
+>
+> Kernel version:
+> Darwin Kernel Version 9.3.0: Fri May 23 00:49:16 PDT 2008;
+> root:xnu-1228.5.18~1/RELEASE_I386
+> System model name: MacPro1,1 (Mac-F4208DC8)
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From hdfdisk at gmail.com  Fri Jun 20 21:23:37 2008
+From: hdfdisk at gmail.com (Freeleader Phoenix)
+Date: Sat, 21 Jun 2008 12:23:37 +0800
+Subject: [zfs-discuss] Kernel Panic When Shutting Down
+Message-ID: <703B8615-346D-4DFC-A0D8-483139B5BEE6@gmail.com>
+
+Hi, I'm using ZFS-117 and it panic when I shut down the computer, but  
+not reboot, Also, it only happening when My Computer has been turn on  
+for at least 1 Hours, and I'm using ZFS Volume for a big read/write  
+(for Example, Downloading/Uploading big file)
+
+Can Make Sure it's problem of ZFS.Kext since I used Verbose Mode for  
+Starting Up
+
+Lin Hao Peng.
+
+From franzschmalzl at spamfreemail.de  Sun Jun 22 06:43:12 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Sun, 22 Jun 2008 15:43:12 +0200
+Subject: [zfs-discuss] PANIC
+Message-ID: <8F3166D1-39D1-44BB-846F-7C33FFD44F3D@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+
+
+ahhm guys... PANIC
+
+
+zpool import raidtank
+cannot import 'raidtank': invalid vdev configuration
+
+
+  zpool import
+   pool: raidtank
+     id: 17754857528528024207
+  state: FAULTED
+action: The pool cannot be imported due to damaged devices or data.
+config:
+
+	raidtank     UNAVAIL  insufficient replicas
+	  raidz1     UNAVAIL  corrupted data
+	    disk3s2  ONLINE
+	    disk2s2  ONLINE
+	    disk4s2  ONLINE
+
+
+worked fine 5 minutes ago
+
+why ?
+
+greetings
+
+franz
+
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJIXlbwAAoJEP8ZopU3BhmtmNEIAJc5fjjDHf6IJNH1At6HuaVM
+E6lse6yk84ofZanWamvrjVojEIvrkEon7e8pmJQAgQ7QY1FG09AyStTZuDpSSPDp
+rSA5OPnW1Yyx3gHR57/lNIT5yAHoldPuviMpc/A5P+CtUm2JvFxqC/41nhChPRZU
+4/U0qgZYdDS0F2QC9MBl7e71LSC68Kaiy/IoWZYuVWJhmUJM20f6XaBAfjN9pkdu
+Pop78qd0cZemNvD/VJMLFW7ShcB9u19FGLDWQSDdZMQwr3DVQ3RIyHKe9FwCcIh7
+6OvEfX1eN83sbRW0VcAzk3kmutMf+CzP+AZWso0ODntnVMtalzdk9t9pmLdRWLU=
+=6JkQ
+-----END PGP SIGNATURE-----
+
+From ndellofano at apple.com  Mon Jun 23 16:38:54 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 23 Jun 2008 16:38:54 -0700
+Subject: [zfs-discuss] PANIC
+In-Reply-To: <8F3166D1-39D1-44BB-846F-7C33FFD44F3D@spamfreemail.de>
+References: <8F3166D1-39D1-44BB-846F-7C33FFD44F3D@spamfreemail.de>
+Message-ID: <2C97CBBF-670C-4A79-B88E-9BDB19B9FFF6@apple.com>
+
+So this could be an artifact of diskutil and ZFS not playing nice  
+together yet.  Somone could have come up out of order or diskutuil  
+decided to reassign the disk's id to someone else.   Don is working on  
+bits that will better integrate ZFS with IOkit and diskutil so we  
+shouldn't see these issues.
+For the time being though, and I hate saying this, try rebooting your  
+system.  It'll shock diskutil out of it's slump and it will ahve to  
+renumber all the disks on bringup.
+
+sorry for the crappy workaround, but hopefully it works for you.
+
+Noel
+
+On Jun 22, 2008, at 6:43 AM, ruebezahl wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>
+>
+>
+> ahhm guys... PANIC
+>
+>
+> zpool import raidtank
+> cannot import 'raidtank': invalid vdev configuration
+>
+>
+>  zpool import
+>   pool: raidtank
+>     id: 17754857528528024207
+>  state: FAULTED
+> action: The pool cannot be imported due to damaged devices or data.
+> config:
+>
+> 	raidtank     UNAVAIL  insufficient replicas
+> 	  raidz1     UNAVAIL  corrupted data
+> 	    disk3s2  ONLINE
+> 	    disk2s2  ONLINE
+> 	    disk4s2  ONLINE
+>
+>
+> worked fine 5 minutes ago
+>
+> why ?
+>
+> greetings
+>
+> franz
+>
+>
+>
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.8 (Darwin)
+>
+> iQEcBAEBAgAGBQJIXlbwAAoJEP8ZopU3BhmtmNEIAJc5fjjDHf6IJNH1At6HuaVM
+> E6lse6yk84ofZanWamvrjVojEIvrkEon7e8pmJQAgQ7QY1FG09AyStTZuDpSSPDp
+> rSA5OPnW1Yyx3gHR57/lNIT5yAHoldPuviMpc/A5P+CtUm2JvFxqC/41nhChPRZU
+> 4/U0qgZYdDS0F2QC9MBl7e71LSC68Kaiy/IoWZYuVWJhmUJM20f6XaBAfjN9pkdu
+> Pop78qd0cZemNvD/VJMLFW7ShcB9u19FGLDWQSDdZMQwr3DVQ3RIyHKe9FwCcIh7
+> 6OvEfX1eN83sbRW0VcAzk3kmutMf+CzP+AZWso0ODntnVMtalzdk9t9pmLdRWLU=
+> =6JkQ
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From floam at aaron.gy  Tue Jun 10 13:04:07 2008
+From: floam at aaron.gy (Aaron Gyes)
+Date: Tue, 10 Jun 2008 13:04:07 -0700
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+Message-ID: <A973D658-1367-4FC2-88EA-BD89F195F65B@aaron.gy>
+
+According to this page here, the Mac Pro already has hardware support  
+for algorithms including SHA, but it's unused. It would be interesting  
+if somebody sneaky found a way to make use of this hardware. (Well, at  
+least for us Mac Pro owners).
+
+http://macprojournal.com/encryption.html
+
+From karl at cs.unc.edu  Mon Jun 16 16:35:17 2008
+From: karl at cs.unc.edu (Karl Gyllstrom)
+Date: Mon, 16 Jun 2008 19:35:17 -0400
+Subject: [zfs-discuss] disappearing/corrupting files in zfs-117
+Message-ID: <338A32A7-5164-4EE5-B1F2-AB28FEB5236F@cs.unc.edu>
+
+I upgraded to 117 a while back.  I'm noticing a new problem I haven't  
+seen before (not since the original zfs seed last summer).  I'm  
+noticing files getting lost and/or corrupted.
+
+This presents during my command-line coding, namely using vim and  
+scons (which copies a large number of files per compile).
+
+Specifically:
+
+1) A file saved by vim becomes 'unreadable'.  When I type 'ls' I see:
+
+ls: <file name>: No such file or directory
+
+The file cannot be reopened.
+
+2) When compiling, often a file can't be found for compilation.  Since  
+scons copies files before compiling them, this is easily corrected by  
+re-running it.
+
+I can't really investigate any further than this.  I haven't seen it  
+occur in any other context.
+
+Karl
+
+
+From karl at cs.unc.edu  Mon Jun 16 17:01:56 2008
+From: karl at cs.unc.edu (Karl Gyllstrom)
+Date: Mon, 16 Jun 2008 20:01:56 -0400
+Subject: [zfs-discuss] follow up
+Message-ID: <E295B734-0430-48DD-9978-B0C04D5B2EBC@cs.unc.edu>
+
+It appears that 'touch'ing the file restores it.  Odd.
+
+From xaver.loisl at gmail.com  Mon Jun 23 07:47:31 2008
+From: xaver.loisl at gmail.com (xaver.loisl at gmail.com)
+Date: Mon, 23 Jun 2008 16:47:31 +0200
+Subject: [zfs-discuss] You must be root in order to load the ZFS kext
+Message-ID: <23ef997c0806230747l2a14d6bbq8274b7a93b8ec433@mail.gmail.com>
+
+To create a pool on my newly formatted zfs disk2s2 I got an error message
+You must be root in order to load the ZFS kext
+
+No problem I thaught and created it with sudo cmd.
+
+But after
+
+zpool status
+  pool: Brazil
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+NAME        STATE     READ WRITE CKSUM
+Brazil      ONLINE       0     0     0
+  disk2s2   ONLINE       0     0     0
+
+and upgrading
+
+Successfully upgraded 'Brazil' from version 6 to version 8
+
+I can't write any data to Brazil without entering my user password.
+
+
+Any suggestions what I've done wrong? or is this a normal behaviour?
+
+Thank you!
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080623/ccce2cf8/attachment.htm 
+
+From zorg at sogeeky.net  Mon Jun 23 17:29:37 2008
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Mon, 23 Jun 2008 17:29:37 -0700
+Subject: [zfs-discuss] You must be root in order to load the ZFS kext
+In-Reply-To: <23ef997c0806230747l2a14d6bbq8274b7a93b8ec433@mail.gmail.com>
+References: <23ef997c0806230747l2a14d6bbq8274b7a93b8ec433@mail.gmail.com>
+Message-ID: <3B8D1410-4D67-47CA-86E7-00351B7E6EDD@sogeeky.net>
+
+Yes. Because you created it as root, the /volumes/ mount point belongs  
+to root too. Go back to sudo and issue a chown on the volume to the  
+user you want to own it.
+
+On Jun 23, 2008, at 7:47 AM, xaver.loisl at gmail.com wrote:
+
+> To create a pool on my newly formatted zfs disk2s2 I got an error  
+> message
+>
+> You must be root in order to load the ZFS kext
+>
+> No problem I thaught and created it with sudo cmd.
+>
+> But after
+>
+> zpool status
+>   pool: Brazil
+>  state: ONLINE
+> status: The pool is formatted using an older on-disk format.  The  
+> pool can
+> 	still be used, but some features are unavailable.
+> action: Upgrade the pool using 'zpool upgrade'.  Once this is done,  
+> the
+> 	pool will no longer be accessible on older software versions.
+>  scrub: none requested
+> config:
+>
+> 	NAME        STATE     READ WRITE CKSUM
+> 	Brazil      ONLINE       0     0     0
+> 	  disk2s2   ONLINE       0     0     0
+>
+> and upgrading
+>
+> Successfully upgraded 'Brazil' from version 6 to version 8
+>
+> I can't write any data to Brazil without entering my user password.
+>
+>
+> Any suggestions what I've done wrong? or is this a normal behaviour?
+>
+> Thank you!
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From hdfdisk at gmail.com  Tue Jun 24 07:36:24 2008
+From: hdfdisk at gmail.com (Freeleader Phoenix)
+Date: Tue, 24 Jun 2008 22:36:24 +0800
+Subject: [zfs-discuss] Cannot Clean the Trash in ZFS Filesystem
+Message-ID: <7BECCCE1-8789-482A-A2CF-CB52563A130A@gmail.com>
+
+Hey All.
+When sth has been move to the trash in ZFS Filesystem, It cannot be  
+clean and Have to manually use rm -rf in the Terminal to clean it
+anyway to solve it?
+
+Bjartskular
+
+From jon at halfpast.net  Tue Jun 24 08:28:31 2008
+From: jon at halfpast.net (Jon Moog)
+Date: Tue, 24 Jun 2008 10:28:31 -0500
+Subject: [zfs-discuss] Cannot Clean the Trash in ZFS Filesystem
+In-Reply-To: <7BECCCE1-8789-482A-A2CF-CB52563A130A@gmail.com>
+References: <7BECCCE1-8789-482A-A2CF-CB52563A130A@gmail.com>
+Message-ID: <3476E92F-40F4-4D71-A18D-564B107B3024@halfpast.net>
+
+This is a known issue at the moment. For now the solution is as you  
+wrote, to rm -rf the .Trash directory.
+
+http://zfs.macosforge.org/trac/wiki/issues
+
+-Jon
+
+On Jun 24, 2008, at 9:36 AM, Freeleader Phoenix wrote:
+
+> Hey All.
+> When sth has been move to the trash in ZFS Filesystem, It cannot be
+> clean and Have to manually use rm -rf in the Terminal to clean it
+> anyway to solve it?
+>
+> Bjartskular
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+
+From jason at jasonrm.net  Tue Jun 24 08:31:05 2008
+From: jason at jasonrm.net (Jason R. McNeil)
+Date: Tue, 24 Jun 2008 08:31:05 -0700
+Subject: [zfs-discuss] Cannot Clean the Trash in ZFS Filesystem
+In-Reply-To: <7BECCCE1-8789-482A-A2CF-CB52563A130A@gmail.com>
+References: <7BECCCE1-8789-482A-A2CF-CB52563A130A@gmail.com>
+Message-ID: <48611339.9080507@jasonrm.net>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Freeleader Phoenix wrote:
+| Hey All.
+| When sth has been move to the trash in ZFS Filesystem, It cannot be
+| clean and Have to manually use rm -rf in the Terminal to clean it
+| anyway to solve it?
+|
+| Bjartskular
+
+Emptying the trash is a known issue
+(http://zfs.macosforge.org/trac/wiki/issues).
+
+The workaround of manually rf -rf the .Trash folder works, but another
+option that involves less hassle is to use the "secure" empty trash
+option. It takes it a lot longer (due to it rewriting the file), but in
+the end it does seem to empty the trash.
+
+jrm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (MingW32)
+
+iEYEARECAAYFAkhhEzkACgkQTtcjahlzEWYWtgCgl9hADv+hWvfVoN5TTJGmTvZQ
+EVUAn2WK7PBQ35s9eWU6B1rOttu2TCOG
+=/HHY
+-----END PGP SIGNATURE-----
+
+From bwaters at nrao.edu  Tue Jun 24 10:21:24 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Tue, 24 Jun 2008 11:21:24 -0600
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+In-Reply-To: <A973D658-1367-4FC2-88EA-BD89F195F65B@aaron.gy>
+References: <A973D658-1367-4FC2-88EA-BD89F195F65B@aaron.gy>
+Message-ID: <72A541BB-8878-4408-9754-2135E46186B7@nrao.edu>
+
+On Jun 10, 2008, at 2:04 PM, Aaron Gyes wrote:
+
+> According to this page here, the Mac Pro already has hardware support
+> for algorithms including SHA, but it's unused. It would be interesting
+> if somebody sneaky found a way to make use of this hardware. (Well, at
+> least for us Mac Pro owners).
+>
+> http://macprojournal.com/encryption.html
+
+
+Cool, interesting link!
+
+Hardware acceleration is always interesting, but often the overhead of  
+going off-CPU swamps any performance gain.
+
+It's totally application-dependent.
+
+  For ZFS disk operations, I suspect that you'll usually want to stay  
+on-CPU, or have a CPU core dedicated to ZFS tasks. You used to see  
+that sort of thing with Ethernet "offload engines", where the Ethernet  
+NIC is pre-processing things for you. But that's very dependent on the  
+device driver, which is tied to the OS implementation...  now that  
+multi-core CPUs are standard, you are far better off with thread-core  
+affinit (letting the OS keep the I/O operations on one of the CPU  
+cores).
+
+About five years ago I played with an AES encryption engine chip and  
+FreeBSD -- it used the chip to generate *really* random numbers to / 
+dev/random, and could use the engine as the system's AES  
+implementation. (OpenSSL has similar support for plug-in drivers in  
+user-space.) Using this thing for full-disk encryption, I maybe saw a  
+performance *hit*, maybe no difference: the throughput was still  
+limited by disk I/O. Great. Curiously, I didn't notice any reduction  
+in CPU utilization. Using the thing as an entropy pool for /dev/random  
+was *great*, though: it never ran out of entropy, you never had to  
+wait! So that was cool. But the encryption part was a disappointment.
+
+Such limitations may *not* apply to *on-CPU* implementations of AES:  
+you see good results with VIA C7 chips, for example. So much so that  
+Intel will add AES-specific instructions to SSE4 -- which are  
+incompatible with the VIA implementation. Oy. (Google "Intel AVX" for  
+near-term, "Westmere AES-NI" for next year's version.)
+
+
+That's not to say that we shouldn't be excited about OpenCL.  I work  
+on an application that can really use the parallelism; we have a data- 
+cube gridding stage that has seen 100x performance improvements when  
+ported to a GPU. We've stayed out of that game for our desktop  
+application because things are changing too rapidly for us to devote  
+much scientist time to it: something like OpenCL couldn't come at a  
+better time for us.
+
+
+
+
+   - boyd
+
+
+Boyd Waters
+Scientific Programmer
+National Radio Astronomy Observatory
+Socorro, New Mexico
+
+
+From ndellofano at apple.com  Tue Jun 24 11:06:13 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 24 Jun 2008 11:06:13 -0700
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+In-Reply-To: <33644d3c0806100857i287a928ci4a60d60db5f1d89f@mail.gmail.com>
+References: <49983.124.168.36.189.1213109520.squirrel@webmail.amsi.org.au>
+	<33644d3c0806100857i287a928ci4a60d60db5f1d89f@mail.gmail.com>
+Message-ID: <00076EE2-8B83-4FBB-88BC-89C3DB092A54@apple.com>
+
+> Hello,
+>
+> I saw this today:
+> http://www.apple.com/server/macosx/snowleopard/
+>
+> Down the bottom there is a mention of ZFS and right next to it is  
+> OpenCL.
+> I wondered if GPUs could be used off-load ZFS checksums from the CPU?
+>
+> Cheers,
+
+ZFS uses fletcher2 by default for all its checksums.
+
+
+> I'm glad to see that ZFS has been declared as an official feature for
+> OS X Server.
+
+  Me too!!!!! :)
+
+
+>  Does this suggest any hints on direction with
+> bootability as well as support in client?  I don't see any mention on
+> the client-side of things.  Not that I'm worried, just curious :-)
+>
+> I also understand that the whole thing is a year off at this point and
+> therefore "things change."
+>
+> Best.
+>
+> -jsnyder
+
+
+We're not going to do anything to disable ZFS on the Snow Leopard  
+client, however it will likely be command line only form, so  
+accessible and usable for your filesystem pleasure for all of you who  
+are more "hard core" :)
+
+
+
+Noel
+
+
+
+
+
+On Jun 10, 2008, at 8:57 AM, James Snyder wrote:
+
+> I'm glad to see that ZFS has been declared as an official feature for
+> OS X Server.  Does this suggest any hints on direction with
+> bootability as well as support in client?  I don't see any mention on
+> the client-side of things.  Not that I'm worried, just curious :-)
+>
+> I also understand that the whole thing is a year off at this point and
+> therefore "things change."
+>
+> Best.
+>
+> -jsnyder
+>
+> On Tue, Jun 10, 2008 at 9:52 AM,  <raoul at amsi.org.au> wrote:
+>> Hello,
+>>
+>> I saw this today:
+>> http://www.apple.com/server/macosx/snowleopard/
+>>
+>> Down the bottom there is a mention of ZFS and right next to it is  
+>> OpenCL.
+>> I wondered if GPUs could be used off-load ZFS checksums from the CPU?
+>>
+>> Cheers,
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+>
+>
+> -- 
+> James Snyder
+> Biomedical Engineering
+> Northwestern University
+> jbsnyder at gmail.com
+> PGP: http://fanplastic.org/key.txt
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080624/ce08019e/attachment.htm 
+
+From raoul at amsi.org.au  Tue Jun 24 16:46:19 2008
+From: raoul at amsi.org.au (Raoul Callaghan)
+Date: Wed, 25 Jun 2008 09:46:19 +1000
+Subject: [zfs-discuss] Cannot Clean the Trash in ZFS Filesystem
+In-Reply-To: <7BECCCE1-8789-482A-A2CF-CB52563A130A@gmail.com>
+References: <7BECCCE1-8789-482A-A2CF-CB52563A130A@gmail.com>
+Message-ID: <64B32E25-09B1-4B10-A7DA-18C3BEF21F74@amsi.org.au>
+
+I have 2 trash icons in the dock.
+The 2nd is an applescript (do shell script) that I use periodically.
+
+Works fine for me, as anything trashed via AFP get deleted immediately.
+
+Raoul Callaghan
+I.T. Manager
+Australian Mathematical Sciences Institute
+111 Barry Street
+The University of Melbourne
+Victoria 3010 Australia
+p: 03 8344 1783
+f:  03 9349 4106
+e: raoul at amsi.org.au
+
+Venus is the only planet that rotates clockwise.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080625/d609146c/attachment.htm 
+
+From jim at netgate.com  Tue Jun 24 17:45:13 2008
+From: jim at netgate.com (Jim Thompson)
+Date: Tue, 24 Jun 2008 14:45:13 -1000
+Subject: [zfs-discuss] using OpenCL for ZFS checksumming possible?
+In-Reply-To: <72A541BB-8878-4408-9754-2135E46186B7@nrao.edu>
+References: <A973D658-1367-4FC2-88EA-BD89F195F65B@aaron.gy>
+	<72A541BB-8878-4408-9754-2135E46186B7@nrao.edu>
+Message-ID: <CA96B2E1-78F2-4425-8828-3254168F2126@netgate.com>
+
+
+On Jun 24, 2008, at 7:21 AM, Boyd Waters wrote:
+
+> About five years ago I played with an AES encryption engine chip and
+> FreeBSD -- it used the chip to generate *really* random numbers to /
+> dev/random, and could use the engine as the system's AES
+> implementation. (OpenSSL has similar support for plug-in drivers in
+> user-space.) Using this thing for full-disk encryption, I maybe saw a
+> performance *hit*, maybe no difference: the throughput was still
+> limited by disk I/O. Great. Curiously, I didn't notice any reduction
+> in CPU utilization. Using the thing as an entropy pool for /dev/random
+> was *great*, though: it never ran out of entropy, you never had to
+> wait! So that was cool. But the encryption part was a disappointment.
+>
+> Such limitations may *not* apply to *on-CPU* implementations of AES:
+> you see good results with VIA C7 chips, for example. So much so that
+> Intel will add AES-specific instructions to SSE4 -- which are
+> incompatible with the VIA implementation. Oy. (Google "Intel AVX" for
+> near-term, "Westmere AES-NI" for next year's version.)
+
+I've discussed the performance and limitations of the various crypto  
+chipsets with Sam Leffler over the years,
+mostly as a side-discussion to our continuing discourse on things  
+802.11.
+
+Sam is the author of most, if not all of the crypto drivers in FreeBSD.
+
+He's pretty 'down' on many (but not all!) implementations, so it could  
+just be that you picked the wrong one.
+
+But back to ZFS.  A crypto offload engine might be useful when we get  
+a crypto layer for ZFS.   This already works
+in FreeBSD, where the GEOM layer allows stacking in the filesystem,  
+under (over?) ZFS.
+
+As for checksum offloading, I doubt you're going to want to use the  
+vector registers (SSE3) for that, due to the overhead of loading/ 
+unloading them
+for every context switch, and not everyone has a GPU supported by  
+OpenCL (much less factoring in the issues with moving the data to/from  
+the GPU.)
+
+Jim
+
+From franzschmalzl at spamfreemail.de  Wed Jun 25 01:00:37 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Wed, 25 Jun 2008 10:00:37 +0200
+Subject: [zfs-discuss] PANIC
+In-Reply-To: <2C97CBBF-670C-4A79-B88E-9BDB19B9FFF6@apple.com>
+References: <8F3166D1-39D1-44BB-846F-7C33FFD44F3D@spamfreemail.de>
+	<2C97CBBF-670C-4A79-B88E-9BDB19B9FFF6@apple.com>
+Message-ID: <DA6640E8-B673-4ED4-A029-56A078563839@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+did work after the third reboot...
+
+thanks noel...
+
+
+
+
+
+On 24.06.2008, at 01:38, No?l Dellofano wrote:
+
+> So this could be an artifact of diskutil and ZFS not playing nice  
+> together yet.  Somone could have come up out of order or diskutuil  
+> decided to reassign the disk's id to someone else.   Don is working  
+> on bits that will better integrate ZFS with IOkit and diskutil so we  
+> shouldn't see these issues.
+> For the time being though, and I hate saying this, try rebooting  
+> your system.  It'll shock diskutil out of it's slump and it will  
+> ahve to renumber all the disks on bringup.
+>
+> sorry for the crappy workaround, but hopefully it works for you.
+>
+> Noel
+>
+> On Jun 22, 2008, at 6:43 AM, ruebezahl wrote:
+>
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>>
+>>
+>>
+>> ahhm guys... PANIC
+>>
+>>
+>> zpool import raidtank
+>> cannot import 'raidtank': invalid vdev configuration
+>>
+>>
+>> zpool import
+>>  pool: raidtank
+>>    id: 17754857528528024207
+>> state: FAULTED
+>> action: The pool cannot be imported due to damaged devices or data.
+>> config:
+>>
+>> 	raidtank     UNAVAIL  insufficient replicas
+>> 	  raidz1     UNAVAIL  corrupted data
+>> 	    disk3s2  ONLINE
+>> 	    disk2s2  ONLINE
+>> 	    disk4s2  ONLINE
+>>
+>>
+>> worked fine 5 minutes ago
+>>
+>> why ?
+>>
+>> greetings
+>>
+>> franz
+>>
+>>
+>>
+>>
+>>
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.8 (Darwin)
+>>
+>> iQEcBAEBAgAGBQJIXlbwAAoJEP8ZopU3BhmtmNEIAJc5fjjDHf6IJNH1At6HuaVM
+>> E6lse6yk84ofZanWamvrjVojEIvrkEon7e8pmJQAgQ7QY1FG09AyStTZuDpSSPDp
+>> rSA5OPnW1Yyx3gHR57/lNIT5yAHoldPuviMpc/A5P+CtUm2JvFxqC/41nhChPRZU
+>> 4/U0qgZYdDS0F2QC9MBl7e71LSC68Kaiy/IoWZYuVWJhmUJM20f6XaBAfjN9pkdu
+>> Pop78qd0cZemNvD/VJMLFW7ShcB9u19FGLDWQSDdZMQwr3DVQ3RIyHKe9FwCcIh7
+>> 6OvEfX1eN83sbRW0VcAzk3kmutMf+CzP+AZWso0ODntnVMtalzdk9t9pmLdRWLU=
+>> =6JkQ
+>> -----END PGP SIGNATURE-----
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJIYfslAAoJEP8ZopU3BhmtnIsH/2xN4FY+WTwrqa5i/qaoC5Qe
+ZtR/SbC1kGMR/X7nyztM2Dsz9opmZh/8XS2TyGfNbGefOuGp39o2tOGS8jPalfh6
+9yE0FS8rPjSRurcRXzKlGsSg4yjgsZMcjFkm8vHK39u1LgbQFbsXHnVUL1cXqSlU
+FYJN3yqzZgyUab/T3IwF9WCieBmBTiBam/FKGVLxr8DneR1DzWn0kvY++2Z+XZh2
+JqjmnPQ2mwIgPSZYCtfBF/vQl03W7icV+RSuGoZ1nr/MYqGTmtLbbGZf5un8OWQX
+s/m0JX5i69CEnHlk/uLtrCjlGNqiD5+XzJK4FNKlxFo8MVcgxITMY2ysuHwce30=
+=MieB
+-----END PGP SIGNATURE-----
+
+From franzschmalzl at spamfreemail.de  Mon Jun 30 11:25:44 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Mon, 30 Jun 2008 20:25:44 +0200
+Subject: [zfs-discuss] weird device identifier
+Message-ID: <86CD8D5D-C020-475C-B291-85436345A768@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+
+i'm facing a little problem here
+
+
+status: One or more devices could not be used because the label is  
+missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+    see: http://www.sun.com/msg/ZFS-8000-4J
+  scrub: resilver completed with 0 errors on Mon Jun 30 19:58:54 2008
+config:
+
+	NAME                     STATE     READ WRITE CKSUM
+	raidtank                 DEGRADED     0     0     0
+	  raidz1                 DEGRADED     0     0     0
+	    disk2s2              ONLINE       0     0     0
+	    disk4s2              ONLINE       0     0     0
+	    5723000294216582652  FAULTED      0     0     0  was /dev/disk4s2
+
+
+the third disk died and i got a replacement today, but i don't know  
+how to tell zfs to replace the disk since 5723000294216582652 isn't  
+being accepted
+
+any ideas on this ?
+
+
+best regards
+
+franz
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJIaSUoAAoJEP8ZopU3Bhmtu8AH/Rs5d39KegWKM92J7Xy7YTMZ
+Ez7JrvNFrjuMHp+Eml7PGbahB5apv0HpYQ8NXeYAT1dOg0Niocg+bSmqHgyX3iFE
+7mQfAUBW0Lqn+Zoq1FNd/e/p9a/mvxQjNhgSl3lCk0NmUiSR666j55Izoi0SKVFE
+9dhKYDX/4KTZJvh4gVCGFaHWSs70B7clOdrfZA9F05ErU07QpQsTndfOzghafr8f
+rxeCw9sGLi8yLcWhDOxS4Xj/xz1LwaigxguMQVU5RsSLFYvJlbQKb84k6FJKLA8J
+4fCf01uZ2JdhmeFSbSGp1fS0H0RDGIuRSNjhG+bkblHaGWAIv4EWAGxsFcVlB28=
+=U/zP
+-----END PGP SIGNATURE-----
+
+From franzschmalzl at spamfreemail.de  Wed Jun 25 00:32:06 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Wed, 25 Jun 2008 07:32:06 -0000
+Subject: [zfs-discuss] Anyone else observing ZFS transfers pausing
+	briefly?
+In-Reply-To: <50090.124.168.8.132.1210860290.squirrel@webmail.amsi.org.au>
+References: <50348.124.168.74.59.1210257018.squirrel@webmail.amsi.org.au>
+	<50090.124.168.8.132.1210860290.squirrel@webmail.amsi.org.au>
+Message-ID: <8FCD4B5C-2157-48B2-A4C7-D8A896961C17@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+
+
+
+I have got the exact same thing here...
+
+
+On 15.05.2008, at 16:04, raoul at amsi.org.au wrote:
+
+>
+> Hi Noel,
+>
+> Thank you for the zpool iostats command.  Very nice to see what's  
+> actually
+> going on.
+> I ran the command, but it has raised another question that I'm  
+> scratching
+> my head over, here is some sample output of iostat.
+>
+>
+> #sudo zpool iostat bigboxraidz 1
+>
+>                capacity     operations    bandwidth
+> pool          used  avail   read  write   read  write
+> -----------  -----  -----  -----  -----  -----  -----
+> bigboxraidz   880G   980G      6     19   601K  1.43M
+> bigboxraidz   880G   980G    320      0  39.8M      0
+> bigboxraidz   880G   980G    269      0  33.4M      0
+> bigboxraidz   880G   980G    254    116  30.3M  1.52M
+> bigboxraidz   880G   980G    274      0  33.9M      0
+> bigboxraidz   880G   980G    339      0  41.9M      0
+> bigboxraidz   880G   980G    304      0  37.5M      0
+> bigboxraidz   880G   980G    330      0  40.5M      0
+> bigboxraidz   880G   980G    247    137  30.1M  1.22M
+> bigboxraidz   880G   980G    320      0  39.8M      0
+> bigboxraidz   880G   980G    312      0  38.5M      0
+> bigboxraidz   880G   980G    330      0  41.0M      0
+> bigboxraidz   880G   980G    313      0  38.7M      0
+> bigboxraidz   880G   980G    207    209  24.6M  2.14M
+>
+> Using a MacPro, the stats above were observed by mounting the share
+> "LoungeRoomMac" which resides on the bigboxraidz pool via Appleshare
+> (gigabit).
+>
+> So, I understand that the zpool is being read at an average of around
+> 30MB/sec...
+>
+> But when I look at actual network transfer speeds via MenuMeters for
+> example, it only shows a transfer speed of approximately 3-5MB/sec..
+>
+> This I don't understand.
+>
+> iostat is saying 30MB/sec reads, but Menumeters is only showing 5Mb/ 
+> sec
+> maximum. (the 5Mb/sec is about right when calculating the time it  
+> took to
+> transfer a 1GB VOB file)
+>
+> I have a screenshot of this at: http://homepage.mac.com/tangles/zfs.html
+>
+> Cheers,
+>
+> Raoul
+>
+>
+>
+>> It could be that what you're witnessing is ZFS's transactional IO
+>> syncing.  Basically we write to disk (ie sync a transaction group)
+>> every five seconds, hence this likely explains your crazy drive light
+>> issue.
+>>
+>> To actually see what's going on down there, I'd recommend running  
+>> this
+>> on the command line in a terminal window:
+>>
+>> #sudo zpool iostat bigboxraidz 1
+>>
+>>
+>> This will give you all the specs on what I/O ZFS is doing every
+>> second.  How many reads, how many writes, and the size of each
+>> respectively. And will keep going until you ctl-C it.
+>>
+>> Noel
+>
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJIYfYgAAoJEP8ZopU3BhmtfucIAMuWt3bXU9eTjfVcBNs+PilR
+fmQ6MCMXVmiJKOs+jCABXx+gD4viyyxQuUbow8VU4Vcz85szQT+4XVyXpz84mbj1
++4RpfJOi8ZBkw+KaSsLivkeumHauoOcI+9cFLARlBSoAXCT8cFUzs+Gess+cR1B4
+yqjmJF0HgMwhz9v/FYsIFviJ+RDIaAFevDMNYYYuKHtI6a9e6xlpS2MTYsXIo9GL
+1zKYkgUa8kph/9BxGDWfut9hnF5L+faYHA/i4FtQ0QGS3qs93P9Yj384rEY7t2ip
+PStG0OrFfmtVAziTqZxCuFA61RAugzGLPJC5IwL4kB1SaNYajH5VAAZuhZwzRzI=
+=78UC
+-----END PGP SIGNATURE-----
+
+From denis at h3q.com  Mon Jun 30 12:15:46 2008
+From: denis at h3q.com (Denis Ahrens)
+Date: Mon, 30 Jun 2008 21:15:46 +0200
+Subject: [zfs-discuss] how to avoid one ZFS Kernel Panic
+Message-ID: <A2614430-855E-4B18-B1CD-8BF319900DED@h3q.com>
+
+Hi
+
+Iam using ZFS on OSX for a long time now. One thing I noticed how
+I can avoid a kernel panic is to manually export the pool after
+ejecting the pool with the Finder.
+
+here is the panic:
+
+panic(cpu 1 caller 0x35BD0C5C): "ZFS: I/O failure (write on <unknown>  
+off 0: zio 0x3dcf440 [L0 DMU dnode] 4000L/1000P  
+DVA[0]=<0:aa0065000:1000> DVA[1]=<0:5c6343000:1000> fletcher4 lzjb LE  
+contiguous birth=138888 fill=32  
+cksum=f9b62d0293:21d432c88ba63:2d53dbff0531543:d3661c48cad68729):  
+error " "6"@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-117/ 
+zfs_kext/zfs/zio.c:918
+
+I have an external disk with a zpool. When I restart my machine
+and unplug the drive while restarting most of the time the
+kernel panics. But when I manually export the pool after ejecting
+I don't see a panic.
+
+Denis
+
+

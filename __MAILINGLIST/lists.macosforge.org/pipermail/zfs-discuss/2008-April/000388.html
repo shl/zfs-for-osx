@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panics&In-Reply-To=c61bd13c0804031858x362fb3cbmabd3bba9fe5004fd%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000383.html">
+   <LINK REL="Next"  HREF="000392.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panics</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panics&In-Reply-To=c61bd13c0804031858x362fb3cbmabd3bba9fe5004fd%40mail.gmail.com"
+       TITLE="[zfs-discuss] Kernel Panics">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Apr  4 13:56:39 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000383.html">[zfs-discuss] Kernel Panics
+</A></li>
+        <LI>Next message: <A HREF="000392.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#388">[ date ]</a>
+              <a href="thread.html#388">[ thread ]</a>
+              <a href="subject.html#388">[ subject ]</a>
+              <a href="author.html#388">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Joe,
+
+This panic is from a device either being removed or failing to  
+respond.  Since ZFS is trying to write to it and it's a non replicated  
+pool, then the write *not* flagged as ZIO_FLAG_CANFAIL.  Since the  
+write must succeed and the drive appears to either be missing or  
+malfunctioning, then a panic ensues.  We are working on changing this  
+behaviour such that instead of panicking we will handle this error  
+more gracefully while still trying to maintain on disk consistency.
+
+Noel
+
+On Apr 3, 2008, at 6:58 PM, Joe Dunn wrote:
+
+&gt;<i> Hey Guys
+</I>&gt;<i>
+</I>&gt;<i> Just wondering how often you experience kernel panics from the  
+</I>&gt;<i> zfs-101a install? I just got my second of the night, here it is below
+</I>&gt;<i>
+</I>&gt;<i> Thu Apr  3 21:49:15 2008
+</I>&gt;<i> panic(cpu 0 caller 0x345AFDEC): &quot;ZFS: I/O failure (write on  
+</I>&gt;<i> &lt;unknown&gt; off 0: zio 0x5448ee0 [L0 ZFS plain file] 20000L/20000P  
+</I>&gt;<i> DVA[0]=&lt;0:8b10c80000:20000&gt; fletcher2 uncompressed LE contiguous  
+</I>&gt;<i> birth=18742 fill=1  
+</I>&gt;<i> cksum 
+</I>&gt;<i> =3d6e6c81d83ac4fc:a6bdb8401f61f4b8:a44578ca38daf3f:cb762ce2540a4cf):  
+</I>&gt;<i> error &quot; &quot;6&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/ 
+</I>&gt;<i> zfs-102A/zfs_kext/zfs/zio.c:918
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x3453be48 : 0x12b0f7 (0x4581f4 0x3453be7c 0x133230 0x0)
+</I>&gt;<i> 0x3453be98 : 0x345afdec (0x3461db90 0x3461db84 0x34619690 0x3464c6ec)
+</I>&gt;<i> 0x3453bf18 : 0x345ac4c0 (0x5448ee0 0x176 0x3453bf38 0x345f3267)
+</I>&gt;<i> 0x3453bf58 : 0x3460b0b0 (0x5448ee0 0x1 0x34656110 0x90f5b30)
+</I>&gt;<i> 0x3453bfc8 : 0x19eadc (0x90f5b30 0x0 0x1a20b5 0xafa1128)
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0x34598000-&gt;0x34663fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9C7010
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000383.html">[zfs-discuss] Kernel Panics
+</A></li>
+	<LI>Next message: <A HREF="000392.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#388">[ date ]</a>
+              <a href="thread.html#388">[ thread ]</a>
+              <a href="subject.html#388">[ subject ]</a>
+              <a href="author.html#388">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

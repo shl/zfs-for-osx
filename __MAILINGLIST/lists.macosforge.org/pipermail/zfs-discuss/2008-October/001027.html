@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS and some questions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20and%20some%20questions&In-Reply-To=%3C4E8C4049-63B0-4CF8-8B10-920653314A42%40nighttimemidnight.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001026.html">
+   <LINK REL="Next"  HREF="001028.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS and some questions</H1>
+    <B>Jacob Lukas</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20and%20some%20questions&In-Reply-To=%3C4E8C4049-63B0-4CF8-8B10-920653314A42%40nighttimemidnight.com%3E"
+       TITLE="[zfs-discuss] ZFS and some questions">jlukas at nighttimemidnight.com
+       </A><BR>
+    <I>Sat Oct 25 10:42:54 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001026.html">[zfs-discuss] ZFS and some questions
+</A></li>
+        <LI>Next message: <A HREF="001028.html">[zfs-discuss] ZFS and some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1027">[ date ]</a>
+              <a href="thread.html#1027">[ thread ]</a>
+              <a href="subject.html#1027">[ subject ]</a>
+              <a href="author.html#1027">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Oct 25, 2008, at 10:07, Jason Todd Slack-Moehrle &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mailinglists at mailnewsrss.com</A> 
+ &gt; wrote:
+
+&gt;<i> HI All,
+</I>&gt;<i>
+</I>&gt;<i> There  is a lot going on with ZFS and OS X and I wanted to get a  
+</I>&gt;<i> feel for what I can do at this point.
+</I>&gt;<i>
+</I>&gt;<i> 1. I know that I cannot boot my new Mac Pro (32gb RAM!) from a ZFS  
+</I>&gt;<i> partition, but I should be able to partition and create a ZFS  
+</I>&gt;<i> partition for my dada, correct? I would use VolumeWorks or something  
+</I>&gt;<i> to do the resize and then Disk Utility to format the unused space  
+</I>&gt;<i> ZFS? Or does the tar-ball have the utility?
+</I>&gt;<i>
+</I>&gt;<i> 2. How do I move my home directory to the partition? (Can this be  
+</I>&gt;<i> done in Leopard?, In Tiger I could using the NetInfo Manager, but I  
+</I>&gt;<i> dont know how in Leopard)
+</I>
+You can mount your ZFS volume at /Users/username
+
+&gt;<i> 3. I write software, what issues are there with compiling XCode  
+</I>&gt;<i> projects on ZFS Partitions?
+</I>
+I've had no problems compiling code, through XCode or otherwise.
+
+&gt;<i> 4. Can I still backup to Time Machine?
+</I>
+No, but you can use ZFS snapshots.
+
+&gt;<i> 5. Any issues with other apps, etc?
+</I>
+ZFS is case-sensitive, so some apps may fail. The only one I know of  
+is DragThing, which fails to start if your home folder is on ZFS.
+
+Hope I've helped,
+Jacob
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001026.html">[zfs-discuss] ZFS and some questions
+</A></li>
+	<LI>Next message: <A HREF="001028.html">[zfs-discuss] ZFS and some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1027">[ date ]</a>
+              <a href="thread.html#1027">[ thread ]</a>
+              <a href="subject.html#1027">[ subject ]</a>
+              <a href="author.html#1027">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] rsync Invalid checksum error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000332.html">
+   <LINK REL="Next"  HREF="000335.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] rsync Invalid checksum error</H1>
+    <B>Christian He&#223;mann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20rsync%20Invalid%20checksum%20error&In-Reply-To="
+       TITLE="[zfs-discuss] rsync Invalid checksum error">zfs at hessmann.de
+       </A><BR>
+    <I>Mon Mar 17 04:21:11 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000332.html">[zfs-discuss] Filename conventions
+</A></li>
+        <LI>Next message: <A HREF="000335.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#333">[ date ]</a>
+              <a href="thread.html#333">[ thread ]</a>
+              <a href="subject.html#333">[ subject ]</a>
+              <a href="author.html#333">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dear all,
+
+
+any update on Ticket #2 (<A HREF="http://trac.macosforge.org/projects/zfs/ticket/2">http://trac.macosforge.org/projects/zfs/ticket/2</A>)?
+
+I'm trying to copy my home directory (HFS+) to a remote 10.5.2 client  
+with ZFS RAID.Z via rsync/ssh (-avESz --no-whole-file --partial -- 
+stats --progress --inplace --delete --ignore-errors), but get errors  
+like:
+
+Invalid checksum length 9175040
+rsync error: protocol incompatibility (code 2) at /SourceCache/rsync/ 
+rsync-30/rsync/sender.c(60)
+
+about every 200-500 files, which result in the termination of the  
+process.
+
+Retrying always works with the same file, but the error returns a few  
+hundred files later.
+
+Thank you for any information.
+
+
+Best regards,
+
+Christian
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000332.html">[zfs-discuss] Filename conventions
+</A></li>
+	<LI>Next message: <A HREF="000335.html">[zfs-discuss] rsync Invalid checksum error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#333">[ date ]</a>
+              <a href="thread.html#333">[ thread ]</a>
+              <a href="subject.html#333">[ subject ]</a>
+              <a href="author.html#333">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

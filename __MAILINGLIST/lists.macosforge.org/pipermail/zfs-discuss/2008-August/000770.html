@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic when using zpool status
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic%20when%20using%20zpool%20status&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000769.html">
+   <LINK REL="Next"  HREF="000771.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic when using zpool status</H1>
+    <B>Freeleader Phoenix</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic%20when%20using%20zpool%20status&In-Reply-To="
+       TITLE="[zfs-discuss] Panic when using zpool status">hdfdisk at gmail.com
+       </A><BR>
+    <I>Mon Aug 11 09:02:29 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000769.html">[zfs-discuss] snapshot
+</A></li>
+        <LI>Next message: <A HREF="000771.html">[zfs-discuss] zfs filesystems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#770">[ date ]</a>
+              <a href="thread.html#770">[ thread ]</a>
+              <a href="subject.html#770">[ subject ]</a>
+              <a href="author.html#770">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey all
+      I just wrote a huge single file (5gb) To my zpool, and when I'm  
+reading that file I found my HDD is always lighting,so I reboot and  
+boot into single user mode, using zpool import to import my pool. Then  
+I got:
+      zpool status:
+
+     status: One or more device is corrupted.......(I forgot the  
+following)
+
+   But All CKSUM is 0.
+
+  Then I got kernel Panic
+
+  I rollback the snapshot which I made 1 weeks ago, and run zpool  
+status again, the result is the same
+
+Anyone has any idea about it?
+
+Sincerely
+Bjartskular
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000769.html">[zfs-discuss] snapshot
+</A></li>
+	<LI>Next message: <A HREF="000771.html">[zfs-discuss] zfs filesystems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#770">[ date ]</a>
+              <a href="thread.html#770">[ thread ]</a>
+              <a href="subject.html#770">[ subject ]</a>
+              <a href="author.html#770">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

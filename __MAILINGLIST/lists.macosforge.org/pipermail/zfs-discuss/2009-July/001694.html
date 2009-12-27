@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Nightly crash (again)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Nightly%20crash%20%28again%29&In-Reply-To=%3C95C291C8-BF36-4C49-9EFC-3AB798AB2D2E%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001705.html">
+   <LINK REL="Next"  HREF="001695.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Nightly crash (again)</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Nightly%20crash%20%28again%29&In-Reply-To=%3C95C291C8-BF36-4C49-9EFC-3AB798AB2D2E%40gmail.com%3E"
+       TITLE="[zfs-discuss] Nightly crash (again)">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Wed Jul  8 16:08:02 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001705.html">[zfs-discuss] zfs and nfs running on opensolaris
+</A></li>
+        <LI>Next message: <A HREF="001695.html">[zfs-discuss] Nightly crash (again)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1694">[ date ]</a>
+              <a href="thread.html#1694">[ thread ]</a>
+              <a href="subject.html#1694">[ subject ]</a>
+              <a href="author.html#1694">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK, so it's definitely ZFS that's causing these crashes. Here's what  
+the zpool history looks like at this stage:
+
+2009-07-09.00:02:44 zpool scrub Data
+2009-07-09.00:02:44 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2009-07-09T00</A>:02
+2009-07-09.00:02:45 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-2009-07-09</A>
+
+So it seems to be a combination of a zfs snapshot and zpool being  
+kicked off at the same time.
+
+I found an earlier one where the reboot was triggered by a single  
+snapshot and scrub occuring concurrently (the import is me rebooting).
+
+2009-07-04.00:00:00 zpool scrub Data
+2009-07-04.00:00:00 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-2009-07-04</A>
+2009-07-04.00:00:38 zpool import -f 10901725609628700814
+
+Here's the stack report:
+
+Interval Since Last Panic Report:  10836 sec
+Panics Since Last Report:          2
+Anonymous UUID:                    4D621934-CC51-49D3-9B4F-2763B46072F9
+
+Thu Jul  9 00:03:44 2009
+panic(cpu 0 caller 0x00BB8CEE): &quot;db-&gt;db_dnode == dn failed, 215226064  
+== 215134288&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/ 
+zfs_kext/zfs/dbuf.c:1661
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+
+ndellofano, this looks like your build - maybe there's a known bug here?
+
+Alex
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001705.html">[zfs-discuss] zfs and nfs running on opensolaris
+</A></li>
+	<LI>Next message: <A HREF="001695.html">[zfs-discuss] Nightly crash (again)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1694">[ date ]</a>
+              <a href="thread.html#1694">[ thread ]</a>
+              <a href="subject.html#1694">[ subject ]</a>
+              <a href="author.html#1694">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

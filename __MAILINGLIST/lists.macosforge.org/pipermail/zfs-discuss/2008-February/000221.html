@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Case Sensitivity and file system
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20Case%20Sensitivity%20and%20file%20system&In-Reply-To=6EA5A7F4-C390-422A-9B69-CB267B2BF122%40Sun.COM">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000220.html">
+   <LINK REL="Next"  HREF="000222.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Case Sensitivity and file system</H1>
+    <B>Solra Bizna</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20Case%20Sensitivity%20and%20file%20system&In-Reply-To=6EA5A7F4-C390-422A-9B69-CB267B2BF122%40Sun.COM"
+       TITLE="[zfs-discuss] ZFS Case Sensitivity and file system">sbizna at tejat.net
+       </A><BR>
+    <I>Wed Feb 27 03:07:41 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000220.html">[zfs-discuss] My ZFS experiments
+</A></li>
+        <LI>Next message: <A HREF="000222.html">[zfs-discuss] Fwd:  ZFS Case Sensitivity and file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#221">[ date ]</a>
+              <a href="thread.html#221">[ thread ]</a>
+              <a href="subject.html#221">[ subject ]</a>
+              <a href="author.html#221">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ack, forgot to be cc'ing the list.
+
+On Wed, Feb 27, 2008 at 3:55 AM, Bill Winnett &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">William.Winnett at sun.com</A>&gt; wrote:
+&gt;<i> On Feb 26, 2008, at 11:49 PM, Solra Bizna wrote:
+</I>&gt;<i> On Tue, Feb 26, 2008 at 12:22 PM, Bill Winnett &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">William.Winnett at sun.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>  Are there plans to add a case insensitive flag to ZFS for OS X?
+</I>&gt;<i> Case insensitivity (in filesystems and in general) is actually very
+</I>&gt;<i> complicated. Support for insensitivity is a significant source of
+</I>&gt;<i> headaches for outside implementors of HFS+, for instance. As such, I
+</I>&gt;<i> strongly doubt it would be added (though it's not impossible).
+</I>&gt;<i> Simple ASCII case folding is easy enough but that would break on any
+</I>&gt;<i> non-English system.
+</I>&gt;<i> -:sigma.SB
+</I>&gt;<i> Mac OS file systems (HFS Standard and HFS Plus, aka HFS Extended) have
+</I>&gt;<i> traditionally been &quot;case-insensitive&quot; file systems.
+</I>&gt;<i> Also, the windows world is case insensitive.  Currently, a OS X Server can
+</I>&gt;<i> serve up filesystems that Windows/NT can use without
+</I>&gt;<i> any problems.  Without a case-insensitive flag for ZFS , a truly transparent
+</I>&gt;<i> ZFS filesystem for serving Windows/NT won't exist.
+</I>&gt;<i> It is also worth noting that OS X itself recommends the use of
+</I>&gt;<i> case-insensitive HFS+ for the startup/boot partition filesystem, up
+</I>&gt;<i> until 10.3 OS X did not have the ability to even make a case sensitive HFS
+</I>&gt;<i> filesystem.
+</I>This is all true. I'd forgotten about Windows's case insensitivity,
+which is much more deeply ingrained than that of Mac OS. In light of
+that, it's not so improbable but still very complicated.
+-:sigma.SB
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000220.html">[zfs-discuss] My ZFS experiments
+</A></li>
+	<LI>Next message: <A HREF="000222.html">[zfs-discuss] Fwd:  ZFS Case Sensitivity and file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#221">[ date ]</a>
+              <a href="thread.html#221">[ thread ]</a>
+              <a href="subject.html#221">[ subject ]</a>
+              <a href="author.html#221">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS-formatted sparsebundle as home directory
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS-formatted%20sparsebundle%20as%20home%20directory&In-Reply-To=9EEDDEF6-A4CC-4DD3-97CE-E8D6CBFD9362%40hessmann.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000947.html">
+   <LINK REL="Next"  HREF="000952.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS-formatted sparsebundle as home directory</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS-formatted%20sparsebundle%20as%20home%20directory&In-Reply-To=9EEDDEF6-A4CC-4DD3-97CE-E8D6CBFD9362%40hessmann.de"
+       TITLE="[zfs-discuss] ZFS-formatted sparsebundle as home directory">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Wed Oct  8 15:23:52 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000947.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+        <LI>Next message: <A HREF="000952.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#948">[ date ]</a>
+              <a href="thread.html#948">[ thread ]</a>
+              <a href="subject.html#948">[ subject ]</a>
+              <a href="author.html#948">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Not a lot of point in a sparsebundle IMHO. You might as well create a  
+file of a fixed size and use ZFS compression. You'lll still need to  
+arrange a mount on boot but are less likely to suffer catastrophic  
+failures that will render the entire volume ubnountable.
+
+If you need more space, create another file-type disk and add it to  
+the pool. You can then grow as needed.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 8 Oct 2008, at 21:20, Christian He&#223;mann &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs at hessmann.de</A>&gt; wrote:
+
+&gt;<i> Hello everybody,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I'm thinking about moving my home directory to ZFS - just for the fun
+</I>&gt;<i> of it.
+</I>&gt;<i> Since one of the reasons to get me acquainted with ZFS was to get rid
+</I>&gt;<i> of partitions and their typical problems (not enough space on one, too
+</I>&gt;<i> much on the other), I'm thinking about using a ZFS formatted
+</I>&gt;<i> sparsebundle on my HFS+ formatted root as my home directory.
+</I>&gt;<i>
+</I>&gt;<i> I gave it a try with an AES encrypted ZFS sparsebundle on a test user,
+</I>&gt;<i> which seemed to work quite fine, except for the inconvenience of
+</I>&gt;<i> having to mount the image from a different user each time I reboot the
+</I>&gt;<i> computer.
+</I>&gt;<i> One possible solution would be a login hook as documented by Mike
+</I>&gt;<i> Bombich, which, at least AFAIK, will prevent me from encrypt the
+</I>&gt;<i> sparsebundle - or does it?
+</I>&gt;<i>
+</I>&gt;<i> So, first of all: Bad idea or good idea to go with a sparsebundle?
+</I>&gt;<i> Second: Any chance to combine an encrypted ZFS-formatted sparsebundle
+</I>&gt;<i> with an automatic mount on login? Tamper with Filevault, for example?
+</I>&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i>
+</I>&gt;<i> Christian
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000947.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+	<LI>Next message: <A HREF="000952.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#948">[ date ]</a>
+              <a href="thread.html#948">[ thread ]</a>
+              <a href="subject.html#948">[ subject ]</a>
+              <a href="author.html#948">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

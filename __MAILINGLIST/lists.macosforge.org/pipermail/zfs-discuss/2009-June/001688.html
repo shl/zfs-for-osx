@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS and kernel panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20and%20kernel%20panics&In-Reply-To=%3C4A4963DD.2050404%40phys.washington.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001687.html">
+   <LINK REL="Next"  HREF="001689.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS and kernel panics</H1>
+    <B>Jared Nance</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20and%20kernel%20panics&In-Reply-To=%3C4A4963DD.2050404%40phys.washington.edu%3E"
+       TITLE="[zfs-discuss] ZFS and kernel panics">nancejk at phys.washington.edu
+       </A><BR>
+    <I>Mon Jun 29 18:01:17 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001687.html">[zfs-discuss] ZFS and kernel panics
+</A></li>
+        <LI>Next message: <A HREF="001689.html">[zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1688">[ date ]</a>
+              <a href="thread.html#1688">[ thread ]</a>
+              <a href="subject.html#1688">[ subject ]</a>
+              <a href="author.html#1688">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Alex-
+Indeed I have had almost exactly the same issue.  My setup is 3 external
+hard drives in a ZRAID1 pool.  Everything is fine until late evening, at
+which point I can no longer stat my zfs pool at all - zpool status
+works, zfs list is fine, but when I try to run anything at FS level e.g.
+ls, the system locks up completely.  Not a kernel panic, but becomes
+totally unresponsive and requires a reboot.  I moved two of the drives
+to a standard software RAID1, and kept one as a zpool, just for
+experimental purposes - my thought was that perhaps it was some i/o
+issue that was causing the problem.  However, even when the zpool
+contains no data that the OS is accessing regularly, the lockup occurs. 
+Very distressing. 
+
+Jared N
+
+
+Alex Blewitt wrote:
+&gt;<i> I've noticed since 10.5.6 (or 10.5.7) I've been getting kernel panics
+</I>&gt;<i> more regularly than I used to before (i.e. not). The symptom is the
+</I>&gt;<i> same; a kernel panic which requires rebooting.
+</I>&gt;<i>
+</I>&gt;<i> At midnight, I have a (potentially raceful) condition of a zpool scrub
+</I>&gt;<i> and a zfs snapshot.
+</I>&gt;<i>
+</I>&gt;<i> @daily  /usr/sbin/zpool scrub Data
+</I>&gt;<i> @daily  /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-</A>`date +&quot;\%F&quot;`
+</I>&gt;<i>
+</I>&gt;<i> Over the last week, my laptop  (when it's been on over midnight) has
+</I>&gt;<i> kernel paniced at exactly midnight. In addition, my Mac Mini (with its
+</I>&gt;<i> external disks making up the Data pool) has the same process. The Mac
+</I>&gt;<i> Mini tends to barf over midnight, though sometimes not until the early
+</I>&gt;<i> hours (presumably, when the ZFS scrub is finishing; it takes a lot
+</I>&gt;<i> longer on that box due to the size of data it has to process).
+</I>&gt;<i>
+</I>&gt;<i> There are no problems with the pool itself; upon reboot, the disk is
+</I>&gt;<i> there and a subsequent scrub does not trigger the kernel panic. I can
+</I>&gt;<i> go days (on the Mini) without needing this, but the laptop seems to
+</I>&gt;<i> have triggered the kernel panic fairly regularly. Of course, crontab
+</I>&gt;<i> doesn't run when the machine is off, so I only see this over the
+</I>&gt;<i> midnight boundary (like tonight) when I happen to be up.
+</I>&gt;<i>
+</I>&gt;<i> Has anyone else noticed a lack of stability since applying the 10.5.6
+</I>&gt;<i> or 10.5.7 patches? Before then, I never used to get a kernel panic and
+</I>&gt;<i> I've been using the same pool continuously since then.
+</I>&gt;<i>
+</I>&gt;<i> Alex
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001687.html">[zfs-discuss] ZFS and kernel panics
+</A></li>
+	<LI>Next message: <A HREF="001689.html">[zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1688">[ date ]</a>
+              <a href="thread.html#1688">[ thread ]</a>
+              <a href="subject.html#1688">[ subject ]</a>
+              <a href="author.html#1688">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

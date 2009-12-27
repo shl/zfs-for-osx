@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=C8CE3861-25AC-4C57-9087-2A0F34188D5D%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000035.html">
+   <LINK REL="Next"  HREF="000049.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=C8CE3861-25AC-4C57-9087-2A0F34188D5D%40nrao.edu"
+       TITLE="[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Jan 21 15:37:57 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000035.html">[zfs-discuss] Kernel Panic - can't allocate memory in zfs_context.c
+</A></li>
+        <LI>Next message: <A HREF="000049.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#45">[ date ]</a>
+              <a href="thread.html#45">[ thread ]</a>
+              <a href="subject.html#45">[ subject ]</a>
+              <a href="author.html#45">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>yikes.
+
+9C16 isn't GM and um, well had some known &quot;issues&quot;.  We should be  
+rolling out the GM version update *very* soon.  Can you try your crazy  
+rsync tests with the new update?? It has a lot of fixes.
+
+Noel
+
+p.s. Thanks for the steady updates and patience and I haven't  
+forgotten about the rsync bug, it just keeps getting clobbered by  
+other stuff :)
+
+On Jan 20, 2008, at 6:14 PM, Boyd Waters wrote:
+
+&gt;<i> I was trying my crazy rsync things a la <A HREF="rdar://5386887">rdar://5386887</A> but it locked  
+</I>&gt;<i> up after a bit:
+</I>&gt;<i>
+</I>&gt;<i> Sun Jan 20 19:03:57 2008
+</I>&gt;<i> panic(cpu 0 caller 0x8B2D9539): &quot;zfs: vmem_alloc couldn't alloc  
+</I>&gt;<i> 131072 bytes\n&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/ 
+</I>&gt;<i> zfs-102A/zfs_kext/zfs/zfs_context.c:668
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x8243ba18 : 0x12b0e1 (0x456e30 0x8243ba4c 0x13321a 0x0)
+</I>&gt;<i> 0x8243ba68 : 0x8b2d9539 (0x8b333720 0x20000 0x20000 0x8b2d81ed)
+</I>&gt;<i> 0x8243ba98 : 0x8b2f3117 (0x8b347264 0x20000 0x0 0x8b2d8267)
+</I>&gt;<i> 0x8243baf8 : 0x8b28ff09 (0xbad9600 0x0 0xb525270 0x0)
+</I>&gt;<i> 0x8243bb18 : 0x8b29a136 (0x20000 0x0 0x8b340310 0xbadaf68)
+</I>&gt;<i> 0x8243bb98 : 0x8b29a989 (0xbadae00 0x0 0x8243bbc8 0x8b2aa96f)
+</I>&gt;<i> 0x8243bbd8 : 0x8b2a0a89 (0xae07000 0x20000 0xd01d61f8 0x0)
+</I>&gt;<i> 0x8243bc28 : 0x8b2a6fec (0xd01d61f8 0x20620900 0x20000 0x0)
+</I>&gt;<i> 0x8243bca8 : 0x8b280451 (0xd790650 0xd7be2 0x0 0x8243bebc)
+</I>&gt;<i> 0x8243bd78 : 0x1f5131 (0x8243bdac 0x246 0x8243bdd8 0x1d9207)
+</I>&gt;<i> 0x8243bdd8 : 0x1eb98f (0xc7c1c20 0x8243bebc 0x1 0x8243bf54)
+</I>&gt;<i> 0x8243be68 : 0x38a19f (0xb7d8800 0x8243bebc 0x0 0x8243bf54)
+</I>&gt;<i> 0x8243bf18 : 0x38a497 (0x8243bf54 0xb7d8800 0x3b80000 0x0)
+</I>&gt;<i> 0x8243bf78 : 0x3dbcab (0xb1b9bc0 0xb5de1e0 0xb5de224 0x37e4df)
+</I>&gt;<i> 0x8243bfc8 : 0x19f084 (0xb47c9e0 0x0 0x1a20b5 0xae28d60)
+</I>&gt;<i> 0xbfffd7a8 : 0x1920014 (0xfeadff0d 0xfef3fe7e 0xff6efe25 0xfd06fe4e)
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0x18d00c0
+</I>&gt;<i>      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>         com.apple.filesystems.zfs(8.0)@0x8b27d000-&gt;0x8b348fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: rsync
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9C16
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.2.0: Tue Jan  8 10:59:40 PST 2008;  
+</I>&gt;<i> root:xnu-1228.3.7~1/RELEASE_I386
+</I>&gt;<i> System model name: MacPro1,1 (Mac-F4208DC8)
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000035.html">[zfs-discuss] Kernel Panic - can't allocate memory in zfs_context.c
+</A></li>
+	<LI>Next message: <A HREF="000049.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#45">[ date ]</a>
+              <a href="thread.html#45">[ thread ]</a>
+              <a href="subject.html#45">[ subject ]</a>
+              <a href="author.html#45">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

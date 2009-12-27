@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Status of ZFS on Mac OS X?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=4FDC27DF-7B55-4223-A705-1EE54D189DE7%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000446.html">
+   <LINK REL="Next"  HREF="000457.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Status of ZFS on Mac OS X?</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=4FDC27DF-7B55-4223-A705-1EE54D189DE7%40nrao.edu"
+       TITLE="[zfs-discuss] Status of ZFS on Mac OS X?">jbsnyder at gmail.com
+       </A><BR>
+    <I>Wed Apr  9 15:27:32 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000446.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+        <LI>Next message: <A HREF="000457.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#448">[ date ]</a>
+              <a href="thread.html#448">[ thread ]</a>
+              <a href="subject.html#448">[ subject ]</a>
+              <a href="author.html#448">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There's also EncFS and EncFSVault.  I've not used encfsvault with ZFS,
+but I've used encfs quite a bit, seems to work fine.  It is just an
+overlay filesystem that encrypts per-file, and is built on FUSE.  The
+files and filenames are encrypted but still live as files on the
+filesystem.
+
+encfs homepage:
+<A HREF="http://www.arg0.net/encfs">http://www.arg0.net/encfs</A>
+Intro to encfs:
+<A HREF="http://www.arg0.net/encfsintro">http://www.arg0.net/encfsintro</A>
+
+MacOS Binaries &amp; EncFSVault
+<A HREF="http://code.google.com/p/encfsvault/">http://code.google.com/p/encfsvault/</A>
+
+Nice and fairly elegant. You can then just skip the mounts and rsync
+the encrypted files.  It works on OS X, Linux, and probably FreeBSD.
+I think there was a windows client at one point, but it may not be
+maintained.
+
+I have not used it for a home, but it works great for individual
+&quot;private&quot; directories that you want encrypted.
+
+-jsnyder
+
+On Wed, Apr 9, 2008 at 3:42 PM, Boyd Waters &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">bwaters at nrao.edu</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>  On Apr 8, 2008, at 6:24 PM, Lorenzo Perone wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; On the other hand, it would be interesting to see what happens when
+</I>&gt;<i> &gt; using File Vault (provided that it is possible to symlink it to
+</I>&gt;<i> &gt; an encrypted sparse image within a zfs volume). Since zfs snapshots
+</I>&gt;<i> &gt; are block-wise, at least that would be a way to backup the sparse-
+</I>&gt;<i> &gt; monster incrementally - and to have a &quot;portable&quot; time machine.
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  I use FileVault. A lot. For years and years.
+</I>&gt;<i>
+</I>&gt;<i>  Every hour I copy my FileVault sparsebundle to the ZFS pool via rsync, then
+</I>&gt;<i> I create a snapshot.
+</I>&gt;<i>
+</I>&gt;<i>  You can mount the sparsebundle by double-clicking on it.
+</I>&gt;<i>
+</I>&gt;<i>  This actually seems to work just fine -- while the FileVault is mounted. I
+</I>&gt;<i> think the whole motivation behind implementing sparsebundles was to carve up
+</I>&gt;<i> a disk image into small chunks so that things like this would work. From
+</I>&gt;<i> hour to hour, only a handful of the 8-megabyte &quot;bands&quot; change, so the rsync
+</I>&gt;<i> is fast, and of course the ZFS snapshots don't take up much room.
+</I>&gt;<i>
+</I>&gt;<i>  To be clear:  an internal 500 GB disk, boots the Mac, has my FileVault
+</I>&gt;<i> image on it, no change from a standard Mac setup.  An external disk
+</I>&gt;<i> formatted ZFS, every hour we rsync from the internal to the external, and
+</I>&gt;<i> make a zfs snapshot.
+</I>&gt;<i>
+</I>&gt;<i>  Here's the script:
+</I>&gt;<i>
+</I>&gt;<i>  ==========
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  #! /bin/bash
+</I>&gt;<i>  #
+</I>&gt;<i>  # file name; /usr/local/bin/backup
+</I>&gt;<i>
+</I>&gt;<i>  # TODO: exclude some things from backup like vm swapfiles
+</I>&gt;<i>
+</I>&gt;<i>  h=$(/bin/hostname -s)
+</I>&gt;<i>
+</I>&gt;<i>  /usr/local/bin/rsync -aEHx  /  /Volumes/pool/backup/${h}/
+</I>&gt;<i>
+</I>&gt;<i>  /usr/sbin/zfs snapshot pool/backup/${h}@$(date +%FT%T)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  # delete all but the last four snapshots
+</I>&gt;<i>
+</I>&gt;<i>  snaps=($(zfs list| grep ${h}@20 | cut -f 1 -d ' '))
+</I>&gt;<i>
+</I>&gt;<i>  fourth_from_last=$(( ${#snaps[@]} - 4 ))
+</I>&gt;<i>
+</I>&gt;<i>  i=0
+</I>&gt;<i>  while [ $i -lt $fourth_from_last ]
+</I>&gt;<i>  do
+</I>&gt;<i>         zfs destroy ${snaps[$i]}
+</I>&gt;<i>         let &quot;i = $i + 1&quot;
+</I>&gt;<i>  done
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ==========
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  and here's the LaunchDaemon that runs it every hour (or so)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ====
+</I>&gt;<i>
+</I>&gt;<i>  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</I>&gt;<i>  &lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot;
+</I>&gt;<i> &quot;<A HREF="http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;">http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;</A>&gt;
+</I>&gt;<i>  &lt;plist version=&quot;1.0&quot;&gt;
+</I>&gt;<i>         &lt;dict&gt;
+</I>&gt;<i>                 &lt;key&gt;Disabled&lt;/key&gt;
+</I>&gt;<i>                 &lt;false/&gt;
+</I>&gt;<i>                 &lt;key&gt;Label&lt;/key&gt;
+</I>&gt;<i>                 &lt;string&gt;edu.nrao.bwaters.backup&lt;/string&gt;
+</I>&gt;<i>                 &lt;key&gt;ProgramArguments&lt;/key&gt;
+</I>&gt;<i>                 &lt;array&gt;
+</I>&gt;<i>                         &lt;string&gt;/usr/local/bin/backup&lt;/string&gt;
+</I>&gt;<i>                 &lt;/array&gt;
+</I>&gt;<i>                 &lt;key&gt;RunAtLoad&lt;/key&gt;
+</I>&gt;<i>                 &lt;true/&gt;
+</I>&gt;<i>                 &lt;key&gt;StandardErrorPath&lt;/key&gt;
+</I>&gt;<i>                 &lt;string&gt;/var/log/rsync-backup.log&lt;/string&gt;
+</I>&gt;<i>                 &lt;key&gt;StandardOutPath&lt;/key&gt;
+</I>&gt;<i>                 &lt;string&gt;/var/log/rsync-backup.log&lt;/string&gt;
+</I>&gt;<i>                 &lt;key&gt;StartInterval&lt;/key&gt;
+</I>&gt;<i>                 &lt;integer&gt;4380&lt;/integer&gt;
+</I>&gt;<i>         &lt;/dict&gt;
+</I>&gt;<i>  &lt;/plist&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ====
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  _______________________________________________
+</I>&gt;<i>  zfs-discuss mailing list
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000446.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+	<LI>Next message: <A HREF="000457.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#448">[ date ]</a>
+              <a href="thread.html#448">[ thread ]</a>
+              <a href="subject.html#448">[ subject ]</a>
+              <a href="author.html#448">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

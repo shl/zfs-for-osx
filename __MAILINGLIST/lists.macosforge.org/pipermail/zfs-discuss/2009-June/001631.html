@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3Calpine.DEB.2.01.0906111646450.6439%40bogon%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001630.html">
+   <LINK REL="Next"  HREF="001632.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Christian Kujau</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3Calpine.DEB.2.01.0906111646450.6439%40bogon%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">lists at nerdbynature.de
+       </A><BR>
+    <I>Thu Jun 11 16:55:38 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001630.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001632.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1631">[ date ]</a>
+              <a href="thread.html#1631">[ thread ]</a>
+              <a href="subject.html#1631">[ subject ]</a>
+              <a href="author.html#1631">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, 11 Jun 2009, Carl Magnuson wrote:
+&gt;<i> zpool scrub runs without any output
+</I>
+You can see its status with &quot;zpool status&quot; as yu did below.
+
+&gt;<i> and the dd command you gave does not produce any output in dmesg,
+</I>
+Hm, that's strange, because:
+
+&gt;<i> however the checksum has definitely shot up for
+</I>&gt;<i> those two disks after running each of those:
+</I>
+ZFS is correcting errors for you, yet the disks can be read from w/o 
+errors. Maybe it's bad RAM: the disks are ok, but ZFS has to correct 
+spurious bit flips, but it's strange that only disk7/8 would be affected 
+by this. Do you have a replacement disk at hand so that you could *really* 
+replace disk7/8 instead of using the old ones? (Sooner or later you'd need 
+a replacement disk anyway).
+
+&gt;<i> Is this a sign of failing disks? If so is there any simple way to identify
+</I>&gt;<i> which physical drives they are other then pulling drives randomly and
+</I>&gt;<i> rebooting?
+</I>
+We know already it's disk7 and disk8 making trouble:
+
+&gt;<i>        NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>        cpool        ONLINE       0     0     0
+</I>&gt;<i>          raidz2     ONLINE       0     0     0
+</I>&gt;<i>            disk7s2  ONLINE       0     0  1007
+</I>&gt;<i>            disk8s2  ONLINE       0     0 1.17K
+</I>
+And system_profiler told you the model and the serial# of the disks, so 
+you could look them up in the disk cage.
+
+Christian.
+-- 
+BOFH excuse #446:
+
+Mailer-daemon is busy burning your message in hell.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001630.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001632.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1631">[ date ]</a>
+              <a href="thread.html#1631">[ thread ]</a>
+              <a href="subject.html#1631">[ subject ]</a>
+              <a href="author.html#1631">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

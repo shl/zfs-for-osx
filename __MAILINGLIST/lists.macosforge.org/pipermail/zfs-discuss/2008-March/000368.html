@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Time machine with ZFS backend
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Time%20machine%20with%20ZFS%20backend&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000375.html">
+   <LINK REL="Next"  HREF="000370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Time machine with ZFS backend</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Time%20machine%20with%20ZFS%20backend&In-Reply-To="
+       TITLE="[zfs-discuss] Time machine with ZFS backend">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Sat Mar 22 06:17:42 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000375.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+        <LI>Next message: <A HREF="000370.html">[zfs-discuss] Increasing the capacity of a RAID-Z pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#368">[ date ]</a>
+              <a href="thread.html#368">[ thread ]</a>
+              <a href="subject.html#368">[ subject ]</a>
+              <a href="author.html#368">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list!
+
+I just managed to get Time machine working on my external raidz...
+it's a bit dirty, but works
+
+Steps:
+
+Create a zfs volume
+Share over the network via afp
+open up ssh tunnel to localhost, since afp won't let you connect to  
+localhost
+(ssh <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">user at localhost</A> -L randomportnumber:localhost:548 )
+Command+K, <A HREF="apf://localhost:randomportnumber">apf://localhost:randomportnumber</A>)
+
+(( of course randomportnumber hast to be a random port number ;), like  
+1234 )
+
+Your &quot;network&quot; share should get mounted  and you can use it for time  
+machine witch creates i'ts sparsebundles...
+
+p.s.
+
+don't forget to apply
+
+defaults write com.apple.systempreferences  
+TMShowUnsupportedNetworkVolumes 1
+
+
+regards
+
+franz schmalzl 
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000375.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+	<LI>Next message: <A HREF="000370.html">[zfs-discuss] Increasing the capacity of a RAID-Z pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#368">[ date ]</a>
+              <a href="thread.html#368">[ thread ]</a>
+              <a href="subject.html#368">[ subject ]</a>
+              <a href="author.html#368">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

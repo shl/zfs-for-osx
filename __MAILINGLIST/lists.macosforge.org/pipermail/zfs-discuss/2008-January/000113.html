@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] memory limits
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=8AD17058-90FB-47DA-AECE-068C08CE0AF5%40berczi.be">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000110.html">
+   <LINK REL="Next"  HREF="000091.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] memory limits</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=8AD17058-90FB-47DA-AECE-068C08CE0AF5%40berczi.be"
+       TITLE="[zfs-discuss] memory limits">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Jan 29 11:57:19 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000110.html">[zfs-discuss] memory limits
+</A></li>
+        <LI>Next message: <A HREF="000091.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#113">[ date ]</a>
+              <a href="thread.html#113">[ thread ]</a>
+              <a href="subject.html#113">[ subject ]</a>
+              <a href="author.html#113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> So I have 38+30 = 68Mb memory actually free, yet ZFS doesn't free  
+</I>&gt;<i> more memory. So maybe ZFS should set its memory limits also based on  
+</I>&gt;<i> the amount of free (free+inactive) memory. Turning paging back on  
+</I>&gt;<i> would evade data loss, but it would also end up in needless  
+</I>&gt;<i> performance degradation.
+</I>
+Yes, so currently this is a problem we are working to fix.  There's no  
+hooks currently that ZFS can have into the VM and memory layer to get  
+live feedback from the system when the system is feeling memory  
+pressure.  We're working on getting some hooks into the lower layers  
+so we have some clue of what is going on with the system and how to  
+scale our resources accordingly.  This is a big consideration and  
+issue.  We're working on a solution :)
+
+Noel
+
+On Jan 29, 2008, at 12:57 AM, B&#233;rczi G&#225;bor wrote:
+
+&gt;<i>
+</I>&gt;<i> On Jan 25, 2008, at 9:54 PM, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Be warned that in general, the smaller you force the ARC, the worse  
+</I>&gt;&gt;<i> your performance will get.  Obviously this differs based on your  
+</I>&gt;&gt;<i> expected workload, but just a heads up :)
+</I>&gt;<i>
+</I>&gt;<i> I have swapping switched off (under OSX it was always a great  
+</I>&gt;<i> performance degradation for me). The thing is, if XNU runs out of  
+</I>&gt;<i> memory, it will become unresponsible and freeze. ZFS doesn't really  
+</I>&gt;<i> help the situation :)
+</I>&gt;<i>
+</I>&gt;<i> Currently:
+</I>&gt;<i> PhysMem:  481M wired,   80M active,   38M inactive,  599M used,    
+</I>&gt;<i> 30M free.
+</I>&gt;<i> ZFS footprint:  314M used,  492M peak,  322M goal               299  
+</I>&gt;<i> threads
+</I>&gt;<i> ARC footprint:  224M used,  375M peak,  224M goal
+</I>&gt;<i>
+</I>&gt;<i> So I have 38+30 = 68Mb memory actually free, yet ZFS doesn't free  
+</I>&gt;<i> more memory. So maybe ZFS should set its memory limits also based on  
+</I>&gt;<i> the amount of free (free+inactive) memory. Turning paging back on  
+</I>&gt;<i> would evade data loss, but it would also end up in needless  
+</I>&gt;<i> performance degradation.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 25, 2008, at 1:27 AM, B&#233;rczi G&#225;bor wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> What are the possibilities of limiting ZFS memory usage on OS X?
+</I>&gt;&gt;&gt;<i> (for example limiting the ARC size)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ZFS footprint:  346M used,  504M peak,  369M goal                
+</I>&gt;&gt;&gt;<i> 299 threads
+</I>&gt;&gt;&gt;<i> ARC footprint:  232M used,  385M peak,  244M goal
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -- 
+</I>&gt;&gt;&gt;<i> Gabucino
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Gabucino
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000110.html">[zfs-discuss] memory limits
+</A></li>
+	<LI>Next message: <A HREF="000091.html">[zfs-discuss] raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#113">[ date ]</a>
+              <a href="thread.html#113">[ thread ]</a>
+              <a href="subject.html#113">[ subject ]</a>
+              <a href="author.html#113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

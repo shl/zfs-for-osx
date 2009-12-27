@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Problems%20with%20ZFS%20on%20Intel%20Mac%20Pro%20Copying%20Hundreds%0A%09of%20Files&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000806.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files</H1>
+    <B>Craig Peterson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Problems%20with%20ZFS%20on%20Intel%20Mac%20Pro%20Copying%20Hundreds%0A%09of%20Files&In-Reply-To="
+       TITLE="[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files">craig at mainstream.net
+       </A><BR>
+    <I>Sat Aug 30 11:38:54 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000806.html">[zfs-discuss] ZFS and Samba do not get along
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#810">[ date ]</a>
+              <a href="thread.html#810">[ thread ]</a>
+              <a href="subject.html#810">[ subject ]</a>
+              <a href="author.html#810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm running build 119 on an up-to-date Mac Pro.  I've set up a three- 
+disk zfs raid-z:
+
+$ zpool status
+   pool: Internal
+  state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool  
+can
+         still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+         pool will no longer be accessible on older software versions.
+  scrub: none requested
+config:
+
+         NAME         STATE     READ WRITE CKSUM
+         Internal     ONLINE       0     0     0
+           raidz1     ONLINE       0     0     0
+             disk1s2  ONLINE       0     0     0
+             disk2s2  ONLINE       0     0     0
+             disk3s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+I'm copying my music collection over to the pool, and it locks up  
+trying to write to the zfs partition after an indeterminate amount of  
+time.  At this point I have to reboot the machine by physically power  
+cycling it in order to get back at the zfs partition and anything that  
+tries to write to it gets locked up:
+
+iTunes/iTunes Music/Dr. Jeffrey D. Thompson/Music for Brainwave  
+Massage CD2/
+iTunes/iTunes Music/Dr. Jeffrey D. Thompson/Music for Brainwave  
+Massage CD2/03 Awakened Focus.m4a
+    138083516 100%   70.69MB/s    0:00:01 (xfer#55201, to- 
+check=12475/116940)
+iTunes/iTunes Music/Dr. Jeffrey D. Thompson/Music for Brainwave  
+Massage CD2/04 Tranquil Awareness.m4a
+^C
+rsync error: received SIGINT, SIGTERM, or SIGHUP (code 20) at / 
+SourceCache/rsync/rsync-35.2/rsync/rsync.c(244) [sender=2.6.9]
+rsync: writefd_unbuffered failed to write 133 bytes [generator]:  
+Broken pipe (32)
+bash-3.2# rsync -av --progress iTunes /Volumes/Internal/
+building file list ...
+116941 files to consider
+host-10-129-1-069:~ craig$
+
+I've only tried using rsync to copy the files, and rebooting the  
+machine every hour or so isn't much of an option :-)
+
+Suggestions?  I found a bug report of something similar that was said  
+to be fixed in build 119...
+
+Thanks,
+
+Craig.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080830/6e3d594e/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080830/6e3d594e/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000806.html">[zfs-discuss] ZFS and Samba do not get along
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#810">[ date ]</a>
+              <a href="thread.html#810">[ thread ]</a>
+              <a href="subject.html#810">[ subject ]</a>
+              <a href="author.html#810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

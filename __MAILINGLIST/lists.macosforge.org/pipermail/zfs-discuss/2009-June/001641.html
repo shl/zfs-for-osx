@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs alternative
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C762437f0906121046r31d8242fle5baf55e2dfe8f8b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001639.html">
+   <LINK REL="Next"  HREF="001643.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs alternative</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20alternative&In-Reply-To=%3C762437f0906121046r31d8242fle5baf55e2dfe8f8b%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] zfs alternative">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Fri Jun 12 10:46:34 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001639.html">[zfs-discuss] zfs alternative
+</A></li>
+        <LI>Next message: <A HREF="001643.html">[zfs-discuss] zfs alternative
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1641">[ date ]</a>
+              <a href="thread.html#1641">[ thread ]</a>
+              <a href="subject.html#1641">[ subject ]</a>
+              <a href="author.html#1641">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I actually had to do that (mount an OS X pool on a Solaris box) a while ago
+to debug some problems. IIRC, just exporting the pool from OS X and
+importing to Solaris did the job, no tweaking required.
+-Mario.
+
+--
+I want to change the world but they won't give me the source code.
+
+
+On Fri, Jun 12, 2009 at 19:42, Erik Ableson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">eableson at mac.com</A>&gt; wrote:
+
+&gt;<i> Anorher vote for OpenSolaris. You can use the netatalk package if you
+</I>&gt;<i> really want to, but OS X is a first class NFS client and with the GlobalSAN
+</I>&gt;<i> initiator you can also use iSCSI.
+</I>&gt;<i>
+</I>&gt;<i> I'm currently using NFS &amp; iSCSI with great performance and reliability
+</I>&gt;<i> under OpenSolaris. Even when Apple does integrate ZFS, I'm probably going to
+</I>&gt;<i> keep the OS server for the form factor: 10 disks in a tower with one plug is
+</I>&gt;<i> a design I'm unlikely to see from Apple. Given that my OS X &quot;server&quot; is a
+</I>&gt;<i> Macbook pro, internal storage is not an option and daisy chaining drives and
+</I>&gt;<i> the attendant cable spaghetti drove me nuts.
+</I>&gt;<i>
+</I>&gt;<i> I'm currently running 4 clients off a Core 2 Duo PC quite happily (details
+</I>&gt;<i> at www.infrageeks.com, search for &quot;better NAS&quot;) with direct GbE for my OS
+</I>&gt;<i> X Server and one other client with the rest over 11n. The disks are more
+</I>&gt;<i> than capable of saturating the GbE connection and even with multiple Time
+</I>&gt;<i> Machine backups running concurrently the source disks are the bottleneck
+</I>&gt;<i> rather than the network or the server.
+</I>&gt;<i>
+</I>&gt;<i> Assuming the disks are part of a zpool they should be readable by
+</I>&gt;<i> OpenSolaris, but the usual Apple ZFS configuration adrdesses a partition so
+</I>&gt;<i> you may have to tweak a little to get the zpool mounted.
+</I>&gt;<i>
+</I>&gt;<i> Cordialement,
+</I>&gt;<i>
+</I>&gt;<i> Erik Ableson
+</I>&gt;<i>
+</I>&gt;<i> Envoy&#233; depuis mon iPhone
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 12 juin 09, at 19:17, Dirk Schelfhout &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">dirkschelfhout at mac.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>  Since probably no longer supported by apple, I would like to move my 4
+</I>&gt;&gt;<i> guid disks to a new machine running another os.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any suggestions which os would be best ? Is there a *nix version that runs
+</I>&gt;&gt;<i> afp ? Will they recognize the disks ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also what kind off machine would I need, just to run as a zfs server for 2
+</I>&gt;&gt;<i> to 3 clients. ( on a gigabit ethernet )
+</I>&gt;&gt;<i> ( as cheap as possible consuming as little power as possible. with the
+</I>&gt;&gt;<i> latter being more important to me ( and many disk bays ) )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Dirk_______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090612/739a5efa/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090612/739a5efa/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001639.html">[zfs-discuss] zfs alternative
+</A></li>
+	<LI>Next message: <A HREF="001643.html">[zfs-discuss] zfs alternative
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1641">[ date ]</a>
+              <a href="thread.html#1641">[ thread ]</a>
+              <a href="subject.html#1641">[ subject ]</a>
+              <a href="author.html#1641">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

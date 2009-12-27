@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] USB and Firewire Performance Problem Question...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C36C0A571-21C3-4959-B9E8-288C15781FFE%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001545.html">
+   <LINK REL="Next"  HREF="001547.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] USB and Firewire Performance Problem Question...</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C36C0A571-21C3-4959-B9E8-288C15781FFE%40gmail.com%3E"
+       TITLE="[zfs-discuss] USB and Firewire Performance Problem Question...">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Tue Apr 28 00:09:42 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001545.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+        <LI>Next message: <A HREF="001547.html">[zfs-discuss] Oh, God, I lost every thing after a reboot !!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1546">[ date ]</a>
+              <a href="thread.html#1546">[ thread ]</a>
+              <a href="subject.html#1546">[ subject ]</a>
+              <a href="author.html#1546">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This list is probably the best place to discuss, unfortunately. Note  
+that ZFS-119 is the latest build for 10.5 and there's unlikely to be  
+any further builds available - 10.6 will have an upgraded version of  
+ZFS which can't be back-ported to 10.5. You can hope that it's been  
+fixed in 10.6 but the chances of any changes happening to 10.5 are  
+pretty slim to non-existent.
+
+Is it possible that something else on your machine is causing the  
+pauses?
+
+Alex
+
+On 28 Apr 2009, at 03:54, David Reed wrote:
+
+&gt;<i> Sorry for all the updates but this is really driving me nuts.  I did  
+</I>&gt;<i> the same test with a file-based disk (mkfile 5g foo; zpool create  
+</I>&gt;<i> test foo).  I used the internal disk for this experiment.  No USB  
+</I>&gt;<i> related issues, no Firewire issues.   Same results.  I've traced the  
+</I>&gt;<i> error further through the code but am at a loss.  Anyone have any  
+</I>&gt;<i> suggestions for a guru to talk to?  The macforge code base is  
+</I>&gt;<i> different from the stock Sun code base so it's not correct for a Sun  
+</I>&gt;<i> bug report.
+</I>&gt;<i>
+</I>&gt;<i> On Apr 27, 2009, at 10:17 PM, David Reed wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Thanks for the suggestions.  Not wanting to be without a good  
+</I>&gt;&gt;<i> reason for the performance problem (especially given it's not  
+</I>&gt;&gt;<i> clearly a disk/disk interface related problem because it's the same  
+</I>&gt;&gt;<i> USB disk driver for HFS+ and ZFS), I recompiled the source for  
+</I>&gt;&gt;<i> zfs-119 with ZFS_DEBUG turned on.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I notice the following in the error logs when the &quot;pause&quot; occurs  
+</I>&gt;&gt;<i> (as best as I can tell based on occurrence count and lots of  
+</I>&gt;&gt;<i> repeated trials - doing a tail -f on syslog has a slight pause from  
+</I>&gt;&gt;<i> &quot;reality&quot;)...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Apr 27 22:08:51 david kernel[0]: zvec_func[4]: error 17
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That ties back to a section of code in zfs_ioctl.c.  Any ideas on  
+</I>&gt;&gt;<i> what the error actually means?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>       /*
+</I>&gt;&gt;<i>        * Ensure that all pool/dataset names are valid before we  
+</I>&gt;&gt;<i> pass down to
+</I>&gt;&gt;<i>        * the lower layers.
+</I>&gt;&gt;<i>        */
+</I>&gt;&gt;<i>       if (error == 0) {
+</I>&gt;&gt;<i>               zc-&gt;zc_name[sizeof (zc-&gt;zc_name) - 1] = '\0';
+</I>&gt;&gt;<i>               switch (zfs_ioc_vec[vec].zvec_namecheck) {
+</I>&gt;&gt;<i>               case POOL_NAME:
+</I>&gt;&gt;<i>                       if (pool_namecheck(zc-&gt;zc_name, NULL, NULL) ! 
+</I>&gt;&gt;<i> = 0)
+</I>&gt;&gt;<i>                               error = EINVAL;
+</I>&gt;&gt;<i>                       break;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>               case DATASET_NAME:
+</I>&gt;&gt;<i>                       if (dataset_namecheck(zc-&gt;zc_name, NULL,  
+</I>&gt;&gt;<i> NULL) != 0)
+</I>&gt;&gt;<i>                               error = EINVAL;
+</I>&gt;&gt;<i>                       break;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>               case NO_NAME:
+</I>&gt;&gt;<i>                       break;
+</I>&gt;&gt;<i>               }
+</I>&gt;&gt;<i>       }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>       if (error == 0) {
+</I>&gt;&gt;<i>               error = zfs_ioc_vec[vec].zvec_func(zc);
+</I>&gt;&gt;<i>               if (error == 0) {
+</I>&gt;&gt;<i>                       if (zfs_ioc_vec[vec].zvec_his_log == B_TRUE)
+</I>&gt;&gt;<i>                               zfs_log_history(zc);
+</I>&gt;&gt;<i>               } else {
+</I>&gt;&gt;<i> #ifdef ZFS_DEBUG
+</I>&gt;&gt;<i>                       printf(&quot;zvec_func[%d]: error %d\n&quot;, vec,  
+</I>&gt;&gt;<i> error);
+</I>&gt;&gt;<i> #endif
+</I>&gt;&gt;<i>               }
+</I>&gt;&gt;<i>       }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 23, 2009, at 6:35 PM, David Reed wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks Richard.  Anyone have any idea if similar settings exist  
+</I>&gt;&gt;&gt;<i> for the OS X implementation?  I ran a strings on the kernel  
+</I>&gt;&gt;&gt;<i> extension and didn't see this one...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -david
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Apr 23, 2009, at 4:07 PM, Richard Elling &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">richard.elling at gmail.com</A> 
+</I>&gt;&gt;&gt;<i> &gt; wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> David Reed wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> An update if it helps anyone with ideas....
+</I>&gt;&gt;&gt;&gt;&gt;<i> Writing a different set of file sizes to the disks don't show  
+</I>&gt;&gt;&gt;&gt;&gt;<i> the problem (at least not as acutely).   So if I'm copying lots  
+</I>&gt;&gt;&gt;&gt;&gt;<i> of smaller files (&lt; 1M) I don't see the hit.  It seems to be  
+</I>&gt;&gt;&gt;&gt;&gt;<i> related (right now) to the file sizes.  Copying a lot of 2.8Mish  
+</I>&gt;&gt;&gt;&gt;&gt;<i> files seems to show the worst behavior.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Any ideas?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'd suspect buffer overrun on the disk side.  If so, then the  
+</I>&gt;&gt;&gt;&gt;<i> behaviour
+</I>&gt;&gt;&gt;&gt;<i> would be something like:
+</I>&gt;&gt;&gt;&gt;<i> spit out some data
+</I>&gt;&gt;&gt;&gt;<i> wait for a timeout
+</I>&gt;&gt;&gt;&gt;<i> re-spit out data that was dropped by the storage
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Solaris, you can change the zfs_vdev_max_pending which
+</I>&gt;&gt;&gt;&gt;<i> would allow finer control of this. Indeed, there are devices which
+</I>&gt;&gt;&gt;&gt;<i> require you to do this, or risk the porpoising behaviour I  
+</I>&gt;&gt;&gt;&gt;<i> described.
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29">http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> -- richard
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001545.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+	<LI>Next message: <A HREF="001547.html">[zfs-discuss] Oh, God, I lost every thing after a reboot !!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1546">[ date ]</a>
+              <a href="thread.html#1546">[ thread ]</a>
+              <a href="subject.html#1546">[ subject ]</a>
+              <a href="author.html#1546">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] What Portions of the OS X Tree Can't Be Put	on	ZFS?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%0A%09on%09ZFS%3F&In-Reply-To=4F1312F9-E498-4A7E-B1FD-89AD0A6AB210%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000254.html">
+   <LINK REL="Next"  HREF="000258.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] What Portions of the OS X Tree Can't Be Put	on	ZFS?</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%0A%09on%09ZFS%3F&In-Reply-To=4F1312F9-E498-4A7E-B1FD-89AD0A6AB210%40mac.com"
+       TITLE="[zfs-discuss] What Portions of the OS X Tree Can't Be Put	on	ZFS?">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Tue Mar  4 07:20:59 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000254.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+        <LI>Next message: <A HREF="000258.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#253">[ date ]</a>
+              <a href="thread.html#253">[ thread ]</a>
+              <a href="subject.html#253">[ subject ]</a>
+              <a href="author.html#253">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>actually - can ZFS be &quot;bless&quot;ed as a bootable filesystem? and what  
+else will break without res forks and EAs?
+
+you've got some other advantages around performance with a dedicated  
+ARC, block checksums (more verifiability), metadata compressibility,  
+and CoW .. but there seems to be a lot of legacy tied up in HFS+ that  
+might be hard to break for a root FS .. it's already painful to watch  
+the apps that currently break just going to a case sensitive install.
+
+---
+.je
+
+On Mar 4, 2008, at 10:04 AM, Gautam Godse wrote:
+&gt;<i> Frankly I have yet to be convinced that ZFS should be used for your
+</I>&gt;<i> Boot / User file system.
+</I>&gt;<i> The advantages of ZFS are only apparent (to me) when ZFS is deployed
+</I>&gt;<i> in a redundant configuration (mirror/raid) and for backup, media file
+</I>&gt;<i> storage, database storage or something similar.
+</I>&gt;<i> The only advantage of ZFS on the Boot/User filesystem would be the
+</I>&gt;<i> snapshot functionality and I think for now TimeMachine suffices.
+</I>&gt;<i> Does anyone agree/disagree ?
+</I>&gt;<i> --
+</I>&gt;<i> Gautam
+</I>&gt;<i>
+</I>&gt;<i> On Mar 4, 2008, at 6:58 AM, James Snyder wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi -
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I was just thinking today about rolling more of my system over to ZFS
+</I>&gt;&gt;<i> since, with some exceptions, it seems to be fairly stable in  
+</I>&gt;&gt;<i> usage.  I
+</I>&gt;&gt;<i> might Assume that Applications, Developer, maybe usr could switch  
+</I>&gt;&gt;<i> over
+</I>&gt;&gt;<i> to ZFS, but I'm not exactly sure what portions of the filesystem are
+</I>&gt;&gt;<i> required to bring up OS X.  /Library, /System likely need to be on  
+</I>&gt;&gt;<i> HFS
+</I>&gt;&gt;<i> at this point I would assume, but what are the limitations, what  
+</I>&gt;&gt;<i> needs
+</I>&gt;&gt;<i> to be on HFS to get things up to the login screen?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Another question is:
+</I>&gt;&gt;<i> Is it preferred to file bugs by using the Trac system?  Should they  
+</I>&gt;&gt;<i> go
+</I>&gt;&gt;<i> on zfs-discuss here?  If one has a panic should that just go in
+</I>&gt;&gt;<i> through the normal Apple reporting system?  I do not have a full ADC
+</I>&gt;&gt;<i> membership so I cannot put anything on rdar as far as I know.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> James Snyder
+</I>&gt;&gt;<i> Biomedical Engineering
+</I>&gt;&gt;<i> Northwestern University
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000254.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+	<LI>Next message: <A HREF="000258.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#253">[ date ]</a>
+              <a href="thread.html#253">[ thread ]</a>
+              <a href="subject.html#253">[ subject ]</a>
+              <a href="author.html#253">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

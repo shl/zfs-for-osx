@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] my first zfs panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=9AD5FEE0-A888-45AF-8E17-829D839F8AA5%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000593.html">
+   <LINK REL="Next"  HREF="000594.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] my first zfs panic</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=9AD5FEE0-A888-45AF-8E17-829D839F8AA5%40apple.com"
+       TITLE="[zfs-discuss] my first zfs panic">bwaters at nrao.edu
+       </A><BR>
+    <I>Fri May  9 15:05:21 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000593.html">[zfs-discuss] my first zfs panic
+</A></li>
+        <LI>Next message: <A HREF="000594.html">[zfs-discuss] simpler approach for reproducing files-in-limbo
+	problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#590">[ date ]</a>
+              <a href="thread.html#590">[ thread ]</a>
+              <a href="subject.html#590">[ subject ]</a>
+              <a href="author.html#590">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Whoa! Duuude!
+
+Is that what I'm seeing here? I have
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">bwaters at galatea</A> ~ $ sysctl hw.physmem
+hw.physmem: 2147483648
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">bwaters at galatea</A> ~ $ sysctl hw.memsize
+hw.memsize: 7516192768
+
+
+Note that hw.physmem is NOT EQUAL TO the actual memory size if you've  
+got more than 2GB of RAM.
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">bwaters at galatea</A> ~ $ vm_stat
+Mach Virtual Memory Statistics: (page size of 4096 bytes)
+Pages free:                  1330519.
+Pages active:                 265433.
+Pages inactive:                22712.
+Pages wired down:             207631.
+&quot;Translation faults&quot;:        4098126.
+Pages copy-on-write:           65416.
+Pages zero filled:           2580530.
+Pages reactivated:                 4.
+Pageins:                      176266.
+Pageouts:                          0.
+Object cache: 33789 hits of 76045 lookups (44% hit rate)
+
+
+and my recurring crash is
+
+Fri May  9 15:52:42 2008
+panic(cpu 1 caller 0x8B6851CF): &quot;zfs: vmem_alloc couldn't alloc 20480  
+bytes\n&quot;@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x83073968 : 0x12b0fa (0x459294 0x8307399c 0x133243 0x0)
+0x830739b8 : 0x8b6851cf (0x8b6d1bc0 0x5000 0x5000 0x8b683efa)
+0x830739e8 : 0x8b69fb1b (0x8b6e3ba0 0x5000 0x0 0x13017a)
+0x83073a48 : 0x8b63bc16 (0xc71be00 0x0 0x0 0x0)
+0x83073a68 : 0x8b645e43 (0x2200 0x0 0x8b6dcc30 0xa6a53c)
+0x83073ae8 : 0x8b646696 (0xc727a00 0x0 0x83073b28 0x0)
+0x83073b28 : 0x8b648f2f (0xcf62800 0x2200 0xfe7f2e60 0x0)
+0x83073bb8 : 0x8b64c889 (0xfe7f2e60 0xea6a328 0x1 0x4c3d)
+0x83073bd8 : 0x8b652d0a (0xfe7f2e60 0x16db7300 0x21c7 0x0)
+0x83073c58 : 0x8b62c848 (0x11f0e200 0x4c3d 0x0 0x83073ebc)
+0x83073d78 : 0x1f6492 (0x83073dac 0x246 0x83073dd8 0x1da55f)
+0x83073dd8 : 0x1ecd0d (0x17466640 0x83073ebc 0x1 0x83073f54)
+0x83073e68 : 0x38c229 (0xc38ec40 0x83073ebc 0x0 0x83073f54)
+0x83073f18 : 0x38c521 (0x83073f54 0xc38ec40 0x4374000 0x0)
+0x83073f78 : 0x3dddda (0xc6e2560 0x173d31a0 0x173d31e4 0x380569)
+0x83073fc8 : 0x19f2b3 (0x1e366ea0 0x0 0x1a20b5 0xc6d34f0)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x8b629000-&gt;0x8b6e4fff
+
+BSD process name corresponding to current thread: rsync
+
+Mac OS version:
+9D23
+
+Kernel version:
+Darwin Kernel Version 9.3.0: Thu Apr 17 00:09:25 PDT 2008;  
+root:xnu-1228.5.16~2/RELEASE_I386
+System model name: MacPro1,1 (Mac-F4208DC8)
+
+
+
+On May 9, 2008, at 1:21 AM, No&#235;l Dellofano wrote:
+
+&gt;<i>
+</I>&gt;<i> That being said though, panics suck and we need to tune the arc_max  
+</I>&gt;<i> limits more accordingly so all your kernel memory doesn't get eaten  
+</I>&gt;<i> up.  We haven't done too much testing on any machine over 2GB ram so  
+</I>&gt;<i> it's quite possible something is amiss in the code if your physmem &gt;  
+</I>&gt;<i> virtual mem.  I'm opening a bug on this.
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000593.html">[zfs-discuss] my first zfs panic
+</A></li>
+	<LI>Next message: <A HREF="000594.html">[zfs-discuss] simpler approach for reproducing files-in-limbo
+	problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#590">[ date ]</a>
+              <a href="thread.html#590">[ thread ]</a>
+              <a href="subject.html#590">[ subject ]</a>
+              <a href="author.html#590">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

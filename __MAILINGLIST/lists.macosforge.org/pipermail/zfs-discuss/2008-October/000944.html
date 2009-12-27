@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20hanging%20when%20a%20disk%20in%20a%20mirror%20goes%20offline&In-Reply-To=6879ebc80810060821l5bde7f3ai61cda11a4ad40cae%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000937.html">
+   <LINK REL="Next"  HREF="000934.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS hanging when a disk in a mirror goes offline</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20hanging%20when%20a%20disk%20in%20a%20mirror%20goes%20offline&In-Reply-To=6879ebc80810060821l5bde7f3ai61cda11a4ad40cae%40mail.gmail.com"
+       TITLE="[zfs-discuss] ZFS hanging when a disk in a mirror goes offline">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Tue Oct  7 14:14:54 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000937.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+        <LI>Next message: <A HREF="000934.html">[zfs-discuss] increased partiiton sizes for raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#944">[ date ]</a>
+              <a href="thread.html#944">[ thread ]</a>
+              <a href="subject.html#944">[ subject ]</a>
+              <a href="author.html#944">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I see the thing about the disks, it can happen in other OSes too. I  
+did do the diskutil command-line stuff beforehand.
+
+Thanks,
+-Mario.
+
+On 6 Oct 2008, at 17:21, Matt Snow wrote:
+
+&gt;<i> silly question, but did you create the ZFS GPT/EFI partition/labels  
+</I>&gt;<i> using CLI diskutil before running zpool create? I had a similar  
+</I>&gt;<i> experience with USB disks and not using diskutil prior to zpool  
+</I>&gt;<i> create as noted in the FAQ.
+</I>&gt;<i>
+</I>&gt;<i> It is normal in OS X for the disks to enumerate differently each  
+</I>&gt;<i> boot, or re-inserting a device.
+</I>&gt;<i>
+</I>&gt;<i> ..Matt
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Oct 5, 2008 at 3:53 AM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;<i> I'm running zfs-119 downloaded yesterday from zfs.macosforge.org.
+</I>&gt;<i>
+</I>&gt;<i> In the end I went with the &quot;sane&quot; option: 2x1TB mirrored and 3x500GB  
+</I>&gt;<i> RAIDZ'd.
+</I>&gt;<i>
+</I>&gt;<i> I first added the mirror to the pool, since 2 of the 500GB disks  
+</I>&gt;<i> currently have data that will be moved into ZFS. I started copying  
+</I>&gt;<i> with cpio but after a while the copy hung.
+</I>&gt;<i>
+</I>&gt;<i> I found out that one of my 1TB disks suddenly turns itself off for  
+</I>&gt;<i> no apparent reason. I get a bunch of IOUSBKit error messages in  
+</I>&gt;<i> dmesg, and zpool status tells me that &quot;One or more devices could not  
+</I>&gt;<i> be opened. Sufficient replicas exist for the pool to continue  
+</I>&gt;<i> functioning in a degraded state&quot;. The device in question shows as  
+</I>&gt;<i> UNAVAIL and the pool and the mirror as DEGRADED.
+</I>&gt;<i>
+</I>&gt;<i> Why does the copy hang if the pool is still usable?
+</I>&gt;<i>
+</I>&gt;<i> Now I turn the offending device off and on again. Thing is, OS X  
+</I>&gt;<i> assigns it a new device name. So I do an ls /dev/disk*, find out  
+</I>&gt;<i> which is the latest disk (from just a couple of seconds ago). If  
+</I>&gt;<i> before it was disk4s2, it turns out it's now disk7s2 (I have other  
+</I>&gt;<i> disks on this machine). So I do a zpool online plogiston /dev/ 
+</I>&gt;<i> disk7s2...which hangs. I next do a zpool status...which hangs. I  
+</I>&gt;<i> have to do a hard shutdown (holding down the power button). I  
+</I>&gt;<i> disconnect all other external hard drives to correctly identify the  
+</I>&gt;<i> parts of the pool and restart. I only have 2 external drives:  
+</I>&gt;<i> disk1s2 (which is now online) and disk2s2 (which doesn't appear in  
+</I>&gt;<i> zpool status, it still says disk4s2). So I try a zpool online /dev/ 
+</I>&gt;<i> disk2s2 and it tells me that device is not part of the pool. So now  
+</I>&gt;<i> I seem to have half a mirror (whichfor some reason is resilvering)  
+</I>&gt;<i> and another disk which is completely unavailable.
+</I>&gt;<i>
+</I>&gt;<i> How could I recover from this situation?
+</I>&gt;<i>
+</I>&gt;<i> At this point I could recreate the pool since I still have the  
+</I>&gt;<i> original data in the 2x500GB disks, but in the end these will be  
+</I>&gt;<i> RAIDZ'ed with another 500GB and added to the pool. I of course need  
+</I>&gt;<i> to get the faulty 1TB disk replaced but at this point I don't think  
+</I>&gt;<i> I can trust ZFS to give it all my data. I would really like to know  
+</I>&gt;<i> what's going on
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> The impossible has, on occasion, let me down
+</I>&gt;<i>                                                        --R.U. Sirius
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081007/04d8636e/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081007/04d8636e/attachment.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000937.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+	<LI>Next message: <A HREF="000934.html">[zfs-discuss] increased partiiton sizes for raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#944">[ date ]</a>
+              <a href="thread.html#944">[ thread ]</a>
+              <a href="subject.html#944">[ subject ]</a>
+              <a href="author.html#944">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

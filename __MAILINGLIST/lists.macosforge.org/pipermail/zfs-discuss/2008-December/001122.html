@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Automatic scrub?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Automatic%20scrub%3F&In-Reply-To=%3C636fd28e0812010142o59f31b1fj623c211358eac8a2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001127.html">
+   <LINK REL="Next"  HREF="001123.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Automatic scrub?</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Automatic%20scrub%3F&In-Reply-To=%3C636fd28e0812010142o59f31b1fj623c211358eac8a2%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Automatic scrub?">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Mon Dec  1 01:42:24 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001127.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+        <LI>Next message: <A HREF="001123.html">[zfs-discuss] Places home icon showing as pool name,	not user name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1122">[ date ]</a>
+              <a href="thread.html#1122">[ thread ]</a>
+              <a href="subject.html#1122">[ subject ]</a>
+              <a href="author.html#1122">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Nov 30, 2008 at 1:35 PM, Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt; wrote:
+&gt;<i> On Sun, Nov 30, 2008 at 2:55 AM, Dillon Kass &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lists at loveturtle.net</A>&gt; wrote:
+</I>&gt;&gt;<i> On 11/29/08 3:43 PM, Alex Blewitt wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I wonder if it doesn't have time to finish the
+</I>&gt;&gt;&gt;<i> nightly scrub between 00:00 and 01:00, and thus at 01:00 re-starts the
+</I>&gt;&gt;&gt;<i> scrubbing, ad infinitum?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sounds like exactly what is happening to me. I believe that was fixed in OS
+</I>&gt;&gt;<i> a little while ago...We'll probably get that when ever we get the latest
+</I>&gt;&gt;<i> bits.
+</I>&gt;<i>
+</I>&gt;<i> Yeah,I turned off the hourly snapshot and the nightly scrub took an
+</I>&gt;<i> hour and a half, completed with no problems. Oh well, I'll just tweak
+</I>&gt;<i> my crontab to give it a 2h window overnight.
+</I>
+For those that are interested, it worked:
+
+2008-12-01.00:00:00 zpool scrub Data
+2008-12-01.00:00:17 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-12-01T00</A>:00
+2008-12-01.00:00:17 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-2008-12-01</A>
+2008-12-01.00:00:18 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoM-2008-12</A>
+2008-12-01.00:00:20 zfs destroy -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-29T06</A>:00
+2008-12-01.00:00:21 zfs destroy -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-2008-11-23</A>
+2008-12-01.02:00:01 zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-12-01T02</A>:00
+2008-12-01.02:00:05 zfs destroy -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-2008-11-29T07</A>:00
+
+My system is in a scrub-free status from about 1:30am onwards:
+
+mini:~ alex$ zpool status
+  pool: Data
+ state: ONLINE
+ scrub: scrub completed with 0 errors on Mon Dec  1 01:30:52 2008
+
+I achieved it by adding a precondition to the hourly run:
+
+@hourly	/usr/sbin/zpool status Data | /usr/bin/grep -q &quot;scrub
+completed&quot; &amp;&amp; /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-</A>`date
++&quot;\%FT\%H:\%M&quot;`
+
+HTH,
+
+Alex
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001127.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+	<LI>Next message: <A HREF="001123.html">[zfs-discuss] Places home icon showing as pool name,	not user name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1122">[ date ]</a>
+              <a href="thread.html#1122">[ thread ]</a>
+              <a href="subject.html#1122">[ subject ]</a>
+              <a href="author.html#1122">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C6FFF32EB-85FA-4E0F-94A6-DF91741C4872%40umn.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001608.html">
+   <LINK REL="Next"  HREF="001609.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Carl Magnuson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C6FFF32EB-85FA-4E0F-94A6-DF91741C4872%40umn.edu%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">magnu213 at umn.edu
+       </A><BR>
+    <I>Mon Jun  8 13:31:22 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001608.html">[zfs-discuss] ZFS in Snow Leopard
+</A></li>
+        <LI>Next message: <A HREF="001609.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1597">[ date ]</a>
+              <a href="thread.html#1597">[ thread ]</a>
+              <a href="subject.html#1597">[ subject ]</a>
+              <a href="author.html#1597">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am writing after receiving a fixed external enclosure which has  
+solved my previous problem (quoted email below).  My pool now starts  
+up correctly however it looks like it is operating without two disks:
+
+g5:~ bobcat$ zpool status -v
+   pool: cpool
+  state: DEGRADED
+status: One or more devices could not be used because the label is  
+missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+  scrub: resilver completed with 0 errors on Mon Jun  8 15:15:31 2009
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	cpool                     DEGRADED     0     0     0
+	  raidz2                  DEGRADED     0     0     0
+	    disk2s2               ONLINE       0     0     0
+	    disk3s2               ONLINE       0     0     0
+	    disk6s2               ONLINE       0     0     0
+	    disk5s2               ONLINE       0     0     0
+	    disk4s2               ONLINE       0     0     0
+	    1751454142452109774   FAULTED      0     0     0  was /dev/disk8s2
+	    13962824586312699565  UNAVAIL      0     0     0  was /dev/disk9s2
+
+errors: No known data errors
+
+Looking in Disk Utility I see all seven disks in the array are  
+recognized by OSX.  Is it possible that swapping drives around when  
+switching to the new enclosure has caused some to not be found by  
+ZFS?  Or maybe more likely that one or two died in the meantime?  Is  
+there a way to identify which the two drives that are FAULTED and  
+UNAVAIL are to easily swap them out or try readding them to the pool?
+
+I realize this isn't strictly a OSX ZFS issue, but this seems like the  
+best place to ask.
+
+Thanks Much,
+
+Carl
+
+
+
+On Apr 21, 2009, at 11:01 PM, Carl Magnuson wrote:
+
+&gt;<i> You are right on all counts.  I am using two 5 disk enclosures with  
+</I>&gt;<i> an eSATA port multiplier.  After playing around I see that the  
+</I>&gt;<i> indicator lights on one of the enclosures aren't indicating as they  
+</I>&gt;<i> should... none of the 5 drives from that enclosure are showing up,  
+</I>&gt;<i> but I can pull one and put it elsewhere and it will indicating a  
+</I>&gt;<i> problem with the enclosure.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the help, sorry to bother everyone with a non ZFS  
+</I>&gt;<i> problem, it is appreciated.
+</I>&gt;<i>
+</I>&gt;<i> Carl
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Apr 21, 2009, at 4:53 PM, James R. Van Artsdalen wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Carl Magnuson wrote:
+</I>&gt;&gt;&gt;<i> diskutil list shows two of my pool disks as disk3 and disk4. There  
+</I>&gt;&gt;&gt;<i> is no
+</I>&gt;&gt;&gt;<i> disk7 listed (though it is shown in the &quot;zpool import&quot; error), and  
+</I>&gt;&gt;&gt;<i> it
+</I>&gt;&gt;&gt;<i> looks like the pool disks 5 and 6 are missing and two of my other  
+</I>&gt;&gt;&gt;<i> disks
+</I>&gt;&gt;&gt;<i> took their place, though it is odd that no disk moved to disk2.  The
+</I>&gt;&gt;&gt;<i> complete output is shown below.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ignore the disk numbers output by zpool status: those are not  
+</I>&gt;&gt;<i> meaningful
+</I>&gt;&gt;<i> here.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This isn't a ZFS error (yet).  Some disks in the pool simply aren't
+</I>&gt;&gt;<i> being seen by OSX for whatever reason.  If diskutil can't see them  
+</I>&gt;&gt;<i> then
+</I>&gt;&gt;<i> neither can higher layers of OSX such as ZFS.  Fix this first - make
+</I>&gt;&gt;<i> sure all pool members are visible to diskutil - then worry about ZFS.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The number of disks missing is 5 - is there a 5-drive enclosure in  
+</I>&gt;&gt;<i> use?
+</I>&gt;&gt;<i> Check power &amp; data cables, maybe cycle its power, etc.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> disk7 &amp; disk8 look odd: are there a couple of eSATA port multiplier
+</I>&gt;&gt;<i> enclosures involved?
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001608.html">[zfs-discuss] ZFS in Snow Leopard
+</A></li>
+	<LI>Next message: <A HREF="001609.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1597">[ date ]</a>
+              <a href="thread.html#1597">[ thread ]</a>
+              <a href="subject.html#1597">[ subject ]</a>
+              <a href="author.html#1597">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

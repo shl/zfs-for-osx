@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Faulted Drives, fixed by export/import... but what causes it?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Faulted%20Drives%2C%0A%20fixed%20by%20export/import...%20but%20what%20causes%20it%3F&In-Reply-To=D25D225A-09E0-47E7-A3A2-733A778D1500%40jasonrm.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000965.html">
+   <LINK REL="Next"  HREF="000980.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Faulted Drives, fixed by export/import... but what causes it?</H1>
+    <B>James R. Van Artsdalen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Faulted%20Drives%2C%0A%20fixed%20by%20export/import...%20but%20what%20causes%20it%3F&In-Reply-To=D25D225A-09E0-47E7-A3A2-733A778D1500%40jasonrm.net"
+       TITLE="[zfs-discuss] Faulted Drives, fixed by export/import... but what causes it?">james-zfsosx at jrv.org
+       </A><BR>
+    <I>Wed Oct 15 01:56:38 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000965.html">[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+</A></li>
+        <LI>Next message: <A HREF="000980.html">[zfs-discuss] Non-UTF-8 filenames
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#966">[ date ]</a>
+              <a href="thread.html#966">[ thread ]</a>
+              <a href="subject.html#966">[ subject ]</a>
+              <a href="author.html#966">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jason Richard McNeil wrote:
+&gt;<i> ...
+</I>&gt;<i> I think that it only happens when I either restart or cold boot after
+</I>&gt;<i> a while.
+</I>&gt;<i> NAME                      STATE     READ WRITE CKSUM
+</I>&gt;<i> Indigo                    DEGRADED     0     0     0
+</I>&gt;<i>  mirror                  DEGRADED     0     0     0
+</I>&gt;<i>    4541104571258798197   FAULTED      0     0     0  was /dev/disk5s2
+</I>&gt;<i>    disk6s2               ONLINE       0     0     0
+</I>&gt;<i>  mirror                  DEGRADED     0     0     0
+</I>&gt;<i>    disk5s2               ONLINE       0     0     0
+</I>&gt;<i>    18432184791024237345  FAULTED      0     0     0  was /dev/disk6s2
+</I>&gt;<i>  mirror                  ONLINE       0     0     0
+</I>&gt;<i>    disk0s2               ONLINE       0     0     0
+</I>&gt;<i>    disk3s2               ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Best solution I have found so far, is to log off all users, SSH in and
+</I>&gt;<i> force a unmount, do an export, then import and it has come back every
+</I>&gt;<i> time so far.
+</I>
+I would guess that when the disks are connected they are detected and
+scanned for mountable filesystems one by one.  As soon as
+disk{6,5,0,3}s2 are ready the pool can be brought online, and if the
+other two disks aren't detected yet then those vdevs are faulted.  It
+may be that the OSX ZFS port needs to wait or probe more vigorously when
+a pool is found but some vdev members are missing.
+
+To my experience it always works to export the pool and then import it. 
+ZFS will resilver but for raidz this is very quick.
+
+&gt;<i> I do have to do a scrub, but it only finds checksum errors, which,
+</I>&gt;<i> considering that it comes up without a drive and activity happens
+</I>&gt;<i> while missing a drive or two, it makes sense to me so far.
+</I>
+
+I suspect these checksum errors to be completely unrelated to the issue
+above and worthy of a great deal of concern.  Checksum errors do *not*
+make sense in such a scenario: there should be *no* checksum errors on
+either the online or faulted disks as a result of a vdev member not
+being present and faulted when the pool is brought online.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081015/9f791833/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081015/9f791833/attachment.html</A> 
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000965.html">[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+</A></li>
+	<LI>Next message: <A HREF="000980.html">[zfs-discuss] Non-UTF-8 filenames
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#966">[ date ]</a>
+              <a href="thread.html#966">[ thread ]</a>
+              <a href="subject.html#966">[ subject ]</a>
+              <a href="author.html#966">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

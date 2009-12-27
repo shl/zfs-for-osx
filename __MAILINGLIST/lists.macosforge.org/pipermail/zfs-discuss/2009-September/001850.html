@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] volume not automounting since 10.6
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20volume%20not%20automounting%20since%2010.6&In-Reply-To=%3C49499a2b0909102053y3cca5d33v8cd4c57ed9ce9950%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001849.html">
+   <LINK REL="Next"  HREF="001851.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] volume not automounting since 10.6</H1>
+    <B>Geoff Flarity</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20volume%20not%20automounting%20since%2010.6&In-Reply-To=%3C49499a2b0909102053y3cca5d33v8cd4c57ed9ce9950%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] volume not automounting since 10.6">geoff.flarity at gmail.com
+       </A><BR>
+    <I>Thu Sep 10 20:53:16 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001849.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+        <LI>Next message: <A HREF="001851.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1850">[ date ]</a>
+              <a href="thread.html#1850">[ thread ]</a>
+              <a href="subject.html#1850">[ subject ]</a>
+              <a href="author.html#1850">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I just joined the mailing list. You may be interested to know that I just
+setup a 4 disk usb raidz array under snow leopard. I've noticed the
+automount problem as well as other glitches. Each time I reboot I need to
+run 'zpool import -f &lt;pool name&gt;'. Its annoying but its been working so far.
+Here's my post with some more info:
+
+<A HREF="http://onlinevillage.blogspot.com/2009/09/opensource-drobo-replacement-on-mac-os.html">http://onlinevillage.blogspot.com/2009/09/opensource-drobo-replacement-on-mac-os.html</A>
+
+I realize that zfs support has been officially dropped, but I'm hoping the
+project is continuing?
+
+Cheers,
+Geoff
+
+
+On Thu, Sep 10, 2009 at 11:38 PM, charlienail &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">charlienail at gmail.com</A>&gt; wrote:
+
+&gt;<i> i was under the impression that installing various versions of zfs
+</I>&gt;<i> (119 or the from the SL beta before it was removed) would be no
+</I>&gt;<i> different than using zfs under leopard.
+</I>&gt;<i>
+</I>&gt;<i> i'm not sure what you mean by 'the code to notice the presence of a
+</I>&gt;<i> ZFS filesystem on an attached device.' OS X definitely notices the
+</I>&gt;<i> presence of ZFS, it is marked ZFS in disk utility and i get a warning
+</I>&gt;<i> that the partition is no longer supported before i mount it.
+</I>&gt;<i>
+</I>&gt;<i> my use of zfs at this point involves read access to a video library
+</I>&gt;<i> that's on a raidz pool, i've been watching all my shows and movies
+</I>&gt;<i> without error except for the automounting which i haven't found
+</I>&gt;<i> mentioned anywhere else.
+</I>&gt;<i>
+</I>&gt;<i> thanks for the tip owen, i'm going to give it a try.
+</I>&gt;<i>
+</I>&gt;<i> daniel, i tried zpool list from the terminal and it doesn't find any
+</I>&gt;<i> pools. perhaps because i haven't been exporting the pool before
+</I>&gt;<i> shutting down?
+</I>&gt;<i>
+</I>&gt;<i> 2009/9/10 Harald Hanche-Olsen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hanche at math.ntnu.no</A>&gt;:
+</I>&gt;<i> &gt; + Eren &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">charlienail at gmail.com</A>&gt;:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; ever since i installed 10.6 and installed zfs-119 on top to access my
+</I>&gt;<i> &gt;&gt; zfs pool i've had to mount it manually after each boot by running
+</I>&gt;<i> &gt;&gt; 'sudo zpool import -f [pool]'
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; You're a brave person.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; I don't understand why this is, the pool used to be mounted on boot
+</I>&gt;<i> &gt;&gt; under leopard and i was using the same version of zfs from
+</I>&gt;<i> &gt;&gt; macosforge.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I guess you haven't followed this mailing list lately, or you would
+</I>&gt;<i> &gt; have known that ZFS support was dropped from 10.6. I am pretty sure
+</I>&gt;<i> &gt; that the code to notice the presence of a ZFS filesystem on an
+</I>&gt;<i> &gt; attached device was not part of the zfs-119 bits. With that part gone
+</I>&gt;<i> &gt; from 10.6, I think the most likely answer to your question ...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; is there a way to make this automatic again like it used to be?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ... is no, at least not easily.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But I find it interesting to learn that zfs-119 still works on 10.6.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; - Harald
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090910/fd89be4b/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090910/fd89be4b/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001849.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+	<LI>Next message: <A HREF="001851.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1850">[ date ]</a>
+              <a href="thread.html#1850">[ thread ]</a>
+              <a href="subject.html#1850">[ subject ]</a>
+              <a href="author.html#1850">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

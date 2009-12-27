@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Installing Windows 7 in VMware &amp; VirtualBox causing	kernel panics
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Installing%20Windows%207%20in%20VMware%20%26%20VirtualBox%20causing%0A%09kernel%20panics&In-Reply-To=%3C72A337FC-4C02-48CB-8D70-3BF9CA52FCBA%40jasonrm.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001868.html">
+   <LINK REL="Next"  HREF="001875.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Installing Windows 7 in VMware &amp; VirtualBox causing	kernel panics</H1>
+    <B>Jason Richard McNeil</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Installing%20Windows%207%20in%20VMware%20%26%20VirtualBox%20causing%0A%09kernel%20panics&In-Reply-To=%3C72A337FC-4C02-48CB-8D70-3BF9CA52FCBA%40jasonrm.net%3E"
+       TITLE="[zfs-discuss] Installing Windows 7 in VMware &amp; VirtualBox causing	kernel panics">jason at jasonrm.net
+       </A><BR>
+    <I>Tue Sep 22 01:58:06 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001868.html">[zfs-discuss] Configuring a ZFS filesystem as a &quot;ram disk&quot;?
+</A></li>
+        <LI>Next message: <A HREF="001875.html">[zfs-discuss] Snapshots under os x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1874">[ date ]</a>
+              <a href="thread.html#1874">[ thread ]</a>
+              <a href="subject.html#1874">[ subject ]</a>
+              <a href="author.html#1874">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Maybe I'm wanting too much, but I really can't stand the idea of going  
+back to HFS+ after having the pleasure of ZFS. Snapshots every 10  
+minutes, checksums, filesystem level compression are all features that  
+I just can't bear to loose... however... at what cost? I can do most  
+of my day-to-day tasks just fine, but when I try and use Windows 7  
+either in VMware or VirtualBox and have the virtual machines HD on a  
+ZFS filesystem, kernel panic.
+
+I can run Ubuntu 9.04 64-bit in VMware and stress the diskIO for over  
+an hour using fsx ( a version similar to the one apple hosts at fstools.macosforge.org 
+  ) with no issues at all, but as soon as I try and install Windows 7  
+(i don't like it either, but some software I need for school is  
+windows only) it gets to the extracting files section of the install  
+and I pretty much have a guaranteed kernel panic. Heavy usage inside  
+of a working Windows VM installed on another system will also cause  
+similar issues. (Although I keep referring only to Windows 7, but I  
+have had the same issue installing/using XP as well.) I've tried it  
+with compression on/off/gzip, checksum on/off/sha256 (which seems to  
+just crash the system without reason even when idle if not on?), atime  
+on/off, even VM inside of a DMG on a ZFS filesystem, all still leads  
+to kernel panics.
+
+I am running the 10a286 beta bits and because I created my pool with  
+this version, my zpool version is 11 and unmountable by the older 119  
+so I can't test out if this same behavior exists in 119. I also have  
+this identical issue on my (identical software setup) Mac Pro when  
+running on ZFS filesystems.
+
+Mostly just wanting my issues to be public record in case others have  
+similar issues... and a little hope that Noel might have pity on those  
+of us who are wanting some more refined bits. :-)
+
+Maybe someday I'll be wise enough to stop trying out new technologies  
+that are this addictive...
+
+Tue Sep 22 01:27:00 2009
+panic(cpu 0 caller 0x2a6ac2): Kernel trap at 0x57d5a27c, type 14=page  
+fault, registers:
+CR0: 0x8001003b, CR2: 0x3120b1e8, CR3: 0x00100000, CR4: 0x000006e0
+EAX: 0x57e7db10, EBX: 0x00020000, ECX: 0x3122b1e8, EDX: 0x3120b1e8
+CR2: 0x3120b1e8, EBP: 0x8091be88, ESI: 0x00020000, EDI: 0x00000000
+EFL: 0x00010287, EIP: 0x57d5a27c, CS:  0x00000008, DS:  0x0df30010
+Error code: 0x00000000
+
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x8091bc58 : 0x21acfa (0x5ce650 0x8091bc8c 0x223156 0x0)
+0x8091bca8 : 0x2a6ac2 (0x590a50 0x57d5a27c 0xe 0x590c1a)
+0x8091bd88 : 0x29c968 (0x8091bda0 0x57e6ee50 0x8091be88 0x57d5a27c)
+0x8091bd98 : 0x57d5a27c (0xe 0x48 0x80910010 0xffff0010)
+0x8091be88 : 0x57d5e659 (0x3 0x3120b1e8 0x20000 0x0)
+0x8091bf28 : 0x57d5aeed (0x7747940 0xd61ca 0x8091bf58 0x57db1510)
+0x8091bf58 : 0x57dcc017 (0x7747940 0x84da280 0x1b9b23 0x57e07fa0)
+0x8091bfc8 : 0x29c68c (0x7055cf8 0x0 0x10 0x80d83a4)
+       Kernel Extensions in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x57d42000-&gt;0x57e88fff
+             dependency: com.apple.iokit.IOStorageFamily(1.6)@0x50eed000
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+10B504
+
+Kernel version:
+Darwin Kernel Version 10.0.0: Fri Jul 31 22:47:34 PDT 2009;  
+root:xnu-1456.1.25~1/RELEASE_I386
+System model name: MacBookPro5,1 (Mac-F42D86C8)
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001868.html">[zfs-discuss] Configuring a ZFS filesystem as a &quot;ram disk&quot;?
+</A></li>
+	<LI>Next message: <A HREF="001875.html">[zfs-discuss] Snapshots under os x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1874">[ date ]</a>
+              <a href="thread.html#1874">[ thread ]</a>
+              <a href="subject.html#1874">[ subject ]</a>
+              <a href="author.html#1874">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

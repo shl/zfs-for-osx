@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000478.html">
+   <LINK REL="Next"  HREF="000481.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic</H1>
+    <B>David Ritchie</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic&In-Reply-To="
+       TITLE="[zfs-discuss] Panic">david299792 at googlemail.com
+       </A><BR>
+    <I>Mon Apr 14 05:06:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000478.html">[zfs-discuss] rsync
+</A></li>
+        <LI>Next message: <A HREF="000481.html">[zfs-discuss] Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#479">[ date ]</a>
+              <a href="thread.html#479">[ thread ]</a>
+              <a href="subject.html#479">[ subject ]</a>
+              <a href="author.html#479">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+This might be a known issue, but in case it's not here's a crash  
+report from a kernel panic I just had. I've had this happen once or  
+twice before:-
+
+
+Mon Apr 14 13:00:29 2008
+panic(cpu 2 caller 0x0101D539): &quot;zfs: vmem_alloc couldn't alloc 131072  
+bytes\n&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/ 
+zfs_kext/zfs/zfs_context.c:668
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0xbed2f908 : 0x12b0f7 (0x4581f4 0xbed2f93c 0x133230 0x0)
+0xbed2f958 : 0x101d539 (0x1077720 0x20000 0x20000 0x101c1ed)
+0xbed2f988 : 0x1037117 (0x108b264 0x20000 0x0 0x100)
+0xbed2f9e8 : 0xfd3f09 (0xb7aca00 0x0 0xb388230 0x0)
+0xbed2fa08 : 0xfde136 (0x20000 0x0 0x1084310 0x0)
+0xbed2fa88 : 0xfde989 (0xb7ac200 0x0 0xbed2fab8 0x8e)
+0xbed2fac8 : 0xfe1222 (0xbaee000 0x20000 0xb9b732d8 0x0)
+0xbed2fb58 : 0xfe71a1 (0xb9b732d8 0x1fd24de0 0x2 0x0)
+0xbed2fba8 : 0xfe72c4 (0x8e 0x0 0x0 0x1)
+0xbed2fc48 : 0xfe77ae (0x10000 0x0 0x1 0x11c0000)
+0xbed2fca8 : 0xfc4216 (0x18600880 0xca 0x0 0x11c0000)
+0xbed2fd78 : 0x1f6131 (0xbed2fdac 0x246 0xbed2fdd8 0x1da207)
+0xbed2fdd8 : 0x1ec98f (0x1232a510 0xbed2febc 0x1 0xbed2ff54)
+0xbed2fe68 : 0x38b3ca (0xb5417f0 0xbed2febc 0x1 0xbed2ff54)
+0xbed2ff18 : 0x38b53b (0xbed2ff54 0xb5417f0 0x24546000 0x0)
+0xbed2ff78 : 0x3dcf13 (0x1f870a00 0x1b34f9c0 0x1b34fa04 0x0)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xfc1000-&gt;0x108cfff
+
+BSD process name corresponding to current thread: vmware-vmx
+
+Mac OS version:
+9C7010
+
+Kernel version:
+Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+root:xnu-1228.4.31~1/RELEASE_I386
+System model name: MacPro1,1 (Mac-F4208DC8)
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000478.html">[zfs-discuss] rsync
+</A></li>
+	<LI>Next message: <A HREF="000481.html">[zfs-discuss] Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#479">[ date ]</a>
+              <a href="thread.html#479">[ thread ]</a>
+              <a href="subject.html#479">[ subject ]</a>
+              <a href="author.html#479">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

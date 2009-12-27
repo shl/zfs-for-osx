@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Some More on Firefox
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Some%20More%20on%20Firefox&In-Reply-To=33644d3c0804031132n278db33ey8da4b869971ef989%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000441.html">
+   <LINK REL="Next"  HREF="000383.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Some More on Firefox</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Some%20More%20on%20Firefox&In-Reply-To=33644d3c0804031132n278db33ey8da4b869971ef989%40mail.gmail.com"
+       TITLE="[zfs-discuss] Some More on Firefox">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Apr  9 15:31:05 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000441.html">[zfs-discuss] Some More on Firefox
+</A></li>
+        <LI>Next message: <A HREF="000383.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#449">[ date ]</a>
+              <a href="thread.html#449">[ thread ]</a>
+              <a href="subject.html#449">[ subject ]</a>
+              <a href="author.html#449">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The '.vol' party you see is basically a mechanism for looking up an  
+object by id.
+
+The first number after the &quot;/.vol/&quot; is the fsid which specifies which  
+file system and the second number is the object id.  ZFS supports this  
+just fine (the calls cited below are all passing).
+
+The fcntl 65 (0x41) seems suspicious as there is no fnctl selector  
+defined for this value.
+
+Noel
+
+On Apr 3, 2008, at 11:32 AM, James Snyder wrote:
+
+&gt;<i> I had played with DTrace a little before with firefox and the plugin
+</I>&gt;<i> installation bug, and I decided to pull it out again today when b5 of
+</I>&gt;<i> Firefox 3 became available today.
+</I>&gt;<i>
+</I>&gt;<i> Related to the previous &quot;fcntl&quot; troubles I noticed before, I've now
+</I>&gt;<i> got a trace from Instruments, which may or may not be useful.
+</I>&gt;<i>
+</I>&gt;<i> I've attached the trace file, and below is one of the stack traces
+</I>&gt;<i> (attached has 3 since I let it try and update 3 extensions).
+</I>&gt;<i>
+</I>&gt;<i>   0 libSystem.B.dylib fcntl$UNIX2003
+</I>&gt;<i>   1 CarbonCore PBAllocateForkSync
+</I>&gt;<i>   2 CarbonCore FSAllocateFork
+</I>&gt;<i>   3 XUL XPT_Do64
+</I>&gt;<i>   4 XUL XPT_Do64
+</I>&gt;<i>   5 XUL XPT_Do64
+</I>&gt;<i>   6 XUL XPT_Do64
+</I>&gt;<i>   7 XUL NS_NewLocalFile_P
+</I>&gt;<i>   8 XUL NS_NewLocalFile_P
+</I>&gt;<i>   9 XUL NS_InvokeByIndex_P
+</I>&gt;<i>  10 XUL XRE_GetFileFromPath
+</I>&gt;<i>  11 XUL XRE_GetFileFromPath
+</I>&gt;<i>  12 libmozjs.dylib js_Invoke
+</I>&gt;<i>  13 libmozjs.dylib js_FreeStack
+</I>&gt;<i>  14 libmozjs.dylib js_Invoke
+</I>&gt;<i>  15 XUL XRE_GetFileFromPath
+</I>&gt;<i>  16 XUL XRE_GetFileFromPath
+</I>&gt;<i>  17 XUL NS_InvokeByIndex_P
+</I>&gt;<i>  18 XUL NS_InvokeByIndex_P
+</I>&gt;<i>  19 XUL XRE_GetFileFromPath
+</I>&gt;<i>  20 XUL XRE_GetFileFromPath
+</I>&gt;<i>  21 XUL XRE_GetFileFromPath
+</I>&gt;<i>  22 XUL XRE_GetFileFromPath
+</I>&gt;<i>  23 XUL XRE_GetFileFromPath
+</I>&gt;<i>  24 XUL XRE_GetFileFromPath
+</I>&gt;<i>  25 XUL JNIEnv_::CallStaticObjectMethod(_jclass*, _jmethodID*, ...)
+</I>&gt;<i>  26 XUL NS_GetComponentRegistrar_P
+</I>&gt;<i>  27 XUL GetSecurityContext(JNIEnv_*, nsISecurityContext**)
+</I>&gt;<i>  28 XUL JSD_GetValueForObject
+</I>&gt;<i>  29 XUL JSD_GetValueForObject
+</I>&gt;<i>  30 CoreFoundation CFRunLoopRunSpecific
+</I>&gt;<i>  31 CoreFoundation CFRunLoopRunInMode
+</I>&gt;<i>  32 HIToolbox RunCurrentEventLoopInMode
+</I>&gt;<i>  33 HIToolbox ReceiveNextEventCommon
+</I>&gt;<i>  34 HIToolbox BlockUntilNextEventMatchingListInMode
+</I>&gt;<i>  35 AppKit _DPSNextEvent
+</I>&gt;<i>  36 AppKit -[NSApplication  
+</I>&gt;<i> nextEventMatchingMask:untilDate:inMode:dequeue:]
+</I>&gt;<i>  37 AppKit -[NSApplication run]
+</I>&gt;<i>  38 XUL JSD_GetValueForObject
+</I>&gt;<i>  39 XUL XRE_GetFileFromPath
+</I>&gt;<i>  40 XUL XRE_main
+</I>&gt;<i>  41 firefox-bin start
+</I>&gt;<i>  42 firefox-bin start
+</I>&gt;<i>
+</I>&gt;<i> The other thing I noticed in dtruss is this sequence of syscalls
+</I>&gt;<i> leading up to the error:
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/71903/tmp.xpi\0&quot;,
+</I>&gt;<i> 0xBFFFAEB0, 0xBFFFAD00)         = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  setattrlist(0xBFFFA454, 0xBFFFABF8,  
+</I>&gt;<i> 0xBFFFA3B0)        = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA8B0,
+</I>&gt;<i> 0xBFFFA6E0)        = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA8B0,
+</I>&gt;<i> 0xBFFFA6E0)        = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA8B0,
+</I>&gt;<i> 0xBFFFA6E0)        = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867362\0&quot;, 0xBFFFA510,
+</I>&gt;<i> 0xBFFFA340)        = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867362\0&quot;, 0xBFFFA1C0,
+</I>&gt;<i> 0xBFFF9CE0)        = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  open(&quot;/.vol/754974724/71903/tmp.xpi\0&quot;, 0x26, 0x1B6)
+</I>&gt;<i>      = 65 0
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/867350\0&quot;, 0xBFFFA1C0,
+</I>&gt;<i> 0xBFFF9CE0)        = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  open(&quot;/.vol/754974724/581663/tmp.xpi\0&quot;, 0x0, 0x1B6)
+</I>&gt;<i>      = 66 0
+</I>&gt;<i> 89550/0x54a93c8:  getattrlist(&quot;/.vol/754974724/71903/tmp.xpi\0&quot;,
+</I>&gt;<i> 0xBFFFA820, 0xBFFFA660)         = 0 0
+</I>&gt;<i> 89550/0x54a93c8:  fcntl(0x41, 0x2A, 0xFFFFFFFFBFFFABB0)      = -1  
+</I>&gt;<i> Err#45
+</I>&gt;<i>
+</I>&gt;<i> What is .vol?  I'm not sure if these syscalls are connected with the
+</I>&gt;<i> same file, but /.vol seems to be owned by root:wheel and have nothing
+</I>&gt;<i> in it on my HFS+ volume.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> James Snyder
+</I>&gt;<i> Biomedical Engineering
+</I>&gt;<i> Northwestern University
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i> &lt; 
+</I>&gt;<i> Firefox_fcntl_error 
+</I>&gt;<i> .trace.zip&gt;_______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000441.html">[zfs-discuss] Some More on Firefox
+</A></li>
+	<LI>Next message: <A HREF="000383.html">[zfs-discuss] Kernel Panics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#449">[ date ]</a>
+              <a href="thread.html#449">[ thread ]</a>
+              <a href="subject.html#449">[ subject ]</a>
+              <a href="author.html#449">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

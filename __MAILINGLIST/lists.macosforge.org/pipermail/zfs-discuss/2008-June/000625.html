@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] indestructable phantom folders with zfs-117
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20indestructable%20phantom%20folders%20with%20zfs-117&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000622.html">
+   <LINK REL="Next"  HREF="000627.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] indestructable phantom folders with zfs-117</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20indestructable%20phantom%20folders%20with%20zfs-117&In-Reply-To="
+       TITLE="[zfs-discuss] indestructable phantom folders with zfs-117">info at martin-hauser.net
+       </A><BR>
+    <I>Mon Jun  2 23:49:49 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000622.html">[zfs-discuss] Suggestion: An external tool for RAID-Z expansion
+</A></li>
+        <LI>Next message: <A HREF="000627.html">[zfs-discuss] indestructable phantom folders with zfs-117
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#625">[ date ]</a>
+              <a href="thread.html#625">[ thread ]</a>
+              <a href="subject.html#625">[ subject ]</a>
+              <a href="author.html#625">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello List,
+
+I've had a quite confusing problem, which I was not able to reproduce.  
+I had a set of subfolders like
+
+rootfolder:
+FolderA
+FolderB
+
+FolderB:
+FileA
+FileB
+
+on attempting a rm -rf rootfolder and then doing an ls in the folder  
+containing rootfolder, i noticed rootfolder still being there. Now  
+attempting to 'ls rootfolder' yanked a still existing rootfolder/ 
+FolderB entry. Trying to ls rootfolder/FolderB however just said 'no  
+such file or directory'. Same went for rm -r on the rootfolder and on  
+FolderB. The solution that got it fixed was to make 'mkdir rootfolder/ 
+FolderB and rm -rf again.
+
+I'm just writing because I think i've seen it being the cause of some  
+macports installations to fail on first attempt and I think it's not  
+intended behaviour in any way.
+
+kind regards
+
+Martin Hauser
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080603/5f167b57/attachment.p7s">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080603/5f167b57/attachment.p7s</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080603/5f167b57/attachment.sig">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080603/5f167b57/attachment.sig</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000622.html">[zfs-discuss] Suggestion: An external tool for RAID-Z expansion
+</A></li>
+	<LI>Next message: <A HREF="000627.html">[zfs-discuss] indestructable phantom folders with zfs-117
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#625">[ date ]</a>
+              <a href="thread.html#625">[ thread ]</a>
+              <a href="subject.html#625">[ subject ]</a>
+              <a href="author.html#625">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

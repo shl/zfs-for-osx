@@ -1,0 +1,2996 @@
+From alvinmoonesq at gmail.com  Fri Feb 13 14:06:45 2009
+From: alvinmoonesq at gmail.com (Alvin Moon)
+Date: Fri, 13 Feb 2009 16:06:45 -0600
+Subject: [zfs-discuss] Separate Intent Logs
+Message-ID: <1AD84B7C-9629-4677-8657-BFB79A6C128F@gmail.com>
+
+Does anyone know whether the separate intent logs and/or cache are  
+available yet?  Does anyone know whether they're available in any of  
+the Snow Leopard (Server or User) builds?  It seems that it is not  
+available in Server build 10A222. 
+  
+
+From alex.blewitt at gmail.com  Fri Feb 13 14:13:44 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Fri, 13 Feb 2009 22:13:44 +0000
+Subject: [zfs-discuss] Separate Intent Logs
+In-Reply-To: <1AD84B7C-9629-4677-8657-BFB79A6C128F@gmail.com>
+References: <1AD84B7C-9629-4677-8657-BFB79A6C128F@gmail.com>
+Message-ID: <636fd28e0902131413v623947aeoa37b17dd45a4c94a@mail.gmail.com>
+
+On Fri, Feb 13, 2009 at 10:06 PM, Alvin Moon <alvinmoonesq at gmail.com> wrote:
+> Does anyone know whether the separate intent logs and/or cache are available
+> yet? ?Does anyone know whether they're available in any of the Snow Leopard
+> (Server or User) builds? ?It seems that it is not available in Server build
+
+It's not available in the public 119 build, and I know Apple doesn't
+talk about unreleased code (nor does anyone else, since it's under
+NDA) so don't expect to get much of a response here.
+
+Whether they make it into final or not, I don't know. My guess is that
+there's probably too much else to get done to get ZFS working properly
+to be able to deal with separate intent logs.
+
+Alex
+
+From chris at young-alumni.com  Fri Feb 13 23:26:31 2009
+From: chris at young-alumni.com (Chris Ruiz)
+Date: Sat, 14 Feb 2009 01:26:31 -0600
+Subject: [zfs-discuss] Separate Intent Logs
+In-Reply-To: <636fd28e0902131413v623947aeoa37b17dd45a4c94a@mail.gmail.com>
+References: <1AD84B7C-9629-4677-8657-BFB79A6C128F@gmail.com>
+	<636fd28e0902131413v623947aeoa37b17dd45a4c94a@mail.gmail.com>
+Message-ID: <35D5DE57-6299-4AFE-905D-C1BA4F3EEF61@young-alumni.com>
+
+
+On Feb 13, 2009, at 4:13 PM, Alex Blewitt wrote:
+
+> On Fri, Feb 13, 2009 at 10:06 PM, Alvin Moon  
+> <alvinmoonesq at gmail.com> wrote:
+>> Does anyone know whether the separate intent logs and/or cache are  
+>> available
+>> yet?  Does anyone know whether they're available in any of the Snow  
+>> Leopard
+>> (Server or User) builds?  It seems that it is not available in  
+>> Server build
+>
+> It's not available in the public 119 build, and I know Apple doesn't
+> talk about unreleased code (nor does anyone else, since it's under
+> NDA) so don't expect to get much of a response here.
+>
+> Whether they make it into final or not, I don't know. My guess is that
+> there's probably too much else to get done to get ZFS working properly
+> to be able to deal with separate intent logs.
+
+The version of ZFS being worked on in ZFS-119 does support a separate  
+ZIL device (it supports ZFS Pool Version 8, and this feature was added  
+in Version 7) but that version of ZFS does not support a cache device  
+(this was added in ZFS Pool Version 10).
+
+Also, as seen with ZFS-119, just because ZFS supports it, it doesn't  
+mean that Apple has or will implement it.
+
+BTW, FreeBSD 8-CURRENT has ZFS Pool Version 12 and supports both a  
+separate ZIL and cache device.
+
+Chris
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090214/801550f4/attachment.html>
+
+From lopez.on.the.lists at yellowspace.net  Sun Feb 15 10:08:09 2009
+From: lopez.on.the.lists at yellowspace.net (Lorenzo Perone)
+Date: Sun, 15 Feb 2009 19:08:09 +0100
+Subject: [zfs-discuss] ZFS panics quite easily
+In-Reply-To: <CF5CA33E-8681-463F-B15F-6C60E8060951@apple.com>
+References: <3848E003-8609-4885-B5B8-FD8D273F1005@chipmunk-app.com>
+	<636fd28e0901041016y7c2aa6ddt5eecdbccec59eb9f@mail.gmail.com>
+	<0EBC7969-BE23-4027-8751-530CF1D94994@chipmunk-app.com>
+	<49621C9C.1030807@gmail.com>
+	<9F503C73-8AD3-4DCA-93EE-30319842D465@gmail.com>
+	<4962BB9C.2050907@gmail.com>
+	<DB5706B4-97BF-4179-A3EE-E8A8A8CD066B@ironsoftware.de>
+	<039B9F4E-3DB6-4996-AE4C-CE9BDAF18DBF@apple.com>
+	<63C7F141-F46D-418C-AFC3-1FEF5928F37D@runlevel7.org>
+	<CF5CA33E-8681-463F-B15F-6C60E8060951@apple.com>
+Message-ID: <C8C21A9E-28E5-4724-BE50-E5FFFD1647A5@yellowspace.net>
+
+Hoping for some new bits, I had a round list reading, and came down  
+this thread again. While it hasn't been said as clearly as it possibly  
+could, I now realize that either there will be a 10.5.x... release  
+incorporating the most important kernel changes made for SL+zfs, or  
+we'll have to move away from ZFS for Mac OS X on anything pre-SL. That  
+is to say, dump anything back to HFS+ until SL is out and stable.
+
+The following comment might be a little OT, but I'll get rid of it  
+here where I know that some very competent people are listening.
+
+I get Your points about the kernel changes, and also that SL will be a  
+"preformance and stability" release of the OS (following an overall  
+trend in the industry...). So, while the hope for a backport of ZFS to  
+10.5 is now rapidly leaving the house, anotherone takes its place:  
+that marketing and sales will offer us an upgrade path to SL Server  
+which honour the patience, perseverance and loyalty of many  
+administrators and customers.
+
+While SL will be a major upgrade certainly covering many thousands of  
+man-hours, it still presents itself more and more like a highly needed  
+cleanup & bugfix round. I'm not going to open up a thread here about  
+the problems I and many others have had with Leopard Server  
+(particularly in environments with heavy use of DS and AFP), but I've  
+had days where frustration reached levels never experienced before  
+with OSX and Apple products in general. Long-missing new zfs bits and  
+the statement that it will probably never be ported back to 10.5.x  
+just round up my frustration (even if I know that the problems I  
+encountered are unrelated to ZFS, which I fortunately never dared  
+implementing in production environments)...
+
+As always, regards and best wishes for the Snow Leopard release in  
+general
+and a cool, rock stable ZFS implementation on top of it...
+
+Lorenzo
+
+On 09.01.2009, at 22:18, Deric Horn wrote:
+
+> The file system is a fundamental technology within the OS.  I think  
+> it's pretty safe to say that the ZFS implementation will always have  
+> dependencies on the latest version of the kernel. We try not to, but  
+> inevitably things change in the kernel, or we need more  
+> functionality from the kernel.
+>
+> We have past the point where we have enough bandwidth to fork our  
+> work, and are instead committed to delivering a single version of  
+> ZFS for SL that we can be proud of.
+>
+> We will continue to post the ZFS source code, but I ask for your  
+> patience while we work on implementing new features, and fix bugs.
+>
+> Hope this helps,
+>
+> Deric Horn
+> Engineering Manager	   File Systems
+> Apple Inc.			   408.974.3138
+>
+> On Jan 9, 2009, at 9:54 AM, Al Gordon wrote:
+>
+>> Deric, maybe I'm not quite following your statement, below.  What  
+>> is the purpose of hosting this as an open source project on  
+>> MacOSXForge if you're not going to continue to release source code,  
+>> and are basically requiring that users upgrade to SL to reap the  
+>> ongoing benefits of what's going on in this project?
+>>
+>> Are we going to continue to see any new code in this project's  
+>> public svn repo for releases/builds following 119?
+>>
+>> Will we get the source to the ZFS code that's actually running in SL?
+>>
+>> Thanks,
+>>
+>> --
+>>
+>>   -- AL --
+>>
+>> On Jan 8, 2009, at 2:04 PM, Deric Horn wrote:
+>>
+>>> We're currently in the process of integrating the latest  
+>>> OpenSolaris ZFS changes into our code base, and this is one we are  
+>>> obviously interested in.  You'll have to wait for a Snow Leopard  
+>>> seed to see it in action though.
+>>>
+>>> Deric Horn
+>>> Engineering Manager	   File Systems
+>>> Apple Inc.			   408.974.3138
+>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090215/68ea55e7/attachment.html>
+
+From zorg at sogeeky.net  Sun Feb 15 10:22:00 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Sun, 15 Feb 2009 10:22:00 -0800
+Subject: [zfs-discuss] ZFS panics quite easily
+In-Reply-To: <C8C21A9E-28E5-4724-BE50-E5FFFD1647A5@yellowspace.net>
+References: <3848E003-8609-4885-B5B8-FD8D273F1005@chipmunk-app.com>
+	<636fd28e0901041016y7c2aa6ddt5eecdbccec59eb9f@mail.gmail.com>
+	<0EBC7969-BE23-4027-8751-530CF1D94994@chipmunk-app.com>
+	<49621C9C.1030807@gmail.com>
+	<9F503C73-8AD3-4DCA-93EE-30319842D465@gmail.com>
+	<4962BB9C.2050907@gmail.com>
+	<DB5706B4-97BF-4179-A3EE-E8A8A8CD066B@ironsoftware.de>
+	<039B9F4E-3DB6-4996-AE4C-CE9BDAF18DBF@apple.com>
+	<63C7F141-F46D-418C-AFC3-1FEF5928F37D@runlevel7.org>
+	<CF5CA33E-8681-463F-B15F-6C60E8060951@apple.com>
+	<C8C21A9E-28E5-4724-BE50-E5FFFD1647A5@yellowspace.net>
+Message-ID: <FA86342F-E211-46A2-A319-CAA734B61B7F@sogeeky.net>
+
+Well said...
+
+On Feb 15, 2009, at 10:08 AM, Lorenzo Perone <lopez.on.the.lists at yellowspace.net 
+ > wrote:
+
+> Hoping for some new bits, I had a round list reading, and came down  
+> this thread again. While it hasn't been said as clearly as it  
+> possibly could, I now realize that either there will be a 10.5.x...  
+> release incorporating the most important kernel changes made for SL 
+> +zfs, or we'll have to move away from ZFS for Mac OS X on anything  
+> pre-SL. That is to say, dump anything back to HFS+ until SL is out  
+> and stable.
+>
+> The following comment might be a little OT, but I'll get rid of it  
+> here where I know that some very competent people are listening.
+>
+> I get Your points about the kernel changes, and also that SL will be  
+> a "preformance and stability" release of the OS (following an  
+> overall trend in the industry...). So, while the hope for a backport  
+> of ZFS to 10.5 is now rapidly leaving the house, anotherone takes  
+> its place: that marketing and sales will offer us an upgrade path to  
+> SL Server which honour the patience, perseverance and loyalty of  
+> many administrators and customers.
+>
+> While SL will be a major upgrade certainly covering many thousands  
+> of man-hours, it still presents itself more and more like a highly  
+> needed cleanup & bugfix round. I'm not going to open up a thread  
+> here about the problems I and many others have had with Leopard  
+> Server (particularly in environments with heavy use of DS and AFP),  
+> but I've had days where frustration reached levels never experienced  
+> before with OSX and Apple products in general. Long-missing new zfs  
+> bits and the statement that it will probably never be ported back to  
+> 10.5.x just round up my frustration (even if I know that the  
+> problems I encountered are unrelated to ZFS, which I fortunately  
+> never dared implementing in production environments)...
+>
+> As always, regards and best wishes for the Snow Leopard release in  
+> general
+> and a cool, rock stable ZFS implementation on top of it...
+>
+> Lorenzo
+>
+> On 09.01.2009, at 22:18, Deric Horn wrote:
+>
+>> The file system is a fundamental technology within the OS.  I think  
+>> it's pretty safe to say that the ZFS implementation will always  
+>> have dependencies on the latest version of the kernel. We try not  
+>> to, but inevitably things change in the kernel, or we need more  
+>> functionality from the kernel.
+>>
+>> We have past the point where we have enough bandwidth to fork our  
+>> work, and are instead committed to delivering a single version of  
+>> ZFS for SL that we can be proud of.
+>>
+>> We will continue to post the ZFS source code, but I ask for your  
+>> patience while we work on implementing new features, and fix bugs.
+>>
+>> Hope this helps,
+>>
+>> Deric Horn
+>> Engineering Manager	   File Systems
+>> Apple Inc.			   408.974.3138
+>>
+>> On Jan 9, 2009, at 9:54 AM, Al Gordon wrote:
+>>
+>>> Deric, maybe I'm not quite following your statement, below.  What  
+>>> is the purpose of hosting this as an open source project on  
+>>> MacOSXForge if you're not going to continue to release source  
+>>> code, and are basically requiring that users upgrade to SL to reap  
+>>> the ongoing benefits of what's going on in this project?
+>>>
+>>> Are we going to continue to see any new code in this project's  
+>>> public svn repo for releases/builds following 119?
+>>>
+>>> Will we get the source to the ZFS code that's actually running in  
+>>> SL?
+>>>
+>>> Thanks,
+>>>
+>>> --
+>>>
+>>>   -- AL --
+>>>
+>>> On Jan 8, 2009, at 2:04 PM, Deric Horn wrote:
+>>>
+>>>> We're currently in the process of integrating the latest  
+>>>> OpenSolaris ZFS changes into our code base, and this is one we  
+>>>> are obviously interested in.  You'll have to wait for a Snow  
+>>>> Leopard seed to see it in action though.
+>>>>
+>>>> Deric Horn
+>>>> Engineering Manager	   File Systems
+>>>> Apple Inc.			   408.974.3138
+>>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090215/6dc1e61e/attachment-0001.html>
+
+From zfs at sbod.at  Mon Feb 16 09:19:05 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Mon, 16 Feb 2009 18:19:05 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+Message-ID: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+
+Hey there beloved list :)
+
+After using zfs on osx almost 1 year it?s time to move on :)
+Since 2 of my Western Digital Harddrives died at the same time ( grrrr )
+I decided it?s time to build an opensolaris server.... ,-)
+
+I?m waving raidz goodbye and will be using zfs mirrors, i think...
+
+So, here?s my  question:
+
+Do you think its better to combine all of my mirrors ( i will be using  
+8 drives, i.e . 4 mirror pairs ) into one pool
+or build 4 pools consisting of one mirror pair each ?
+
+When using the first method, if one mirror dies, all my data is gone  
+( again )
+But having 4 pools is annoying...
+
+Is there a way to "stripe" ( i know stripe is the wrong term here ) my  
+data across all of the pools, but only loose data on one of the mirror  
+pairs if it dies ?
+
+
+
+
+Thanks in advance !
+
+
+p.s.
+
+Is Noel still around ?
+
+
+
+
+
+
+
+
+Franz 
+
+From richard.elling at gmail.com  Mon Feb 16 09:59:43 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Mon, 16 Feb 2009 09:59:43 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+Message-ID: <4999A98F.7000207@gmail.com>
+
+Franz Schmalzl wrote:
+> Hey there beloved list :)
+>
+> After using zfs on osx almost 1 year it?s time to move on :)
+> Since 2 of my Western Digital Harddrives died at the same time ( grrrr )
+> I decided it?s time to build an opensolaris server.... ,-)
+>
+> I?m waving raidz goodbye and will be using zfs mirrors, i think...
+
+IMHO, a good idea.  http://baarf.com :-)
+
+>
+> So, here?s my  question:
+>
+> Do you think its better to combine all of my mirrors ( i will be using 
+> 8 drives, i.e . 4 mirror pairs ) into one pool
+> or build 4 pools consisting of one mirror pair each ?
+
+Better in what way? A single mirror (or RAID-1) has better data protection
+than a stripe of mirrors (or RAID-1+0). But the stripe of mirrors has more
+space and better performance.
+
+>
+> When using the first method, if one mirror dies, all my data is gone ( 
+> again )
+> But having 4 pools is annoying...
+
+In general, fewer is better -- easier to manage and lower TCO.
+
+>
+> Is there a way to "stripe" ( i know stripe is the wrong term here ) my 
+> data across all of the pools, but only loose data on one of the mirror 
+> pairs if it dies ?
+
+It really depends on the failure mode. For ZFS, you have more options.
+For example, on my wife's home directory (containing her Pictures), I set
+copies=2. This offers better redundancy for those things which are most
+important. By contrast, my junk is in a file system with copies=1.  The
+zfs copies mechanism works over and above the zpool data protection.
+I find this difficult to describe in text, so a picture is worth 1,000 
+words.
+http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection
+
+HTH,
+ -- richard
+
+
+From mattsnow at gmail.com  Mon Feb 16 10:03:51 2009
+From: mattsnow at gmail.com (Matt Snow)
+Date: Mon, 16 Feb 2009 10:03:51 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+Message-ID: <6879ebc80902161003u4a3569eew97fddf07794f8ca9@mail.gmail.com>
+
+Hi Franz,
+Good luck! Hopefully you don't get too many dieing drives. I've been running
+RAIDZ with 5x 500GB drives for the last year on OSX and its been great. 1
+drive gave up and was RMA'd with Seagate.
+
+You will certainly see better I/O performance with multiple mirrors. My
+suggestion is get a motherboard with PCI-X, and one of these SATA
+controller<http://www.supermicro.com/products/accessories/addon/AoC-SAT2-MV8.cfm>from
+SuperMicro. I have 8 systems with both intel and tyan boards in my
+work
+lab using two of these cards with S10U5(+misc patches for marvell chipset
+and ZFS) and they both scream.
+Anyways, get one of those cards and use a couple of the onboard SATA ports
+for 1-2 hot spares so you don't have to work as much about losing a mirror
+pair.
+
+To create mirrored stripes(aka RAID-10) in zfs you can do `zpool create tank
+mirror c0t1d0 c0t2d0 mirror c0t3d0 c0t4d0 mirror c0t5d0 c0t6d0`.
+if you choose to add a spare, append `spare c0t7d0` to the end.
+
+There is no way with ZFS to store your data across 4 mirror pairs and be
+able to lose 1 mirror pair and still have the rest of your data, unless of
+course you create 4 seperate pools. data loss is not acceptable in my eyes
+so i'm not sure why you'd want to let it get to that point. =\
+
+..Matt
+
+On Mon, Feb 16, 2009 at 9:19 AM, Franz Schmalzl <zfs at sbod.at> wrote:
+
+> Hey there beloved list :)
+>
+> After using zfs on osx almost 1 year it?s time to move on :)
+> Since 2 of my Western Digital Harddrives died at the same time ( grrrr )
+> I decided it?s time to build an opensolaris server.... ,-)
+>
+> I?m waving raidz goodbye and will be using zfs mirrors, i think...
+>
+> So, here?s my  question:
+>
+> Do you think its better to combine all of my mirrors ( i will be using 8
+> drives, i.e . 4 mirror pairs ) into one pool
+> or build 4 pools consisting of one mirror pair each ?
+>
+> When using the first method, if one mirror dies, all my data is gone (
+> again )
+> But having 4 pools is annoying...
+>
+> Is there a way to "stripe" ( i know stripe is the wrong term here ) my data
+> across all of the pools, but only loose data on one of the mirror pairs if
+> it dies ?
+>
+>
+>
+>
+> Thanks in advance !
+>
+>
+> p.s.
+>
+> Is Noel still around ?
+>
+>
+>
+>
+>
+>
+>
+>
+> Franz_______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090216/bdb66d4a/attachment.html>
+
+From zfs at sbod.at  Mon Feb 16 10:08:44 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Mon, 16 Feb 2009 19:08:44 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <4999A98F.7000207@gmail.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+Message-ID: <D1CF374F-7AFA-4A84-ACCA-ABC4A3DEB4D0@sbod.at>
+
+
+On 16.02.2009, at 18:59, Richard Elling wrote:
+
+> Franz Schmalzl wrote:
+>> Hey there beloved list :)
+>>
+>> After using zfs on osx almost 1 year it?s time to move on :)
+>> Since 2 of my Western Digital Harddrives died at the same time  
+>> ( grrrr )
+>> I decided it?s time to build an opensolaris server.... ,-)
+>>
+>> I?m waving raidz goodbye and will be using zfs mirrors, i think...
+>
+> IMHO, a good idea.  http://baarf.com :-)
+
+That?s nice :)
+
+
+>
+>
+>>
+>> So, here?s my  question:
+>>
+>> Do you think its better to combine all of my mirrors ( i will be  
+>> using 8 drives, i.e . 4 mirror pairs ) into one pool
+>> or build 4 pools consisting of one mirror pair each ?
+>
+> Better in what way? A single mirror (or RAID-1) has better data  
+> protection
+> than a stripe of mirrors (or RAID-1+0). But the stripe of mirrors  
+> has more
+> space and better performance.
+>
+>>
+>> When using the first method, if one mirror dies, all my data is  
+>> gone ( again )
+>> But having 4 pools is annoying...
+>
+> In general, fewer is better -- easier to manage and lower TCO.
+
+Right... but more vulnerable to a failing hardrive as well...
+
+
+I think i?ll stick to building a couple of pools....
+
+
+>
+>
+>>
+>> Is there a way to "stripe" ( i know stripe is the wrong term here )  
+>> my data across all of the pools, but only loose data on one of the  
+>> mirror pairs if it dies ?
+>
+> It really depends on the failure mode. For ZFS, you have more options.
+> For example, on my wife's home directory (containing her Pictures),  
+> I set
+> copies=2. This offers better redundancy for those things which are  
+> most
+> important. By contrast, my junk is in a file system with copies=1.   
+> The
+> zfs copies mechanism works over and above the zpool data protection.
+> I find this difficult to describe in text, so a picture is worth  
+> 1,000 words.
+> http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection
+>
+
+
+
+
+
+> HTH,
+
+It did,
+
+
+Thank you very much!
+
+
+
+
+Franz
+
+>
+> -- richard
+>
+
+
+From zfs at sbod.at  Mon Feb 16 10:11:34 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Mon, 16 Feb 2009 19:11:34 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <6879ebc80902161003u4a3569eew97fddf07794f8ca9@mail.gmail.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<6879ebc80902161003u4a3569eew97fddf07794f8ca9@mail.gmail.com>
+Message-ID: <08EED7D3-C0BF-4C30-96C9-CBBB9B4EDD2B@sbod.at>
+
+
+On 16.02.2009, at 19:03, Matt Snow wrote:
+
+> Hi Franz,
+
+
+Hey!
+
+
+>
+> Good luck!
+
+Thanks :)
+
+> Hopefully you don't get too many dieing drives. I've been running  
+> RAIDZ with 5x 500GB drives for the last year on OSX and its been  
+> great. 1 drive gave up and was RMA'd with Seagate.
+>
+> You will certainly see better I/O performance with multiple mirrors.  
+> My suggestion is get a motherboard with PCI-X, and one of these SATA  
+> controller from SuperMicro.
+
+Really ? Why those cards ?
+
+I was just thinking about buying a motherboard with 8 SATA ports...
+
+
+Is it better to buy a PCI-X SATA extension card ?
+
+
+> I have 8 systems with both intel and tyan boards in my work lab  
+> using two of these cards with S10U5(+misc patches for marvell  
+> chipset and ZFS) and they both scream.
+> Anyways, get one of those cards and use a couple of the onboard SATA  
+> ports for 1-2 hot spares so you don't have to work as much about  
+> losing a mirror pair.
+>
+> To create mirrored stripes(aka RAID-10) in zfs you can do `zpool  
+> create tank mirror c0t1d0 c0t2d0 mirror c0t3d0 c0t4d0 mirror c0t5d0  
+> c0t6d0`.
+> if you choose to add a spare, append `spare c0t7d0` to the end.
+
+Hot Spares.... Good Idea...
+
+>
+>
+> There is no way with ZFS to store your data across 4 mirror pairs  
+> and be able to lose 1 mirror pair and still have the rest of your  
+> data, unless of course you create 4 seperate pools. data loss is not  
+> acceptable in my eyes so i'm not sure why you'd want to let it get  
+> to that point. =\
+>
+> ..Matt
+
+
+Thanks for your answer!
+
+
+Franz
+
+
+
+>
+>
+> On Mon, Feb 16, 2009 at 9:19 AM, Franz Schmalzl <zfs at sbod.at> wrote:
+> Hey there beloved list :)
+>
+> After using zfs on osx almost 1 year it?s time to move on :)
+> Since 2 of my Western Digital Harddrives died at the same time  
+> ( grrrr )
+> I decided it?s time to build an opensolaris server.... ,-)
+>
+> I?m waving raidz goodbye and will be using zfs mirrors, i think...
+>
+> So, here?s my  question:
+>
+> Do you think its better to combine all of my mirrors ( i will be  
+> using 8 drives, i.e . 4 mirror pairs ) into one pool
+> or build 4 pools consisting of one mirror pair each ?
+>
+> When using the first method, if one mirror dies, all my data is gone  
+> ( again )
+> But having 4 pools is annoying...
+>
+> Is there a way to "stripe" ( i know stripe is the wrong term here )  
+> my data across all of the pools, but only loose data on one of the  
+> mirror pairs if it dies ?
+>
+>
+>
+>
+> Thanks in advance !
+>
+>
+> p.s.
+>
+> Is Noel still around ?
+>
+>
+>
+>
+>
+>
+>
+>
+> Franz_______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+
+From zfs at sbod.at  Mon Feb 16 10:28:00 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Mon, 16 Feb 2009 19:28:00 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <08EED7D3-C0BF-4C30-96C9-CBBB9B4EDD2B@sbod.at>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<6879ebc80902161003u4a3569eew97fddf07794f8ca9@mail.gmail.com>
+	<08EED7D3-C0BF-4C30-96C9-CBBB9B4EDD2B@sbod.at>
+Message-ID: <5E18B65F-18AC-4A08-9906-4741474F4386@sbod.at>
+
+Ok i decided i will use a striped mirror set BUT set up some hotspares  
+to minimize the risk of data loss...
+
+
+
+good idea ?
+
+
+
+franz 
+
+From richard.elling at gmail.com  Mon Feb 16 10:37:31 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Mon, 16 Feb 2009 10:37:31 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <5E18B65F-18AC-4A08-9906-4741474F4386@sbod.at>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>	<6879ebc80902161003u4a3569eew97fddf07794f8ca9@mail.gmail.com>	<08EED7D3-C0BF-4C30-96C9-CBBB9B4EDD2B@sbod.at>
+	<5E18B65F-18AC-4A08-9906-4741474F4386@sbod.at>
+Message-ID: <4999B26B.8030808@gmail.com>
+
+Franz Schmalzl wrote:
+> Ok i decided i will use a striped mirror set BUT set up some hotspares 
+> to minimize the risk of data loss...
+>
+>
+>
+> good idea ?
+
+Hot spares are a good idea, especially if you might not be able
+to quickly repair the system.  The longer it takes to repair, the
+higher the risk that you will lose data.  This is reflected in some
+of the MTTDL models we use.
+http://blogs.sun.com/relling/entry/a_story_of_two_mttdl
+ -- richard
+
+
+From fruitboi at gmail.com  Mon Feb 16 10:45:56 2009
+From: fruitboi at gmail.com (Aaron Berland)
+Date: Mon, 16 Feb 2009 12:45:56 -0600
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <9422918F-AD33-4185-8290-F26E9CB2333B@mac.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<6879ebc80902161003u4a3569eew97fddf07794f8ca9@mail.gmail.com>
+	<08EED7D3-C0BF-4C30-96C9-CBBB9B4EDD2B@sbod.at>
+	<5E18B65F-18AC-4A08-9906-4741474F4386@sbod.at>
+	<9422918F-AD33-4185-8290-F26E9CB2333B@mac.com>
+Message-ID: <373ECB24-11AD-42FB-A74F-5F31FAEF563A@gmail.com>
+
+Oops, sent from wrong email
+On Feb 16, 2009, at 12:39 PM, Aaron Berland  wrote:
+
+> Lots of suggestions here, and mirrors are good!  Having all of your  
+> drives mirrored on the same box will give you good *local*  
+> reliability, but what happens if/when the SATA controller blows all  
+> of your drives? Is your data backed up or replicated to another box  
+> or medium?
+>
+> Personally, I run 2 boxes with 1 raidz pool on each box. Use zfs  
+> send/recv to clone the file systems in case of catastrophic failure  
+> on my primary box. It really depends on how paranoid u r and the  
+> importance of your data.
+>
+> Another wrench in the spokes!
+>
+> Sent from my iPhone
+>
+> On Feb 16, 2009, at 12:28 PM, Franz Schmalzl <zfs at sbod.at> wrote:
+>
+>> Ok i decided i will use a striped mirror set BUT set up some  
+>> hotspares to minimize the risk of data loss...
+>>
+>>
+>>
+>> good idea ?
+>>
+>>
+>>
+>> franz_______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From wmertens at cisco.com  Mon Feb 16 11:27:04 2009
+From: wmertens at cisco.com (Wout Mertens)
+Date: Mon, 16 Feb 2009 20:27:04 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <4999A98F.7000207@gmail.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+Message-ID: <A42E4808-C935-4144-9B09-6ECDB4607397@cisco.com>
+
+On Feb 16, 2009, at 6:59 PM, Richard Elling wrote:
+
+>> Do you think its better to combine all of my mirrors ( i will be  
+>> using 8 drives, i.e . 4 mirror pairs ) into one pool
+>> or build 4 pools consisting of one mirror pair each ?
+>
+> Better in what way? A single mirror (or RAID-1) has better data  
+> protection
+> than a stripe of mirrors (or RAID-1+0).
+
+Huh? Why? You mean an N-way mirror?
+
+Wout.
+
+
+
+From zfs at hessmann.de  Mon Feb 16 11:37:38 2009
+From: zfs at hessmann.de (=?ISO-8859-1?Q?Christian_He=DFmann?=)
+Date: Mon, 16 Feb 2009 20:37:38 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <4999A98F.7000207@gmail.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+Message-ID: <84734C63-141A-46FF-A1F2-27815B2C15BC@hessmann.de>
+
+On 16.02.2009, at 18:59, Richard Elling wrote:
+
+> For example, on my wife's home directory (containing her Pictures),  
+> I set
+> copies=2. This offers better redundancy for those things which are  
+> most
+> important. By contrast, my junk is in a file system with copies=1.   
+> The
+> zfs copies mechanism works over and above the zpool data protection.
+> I find this difficult to describe in text, so a picture is worth  
+> 1,000 words.
+> http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection
+
+I know the copies-parameter and this blog entry, but I still don't get  
+it...
+
+Ok, in case something goes wrong and I lose one side of my stripe, I  
+can be (quite) sure the data is still written on the second disk.
+
+Nonetheless, AFAIK, I can't mount one side of a stripe without the  
+other - so what's the point? Being able to extract my valuable data  
+with a hex editor? That can't be the whole point of this exercise...?
+
+
+Best regards,
+
+Christian
+
+From richard.elling at gmail.com  Mon Feb 16 11:55:07 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Mon, 16 Feb 2009 11:55:07 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <84734C63-141A-46FF-A1F2-27815B2C15BC@hessmann.de>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+	<84734C63-141A-46FF-A1F2-27815B2C15BC@hessmann.de>
+Message-ID: <4999C49B.7010802@gmail.com>
+
+Christian He?mann wrote:
+> On 16.02.2009, at 18:59, Richard Elling wrote:
+>
+>> For example, on my wife's home directory (containing her Pictures), I 
+>> set
+>> copies=2. This offers better redundancy for those things which are most
+>> important. By contrast, my junk is in a file system with copies=1.  The
+>> zfs copies mechanism works over and above the zpool data protection.
+>> I find this difficult to describe in text, so a picture is worth 
+>> 1,000 words.
+>> http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection
+>
+> I know the copies-parameter and this blog entry, but I still don't get 
+> it...
+>
+> Ok, in case something goes wrong and I lose one side of my stripe, I 
+> can be (quite) sure the data is still written on the second disk.
+
+You seem to only be considering a failure mode where the whole
+disk becomes suddenly, completely inaccessible.  As the data
+shows in the blog, this is not the most common failure mode.
+
+>
+> Nonetheless, AFAIK, I can't mount one side of a stripe without the 
+> other - so what's the point? Being able to extract my valuable data 
+> with a hex editor? That can't be the whole point of this exercise...?
+
+You do need all top-level vdevs to be available, but we do not
+refer to these as "side of a stripe."  Mirrors are typically referred
+to as having sides.  If you are concerned about complete double
+failures of disk drives, then you will need to implement a double
+parity protection scheme: 3-way mirror or raidz2.  Or, as I sometimes
+like to say, pay for your paranoia.
+ -- richard
+
+
+From colin_s_johnson at comcast.net  Mon Feb 16 12:12:05 2009
+From: colin_s_johnson at comcast.net (Colin Johnson)
+Date: Mon, 16 Feb 2009 12:12:05 -0800
+Subject: [zfs-discuss]  One big pool / Several ones ?
+Message-ID: <BE3B47B9-F021-495C-914E-1F3ED522C161@comcast.net>
+
+Hi there,
+
+I saw everyone's posts about building an OpenSolaris server.
+
+I just went through weeks of hell doing this, so maybe I can share my  
+experiences:
+
+My current system is as follows:
+
+Dell PowerEdge SC1430 quad core server with 6GB RAM.
+1x 80GB drive for OpenSolaris rpool (not mirrored yet, but I'll use an  
+external USB drive for this).
+
+4x750GB Seagate drives in a single RAIDZ pool and a SATA port left  
+over and a bay left over for a hot spare. I broke the connector off  
+one of my drives, so it's either hot glue or buy another for $75.
+I run the 80GB drive off the motherboard and the 4x Seagates off a  
+SuperMicro AOC SAT2-MV8.
+I'm running build 106 and I have had zero issues with it now that it  
+is up and running.
+I've bench marked OpenSolaris with the drives in normal stripe,  
+mirror, raidz and raidz2 and using the kernel CIFS server and both a  
+5GB zip drag drop test and IOMeter, consistently get around 50MB/ 
+second, regardless of configuration.
+The stripe and mirror is a 'little' faster, but not so you would notice.
+My recommendation is to run raidz with a hot spare if this is your NAS.
+
+I originally planned to also run an external array from the same  
+server but I had major issues with this Super Micro board.
+It turns out that after 3 weeks of hell, Super Micro eventually  
+admitted that the board does NOT and never will support 1.5TB or  
+higher drives. The Seagate's I had planned to use were giving all  
+sorts of weird errors.
+The end result is I really learned a lot about setting up OpenSolaris.
+
+This left me with a EnhanceBox ML-8 infiniband external enclosure and  
+8x 1.5TB drives to play with :)
+I ended up using the 3Ware 3650SE 8LPML card in my Mac Pro (8 core +  
+6GB RAM) and using the Sidecare drivers for Leopard.
+3Ware tell me they will have full Leopard and OpenSolaris support for  
+all their boards in a matter of days (so this gives another  
+alternative to the Supermicro, running as JBOD).
+
+Even this wasn't plain sailing as the drivers wouldn't work correctly  
+on anything that required parity (RAID 5, 50, 6 etc).
+I reluctantly tried configuring it as raid 10 (striped of mirrors) and  
+although I have 5.45TB usable out of 8x1.5TB drives, it has by  
+accident turned into the best possible solution.
+It is lightening fast due to the size of the array!
+
+So now I have a Dell server running as a NAS with OpenSolaris, purely  
+hosting files and sharing via the kernel CIFS server (very nice).
+
+I have had problems getting SqueezeCenter to build on OpenSolaris. so  
+I've given up there.
+I've also tried using XBMC linked to the CIFS shares on the  
+OpenSolaris NAS for my AppleTV, but the video quality sucks.
+
+The end result is I am loaning my new MacBook Pro to the temporary  
+task of running iTunes and SlimServer and pointing to the NAS to get  
+the files via CIFS.
+I will replace the MacBook Pro with wither an old dual core Mac Mini  
+or wait a few weeks to see if the new model arrives.
+
+This works pretty flawlessly and I use Automater to mount the CIFS  
+shares at reboot.
+
+The large extrenal DAS array is used for very very fast storage when/ 
+if I need it and also as a backup target for the OpenSolaris NAS.
+
+All I need to do now is get some backup scheme in place. I'd love to  
+use iSCSI from the Mac Mini to the NAS but that's an exercise for later.
+
+Please don't hesitate to ask if you have any questions about  
+OpenSolaris, I feel I could write a book on it now :)
+
+~Colin
+
+
+From richard.elling at gmail.com  Mon Feb 16 12:15:15 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Mon, 16 Feb 2009 12:15:15 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <A42E4808-C935-4144-9B09-6ECDB4607397@cisco.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+	<A42E4808-C935-4144-9B09-6ECDB4607397@cisco.com>
+Message-ID: <4999C953.9050806@gmail.com>
+
+Wout Mertens wrote:
+> On Feb 16, 2009, at 6:59 PM, Richard Elling wrote:
+>
+>>> Do you think its better to combine all of my mirrors ( i will be 
+>>> using 8 drives, i.e . 4 mirror pairs ) into one pool
+>>> or build 4 pools consisting of one mirror pair each ?
+>>
+>> Better in what way? A single mirror (or RAID-1) has better data 
+>> protection
+>> than a stripe of mirrors (or RAID-1+0).
+>
+> Huh? Why? You mean an N-way mirror?
+
+Mathematically, for a stripe:
+    MTTDL = MTBF / N
+where N is the number of columns in the stripe.  Adding more columns
+results in worse MTTDL.
+
+For a 2-way mirror, using a simple MTTDL model for homogenous disks:
+     MTTDL = MTBF^2 / (2 * MTTR)
+
+For a 4-disk, 2-way mirror + stripe (RAID-1+0):
+    MTTDL = (MTBF^2 / (2 * MTTR)) / 2
+
+Or, as a rule of thumb, for data protection: stripes are bad, mirrors 
+are good.
+ -- richard
+
+
+From zfs at sbod.at  Mon Feb 16 12:16:55 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Mon, 16 Feb 2009 21:16:55 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <4999C49B.7010802@gmail.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+	<84734C63-141A-46FF-A1F2-27815B2C15BC@hessmann.de>
+	<4999C49B.7010802@gmail.com>
+Message-ID: <855D4ACA-F483-4329-9DC2-FFA5169BB8C4@sbod.at>
+
+I just wanted to say:
+
+Thanks for all your help/information guys!
+
+As always this list ( and the people writing on it ) provide(s) on of  
+the best resources i know of : )
+
+
+
+I?ll keep you posted about my nifty little project, as soon as my  
+server is set up :)
+
+
+
+
+Cheers,
+
+Franz
+
+
+
+
+From zfs at sbod.at  Mon Feb 16 12:21:08 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Mon, 16 Feb 2009 21:21:08 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <BE3B47B9-F021-495C-914E-1F3ED522C161@comcast.net>
+References: <BE3B47B9-F021-495C-914E-1F3ED522C161@comcast.net>
+Message-ID: <2B81572E-5B71-42BF-B291-8F5302DFACDA@sbod.at>
+
+>
+>
+> Please don't hesitate to ask if you have any questions about  
+> OpenSolaris, I feel I could write a book on it now :)
+
+
+
+I *definitely* will come back to that in the near future :)
+
+
+
+Franz
+
+
+
+
+
+>
+>
+> ~Colin
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From colin_s_johnson at comcast.net  Mon Feb 16 12:22:28 2009
+From: colin_s_johnson at comcast.net (Colin Johnson)
+Date: Mon, 16 Feb 2009 12:22:28 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <4999C953.9050806@gmail.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+	<A42E4808-C935-4144-9B09-6ECDB4607397@cisco.com>
+	<4999C953.9050806@gmail.com>
+Message-ID: <304ABD52-1E3C-4597-9315-CDCBBA4846EA@comcast.net>
+
+Actually, mirrors are not a good solution for data protection -  
+backups are!
+RAIDs do not save you from losing data and a mirror will write crap to  
+two disks just as easily as one ;)
+
+~Colin
+
+
+On Feb 16, 2009, at 12:15 PM, Richard Elling wrote:
+
+> Or, as a rule of thumb, for data protection: stripes are bad,  
+> mirrors are good.
+
+
+From zorg at sogeeky.net  Mon Feb 16 13:31:31 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Mon, 16 Feb 2009 13:31:31 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <304ABD52-1E3C-4597-9315-CDCBBA4846EA@comcast.net>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+	<A42E4808-C935-4144-9B09-6ECDB4607397@cisco.com>
+	<4999C953.9050806@gmail.com>
+	<304ABD52-1E3C-4597-9315-CDCBBA4846EA@comcast.net>
+Message-ID: <CF1A4987-E9F8-4E97-BE9C-C99ED428427A@sogeeky.net>
+
+True. It's more about uptime. :)
+
+On Feb 16, 2009, at 12:22 PM, Colin Johnson  
+<colin_s_johnson at comcast.net> wrote:
+
+> Actually, mirrors are not a good solution for data protection -  
+> backups are!
+> RAIDs do not save you from losing data and a mirror will write crap  
+> to two disks just as easily as one ;)
+>
+> ~Colin
+>
+>
+> On Feb 16, 2009, at 12:15 PM, Richard Elling wrote:
+>
+>> Or, as a rule of thumb, for data protection: stripes are bad,  
+>> mirrors are good.
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From alex.blewitt at gmail.com  Mon Feb 16 13:31:35 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Mon, 16 Feb 2009 21:31:35 +0000
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <304ABD52-1E3C-4597-9315-CDCBBA4846EA@comcast.net>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<4999A98F.7000207@gmail.com>
+	<A42E4808-C935-4144-9B09-6ECDB4607397@cisco.com>
+	<4999C953.9050806@gmail.com>
+	<304ABD52-1E3C-4597-9315-CDCBBA4846EA@comcast.net>
+Message-ID: <CB8B4B14-C0DA-4DCC-888B-E359CE0CE72F@gmail.com>
+
+With a mirror, you can rm -rf twice as fast ...
+
+Sent from my (new) iPhone
+
+On 16 Feb 2009, at 20:22, Colin Johnson <colin_s_johnson at comcast.net>  
+wrote:
+
+> Actually, mirrors are not a good solution for data protection -  
+> backups are!
+> RAIDs do not save you from losing data and a mirror will write crap  
+> to two disks just as easily as one ;)
+>
+> ~Colin
+>
+>
+> On Feb 16, 2009, at 12:15 PM, Richard Elling wrote:
+>
+>> Or, as a rule of thumb, for data protection: stripes are bad,  
+>> mirrors are good.
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From fruitboi at gmail.com  Mon Feb 16 14:05:08 2009
+From: fruitboi at gmail.com (Aaron Berland)
+Date: Mon, 16 Feb 2009 16:05:08 -0600
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <E483CD76-902F-4B65-ACF5-45A305FD2E18@mac.com>
+References: <BE3B47B9-F021-495C-914E-1F3ED522C161@comcast.net>
+	<E483CD76-902F-4B65-ACF5-45A305FD2E18@mac.com>
+Message-ID: <F8D80E68-8414-41D7-BE3A-6E2D7D23B542@gmail.com>
+
+Grr.. Did it again! My msg is below
+
+Sent from my iPhone
+
+On Feb 16, 2009, at 3:08 PM, Aaron Berland  wrote:
+
+> OpenSolaris is fun! NexentaStor is solaris kernal with ubuntu gnu  
+> management tools and the web GUI us super sweet as a storage  
+> appliance for cifs, nfs, webdav, iSCSI and the works!
+>
+> Sent from my iPhone
+>
+> On Feb 16, 2009, at 2:12 PM, Colin Johnson <colin_s_johnson at comcast.net 
+> > wrote:
+>
+>> Hi there,
+>>
+>> I saw everyone's posts about building an OpenSolaris server.
+>>
+>> I just went through weeks of hell doing this, so maybe I can share  
+>> my experiences:
+>>
+>> My current system is as follows:
+>>
+>> Dell PowerEdge SC1430 quad core server with 6GB RAM.
+>> 1x 80GB drive for OpenSolaris rpool (not mirrored yet, but I'll use  
+>> an external USB drive for this).
+>>
+>> 4x750GB Seagate drives in a single RAIDZ pool and a SATA port left  
+>> over and a bay left over for a hot spare. I broke the connector off  
+>> one of my drives, so it's either hot glue or buy another for $75.
+>> I run the 80GB drive off the motherboard and the 4x Seagates off a  
+>> SuperMicro AOC SAT2-MV8.
+>> I'm running build 106 and I have had zero issues with it now that  
+>> it is up and running.
+>> I've bench marked OpenSolaris with the drives in normal stripe,  
+>> mirror, raidz and raidz2 and using the kernel CIFS server and both  
+>> a 5GB zip drag drop test and IOMeter, consistently get around 50MB/ 
+>> second, regardless of configuration.
+>> The stripe and mirror is a 'little' faster, but not so you would  
+>> notice.
+>> My recommendation is to run raidz with a hot spare if this is your  
+>> NAS.
+>>
+>> I originally planned to also run an external array from the same  
+>> server but I had major issues with this Super Micro board.
+>> It turns out that after 3 weeks of hell, Super Micro eventually  
+>> admitted that the board does NOT and never will support 1.5TB or  
+>> higher drives. The Seagate's I had planned to use were giving all  
+>> sorts of weird errors.
+>> The end result is I really learned a lot about setting up  
+>> OpenSolaris.
+>>
+>> This left me with a EnhanceBox ML-8 infiniband external enclosure  
+>> and 8x 1.5TB drives to play with :)
+>> I ended up using the 3Ware 3650SE 8LPML card in my Mac Pro (8 core  
+>> + 6GB RAM) and using the Sidecare drivers for Leopard.
+>> 3Ware tell me they will have full Leopard and OpenSolaris support  
+>> for all their boards in a matter of days (so this gives another  
+>> alternative to the Supermicro, running as JBOD).
+>>
+>> Even this wasn't plain sailing as the drivers wouldn't work  
+>> correctly on anything that required parity (RAID 5, 50, 6 etc).
+>> I reluctantly tried configuring it as raid 10 (striped of mirrors)  
+>> and although I have 5.45TB usable out of 8x1.5TB drives, it has by  
+>> accident turned into the best possible solution.
+>> It is lightening fast due to the size of the array!
+>>
+>> So now I have a Dell server running as a NAS with OpenSolaris,  
+>> purely hosting files and sharing via the kernel CIFS server (very  
+>> nice).
+>>
+>> I have had problems getting SqueezeCenter to build on OpenSolaris.  
+>> so I've given up there.
+>> I've also tried using XBMC linked to the CIFS shares on the  
+>> OpenSolaris NAS for my AppleTV, but the video quality sucks.
+>>
+>> The end result is I am loaning my new MacBook Pro to the temporary  
+>> task of running iTunes and SlimServer and pointing to the NAS to  
+>> get the files via CIFS.
+>> I will replace the MacBook Pro with wither an old dual core Mac  
+>> Mini or wait a few weeks to see if the new model arrives.
+>>
+>> This works pretty flawlessly and I use Automater to mount the CIFS  
+>> shares at reboot.
+>>
+>> The large extrenal DAS array is used for very very fast storage  
+>> when/if I need it and also as a backup target for the OpenSolaris  
+>> NAS.
+>>
+>> All I need to do now is get some backup scheme in place. I'd love  
+>> to use iSCSI from the Mac Mini to the NAS but that's an exercise  
+>> for later.
+>>
+>> Please don't hesitate to ask if you have any questions about  
+>> OpenSolaris, I feel I could write a book on it now :)
+>>
+>> ~Colin
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From zorg at sogeeky.net  Mon Feb 16 14:37:21 2009
+From: zorg at sogeeky.net (Mr. Zorg ...)
+Date: Mon, 16 Feb 2009 14:37:21 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+Message-ID: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+
+Does it matter what order I destroy snapshots in?  That is, is it
+faster to destroy oldest to newest or newest to oldest?  Or does it
+make no difference?
+
+Thanks!
+
+From colin_s_johnson at comcast.net  Mon Feb 16 14:56:25 2009
+From: colin_s_johnson at comcast.net (Colin Johnson)
+Date: Mon, 16 Feb 2009 14:56:25 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+Message-ID: <67C79E90-CAB9-4825-98FC-E052DC084FB5@comcast.net>
+
+Why would it make any difference?
+
+On Feb 16, 2009, at 2:37 PM, Mr. Zorg ... wrote:
+
+> Does it matter what order I destroy snapshots in?  That is, is it
+> faster to destroy oldest to newest or newest to oldest?  Or does it
+> make no difference?
+>
+> Thanks!
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From zorg at sogeeky.net  Mon Feb 16 15:05:05 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Mon, 16 Feb 2009 15:05:05 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <67C79E90-CAB9-4825-98FC-E052DC084FB5@comcast.net>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+	<67C79E90-CAB9-4825-98FC-E052DC084FB5@comcast.net>
+Message-ID: <530C8BA6-57C1-459B-9D86-748D8E6E8300@sogeeky.net>
+
+I don't know that it does. I was just thinking that when I destroy a  
+snapshot maybe it has to recalculate some file pointers or something.  
+If that's the case, there might be less to do when deleting a newer  
+snapshot as compared to an older one?  And so, when deleting a range  
+of snapshots, there may be a performance advantage to going in one  
+direction over another. Kind of like when restoring from an  
+incremental backup it would always be faster to restore the oldest  
+copy from the last full backup than it would be to restore the newest  
+one that has to parse through the full plus all the incrementals. Now  
+does my question make sense?
+
+On Feb 16, 2009, at 2:56 PM, Colin Johnson  
+<colin_s_johnson at comcast.net> wrote:
+
+> Why would it make any difference?
+>
+> On Feb 16, 2009, at 2:37 PM, Mr. Zorg ... wrote:
+>
+>> Does it matter what order I destroy snapshots in?  That is, is it
+>> faster to destroy oldest to newest or newest to oldest?  Or does it
+>> make no difference?
+>>
+>> Thanks!
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From colin_s_johnson at comcast.net  Mon Feb 16 15:13:18 2009
+From: colin_s_johnson at comcast.net (Colin Johnson)
+Date: Mon, 16 Feb 2009 15:13:18 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <530C8BA6-57C1-459B-9D86-748D8E6E8300@sogeeky.net>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+	<67C79E90-CAB9-4825-98FC-E052DC084FB5@comcast.net>
+	<530C8BA6-57C1-459B-9D86-748D8E6E8300@sogeeky.net>
+Message-ID: <59403D38-0D03-4831-ADD4-A84778050A99@comcast.net>
+
+They are only pointers...
+
+On Feb 16, 2009, at 3:05 PM, Mr. Zorg wrote:
+
+> I don't know that it does. I was just thinking that when I destroy a  
+> snapshot maybe it has to recalculate some file pointers or  
+> something. If that's the case, there might be less to do when  
+> deleting a newer snapshot as compared to an older one?  And so, when  
+> deleting a range of snapshots, there may be a performance advantage  
+> to going in one direction over another. Kind of like when restoring  
+> from an incremental backup it would always be faster to restore the  
+> oldest copy from the last full backup than it would be to restore  
+> the newest one that has to parse through the full plus all the  
+> incrementals. Now does my question make sense?
+>
+> On Feb 16, 2009, at 2:56 PM, Colin Johnson <colin_s_johnson at comcast.net 
+> > wrote:
+>
+>> Why would it make any difference?
+>>
+>> On Feb 16, 2009, at 2:37 PM, Mr. Zorg ... wrote:
+>>
+>>> Does it matter what order I destroy snapshots in?  That is, is it
+>>> faster to destroy oldest to newest or newest to oldest?  Or does it
+>>> make no difference?
+>>>
+>>> Thanks!
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+
+
+From colin_s_johnson at comcast.net  Mon Feb 16 15:17:23 2009
+From: colin_s_johnson at comcast.net (Colin Johnson)
+Date: Mon, 16 Feb 2009 15:17:23 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <530C8BA6-57C1-459B-9D86-748D8E6E8300@sogeeky.net>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+	<67C79E90-CAB9-4825-98FC-E052DC084FB5@comcast.net>
+	<530C8BA6-57C1-459B-9D86-748D8E6E8300@sogeeky.net>
+Message-ID: <12CA7188-D5B1-4679-B8BC-3C6517392CFD@comcast.net>
+
+Look at this thread...
+
+http://osdir.com/ml/hardware.netapp/2005-11/msg00017.html
+
+Snapshots are created and deleted in a near identical manner between  
+ZFS and NetApp's WAFL...
+
+
+
+On Feb 16, 2009, at 3:05 PM, Mr. Zorg wrote:
+
+> I don't know that it does. I was just thinking that when I destroy a  
+> snapshot maybe it has to recalculate some file pointers or  
+> something. If that's the case, there might be less to do when  
+> deleting a newer snapshot as compared to an older one?  And so, when  
+> deleting a range of snapshots, there may be a performance advantage  
+> to going in one direction over another. Kind of like when restoring  
+> from an incremental backup it would always be faster to restore the  
+> oldest copy from the last full backup than it would be to restore  
+> the newest one that has to parse through the full plus all the  
+> incrementals. Now does my question make sense?
+>
+> On Feb 16, 2009, at 2:56 PM, Colin Johnson <colin_s_johnson at comcast.net 
+> > wrote:
+>
+>> Why would it make any difference?
+>>
+>> On Feb 16, 2009, at 2:37 PM, Mr. Zorg ... wrote:
+>>
+>>> Does it matter what order I destroy snapshots in?  That is, is it
+>>> faster to destroy oldest to newest or newest to oldest?  Or does it
+>>> make no difference?
+>>>
+>>> Thanks!
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+
+
+From colin_s_johnson at comcast.net  Mon Feb 16 15:18:46 2009
+From: colin_s_johnson at comcast.net (Colin Johnson)
+Date: Mon, 16 Feb 2009 15:18:46 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <59403D38-0D03-4831-ADD4-A84778050A99@comcast.net>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+	<67C79E90-CAB9-4825-98FC-E052DC084FB5@comcast.net>
+	<530C8BA6-57C1-459B-9D86-748D8E6E8300@sogeeky.net>
+	<59403D38-0D03-4831-ADD4-A84778050A99@comcast.net>
+Message-ID: <3E0686FD-0AC5-476C-A44D-30E28281A474@comcast.net>
+
+This explains it better:
+
+There is no "copying of blocks" involved in deleting a snapshot
+(and it shows some fundamental misapprehensions about ONTAP / WAFL
+to imagine that there might be). Essentially, the blocks allocated
+within the snapshot have a reference count decremented, and those
+for which the count reaches zero become available for re-allocation.
+
+There is some I/O involved in updating the allocation maps, but the
+only useful advice here is "delete multiple snapshots simultaneously
+if possible, so that only a single pass updating the maps is required".
+Unfortunately, the "snap delete" command only allows deletion of one
+snapshot per invocation, but if they are issued fast enough the
+resulting passes over the allocation maps do get merged. But all
+this is a second-order effect.
+
+HTH
+
+~Colin
+
+
+On Feb 16, 2009, at 3:13 PM, Colin Johnson wrote:
+
+> They are only pointers...
+>
+> On Feb 16, 2009, at 3:05 PM, Mr. Zorg wrote:
+>
+>> I don't know that it does. I was just thinking that when I destroy  
+>> a snapshot maybe it has to recalculate some file pointers or  
+>> something. If that's the case, there might be less to do when  
+>> deleting a newer snapshot as compared to an older one?  And so,  
+>> when deleting a range of snapshots, there may be a performance  
+>> advantage to going in one direction over another. Kind of like when  
+>> restoring from an incremental backup it would always be faster to  
+>> restore the oldest copy from the last full backup than it would be  
+>> to restore the newest one that has to parse through the full plus  
+>> all the incrementals. Now does my question make sense?
+>>
+>> On Feb 16, 2009, at 2:56 PM, Colin Johnson <colin_s_johnson at comcast.net 
+>> > wrote:
+>>
+>>> Why would it make any difference?
+>>>
+>>> On Feb 16, 2009, at 2:37 PM, Mr. Zorg ... wrote:
+>>>
+>>>> Does it matter what order I destroy snapshots in?  That is, is it
+>>>> faster to destroy oldest to newest or newest to oldest?  Or does it
+>>>> make no difference?
+>>>>
+>>>> Thanks!
+>>>> _______________________________________________
+>>>> zfs-discuss mailing list
+>>>> zfs-discuss at lists.macosforge.org
+>>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From zorg at sogeeky.net  Mon Feb 16 15:23:43 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Mon, 16 Feb 2009 15:23:43 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <3E0686FD-0AC5-476C-A44D-30E28281A474@comcast.net>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+	<67C79E90-CAB9-4825-98FC-E052DC084FB5@comcast.net>
+	<530C8BA6-57C1-459B-9D86-748D8E6E8300@sogeeky.net>
+	<59403D38-0D03-4831-ADD4-A84778050A99@comcast.net>
+	<3E0686FD-0AC5-476C-A44D-30E28281A474@comcast.net>
+Message-ID: <3B4C66C2-A852-4760-B062-35FCC90E2695@sogeeky.net>
+
+Thank you. That answers my question quite nicely. I imagined that was  
+the case, but I figured somebody here would know for sure. I'm just an  
+end user and not an expert. :)
+
+On Feb 16, 2009, at 3:18 PM, Colin Johnson  
+<colin_s_johnson at comcast.net> wrote:
+
+> This explains it better:
+>
+> There is no "copying of blocks" involved in deleting a snapshot
+> (and it shows some fundamental misapprehensions about ONTAP / WAFL
+> to imagine that there might be). Essentially, the blocks allocated
+> within the snapshot have a reference count decremented, and those
+> for which the count reaches zero become available for re-allocation.
+>
+> There is some I/O involved in updating the allocation maps, but the
+> only useful advice here is "delete multiple snapshots simultaneously
+> if possible, so that only a single pass updating the maps is  
+> required".
+> Unfortunately, the "snap delete" command only allows deletion of one
+> snapshot per invocation, but if they are issued fast enough the
+> resulting passes over the allocation maps do get merged. But all
+> this is a second-order effect.
+>
+> HTH
+>
+> ~Colin
+>
+>
+> On Feb 16, 2009, at 3:13 PM, Colin Johnson wrote:
+>
+>> They are only pointers...
+>>
+>> On Feb 16, 2009, at 3:05 PM, Mr. Zorg wrote:
+>>
+>>> I don't know that it does. I was just thinking that when I destroy  
+>>> a snapshot maybe it has to recalculate some file pointers or  
+>>> something. If that's the case, there might be less to do when  
+>>> deleting a newer snapshot as compared to an older one?  And so,  
+>>> when deleting a range of snapshots, there may be a performance  
+>>> advantage to going in one direction over another. Kind of like  
+>>> when restoring from an incremental backup it would always be  
+>>> faster to restore the oldest copy from the last full backup than  
+>>> it would be to restore the newest one that has to parse through  
+>>> the full plus all the incrementals. Now does my question make sense?
+>>>
+>>> On Feb 16, 2009, at 2:56 PM, Colin Johnson <colin_s_johnson at comcast.net 
+>>> > wrote:
+>>>
+>>>> Why would it make any difference?
+>>>>
+>>>> On Feb 16, 2009, at 2:37 PM, Mr. Zorg ... wrote:
+>>>>
+>>>>> Does it matter what order I destroy snapshots in?  That is, is it
+>>>>> faster to destroy oldest to newest or newest to oldest?  Or does  
+>>>>> it
+>>>>> make no difference?
+>>>>>
+>>>>> Thanks!
+>>>>> _______________________________________________
+>>>>> zfs-discuss mailing list
+>>>>> zfs-discuss at lists.macosforge.org
+>>>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From andy at aligature.com  Mon Feb 16 18:59:51 2009
+From: andy at aligature.com (Andy Webber)
+Date: Mon, 16 Feb 2009 21:59:51 -0500
+Subject: [zfs-discuss] find command not working
+Message-ID: <60b50dc10902161859m7b1d2439u384d414665a7a18f@mail.gmail.com>
+
+Hi all.  I'm not sure if anyone else has had a problem with the find command
+on zfs on mac.  Specifically, when I use any of the time primitives with
+find, the results that get returned are totally bogus.
+
+For instance, the command "find . -ctime -10m" seems to return all of the
+files and folders instead of just the ones modified less than 10 minutes
+ago.  Conversely, "find . -ctime +10m" returns no results.  Needless to say,
+I have a mix of files in this folder some with modification times less than
+ten minutes ago and some older.  When I run similar commands on one of the
+HFS+ drives that I have, the results return as expected.
+
+Anyone else see this?  Is this a known issue?
+
+
+Thanks,
+  Andy
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090216/bc53ebbb/attachment.html>
+
+From hanche at math.ntnu.no  Mon Feb 16 23:50:42 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Tue, 17 Feb 2009 08:50:42 +0100 (CET)
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <304ABD52-1E3C-4597-9315-CDCBBA4846EA@comcast.net>
+References: <A42E4808-C935-4144-9B09-6ECDB4607397@cisco.com>
+	<4999C953.9050806@gmail.com>
+	<304ABD52-1E3C-4597-9315-CDCBBA4846EA@comcast.net>
+Message-ID: <20090217.085042.211765298.hanche@math.ntnu.no>
+
++ Colin Johnson <colin_s_johnson at comcast.net>:
+
+> Actually, mirrors are not a good solution for data protection - 
+> backups are!
+> RAIDs do not save you from losing data and a mirror will write crap 
+> to two disks just as easily as one ;)
+
+Indeed. It's time for an anecdote: In Norway, all card transactions 
+in stores (and ATM transacations) are handled by one company (BBS) 
+acting on behalf of the banks. A few years ago they opened a new data 
+center so they could remain in operation even if the first center was 
+disabled due to some catastrophic event. Unfortunately, when they 
+enabled mirroring between the two data centers, they did it wrong, so 
+they essentially copied the empty one over the full one. They did 
+have backups of course, but it took them a day or two to read it in, 
+and in the mean time, only cash payments were possible throughout the 
+country. ATMs were down too, of course, so people couldn't get cash 
+to use in the stores.
+
+- Harald
+
+From sjeanpluv at yahoo.com  Wed Feb 18 11:38:04 2009
+From: sjeanpluv at yahoo.com (sjeanpluv)
+Date: Wed, 18 Feb 2009 11:38:04 -0800 (PST)
+Subject: [zfs-discuss] nfs on top of zfs does not work?
+Message-ID: <231443.69541.qm@web50106.mail.re2.yahoo.com>
+
+Hi,
+?? I recently moved my home directory HFS to ZFS.?? 
+Prior, I had NFS enabled to share my home directory so that it is accessible on my
+network by other UNIX systems.?? 
+With ZFS, I am still able to nfs mount my home directory on the UNIX clients, but 
+see nothing.?? 
+
+Feedbacks appreciated, thank you.
+-Stephane
+
+
+
+
+      
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090218/c1799ee7/attachment.html>
+
+From dirkschelfhout at mac.com  Wed Feb 18 11:54:48 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Wed, 18 Feb 2009 20:54:48 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+Message-ID: <82101367-1012-4D0F-8E05-C7AB09EDDF86@mac.com>
+
+Did these 2 disks fail at boot time ?
+For raid I once read it is not recommended to buy your disks at the  
+same time.
+( which means start replacing 1 once in a while )
+Or buy different makes.
+I once heard off a raid5 system that was working perfectly until
+they switched off power for a fab maintenance. When they switched back  
+on, all
+disks were worn out. I believe they had tapes :-)
+Dirk
+On 16 Feb 2009, at 18:19, Franz Schmalzl wrote:
+
+> Hey there beloved list :)
+>
+> After using zfs on osx almost 1 year it?s time to move on :)
+> Since 2 of my Western Digital Harddrives died at the same time  
+> ( grrrr )
+> I decided it?s time to build an opensolaris server.... ,-)
+
+
+From zfs at sbod.at  Wed Feb 18 12:04:17 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Wed, 18 Feb 2009 21:04:17 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <82101367-1012-4D0F-8E05-C7AB09EDDF86@mac.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<82101367-1012-4D0F-8E05-C7AB09EDDF86@mac.com>
+Message-ID: <9745B81F-9D08-4D64-81AF-EDD229C6A012@sbod.at>
+
+
+On 18.02.2009, at 20:54, Dirk Schelfhout wrote:
+
+> Did these 2 disks fail at boot time ?
+
+They did, 2 Western Digital Drives ( external ones )
+
+But it was almost a year between i bought those two...
+They were not even the same model.
+
+
+
+Franz
+
+
+>
+> For raid I once read it is not recommended to buy your disks at the  
+> same time.
+> ( which means start replacing 1 once in a while )
+> Or buy different makes.
+> I once heard off a raid5 system that was working perfectly until
+> they switched off power for a fab maintenance. When they switched  
+> back on, all
+> disks were worn out. I believe they had tapes :-)
+> Dirk
+> On 16 Feb 2009, at 18:19, Franz Schmalzl wrote:
+>
+>> Hey there beloved list :)
+>>
+>> After using zfs on osx almost 1 year it?s time to move on :)
+>> Since 2 of my Western Digital Harddrives died at the same time  
+>> ( grrrr )
+>> I decided it?s time to build an opensolaris server.... ,-)
+>
+
+
+From zfs at sbod.at  Wed Feb 18 12:12:04 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Wed, 18 Feb 2009 21:12:04 +0100
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <80816457-5720-4034-AADB-3B87C951EF2F@mac.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<82101367-1012-4D0F-8E05-C7AB09EDDF86@mac.com>
+	<9745B81F-9D08-4D64-81AF-EDD229C6A012@sbod.at>
+	<80816457-5720-4034-AADB-3B87C951EF2F@mac.com>
+Message-ID: <A36B083C-1481-4860-92BE-4EF6DC5E8584@sbod.at>
+
+Actually, it was thursday the 12th
+
+
+:)
+
+
+
+
+On 18.02.2009, at 21:06, Dirk Schelfhout wrote:
+
+> Then it must have been on friday the 13th......
+> :-)
+> On 18 Feb 2009, at 21:04, Franz Schmalzl wrote:
+>
+>>
+>> On 18.02.2009, at 20:54, Dirk Schelfhout wrote:
+>>
+>>> Did these 2 disks fail at boot time ?
+>>
+>> They did, 2 Western Digital Drives ( external ones )
+>>
+>> But it was almost a year between i bought those two...
+>> They were not even the same model.
+>>
+>>
+>>
+>> Franz
+>>
+>>
+>>>
+>>> For raid I once read it is not recommended to buy your disks at  
+>>> the same time.
+>>> ( which means start replacing 1 once in a while )
+>>> Or buy different makes.
+>>> I once heard off a raid5 system that was working perfectly until
+>>> they switched off power for a fab maintenance. When they switched  
+>>> back on, all
+>>> disks were worn out. I believe they had tapes :-)
+>>> Dirk
+>>> On 16 Feb 2009, at 18:19, Franz Schmalzl wrote:
+>>>
+>>>> Hey there beloved list :)
+>>>>
+>>>> After using zfs on osx almost 1 year it?s time to move on :)
+>>>> Since 2 of my Western Digital Harddrives died at the same time  
+>>>> ( grrrr )
+>>>> I decided it?s time to build an opensolaris server.... ,-)
+>>>
+>>
+>
+
+
+From alex.blewitt at gmail.com  Wed Feb 18 12:50:12 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 18 Feb 2009 20:50:12 +0000
+Subject: [zfs-discuss] nfs on top of zfs does not work?
+In-Reply-To: <231443.69541.qm@web50106.mail.re2.yahoo.com>
+References: <231443.69541.qm@web50106.mail.re2.yahoo.com>
+Message-ID: <3D4F28DD-583F-470B-B6ED-13EE48C2633C@gmail.com>
+
+I have this set up at home and it works for me, so it is possible.
+
+However, nested filesystems aren't shared the same way you might  
+expect/want, thereby making lots of filesystems somewhat useless.
+
+If you have a zfs fs exported as /home, and another fs stephanie  
+underneath that, then remote clients will be able to mount /home and  
+see an empty dir stephanie.
+
+You'll need to export/mount /home/stephanie explicitly to see the  
+contents.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 18 Feb 2009, at 19:38, sjeanpluv <sjeanpluv at yahoo.com> wrote:
+
+> Hi,
+>    I recently moved my home directory HFS to ZFS.
+> Prior, I had NFS enabled to share my home directory so that it is  
+> accessible on my
+> network by other UNIX systems.
+> With ZFS, I am still able to nfs mount my home directory on the UNIX  
+> clients, but
+> see nothing.
+>
+> Feedbacks appreciated, thank you.
+> -Stephane
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090218/76ef77f2/attachment.html>
+
+From richmc at gmail.com  Wed Feb 18 13:10:19 2009
+From: richmc at gmail.com (Richard McClellan)
+Date: Wed, 18 Feb 2009 13:10:19 -0800
+Subject: [zfs-discuss] nfs on top of zfs does not work?
+In-Reply-To: <231443.69541.qm@web50106.mail.re2.yahoo.com>
+References: <231443.69541.qm@web50106.mail.re2.yahoo.com>
+Message-ID: <E99ED1D7-B4CF-43F2-BA83-7456C22E0580@gmail.com>
+
+On Solaris' implementation of ZFS you configure NFS through ZFS: zfs  
+set sharenfs=...  It's probably the same with Apple's implementation.  
+Check out Sun's excellent documentation for the details.
+
+                 Rich
+
+On Feb 18, 2009, at 11:38, sjeanpluv <sjeanpluv at yahoo.com> wrote:
+
+> Hi,
+>    I recently moved my home directory HFS to ZFS.
+> Prior, I had NFS enabled to share my home directory so that it is  
+> accessible on my
+> network by other UNIX systems.
+> With ZFS, I am still able to nfs mount my home directory on the UNIX  
+> clients, but
+> see nothing.
+>
+> Feedbacks appreciated, thank you.
+> -Stephane
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090218/6e541969/attachment.html>
+
+From zfs at sbod.at  Wed Feb 18 13:14:40 2009
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Wed, 18 Feb 2009 22:14:40 +0100
+Subject: [zfs-discuss] nfs on top of zfs does not work?
+In-Reply-To: <E99ED1D7-B4CF-43F2-BA83-7456C22E0580@gmail.com>
+References: <231443.69541.qm@web50106.mail.re2.yahoo.com>
+	<E99ED1D7-B4CF-43F2-BA83-7456C22E0580@gmail.com>
+Message-ID: <FC97A4EC-1E06-457C-9122-8783CFDFB1DF@sbod.at>
+
+
+On 18.02.2009, at 22:10, Richard McClellan wrote:
+
+> On Solaris' implementation of ZFS you configure NFS through ZFS: zfs  
+> set sharenfs=...  It's probably the same with Apple's implementation.
+
+Doesn?t work in osx I think
+
+
+
+...
+
+
+
+> Check out Sun's excellent documentation for the details.
+>
+>                 Rich
+>
+> On Feb 18, 2009, at 11:38, sjeanpluv <sjeanpluv at yahoo.com> wrote:
+>
+>> Hi,
+>>    I recently moved my home directory HFS to ZFS.
+>> Prior, I had NFS enabled to share my home directory so that it is  
+>> accessible on my
+>> network by other UNIX systems.
+>> With ZFS, I am still able to nfs mount my home directory on the  
+>> UNIX clients, but
+>> see nothing.
+>>
+>> Feedbacks appreciated, thank you.
+>> -Stephane
+>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From mattsnow at gmail.com  Wed Feb 18 13:37:35 2009
+From: mattsnow at gmail.com (Matt Snow)
+Date: Wed, 18 Feb 2009 13:37:35 -0800
+Subject: [zfs-discuss] One big pool / Several ones ?
+In-Reply-To: <82101367-1012-4D0F-8E05-C7AB09EDDF86@mac.com>
+References: <3A711AE3-875B-4A4B-874C-3648FE1D3D90@sbod.at>
+	<82101367-1012-4D0F-8E05-C7AB09EDDF86@mac.com>
+Message-ID: <6879ebc80902181337u58599692r24ffce0fbc43fe8e@mail.gmail.com>
+
+On Wed, Feb 18, 2009 at 11:54 AM, Dirk Schelfhout <dirkschelfhout at mac.com>wrote:
+
+> Did these 2 disks fail at boot time ?
+> For raid I once read it is not recommended to buy your disks at the same
+> time.
+> ( which means start replacing 1 once in a while )
+> Or buy different makes.
+
+This doesn't apply in most cases. Sun's X4500/X4540 systems contain 48 SATA
+disks in each 4U server. Many, if not all of the disk serial numbers are
+close in numbers.
+
+>
+> I once heard off a raid5 system that was working perfectly until
+> they switched off power for a fab maintenance. When they switched back on,
+> all
+> disks were worn out. I believe they had tapes :-)
+
+I forget the industry term for this, but its related to platter bearing
+seize. If a system has been running for years, then powered off for
+relocation, the disk(s) will not always spin up. That is when giving the
+disk a tap with a hammer and rotating swing before powering back on can get
+a disk spinning again. fun stuff. :)
+
+..Matt
+
+>
+> Dirk
+> On 16 Feb 2009, at 18:19, Franz Schmalzl wrote:
+>
+>  Hey there beloved list :)
+>>
+>> After using zfs on osx almost 1 year it?s time to move on :)
+>> Since 2 of my Western Digital Harddrives died at the same time ( grrrr )
+>> I decided it?s time to build an opensolaris server.... ,-)
+>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090218/abe18719/attachment.html>
+
+From ndellofano at apple.com  Wed Feb 18 13:37:50 2009
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 18 Feb 2009 13:37:50 -0800
+Subject: [zfs-discuss] nfs on top of zfs does not work?
+In-Reply-To: <FC97A4EC-1E06-457C-9122-8783CFDFB1DF@sbod.at>
+References: <231443.69541.qm@web50106.mail.re2.yahoo.com>
+	<E99ED1D7-B4CF-43F2-BA83-7456C22E0580@gmail.com>
+	<FC97A4EC-1E06-457C-9122-8783CFDFB1DF@sbod.at>
+Message-ID: <88EB8977-0840-4431-8B5C-607965EA1AA6@apple.com>
+
+correct.  we don't support sharenfs in osx
+
+Noel
+On Feb 18, 2009, at 1:14 PM, Franz Schmalzl wrote:
+
+>
+> On 18.02.2009, at 22:10, Richard McClellan wrote:
+>
+>> On Solaris' implementation of ZFS you configure NFS through ZFS:  
+>> zfs set sharenfs=...  It's probably the same with Apple's  
+>> implementation.
+>
+> Doesn?t work in osx I think
+>
+>
+>
+> ...
+>
+>
+>
+>> Check out Sun's excellent documentation for the details.
+>>
+>>                Rich
+>>
+>> On Feb 18, 2009, at 11:38, sjeanpluv <sjeanpluv at yahoo.com> wrote:
+>>
+>>> Hi,
+>>>   I recently moved my home directory HFS to ZFS.
+>>> Prior, I had NFS enabled to share my home directory so that it is  
+>>> accessible on my
+>>> network by other UNIX systems.
+>>> With ZFS, I am still able to nfs mount my home directory on the  
+>>> UNIX clients, but
+>>> see nothing.
+>>>
+>>> Feedbacks appreciated, thank you.
+>>> -Stephane
+>>>
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From sjeanpluv at yahoo.com  Wed Feb 18 14:35:26 2009
+From: sjeanpluv at yahoo.com (sjeanpluv)
+Date: Wed, 18 Feb 2009 14:35:26 -0800 (PST)
+Subject: [zfs-discuss] nfs on top of zfs does not work?
+Message-ID: <680687.34065.qm@web50102.mail.re2.yahoo.com>
+
+
+Got it. Thanks
+Hopefully NFS support is in a future release.   
+
+--- On Wed, 2/18/09, No?l Dellofano <ndellofano at apple.com> wrote:
+
+> From: No?l Dellofano <ndellofano at apple.com>
+> Subject: Re: [zfs-discuss] nfs on top of zfs does not work?
+> To: "Franz Schmalzl" <zfs at sbod.at>
+> Cc: "ZFS on OSX mailing list mailing list" <zfs-discuss at lists.macosforge.org>
+> Date: Wednesday, February 18, 2009, 4:37 PM
+> correct.? we don't support
+> sharenfs in osx
+> 
+> Noel
+> On Feb 18, 2009, at 1:14 PM, Franz Schmalzl wrote:
+> 
+> > 
+> > On 18.02.2009, at 22:10, Richard McClellan wrote:
+> > 
+> >> On Solaris' implementation of ZFS you configure
+> NFS through ZFS: zfs set sharenfs=...? It's probably
+> the same with Apple's implementation.
+> > 
+> > Doesn?t work in osx I think
+> > 
+> > 
+> > 
+> > ...
+> > 
+> > 
+> > 
+> >> Check out Sun's excellent documentation for the
+> details.
+> >> 
+> >>? ? ? ? ? ? ?
+> ? Rich
+> >> 
+> >> On Feb 18, 2009, at 11:38, sjeanpluv <sjeanpluv at yahoo.com>
+> wrote:
+> >> 
+> >>> Hi,
+> >>>???I recently moved my home
+> directory HFS to ZFS.
+> >>> Prior, I had NFS enabled to share my home
+> directory so that it is accessible on my
+> >>> network by other UNIX systems.
+> >>> With ZFS, I am still able to nfs mount my home
+> directory on the UNIX clients, but
+> >>> see nothing.
+> >>> 
+> >>> Feedbacks appreciated, thank you.
+> >>> -Stephane
+> >>> 
+> >>> 
+> >>>
+> _______________________________________________
+> >>> zfs-discuss mailing list
+> >>> zfs-discuss at lists.macosforge.org
+> >>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> >> _______________________________________________
+> >> zfs-discuss mailing list
+> >> zfs-discuss at lists.macosforge.org
+> >> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> > 
+> > _______________________________________________
+> > zfs-discuss mailing list
+> > zfs-discuss at lists.macosforge.org
+> > http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> 
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> 
+
+
+      
+
+From Matthew.Ahrens at sun.com  Wed Feb 18 15:19:11 2009
+From: Matthew.Ahrens at sun.com (Matthew Ahrens)
+Date: Wed, 18 Feb 2009 15:19:11 -0800
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+Message-ID: <499C976F.5010503@sun.com>
+
+Mr. Zorg ... wrote:
+> Does it matter what order I destroy snapshots in?  That is, is it
+> faster to destroy oldest to newest or newest to oldest?  Or does it
+> make no difference?
+
+It is slightly faster to destroy from oldest to newest.  That way the dead 
+lists are processed most efficiently.  You can read about the details of the 
+implementation at:
+
+http://blogs.sun.com/ahrens/entry/is_it_magic
+
+--matt
+
+From caronni at gmail.com  Thu Feb 19 09:18:27 2009
+From: caronni at gmail.com (Germano Caronni)
+Date: Thu, 19 Feb 2009 18:18:27 +0100
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <499C976F.5010503@sun.com>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+	<499C976F.5010503@sun.com>
+Message-ID: <327b821f0902190918y66da5313m54d36416432d1ed5@mail.gmail.com>
+
+Hey all,
+I'm currently in the process of setting up a 15TB disk array (10x seagate
+7200.11 in a DatOptic SBox-X), and will drive it from a PC with Open Solaris
+11/08 for now. The plan is to use the disk array with Snow Leopard later. Do
+any of you have suggestions as to how to initialize the pool slices on those
+ten disks such that both Open Solaris and Leopard will easily find them? Ie:
+Simply use the whole disk device /dev/diskX for ZFS, or put a MBR partition
+table on the disk (or GPT?), and then make one huge partition for the pool
+slice? Initialisation will be done from a Leopard machine, so that I get zfs
+pool version 6 on the disk. Also, any opinion concerning 'diskutil
+partitionDisk ... zfs ...' vs. 'zpool create' ?
+
+Any suggestions / comments welcome.
+
+Germano
+
+p.s. note that I did not mention anything about raid / stripe / mirror /
+spare -- that's on purpose ;-)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090219/dcc43227/attachment.html>
+
+From caronni at gmail.com  Thu Feb 19 09:20:32 2009
+From: caronni at gmail.com (Germano Caronni)
+Date: Thu, 19 Feb 2009 18:20:32 +0100
+Subject: [zfs-discuss] Best order for destroying snapshots?
+In-Reply-To: <327b821f0902190918y66da5313m54d36416432d1ed5@mail.gmail.com>
+References: <fbaadd320902161437s2c29515djff8707cdc3345f5@mail.gmail.com>
+	<499C976F.5010503@sun.com>
+	<327b821f0902190918y66da5313m54d36416432d1ed5@mail.gmail.com>
+Message-ID: <327b821f0902190920t275b3f3at841cb534f82d9c6d@mail.gmail.com>
+
+argh. sorry for sending this in the context of this thread. please disragard
+this post -- i'll repost as a new thread!
+
+
+
+On Thu, Feb 19, 2009 at 18:18, Germano Caronni <caronni at gmail.com> wrote:
+
+> Hey all,
+> I'm currently in the process of setting up a 15TB disk array (10x seagate
+> 7200.11 in a DatOptic SBox-X), and will drive it from a PC with Open Solaris
+> 11/08 for now. The plan is to use the disk array with Snow Leopard later. Do
+> any of you have suggestions as to how to initialize the pool slices on those
+> ten disks such that both Open Solaris and Leopard will easily find them? Ie:
+> Simply use the whole disk device /dev/diskX for ZFS, or put a MBR partition
+> table on the disk (or GPT?), and then make one huge partition for the pool
+> slice? Initialisation will be done from a Leopard machine, so that I get zfs
+> pool version 6 on the disk. Also, any opinion concerning 'diskutil
+> partitionDisk ... zfs ...' vs. 'zpool create' ?
+>
+> Any suggestions / comments welcome.
+>
+> Germano
+>
+> p.s. note that I did not mention anything about raid / stripe / mirror /
+> spare -- that's on purpose ;-)
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090219/1eaefbf4/attachment.html>
+
+From caronni at gmail.com  Thu Feb 19 09:21:22 2009
+From: caronni at gmail.com (Germano Caronni)
+Date: Thu, 19 Feb 2009 18:21:22 +0100
+Subject: [zfs-discuss] setting up zfs for solaris + mac ?
+Message-ID: <327b821f0902190921i9f4edabpa1d6c9e94cc331bf@mail.gmail.com>
+
+[sorry for double-post]
+Hey all,
+I'm currently in the process of setting up a 15TB disk array (10x seagate
+7200.11 in a DatOptic SBox-X), and will drive it from a PC with Open Solaris
+11/08 for now. The plan is to use the disk array with Snow Leopard later. Do
+any of you have suggestions as to how to initialize the pool slices on those
+ten disks such that both Open Solaris and Leopard will easily find them? Ie:
+Simply use the whole disk device /dev/diskX for ZFS, or put a MBR partition
+table on the disk (or GPT?), and then make one huge partition for the pool
+slice? Initialisation will be done from a Leopard machine, so that I get zfs
+pool version 6 on the disk. Also, any opinion concerning 'diskutil
+partitionDisk ... zfs ...' vs. 'zpool create' ?
+
+Any suggestions / comments welcome.
+
+Germano
+
+p.s. note that I did not mention anything about raid / stripe / mirror /
+spare -- that's on purpose ;-)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090219/602336c7/attachment.html>
+
+From richmc at gmail.com  Thu Feb 19 10:25:55 2009
+From: richmc at gmail.com (Rich McClellan)
+Date: Thu, 19 Feb 2009 10:25:55 -0800
+Subject: [zfs-discuss] setting up zfs for solaris + mac ?
+In-Reply-To: <327b821f0902190921i9f4edabpa1d6c9e94cc331bf@mail.gmail.com>
+References: <327b821f0902190921i9f4edabpa1d6c9e94cc331bf@mail.gmail.com>
+Message-ID: <203e36e30902191025u3fe2a77es2019f2f151bd8c76@mail.gmail.com>
+
+ZFS best practices (Google it and read it :-) suggest using the entire
+disk. The Apple implementation of ZFS requires the entire disk be
+initialized.  So use the entire disk.
+
+Why on earth would you replace an (Open)Solaris box with Snow
+Leopard???  So far the Apple ZFS implementation doesn't have all of
+the features that are in Sun's and Apple's is new and relatively
+untested.
+
+Rich
+
+On Thu, Feb 19, 2009 at 9:21 AM, Germano Caronni <caronni at gmail.com> wrote:
+> [sorry for double-post]
+> Hey all,
+> I'm currently in the process of setting up a 15TB disk array (10x seagate
+> 7200.11 in a DatOptic SBox-X), and will drive it from a PC with Open Solaris
+> 11/08 for now. The plan is to use the disk array with Snow Leopard later. Do
+> any of you have suggestions as to how to initialize the pool slices on those
+> ten disks such that both Open Solaris and Leopard will easily find them? Ie:
+> Simply use the whole disk device /dev/diskX for ZFS, or put a MBR partition
+> table on the disk (or GPT?), and then make one huge partition for the pool
+> slice? Initialisation will be done from a Leopard machine, so that I get zfs
+> pool version 6 on the disk. Also, any opinion concerning 'diskutil
+> partitionDisk ... zfs ...' vs. 'zpool create' ?
+> Any suggestions / comments welcome.
+> Germano
+> p.s. note that I did not mention anything about raid / stripe / mirror /
+> spare -- that's on purpose ;-)
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+>
+
+From ndellofano at apple.com  Thu Feb 19 15:32:03 2009
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 19 Feb 2009 15:32:03 -0800
+Subject: [zfs-discuss] setting up zfs for solaris + mac ?
+In-Reply-To: <203e36e30902191025u3fe2a77es2019f2f151bd8c76@mail.gmail.com>
+References: <327b821f0902190921i9f4edabpa1d6c9e94cc331bf@mail.gmail.com>
+	<203e36e30902191025u3fe2a77es2019f2f151bd8c76@mail.gmail.com>
+Message-ID: <13D29D68-F3D7-4EA1-95BB-96D3E2A7F689@apple.com>
+
+Germano,
+
+At least as far as OSX is concerned, you *must* create the pool on a  
+disk that is already initialized *and* when you create the pool you  
+must pass it the full disk name( i.e. disk number and slice).  This is  
+very important as if you create a pool just using the whole disk name,  
+OSX will become confused and will not mount your bool on boot.
+
+so use 'zpool create mypool /dev/diskXsX'
+
+Also on OSX, note you must do a 'diskutil partition disk...."  on the  
+disk in order to format it for ZFS *before* you do the zpool create,  
+otherwise if the disk isn't labeled properly, diskutil can't  
+understand what it is and other probes may race us and try and bring  
+up the drive as something else.  It needs to be properly labeled.
+
+On the whole, Sun's code is pretty robust, so should be able to  
+understand disks fine.  I'd worry more about making sure they are  
+kosher for OSX, since we're pickier about things :)
+
+
+Noel
+
+On Feb 19, 2009, at 10:25 AM, Rich McClellan wrote:
+
+> ZFS best practices (Google it and read it :-) suggest using the entire
+> disk. The Apple implementation of ZFS requires the entire disk be
+> initialized.  So use the entire disk.
+>
+> Why on earth would you replace an (Open)Solaris box with Snow
+> Leopard???  So far the Apple ZFS implementation doesn't have all of
+> the features that are in Sun's and Apple's is new and relatively
+> untested.
+>
+> Rich
+>
+> On Thu, Feb 19, 2009 at 9:21 AM, Germano Caronni <caronni at gmail.com>  
+> wrote:
+>> [sorry for double-post]
+>> Hey all,
+>> I'm currently in the process of setting up a 15TB disk array (10x  
+>> seagate
+>> 7200.11 in a DatOptic SBox-X), and will drive it from a PC with  
+>> Open Solaris
+>> 11/08 for now. The plan is to use the disk array with Snow Leopard  
+>> later. Do
+>> any of you have suggestions as to how to initialize the pool slices  
+>> on those
+>> ten disks such that both Open Solaris and Leopard will easily find  
+>> them? Ie:
+>> Simply use the whole disk device /dev/diskX for ZFS, or put a MBR  
+>> partition
+>> table on the disk (or GPT?), and then make one huge partition for  
+>> the pool
+>> slice? Initialisation will be done from a Leopard machine, so that  
+>> I get zfs
+>> pool version 6 on the disk. Also, any opinion concerning 'diskutil
+>> partitionDisk ... zfs ...' vs. 'zpool create' ?
+>> Any suggestions / comments welcome.
+>> Germano
+>> p.s. note that I did not mention anything about raid / stripe /  
+>> mirror /
+>> spare -- that's on purpose ;-)
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From hanche at math.ntnu.no  Fri Feb 20 01:55:57 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 20 Feb 2009 10:55:57 +0100 (CET)
+Subject: [zfs-discuss] setting up zfs for solaris + mac ?
+In-Reply-To: <13D29D68-F3D7-4EA1-95BB-96D3E2A7F689@apple.com>
+References: <327b821f0902190921i9f4edabpa1d6c9e94cc331bf@mail.gmail.com>
+	<203e36e30902191025u3fe2a77es2019f2f151bd8c76@mail.gmail.com>
+	<13D29D68-F3D7-4EA1-95BB-96D3E2A7F689@apple.com>
+Message-ID: <20090220.105557.87954811.hanche@math.ntnu.no>
+
++ No?l Dellofano <ndellofano at apple.com>:
+
+> Also on OSX, note you must do a 'diskutil partition disk...."  on
+> the disk in order to format it for ZFS *before* you do the zpool
+> create,
+
+FWIW, I find that when I do this, diskutil creates a 200 MB EFI
+partition on the disk whether I ask for it or not. On a large disk
+that might not be a big waste, but even so, I prefer to do the
+partitioning and labeling the disk on FreeBSD instead:
+
+#; gpt create -f da2 # or whatever the device name may be
+#; gpt add -t 6a898cc3-1dd2-11b2-99a6-080020736631 da2
+
+using the UUID that OSX uses for ZFS partitions.
+I expect one can do something similar on Solaris.
+
+- Harald
+
+From caronni at gmail.com  Mon Feb 23 23:16:17 2009
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 24 Feb 2009 08:16:17 +0100
+Subject: [zfs-discuss] setting up zfs for solaris + mac ?
+In-Reply-To: <13D29D68-F3D7-4EA1-95BB-96D3E2A7F689@apple.com>
+References: <327b821f0902190921i9f4edabpa1d6c9e94cc331bf@mail.gmail.com>
+	<203e36e30902191025u3fe2a77es2019f2f151bd8c76@mail.gmail.com>
+	<13D29D68-F3D7-4EA1-95BB-96D3E2A7F689@apple.com>
+Message-ID: <327b821f0902232316j5337100g79d1753596edca3@mail.gmail.com>
+
+Hi again to all, and thank you for your input.
+
+So a little update (with a boo-boo) for those interested -- everybody else,
+just whistle loudly while I'm talking :-)
+
+Hardware setup:
+SBox-X with SiI3726 port multiplier and SiI3132 ExpressCard/34 host adapter,
+with 10 1.5TB Seagate 7200.11 disks. MacbookPro4,1 with 10.5.6 as a little
+test system.
+
+Configuration for testing:
+Each disk has a GPT, with 200 MB EFI on s1 (yuck, but staying strictly
+vanilla for now) and s2 is a giant slice of a ten-disk RAIDZ2 pool.
+
+Observation under ZFS-119: Most times when the card is inserted into the
+macbook, the pool gets detected and imported correctly, BUT 1-2 disks are
+reported as 'FAULTED'. zpool replace <id(1|2)> disk(10|11)s2; will fix
+things up. After fixing the pool back up, the disks will operate flawlessy.
+
+My guess: Drive detection times out somewhere for the last drives to come
+online. Not sure if this is a problem with the zfs/zpool implementation to
+gather disks -- and giving the disks enough time to spin up, or if this is
+the domain of the sata driver, and zpool import is not at fault.
+
+Any ideas / comments? Maybe suggestions on how to increase timeouts under
+MacOS? Also, this FreeBSD post appears strangely relevant (and would point
+at the sata driver):
+http://lists.freebsd.org/pipermail/freebsd-current/2008-December/001375.html
+
+Germano
+
+
+
+On Fri, Feb 20, 2009 at 00:32, No?l Dellofano <ndellofano at apple.com> wrote:
+
+> Germano,
+>
+> At least as far as OSX is concerned, you *must* create the pool on a disk
+> that is already initialized *and* when you create the pool you must pass it
+> the full disk name( i.e. disk number and slice).  This is very important as
+> if you create a pool just using the whole disk name, OSX will become
+> confused and will not mount your bool on boot.
+>
+> so use 'zpool create mypool /dev/diskXsX'
+>
+> Also on OSX, note you must do a 'diskutil partition disk...."  on the disk
+> in order to format it for ZFS *before* you do the zpool create, otherwise if
+> the disk isn't labeled properly, diskutil can't understand what it is and
+> other probes may race us and try and bring up the drive as something else.
+>  It needs to be properly labeled.
+>
+> On the whole, Sun's code is pretty robust, so should be able to understand
+> disks fine.  I'd worry more about making sure they are kosher for OSX, since
+> we're pickier about things :)
+>
+>
+> Noel
+>
+>
+> On Feb 19, 2009, at 10:25 AM, Rich McClellan wrote:
+>
+>  ZFS best practices (Google it and read it :-) suggest using the entire
+>> disk. The Apple implementation of ZFS requires the entire disk be
+>> initialized.  So use the entire disk.
+>>
+>> Why on earth would you replace an (Open)Solaris box with Snow
+>> Leopard???  So far the Apple ZFS implementation doesn't have all of
+>> the features that are in Sun's and Apple's is new and relatively
+>> untested.
+>>
+>> Rich
+>>
+>> On Thu, Feb 19, 2009 at 9:21 AM, Germano Caronni <caronni at gmail.com>
+>> wrote:
+>>
+>>> [sorry for double-post]
+>>> Hey all,
+>>> I'm currently in the process of setting up a 15TB disk array (10x seagate
+>>> 7200.11 in a DatOptic SBox-X), and will drive it from a PC with Open
+>>> Solaris
+>>> 11/08 for now. The plan is to use the disk array with Snow Leopard later.
+>>> Do
+>>> any of you have suggestions as to how to initialize the pool slices on
+>>> those
+>>> ten disks such that both Open Solaris and Leopard will easily find them?
+>>> Ie:
+>>> Simply use the whole disk device /dev/diskX for ZFS, or put a MBR
+>>> partition
+>>> table on the disk (or GPT?), and then make one huge partition for the
+>>> pool
+>>> slice? Initialisation will be done from a Leopard machine, so that I get
+>>> zfs
+>>> pool version 6 on the disk. Also, any opinion concerning 'diskutil
+>>> partitionDisk ... zfs ...' vs. 'zpool create' ?
+>>> Any suggestions / comments welcome.
+>>> Germano
+>>> p.s. note that I did not mention anything about raid / stripe / mirror /
+>>> spare -- that's on purpose ;-)
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>>>
+>>>  _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090224/175ff180/attachment.html>
+
+From robert.muench at gmail.com  Fri Feb 27 09:01:00 2009
+From: robert.muench at gmail.com (Robert Muench)
+Date: Fri, 27 Feb 2009 18:01:00 +0100
+Subject: [zfs-discuss] First time user: Some questions
+Message-ID: <9efc39d30902270901s35d4b6d2u23d4d8fdb3e97864@mail.gmail.com>
+
+Hi, I just installed ZFS-119 on 10.5.6 and so far I brought everything
+up & running. I haven't pushed a lot of data to the drive yet.
+
+Some questions:
+
+1. Datapool / Datasets: I have created one pool but no explicit
+dataset. I read something about datasets but I'm not sure for what
+these are. Is a dataset like a parition inside a ZFS pool?
+
+2. I'm using PathFinder. There the new volume isn't listed. But it's
+listed in Finder. No big deal because I just put the shortcut to it
+into Pathfinder. So far works good.
+
+3. I'm using PGP Whole-Disk-Encryption (WDE). I think I will give it a
+try on the ZFS drive. As far as I understand PGP it should work
+transparently because it's working on a much lower IO level. I'll let
+you know what happend.
+
+4. Is there anything I need to consider or take care about while using
+the ZFS volume? Or can I just use it like every other drive?
+
+
+
+My current setup looks like this:
+
+/dev/disk1
+   #:                       TYPE NAME                    SIZE       IDENTIFIER
+   0:      GUID_partition_scheme                        *931.5 Gi   disk1
+   1:                        EFI
+200.0 Mi   disk1s1
+   2:                        ZFS
+931.2 Gi   disk1s2
+
+mac-pro:~ robby$ zpool list
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+work                       931G    156K    931G       0%  ONLINE     -
+
+mac-pro:~ robby$ zfs list
+NAME   USED  AVAIL  REFER  MOUNTPOINT
+work       151K   916G    58K      /Volumes/work
+
+
+-- 
+Robert M. M?nch
+
+From robert.muench at gmail.com  Fri Feb 27 09:17:17 2009
+From: robert.muench at gmail.com (Robert Muench)
+Date: Fri, 27 Feb 2009 18:17:17 +0100
+Subject: [zfs-discuss] Asked for Admin password
+Message-ID: <9efc39d30902270917r583fa392u257b8ba712619a0a@mail.gmail.com>
+
+Hi, is it normal that I'm asked to provide the admin password if I
+want to copy files to a ZFS pool? Is this required every time?
+
+Is there a way to handle rights on ZFS like on HFS+ drives? I just
+want to have my normal user have read/write access.
+
+-- 
+Robert M. M?nch
+
+From deric at apple.com  Fri Feb 27 09:35:29 2009
+From: deric at apple.com (Deric Horn)
+Date: Fri, 27 Feb 2009 09:35:29 -0800
+Subject: [zfs-discuss] Asked for Admin password
+In-Reply-To: <9efc39d30902270917r583fa392u257b8ba712619a0a@mail.gmail.com>
+References: <9efc39d30902270917r583fa392u257b8ba712619a0a@mail.gmail.com>
+Message-ID: <766176E6-61A2-401C-8DC8-C19A2D0A48C8@apple.com>
+
+The file system was created with root ownership.
+
+You can change the ownership of the file system by typing:
+
+chown -R UserName:GroupName /Volumes/YourZFSVolume
+
+And of course you can chmod to allow access to other users.
+
+- Deric
+
+
+On Feb 27, 2009, at 9:17 AM, Robert Muench wrote:
+
+> Hi, is it normal that I'm asked to provide the admin password if I
+> want to copy files to a ZFS pool? Is this required every time?
+>
+> Is there a way to handle rights on ZFS like on HFS+ drives? I just
+> want to have my normal user have read/write access.
+>
+> -- 
+> Robert M. M?nch
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From hanche at math.ntnu.no  Fri Feb 27 09:40:13 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 27 Feb 2009 18:40:13 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <9efc39d30902270901s35d4b6d2u23d4d8fdb3e97864@mail.gmail.com>
+References: <9efc39d30902270901s35d4b6d2u23d4d8fdb3e97864@mail.gmail.com>
+Message-ID: <20090227.184013.567220359449547631.hanche@math.ntnu.no>
+
++ Robert Muench <robert.muench at gmail.com>:
+
+> 1. Datapool / Datasets: I have created one pool but no explicit
+> dataset. I read something about datasets but I'm not sure for what
+> these are. Is a dataset like a parition inside a ZFS pool?
+
+Somewhat. They are filesystems. You create and manage them using the
+zfs command. The top-level filesystem has the same name as the pool
+and is automatically created when you create the pool. But they are
+better than partitions, because you don't give them a predefined
+size. Any of them can grow to occupy all free space, after which none
+of them can grow until you delete something.
+
+One reason for having several filesystems on the pool is that you can
+take individual snapshots. There may be some data that you wish to
+snapshot every day, and others that you'd rather not.
+
+> 4. Is there anything I need to consider or take care about while
+> using the ZFS volume? Or can I just use it like every other drive?
+
+You should be fine using it like any drive, except as you have found
+out zfs is not so very well integrated with everything mac yet.
+
+- Harald
+
+From hanche at math.ntnu.no  Fri Feb 27 09:41:07 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 27 Feb 2009 18:41:07 +0100 (CET)
+Subject: [zfs-discuss] Asked for Admin password
+In-Reply-To: <9efc39d30902270917r583fa392u257b8ba712619a0a@mail.gmail.com>
+References: <9efc39d30902270917r583fa392u257b8ba712619a0a@mail.gmail.com>
+Message-ID: <20090227.184107.655660669507323299.hanche@math.ntnu.no>
+
++ Robert Muench <robert.muench at gmail.com>:
+
+> Hi, is it normal that I'm asked to provide the admin password if I
+> want to copy files to a ZFS pool? Is this required every time?
+> 
+> Is there a way to handle rights on ZFS like on HFS+ drives? I just
+> want to have my normal user have read/write access.
+
+Just do:  sudo chown yourusername /Volumes/poolname
+
+(or sudo chown -R ... if you have already put files there).
+
+- Harald
+
+From jw.hendy at gmail.com  Fri Feb 27 10:53:58 2009
+From: jw.hendy at gmail.com (John Hendy)
+Date: Fri, 27 Feb 2009 12:53:58 -0600
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <20090227.184013.567220359449547631.hanche@math.ntnu.no>
+References: <9efc39d30902270901s35d4b6d2u23d4d8fdb3e97864@mail.gmail.com>
+	<20090227.184013.567220359449547631.hanche@math.ntnu.no>
+Message-ID: <a037f7360902271053p7b7a10afy601acbec51ee3b62@mail.gmail.com>
+
+On Fri, Feb 27, 2009 at 11:40 AM, Harald Hanche-Olsen
+<hanche at math.ntnu.no>wrote:
+
+> + Robert Muench <robert.muench at gmail.com>:
+>
+> > 1. Datapool / Datasets: I have created one pool but no explicit
+> > dataset. I read something about datasets but I'm not sure for what
+> > these are. Is a dataset like a parition inside a ZFS pool?
+>
+> Somewhat. They are filesystems. You create and manage them using the
+> zfs command. The top-level filesystem has the same name as the pool
+> and is automatically created when you create the pool. But they are
+> better than partitions, because you don't give them a predefined
+> size. Any of them can grow to occupy all free space, after which none
+> of them can grow until you delete something.
+>
+> One reason for having several filesystems on the pool is that you can
+> take individual snapshots. There may be some data that you wish to
+> snapshot every day, and others that you'd rather not.
+>
+> > 4. Is there anything I need to consider or take care about while
+> > using the ZFS volume? Or can I just use it like every other drive?
+>
+> You should be fine using it like any drive, except as you have found
+> out zfs is not so very well integrated with everything mac yet.
+>
+> - Harald
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+
+One thing I've found that I have not solved yet is how to share my zfs pool
+[well] with FreeBSD, which I dual boot. To correctly do this, at least as
+far as I've figured out, the zpool likes to be exported from the current OS
+before rebooting to the other. The problem is that my Users folder is on
+zfs, so I can't export it while I'm logged in. I briefly looked at creating
+a logout hook via this site: http://www.bombich.com/mactips/loginhooks.html,
+but trying to execute the script stalled my logout, so I gave up on that. If
+I logout and back in as another user with admin privileges, I can 'sudo
+diskutil umount /Volumes/pool' and then 'zpool export pool' and then reboot,
+and do 'zpool import pool' in FreeBSD just fine. If I don't export before
+rebooting, FreeBSD tells me that it looks like it's in use. If I force it,
+it wants to scrub the pool before playing nice again. I realize this isn't
+exactly what you were looking for, but in the event you ever dual boot, it's
+an added issue.
+
+I also think that mounting is goofy in OS X with zfs. Every pool/filesystem
+should be handled by zfs, but to do certain things, you have to unmount it
+before you can 'zfs unmount' it. It's like the mounting of OS X prevents zfs
+from doing it's thing. I just might not know what I'm doing though...
+
+I currently only have one pool/filesystem. It's mounted at /Volumes/pool and
+I put a symlink in /Users/ to it. I changed the location of my Users folder
+for my user via the system preferences to be /Volumes/pool, but having the
+symlink is nice since I'm so used to going to /Users/me, not
+/Volumes/pool... I may just decide to keep my 'data' folder separate from my
+OS X Users folder so that I can unmount/export it when I'm done. OS X just
+needs my Users folder, and I don't care about accessing that from FreeBSD,
+just my docs, pics, code, etc.
+
+Maybe this is not what you're looking for... but these are my thoughts!
+
+- John
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090227/e6a53e6f/attachment.html>
+
+From alvinmoonesq at gmail.com  Fri Feb 27 12:51:06 2009
+From: alvinmoonesq at gmail.com (alvinmoonesq at gmail.com)
+Date: Fri, 27 Feb 2009 20:51:06 +0000
+Subject: [zfs-discuss] Questions from an amateur re: created pool,
+	then a file system then a 	ZIL and got kernel panics
+Message-ID: <00151748dcc6b425120463eca033@google.com>
+
+I've read that we can't do ZILs in Mac OS X so I'm wondering whether the  
+kernel panics are because of the ZILs or the sequence of creation. Should I  
+have created the FS last? The panics only happen when I try to write to the  
+file system, but after that, there are kernel panics whenever I boot. BTW:  
+the ZFS fs is located on four 2.5" WD Scorpio Blacks (320GB) which are in  
+two "Dual Portable Raid Enclosures" and connected via esata expresscard 34
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090227/41c90ec1/attachment-0001.html>
+
+From robert.muench at gmail.com  Sat Feb 28 04:28:20 2009
+From: robert.muench at gmail.com (Robert Muench)
+Date: Sat, 28 Feb 2009 13:28:20 +0100
+Subject: [zfs-discuss] ZFS & PGP Whole Disk Encryption
+Message-ID: <9efc39d30902280428i32507710n1570ecc40b2a9756@mail.gmail.com>
+
+Hi, so I tried to get PGP Whole Disk Encryption running but it doesn't work.
+
+I first tried it on drive only with a ZFS partition and than on a
+drive that has a HFS+ partition and a ZFS one. But no luck either.
+
+The alternative is to use PGP encrypted disk images.
+
+So I think we either wait to get encryption support in ZFS (which I
+would prefer) or wait until PGP officially support ZFS partitions.
+
+-- 
+Robert M. M?nch
+
+From ksh at ironsoftware.de  Sat Feb 28 15:38:32 2009
+From: ksh at ironsoftware.de (Christian Kendi)
+Date: Sun, 1 Mar 2009 00:38:32 +0100
+Subject: [zfs-discuss] ZFS & PGP Whole Disk Encryption
+In-Reply-To: <9efc39d30902280428i32507710n1570ecc40b2a9756@mail.gmail.com>
+References: <9efc39d30902280428i32507710n1570ecc40b2a9756@mail.gmail.com>
+Message-ID: <ACEE4FE2-51A8-42BB-9BEC-614BA49AD683@ironsoftware.de>
+
+Try Truecrypt... or Apple Filevault if you dont' mind performance.
+
+Chris.
+
+El Feb 28, 2009, a las 1:28 PM, Robert Muench escribi?:
+
+> Hi, so I tried to get PGP Whole Disk Encryption running but it  
+> doesn't work.
+>
+> I first tried it on drive only with a ZFS partition and than on a
+> drive that has a HFS+ partition and a ZFS one. But no luck either.
+>
+> The alternative is to use PGP encrypted disk images.
+>
+> So I think we either wait to get encryption support in ZFS (which I
+> would prefer) or wait until PGP officially support ZFS partitions.
+>
+> -- 
+> Robert M. M?nch
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090301/b65794ac/attachment.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: Mensaje firmado digitalmente
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090301/b65794ac/attachment.bin>
+
+From james-zfsosx at jrv.org  Sat Feb 28 17:17:27 2009
+From: james-zfsosx at jrv.org (James R. Van Artsdalen)
+Date: Sat, 28 Feb 2009 19:17:27 -0600
+Subject: [zfs-discuss] Questions from an amateur re: created pool,
+ then a file system then a 	ZIL and got kernel panics
+In-Reply-To: <00151748dcc6b425120463eca033@google.com>
+References: <00151748dcc6b425120463eca033@google.com>
+Message-ID: <49A9E227.3070101@jrv.org>
+
+alvinmoonesq at gmail.com wrote:
+> I've read that we can't do ZILs in Mac OS X so I'm wondering whether
+> the kernel panics are because of the ZILs or the sequence of creation.
+> Should I have created the FS last? The panics only happen when I try
+> to write to the file system, but after that, there are kernel panics
+> whenever I boot. BTW: the ZFS fs is located on four 2.5" WD Scorpio
+> Blacks (320GB) which are in two "Dual Portable Raid Enclosures" and
+> connected via esata expresscard 34
+
+All ZFS pools have a ZIL (ZFS Intent Log).  Normally the ZIL is in the
+pool storage with everything else.  The "log" feature lets you reserve a
+disk for the ZIL and nothing else.  This probably isn't useful and might
+even reduce reliability.  Just create the pool normally without
+specifying a log device - this is probably what you want anyway.
+
+From richard.elling at gmail.com  Sat Feb 28 18:12:31 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Sat, 28 Feb 2009 18:12:31 -0800
+Subject: [zfs-discuss] Questions from an amateur re: created pool,
+ then a file system then a 	ZIL and got kernel panics
+In-Reply-To: <49A9E227.3070101@jrv.org>
+References: <00151748dcc6b425120463eca033@google.com>
+	<49A9E227.3070101@jrv.org>
+Message-ID: <49A9EF0F.8040809@gmail.com>
+
+James R. Van Artsdalen wrote:
+> alvinmoonesq at gmail.com wrote:
+>   
+>> I've read that we can't do ZILs in Mac OS X so I'm wondering whether
+>> the kernel panics are because of the ZILs or the sequence of creation.
+>> Should I have created the FS last? The panics only happen when I try
+>> to write to the file system, but after that, there are kernel panics
+>> whenever I boot. BTW: the ZFS fs is located on four 2.5" WD Scorpio
+>> Blacks (320GB) which are in two "Dual Portable Raid Enclosures" and
+>> connected via esata expresscard 34
+>>     
+>
+> All ZFS pools have a ZIL (ZFS Intent Log).  Normally the ZIL is in the
+> pool storage with everything else.  The "log" feature lets you reserve a
+> disk for the ZIL and nothing else.  This probably isn't useful and might
+> even reduce reliability.  Just create the pool normally without
+> specifying a log device - this is probably what you want anyway.
+>   
+
+There are two scenarios where a separate log really help, especially if the
+separate log is on a low-write-latency device (eg. STEC Zeus or RAID array):
+    1. NAS server
+    2. database server
+
+For the vast majority of common uses, a separate log is rarely needed.
+
+This leads to a question of how do you know if your workload is affected?
+I've written a dtrace script called zilstat to try to answer that question.
+http://richardelling.blogspot.com/2009/02/zilstat-improved.html
+
+While I originally wrote that for Solaris, it should work very similarly for
+OSX.  If someone would be so kind as to try it, I would appreciate the
+effort.
+ -- richard-who-is-currently-sans-Mac :-(
+
+

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Deleting zfs.readonly.kext if zfs.kext does not	exist?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Deleting%20zfs.readonly.kext%20if%20zfs.kext%20does%20not%0A%09exist%3F&In-Reply-To=6C9EEAA4-B218-47F9-B833-F0A8507F7A7D%40meyerle.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000791.html">
+   <LINK REL="Next"  HREF="000795.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Deleting zfs.readonly.kext if zfs.kext does not	exist?</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Deleting%20zfs.readonly.kext%20if%20zfs.kext%20does%20not%0A%09exist%3F&In-Reply-To=6C9EEAA4-B218-47F9-B833-F0A8507F7A7D%40meyerle.org"
+       TITLE="[zfs-discuss] Deleting zfs.readonly.kext if zfs.kext does not	exist?">info at martin-hauser.net
+       </A><BR>
+    <I>Sun Aug 17 12:01:26 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000791.html">[zfs-discuss] Deleting zfs.readonly.kext if zfs.kext does not exist?
+</A></li>
+        <LI>Next message: <A HREF="000795.html">[zfs-discuss] zfs write as user
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#793">[ date ]</a>
+              <a href="thread.html#793">[ thread ]</a>
+              <a href="subject.html#793">[ subject ]</a>
+              <a href="author.html#793">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The zfs.readonly.kext does not need to be deleted. It is the read only  
+support that ships with Mac Os X leopard and will be placed there by  
+the next upgrade. The read-write zfs.kext will automatically disable  
+the zfs.readonly.kext while it is loaded.
+
+The instructions on the site are meant for both upgrade and first time  
+installations... rm -rf ing a .kext that doesn't even exist won't even  
+give you an error.
+
+Regards
+
+Martin
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080817/745fa00c/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080817/745fa00c/attachment.bin</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080817/745fa00c/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080817/745fa00c/attachment-0001.bin</A> 
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000791.html">[zfs-discuss] Deleting zfs.readonly.kext if zfs.kext does not exist?
+</A></li>
+	<LI>Next message: <A HREF="000795.html">[zfs-discuss] zfs write as user
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#793">[ date ]</a>
+              <a href="thread.html#793">[ thread ]</a>
+              <a href="subject.html#793">[ subject ]</a>
+              <a href="author.html#793">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

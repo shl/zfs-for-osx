@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic after zpool status on (damaged) USB	stick
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20after%20zpool%20status%20on%20%28damaged%29%20USB%0A%09stick&In-Reply-To=E02D5E8D-FD93-46DD-9BA2-7935390BBA9B%40hessmann.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000807.html">
+   <LINK REL="Next"  HREF="000811.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic after zpool status on (damaged) USB	stick</H1>
+    <B>Riscky Abacus</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20after%20zpool%20status%20on%20%28damaged%29%20USB%0A%09stick&In-Reply-To=E02D5E8D-FD93-46DD-9BA2-7935390BBA9B%40hessmann.de"
+       TITLE="[zfs-discuss] Kernel Panic after zpool status on (damaged) USB	stick">riscky at gmail.com
+       </A><BR>
+    <I>Wed Sep  3 12:55:48 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000807.html">[zfs-discuss] Kernel Panic after zpool status on (damaged) USB stick
+</A></li>
+        <LI>Next message: <A HREF="000811.html">[zfs-discuss] Where are my zfs filesystems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#808">[ date ]</a>
+              <a href="thread.html#808">[ thread ]</a>
+              <a href="subject.html#808">[ subject ]</a>
+              <a href="author.html#808">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This has been an issue for me for some time... I think I sent a few
+emails to the list sometime in March/April. I basically gave up using
+zfs on flash drives.... :(
+
+On Wed, Sep 3, 2008 at 11:16 AM, Christian He&#223;mann &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs at hessmann.de</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> there seems to be something wrong with a ZFS formated 2GB USB stick.
+</I>&gt;<i>
+</I>&gt;<i> ls -la results in partly correct directory listing, partly error
+</I>&gt;<i> messages.
+</I>&gt;<i>
+</I>&gt;<i> A zpool status results in reproducible Kernel Panics:
+</I>&gt;<i>
+</I>&gt;<i> =====
+</I>&gt;<i> Tue Sep  2 12:24:39 2008
+</I>&gt;<i> panic(cpu 0 caller 0x001A8CD4): Kernel trap at 0x0036271b, type
+</I>&gt;<i> 14=page fault, registers:
+</I>&gt;<i> CR0: 0x80010033, CR2: 0x0000000c, CR3: 0x011b9000, CR4: 0x00000660
+</I>&gt;<i> EAX: 0x00000000, EBX: 0x34d7fde8, ECX: 0x1f000000, EDX: 0x00000000
+</I>&gt;<i> CR2: 0x0000000c, EBP: 0x34d7fd18, ESI: 0x00000200, EDI: 0x041d2000
+</I>&gt;<i> EFL: 0x00010202, EIP: 0x0036271b, CS:  0x00000008, DS:  0x04a20010
+</I>&gt;<i> Error code: 0x00000000
+</I>&gt;<i>
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x34d7fb38 : 0x12b0fa (0x4592a4 0x34d7fb6c 0x133243 0x0)
+</I>&gt;<i> 0x34d7fb88 : 0x1a8cd4 (0x46280c 0x36271b 0xe 0x461fbc)
+</I>&gt;<i> 0x34d7fc68 : 0x19ede5 (0x34d7fc80 0x60125d0 0x34d7fd18 0x36271b)
+</I>&gt;<i> 0x34d7fc78 : 0x36271b (0xe 0x48 0x63890010 0x190010)
+</I>&gt;<i> 0x34d7fd18 : 0xcbedf8 (0x0 0x69949 0x3000 0x0)
+</I>&gt;<i> 0x34d7fd38 : 0xcc6935 (0x0 0x0 0x34d7fd58 0x1a236f)
+</I>&gt;<i> 0x34d7fd78 : 0x20300f (0x1f000000 0xcf1c5a20 0x41d2000 0x3)
+</I>&gt;<i> 0x34d7fdb8 : 0x1f63a2 (0x34d7fde8 0x246 0x34d7fe18 0x1da567)
+</I>&gt;<i> 0x34d7fe18 : 0x1ec67c (0x49cae10 0xcf1c5a20 0x41d2000 0x3)
+</I>&gt;<i> 0x34d7fe78 : 0x3661ff (0x4a0a8a0 0xcf1c5a20 0x41d2000 0x34d7ff50)
+</I>&gt;<i> 0x34d7fe98 : 0x38cb8f (0x4a0a8a0 0xcf1c5a20 0x41d2000 0x34d7ff50)
+</I>&gt;<i> 0x34d7ff78 : 0x3ddde2 (0x8b87750 0x61503c0 0x6150404 0x0)
+</I>&gt;<i> 0x34d7ffc8 : 0x19f2c3 (0x8fdb5e0 0x0 0x1a20b5 0x8fdb5e0)
+</I>&gt;<i> No mapping exists for frame pointer
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0xbfffa888
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0xc63000-&gt;0xd2efff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: zpool
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9E17
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+</I>&gt;<i> root:xnu-1228.5.20~1/RELEASE_I386
+</I>&gt;<i> System model name: MacBook4,1 (Mac-F22788A9)
+</I>&gt;<i> ====
+</I>&gt;<i>
+</I>&gt;<i> zfs-119 on newest 10.5.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i>
+</I>&gt;<i> Christian
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000807.html">[zfs-discuss] Kernel Panic after zpool status on (damaged) USB stick
+</A></li>
+	<LI>Next message: <A HREF="000811.html">[zfs-discuss] Where are my zfs filesystems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#808">[ date ]</a>
+              <a href="thread.html#808">[ thread ]</a>
+              <a href="subject.html#808">[ subject ]</a>
+              <a href="author.html#808">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS mmap bug with PHP?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To=EEE43AF5-1477-4D5C-955F-E71CA9E0D392%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000167.html">
+   <LINK REL="Next"  HREF="000170.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS mmap bug with PHP?</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To=EEE43AF5-1477-4D5C-955F-E71CA9E0D392%40mac.com"
+       TITLE="[zfs-discuss] ZFS mmap bug with PHP?">bwaters at nrao.edu
+       </A><BR>
+    <I>Fri Feb 15 19:17:05 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000167.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+        <LI>Next message: <A HREF="000170.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#169">[ date ]</a>
+              <a href="thread.html#169">[ thread ]</a>
+              <a href="subject.html#169">[ subject ]</a>
+              <a href="author.html#169">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Feb 15, 2008, at 6:27 PM, Dirk Schelfhout wrote:
+
+&gt;<i> What makes the file system different on osx than on solaris ?
+</I>
+If I had to guess...
+
+OSX and Solaris have some pretty big differences in the way that they  
+present the kernel.
+
+The Mac OS X Kernel API is written in a subset of C++, right? I  
+suspect that many system calls are different from Solaris, for things  
+like memory allocation and the like. But I have no idea.
+
+The layer that abstracts all filesystem implementations to the rest of  
+the kernel - the VFS layer - is different.
+
+I haven't memorized Amit Singh's book yet, but it is a fun thing to  
+wade through:
+<A HREF="http://www.osxbook.com/">http://www.osxbook.com/</A>
+
+
+The source code for each port is available, has anyone run a diff on  
+them?
+
+  - boyd
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000167.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+	<LI>Next message: <A HREF="000170.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#169">[ date ]</a>
+              <a href="thread.html#169">[ thread ]</a>
+              <a href="subject.html#169">[ subject ]</a>
+              <a href="author.html#169">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

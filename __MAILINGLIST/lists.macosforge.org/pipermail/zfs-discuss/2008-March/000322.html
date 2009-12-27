@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] invalid vdev configuration after crash
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20invalid%20vdev%20configuration%20after%20crash&In-Reply-To=mailman.1486.1205340668.11791.zfs-discuss%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000325.html">
+   <LINK REL="Next"  HREF="000323.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] invalid vdev configuration after crash</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20invalid%20vdev%20configuration%20after%20crash&In-Reply-To=mailman.1486.1205340668.11791.zfs-discuss%40lists.macosforge.org"
+       TITLE="[zfs-discuss] invalid vdev configuration after crash">i_see at macnews.de
+       </A><BR>
+    <I>Thu Mar 13 11:31:37 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000325.html">[zfs-discuss] Re: Firefox Plugin Install Related to Preallocation?
+</A></li>
+        <LI>Next message: <A HREF="000323.html">[zfs-discuss] invalid vdev configuration after crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#322">[ date ]</a>
+              <a href="thread.html#322">[ thread ]</a>
+              <a href="subject.html#322">[ subject ]</a>
+              <a href="author.html#322">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list, hi Kane
+I had similar problems during my early experiments with ZFS, but  
+managed to get all my data out the pool (however, I was unable to  
+fully recover it. No&#235;l attributed the problems to one of the disks not  
+having an GUID partition scheme, but I am not sure that was really the  
+cause of the problem.
+
+You get the weird number because disk10 is not recognized by zfs as  
+being the disk correctly, i.e. the disk/pool identifiers do not match.
+What worked for me was disconnecting the disk, bringing the pool up in  
+a degraded state.
+Unfortunately, I was unable to add the disk later without getting a  
+kenel panic on the next zpool status, so I just copied all data from  
+the broken pool and started over.
+AFTER rescuing all data, you might try to copy / wipe the first/last  
+MB of the disk using dd. That way, zfs would probably recognize the  
+identification a broken and rewrite it from the other disks. Maybe  
+No&#235;l can recall my case and give you further instructions.
+Hope this helps,
+	ralf
+
+Am 12.03.2008 um 17:51 schrieb <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>:
+
+&gt;<i> As of this morning when I sent this (before leaving for work and  
+</I>&gt;<i> after the system was up for 8 hours) I had the following
+</I>&gt;<i>
+</I>&gt;<i> Lumiere:~ kane$ zpool import -af
+</I>&gt;<i> cannot import 'zfsMirror': invalid vdev configuration
+</I>&gt;<i>
+</I>&gt;<i> as the only message.
+</I>&gt;<i>
+</I>&gt;<i> I just got home and tried again and got the following
+</I>&gt;<i>
+</I>&gt;<i> Lumiere:~ kane$ zpool import
+</I>&gt;<i>  pool: zfsMirror
+</I>&gt;<i>    id: 5643149568963753982
+</I>&gt;<i> state: FAULTED
+</I>&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	zfsMirror                 UNAVAIL  insufficient replicas
+</I>&gt;<i> 	  raidz1                  UNAVAIL  corrupted data
+</I>&gt;<i> 	    disk7s2               ONLINE
+</I>&gt;<i> 	    disk8s2               ONLINE
+</I>&gt;<i> 	    disk12s2              ONLINE
+</I>&gt;<i> 	    10120111723985263653  ONLINE
+</I>&gt;<i> 	    disk6s2               ONLINE
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So the system is currently offline and not working.
+</I>&gt;<i>
+</I>&gt;<i> I have no idea what 10120111723985263653 is. When things were  
+</I>&gt;<i> working this was just a normal disk?s? name.
+</I>&gt;<i>
+</I>&gt;<i> Looking at my list of drives with diskutil list it appears that the  
+</I>&gt;<i> following is this weird numbered drive
+</I>&gt;<i> /dev/disk10
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *279.5 Gi    
+</I>&gt;<i> disk10
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk10s1
+</I>&gt;<i>   2:                        ZFS zfsMirror               279.1 Gi    
+</I>&gt;<i> disk10s2
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The pool only ever had these 5 disks in it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> When I created the pool I used the slice names
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Is there a way to recover from this fubarred state?
+</I>&gt;<i>
+</I>&gt;<i> Also, a little more info that may or may not be important. All my  
+</I>&gt;<i> drives are in an external firewire mega case. One of the the drives  
+</I>&gt;<i> for a normal apple raid had died so I took the case apart, removed  
+</I>&gt;<i> that drive and then moved another drive into its place (so it was  
+</I>&gt;<i> connected elsewhere in the firewire ide chain). It was one of the  
+</I>&gt;<i> drives from this pool. But after that was done I booted up and the  
+</I>&gt;<i> pool showed up and everything worked as normal without any issues  
+</I>&gt;<i> that I am aware of. It wasnt until a few restarts later that I had  
+</I>&gt;<i> the crash that has me in the current situation.
+</I>&gt;<i>
+</I>&gt;<i> Everything on this pool is mirrored on another raid, so I can easily  
+</I>&gt;<i> just destroy and recreate it. But I want to make sure there is no  
+</I>&gt;<i> other useful info I can give you before I do.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Kane
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000325.html">[zfs-discuss] Re: Firefox Plugin Install Related to Preallocation?
+</A></li>
+	<LI>Next message: <A HREF="000323.html">[zfs-discuss] invalid vdev configuration after crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#322">[ date ]</a>
+              <a href="thread.html#322">[ thread ]</a>
+              <a href="subject.html#322">[ subject ]</a>
+              <a href="author.html#322">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

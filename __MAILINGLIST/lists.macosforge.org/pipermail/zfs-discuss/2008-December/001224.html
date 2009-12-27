@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] rsync backups to ZFS volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20rsync%20backups%20to%20ZFS%20volume&In-Reply-To=%3C495172F5.2010506%40cs.indiana.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001223.html">
+   <LINK REL="Next"  HREF="001225.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] rsync backups to ZFS volume</H1>
+    <B>Chun-Yu Shei</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20rsync%20backups%20to%20ZFS%20volume&In-Reply-To=%3C495172F5.2010506%40cs.indiana.edu%3E"
+       TITLE="[zfs-discuss] rsync backups to ZFS volume">cshei at cs.indiana.edu
+       </A><BR>
+    <I>Tue Dec 23 15:23:33 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001223.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+        <LI>Next message: <A HREF="001225.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1224">[ date ]</a>
+              <a href="thread.html#1224">[ thread ]</a>
+              <a href="subject.html#1224">[ subject ]</a>
+              <a href="author.html#1224">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This isn't directly related, but I recently moved my home directory on 
+my MacBook Pro onto ZFS, leaving the rest of the system on HFS+.  I've 
+got an OpenSolaris server sharing a ZVol that I connect to with the 
+globalSAN iSCSI initiator 
+(<A HREF="http://www.studionetworksolutions.com/products/product_detail.php?pi=11">http://www.studionetworksolutions.com/products/product_detail.php?pi=11</A>) that's 
+formatted as HFS+ for Time Machine to back up to.  This takes care of 
+backing up all my applications, and since those don't change very often, 
+I only bother &quot;attaching&quot; the Time Machine disk occasionally.
+
+For my home directory, I have a cron job on my server that tries to ssh 
+to my laptop at 4:30am, take a snapshot, and send it over the network 
+with zfs send/recv.  Since it does an incremental send from snapshot to 
+snapshot, there is absolutely no time spent locating what files changed, 
+etc.  This of course could result in problems should you disconnect the 
+network while it's in progress, but that's why I chose to run it at 
+4:30am.  So now I basically have all the benefits of having a Time 
+Capsule and more... automatic backups whenever my laptop is on the 
+network, compression and checksumming built into the filesystem, and 
+snapshots.  I really look forward to official ZFS support in Snow 
+Leopard! :)  (although I'm a bit sad to hear that there won't be a 
+pretty GUI for it to make it accessible to the masses)
+
+Chun-Yu
+
+On 12/23/08 4:37 PM, Jeff Waddell wrote:
+&gt;<i> I've been wondering about the effectivness of an rsync backup of an HFS+
+</I>&gt;<i> volume to ZFS as well. For a while now, I've been exploring different
+</I>&gt;<i> options to replace Time Machine as a backup server for my Mac systems.
+</I>&gt;<i> Time Machine just hasn't been efficient backing up to my AirDisk, taking
+</I>&gt;<i> over 30 minutes for small hourly incrementals and no delta-transfer.
+</I>&gt;<i> Rsync would be a perfect solution, but then the question remains about
+</I>&gt;<i> snapshots. I know there are many rsync-related snapshot scripts that
+</I>&gt;<i> make use of hard-links, but they are also incredibly slow to an AirDisk.
+</I>&gt;<i>
+</I>&gt;<i> For efficiency purposes, I keep coming back to ZFS for whole system
+</I>&gt;<i> backups. However, I have reservations on how well ZFS can backup all of
+</I>&gt;<i> the different aspects of an HFS+ volume (metadata, xattr, permissions,
+</I>&gt;<i> fileflags, resource forks. etc.). I've briefly run the backup bouncer
+</I>&gt;<i> test script with ZFS, and the results haven't been very good, but I'm
+</I>&gt;<i> also not sure if all HFS+ data needs to be preserved to have an
+</I>&gt;<i> effective backup (since I'm not looking for bootability). I'm especially
+</I>&gt;<i> interested with using OpenSolaris ZFS as a backup server (since my Macs
+</I>&gt;<i> are portable). Any personal experiences or advice would be greatly
+</I>&gt;<i> appreciated! Thanks!
+</I>&gt;<i>
+</I>&gt;<i> -Jeff Waddell
+</I>&gt;<i>
+</I>&gt;<i> On Dec 11, 2008, at 8:00 AM, <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Message: 1
+</I>&gt;&gt;<i> Date: Thu, 11 Dec 2008 10:59:01 +1100
+</I>&gt;&gt;<i> From: Nathan &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs at encode.mine.nu</A>&gt;
+</I>&gt;&gt;<i> Subject: [zfs-discuss] rsync backups to ZFS volume
+</I>&gt;&gt;<i> To: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">7f2931472cea820a55908c7656df0872 at localhost</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=&quot;utf-8&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I recently got a new MBP, and thought I should do something about
+</I>&gt;&gt;<i> backing it up regularly. I had an external drive formatted as zfs,
+</I>&gt;&gt;<i> and I figured I'd use rsync to copy files over, then do a ZFS
+</I>&gt;&gt;<i> snapshot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm wondering what people's thoughts are on the effectiveness of
+</I>&gt;&gt;<i> rsync to backup a HFS+ volume to a ZFS volume. I'm using rsync 3.0.4,
+</I>&gt;&gt;<i> installed via darwinports, with the following flags (which I got from
+</I>&gt;&gt;<i> <A HREF="http://www.jeffawaddell.com/2008/05/rsync-solaris-problems.html">http://www.jeffawaddell.com/2008/05/rsync-solaris-problems.html</A>).
+</I>&gt;&gt;<i> /Volumes/backup is my ZFS volume, I'm using the ZFS-119 binaries.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sudo rsync -avxXHAN --fileflags --protect-args --force-change /
+</I>&gt;&gt;<i> /Volumes/backup
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I plan on excluding the following files and folders, although I
+</I>&gt;&gt;<i> haven't included that in the above command:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /tmp/*
+</I>&gt;&gt;<i> /Network/*
+</I>&gt;&gt;<i> /cores/*
+</I>&gt;&gt;<i> */.Trash
+</I>&gt;&gt;<i> /afs/*
+</I>&gt;&gt;<i> /automount/*
+</I>&gt;&gt;<i> /private/tmp/*
+</I>&gt;&gt;<i> /private/var/run/*
+</I>&gt;&gt;<i> /private/var/spool/postfix/*
+</I>&gt;&gt;<i> /private/var/vm/*
+</I>&gt;&gt;<i> /Previous Systems.localized
+</I>&gt;&gt;<i> .Spotlight-*/
+</I>&gt;&gt;<i> Can anyone think of any issues doing this?
+</I>&gt;&gt;<i> I
+</I>&gt;&gt;<i> notice applications seem to have the correct icons in
+</I>&gt;&gt;<i> /Volumes/backup/Applications, and I can run some of them from there
+</I>&gt;&gt;<i> with no issues. Photoshop CS3 quits straight away, not sure if thats
+</I>&gt;&gt;<i> due to the application itself or something I'm overlooking.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regards,
+</I>&gt;&gt;<i> Nathan.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001223.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+	<LI>Next message: <A HREF="001225.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1224">[ date ]</a>
+              <a href="thread.html#1224">[ thread ]</a>
+              <a href="subject.html#1224">[ subject ]</a>
+              <a href="author.html#1224">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

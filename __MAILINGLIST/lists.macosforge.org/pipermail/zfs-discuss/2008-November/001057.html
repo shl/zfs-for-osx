@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic&In-Reply-To=%3CF5296B1F-C35A-4964-B226-22695AE97F8F%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001055.html">
+   <LINK REL="Next"  HREF="001058.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic</H1>
+    <B>Petite Abeille</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20panic&In-Reply-To=%3CF5296B1F-C35A-4964-B226-22695AE97F8F%40gmail.com%3E"
+       TITLE="[zfs-discuss] panic">petite.abeille at gmail.com
+       </A><BR>
+    <I>Sun Nov 16 09:18:48 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001055.html">[zfs-discuss] Fw:  adding drives to a raidz volume
+</A></li>
+        <LI>Next message: <A HREF="001058.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1057">[ date ]</a>
+              <a href="thread.html#1057">[ thread ]</a>
+              <a href="subject.html#1057">[ subject ]</a>
+              <a href="author.html#1057">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In case anyone is keeping track of such things...
+
+panic(cpu 1 caller 0x001A8CEC): Kernel trap at 0x00cb052a, type  
+14=page fault, registers:
+CR0: 0x8001003b, CR2: 0x00000085, CR3: 0x011b2000, CR4: 0x00000660
+EAX: 0x00000051, EBX: 0x00000051, ECX: 0x09654100, EDX: 0x00000001
+CR2: 0x00000085, EBP: 0x76ca3958, ESI: 0x09654100, EDI: 0x15448fb8
+EFL: 0x00010202, EIP: 0x00cb052a, CS:  0x00000008, DS:  0x163c0010
+Error code: 0x00000000
+
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x76ca3768 : 0x12b0fa (0x459234 0x76ca379c 0x133243 0x0)
+0x76ca37b8 : 0x1a8cec (0x4627a0 0xcb052a 0xe 0x461f50)
+0x76ca3898 : 0x19eed5 (0x76ca38b0 0x206 0x76ca3958 0xcb052a)
+0x76ca38a8 : 0xcb052a (0xe 0x48 0x76ca0010 0xcd0010)
+0x76ca3958 : 0xca3a5a (0x51 0x0 0x0 0x8c914a0)
+0x76ca3978 : 0xcbe4ba (0x1 0x9654100 0x3 0x89ac3030)
+0x76ca39a8 : 0xcc0df6 (0x6de1840 0x6b50022 0x0 0xf0c914a0)
+0x76ca3a48 : 0xcc0f0d (0x15448f80 0x6b50022 0x8 0x0)
+0x76ca3aa8 : 0xcbd908 (0x15448f80 0x6b50022 0x8 0x0)
+0x76ca3b08 : 0xce6976 (0x6cac250 0xd5bc6a 0x0 0x6b50022)
+0x76ca3b88 : 0xc84e63 (0x1ea3a540 0x80436560 0x9654100 0x1)
+0x76ca3c08 : 0x1f3a83 (0x76ca3c24 0x0 0x0 0x0)
+0x76ca3c58 : 0x1dbc89 (0xbba2560 0x76ca3e4c 0x76ca3e24 0x76ca3e8c)
+0x76ca3cb8 : 0x1e70d9 (0xbba2560 0x76ca3e4c 0x76ca3e24 0x76ca3e8c)
+0x76ca3e68 : 0x1e7302 (0x76ca3e8c 0x206 0x76ca3ee8 0x367561)
+0x76ca3f78 : 0x3ddd6e (0x6b66a00 0x880ed80 0x880edc4 0xffffffff)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xc80000-&gt;0xd4bfff
+
+BSD process name corresponding to current thread: lua
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBook3,1 (Mac-F22788C8)
+
+Cheers,
+
+--
+PA.
+<A HREF="http://alt.textdrive.com/nanoki/">http://alt.textdrive.com/nanoki/</A>
+
+  
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001055.html">[zfs-discuss] Fw:  adding drives to a raidz volume
+</A></li>
+	<LI>Next message: <A HREF="001058.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1057">[ date ]</a>
+              <a href="thread.html#1057">[ thread ]</a>
+              <a href="subject.html#1057">[ subject ]</a>
+              <a href="author.html#1057">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

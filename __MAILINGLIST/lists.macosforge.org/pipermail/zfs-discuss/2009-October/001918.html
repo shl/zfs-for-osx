@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Disk speeds
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3C367a23780910110533n783dc417if97fb00b957c4466%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001913.html">
+   <LINK REL="Next"  HREF="001922.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Disk speeds</H1>
+    <B>Kacper Wysocki</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3C367a23780910110533n783dc417if97fb00b957c4466%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Disk speeds">kacperw at online.no
+       </A><BR>
+    <I>Sun Oct 11 05:33:40 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001913.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001922.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1918">[ date ]</a>
+              <a href="thread.html#1918">[ thread ]</a>
+              <a href="subject.html#1918">[ subject ]</a>
+              <a href="author.html#1918">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Sep 21, 2009 at 3:21 PM, Christian Kendi &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at ironsoftware.de</A>&gt; wrote:
+&gt;<i> El 21/09/2009, a las 8:35, sammy ominsky escribi&#243;:
+</I>&gt;&gt;<i> This is with 2000 8MB files:
+</I>&gt;&gt;<i> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+</I>&gt;&gt;<i> 32768355 blocks
+</I>&gt;&gt;<i> real    4m57.183s
+</I>&gt;&gt;<i> user    0m3.919s
+</I>&gt;&gt;<i> sys     0m33.403s
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and your kext:
+</I>&gt;&gt;<i> zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+</I>&gt;&gt;<i> 32768355 blocks
+</I>&gt;&gt;<i> real    2m45.003s
+</I>&gt;&gt;<i> user    0m2.926s
+</I>&gt;&gt;<i> sys     0m20.218s
+</I>&gt;<i>
+</I>&gt;<i> This now looks like a working zfs :)
+</I>
+Hey all,
+thought I'd try the Kendi improvements for myself. Stock G5 with two
+7200rpm seagate 1.5TB SATAs in RAIDZ1 on OSX 10.5:
+
+I made 2000 8MB files with contents from /dev/urandom in a single
+folder in a newly created ZFS filesystem.
+
+- regular zfs.kext -
+nurgle:scratch kwy$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+real    5m58.890s
+user    0m31.158s
+sys     1m27.168s
+
+- 2nd run -
+nurgle:scratch kwy$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+real    5m58.092s
+user    0m31.161s
+sys     1m27.054s
+
+- kendi zfs.kext -
+nurgle:scratch kwy$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+real    4m35.392s
+user    0m31.147s
+sys     2m0.470s
+
+- 2nd run -
+nurgle:scratch kwy$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+real    4m20.960s
+user    0m31.053s
+sys     1m55.890s
+
+so, thanks for that one!
+
+Still, the mac can not handle mplayer playback of a xvid movie while
+copying gigs from firewire 800. CPU gets overloaded, movie gets too
+choppy! :-(
+
+cheers,
+  Kacper
+-- 
+<A HREF="http://kacper.doesntexist.org">http://kacper.doesntexist.org</A>
+<A HREF="http://windows.dontexist.com">http://windows.dontexist.com</A>
+Employ no technique to gain supreme enlightment.
+- Mar pa Chos kyi blos gros
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001913.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001922.html">[zfs-discuss] Pool gone after Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1918">[ date ]</a>
+              <a href="thread.html#1918">[ thread ]</a>
+              <a href="subject.html#1918">[ subject ]</a>
+              <a href="author.html#1918">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs write as user
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20write%20as%20user&In-Reply-To=E333E758-B273-44BF-8ABA-8EB9F248E0F0%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000797.html">
+   <LINK REL="Next"  HREF="000800.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs write as user</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20write%20as%20user&In-Reply-To=E333E758-B273-44BF-8ABA-8EB9F248E0F0%40mac.com"
+       TITLE="[zfs-discuss] zfs write as user">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Aug 18 10:29:32 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000797.html">[zfs-discuss] zfs write as user
+</A></li>
+        <LI>Next message: <A HREF="000800.html">[zfs-discuss] An interesting crash..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#798">[ date ]</a>
+              <a href="thread.html#798">[ thread ]</a>
+              <a href="subject.html#798">[ subject ]</a>
+              <a href="author.html#798">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The only reason we currently create version 6 pools (when the latest  
+is version 8), is to be compatible with the original zfs readonly  
+version released in the original version of Leopard.  See the second  
+item of:
+
+<A HREF="http://zfs.macosforge.org/trac/wiki/faq">http://zfs.macosforge.org/trac/wiki/faq</A>
+
+So if you don't intend to need to mount your pool readonly on a  
+Leopard system that only has the old readonly zfs code on it, upgrade  
+away.
+
+&gt;&gt;<i> At the moment I need sudo... which isn't very compfortable I think.
+</I>&gt;<i>
+</I>&gt;<i> It's not convenient :) -- Maybe the Apple Z-Team will use zfs
+</I>&gt;<i> delegation to help solve this issue ??
+</I>
+You can also use Finder to change the permissions on your pool if that  
+is easier for you.  But yeah, we're still  working on a proper  
+presentation model.  Solaris' delegated admin model is cool, but in  
+Mac OSX we do all our access and permissions checking in the VFS  
+layer, so this may not make the most sense for the OSX model... hence  
+we're still figuring out ...
+
+Noel
+
+
+
+On Aug 18, 2008, at 8:59 AM, Robert Gordon wrote:
+
+&gt;<i>
+</I>&gt;<i> On Aug 18, 2008, at 3:23 AM, wishi wrote:
+</I>&gt;<i> {snip}
+</I>&gt;&gt;<i> Are there any known issues with updateing?
+</I>&gt;<i>
+</I>&gt;<i> Not that i have seen thus far..
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can someone tell me how I allow my local users to write on the pool.
+</I>&gt;<i>
+</I>&gt;<i> If your create a file system for each user you can then change the
+</I>&gt;<i> owner of the mount point for the intended user.
+</I>&gt;<i>
+</I>&gt;&gt;<i> At the moment I need sudo... which isn't very compfortable I think.
+</I>&gt;<i>
+</I>&gt;<i> It's not convenient :) -- Maybe the Apple Z-Team will use zfs
+</I>&gt;<i> delegation to help solve this issue ??
+</I>&gt;<i>
+</I>&gt;<i> Robert..
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000797.html">[zfs-discuss] zfs write as user
+</A></li>
+	<LI>Next message: <A HREF="000800.html">[zfs-discuss] An interesting crash..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#798">[ date ]</a>
+              <a href="thread.html#798">[ thread ]</a>
+              <a href="subject.html#798">[ subject ]</a>
+              <a href="author.html#798">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

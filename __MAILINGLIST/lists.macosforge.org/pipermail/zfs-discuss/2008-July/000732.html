@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic on zfs-119
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20on%20zfs-119&In-Reply-To=149ABB55-44DA-4FB3-A630-47924A6172EF%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000731.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic on zfs-119</H1>
+    <B>Brian Pinkerton</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20on%20zfs-119&In-Reply-To=149ABB55-44DA-4FB3-A630-47924A6172EF%40apple.com"
+       TITLE="[zfs-discuss] panic on zfs-119">bplist at thinkpink.com
+       </A><BR>
+    <I>Wed Jul 30 12:17:26 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000731.html">[zfs-discuss] panic on zfs-119
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#732">[ date ]</a>
+              <a href="thread.html#732">[ thread ]</a>
+              <a href="subject.html#732">[ subject ]</a>
+              <a href="author.html#732">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This happened on a quad PM G5 with 4GB of RAM.  The array in question,  
+&quot;max&quot;, has 8 disks (4 stripe x 2 mirror.)  I was having some problems  
+with one of the bays in my enclosure, which had resulted in a degraded  
+mirror.  I moved the disk from the bad bay into another enclosure and  
+had just completed a scrub.  I was in the process of doing another  
+backup when the panic occurred.  Instead of rsync, I used a back-to- 
+back tar, like:
+
+	gnutar cpf - Photos | (cd /Volumes/Backup2; gnutar xpvf -)
+
+The panic occurred just before the last zpool import in the history  
+below.
+
+thanks,
+bri
+
+History for 'max':
+2008-01-16.15:44:39 zpool create max mirror disk8s2 disk5s2 mirror  
+disk2s2 disk1s2 mirror disk3s2 disk6s2 mirror disk4s2 disk7s2
+2008-01-16.15:44:51 zpool upgrade max
+2008-01-16.15:55:57 zfs create max/Video
+2008-01-16.15:56:05 zfs create max/Photos
+2008-01-16.15:56:09 zfs create max/Music
+2008-01-16.15:56:18 zfs create max/Backups
+2008-01-16.20:24:18 zpool import -f 9029985489610784659
+2008-01-16.22:22:48 zpool import -f 9029985489610784659
+2008-01-19.21:56:08 zpool import -f 9029985489610784659
+2008-01-27.15:16:13 zpool import -f 9029985489610784659
+2008-02-12.13:26:51 zpool import -f 9029985489610784659
+2008-02-12.13:34:42 zpool import -f 9029985489610784659
+2008-03-02.14:31:56 zpool import -f 9029985489610784659
+2008-03-02.14:44:57 zpool import -f 9029985489610784659
+2008-03-05.21:44:14 zpool import -f 9029985489610784659
+2008-03-06.09:09:44 zpool import -f 9029985489610784659
+2008-03-06.10:41:32 zpool import -f 9029985489610784659
+2008-03-07.11:13:56 zpool import -f 9029985489610784659
+2008-03-07.11:34:55 zpool import -f 9029985489610784659
+2008-05-24.21:58:35 zpool scrub max
+2008-05-25.15:23:07 zpool import -f 9029985489610784659
+2008-05-25.16:43:32 zpool import -f 9029985489610784659
+2008-05-29.08:44:16 zpool import -f 9029985489610784659
+2008-06-11.15:37:46 zpool import -f 9029985489610784659
+2008-06-24.17:39:38 zpool import -f 9029985489610784659
+2008-07-24.21:54:46 zpool import -f 9029985489610784659
+2008-07-24.22:03:44 zpool import -f 9029985489610784659
+2008-07-24.22:43:27 zpool import -f 9029985489610784659
+2008-07-24.22:44:59 zpool scrub max
+2008-07-24.23:20:46 zpool scrub -s max
+2008-07-25.23:07:13 zpool import -f 9029985489610784659
+2008-07-27.15:47:46 zpool import -f 9029985489610784659
+2008-07-27.15:56:51 zpool clear max
+2008-07-27.20:25:43 zpool scrub max
+2008-07-28.01:13:58 zpool clear max
+2008-07-28.01:19:05 zpool scrub max
+2008-07-29.10:13:15 zpool import -f 9029985489610784659
+
+
+On Jul 30, 2008, at 11:19 AM, No&#235;l Dellofano wrote:
+
+&gt;<i> oh grosse, kernel heap corruption.  I'll open a bug on this right  
+</I>&gt;<i> away.
+</I>&gt;<i> Can you send me a 'zpool history' of your pool?  Out of curiosity  
+</I>&gt;<i> how much RAM do you have?
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000731.html">[zfs-discuss] panic on zfs-119
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#732">[ date ]</a>
+              <a href="thread.html#732">[ thread ]</a>
+              <a href="subject.html#732">[ subject ]</a>
+              <a href="author.html#732">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

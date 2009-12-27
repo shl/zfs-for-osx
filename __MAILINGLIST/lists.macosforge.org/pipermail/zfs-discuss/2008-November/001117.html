@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs scrub hangs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20scrub%20hangs&In-Reply-To=%3CB74AF4D9-DDC9-45E7-8706-0A0E468D94C1%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001118.html">
+   <LINK REL="Next"  HREF="001238.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs scrub hangs</H1>
+    <B>Garrett Power</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20scrub%20hangs&In-Reply-To=%3CB74AF4D9-DDC9-45E7-8706-0A0E468D94C1%40gmail.com%3E"
+       TITLE="[zfs-discuss] zfs scrub hangs">garrett.power at gmail.com
+       </A><BR>
+    <I>Sat Nov 29 22:40:47 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001118.html">[zfs-discuss] Automatic scrub?
+</A></li>
+        <LI>Next message: <A HREF="001238.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1117">[ date ]</a>
+              <a href="thread.html#1117">[ thread ]</a>
+              <a href="subject.html#1117">[ subject ]</a>
+              <a href="author.html#1117">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Does anyone have any suggestions? I now received a kernel panic when  
+doing a zpool export -f on my raidz pool. I was doing an export to put  
+in a new fan into my enclosure and the system crapped out. Here is the  
+following information from the panic:
+
+Sat Nov 29 11:37:02 2008
+panic(cpu 0 caller 0x00AD97C4): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/dnode_sync.c  
+line 397: pass &lt; 100&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/ 
+zfs-119/zfs_kext/zfs/dnode_sync.c:397
+Latest stack backtrace for cpu 0:
+       Backtrace:
+          0x0009B518 0x0009BEBC 0x00029DD8 0x00AD97C4 0x00AD072C  
+0x00AA6248 0x00105D70 0x000F57B8
+          0x000F5C24 0x0030ABDC 0x000B2CC8 0x80430000
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xaa4000-&gt;0xb8dfff
+Proceeding back via exception chain:
+    Exception state (sv=0x5daad500)
+       PC=0x9593770C; MSR=0x0000D030; DAR=0xE0024000;  
+DSISR=0x42000000; LR=0x0004B5E4; R1=0xBFFFBA30; XCP=0x00000030 (0xC00  
+- System call)
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:31:44 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_PPC
+System model name: PowerMac7,2
+
+This was a panic for doing an export on the raidz pool. Is there going  
+to be another update for zfs soon? Should I reinstall mac 10.5 on my  
+G5 and not do the latest security updates if that option is possible?  
+I would really hate to loose my stability and not be able to do any  
+scrubs.
+
+- Garrett
+
+&gt;<i>
+</I>&gt;<i> On Nov 26, 2008, at 10:28 PM, &quot;Garrett Power garrett.power-at- 
+</I>&gt;<i> gmail.com |ZFS macosforge.org|&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">7i4pkazbb40t at sneakemail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>   I am having issues when doing a zpool scrub on my raidz setup. My  
+</I>&gt;&gt;<i> setup is configured of 5 1TB drives in a raidz configuration. They  
+</I>&gt;&gt;<i> are housed in a 5 drive bay esata enclosure that uses a port  
+</I>&gt;&gt;<i> multiplier. After doing the latest mac updates for 10.5.5 i.e.  
+</I>&gt;&gt;<i> security update, it seems that when doing a scrub on the raidz, it  
+</I>&gt;&gt;<i> will hang. It will hang from 26+%. It hung at one point at 46% and  
+</I>&gt;&gt;<i> another time at 51% and so on. I have never had an issue when doing  
+</I>&gt;&gt;<i> a scrub. Is anyone else having any problems? Could it be the  
+</I>&gt;&gt;<i> security update?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   As mentioned above, I am running on Mac OS 10.5.5. The hardware  
+</I>&gt;&gt;<i> is a G5 dual 1.8 with 2.5GB of ram. The hangs that I am describing  
+</I>&gt;&gt;<i> are the finder will freeze up, but I can still load up applications  
+</I>&gt;&gt;<i> that are not finder specific. I can not issue any zfs or zpool  
+</I>&gt;&gt;<i> commands and I can not list the contents of the raidz pool with the  
+</I>&gt;&gt;<i> command line prompt. I have not received any kernel panics. The  
+</I>&gt;&gt;<i> only way for me to reboot the machine is by holding down the power  
+</I>&gt;&gt;<i> button on the G5. Finder will not reboot correctly. I have looked  
+</I>&gt;&gt;<i> at the logs and do not see anything suspicious.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   Can anyone give me any suggestions? Is there anything I can do to  
+</I>&gt;&gt;<i> grab more data to help me solve this problem? Everything seems to  
+</I>&gt;&gt;<i> be fine. For example, I can read the data fine or copy data to the  
+</I>&gt;&gt;<i> pool fine, but when doing a scrub it will hang up.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for any help that can be provided,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Garrett Power
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1605 bytes
+Desc: not available
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081130/96bba1de/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081130/96bba1de/attachment-0001.bin</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001118.html">[zfs-discuss] Automatic scrub?
+</A></li>
+	<LI>Next message: <A HREF="001238.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1117">[ date ]</a>
+              <a href="thread.html#1117">[ thread ]</a>
+              <a href="subject.html#1117">[ subject ]</a>
+              <a href="author.html#1117">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

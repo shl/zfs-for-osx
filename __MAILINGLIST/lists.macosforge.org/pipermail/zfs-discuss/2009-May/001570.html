@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3C661B55F4-CE65-4F3B-98F7-07A4C0483159%40designlifecycle.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001566.html">
+   <LINK REL="Next"  HREF="001572.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation</H1>
+    <B>Alex Bowden</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3C661B55F4-CE65-4F3B-98F7-07A4C0483159%40designlifecycle.com%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation">alex at designlifecycle.com
+       </A><BR>
+    <I>Wed May  6 07:56:55 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001566.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+        <LI>Next message: <A HREF="001572.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1570">[ date ]</a>
+              <a href="thread.html#1570">[ thread ]</a>
+              <a href="subject.html#1570">[ subject ]</a>
+              <a href="author.html#1570">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 6 May 2009, at 02:06, Dan Shoop wrote:
+
+&gt;<i>
+</I>&gt;<i> On May 5, 2009, at 7:00 PM, Alex Bowden wrote:
+</I>&gt;&gt;<i> This is the Unix world where root and swap partitions have known  
+</I>&gt;&gt;<i> how not to stomp on the boot block for 40 years.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> But this is *not* unix, it's OS X / Darwin. Just like Solaris is not  
+</I>&gt;<i> unix either.
+</I>
+?  That is more a legal and marketing issue than anything else.  From  
+a technical point of view, MacOS is a Unix based operating system.    
+After 40 years you'll learn to spot one.  That doesn't mean that it  
+hasn't any of its own ways of doing things.
+
+To quote Apple Inc.  &quot;There are over 15 million Mac OS X users&#8212; 
+scientists, animators, developers, system administrators, and more&#8212; 
+making Mac OS X the most widely used UNIX-based desktop operating  
+system.&quot;
+
+I'm sure the 15m is now well out of date.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So trying to presume unix parlance equates on OS X is equally  
+</I>&gt;<i> questionable. Generally speaking under OS X you don't consider /dev/ 
+</I>&gt;<i> diskN as a &quot;disk&quot; since this will vary across reboots and system  
+</I>&gt;<i> event transitions. &quot;diskN&quot; would be used, and it is seen by the OS  
+</I>&gt;<i> in this case as the partition.
+</I>
+That is a red herring.   diskN is an abbreviation for /dev/diskN.
+
+The discussion is whether, at the point in time the zpool command is  
+used,  diskN or diskNsM can be described as the whole disk.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> You do have a fair argument that there's room for improvement and  
+</I>&gt;<i> clarity in the beta docs, but they're not &quot;very wrong&quot; by their  
+</I>&gt;<i> readership, and with the attitude you're using it's unlikely you're  
+</I>&gt;<i> going to win many supporters, especially since the current parlance  
+</I>&gt;<i> does match what a OS X sysadmin is likely to understand and view as  
+</I>&gt;<i> correct or acceptable verbiage.
+</I>
+I suspect that this is a carry over of the /dev herring.   If the  
+average OS X sysadmin considers diskNsM to be a whole disk than
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Feel free to flame on, but you've already losing your audience with  
+</I>&gt;<i> your ranting and what at least this reader views as a juvenile  
+</I>&gt;<i> attitude towards working with the community.
+</I>
+My interjection was about the overbearing and supercilious snubbing of  
+a user who sent in a perfectly reasonable issue where he had lost his  
+zpool and was dismissed because he had ignored the getting started  
+documentation.
+
+The discussion had become protracted because the writer of that  
+dismissal is determined to use ever increasing babel towers of  
+confusion, rather than just recognise the inappropriateness of the  
+attitude to a user who had made a perfectly reasonable pass at  
+following the recommendations.
+
+If you prefer this group encourage such behaviour toward new users  
+then continue ignoring their problems and pretending that they don't  
+exist.
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -d
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> Dan Shoop
+</I>&gt;<i> Computer Scientist
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">shoop at iwiring.net</A>
+</I>&gt;<i> 1-714-363-1174
+</I>&gt;<i> aim: iWiring
+</I>&gt;<i> twitter: @colonelmode
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001566.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+	<LI>Next message: <A HREF="001572.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1570">[ date ]</a>
+              <a href="thread.html#1570">[ thread ]</a>
+              <a href="subject.html#1570">[ subject ]</a>
+              <a href="author.html#1570">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

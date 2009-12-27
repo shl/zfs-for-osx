@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Hard Lockup on zpool status
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Hard%20Lockup%20on%20zpool%20status&In-Reply-To=497BEB72-D07C-4D17-9300-E2DEF4C7B848%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000850.html">
+   <LINK REL="Next"  HREF="000855.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Hard Lockup on zpool status</H1>
+    <B>Al Gordon</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Hard%20Lockup%20on%20zpool%20status&In-Reply-To=497BEB72-D07C-4D17-9300-E2DEF4C7B848%40gmail.com"
+       TITLE="[zfs-discuss] Hard Lockup on zpool status">al at runlevel7.org
+       </A><BR>
+    <I>Wed Sep 17 08:20:26 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000850.html">[zfs-discuss] Hard Lockup on zpool status
+</A></li>
+        <LI>Next message: <A HREF="000855.html">[zfs-discuss] Hard Lockup on zpool status
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#854">[ date ]</a>
+              <a href="thread.html#854">[ thread ]</a>
+              <a href="subject.html#854">[ subject ]</a>
+              <a href="author.html#854">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've encountered this as well.  No solutions, just a +1 for the  
+problem reporting.
+
+--
+
+   -- AL --
+
+On Sep 15, 2008, at 10:57 PM, Sean Hafeez wrote:
+
+&gt;<i> rioja:~ me$ zpool list
+</I>&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;<i> ALTROOT
+</I>&gt;<i> data2                  2.53T    993G   1.56T    38%  ONLINE     -
+</I>&gt;<i> rioja:~ me$ zpool status
+</I>&gt;<i>   pool: data2
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i> status: One or more devices has experienced an error resulting in data
+</I>&gt;<i> 	corruption.  Applications may be affected.
+</I>&gt;<i> action: Restore the file in question if possible.  Otherwise restore  
+</I>&gt;<i> the
+</I>&gt;<i> 	entire pool from backup.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-8A">http://www.sun.com/msg/ZFS-8000-8A</A>
+</I>&gt;<i>  scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i> 	data2        ONLINE       0     0     0
+</I>&gt;<i> 	  raidz1     ONLINE       0     0     0
+</I>&gt;<i> 	    disk2s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk1s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk3s2  ONLINE       0     0     0
+</I>&gt;<i> 	  raidz1     ONLINE       0     0     0
+</I>&gt;<i> 	    disk5s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk4s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk6s2  ONLINE       0     0     0
+</I>&gt;<i> 	    disk7s2  ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> ...at this point the system locks up.
+</I>&gt;<i>
+</I>&gt;<i> There was another zpool that fail and was removed (external USB disk).
+</I>&gt;<i>
+</I>&gt;<i> I have to reboot the system. Hard lockup. Any ideas.
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i> Sean
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000850.html">[zfs-discuss] Hard Lockup on zpool status
+</A></li>
+	<LI>Next message: <A HREF="000855.html">[zfs-discuss] Hard Lockup on zpool status
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#854">[ date ]</a>
+              <a href="thread.html#854">[ thread ]</a>
+              <a href="subject.html#854">[ subject ]</a>
+              <a href="author.html#854">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

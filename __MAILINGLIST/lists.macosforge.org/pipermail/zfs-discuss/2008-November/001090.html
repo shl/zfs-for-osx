@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS and nested NFS exports (and crontab for backup)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20and%20nested%20NFS%20exports%20%28and%20crontab%20for%20backup%29&In-Reply-To=%3C636fd28e0811211702y5895e33ne8274cf318c4470f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001235.html">
+   <LINK REL="Next"  HREF="001091.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS and nested NFS exports (and crontab for backup)</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20and%20nested%20NFS%20exports%20%28and%20crontab%20for%20backup%29&In-Reply-To=%3C636fd28e0811211702y5895e33ne8274cf318c4470f%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] ZFS and nested NFS exports (and crontab for backup)">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Fri Nov 21 17:02:50 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001235.html">[zfs-discuss] zfs panics
+</A></li>
+        <LI>Next message: <A HREF="001091.html">[zfs-discuss] Benefits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1090">[ date ]</a>
+              <a href="thread.html#1090">[ thread ]</a>
+              <a href="subject.html#1090">[ subject ]</a>
+              <a href="author.html#1090">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, after much trial and tribulations, I've finally got my home
+drives over NFS with a ZFS backend. All I need now is for a stable
+NFS4 that can handle xattrs over the wire and I'm golden :-) Mind you,
+that's not going to come until 10.7 &quot;Rain puppy&quot;.
+
+The good:
+* I've got ZFS on the back-end, with snapshots and everything.
+* Compression is a bonus, especially for /Library/Documentation.
+Doesn't seem to impact files that much - I have it on for all shares
+at the moment. Largest compression ratio is 1.31x, (developer stuff,
+CVS repo etc.)
+* xattr properties are cool
+* copies=2 is great for data when you're on a laptop
+* crontab is your friend:
+@reboot /usr/sbin/zfs scrub Data
+@daily /usr/sbin/zfs scrub Data
+#If you really want to get silly
+@hourly /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-</A>`date +&quot;\%FT\%H:\%M&quot;`
+@daily /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-</A>`date +&quot;\%F&quot;`
+@weekly /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoW-</A>`date +&quot;\%Y-\%U&quot;`
+@monthly /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoM-</A>`date +&quot;\%Y-\%m&quot;`
+@yearly /usr/sbin/zfs snapshot -r <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoY-</A>`date +&quot;\%Y&quot;`
+# do a spot of housecleaning - somewhat assumes the daily ones have run ..
+@hourly /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoH-</A> | /usr/bin/sort -r | tail -n +26 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+@daily /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoD-</A> | /usr/bin/sort -r | tail -n +9 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+@weekly /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoW-</A> | /usr/bin/sort -r | tail -n +7 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+@monthly /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Data at AutoM-</A> | /usr/bin/sort -r | tail -n +14 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+
+The bad:
+* I've had one kernel panic. Mind you, that's on a fresh (i.e. buggy)
+MacBook Pro and the graphics card had several glitches. Not sure if it
+was ZFS related, but I sent the report in anyway.
+* No friendly GUI Mac support. Hey, I smell a business idea ...
+
+The ugly:
+* NFS mounting. Really, don't do it. Well, I say that - but the
+alternative (AFP) is worse. I'd say that ZFS is great for single
+machine systems at the moment - the ability to create nested data
+structures is great, especially for the automated backups (above).
+** But as my last post indicated (to my lack of knowledge, really)
+each ZFS FS needs its own entry in /etc/exports. With a lot of file
+systems, that's a problem - and given that ZFS encourages a lot of
+file systems, it's a big issue. Worse still is the zfs share (or lack
+thereof) support.
+** Note to self; how hard could zfs share be? It's just a cat &gt;&gt;
+/etc/exports and corresponding deletion for zfs unshare ...
+** Client-side mounting. AutoFS doesn't really like nested automounts.
+If you have static mounts (via dscl /Search -list /Mounts) then it
+complains every time there's a nested level in there. you need to list
+every mount point or otherwise your file system tree is more holey
+than a bullet ridden swiss cheese.
+** DS import and export. Could I do it? Could I buggery. Ended up
+doing an ldap export and import. Sob, demise of NetInfo etc. Server
+Admin isn't great ether - you can poke in a share line by line if you
+have time (add opts, add tcp, add nointr, add soft, add VFSLink ...)
+but imagine doing that for many file systems. Hmm, there's that
+business idea again ... or maybe it's my toast burning.
+** Even when you've done that, it's the three-finger salute (one
+finger for Mac users, I guess) to get the automounter to *realise*
+that you've managed to kick ldap into submission.
+** Figure out (after reboot) that sudo automount -vc would have done the trick
+** OK, you can do /net/mini/Users/alex instead. That works, but you
+need to either symlink /Users/alex or put /net/mini/Users/alex in the
+VFSDir record. And that goes wahoonie shaped when you try and log in
+to mini, because it then says you can't local mount a networked dir,
+please sod off.
+** I had to buy a mini a month before they were upgraded (or
+cancelled, depending on belief). Bugger. Oh well, at least it's got
+4G(*) in it.
+
+Even if you do something funky with auto_home to mount user's
+directories across NFS, its still a pain to have 1 NFS export per user
+(pretty much back to the bad old days of AFP) - and it pretty much
+negates the ability for a user to have multiple ZFS file systems (one
+for Music, one for Documents etc. with different
+encryption/compression levels). Of course these would only be
+manageable on the 'home' server, but remote mounting would be a
+nightmare.
+
+Anyway, I thought I'd share my impressions with everyone on the list
+and hope the set of crontab magic incarnations is useful. I'll be
+blogging about it tomorrow via
+<A HREF="http://alblue.blogspot.com/search/label/zfs">http://alblue.blogspot.com/search/label/zfs</A> which would be a good
+canonical URL to bookmark for the above crontab entries
+
+Alex
+
+(*) Yes, it is possible to stick 4G in a mini. You just have to take
+it gently and use plenty of lube. I bought a Crucial jobby
+(<A HREF="http://www.crucial.com/store/partspecs.aspx?IMODULE=CT2KIT25664AC667">http://www.crucial.com/store/partspecs.aspx?IMODULE=CT2KIT25664AC667</A>).
+Note that whilst you can shove 4G where the sun don't shine, and it
+says 4G in warm fluffy letters on the 'About' box, the intel chipset
+on board can only see ~3G of it:
+mini$ sysctl -a | grep mem
+hw.physmem = 2147483648
+hw.usermem = 1125699584
+hw.memsize = 4294967296
+PhysMem:  975M wired,  431M active,  113M inactive, 2548M used, 1548M free.
+
+Heck, still gives me a good Gb of space for ZFS's nefarious caching
+needs and leaves plenty left over for a trip down memory lane. And
+with my latest hourly snapshot complete, I'm going to retire for the
+evening...
+Data/Users/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex at AutoH-2008-11-22T01</A>:00                     1.41M
+-  52.0G  -
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001235.html">[zfs-discuss] zfs panics
+</A></li>
+	<LI>Next message: <A HREF="001091.html">[zfs-discuss] Benefits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1090">[ date ]</a>
+              <a href="thread.html#1090">[ thread ]</a>
+              <a href="subject.html#1090">[ subject ]</a>
+              <a href="author.html#1090">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

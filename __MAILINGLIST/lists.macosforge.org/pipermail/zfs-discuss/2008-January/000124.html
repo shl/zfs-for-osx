@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=6C8FAFD9-68D6-4A52-94BE-D5FCDE9D7705%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000123.html">
+   <LINK REL="Next"  HREF="000099.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] raidz</H1>
+    <B>Erik Ableson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20raidz&In-Reply-To=6C8FAFD9-68D6-4A52-94BE-D5FCDE9D7705%40apple.com"
+       TITLE="[zfs-discuss] raidz">eableson at mac.com
+       </A><BR>
+    <I>Wed Jan 30 13:09:32 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000123.html">[zfs-discuss] raidz
+</A></li>
+        <LI>Next message: <A HREF="000099.html">[zfs-discuss] Development on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#124">[ date ]</a>
+              <a href="thread.html#124">[ thread ]</a>
+              <a href="subject.html#124">[ subject ]</a>
+              <a href="author.html#124">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK - many thanks for the clarifications - I crossed a few wires  
+reviewing a side discussion about the disk replacements under raidz  
+and adding disks to a mirror.
+
+Going back to my test logs, the issue I was testing at the time was  
+replacing existing disks with larger ones, which is a viable upgrade  
+path and I hadn't actually tested the addition of a new disk to the  
+raidz set.
+
+Cheers,
+
+Erik
+On 30 janv. 08, at 21:06, No&#235;l Dellofano wrote:
+
+&gt;&gt;<i> Yes, this is what people *want* o happen, but it doesn't happen  
+</I>&gt;&gt;<i> that way. Not yet.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As I understand it, you can't add devices to an existing raidz  
+</I>&gt;&gt;<i> array. (On the ZFS that's currently shipping with Solaris, I think  
+</I>&gt;&gt;<i> you can add on-line spares to an existing array, but that won't  
+</I>&gt;&gt;<i> increase the storage capacity of the array.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You *can* add storage to an existing storage *pool*, as long as the  
+</I>&gt;&gt;<i> new elements of the pool are at least as large as the existing  
+</I>&gt;&gt;<i> elements.
+</I>&gt;<i>
+</I>&gt;<i> Yes exactly, all three of the above assertions Boyd makes are correct.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000123.html">[zfs-discuss] raidz
+</A></li>
+	<LI>Next message: <A HREF="000099.html">[zfs-discuss] Development on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#124">[ date ]</a>
+              <a href="thread.html#124">[ thread ]</a>
+              <a href="subject.html#124">[ subject ]</a>
+              <a href="author.html#124">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

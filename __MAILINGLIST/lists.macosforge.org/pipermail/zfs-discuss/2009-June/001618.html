@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CC80F63FA-010E-4D3D-AF09-9890A49C2D89%40Sun.COM%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001617.html">
+   <LINK REL="Next"  HREF="001619.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CC80F63FA-010E-4D3D-AF09-9890A49C2D89%40Sun.COM%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Tue Jun  9 19:43:53 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001617.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001619.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1618">[ date ]</a>
+              <a href="thread.html#1618">[ thread ]</a>
+              <a href="subject.html#1618">[ subject ]</a>
+              <a href="author.html#1618">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>okay .. so it looks like disk2 - disk8 should be your 5+2 raidz2 pool  
+named cpool, but now it can't find the vdev with guid  
+13962824586312699565 and disk8s2 is showing faulted (the guid looks a  
+little funky too)
+
+zdb isn't ported to the mac so you can't exactly walk the headers, and  
+that might be a little too deep for where you want to go - so it looks  
+like you want to get disk7s2 and disk8s2 back into the pool .. since  
+disk8 is kind of recognized as being part of the pool (only faulted  
+now) .. what might work is:
+
+# zpool replace cpool disk8s2 disk8s2
+
+see if this completes .. (or perhaps zpool replace 1751454142452109774  
+disk8s2) .. this should just do an in place upgrade .. then:
+
+# zpool replace cpool 13962824586312699565 disk7s2
+
+it's a little odd to me that the vdev guids are being displayed there  
+instead of the last known devices .. but perhaps that's just because  
+the previous device (disk9s2) was changed and it couldn't find this  
+particular guid
+
+btw - out of curiousity - when you built the pool initially did you do  
+a:
+# zpool create cpool raidz2 disk2s2 disk3s2 disk4s2 .. &lt;etc&gt;
+or a
+# zpool create cpool raidz2 disk2 disk3 disk4 .. &lt;etc&gt;
+
+oh, and if you have spare disks .. it might pay to put in a hot spare  
+here .. haven't tested this too much with the mac port, but this  
+should just work to replace degraded or missing devices .. (good  
+choice though on raidz2!!)
+
+On Jun 9, 2009, at 8:51 PM, Carl Magnuson wrote:
+
+&gt;<i> Here is the output John:
+</I>&gt;<i>
+</I>&gt;<i> g5:~ bobcat$ diskutil list
+</I>&gt;<i> /dev/disk0
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *298.1 Gi    
+</I>&gt;<i> disk0
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk0s1
+</I>&gt;<i>   2:                  Apple_HFS Boot                    297.8 Gi    
+</I>&gt;<i> disk0s2
+</I>&gt;<i> /dev/disk1
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:     Apple_partition_scheme                        *232.9 Gi    
+</I>&gt;<i> disk1
+</I>&gt;<i>   1:        Apple_partition_map                         31.5 Ki     
+</I>&gt;<i> disk1s1
+</I>&gt;<i>   2:                  Apple_HFS Users                   232.8 Gi    
+</I>&gt;<i> disk1s3
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk2s1
+</I>&gt;<i>   2:                        ZFS cpool                   465.4 Gi    
+</I>&gt;<i> disk2s2
+</I>&gt;<i> /dev/disk3
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk3
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk3s1
+</I>&gt;<i>   2:                        ZFS cpool                   465.4 Gi    
+</I>&gt;<i> disk3s2
+</I>&gt;<i> /dev/disk4
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk4
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk4s1
+</I>&gt;<i>   2:                        ZFS cpool                   465.4 Gi    
+</I>&gt;<i> disk4s2
+</I>&gt;<i> /dev/disk5
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk5
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk5s1
+</I>&gt;<i>   2:                        ZFS cpool                   465.4 Gi    
+</I>&gt;<i> disk5s2
+</I>&gt;<i> /dev/disk6
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk6
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk6s1
+</I>&gt;<i>   2:                        ZFS cpool                   465.4 Gi    
+</I>&gt;<i> disk6s2
+</I>&gt;<i> /dev/disk7
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk7
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk7s1
+</I>&gt;<i>   2:                        ZFS cpool                   465.4 Gi    
+</I>&gt;<i> disk7s2
+</I>&gt;<i> /dev/disk8
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk8
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk8s1
+</I>&gt;<i>   2:                        ZFS cpool                   465.4 Gi    
+</I>&gt;<i> disk8s2
+</I>&gt;<i> /dev/disk9
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *465.8 Gi    
+</I>&gt;<i> disk9
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk9s1
+</I>&gt;<i>   2:                  Apple_HFS Backup                  465.4 Gi    
+</I>&gt;<i> disk9s2
+</I>&gt;<i> /dev/disk10
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:      GUID_partition_scheme                        *931.5 Gi    
+</I>&gt;<i> disk10
+</I>&gt;<i>   1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk10s1
+</I>&gt;<i>   2:                  Apple_HFS Backup-G5               931.2 Gi    
+</I>&gt;<i> disk10s2
+</I>&gt;<i> /dev/disk11
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:                                                   *320.0 Ki    
+</I>&gt;<i> disk11
+</I>&gt;<i> /dev/disk12
+</I>&gt;<i>   #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>   0:                                                   *320.0 Ki    
+</I>&gt;<i> disk12
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> g5:~ bobcat$ zpool status -v
+</I>&gt;<i>  pool: cpool
+</I>&gt;<i> state: DEGRADED
+</I>&gt;<i> status: One or more devices could not be used because the label is  
+</I>&gt;<i> missing or
+</I>&gt;<i> 	invalid.  Sufficient replicas exist for the pool to continue
+</I>&gt;<i> 	functioning in a degraded state.
+</I>&gt;<i> action: Replace the device using 'zpool replace'.
+</I>&gt;<i>   see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+</I>&gt;<i> scrub: resilver completed with 0 errors on Mon Jun  8 15:15:31 2009
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	NAME                      STATE     READ WRITE CKSUM
+</I>&gt;<i> 	cpool                     DEGRADED     0     0     0
+</I>&gt;<i> 	  raidz2                  DEGRADED     0     0     0
+</I>&gt;<i> 	    disk2s2               ONLINE       0     0     0
+</I>&gt;<i> 	    disk3s2               ONLINE       0     0     0
+</I>&gt;<i> 	    disk6s2               ONLINE       0     0     0
+</I>&gt;<i> 	    disk5s2               ONLINE       0     0     0
+</I>&gt;<i> 	    disk4s2               ONLINE       0     0     0
+</I>&gt;<i> 	    1751454142452109774   FAULTED      0     0     0  was /dev/ 
+</I>&gt;<i> disk8s2
+</I>&gt;<i> 	    13962824586312699565  UNAVAIL      0     0     0  was /dev/ 
+</I>&gt;<i> disk9s2
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Carl
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001617.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001619.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1618">[ date ]</a>
+              <a href="thread.html#1618">[ thread ]</a>
+              <a href="subject.html#1618">[ subject ]</a>
+              <a href="author.html#1618">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

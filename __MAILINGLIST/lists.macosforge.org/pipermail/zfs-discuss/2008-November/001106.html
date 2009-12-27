@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Volumes in Server Admin's File Sharing tab
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Volumes%20in%20Server%20Admin%27s%20File%20Sharing%20tab&In-Reply-To=%3C3F7D99D5-89FD-42B5-90DD-518EFAA14148%40thefloreas.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001110.html">
+   <LINK REL="Next"  HREF="001107.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Volumes in Server Admin's File Sharing tab</H1>
+    <B>Nathan Florea</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Volumes%20in%20Server%20Admin%27s%20File%20Sharing%20tab&In-Reply-To=%3C3F7D99D5-89FD-42B5-90DD-518EFAA14148%40thefloreas.com%3E"
+       TITLE="[zfs-discuss] ZFS Volumes in Server Admin's File Sharing tab">dev-lists at thefloreas.com
+       </A><BR>
+    <I>Tue Nov 25 11:48:05 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001110.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+        <LI>Next message: <A HREF="001107.html">[zfs-discuss] ACLs on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1106">[ date ]</a>
+              <a href="thread.html#1106">[ thread ]</a>
+              <a href="subject.html#1106">[ subject ]</a>
+              <a href="author.html#1106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>By default, the File Sharing tab doesn't allow one to access ZFS  
+volumes.  However, one can access them by creating a softlink on a  
+visible volume to the ZFS volume.  For example, I've created a &quot;zfs&quot;  
+folder in /Users, in which I put softlinks to all of my ZFS volumes.   
+Now, in the File Sharing tab, by clicking on Volumes and Browse and  
+navigating to /Users/zfs, I can access directly any of my ZFS volumes.
+This is very useful, because setting ACEs and propagating them from  
+the command-line is a PITA and this lets one set them via Server  
+Admin's GUI.  It also lets one setup shares via the GUI (although I  
+haven't, so test a ZFS share before doing so).
+
+Nathan Florea
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001110.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+	<LI>Next message: <A HREF="001107.html">[zfs-discuss] ACLs on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1106">[ date ]</a>
+              <a href="thread.html#1106">[ thread ]</a>
+              <a href="subject.html#1106">[ subject ]</a>
+              <a href="author.html#1106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

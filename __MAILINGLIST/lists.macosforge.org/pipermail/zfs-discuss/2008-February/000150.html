@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Abort trap
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Abort%20trap&In-Reply-To=2252F5C2-7C0F-4AC9-B940-C13BCB0C59B3%40sun.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000149.html">
+   <LINK REL="Next"  HREF="000155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Abort trap</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Abort%20trap&In-Reply-To=2252F5C2-7C0F-4AC9-B940-C13BCB0C59B3%40sun.com"
+       TITLE="[zfs-discuss] Abort trap">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Feb 11 19:54:27 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000149.html">[zfs-discuss] Abort trap
+</A></li>
+        <LI>Next message: <A HREF="000155.html">[zfs-discuss]  Data Integrity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#150">[ date ]</a>
+              <a href="thread.html#150">[ thread ]</a>
+              <a href="subject.html#150">[ subject ]</a>
+              <a href="author.html#150">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bill,
+
+What version of ZFS are you running?  The abort trap was a problem due  
+to a package bug in the ZFS packages that were downloaded from the ADC  
+site, which since have been removed, and not from the macosforge  
+site.  Are you running ZFS downloaded from zfs.macosforge.org, zfs-102A?
+
+Also, what version of Leopard are you running?
+
+Noel
+
+On Feb 11, 2008, at 6:51 PM, Bill Winnett wrote:
+
+&gt;<i> How do I root cause this tha &quot;Abort trap&quot;?
+</I>&gt;<i> /dev/disk2 is a Maxtor 1TB one touch III disk
+</I>&gt;<i>
+</I>&gt;<i> ---
+</I>&gt;<i> Macintosh-2:~ billwinnett$ diskutil partitiondisk /dev/disk2  
+</I>&gt;<i> GPTFormat ZFS %noformat% 100%
+</I>&gt;<i> Started partitioning on disk disk2
+</I>&gt;<i> Creating partition map
+</I>&gt;<i> [ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+</I>&gt;<i> Finished partitioning on disk disk2
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *931.5 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk2s1
+</I>&gt;<i>    2:                        ZFS                         931.2 Gi    
+</I>&gt;<i> disk2s2
+</I>&gt;<i> Macintosh-2:~ billwinnett$ diskutil list
+</I>&gt;<i> /dev/disk0
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *298.1 Gi    
+</I>&gt;<i> disk0
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk0s1
+</I>&gt;<i>    2:                  Apple_HFS Machintosh              297.8 Gi    
+</I>&gt;<i> disk0s2
+</I>&gt;<i> /dev/disk1
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:     Apple_partition_scheme                        *931.5 Gi    
+</I>&gt;<i> disk1
+</I>&gt;<i>    1:        Apple_partition_map                         31.5 Ki     
+</I>&gt;<i> disk1s1
+</I>&gt;<i>    2:             Apple_Driver43                         28.0 Ki     
+</I>&gt;<i> disk1s2
+</I>&gt;<i>    3:             Apple_Driver43                         28.0 Ki     
+</I>&gt;<i> disk1s3
+</I>&gt;<i>    4:           Apple_Driver_ATA                         28.0 Ki     
+</I>&gt;<i> disk1s4
+</I>&gt;<i>    5:           Apple_Driver_ATA                         28.0 Ki     
+</I>&gt;<i> disk1s5
+</I>&gt;<i>    6:             Apple_FWDriver                         256.0 Ki    
+</I>&gt;<i> disk1s6
+</I>&gt;<i>    7:         Apple_Driver_IOKit                         256.0 Ki    
+</I>&gt;<i> disk1s7
+</I>&gt;<i>    8:              Apple_Patches                         256.0 Ki    
+</I>&gt;<i> disk1s8
+</I>&gt;<i>    9:                  Apple_HFS untitled                931.4 Gi    
+</I>&gt;<i> disk1s10
+</I>&gt;<i> /dev/disk2
+</I>&gt;<i>    #:                       TYPE NAME                    SIZE        
+</I>&gt;<i> IDENTIFIER
+</I>&gt;<i>    0:      GUID_partition_scheme                        *931.5 Gi    
+</I>&gt;<i> disk2
+</I>&gt;<i>    1:                        EFI                         200.0 Mi    
+</I>&gt;<i> disk2s1
+</I>&gt;<i>    2:                        ZFS                         931.2 Gi    
+</I>&gt;<i> disk2s2
+</I>&gt;<i> Macintosh-2:~ billwinnett$ zpool create bfd /dev/disk2s2
+</I>&gt;<i> Abort trap
+</I>&gt;<i> Macintosh-2:~ billwinnett$
+</I>&gt;<i> ----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080211/92973108/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080211/92973108/attachment-0001.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000149.html">[zfs-discuss] Abort trap
+</A></li>
+	<LI>Next message: <A HREF="000155.html">[zfs-discuss]  Data Integrity
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#150">[ date ]</a>
+              <a href="thread.html#150">[ thread ]</a>
+              <a href="subject.html#150">[ subject ]</a>
+              <a href="author.html#150">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

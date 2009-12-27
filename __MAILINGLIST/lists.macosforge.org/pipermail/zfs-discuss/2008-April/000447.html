@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Version incompatibility when importing zpool from
+	Solaris
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Version%20incompatibility%20when%20importing%20zpool%20from%0A%09Solaris&In-Reply-To=C7481F86-29E3-4AF3-86AC-2B23A13F984F%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000432.html">
+   <LINK REL="Next"  HREF="000415.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Version%20incompatibility%20when%20importing%20zpool%20from%0A%09Solaris&In-Reply-To=C7481F86-29E3-4AF3-86AC-2B23A13F984F%40gmail.com"
+       TITLE="[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Apr  9 13:45:03 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000432.html">[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris
+</A></li>
+        <LI>Next message: <A HREF="000415.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#447">[ date ]</a>
+              <a href="thread.html#447">[ thread ]</a>
+              <a href="subject.html#447">[ subject ]</a>
+              <a href="author.html#447">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Dave,
+
+We are currently synced with Solaris snv_72, which is ZFS version 8,  
+however to maintain backward compatibility with the readonly version  
+of ZFS (released on Leopard) we kept the writable version of ZFS  
+version 6 by default, but it has the ability to understand version 8  
+pools.  Since the highest version in the code is version 8, you should  
+be allowed to import your new pool.  Can you double check your current  
+pool is version 8?  (zpool upgrade will let you know what version your  
+pool is).
+
+  If so let me know and I'll gen you some custom bits with the default  
+at 8 as it should be to try and import your pool.
+
+Noel
+
+
+
+On Apr 9, 2008, at 8:40 AM, Karl Gyllstrom wrote:
+
+&gt;<i> If you have the space, maybe you can just make a new pool on the new  
+</I>&gt;<i> machine and send the snapshot of the old one.
+</I>&gt;<i>
+</I>&gt;<i> On Apr 6, 2008, at 1:50 PM, Dave Loose wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> About a year ago, I put a Solaris box together to play with ZFS. I
+</I>&gt;&gt;<i> mainly use it to serve my iTunes library and DVD rips. I used samba
+</I>&gt;&gt;<i> for this, and I was continually frustrated by its flakiness. Both
+</I>&gt;&gt;<i> samba and Solaris's built-in smb server don't seem to play well with
+</I>&gt;&gt;<i> the other computers in my house (all of which are Macs).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I finally bit the bullet and bought a Mac Pro (I'd been needing a new
+</I>&gt;&gt;<i> desktop for a while) and I decided I'd try to migrate the zpool to my
+</I>&gt;&gt;<i> new machine. The problem is that I upgraded my Solaris machine rather
+</I>&gt;&gt;<i> frequently and now when I try to 'zpool import storage' I get this
+</I>&gt;&gt;<i> message: cannot import 'storage': pool is formatted using a newer ZFS
+</I>&gt;&gt;<i> version
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I kept my Solaris machine pretty current. It has Nevada release 84  
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i> the zpool format is whatever was most current for that release. I
+</I>&gt;&gt;<i> don't remember which version it is off the top of my head.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there any way for me to get my zfs volume running under OS X? I
+</I>&gt;&gt;<i> read the FAQ and it seems to suggest that OS X creates new zpools
+</I>&gt;&gt;<i> using an older version, but is there any way to import a newer
+</I>&gt;&gt;<i> version? Is there any way to &quot;downgrade&quot; the version?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for the help,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Dave
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000432.html">[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris
+</A></li>
+	<LI>Next message: <A HREF="000415.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#447">[ date ]</a>
+              <a href="thread.html#447">[ thread ]</a>
+              <a href="subject.html#447">[ subject ]</a>
+              <a href="author.html#447">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

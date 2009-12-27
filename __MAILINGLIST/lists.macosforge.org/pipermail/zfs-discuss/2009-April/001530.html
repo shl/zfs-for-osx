@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C2F64E272-B3A3-4691-BEE5-F850DF2ED656%40umn.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001529.html">
+   <LINK REL="Next"  HREF="001531.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Carl Magnuson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C2F64E272-B3A3-4691-BEE5-F850DF2ED656%40umn.edu%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">magnu213 at umn.edu
+       </A><BR>
+    <I>Tue Apr 21 13:41:54 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001529.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001531.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1530">[ date ]</a>
+              <a href="thread.html#1530">[ thread ]</a>
+              <a href="subject.html#1530">[ subject ]</a>
+              <a href="author.html#1530">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>diskutil list shows two of my pool disks as disk3 and disk4. There is  
+no disk7 listed (though it is shown in the &quot;zpool import&quot; error), and  
+it looks like the pool disks 5 and 6 are missing and two of my other  
+disks took their place, though it is odd that no disk moved to disk2.   
+The complete output is shown below.
+
+Thanks,
+
+Carl
+
+
+g5:~ bobcat$ diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *298.1 Gi    
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS Boot                    297.8 Gi    
+disk0s2
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     Apple_partition_scheme                        *232.9 Gi    
+disk1
+    1:        Apple_partition_map                         31.5 Ki     
+disk1s1
+    2:                  Apple_HFS Users                   232.8 Gi    
+disk1s3
+/dev/disk3
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk3
+    1:                        EFI                         200.0 Mi    
+disk3s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk3s2
+/dev/disk4
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk4
+    1:                        EFI                         200.0 Mi    
+disk4s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk4s2
+/dev/disk5
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk5
+    1:                        EFI                         200.0 Mi    
+disk5s1
+    2:                  Apple_HFS Backup                  465.4 Gi    
+disk5s2
+/dev/disk6
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *931.5 Gi    
+disk6
+    1:                        EFI                         200.0 Mi    
+disk6s1
+    2:                  Apple_HFS Backup-G5               931.2 Gi    
+disk6s2
+/dev/disk7
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:                                                   *320.0 Ki    
+disk7
+/dev/disk8
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:                                                   *320.0 Ki    
+disk8
+
+
+
+
+On Apr 21, 2009, at 3:26 PM, Mark Janssen wrote:
+
+&gt;<i> On Tue, Apr 21, 2009 at 10:09 PM, Carl Magnuson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">magnu213 at umn.edu</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i> After running &quot;sudo zpool import&quot; which was suggested to me by a  
+</I>&gt;&gt;<i> helpful
+</I>&gt;&gt;<i> person, I receive the following error:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  pool: cpool
+</I>&gt;&gt;<i>    id: 11949389578688040651
+</I>&gt;&gt;<i>  state: FAULTED
+</I>&gt;&gt;<i> status: One or more devices are missing from the system.
+</I>&gt;&gt;<i> action: The pool cannot be imported. Attach the missing
+</I>&gt;&gt;<i>        devices and try again.
+</I>&gt;&gt;<i>   see: <A HREF="http://www.sun.com/msg/ZFS-8000-3C">http://www.sun.com/msg/ZFS-8000-3C</A>
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        cpool        UNAVAIL  insufficient replicas
+</I>&gt;&gt;<i>          raidz2     UNAVAIL  insufficient replicas
+</I>&gt;&gt;<i>            disk3s2  ONLINE
+</I>&gt;&gt;<i>            disk4s2  ONLINE
+</I>&gt;&gt;<i>            disk5s2  UNAVAIL  cannot open
+</I>&gt;&gt;<i>            disk7s2  UNAVAIL  cannot open
+</I>&gt;&gt;<i>            disk6s2  UNAVAIL  cannot open
+</I>&gt;&gt;<i>            disk3s2  ONLINE
+</I>&gt;&gt;<i>            disk4s2  ONLINE
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I checked my external enclosures and everything seems to be hooked up
+</I>&gt;&gt;<i> correctly, I'm having a hard time accepting that three of my drives  
+</I>&gt;&gt;<i> died
+</I>&gt;&gt;<i> nearly simultaneously.
+</I>&gt;<i>
+</I>&gt;<i> What are the seven disks called (i.e. the output of `diskutil list`)?
+</I>&gt;<i> They might have been renamed for some reason.
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001529.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001531.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1530">[ date ]</a>
+              <a href="thread.html#1530">[ thread ]</a>
+              <a href="subject.html#1530">[ subject ]</a>
+              <a href="author.html#1530">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

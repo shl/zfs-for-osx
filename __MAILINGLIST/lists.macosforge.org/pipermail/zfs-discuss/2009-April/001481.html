@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RaidZ on SAN
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20RaidZ%20on%20SAN&In-Reply-To=%3CC5FFCD36.F619%25Ted%40philotv.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001480.html">
+   <LINK REL="Next"  HREF="001482.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RaidZ on SAN</H1>
+    <B>Ted Simbajon</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20RaidZ%20on%20SAN&In-Reply-To=%3CC5FFCD36.F619%25Ted%40philotv.com%3E"
+       TITLE="[zfs-discuss] RaidZ on SAN">Ted at philotv.com
+       </A><BR>
+    <I>Mon Apr  6 15:16:06 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001480.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+        <LI>Next message: <A HREF="001482.html">[zfs-discuss] Zpool disaster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1481">[ date ]</a>
+              <a href="thread.html#1481">[ thread ]</a>
+              <a href="subject.html#1481">[ subject ]</a>
+              <a href="author.html#1481">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That actually did it!
+
+Thanks Guys..
+
+
+---
+Ted
+
+
+&gt;<i> From: Boyd Waters &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at nrao.edu</A>&gt;
+</I>&gt;<i> Date: Mon, 6 Apr 2009 14:50:59 -0600
+</I>&gt;<i> To: &quot;Mr. Zorg&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zorg at sogeeky.net</A>&gt;
+</I>&gt;<i> Cc: Ted Simbajon &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ted at philotv.com</A>&gt;, &quot;&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;&quot;
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] RaidZ on SAN
+</I>&gt;<i> 
+</I>&gt;<i> The key here is to make sure there's a GPT label on each disk, with a
+</I>&gt;<i> partition marked as ZFS, *before* you add it to the array.
+</I>&gt;<i> 
+</I>&gt;<i> I was able to create a raidz with &quot;raw&quot; disks, it works just fine --
+</I>&gt;<i> until you want to export the pool. ZFS export tries to write something
+</I>&gt;<i> to the disk label, and there isn't one...
+</I>&gt;<i> 
+</I>&gt;<i> Anyway. I'm moving my data off that array onto the new one, then I'll
+</I>&gt;<i> go back and partition those disks correctly.
+</I>&gt;<i> 
+</I>&gt;<i> I think. (i am often wrong)
+</I>
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001480.html">[zfs-discuss] RaidZ on SAN
+</A></li>
+	<LI>Next message: <A HREF="001482.html">[zfs-discuss] Zpool disaster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1481">[ date ]</a>
+              <a href="thread.html#1481">[ thread ]</a>
+              <a href="subject.html#1481">[ subject ]</a>
+              <a href="author.html#1481">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

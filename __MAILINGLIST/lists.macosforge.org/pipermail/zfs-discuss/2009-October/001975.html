@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-10a286 ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C3A8DB67C-B2DE-43B0-9F6B-FE09D5294A2D%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001977.html">
+   <LINK REL="Next"  HREF="001981.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-10a286 ?</H1>
+    <B>David Ritchie</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C3A8DB67C-B2DE-43B0-9F6B-FE09D5294A2D%40googlemail.com%3E"
+       TITLE="[zfs-discuss] zfs-10a286 ?">david299792 at googlemail.com
+       </A><BR>
+    <I>Wed Oct 21 05:17:26 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001977.html">[zfs-discuss] New Mac Mini Server
+</A></li>
+        <LI>Next message: <A HREF="001981.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 21 Oct 2009, at 06:25, Raoul Callaghan wrote:
+
+&gt;&gt;<i> 5. I could use iSCSI to mount a ZFS backed disk image and store my  
+</I>&gt;&gt;<i> home on that. That would give me spotlight and the reliability  
+</I>&gt;&gt;<i> advantages of ZFS (scrubbing, checksums &amp;c) but not very convenient  
+</I>&gt;&gt;<i> access to snapshots - it would involve mounting a snapshot to look  
+</I>&gt;&gt;<i> for stuff I presume
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I set this up using OpenSolaris (0906) and successfully used a  
+</I>&gt;<i> MacPro to access the iscsi share.
+</I>&gt;<i> I wasn't wrapped with the 1MB/sec transfer speeds though!
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://serverfault.com/questions/68837/opensolaris-iscsi-target-slow-read">http://serverfault.com/questions/68837/opensolaris-iscsi-target-slow-read</A>
+</I>&gt;<i> <A HREF="http://opensolaris.org/jive/thread.jspa;jsessionid=8AEB8CE2E1E0C35868C2DB1A3AA4E728?messageID=363859&amp;#363859">http://opensolaris.org/jive/thread.jspa;jsessionid=8AEB8CE2E1E0C35868C2DB1A3AA4E728?messageID=363859&amp;#363859</A>
+</I>&gt;<i> <A HREF="http://forums.sun.com/thread.jspa?threadID=5299072">http://forums.sun.com/thread.jspa?threadID=5299072</A>
+</I>&gt;<i> <A HREF="http://www.snsforums.com/index.php?showtopic=279">http://www.snsforums.com/index.php?showtopic=279</A>
+</I>&gt;<i>
+</I>&gt;<i> I haven't tried Atto's initiator yet either, nor have I tried a  
+</I>&gt;<i> cross over cable to eliminate my L2 switch.
+</I>&gt;<i>
+</I>&gt;<i> Considering Apple's silence regarding ZFS, I've considered OS-0906  
+</I>&gt;<i> and use iscsi for my home setup.
+</I>&gt;<i> I guess I just have to wait for ZFS/iscsi to mature also.
+</I>
+I just installed OpenSolaris in VMWare to test iSCSI. I'm using the  
+GlobalSAN free iSCSI initiator. I set up a zvol, set shareiscsi on.
+
+It seems to work ok. I'm definitely getting better than 1MB/s - maybe  
+30MB/s read and 10-13 write. When I do this the VMWare VM is running  
+at just over 100% CPU use, so I assume it's maxing out 1 core (Mac  
+Pro, quad 2.66GHz). CPU use on the client is low. Interestingly when I  
+access the iSCSI target from the same machine (Mac Pro) I get the  
+above 30/13MB/s read/write speed, but from my MacBook (running Snow  
+Leopard) it's more like 17/7, which isn't so great. I don't know why  
+that should be - is extra latency of going out to the gigabit ethernet  
+slowing things down?
+
+ From some of the links above (thanks) I can see that it could partly  
+be due to this initiator and/or network gear.
+
+Does anyone know what kind of speeds I can expect over GbE? 128MB/s  
+would be nice! I'm guessing that since the VM is pegging the CPU  
+there's something weird going on with virtualization and that if I ran  
+it on real hardware it would be much faster? I'm wondering whether to  
+build a server for this.
+
+On the whole the iSCSI route seems a good way to go - it gives  
+straightforward fully functional client access with ZFS backed  
+storage. The only disadvantage being that accessing snapshots won't be  
+as convenient, because I'd have to clone and mount the old zvols. I  
+can use Time Machine for that I suppose.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091021/b8a14a0e/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091021/b8a14a0e/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001977.html">[zfs-discuss] New Mac Mini Server
+</A></li>
+	<LI>Next message: <A HREF="001981.html">[zfs-discuss] iSCSI on ZFS (was Re:  zfs-10a286 ?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

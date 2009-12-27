@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Handbrake 0.9.2 solved?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Handbrake%200.9.2%20solved%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000885.html">
+   <LINK REL="Next"  HREF="000888.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Handbrake 0.9.2 solved?</H1>
+    <B>Kona Blend</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Handbrake%200.9.2%20solved%3F&In-Reply-To="
+       TITLE="[zfs-discuss] Handbrake 0.9.2 solved?">kona8lend at gmail.com
+       </A><BR>
+    <I>Sat Sep 27 07:34:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000885.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)
+</A></li>
+        <LI>Next message: <A HREF="000888.html">[zfs-discuss] Handbrake 0.9.2 solved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#886">[ date ]</a>
+              <a href="thread.html#886">[ thread ]</a>
+              <a href="subject.html#886">[ subject ]</a>
+              <a href="author.html#886">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi, I did a search of archives in this mailing list and found that a  
+few Handbrake users have experienced the issue where using a source  
+VIDEO_TS/ stored on ZFS causes Handbrake to malfunction. When copying  
+the same folder to HFS+, Handbrake operates as expected.
+
+A patch addressing the issue has been submitted to Handbrake devs and  
+hopefully they'll accept it on their trunk branch. The problem is in  
+code assuming a device-name can be associated with any folder and in  
+case of ZFS (as has been mentioned on this list) there is none. Short  
+story short, the patch checks for a NULL vMDeviceID supplied by  
+FSGetVolumeParms() and prevents the runtime exception:
+
+[NSString stringWithCString:]: NULL cString
+
+and encoding then proceeds as expected.
+
+--Kona Blend
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000885.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)
+</A></li>
+	<LI>Next message: <A HREF="000888.html">[zfs-discuss] Handbrake 0.9.2 solved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#886">[ date ]</a>
+              <a href="thread.html#886">[ thread ]</a>
+              <a href="subject.html#886">[ subject ]</a>
+              <a href="author.html#886">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

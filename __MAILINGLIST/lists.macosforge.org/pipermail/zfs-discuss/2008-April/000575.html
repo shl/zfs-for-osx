@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RE: Time machine with ZFS backend
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RE%3A%20Time%20machine%20with%20ZFS%20backend&In-Reply-To=C72E059B-A80F-4C97-BA60-E4C975510B7E%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000551.html">
+   <LINK REL="Next"  HREF="000526.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RE: Time machine with ZFS backend</H1>
+    <B>Thornton Adrian</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RE%3A%20Time%20machine%20with%20ZFS%20backend&In-Reply-To=C72E059B-A80F-4C97-BA60-E4C975510B7E%40spamfreemail.de"
+       TITLE="[zfs-discuss] RE: Time machine with ZFS backend">canadrian at electricteaparty.net
+       </A><BR>
+    <I>Fri Apr 25 17:22:26 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000551.html">[zfs-discuss] RE: Time machine with ZFS backend
+</A></li>
+        <LI>Next message: <A HREF="000526.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 28
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#575">[ date ]</a>
+              <a href="thread.html#575">[ thread ]</a>
+              <a href="subject.html#575">[ subject ]</a>
+              <a href="author.html#575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Excellent, that did the trick. One side note is disk utility didn't  
+want to create a 1TB sparsebundle on the OS drive, which only had 40gb  
+free. I had to aim the &quot;save as&quot; window at the zfs pool, choose the  
+disk image size, and then select a location on the OS drive after  
+setting the size. But then I created it, copied it to the raidz, and  
+bingo it works! I think I'll set up an automator app to initiate the  
+ssh and mount the drive every time I reboot. :)
+
+- Adrian
+
+On 25-Apr-08, at 2:29 PM, ruebezahl wrote:
+
+&gt;<i>
+</I>&gt;<i> On Apr 25, 2008, at 8:02 PM, Adrian Thornton wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I tried this method, but now Time Machine is complaining it  
+</I>&gt;&gt;<i> couldn't create the backup disk image. Any idea why this might be  
+</I>&gt;&gt;<i> happening?
+</I>&gt;<i>
+</I>&gt;<i> jap, diskutil at the moment does not manage to create sparsebundles  
+</I>&gt;<i> on zfs volumes
+</I>&gt;<i> so when starting TM go to the volume you selected, write down the  
+</I>&gt;<i> name or make a screenshot ( be quick as the sparsbundle disappears)  
+</I>&gt;<i> then open up diskutility create the sparsebundle yourself and name  
+</I>&gt;<i> it the exact name TM did ( create a sparsbundle using GPT)
+</I>&gt;<i>
+</I>&gt;<i> save it to your desktop or something and copy it over to your zfs  
+</I>&gt;<i> volume manually..
+</I>&gt;<i>
+</I>&gt;<i> this way it works
+</I>&gt;<i>
+</I>&gt;<i> regards
+</I>&gt;<i>
+</I>&gt;<i> franz
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> Adrian
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 20, 2008, at 01:03 , Franz Schmalzl wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Apr 19, 2008, at 8:49 PM, Adrian Thornton wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Hey there, just wondering if anyone has anything else to say  
+</I>&gt;&gt;&gt;&gt;<i> about the below-described method. Also, just curious why Time  
+</I>&gt;&gt;&gt;&gt;<i> Machine would not work simply with a writable disk image on the  
+</I>&gt;&gt;&gt;&gt;<i> ZFS pool, without going to all the AFS/SSH trouble described  
+</I>&gt;&gt;&gt;&gt;<i> below? If Time Machine has a properly formatted disk image, why  
+</I>&gt;&gt;&gt;&gt;<i> would it even care what filesystem that disk image is stored on?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Time machine just won't let you choose a local sparsbundle....  
+</I>&gt;&gt;&gt;<i> that's why the afp/ssh thing is needed....
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks,
+</I>&gt;&gt;&gt;&gt;<i> Adrian
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> [zfs-discuss] Time machine with ZFS backend
+</I>&gt;&gt;&gt;&gt;&gt;<i> Franz Schmalzl franzschmalzl at spamfreemail.de
+</I>&gt;&gt;&gt;&gt;&gt;<i> Sat Mar 22 06:17:42 PDT 2008
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hi list!
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I just managed to get Time machine working on my external raidz...
+</I>&gt;&gt;&gt;&gt;&gt;<i> it's a bit dirty, but works
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Steps:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Create a zfs volume
+</I>&gt;&gt;&gt;&gt;&gt;<i> Share over the network via afp
+</I>&gt;&gt;&gt;&gt;&gt;<i> open up ssh tunnel to localhost, since afp won't let you connect  
+</I>&gt;&gt;&gt;&gt;&gt;<i> to
+</I>&gt;&gt;&gt;&gt;&gt;<i> localhost
+</I>&gt;&gt;&gt;&gt;&gt;<i> (ssh user at localhost -L randomportnumber:localhost:548 )
+</I>&gt;&gt;&gt;&gt;&gt;<i> Command+K, <A HREF="apf://localhost:randomportnumber">apf://localhost:randomportnumber</A>)
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> (( of course randomportnumber hast to be a random port  
+</I>&gt;&gt;&gt;&gt;&gt;<i> number ;), like
+</I>&gt;&gt;&gt;&gt;&gt;<i> 1234 )
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Your &quot;network&quot; share should get mounted  and you can use it for  
+</I>&gt;&gt;&gt;&gt;&gt;<i> time
+</I>&gt;&gt;&gt;&gt;&gt;<i> machine witch creates i'ts sparsebundles...
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> p.s.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> don't forget to apply
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> defaults write com.apple.systempreferences
+</I>&gt;&gt;&gt;&gt;&gt;<i> TMShowUnsupportedNetworkVolumes 1
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> regards
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> franz schmalzl
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000551.html">[zfs-discuss] RE: Time machine with ZFS backend
+</A></li>
+	<LI>Next message: <A HREF="000526.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 28
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#575">[ date ]</a>
+              <a href="thread.html#575">[ thread ]</a>
+              <a href="subject.html#575">[ subject ]</a>
+              <a href="author.html#575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

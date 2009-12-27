@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Performance problems - AFP!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Performance%20problems%20-%20AFP%21&In-Reply-To=F1CE4772-22AB-46EC-A755-39CEE0B588DA%40rehnmark.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000411.html">
+   <LINK REL="Next"  HREF="000404.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Performance problems - AFP!</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Performance%20problems%20-%20AFP%21&In-Reply-To=F1CE4772-22AB-46EC-A755-39CEE0B588DA%40rehnmark.net"
+       TITLE="[zfs-discuss] Performance problems - AFP!">ndellofano at apple.com
+       </A><BR>
+    <I>Thu Apr 10 13:53:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000411.html">[zfs-discuss] Performance problems - AFP!
+</A></li>
+        <LI>Next message: <A HREF="000404.html">[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#455">[ date ]</a>
+              <a href="thread.html#455">[ thread ]</a>
+              <a href="subject.html#455">[ subject ]</a>
+              <a href="author.html#455">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry to be the bearer of bad news but the truth is I've done zero,  
+and i do mean zero, work on performance for ZFS, hence the issues  
+you're having are present.  Apologies, we're still trying to get  
+features up and going and performance is second on the list to getting  
+us stable and feature complete.
+
+That being said, any feedback you have, like the below is super  
+helpful as I can open a bug now to track this problem so then i can go  
+back reproduce it and fix it.
+
+thanks!
+Noel
+
+On Apr 7, 2008, at 2:38 AM, Robert Rehnmark wrote:
+
+&gt;<i> Ugh!
+</I>&gt;<i> The pools work fine locally but when used over Apple File Sharing  
+</I>&gt;<i> Protocol it tends to read/write in short bursts.
+</I>&gt;<i> The effect is speeds cut in half or worse.
+</I>&gt;<i>
+</I>&gt;<i> Can anybody verify this or maybe even share a solution?
+</I>&gt;<i>
+</I>&gt;<i> Please.
+</I>&gt;<i>
+</I>&gt;<i> /Robert
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 6 apr 2008 kl. 16:35 skrev Robert Rehnmark:
+</I>&gt;&gt;<i> When I copy files over the network to/from my server (10.5.2 client  
+</I>&gt;&gt;<i> single-disk volume) I get 66-70 MB/sec.
+</I>&gt;&gt;<i> If I do the same thing to the same machine with a single-disk zpool  
+</I>&gt;&gt;<i> I get 0-30/40 MB/sec.
+</I>&gt;&gt;<i> To a zpool mirror I get 0-55 MB/sec.
+</I>&gt;&gt;<i> The performance/operation is very &quot;janky&quot; and when the speed is up  
+</I>&gt;&gt;<i> the CPU use allmost  tops out too.
+</I>&gt;&gt;<i> Does this have anything to do with caching etc.?
+</I>&gt;&gt;<i> The pools are version 8, allmost empty and made from the same disks.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I want to be able to use ZFS but if I am not able to fix the  
+</I>&gt;&gt;<i> performance problems HFS+ with daily backups will be preferred.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I want to hear about ather peoples experiences and tips, please.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /Robert
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000411.html">[zfs-discuss] Performance problems - AFP!
+</A></li>
+	<LI>Next message: <A HREF="000404.html">[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#455">[ date ]</a>
+              <a href="thread.html#455">[ thread ]</a>
+              <a href="subject.html#455">[ subject ]</a>
+              <a href="author.html#455">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

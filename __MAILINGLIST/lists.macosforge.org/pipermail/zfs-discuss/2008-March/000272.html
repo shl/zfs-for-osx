@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%09ZFS%3F&In-Reply-To=3684E310-97D9-47A0-ABCD-C3AD3BB5F8E7%40thinkpink.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000271.html">
+   <LINK REL="Next"  HREF="000273.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%09ZFS%3F&In-Reply-To=3684E310-97D9-47A0-ABCD-C3AD3BB5F8E7%40thinkpink.com"
+       TITLE="[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?">jbsnyder at gmail.com
+       </A><BR>
+    <I>Wed Mar  5 11:17:23 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000271.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+        <LI>Next message: <A HREF="000273.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#272">[ date ]</a>
+              <a href="thread.html#272">[ thread ]</a>
+              <a href="subject.html#272">[ subject ]</a>
+              <a href="author.html#272">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This is my understanding of the matter, and so take with the caveat.
+I'm sure someone will correct me if this is not the case.
+
+It involves link(2) because your remote afp backups on time machine
+are in sparse bundles on that remote host.  The link(2) isn't taking
+place over AFP, but rather within that image. If the drive is local,
+it doesn't need this sparse bundle container and just does link(2)
+directly on the HFS+ volume.  I also am under the understanding
+(correct me if wrong), that the link(2) implementation under HFS+ was
+specifically added for TimeMachine.  This makes it so that when a
+backup is updated you can have multiple simultaneous trees of files
+that all look like a full filesystem, but data doesn't have to be
+duplicated in each &quot;snapshot&quot; because of the hard links. (I've also
+heard that the hard linking on HFS+ is a little of a hack, and that
+Apple has limited access to it through the normal system commands in
+accordance with this).  This is nice and elegant in some ways, but
+it's not nearly as nice as zfs snapshots because you still have to
+maintain a huge ball of hard links sitting on top of the filesystem.
+Since it has to deal with hundreds of thousands or millions of files
+in this manner, it can take some time for Time Machine to work with
+all that :-)
+
+This approach also has the downside that it isn't efficient for
+dealing with changes in gigantic files (like vmware images).  I've not
+checked into time machine to see if it handles things any more
+efficiently than I would assume, but if 2MB change in a VMware image,
+you have to retransfer the whole file.  Even if you use something like
+rsync on both ends, you still have to let it traverse the whole file
+and compute checksums to see which portions need to be transferred.
+
+On Wed, Mar 5, 2008 at 11:17 AM, Brian Pinkerton &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bplist at thinkpink.com</A>&gt; wrote:
+&gt;<i> Disclaimer: I have no idea how Time Machine works.  I'm backing up to
+</I>&gt;<i>  an AFP volume (which is actually a ZFS volume, as it happens), so how
+</I>&gt;<i>  could TM be doing anything involving link(2)?  I do have a lot of
+</I>&gt;<i>  small files on my disk (around 2 million), though the average file
+</I>&gt;<i>  size is a respectable 204K.
+</I>&gt;<i>
+</I>&gt;<i>  bri
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  On Mar 4, 2008, at 6:08 PM, Jim Thompson wrote:
+</I>&gt;<i>
+</I>&gt;<i>  &gt; Sounds like you have a ton of small files. link(2) is syncronous.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; All ZFS has to do for a snapshot is Inc the generation count.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; On Mar 4, 2008, at 1:18 PM, Brian Pinkerton &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bplist at thinkpink.com</A>&gt;
+</I>&gt;<i>  &gt; wrote:
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;&gt; Yeah, I second that.  I love the idea of TimeMachine, but in my
+</I>&gt;<i>  &gt;&gt; experience it's got a ways to go before it's ready for prime-time,
+</I>&gt;<i>  &gt;&gt; and
+</I>&gt;<i>  &gt;&gt; even further before I'll trust it as my primary backup solution.
+</I>&gt;<i>  &gt;&gt; As I
+</I>&gt;<i>  &gt;&gt; set here at 3:15, TimeMachine has been &quot;Finishing Backup&quot; on one of
+</I>&gt;<i>  &gt;&gt; its hourlies for nearly 8 hours.  Heck, I could have done a leisurely
+</I>&gt;<i>  &gt;&gt; full backup of the 100GB or so in half that time!
+</I>&gt;<i>  &gt;&gt;
+</I>&gt;<i>  &gt;&gt; bri
+</I>&gt;<i>  &gt;&gt;
+</I>&gt;<i>  &gt;&gt;
+</I>&gt;<i>  &gt;&gt; On Mar 4, 2008, at 2:53 PM, Brett Ault-McCoy wrote:
+</I>&gt;<i>  &gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt; All I know is that a 'zfs snapshot -r ZFSPool' on my 733MHz G4 takes
+</I>&gt;<i>  &gt;&gt;&gt; &lt;1 second but when TimeMachine starts up cpu usage goes to 100% for
+</I>&gt;<i>  &gt;&gt;&gt; several minutes and the machine becomes completely unusable.
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt; Definitely *not* the same.
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt; ++Brett;
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt; On Tue, Mar 4, 2008 at 6:45 PM, Jim Thompson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jim at netgate.com</A>&gt;
+</I>&gt;<i>  &gt;&gt;&gt; wrote:
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt; On Mar 4, 2008, at 5:25 AM, Brett Ault-McCoy wrote:
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt;&gt; TimeMachine != zfs snapshots.  A full scan of the filesystem has to
+</I>&gt;<i>  &gt;&gt;&gt;&gt; be done to find what's changed,
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt; Well,... no.   Time Machine leverages the FSEvents framework.    It
+</I>&gt;<i>  &gt;&gt;&gt; does have to do a full scan within a directory that is reported to
+</I>&gt;<i>  &gt;&gt;&gt; have changed, but this does not equate to a &quot;full scan of the
+</I>&gt;<i>  &gt;&gt;&gt; filesystem&quot;, except in the degenerate case.
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i>  &gt;&gt;&gt; zfs-discuss mailing list
+</I>&gt;<i>  &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>  &gt;&gt;
+</I>&gt;<i>  &gt;&gt; _______________________________________________
+</I>&gt;<i>  &gt;&gt; zfs-discuss mailing list
+</I>&gt;<i>  &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>  _______________________________________________
+</I>&gt;<i>  zfs-discuss mailing list
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000271.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+	<LI>Next message: <A HREF="000273.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#272">[ date ]</a>
+              <a href="thread.html#272">[ thread ]</a>
+              <a href="subject.html#272">[ subject ]</a>
+              <a href="author.html#272">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

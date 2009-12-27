@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] memory limits
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=9800BDB6-31F7-4F2D-82FF-DBD9282F35E3%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000085.html">
+   <LINK REL="Next"  HREF="000089.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] memory limits</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=9800BDB6-31F7-4F2D-82FF-DBD9282F35E3%40nrao.edu"
+       TITLE="[zfs-discuss] memory limits">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Jan 25 16:18:13 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000085.html">[zfs-discuss] memory limits
+</A></li>
+        <LI>Next message: <A HREF="000089.html">[zfs-discuss] memory limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yeah true, that's a good idea, we could add a sysctl like that to make  
+life a bit easier if you wanted to tweek your values around before the  
+kext gets loaded.  The only pain is the kext will get loaded  
+automagically at boot time if it detects any zfs formatted drives.   
+But it's easy just to move it and the readonly kext somewhere else  
+during boot so it won't load at boot time.  I'll open a bug for it.
+
+Noel :)
+
+
+On Jan 25, 2008, at 3:12 PM, Boyd Waters wrote:
+
+&gt;<i>
+</I>&gt;<i> On Jan 25, 2008, at 1:54 PM, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> you'll have to change the source and recompile the code because  
+</I>&gt;&gt;<i> there is no 'mdb -k' on Mac in order to change the zfs_arc_max on a  
+</I>&gt;&gt;<i> live kernel.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> That's good, but why not a sysctl parameter? So at least you could  
+</I>&gt;<i> change it at kernel extension load time (er, boot time)
+</I>&gt;<i>
+</I>&gt;<i> $ cat /etc/sysctl.conf
+</I>&gt;<i>
+</I>&gt;<i> kern.sysv.shmmax=10485760
+</I>&gt;<i> kern.sysv.shmmin=1
+</I>&gt;<i> kern.sysv.shmmni=32
+</I>&gt;<i> kern.sysv.shmseg=8
+</I>&gt;<i> kern.sysv.shmall=4096
+</I>&gt;<i> fs.zfs.arcmax=1073741824
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> =====
+</I>&gt;<i> <A HREF="http://developer.apple.com/documentation/Darwin/Conceptual/KernelProgramming/boundaries/chapter_14_section_7.html">http://developer.apple.com/documentation/Darwin/Conceptual/KernelProgramming/boundaries/chapter_14_section_7.html</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000085.html">[zfs-discuss] memory limits
+</A></li>
+	<LI>Next message: <A HREF="000089.html">[zfs-discuss] memory limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Removing the binary package?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Removing%20the%20binary%20package%3F&In-Reply-To=%3C20090130.083305.34775001.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001379.html">
+   <LINK REL="Next"  HREF="001380.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Removing the binary package?</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Removing%20the%20binary%20package%3F&In-Reply-To=%3C20090130.083305.34775001.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] Removing the binary package?">hanche at math.ntnu.no
+       </A><BR>
+    <I>Thu Jan 29 23:33:05 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001379.html">[zfs-discuss] Removing the binary package?
+</A></li>
+        <LI>Next message: <A HREF="001380.html">[zfs-discuss] zpool offline problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1381">[ date ]</a>
+              <a href="thread.html#1381">[ thread ]</a>
+              <a href="subject.html#1381">[ subject ]</a>
+              <a href="author.html#1381">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ Colin Johnson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">colin_s_johnson at comcast.net</A>&gt;:
+
+&gt;<i> How do I remove ZFS support?
+</I>
+Why do you need to? It does little or no harm if you don't use it.
+
+But if you want to remove every trace of zfs support, throw away these
+files and directories:
+
+/System/Library/Extensions/zfs.kext/
+/System/Library/Extensions/zfs.readonly.kext/
+/System/Library/Filesystems/zfs.fs/
+/usr/lib/libzfs.dylib
+/usr/sbin/zfs
+/usr/sbin/zpool
+
+(Note that zfs.readonly.kext did not come with the binary package
+though; it came with the original Leopard system.)
+
+- Harald
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001379.html">[zfs-discuss] Removing the binary package?
+</A></li>
+	<LI>Next message: <A HREF="001380.html">[zfs-discuss] zpool offline problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1381">[ date ]</a>
+              <a href="thread.html#1381">[ thread ]</a>
+              <a href="subject.html#1381">[ subject ]</a>
+              <a href="author.html#1381">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

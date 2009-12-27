@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] adding drives to a raidz volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3CE06A3798-A4C4-4E63-A905-39647D2E9D36%40apple.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001056.html">
+   <LINK REL="Next"  HREF="001055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] adding drives to a raidz volume</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3CE06A3798-A4C4-4E63-A905-39647D2E9D36%40apple.com%3E"
+       TITLE="[zfs-discuss] adding drives to a raidz volume">ndellofano at apple.com
+       </A><BR>
+    <I>Mon Nov 17 00:04:42 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001056.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+        <LI>Next message: <A HREF="001055.html">[zfs-discuss] Fw:  adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1065">[ date ]</a>
+              <a href="thread.html#1065">[ thread ]</a>
+              <a href="subject.html#1065">[ subject ]</a>
+              <a href="author.html#1065">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So in essence, I'd like to say great job guys and I agree with &quot;all of  
+the above&quot; :)
+
+1. like Zorg mentions, this is tricky business.  In fact, the math is  
+outright ugly, and with the size of a single disk that you're adding,  
+once the magic did actually happen, this procedure is really only  
+gonna buy you a few gigs to hold you over for a while, which makes the  
+whole deal that much less appealing, since you're going to have to add  
+more space soon again.
+2. As Jonathan Edwards adds, relaying out all of your current data,  
+while maintaing stability and data integrity is a non-trivial task
+3.  as Alex says and Boyd mention, we've got other more immediate  
+issues to tackle.
+      Step one, make everything on OSX platform work.
+      Step two, make it stable.
+      Step 3, conquer the rest of the world (note there may be an  
+infinitesimal number of steps between 2 and 3 I'm leaving unmentioned  
+here)
+
+for extra credit and the curious, you can read Adam Leventhal's blog  
+about this if you're interested:
+<A HREF="http://blogs.sun.com/ahl/entry/expand_o_matic_raid_z">http://blogs.sun.com/ahl/entry/expand_o_matic_raid_z</A>
+
+Noel
+
+On Nov 15, 2008, at 7:36 PM, Jonathan Edwards wrote:
+
+&gt;<i>
+</I>&gt;<i> On Nov 15, 2008, at 6:10 PM, Alex Blewitt wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Note that it is fairly likely the way to upgrade a zfs pool for  
+</I>&gt;&gt;<i> home users is simply to buy another n drives that are (much) larger  
+</I>&gt;&gt;<i> than your current set of drives, and by a sequence of one-for-one  
+</I>&gt;&gt;<i> replacements increase your size that way. That can be done either  
+</I>&gt;&gt;<i> for a mirrored or raid set.
+</I>&gt;<i>
+</I>&gt;<i> yep - that can work as you're also solving the problem of re-laying  
+</I>&gt;<i> out the data which is why it's not just trivial to just add a disk  
+</I>&gt;<i> to an existing raidz stripe .. your data layout and parity would be  
+</I>&gt;<i> all out of whack
+</I>&gt;<i>
+</I>&gt;<i> you can always just add more disks in separate stripe groups to the  
+</I>&gt;<i> pool which will also have the side effect of increasing the amount  
+</I>&gt;<i> of parity protection you have in the pool, but if you're going raidz  
+</I>&gt;<i> - adding a single disk isn't going to help you much in the pool  
+</I>&gt;<i> unless you're adding a spare.
+</I>&gt;<i>
+</I>&gt;<i> ---
+</I>&gt;<i> .je
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001056.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+	<LI>Next message: <A HREF="001055.html">[zfs-discuss] Fw:  adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1065">[ date ]</a>
+              <a href="thread.html#1065">[ thread ]</a>
+              <a href="subject.html#1065">[ subject ]</a>
+              <a href="author.html#1065">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

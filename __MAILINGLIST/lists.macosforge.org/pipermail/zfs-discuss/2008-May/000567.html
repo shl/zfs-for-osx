@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Where's the self healing?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=C22EF067-09D4-4833-BB5E-9AFA10F6CFAA%40gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000571.html">
+   <LINK REL="Next"  HREF="000569.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Where's the self healing?</H1>
+    <B>Jason R. McNeil</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=C22EF067-09D4-4833-BB5E-9AFA10F6CFAA%40gmail.com"
+       TITLE="[zfs-discuss] Where's the self healing?">jason at jasonrm.net
+       </A><BR>
+    <I>Mon May  5 10:54:41 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000571.html">[zfs-discuss] Where's the self healing?
+</A></li>
+        <LI>Next message: <A HREF="000569.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#567">[ date ]</a>
+              <a href="thread.html#567">[ thread ]</a>
+              <a href="subject.html#567">[ subject ]</a>
+              <a href="author.html#567">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Scott Palmer wrote:
+&gt;<i> scott-palmers-imac:~ scott$ zpool status
+</I>&gt;<i>   pool: tank
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i> status: One or more devices has experienced an unrecoverable error.  An
+</I>&gt;<i>     attempt was made to correct the error.  Applications are unaffected.
+</I>&gt;<i> action: Determine if the device needs to be replaced, and clear the errors
+</I>&gt;<i>     using 'zpool clear' or replace the device with 'zpool replace'.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-9P">http://www.sun.com/msg/ZFS-8000-9P</A>
+</I>&gt;<i>  scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i> 
+</I>&gt;<i>     NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>     tank         ONLINE       0     0     0
+</I>&gt;<i>       mirror     ONLINE       0     0     0
+</I>&gt;<i>         disk1s2  ONLINE       0     0     0
+</I>&gt;<i>         disk2s2  ONLINE   6.43K 33.9K     0
+</I>&gt;<i> 
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i> 
+</I>
+&gt;<i> 
+</I>&gt;<i> Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+</I>&gt;<i> 
+</I>
+&gt;<i> Scott
+</I>&gt;<i> 
+</I>
+Scott,
+   The error message needs to be read a certain way. The &quot;unrecoverable
+error&quot; is correct, but realize that it is only referring to ZFS being
+aware that there was a problem with the underlying hardware. Reading
+further note that &quot;applications are unaffected&quot;, implying that ZFS is
+still confident that all your data is correct, despite the hardware
+problems.
+
+   Also, when watching the ZFS self-healing videos and such online I
+recall that ZFS doesn't do background checks (excluding a scrub) that
+all the devices are still there or that the data is correct. For
+example, if you dd zero's randomly across a mirror, ZFS will report that
+everything is good until it reads the data in, realizes that one of the
+mirrors is bad, and will use whichever mirror it need to in order to
+pass the checksums.
+
+   I can't say exactly why after thousands of errors it didn't flag the
+pool as degraded, but never was ZFS uncertain about the data integrity
+on the remaining drive, hence, applications being unaffected. It could
+be an artifact of the Mac OS X implementation vs the Sun implementation.
+
+   As far as replacing the drive and having to go through a few steps, I
+will say that it isn't as easy as it could be, particularly on the Mac.
+Personally, I found that restarting my system was best when doing drive
+changes, but that might be caused by the highpoint RAID card I am using
+which has horrid hot-swap support.
+
+Jason R. M.
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000571.html">[zfs-discuss] Where's the self healing?
+</A></li>
+	<LI>Next message: <A HREF="000569.html">[zfs-discuss] Where's the self healing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#567">[ date ]</a>
+              <a href="thread.html#567">[ thread ]</a>
+              <a href="subject.html#567">[ subject ]</a>
+              <a href="author.html#567">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

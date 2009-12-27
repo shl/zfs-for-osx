@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS mmap bug with PHP?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To=9CFE6352-626A-4E1A-8B5C-ABE418CBE848%40berczi.be">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000156.html">
+   <LINK REL="Next"  HREF="000167.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS mmap bug with PHP?</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To=9CFE6352-626A-4E1A-8B5C-ABE418CBE848%40berczi.be"
+       TITLE="[zfs-discuss] ZFS mmap bug with PHP?">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Feb 15 17:04:15 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000156.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+        <LI>Next message: <A HREF="000167.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#166">[ date ]</a>
+              <a href="thread.html#166">[ thread ]</a>
+              <a href="subject.html#166">[ subject ]</a>
+              <a href="author.html#166">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>the zfs-102A bits are not mmap coherent, hence this is likely causing  
+the weirdness you're seeing.  I'm releasing new bits on macosforge  
+soon, which have the mmap coherency working so hang tight :)
+
+Noel
+
+On Feb 15, 2008, at 1:12 PM, B&#233;rczi G&#225;bor wrote:
+
+&gt;<i> See the attached PHP code. Its functionality:
+</I>&gt;<i>
+</I>&gt;<i> - unlinks test.cfg
+</I>&gt;<i> - creates test.cfg with the content &quot;test&quot;
+</I>&gt;<i> - lists the file with file_get_contents()
+</I>&gt;<i> - adds an X509 certificate with OpenSSL
+</I>&gt;<i> - lists the file again
+</I>&gt;<i> - lists the file again
+</I>&gt;<i> - lists the file again
+</I>&gt;<i>
+</I>&gt;<i> The thing is: on HFS+ it works as it should, but on ZFS all  
+</I>&gt;<i> subsequent file listings contain only &quot;test&quot; - the initial content.  
+</I>&gt;<i> DTrace notices the opening of the file every time - so this looks  
+</I>&gt;<i> like to be a very bad low-level problem.
+</I>&gt;<i>
+</I>&gt;<i> Output:
+</I>&gt;<i>
+</I>&gt;<i> File contents:testDone.Attaching new CERT into test.cfgFile  
+</I>&gt;<i> contents, second try:testDone.File contents, third try:testDone.File  
+</I>&gt;<i> contents, fourth try:testDone.The file should now contain an X509  
+</I>&gt;<i> cert, but PHP can't see it :(
+</I>&gt;<i>
+</I>&gt;<i> What the..?
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Gabucino
+</I>&gt;<i> &lt;zfsphp.tar&gt;_______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000156.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+	<LI>Next message: <A HREF="000167.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#166">[ date ]</a>
+              <a href="thread.html#166">[ thread ]</a>
+              <a href="subject.html#166">[ subject ]</a>
+              <a href="author.html#166">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

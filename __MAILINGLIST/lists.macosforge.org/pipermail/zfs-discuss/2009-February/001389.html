@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS panics quite easily
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3CFA86342F-E211-46A2-A319-CAA734B61B7F%40sogeeky.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001388.html">
+   <LINK REL="Next"  HREF="001390.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS panics quite easily</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20panics%20quite%20easily&In-Reply-To=%3CFA86342F-E211-46A2-A319-CAA734B61B7F%40sogeeky.net%3E"
+       TITLE="[zfs-discuss] ZFS panics quite easily">zorg at sogeeky.net
+       </A><BR>
+    <I>Sun Feb 15 10:22:00 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001388.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+        <LI>Next message: <A HREF="001390.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1389">[ date ]</a>
+              <a href="thread.html#1389">[ thread ]</a>
+              <a href="subject.html#1389">[ subject ]</a>
+              <a href="author.html#1389">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well said...
+
+On Feb 15, 2009, at 10:08 AM, Lorenzo Perone &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lopez.on.the.lists at yellowspace.net</A> 
+ &gt; wrote:
+
+&gt;<i> Hoping for some new bits, I had a round list reading, and came down  
+</I>&gt;<i> this thread again. While it hasn't been said as clearly as it  
+</I>&gt;<i> possibly could, I now realize that either there will be a 10.5.x...  
+</I>&gt;<i> release incorporating the most important kernel changes made for SL 
+</I>&gt;<i> +zfs, or we'll have to move away from ZFS for Mac OS X on anything  
+</I>&gt;<i> pre-SL. That is to say, dump anything back to HFS+ until SL is out  
+</I>&gt;<i> and stable.
+</I>&gt;<i>
+</I>&gt;<i> The following comment might be a little OT, but I'll get rid of it  
+</I>&gt;<i> here where I know that some very competent people are listening.
+</I>&gt;<i>
+</I>&gt;<i> I get Your points about the kernel changes, and also that SL will be  
+</I>&gt;<i> a &quot;preformance and stability&quot; release of the OS (following an  
+</I>&gt;<i> overall trend in the industry...). So, while the hope for a backport  
+</I>&gt;<i> of ZFS to 10.5 is now rapidly leaving the house, anotherone takes  
+</I>&gt;<i> its place: that marketing and sales will offer us an upgrade path to  
+</I>&gt;<i> SL Server which honour the patience, perseverance and loyalty of  
+</I>&gt;<i> many administrators and customers.
+</I>&gt;<i>
+</I>&gt;<i> While SL will be a major upgrade certainly covering many thousands  
+</I>&gt;<i> of man-hours, it still presents itself more and more like a highly  
+</I>&gt;<i> needed cleanup &amp; bugfix round. I'm not going to open up a thread  
+</I>&gt;<i> here about the problems I and many others have had with Leopard  
+</I>&gt;<i> Server (particularly in environments with heavy use of DS and AFP),  
+</I>&gt;<i> but I've had days where frustration reached levels never experienced  
+</I>&gt;<i> before with OSX and Apple products in general. Long-missing new zfs  
+</I>&gt;<i> bits and the statement that it will probably never be ported back to  
+</I>&gt;<i> 10.5.x just round up my frustration (even if I know that the  
+</I>&gt;<i> problems I encountered are unrelated to ZFS, which I fortunately  
+</I>&gt;<i> never dared implementing in production environments)...
+</I>&gt;<i>
+</I>&gt;<i> As always, regards and best wishes for the Snow Leopard release in  
+</I>&gt;<i> general
+</I>&gt;<i> and a cool, rock stable ZFS implementation on top of it...
+</I>&gt;<i>
+</I>&gt;<i> Lorenzo
+</I>&gt;<i>
+</I>&gt;<i> On 09.01.2009, at 22:18, Deric Horn wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> The file system is a fundamental technology within the OS.  I think  
+</I>&gt;&gt;<i> it's pretty safe to say that the ZFS implementation will always  
+</I>&gt;&gt;<i> have dependencies on the latest version of the kernel. We try not  
+</I>&gt;&gt;<i> to, but inevitably things change in the kernel, or we need more  
+</I>&gt;&gt;<i> functionality from the kernel.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We have past the point where we have enough bandwidth to fork our  
+</I>&gt;&gt;<i> work, and are instead committed to delivering a single version of  
+</I>&gt;&gt;<i> ZFS for SL that we can be proud of.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We will continue to post the ZFS source code, but I ask for your  
+</I>&gt;&gt;<i> patience while we work on implementing new features, and fix bugs.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hope this helps,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Deric Horn
+</I>&gt;&gt;<i> Engineering Manager	   File Systems
+</I>&gt;&gt;<i> Apple Inc.			   408.974.3138
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 9, 2009, at 9:54 AM, Al Gordon wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Deric, maybe I'm not quite following your statement, below.  What  
+</I>&gt;&gt;&gt;<i> is the purpose of hosting this as an open source project on  
+</I>&gt;&gt;&gt;<i> MacOSXForge if you're not going to continue to release source  
+</I>&gt;&gt;&gt;<i> code, and are basically requiring that users upgrade to SL to reap  
+</I>&gt;&gt;&gt;<i> the ongoing benefits of what's going on in this project?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Are we going to continue to see any new code in this project's  
+</I>&gt;&gt;&gt;<i> public svn repo for releases/builds following 119?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Will we get the source to the ZFS code that's actually running in  
+</I>&gt;&gt;&gt;<i> SL?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   -- AL --
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Jan 8, 2009, at 2:04 PM, Deric Horn wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> We're currently in the process of integrating the latest  
+</I>&gt;&gt;&gt;&gt;<i> OpenSolaris ZFS changes into our code base, and this is one we  
+</I>&gt;&gt;&gt;&gt;<i> are obviously interested in.  You'll have to wait for a Snow  
+</I>&gt;&gt;&gt;&gt;<i> Leopard seed to see it in action though.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Deric Horn
+</I>&gt;&gt;&gt;&gt;<i> Engineering Manager	   File Systems
+</I>&gt;&gt;&gt;&gt;<i> Apple Inc.			   408.974.3138
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090215/6dc1e61e/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090215/6dc1e61e/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001388.html">[zfs-discuss] ZFS panics quite easily
+</A></li>
+	<LI>Next message: <A HREF="001390.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1389">[ date ]</a>
+              <a href="thread.html#1389">[ thread ]</a>
+              <a href="subject.html#1389">[ subject ]</a>
+              <a href="author.html#1389">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

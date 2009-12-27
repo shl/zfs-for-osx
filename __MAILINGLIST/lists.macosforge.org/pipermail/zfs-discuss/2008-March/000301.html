@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] DTrace w/ OS X ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20DTrace%20w/%20OS%20X%20ZFS&In-Reply-To=33644d3c0803101456tb2760fax1bc531fe61ce49d7%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000300.html">
+   <LINK REL="Next"  HREF="000278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] DTrace w/ OS X ZFS</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20DTrace%20w/%20OS%20X%20ZFS&In-Reply-To=33644d3c0803101456tb2760fax1bc531fe61ce49d7%40mail.gmail.com"
+       TITLE="[zfs-discuss] DTrace w/ OS X ZFS">jbsnyder at gmail.com
+       </A><BR>
+    <I>Mon Mar 10 15:12:12 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000300.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+        <LI>Next message: <A HREF="000278.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#301">[ date ]</a>
+              <a href="thread.html#301">[ thread ]</a>
+              <a href="subject.html#301">[ subject ]</a>
+              <a href="author.html#301">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Following up, I did locate the following TN to get the binary dump:
+<A HREF="http://developer.apple.com/technotes/tn2004/tn2118.html">http://developer.apple.com/technotes/tn2004/tn2118.html</A>
+
+The only problem here is that I am running on a macbook and it is hard
+to say whether I might or might not have network access at a given
+time, and I'm not usually actively trying to crash it when it does
+crash.  Is there a way to do a local dump, say to a dedicated spot on
+disk or something?
+
+
+On Mon, Mar 10, 2008 at 4:56 PM, James Snyder &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>&gt; wrote:
+&gt;<i> I assume, then, that this will need to be something integrated into a
+</I>&gt;<i>  future OS update (both kernel and dtrace userland) before this becomes
+</I>&gt;<i>  possible?
+</I>&gt;<i>
+</I>&gt;<i>  Somewhat related &amp; unrelated:
+</I>&gt;<i>  Is there another way to get more information out of some of the panic
+</I>&gt;<i>  traces?  I've seen a few posts here where it appears that the debug
+</I>&gt;<i>  information in the code includes references to points in the ZFS
+</I>&gt;<i>  source that I suppose make it easier to track difficulties down.  What
+</I>&gt;<i>  I've had happen a number of times recently, though, are some double
+</I>&gt;<i>  faults  (<A HREF="rdar://problem/5786708">rdar://problem/5786708</A>), but the trace seems to reference
+</I>&gt;<i>  addresses that aren't communicating to me anything about how I might
+</I>&gt;<i>  narrow down the causes to provide a better test case.  I see at the
+</I>&gt;<i>  bottoms of many of the traces &quot;Backtrace continues...&quot;  Is there some
+</I>&gt;<i>  way to list the rest of the backtrace or choose to have that included?
+</I>&gt;<i>   I've googled a bit and not found a reference to configuring panic
+</I>&gt;<i>  backtrace options...
+</I>&gt;<i>
+</I>&gt;<i>  Example trace below:
+</I>&gt;<i>
+</I>&gt;<i>  Fri Mar  7 12:18:42 2008
+</I>&gt;<i>  panic(cpu 0 caller 0x001A83A6): Double fault at 0x00c3d632,
+</I>&gt;<i>  thread:0x4b1cba0, trapno:0x8, err:0x0),registers:
+</I>&gt;<i>  CR0: 0x80010033, CR2: 0x3938bff8, CR3: 0x01137000, CR4: 0x00000660
+</I>&gt;<i>  EAX: 0x00077265, EBX: 0x04c2dd98, ECX: 0x04b89800, EDX: 0x04c21600
+</I>&gt;<i>  ESP: 0x3938c000, EBP: 0x3938c048, ESI: 0x00000000, EDI: 0x04b898b8
+</I>&gt;<i>  EFL: 0x00010246, EIP: 0x00c3d632
+</I>&gt;<i>
+</I>&gt;<i>  Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i>  0x4eae28 : 0x12b0f7 (0x458124 0x4eae5c 0x133230 0x0)
+</I>&gt;<i>  0x4eae78 : 0x1a83a6 (0x4610d4 0xc3d632 0x4b1cba0 0x8)
+</I>&gt;<i>  0x4eaf58 : 0x19fc73 (0x4eaf70 0x0 0x0 0x0)
+</I>&gt;<i>  0x3938c048 : 0xc3d94e (0x4c21600 0x77266 0x0 0x1)
+</I>&gt;<i>  0x3938c078 : 0xc38fde (0x4c21600 0x77266 0x0 0xca59a4)
+</I>&gt;<i>  0x3938c0d8 : 0xc6ed92 (0x45691e0 0x77266 0x0 0x0)
+</I>&gt;<i>  0x3938c188 : 0xc77598 (0x3938c33c 0x0 0x0 0x3938c33c)
+</I>&gt;<i>  0x3938c358 : 0xc6dfa1 (0x5115df80 0x216 0x3938c388 0x4c3cf50)
+</I>&gt;<i>  0x3938c398 : 0xc17e5b (0x5115df80 0x1 0x3938c428 0x4c3cf50)
+</I>&gt;<i>  0x3938c3d8 : 0x1f3eb1 (0x3938c3f4 0x216 0x3938c3fc 0x0)
+</I>&gt;<i>  0x3938c418 : 0x1db45f (0x499cd80 0x4b0d784 0x0 0x2)
+</I>&gt;<i>  0x3938c468 : 0x1db67b (0x499cd80 0x1 0x3938c498 0x19d4b1)
+</I>&gt;<i>  0x3938c4b8 : 0x1dd2e6 (0x0 0x4f43c0 0x3938c558 0x54121908)
+</I>&gt;<i>  0x3938c538 : 0xc6eca5 (0x0 0x34 0x3938c56c 0x54121894)
+</I>&gt;<i>  0x3938c5b8 : 0xc6f0ba (0x4b89c78 0x0 0x200 0x0)
+</I>&gt;<i>  0x3938c668 : 0xc77598 (0x3938c81c 0x0 0x0 0x3938c81c)
+</I>&gt;<i>         Backtrace continues...
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0xc10000-&gt;0xcdbfff
+</I>&gt;<i>
+</I>&gt;<i>  BSD process name corresponding to current thread: Finder
+</I>&gt;<i>
+</I>&gt;<i>  Mac OS version:
+</I>&gt;<i>  9C2015
+</I>&gt;<i>
+</I>&gt;<i>  Kernel version:
+</I>&gt;<i>  Darwin Kernel Version 9.2.1: Tue Feb  5 23:08:45 PST 2008;
+</I>&gt;<i>  root:xnu-1228.4.20~1/RELEASE_I386
+</I>&gt;<i>  System model name: MacBook4,1 (Mac-F22788A9)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  On Fri, Mar 7, 2008 at 2:37 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+</I>&gt;<i>  &gt; Currently it is not yet possible to trace any kexts with Dtrace.  This
+</I>&gt;<i>  &gt;  is an open RFE that is being worked on currently.  For now though
+</I>&gt;<i>  &gt;  sadly, you cannot Dtrace ZFS, hopefully soon though.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  Noel
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  On Mar 6, 2008, at 10:59 AM, James Snyder wrote:
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  &gt; I'm curious about making use of the dtrace probes in ZFS on OS X.  I
+</I>&gt;<i>  &gt;  &gt; can see in the source release on macosforge that some of the probes
+</I>&gt;<i>  &gt;  &gt; are commented out and others, eat least in the code there, look as if
+</I>&gt;<i>  &gt;  &gt; they should be compiled in.  I don't however see them when I do a
+</I>&gt;<i>  &gt;  &gt; dtrace -l.  I've poked around at some documentation for adding probes
+</I>&gt;<i>  &gt;  &gt; to my own code, but I've still not 100% gotten a handle on how to
+</I>&gt;<i>  &gt;  &gt; enable them on ZFS.  It sounds to me from documents like this one
+</I>&gt;<i>  &gt;  &gt; (<A HREF="http://blogs.sun.com/tpenta/entry/dtrace_using_placing_sdt_probes">http://blogs.sun.com/tpenta/entry/dtrace_using_placing_sdt_probes</A>)
+</I>&gt;<i>  &gt;  &gt; that dtrace needs to be run on the generated binaries to embed the
+</I>&gt;<i>  &gt;  &gt; probes?
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; I'm not sure that I'll actually do much debugging with it, but I
+</I>&gt;<i>  &gt;  &gt; thought I would play around with it to get a sense for what ZFS is
+</I>&gt;<i>  &gt;  &gt; doing while I'm working on top of it as well as getting a sense for
+</I>&gt;<i>  &gt;  &gt; how to use dtrace on other applications.
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; Most of what I'm working with lately in terms of coding is in MATLAB,
+</I>&gt;<i>  &gt;  &gt; so I don't have much of an opportunity there to use probes :-)
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; --
+</I>&gt;<i>  &gt;  &gt; James Snyder
+</I>&gt;<i>  &gt;  &gt; Biomedical Engineering
+</I>&gt;<i>  &gt;  &gt; Northwestern University
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i>  &gt;  &gt; _______________________________________________
+</I>&gt;<i>  &gt;  &gt; zfs-discuss mailing list
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  &gt;  &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  --
+</I>&gt;<i>  James Snyder
+</I>&gt;<i>  Biomedical Engineering
+</I>&gt;<i>  Northwestern University
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000300.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+	<LI>Next message: <A HREF="000278.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#301">[ date ]</a>
+              <a href="thread.html#301">[ thread ]</a>
+              <a href="subject.html#301">[ subject ]</a>
+              <a href="author.html#301">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

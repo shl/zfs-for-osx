@@ -1,0 +1,1117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] snapshots
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C2b0225fb0812201700j65853f7bud1f49fd631f6b2d4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001207.html">
+   <LINK REL="Next"  HREF="001242.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] snapshots</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C2b0225fb0812201700j65853f7bud1f49fd631f6b2d4%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] snapshots">bwaters at nrao.edu
+       </A><BR>
+    <I>Sat Dec 20 17:00:30 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001207.html">[zfs-discuss] snapshots
+</A></li>
+        <LI>Next message: <A HREF="001242.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1237">[ date ]</a>
+              <a href="thread.html#1237">[ thread ]</a>
+              <a href="subject.html#1237">[ subject ]</a>
+              <a href="author.html#1237">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> On Dec 20, 2008, at 12:23 PM, Richard McClellan wrote:
+</I>&gt;<i>
+</I>&gt;<i> Others that have encountered this error (dataset busy) manually umount/mount
+</I>&gt;<i> the filesystem and snapshots started working again.  Check this out:
+</I>&gt;<i> <A HREF="http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html">http://malsserver.blogspot.com/2008/11/zfs-auto-snapshot-and-thus-time-slider.html</A>
+</I>
+Thanks much, but that doesn't work for me....
+
+Here is a transcript of a long dialog between me and ZFS:
+
+======
+Last login: Sat Dec 20 17:31:41 on console
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">me at galatea</A> ~ $ sudo -i
+Password:
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # man zfs
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs unmount /Volumes/pool
+cannot unmount '/Volumes/pool/backup/galatea': Resource busy
+cannot unmount '/Volumes/pool/backup': Resource busy
+cannot unmount '/Volumes/pool': Resource busy
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # lsof | grep /Volumes/pool
+Finder    14688        galatea   15r      DIR      45,17        35
+    2 /Volumes/pool/backup/galatea
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # osascript -e &quot;='tell application &quot;Finder&quot; to quit'
+&gt;<i> C
+</I><A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # osascript -e 'tell application &quot;Finder&quot; to quit'
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # lsof | grep /Volumes/pool
+fseventsd    55           root   10u      REG       45,5         0
+  262 /Volumes/pool/.fseventsd/00000000015d4794
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # killall fseventsd
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # lsof | grep /Volumes/pool
+mds          49           root  txt       REG       45,5        52
+  517 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexGroups
+mds          49           root  txt       REG       45,5         8
+  529 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexCompactDirectory
+mds          49           root  txt       REG       45,5      2731
+  147 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexGroups
+mds          49           root  txt       REG       45,5      1024
+  153 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexCompactDirectory
+mds          49           root  txt       REG       45,5      2056
+  527 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexDirectory
+mds          49           root  txt       REG       45,5      8224
+  152 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexDirectory
+mds          49           root  txt       REG       45,5       624
+  510 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexIds
+mds          49           root  txt       REG       45,5     32768
+  146 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexIds
+mds          49           root   41u      REG       45,5     53248
+   40 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/store.db
+mds          49           root   53u      REG       45,5     53248
+   41 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/.store.db
+mds          49           root   56r      DIR       45,5         9
+    2 /Volumes/pool
+mds          49           root   57u      REG       45,5     16384
+   16 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/psid.db
+mds          49           root   58u      REG       45,5         0
+   43 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/journalLive
+mds          49           root   59u      REG       45,5        28
+   17 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/indexState
+mds          49           root   61r      DIR       45,5        40
+   14 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F
+mds          49           root   62u      REG       45,5         0
+   44 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/journalExclusion
+mds          49           root   73u      REG       45,5         0
+   45 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/journalSync
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # kill 49
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # lsof | grep /Volumes/pool
+mds          49           root  twd       DIR       45,5        41
+   14 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F
+mds          49           root  txt       REG       45,5        52
+  517 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexGroups
+mds          49           root  txt       REG       45,5         8
+  529 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexCompactDirectory
+mds          49           root  txt       REG       45,5      2731
+  147 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexGroups
+mds          49           root  txt       REG       45,5      1024
+  153 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexCompactDirectory
+mds          49           root  txt       REG       45,5      2056
+  527 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexDirectory
+mds          49           root  txt       REG       45,5      8224
+  152 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexDirectory
+mds          49           root  txt       REG       45,5       624
+  510 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexIds
+mds          49           root  txt       REG       45,5     32768
+  146 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexIds
+mds          49           root    6u      REG       45,5        14
+  145 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexUpdates
+mds          49           root    8u      REG       45,5      4096
+  144 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexHead
+mds          49           root   26u      REG       45,5        52
+  517 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexGroups
+mds          49           root   27r      REG       45,5       624
+  510 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexIds
+mds          49           root   28u      REG       45,5      4096
+  503 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexHead
+mds          49           root   30r      REG       45,5      1401
+  519 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexPostings
+mds          49           root   31r      REG       45,5         8
+  521 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexPositions
+mds          49           root   33r      REG       45,5      2056
+  527 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexDirectory
+mds          49           root   35r      REG       45,5         8
+  529 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexCompactDirectory
+mds          49           root   37r      REG       45,5     70200
+  536 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/0.indexArrays
+mds          49           root   41u      REG       45,5     53248
+   40 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/store.db
+mds          49           root   44u      REG       45,5      2731
+  147 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexGroups
+mds          49           root   49u      REG       45,5     32768
+  146 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexIds
+mds          49           root   52u      REG       45,5      4096
+  148 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexPostings
+mds          49           root   53u      REG       45,5     53248
+   41 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/.store.db
+mds          49           root   54u      REG       45,5      8192
+  149 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexTermIds
+mds          49           root   55u      REG       45,5      4096
+  150 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexPositions
+mds          49           root   56r      DIR       45,5         9
+    2 /Volumes/pool
+mds          49           root   57u      REG       45,5     16384
+   16 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/psid.db
+mds          49           root   58u      REG       45,5         0
+   43 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/journalLive
+mds          49           root   59u      REG       45,5        28
+   17 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/indexState
+mds          49           root   60u      REG       45,5      8192
+  151 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexPositionTable
+mds          49           root   61r      DIR       45,5        41
+   14 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F
+mds          49           root   62u      REG       45,5      8224
+  152 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexDirectory
+mds          49           root   63u      REG       45,5      1024
+  153 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexCompactDirectory
+mds          49           root   64u      REG       45,5     65536
+  154 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/live.0.indexArrays
+mds          49           root   73u      REG       45,5         0
+   45 /Volumes/pool/.Spotlight-V100/Store-V1/Stores/169E9FFA-03A7-4B1F-A966-9DCCFFF3AB2F/journalSync
+fseventsd 14844           root    7u      REG       45,5         0
+  267 /Volumes/pool/.fseventsd/00000000015d4d2a
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs unmount -f /Volumes/pool
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # date +%Ft%T
+2008-12-20t17:42:34
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs snapshot pool/bwaters@$(date +%Ft%T)
+cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-20t17</A>:42:50': dataset is busy
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # monut
+-sh: monut: command not found
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # mount
+/dev/disk4s3 on / (hfs, local, journaled)
+devfs on /dev (devfs, local)
+fdesc on /dev (fdesc, union)
+map -hosts on /net (autofs, automounted)
+map auto_home on /home (autofs, automounted)
+/dev/disk4s2 on /Volumes/galatea-tiger (hfs, local, journaled)
+tank on /Volumes/tank (zfs, local)
+tank/bwaters on /Volumes/tank/bwaters (zfs, local)
+tank/media on /Volumes/tank/media (zfs, local)
+tank/opt on /Volumes/tank/opt (zfs, local)
+tank/opt_leopard on /Volumes/tank/opt_leopard (zfs, local)
+tank/opt_tiger on /Volumes/tank/opt_tiger (zfs, local)
+tank/staging on /Volumes/tank/staging (zfs, local)
+/dev/disk10s2 on /Users/galatea (hfs, local, nodev, nosuid, journaled)
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs list
+NAME                                          USED  AVAIL  REFER  MOUNTPOINT
+pool                                         1.92T   774G  7.66M  /Volumes/pool
+pool/backup                                   889G   774G   283G
+/Volumes/pool/backup
+pool/backup/cameron                          8.06G   774G  8.06G
+/Volumes/pool/backup/cameron
+pool/backup/eurythion                        81.5G   774G  65.2G
+/Volumes/pool/backup/eurythion
+pool/backup/eurythion-tiger                  9.63G   774G  9.63G
+/Volumes/pool/backup/eurythion-tiger
+pool/backup/eurythion/opt                    16.3G   774G  16.3G
+/Volumes/pool/backup/eurythion/opt
+pool/backup/galatea                           505G   774G   111G
+/Volumes/pool/backup/galatea
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T15</A>:52:23       349G      -   370G  -
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-15T16</A>:10:29       630M      -   112G  -
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-16T16</A>:10:28       517M      -   112G  -
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-17T16</A>:10:43       534M      -   112G  -
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-26T16</A>:12:47      49.4K      -   110G  -
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-26T21</A>:15:32      49.4K      -   110G  -
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-27T16</A>:10:50       249M      -   111G  -
+pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-27T20</A>:03:05       400K      -   111G  -
+pool/backup/galatea-opt_2008-06-24T16:58:07   295K   774G  34.7G
+/Volumes/pool/backup/galatea-opt_2008-06-24T16:58:07
+pool/backup/galatea/opt                      38.2G   774G   184K
+/Volumes/pool/backup/galatea/opt
+pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-03-31T16</A>:50:00  1.30G      -  10.3G  -
+pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-04-10T15</A>:52:23  1.87G      -  21.9G  -
+pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-06-24T16</A>:58:07  15.0G      -  34.7G  -
+pool/backup/galatea_2008-04-10T15:52:23       142M   774G   348G
+/Volumes/pool/backup/galatea_2008-04-10T15:52:23
+pool/backup/ibook_10_3_9                     1.87G   774G  1.87G
+/Volumes/pool/backup/ibook_10_3_9
+pool/backup/mochi                            84.0M   774G  84.0M
+/Volumes/pool/backup/mochi
+pool/backup/sedna                             646M   774G   646M
+/Volumes/pool/backup/sedna
+pool/backup/vmware-winxp                     49.4K   774G  49.4K
+/Volumes/pool/backup/vmware-winxp
+pool/bwaters                                  878G   774G   671G
+/Volumes/pool/bwaters
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-04-11T14</A>:16:10             3.63G      -   271G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-04-20T14</A>:20:43             96.0M      -   281G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-04-24T19</A>:19:55              110M      -   302G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-05-14T13</A>:52:41              152M      -   432G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-05-29T16</A>:47:59              129M      -   466G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-06-13T16</A>:22:27             20.4M      -   530G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-06-27T16</A>:11:45              202M      -   545G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-07-07T18</A>:54:03             7.71M      -   551G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-07-29T17</A>:13:16             1.52M      -   559G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-09-22T07</A>:24:43             7.64M      -   562G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-10-01T12</A>:24:09             24.8M      -   574G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-10-28T17</A>:14:54              222M      -   615G  -
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-10-29T13</A>:33:52             18.2M      -   438G  -
+pool/casa                                    34.5G   774G  28.0G
+/Volumes/pool/casa
+pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">casa at 2008-11-17T12</A>:32:46                 425K      -  27.6G  -
+pool/casa/data                               6.52G   774G  6.52G
+/Volumes/pool/casa/data
+pool/casa/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">data at 2008-11-17T12</A>:35:13           45.6K      -  6.52G  -
+pool/pictures                                23.5G   774G  53.9K
+/Volumes/pool/pictures
+pool/pictures/staging                        23.5G   774G  23.5G
+/Volumes/pool/pictures/staging
+pool/vm                                       142G   774G  23.5G
+/Volumes/pool/vm
+pool/vm/nexenta                              1.96G   774G  1.96G
+/Volumes/pool/vm/nexenta
+pool/vm/nrao-rhel4                           29.9G   774G  29.9G
+/Volumes/pool/vm/nrao-rhel4
+pool/vm/rhel5                                19.2G   774G  15.3G
+/Volumes/pool/vm/rhel5
+pool/vm/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">rhel5 at 2008-04-17T13</A>:25:54            3.94G      -  3.94G  -
+pool/vm/solaris                              5.20G   774G  5.20G
+/Volumes/pool/vm/solaris
+pool/vm/windowsXP                            62.4G   774G  62.4G
+/Volumes/pool/vm/windowsXP
+tank                                         1.33T  9.53G   106K  /Volumes/tank
+tank/bwaters                                 46.4K  9.53G  46.4K
+/Volumes/tank/bwaters
+tank/media                                    435G  9.53G   420G
+/Volumes/tank/media
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">media at samsara</A>                           74.8M      -  6.26G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">media at silver</A>                            1.54G      -  40.0G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">media at nessus</A>                             732M      -   163G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">media at nessus2</A>                           49.5M      -   200G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">media at nessus_snapshot</A>                    163K      -   206G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">media at nessus_snapshot2</A>                  8.35G      -   299G  -
+tank/opt                                     23.7G  9.53G  13.5G
+/Volumes/tank/opt
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at galatea-tiger</A>                       10.1G      -  13.8G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at galatea-leopard</A>                     66.3M      -  13.5G  -
+tank/opt_leopard                             71.8K  9.53G  13.5G
+/Volumes/tank/opt_leopard
+tank/opt_tiger                               48.9M  9.53G  13.8G
+/Volumes/tank/opt_tiger
+tank/staging                                  901G  9.53G   684G
+/Volumes/tank/staging
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at 2006-01-25__samsara</A>             13.3G      -  55.1G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at 2006-03-01__samsara</A>             12.8G      -  57.1G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at 2006-04-08__eurythion</A>           16.4G      -  33.5G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at 2006-06-08__eurythion</A>           26.6G      -  52.7G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at 2006-07-08__eurythion</A>           42.1M      -  51.8G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at 2006-07-11__canonical</A>           3.43G      -   231G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at canonical_photos</A>                3.37G      -   277G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at canonical_maxtor</A>                 300K      -   565G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at canonical_littleLprd</A>             340K      -   593G  -
+tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">staging at canonical_warranty</A>              83.4M      -   620G  -
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # ls /Volumes/
+.DS_Store     galatea       galatea-tiger tank
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs snapshot tank/bwaters@$(date +%Ft%T)
+cannot create snapshot 'tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-20t17</A>:44:04': dataset is busy
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs unmount -f tank
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # mount
+/dev/disk4s3 on / (hfs, local, journaled)
+devfs on /dev (devfs, local)
+fdesc on /dev (fdesc, union)
+map -hosts on /net (autofs, automounted)
+map auto_home on /home (autofs, automounted)
+/dev/disk4s2 on /Volumes/galatea-tiger (hfs, local, journaled)
+/dev/disk10s2 on /Users/galatea (hfs, local, nodev, nosuid, journaled)
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # ls /Volumes/
+.DS_Store     galatea       galatea-tiger
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs snapshot tank/bwaters@$(date +%Ft%T)
+cannot create snapshot 'tank/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-20t17</A>:44:39': dataset is busy
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs export pool/bwaters
+unrecognized command 'export'
+usage: zfs command args ...
+where 'command' is one of the following:
+
+	create [-p] [-o property=value] ... &lt;filesystem&gt;
+	create [-ps] [-b blocksize] [-o property=value] ... -V &lt;size&gt; &lt;volume&gt;
+	destroy [-rRf] &lt;filesystem|volume|snapshot&gt;
+
+	snapshot [-r] &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">filesystem at snapname</A>|<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">volume at snapname</A>&gt;
+	rollback [-rRf] &lt;snapshot&gt;
+	clone [-p] &lt;snapshot&gt; &lt;filesystem|volume&gt;
+	promote &lt;clone-filesystem&gt;
+	rename &lt;filesystem|volume|snapshot&gt; &lt;filesystem|volume|snapshot&gt;
+	rename -p &lt;filesystem|volume&gt; &lt;filesystem|volume&gt;
+	rename -r &lt;snapshot&gt; &lt;snapshot&gt;
+	list [-rH] [-o property[,...]] [-t type[,...]] [-s property] ...
+	    [-S property] ... [filesystem|volume|snapshot] ...
+
+	set &lt;property=value&gt; &lt;filesystem|volume&gt; ...
+	get [-rHp] [-o field[,...]] [-s source[,...]]
+	    &lt;&quot;all&quot; | property[,...]&gt; [filesystem|volume|snapshot] ...
+	inherit [-r] &lt;property&gt; &lt;filesystem|volume&gt; ...
+	upgrade [-v]
+	upgrade [-r] [-V version] &lt;-a | filesystem ...&gt;
+
+	mount
+	mount [-vO] [-o opts] &lt;-a | filesystem&gt;
+	unmount [-f] &lt;-a | filesystem|mountpoint&gt;
+	share &lt;-a | filesystem&gt;
+	unshare [-f] &lt;-a | filesystem|mountpoint&gt;
+
+	send [-i snapshot] &lt;snapshot&gt;
+	receive [-vnF] &lt;filesystem|volume|snapshot&gt;
+	receive [-vnF] -d &lt;filesystem&gt;
+
+	allow [-ldug] &lt;&quot;everyone&quot;|user|group&gt;[,...] &lt;perm|@setname&gt;[,...]
+	    &lt;filesystem|volume&gt;
+	allow [-ld] -e &lt;perm|@setname&gt;[,...] &lt;filesystem|volume&gt;
+	allow -c &lt;perm|@setname&gt;[,...] &lt;filesystem|volume&gt;
+	allow -s @setname &lt;perm|@setname&gt;[,...] &lt;filesystem|volume&gt;
+
+	unallow [-rldug] &lt;&quot;everyone&quot;|user|group&gt;[,...]
+	    [&lt;perm|@setname&gt;[,...]] &lt;filesystem|volume&gt;
+	unallow [-rld] -e [&lt;perm|@setname&gt;[,...]] &lt;filesystem|volume&gt;
+	unallow [-r] -c [&lt;perm|@setname&gt;[,...]] &lt;filesystem|volume&gt;
+	unallow [-r] -s @setname [&lt;perm|@setname&gt;[,...]] &lt;filesystem|volume&gt;
+
+Each dataset is of the form: pool/[dataset/]*dataset[@name]
+
+For the property list, run: zfs set|get
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool export pool
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool status
+  pool: tank
+ state: ONLINE
+ scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	    disk6s2  ONLINE       0     0     0
+	    disk8s2  ONLINE       0     0     0
+
+errors: No known data errors
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool import pool
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool status
+  pool: pool
+ state: ONLINE
+ scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	pool         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: tank
+ state: ONLINE
+ scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	    disk6s2  ONLINE       0     0     0
+	    disk8s2  ONLINE       0     0     0
+
+errors: No known data errors
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs snapshot pool/bwaters@$(date +%Ft%T)
+cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-20t17</A>:47:31': dataset is busy
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool export tank
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs snapshot pool/bwaters@$(date +%Ft%T)
+cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-20t17</A>:48:10': dataset is busy
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # man zpool
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool upgrade pool
+This system is currently running ZFS pool version 8.
+
+Pool 'pool' is already formatted using the current version.
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool clear pool
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool status
+  pool: pool
+ state: ONLINE
+ scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	pool         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+
+errors: No known data errors
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zfs snapshot pool/bwaters@$(date +%Ft%T)
+cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-20t17</A>:52:46': dataset is busy
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # lsof | grep pool/bwaters
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at galatea</A> ~ # zpool history pool
+History for 'pool':
+2008-02-25.18:40:24 zpool create pool raidz /dev/disk0s2 /dev/disk1s2
+/dev/disk2s2 /dev/disk3s2
+2008-02-25.18:42:13 zfs create pool/backup
+2008-02-25.20:12:40 zpool import -f 17751373224295458742
+2008-03-05.17:44:48 zpool import -f 17751373224295458742
+2008-03-05.17:48:24 zpool upgrade pool
+2008-03-06.15:50:58 zfs create pool/opt
+2008-03-06.16:02:07 zpool import -f 17751373224295458742
+2008-03-06.16:07:12 zfs destroy pool/opt
+2008-03-07.13:22:42 zpool import -f 17751373224295458742
+2008-03-10.09:17:37 zpool import -f 17751373224295458742
+2008-03-24.17:52:31 zpool import -f 17751373224295458742
+2008-03-31.16:17:49 zfs create pool/backup/galatea
+2008-03-31.16:28:50 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at opt_active</A>
+2008-04-01.12:00:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at opt_active</A>
+2008-04-01.12:11:25 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at opt</A>
+2008-04-01.12:20:37 zpool import -f 17751373224295458742
+2008-04-01.18:21:40 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T18</A>:21:38
+2008-04-01.18:35:28 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T18</A>:35:27
+2008-04-01.19:44:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T19</A>:44:12
+2008-04-01.20:55:41 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T20</A>:55:40
+2008-04-01.22:08:57 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T22</A>:08:56
+2008-04-01.23:21:50 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T23</A>:21:49
+2008-04-02.00:35:04 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T00</A>:35:03
+2008-04-02.01:47:47 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T01</A>:47:46
+2008-04-02.03:00:52 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T03</A>:00:51
+2008-04-02.04:13:56 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T04</A>:13:55
+2008-04-02.05:27:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T05</A>:27:18
+2008-04-02.06:39:53 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T06</A>:39:52
+2008-04-02.07:52:54 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T07</A>:52:52
+2008-04-02.09:06:06 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T09</A>:06:04
+2008-04-02.10:19:04 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T10</A>:19:03
+2008-04-02.11:32:13 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T11</A>:32:12
+2008-04-02.12:45:06 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T12</A>:45:05
+2008-04-02.13:58:07 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T13</A>:58:05
+2008-04-02.15:11:06 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T15</A>:11:05
+2008-04-02.16:23:51 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T16</A>:23:50
+2008-04-02.17:36:47 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T17</A>:36:45
+2008-04-02.18:49:45 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T18</A>:49:43
+2008-04-02.20:03:00 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T20</A>:02:59
+2008-04-02.21:15:51 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T21</A>:15:50
+2008-04-02.22:29:11 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T22</A>:29:10
+2008-04-02.23:42:09 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T23</A>:42:08
+2008-04-03.00:54:54 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T00</A>:54:53
+2008-04-03.02:07:53 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T02</A>:07:52
+2008-04-03.03:21:03 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T03</A>:21:02
+2008-04-03.04:34:01 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T04</A>:34:00
+2008-04-03.05:46:56 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T05</A>:46:55
+2008-04-03.06:59:55 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T06</A>:59:54
+2008-04-03.08:13:06 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T08</A>:13:05
+2008-04-03.09:26:21 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T09</A>:26:20
+2008-04-03.10:38:47 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T10</A>:38:46
+2008-04-03.11:51:51 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T11</A>:51:50
+2008-04-03.13:05:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T13</A>:05:18
+2008-04-03.13:16:29 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T18</A>:21:38
+2008-04-03.13:16:30 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T18</A>:35:27
+2008-04-03.13:16:31 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T19</A>:44:12
+2008-04-03.13:16:32 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T20</A>:55:40
+2008-04-03.13:16:34 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T22</A>:08:56
+2008-04-03.13:16:35 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-01T23</A>:21:49
+2008-04-03.13:16:36 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T00</A>:35:03
+2008-04-03.13:16:37 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T01</A>:47:46
+2008-04-03.13:16:38 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T03</A>:00:51
+2008-04-03.13:16:39 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T04</A>:13:55
+2008-04-03.13:16:40 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T05</A>:27:18
+2008-04-03.13:16:41 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T06</A>:39:52
+2008-04-03.13:16:42 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T07</A>:52:52
+2008-04-03.13:16:43 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T09</A>:06:04
+2008-04-03.13:16:44 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T10</A>:19:03
+2008-04-03.13:16:45 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T11</A>:32:12
+2008-04-03.13:16:46 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T12</A>:45:05
+2008-04-03.13:16:47 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T13</A>:58:05
+2008-04-03.13:16:48 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T15</A>:11:05
+2008-04-03.13:16:49 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T16</A>:23:50
+2008-04-03.13:16:50 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T17</A>:36:45
+2008-04-03.13:16:51 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T18</A>:49:43
+2008-04-03.13:16:52 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T20</A>:02:59
+2008-04-03.13:16:54 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T21</A>:15:50
+2008-04-03.13:16:55 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T22</A>:29:10
+2008-04-03.13:16:56 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-02T23</A>:42:08
+2008-04-03.13:16:57 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T00</A>:54:53
+2008-04-03.13:16:58 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T02</A>:07:52
+2008-04-03.13:16:59 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T03</A>:21:02
+2008-04-03.13:17:01 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T04</A>:34:00
+2008-04-03.13:17:02 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T05</A>:46:55
+2008-04-03.13:17:03 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T06</A>:59:54
+2008-04-03.14:18:41 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T14</A>:18:40
+2008-04-03.14:18:42 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T08</A>:13:05
+2008-04-03.14:18:44 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T09</A>:26:20
+2008-04-03.15:31:09 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T15</A>:31:08
+2008-04-03.15:31:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T10</A>:38:46
+2008-04-03.16:43:46 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T16</A>:43:45
+2008-04-03.16:43:47 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T11</A>:51:50
+2008-04-03.17:57:14 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T17</A>:57:13
+2008-04-03.17:57:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T13</A>:05:18
+2008-04-03.19:11:58 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T19</A>:11:57
+2008-04-03.19:12:00 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T14</A>:18:40
+2008-04-03.20:23:25 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T20</A>:23:24
+2008-04-03.20:23:27 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T15</A>:31:08
+2008-04-03.21:36:11 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T21</A>:36:10
+2008-04-03.21:36:14 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T16</A>:43:45
+2008-04-03.22:48:53 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T22</A>:48:52
+2008-04-03.22:48:56 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T17</A>:57:13
+2008-04-04.00:02:09 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T00</A>:02:08
+2008-04-04.00:02:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T19</A>:11:57
+2008-04-04.01:14:57 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T01</A>:14:56
+2008-04-04.01:14:58 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T20</A>:23:24
+2008-04-04.02:28:14 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T02</A>:28:13
+2008-04-04.02:28:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T21</A>:36:10
+2008-04-04.03:41:08 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T03</A>:41:06
+2008-04-04.03:41:09 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-03T22</A>:48:52
+2008-04-04.04:54:01 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T04</A>:54:00
+2008-04-04.04:54:03 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T00</A>:02:08
+2008-04-04.06:07:07 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T06</A>:07:06
+2008-04-04.06:07:09 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T01</A>:14:56
+2008-04-04.07:20:08 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T07</A>:20:07
+2008-04-04.07:20:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T02</A>:28:13
+2008-04-04.08:33:16 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T08</A>:33:15
+2008-04-04.08:33:18 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T03</A>:41:06
+2008-04-04.09:46:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T09</A>:46:17
+2008-04-04.09:46:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T04</A>:54:00
+2008-04-04.10:59:16 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T10</A>:59:15
+2008-04-04.10:59:18 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T06</A>:07:06
+2008-04-04.12:13:39 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T12</A>:13:38
+2008-04-04.12:13:41 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T07</A>:20:07
+2008-04-04.13:26:32 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T13</A>:26:31
+2008-04-04.13:26:34 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T08</A>:33:15
+2008-04-04.14:38:45 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T14</A>:38:44
+2008-04-04.14:38:47 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T09</A>:46:17
+2008-04-04.15:53:21 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T15</A>:53:20
+2008-04-04.15:53:24 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T10</A>:59:15
+2008-04-04.16:41:08 zpool import -f 17751373224295458742
+2008-04-05.15:23:35 zpool import -f 17751373224295458742
+2008-04-05.15:32:08 zfs clone pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T15</A>:53:20
+pool/backup/galatea-10.5.2-2008-04-04
+2008-04-05.15:32:32 zfs promote pool/backup/galatea-10.5.2-2008-04-04
+2008-04-05.15:43:34 zfs promote pool/backup/galatea
+2008-04-05.17:11:33 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T17</A>:11:31
+2008-04-05.17:11:34 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T12</A>:13:38
+2008-04-05.18:31:14 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T18</A>:31:13
+2008-04-05.18:31:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T13</A>:26:31
+2008-04-05.19:23:07 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T19</A>:23:06
+2008-04-05.19:23:09 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T14</A>:38:44
+2008-04-05.20:35:23 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T20</A>:35:23
+2008-04-05.21:48:11 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T21</A>:48:10
+2008-04-05.21:48:14 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T17</A>:11:31
+2008-04-05.23:01:15 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T23</A>:01:14
+2008-04-05.23:01:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T18</A>:31:13
+2008-04-06.00:14:14 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T00</A>:14:13
+2008-04-06.00:14:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T19</A>:23:06
+2008-04-06.01:27:17 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T01</A>:27:16
+2008-04-06.01:27:19 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T20</A>:35:23
+2008-04-06.02:40:17 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T02</A>:40:15
+2008-04-06.02:40:18 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T21</A>:48:10
+2008-04-06.03:53:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T03</A>:53:11
+2008-04-06.03:53:13 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-05T23</A>:01:14
+2008-04-06.05:06:14 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T05</A>:06:13
+2008-04-06.05:06:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T00</A>:14:13
+2008-04-06.06:19:10 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T06</A>:19:08
+2008-04-06.06:19:12 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T01</A>:27:16
+2008-04-06.07:32:01 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T07</A>:32:00
+2008-04-06.07:32:03 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T02</A>:40:15
+2008-04-06.08:45:16 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T08</A>:45:14
+2008-04-06.08:45:18 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T03</A>:53:11
+2008-04-06.09:58:18 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T09</A>:58:16
+2008-04-06.09:58:19 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T05</A>:06:13
+2008-04-06.11:11:17 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T11</A>:11:16
+2008-04-06.11:11:19 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T06</A>:19:08
+2008-04-06.12:24:09 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T12</A>:24:08
+2008-04-06.12:24:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T07</A>:32:00
+2008-04-06.13:37:21 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T13</A>:37:20
+2008-04-06.13:37:23 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T08</A>:45:14
+2008-04-06.14:50:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T14</A>:50:19
+2008-04-06.14:50:22 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T09</A>:58:16
+2008-04-06.16:03:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T16</A>:03:11
+2008-04-06.16:03:13 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T11</A>:11:16
+2008-04-06.17:16:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T17</A>:16:18
+2008-04-06.17:16:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T12</A>:24:08
+2008-04-06.18:29:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T18</A>:29:18
+2008-04-06.18:29:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T13</A>:37:20
+2008-04-06.19:42:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T19</A>:42:17
+2008-04-06.19:42:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T14</A>:50:19
+2008-04-06.20:55:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T20</A>:55:19
+2008-04-06.20:55:22 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T16</A>:03:11
+2008-04-06.22:08:25 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T22</A>:08:24
+2008-04-06.22:08:27 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T17</A>:16:18
+2008-04-06.23:21:18 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T23</A>:21:17
+2008-04-06.23:21:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T18</A>:29:18
+2008-04-07.00:34:29 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T00</A>:34:28
+2008-04-07.00:34:31 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T19</A>:42:17
+2008-04-07.01:47:31 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T01</A>:47:29
+2008-04-07.01:47:32 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T20</A>:55:19
+2008-04-07.03:00:11 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T03</A>:00:10
+2008-04-07.03:00:13 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T22</A>:08:24
+2008-04-07.04:13:16 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T04</A>:13:15
+2008-04-07.04:13:18 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-06T23</A>:21:17
+2008-04-07.05:26:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T05</A>:26:18
+2008-04-07.05:26:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T00</A>:34:28
+2008-04-07.06:39:21 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T06</A>:39:20
+2008-04-07.06:39:23 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T01</A>:47:29
+2008-04-07.07:52:27 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T07</A>:52:26
+2008-04-07.07:52:29 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T03</A>:00:10
+2008-04-07.09:05:23 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T09</A>:05:22
+2008-04-07.09:05:25 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T04</A>:13:15
+2008-04-07.10:19:14 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T10</A>:19:13
+2008-04-07.10:19:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T05</A>:26:18
+2008-04-07.11:34:35 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T11</A>:34:34
+2008-04-07.11:34:37 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T06</A>:39:20
+2008-04-07.12:47:30 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T12</A>:47:29
+2008-04-07.12:47:32 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T07</A>:52:26
+2008-04-07.14:01:31 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T14</A>:01:30
+2008-04-07.14:01:33 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T09</A>:05:22
+2008-04-07.15:12:32 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T15</A>:12:31
+2008-04-07.15:12:34 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T10</A>:19:13
+2008-04-07.16:24:15 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T16</A>:24:14
+2008-04-07.16:24:17 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T11</A>:34:34
+2008-04-07.17:37:34 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T17</A>:37:33
+2008-04-07.17:37:37 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T12</A>:47:29
+2008-04-07.18:50:04 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T18</A>:50:03
+2008-04-07.18:50:07 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T14</A>:01:30
+2008-04-07.20:02:29 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T20</A>:02:28
+2008-04-07.20:02:31 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T15</A>:12:31
+2008-04-07.21:15:31 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T21</A>:15:30
+2008-04-07.21:15:33 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T16</A>:24:14
+2008-04-07.22:28:30 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T22</A>:28:29
+2008-04-07.22:28:33 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T17</A>:37:33
+2008-04-07.23:41:26 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T23</A>:41:24
+2008-04-07.23:41:27 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T18</A>:50:03
+2008-04-08.00:54:11 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T00</A>:54:10
+2008-04-08.00:54:13 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T20</A>:02:28
+2008-04-08.02:07:25 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T02</A>:07:23
+2008-04-08.02:07:26 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T21</A>:15:30
+2008-04-08.03:20:18 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T03</A>:20:17
+2008-04-08.03:20:20 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T22</A>:28:29
+2008-04-08.04:33:36 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T04</A>:33:34
+2008-04-08.04:33:38 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-07T23</A>:41:24
+2008-04-08.05:46:26 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T05</A>:46:25
+2008-04-08.05:46:28 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T00</A>:54:10
+2008-04-08.06:59:18 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T06</A>:59:17
+2008-04-08.06:59:19 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T02</A>:07:23
+2008-04-08.08:12:34 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T08</A>:12:33
+2008-04-08.08:12:36 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T03</A>:20:17
+2008-04-08.09:25:28 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T09</A>:25:26
+2008-04-08.09:25:29 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T04</A>:33:34
+2008-04-08.10:38:45 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T10</A>:38:44
+2008-04-08.10:38:46 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T05</A>:46:25
+2008-04-08.11:51:34 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T11</A>:51:33
+2008-04-08.11:51:36 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T06</A>:59:17
+2008-04-08.13:04:24 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T13</A>:04:23
+2008-04-08.13:04:26 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T08</A>:12:33
+2008-04-08.14:17:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T14</A>:17:18
+2008-04-08.14:17:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T09</A>:25:26
+2008-04-08.15:30:38 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T15</A>:30:36
+2008-04-08.15:30:39 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T10</A>:38:44
+2008-04-08.16:46:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T16</A>:46:11
+2008-04-08.16:46:14 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T11</A>:51:33
+2008-04-08.18:02:07 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T18</A>:02:06
+2008-04-08.18:02:09 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T13</A>:04:23
+2008-04-08.19:10:33 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T19</A>:10:32
+2008-04-08.19:10:35 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T14</A>:17:18
+2008-04-09.10:30:15 zpool import -f 17751373224295458742
+2008-04-09.11:38:09 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T11</A>:38:08
+2008-04-09.11:38:12 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T15</A>:30:36
+2008-04-09.11:52:16 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T11</A>:52:15
+2008-04-09.11:52:19 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T16</A>:46:11
+2008-04-09.13:04:09 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T13</A>:04:07
+2008-04-09.13:04:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T18</A>:02:06
+2008-04-09.14:14:58 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T14</A>:14:56
+2008-04-09.14:15:00 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-08T19</A>:10:32
+2008-04-09.15:28:06 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T15</A>:28:05
+2008-04-09.15:28:09 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T11</A>:38:08
+2008-04-09.16:43:17 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T16</A>:43:16
+2008-04-09.16:43:21 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T11</A>:52:15
+2008-04-09.17:54:09 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T17</A>:54:08
+2008-04-09.17:54:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T13</A>:04:07
+2008-04-09.19:06:55 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T19</A>:06:53
+2008-04-09.19:06:57 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T14</A>:14:56
+2008-04-09.20:19:55 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T20</A>:19:54
+2008-04-09.20:19:58 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T15</A>:28:05
+2008-04-09.21:32:55 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T21</A>:32:54
+2008-04-09.21:32:57 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T16</A>:43:16
+2008-04-09.22:46:01 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T22</A>:46:00
+2008-04-09.22:46:03 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T17</A>:54:08
+2008-04-09.23:59:00 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T23</A>:58:58
+2008-04-09.23:59:02 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T19</A>:06:53
+2008-04-10.01:11:51 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T01</A>:11:50
+2008-04-10.01:11:54 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T20</A>:19:54
+2008-04-10.02:24:39 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T02</A>:24:38
+2008-04-10.02:24:42 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T21</A>:32:54
+2008-04-10.03:37:55 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T03</A>:37:54
+2008-04-10.03:37:57 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T22</A>:46:00
+2008-04-10.04:50:54 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T04</A>:50:52
+2008-04-10.04:50:56 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-09T23</A>:58:58
+2008-04-10.06:03:47 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T06</A>:03:45
+2008-04-10.06:03:48 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T01</A>:11:50
+2008-04-10.07:16:52 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T07</A>:16:51
+2008-04-10.07:16:55 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T02</A>:24:38
+2008-04-10.08:29:58 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T08</A>:29:56
+2008-04-10.08:30:00 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T03</A>:37:54
+2008-04-10.09:42:51 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T09</A>:42:50
+2008-04-10.09:42:53 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T04</A>:50:52
+2008-04-10.10:55:49 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T10</A>:55:48
+2008-04-10.10:55:51 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T06</A>:03:45
+2008-04-10.12:08:56 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T12</A>:08:55
+2008-04-10.12:08:58 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T07</A>:16:51
+2008-04-10.13:21:50 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T13</A>:21:49
+2008-04-10.13:21:53 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T08</A>:29:56
+2008-04-10.14:32:20 zpool import -f 17751373224295458742
+2008-04-10.15:42:18 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T15</A>:42:18
+2008-04-10.15:52:25 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T15</A>:52:23
+2008-04-10.16:21:43 zfs create pool/bwaters
+2008-04-11.14:16:11 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-04-11T14</A>:16:10
+2008-04-11.20:01:59 zpool import -f 17751373224295458742
+2008-04-11.20:03:20 zpool import -f 17751373224295458742
+2008-04-11.20:09:18 zpool import -f 17751373224295458742
+2008-04-14.12:52:23 zfs clone pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at opt</A> pool/backup/galatea_opt
+2008-04-16.12:56:15 zpool import -f 17751373224295458742
+2008-04-16.12:59:00 zpool export pool
+2008-04-16.13:01:06 zpool import -f 17751373224295458742
+2008-04-16.13:37:01 zpool import -f 17751373224295458742
+2008-04-16.15:18:26 zpool import -f 17751373224295458742
+2008-04-17.11:17:51 zfs create pool/vm
+2008-04-17.11:18:04 zfs create pool/vm/nrao-rhel4
+2008-04-17.11:51:13 zfs create pool/vm/rhel5
+2008-04-17.12:31:06 zfs create pool/vm/solaris
+2008-04-17.12:32:12 zfs create pool/vm/nexenta
+2008-04-17.13:25:54 zfs snapshot pool/vm/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">rhel5 at 2008-04-17T13</A>:25:54
+2008-04-20.14:20:44 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-04-20T14</A>:20:43
+2008-04-20.14:22:25 zfs create pool/vm/windowsXP
+2008-04-22.10:56:57 zpool import -f 17751373224295458742
+2008-04-24.16:50:02 zpool import -f 17751373224295458742
+2008-04-24.17:06:52 zpool import -f 17751373224295458742
+2008-04-24.19:19:56 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-04-24T19</A>:19:55
+2008-04-25.10:14:58 zpool import -f 17751373224295458742
+2008-05-08.18:53:57 zfs create pool/pictures
+2008-05-08.18:54:01 zfs create pool/pictures/staging
+2008-05-09.13:57:22 zfs create pool/backup/mochi
+2008-05-09.15:53:01 zpool import -f 17751373224295458742
+2008-05-14.13:52:41 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-05-14T13</A>:52:41
+2008-05-14.15:07:53 zpool import -f 17751373224295458742
+2008-05-14.16:18:09 zfs create pool/vm/kubuntu
+2008-05-14.16:18:36 zfs create pool/vm/fedora
+2008-05-15.14:14:59 zpool import -f 17751373224295458742
+2008-05-15.16:08:59 zpool import -f 17751373224295458742
+2008-05-23.09:00:24 zpool import -f 17751373224295458742
+2008-05-23.09:10:25 zfs create pool/backup/cameron
+2008-05-23.10:09:47 zfs create pool/backup/ibook_10_3_9
+2008-05-29.16:47:59 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-05-29T16</A>:47:59
+2008-05-29.17:03:20 zpool import -f 17751373224295458742
+2008-05-29.17:23:27 zpool import -f 17751373224295458742
+2008-06-04.14:22:35 zfs create pool/backup/eurythion
+2008-06-04.14:22:55 zfs create pool/backup/eurythion/opt
+2008-06-04.14:23:09 zfs create pool/backup/galatea/opt
+2008-06-04.15:08:31 zfs destroy pool/backup/galatea_opt
+2008-06-04.15:28:10 zfs clone pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at opt</A> pool/backup/galatea_opt
+2008-06-04.15:28:53 zfs destroy pool/backup/galatea_opt
+2008-06-04.15:29:10 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at opt</A>
+2008-06-04.15:32:50 zfs snapshot pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-03-31T16</A>:50:00
+2008-06-04.16:11:56 zfs snapshot pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-04-04T15</A>:53:20
+2008-06-04.16:38:53 zfs clone pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T15</A>:52:23
+pool/backup/galatea_2008-04-10T15:52:23
+2008-06-04.17:00:14 zfs snapshot pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-04-10T15</A>:52:23
+2008-06-04.17:13:27 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T09</A>:42:50
+2008-06-04.17:13:40 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T10</A>:55:48
+2008-06-04.17:14:46 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T12</A>:08:55
+2008-06-04.17:16:33 zfs destroy -R pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-04T15</A>:53:20
+2008-06-04.17:16:56 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T13</A>:21:49
+2008-06-04.17:17:38 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-04-10T15</A>:42:18
+2008-06-10.14:39:00 zpool import -f 17751373224295458742
+2008-06-10.14:56:17 zpool import -f 17751373224295458742
+2008-06-10.15:02:35 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-10T15</A>:02:33
+2008-06-10.15:04:42 zpool import -f 17751373224295458742
+2008-06-10.15:08:06 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-10T15</A>:08:05
+2008-06-10.16:10:46 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-10T16</A>:10:45
+2008-06-11.16:03:39 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-11T16</A>:03:38
+2008-06-12.17:11:02 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-12T17</A>:11:00
+2008-06-13.16:22:31 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-06-13T16</A>:22:27
+2008-06-13.16:37:54 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-13T16</A>:37:52
+2008-06-14.16:14:02 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-14T16</A>:14:00
+2008-06-15.16:13:17 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-15T16</A>:13:15
+2008-06-15.16:13:20 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-10T15</A>:02:33
+2008-06-16.11:55:34 zpool import -f 17751373224295458742
+2008-06-16.14:13:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-16T14</A>:13:19
+2008-06-16.14:13:25 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-10T15</A>:08:05
+2008-06-17.16:03:26 zpool import -f 17751373224295458742
+2008-06-18.16:31:45 zpool import -f 17751373224295458742
+2008-06-19.16:16:36 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-19T16</A>:16:34
+2008-06-19.16:16:42 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-10T16</A>:10:45
+2008-06-20.16:16:24 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-20T16</A>:16:23
+2008-06-20.16:16:43 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-11T16</A>:03:38
+2008-06-21.16:16:07 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-21T16</A>:16:06
+2008-06-23.11:39:53 zpool import -f 17751373224295458742
+2008-06-23.16:16:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-23T16</A>:16:19
+2008-06-23.16:16:22 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-13T16</A>:37:52
+2008-06-24.16:35:45 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-24T16</A>:35:44
+2008-06-24.16:35:48 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-14T16</A>:14:00
+2008-06-24.16:58:08 zfs snapshot pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-06-24T16</A>:58:07
+2008-06-25.16:16:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-25T16</A>:16:11
+2008-06-25.16:16:15 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-15T16</A>:13:15
+2008-06-26.16:12:37 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-26T16</A>:12:36
+2008-06-26.16:12:41 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-16T14</A>:13:19
+2008-06-27.16:11:47 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-06-27T16</A>:11:45
+2008-06-27.16:20:32 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-27T16</A>:20:31
+2008-06-27.16:20:34 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-19T16</A>:16:34
+2008-06-28.16:21:50 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-28T16</A>:21:50
+2008-06-28.16:21:53 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-20T16</A>:16:23
+2008-06-29.16:13:46 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-29T16</A>:13:45
+2008-06-29.16:13:49 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-21T16</A>:16:06
+2008-06-30.16:26:36 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-30T16</A>:26:36
+2008-06-30.16:26:39 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-23T16</A>:16:19
+2008-07-01.16:17:28 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-01T16</A>:17:28
+2008-07-01.16:17:31 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-24T16</A>:35:44
+2008-07-02.16:14:31 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-02T16</A>:14:30
+2008-07-02.16:14:34 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-25T16</A>:16:11
+2008-07-03.16:14:30 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-03T16</A>:14:29
+2008-07-03.16:14:33 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-26T16</A>:12:36
+2008-07-04.16:21:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-04T16</A>:21:11
+2008-07-04.16:21:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-27T16</A>:20:31
+2008-07-05.16:14:16 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-05T16</A>:14:15
+2008-07-05.16:14:20 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-28T16</A>:21:50
+2008-07-06.16:13:55 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-06T16</A>:13:54
+2008-07-06.16:13:57 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-29T16</A>:13:45
+2008-07-07.16:09:04 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-07T16</A>:09:04
+2008-07-07.16:09:07 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-06-30T16</A>:26:36
+2008-07-07.18:42:50 zfs clone pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-06-27T16</A>:11:45
+pool/bwaters_lastsnap
+2008-07-07.18:43:08 zfs destroy pool/bwaters_lastsnap
+2008-07-07.18:43:31 zfs clone pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-06-27T16</A>:11:45
+pool/bwaters_lastsnap
+2008-07-07.18:54:04 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-07-07T18</A>:54:03
+2008-07-07.18:54:23 zfs destroy pool/bwaters_lastsnap
+2008-07-08.16:09:00 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-08T16</A>:08:59
+2008-07-08.16:09:02 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-01T16</A>:17:28
+2008-07-09.16:15:52 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-09T16</A>:15:50
+2008-07-09.16:15:55 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-02T16</A>:14:30
+2008-07-10.16:14:53 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-10T16</A>:14:52
+2008-07-10.16:14:57 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-03T16</A>:14:29
+2008-07-11.16:15:34 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-11T16</A>:15:33
+2008-07-11.16:15:37 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-04T16</A>:21:11
+2008-07-12.16:14:24 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-12T16</A>:14:23
+2008-07-12.16:14:26 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-05T16</A>:14:15
+2008-07-13.16:14:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-13T16</A>:14:19
+2008-07-13.16:14:23 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-06T16</A>:13:54
+2008-07-14.16:14:40 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-14T16</A>:14:39
+2008-07-14.16:14:43 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-07T16</A>:09:04
+2008-07-15.16:14:29 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-15T16</A>:14:28
+2008-07-15.16:14:32 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-08T16</A>:08:59
+2008-07-16.16:14:52 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-16T16</A>:14:51
+2008-07-16.16:14:55 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-09T16</A>:15:50
+2008-07-17.16:14:30 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-17T16</A>:14:29
+2008-07-17.16:14:33 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-10T16</A>:14:52
+2008-07-17.17:25:14 zpool import -f 17751373224295458742
+2008-07-17.19:43:07 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-17T19</A>:43:07
+2008-07-17.19:43:10 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-11T16</A>:15:33
+2008-07-18.16:17:25 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-18T16</A>:17:24
+2008-07-18.16:17:28 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-12T16</A>:14:23
+2008-07-19.16:14:10 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-19T16</A>:14:09
+2008-07-19.16:14:13 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-13T16</A>:14:19
+2008-07-20.16:14:15 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-20T16</A>:14:14
+2008-07-20.16:14:17 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-14T16</A>:14:39
+2008-07-21.16:14:44 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-21T16</A>:14:43
+2008-07-21.16:14:47 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-15T16</A>:14:28
+2008-07-22.16:14:18 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-22T16</A>:14:16
+2008-07-22.16:14:20 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-16T16</A>:14:51
+2008-07-23.16:13:38 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-23T16</A>:13:37
+2008-07-23.16:13:41 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-17T16</A>:14:29
+2008-07-24.16:14:41 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-24T16</A>:14:41
+2008-07-24.16:14:45 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-17T19</A>:43:07
+2008-07-25.16:13:58 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-25T16</A>:13:55
+2008-07-25.16:14:03 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-18T16</A>:17:24
+2008-07-26.16:14:01 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-26T16</A>:14:00
+2008-07-26.16:14:05 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-19T16</A>:14:09
+2008-07-27.16:13:43 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-27T16</A>:13:42
+2008-07-27.16:13:48 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-20T16</A>:14:14
+2008-07-28.16:13:43 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-28T16</A>:13:42
+2008-07-28.16:13:46 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-21T16</A>:14:43
+2008-07-29.16:13:49 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-29T16</A>:13:48
+2008-07-29.16:13:52 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-22T16</A>:14:16
+2008-07-29.17:13:17 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-07-29T17</A>:13:16
+2008-07-30.16:15:22 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-30T16</A>:15:21
+2008-07-30.16:15:24 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-23T16</A>:13:37
+2008-07-31.16:14:29 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-31T16</A>:14:28
+2008-07-31.16:14:32 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-24T16</A>:14:41
+2008-08-01.16:14:29 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-01T16</A>:14:28
+2008-08-01.16:14:31 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-25T16</A>:13:55
+2008-08-02.16:14:19 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-02T16</A>:14:18
+2008-08-02.16:14:22 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-26T16</A>:14:00
+2008-08-03.16:14:33 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-03T16</A>:14:32
+2008-08-03.16:14:36 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-27T16</A>:13:42
+2008-08-04.16:14:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-04T16</A>:14:19
+2008-08-04.16:14:23 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-28T16</A>:13:42
+2008-08-05.16:14:22 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-05T16</A>:14:21
+2008-08-05.16:14:25 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-29T16</A>:13:48
+2008-08-06.16:14:36 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-06T16</A>:14:35
+2008-08-06.16:14:40 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-30T16</A>:15:21
+2008-08-07.16:14:37 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-07T16</A>:14:36
+2008-08-07.16:14:40 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-07-31T16</A>:14:28
+2008-08-08.16:14:21 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-08T16</A>:14:21
+2008-08-08.16:14:24 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-01T16</A>:14:28
+2008-08-09.16:14:11 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-09T16</A>:14:10
+2008-08-09.16:14:16 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-02T16</A>:14:18
+2008-08-12.14:22:50 zpool import -f 17751373224295458742
+2008-08-12.15:00:43 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-12T15</A>:00:42
+2008-08-12.15:00:46 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-03T16</A>:14:32
+2008-08-12.16:23:56 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-12T16</A>:23:55
+2008-08-12.16:23:59 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-04T16</A>:14:19
+2008-08-13.16:08:27 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-13T16</A>:08:25
+2008-08-13.16:08:30 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-05T16</A>:14:21
+2008-08-14.16:08:23 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-14T16</A>:08:23
+2008-08-14.16:08:26 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-06T16</A>:14:35
+2008-08-15.16:08:43 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-15T16</A>:08:42
+2008-08-15.16:08:46 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-07T16</A>:14:36
+2008-08-16.16:08:35 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-16T16</A>:08:35
+2008-08-16.16:08:38 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-08T16</A>:14:21
+2008-08-17.16:08:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-17T16</A>:08:19
+2008-08-17.16:08:23 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-09T16</A>:14:10
+2008-08-18.16:08:39 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-18T16</A>:08:38
+2008-08-18.16:08:43 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-12T15</A>:00:42
+2008-08-19.16:08:42 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-19T16</A>:08:40
+2008-08-19.16:08:45 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-12T16</A>:23:55
+2008-08-20.16:08:49 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-20T16</A>:08:48
+2008-08-20.16:08:51 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-13T16</A>:08:25
+2008-08-21.16:08:40 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-21T16</A>:08:39
+2008-08-21.16:08:42 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-14T16</A>:08:23
+2008-08-22.16:08:45 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-22T16</A>:08:44
+2008-08-22.16:08:48 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-15T16</A>:08:42
+2008-08-22.18:31:47 zfs clone pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-16T16</A>:08:35
+pool/backup/galatea_2008-08-16T16:08:35
+2008-08-22.18:32:06 zfs destroy pool/backup/galatea_2008-08-16T16:08:35
+2008-08-22.18:33:11 zfs clone
+pool/backup/galatea/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">opt at 2008-06-24T16</A>:58:07
+pool/backup/galatea-opt_2008-06-24T16:58:07
+2008-09-21.20:04:58 zpool import -f 17751373224295458742
+2008-09-22.07:24:43 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-09-22T07</A>:24:43
+2008-09-22.07:31:06 zpool import -f 17751373224295458742
+2008-09-22.07:47:14 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-22T07</A>:47:13
+2008-09-22.07:47:17 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-16T16</A>:08:35
+2008-09-22.13:11:20 zpool import -f 17751373224295458742
+2008-09-22.16:14:03 zpool import -f 17751373224295458742
+2008-09-22.16:34:16 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-22T16</A>:34:15
+2008-09-22.16:34:20 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-17T16</A>:08:19
+2008-09-22.16:50:34 zpool import -f 17751373224295458742
+2008-09-22.17:01:41 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-22T17</A>:01:40
+2008-09-22.17:01:43 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-18T16</A>:08:38
+2008-09-22.18:30:17 zpool import -f 17751373224295458742
+2008-09-23.16:13:40 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-23T16</A>:13:38
+2008-09-23.16:13:42 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-19T16</A>:08:40
+2008-09-24.16:10:32 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-24T16</A>:10:30
+2008-09-24.16:10:34 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-20T16</A>:08:48
+2008-09-25.16:09:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-25T16</A>:09:11
+2008-09-25.16:09:15 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-21T16</A>:08:39
+2008-09-26.16:11:12 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-26T16</A>:11:03
+2008-09-26.16:11:14 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-08-22T16</A>:08:44
+2008-09-27.16:10:58 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-27T16</A>:10:57
+2008-09-27.16:11:01 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-22T07</A>:47:13
+2008-09-28.16:09:45 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-28T16</A>:09:44
+2008-09-28.16:09:48 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-22T16</A>:34:15
+2008-09-29.16:10:35 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-29T16</A>:10:33
+2008-09-29.16:10:39 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-22T17</A>:01:40
+2008-09-30.16:10:07 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-30T16</A>:10:06
+2008-09-30.16:10:10 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-23T16</A>:13:38
+2008-10-01.12:24:10 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-10-01T12</A>:24:09
+2008-10-06.19:57:31 zpool import -f 17751373224295458742
+2008-10-10.14:24:42 zpool import -f 17751373224295458742
+2008-10-10.14:42:03 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-10T14</A>:42:02
+2008-10-10.14:42:06 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-24T16</A>:10:30
+2008-10-10.15:06:38 zpool import -f 17751373224295458742
+2008-10-10.15:17:08 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-10T15</A>:17:07
+2008-10-10.15:17:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-25T16</A>:09:11
+2008-10-10.16:12:20 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-10T16</A>:12:19
+2008-10-10.16:12:23 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-26T16</A>:11:03
+2008-10-11.16:10:17 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-11T16</A>:10:15
+2008-10-11.16:10:20 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-27T16</A>:10:57
+2008-10-12.16:10:02 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-12T16</A>:10:01
+2008-10-12.16:10:05 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-28T16</A>:09:44
+2008-10-13.15:29:19 zpool import -f 17751373224295458742
+2008-10-13.15:38:36 zpool import -f 17751373224295458742
+2008-10-13.16:09:44 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-13T16</A>:09:43
+2008-10-13.16:09:47 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-29T16</A>:10:33
+2008-10-14.16:13:22 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-14T16</A>:13:22
+2008-10-14.16:13:25 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-09-30T16</A>:10:06
+2008-10-15.16:10:30 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-15T16</A>:10:29
+2008-10-15.16:10:32 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-10T14</A>:42:02
+2008-10-16.16:10:28 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-16T16</A>:10:28
+2008-10-16.16:10:32 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-10T15</A>:17:07
+2008-10-17.16:10:43 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-17T16</A>:10:43
+2008-10-17.16:10:46 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-10T16</A>:12:19
+2008-10-26.13:13:10 zpool import -f 17751373224295458742
+2008-10-26.16:12:48 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-26T16</A>:12:47
+2008-10-26.16:12:51 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-11T16</A>:10:15
+2008-10-26.20:07:45 zfs create pool/backup/eurythion-tiger
+2008-10-26.20:55:32 zpool import -f 17751373224295458742
+2008-10-26.21:15:33 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-26T21</A>:15:32
+2008-10-26.21:15:39 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-12T16</A>:10:01
+2008-10-27.16:10:51 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-27T16</A>:10:50
+2008-10-27.16:10:55 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-13T16</A>:09:43
+2008-10-27.20:03:06 zfs snapshot pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-27T20</A>:03:05
+2008-10-27.20:03:11 zfs destroy pool/backup/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">galatea at 2008-10-14T16</A>:13:22
+2008-10-27.22:05:03 zpool import -f 17751373224295458742
+2008-10-27.22:19:24 zpool import -f 17751373224295458742
+2008-10-28.10:32:20 zpool import -f 17751373224295458742
+2008-10-28.13:12:49 zpool import -f 17751373224295458742
+2008-10-28.17:14:55 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-10-28T17</A>:14:54
+2008-10-28.18:44:07 zpool import -f 17751373224295458742
+2008-10-29.13:26:15 zpool import -f 17751373224295458742
+2008-10-29.13:33:53 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-10-29T13</A>:33:52
+2008-10-31.12:27:10 zpool import -f 17751373224295458742
+2008-10-31.14:25:52 zpool import -f 17751373224295458742
+2008-11-01.14:04:45 zpool import -f 17751373224295458742
+2008-11-01.14:48:27 zpool import -f 17751373224295458742
+2008-11-01.15:11:46 zpool import -f 17751373224295458742
+2008-11-02.15:17:58 zpool import -f 17751373224295458742
+2008-11-02.15:55:59 zpool import -f 17751373224295458742
+2008-11-02.16:04:35 zpool import -f 17751373224295458742
+2008-11-02.16:13:20 zpool import -f 17751373224295458742
+2008-11-02.16:22:00 zpool import -f 17751373224295458742
+2008-11-02.23:03:58 zpool import -f 17751373224295458742
+2008-11-03.14:07:54 zpool import -f 17751373224295458742
+2008-11-03.15:06:35 zpool import -f 17751373224295458742
+2008-11-03.17:16:04 zpool import -f 17751373224295458742
+2008-11-03.17:30:18 zpool import -f 17751373224295458742
+2008-11-04.13:28:04 zpool import -f 17751373224295458742
+2008-11-04.15:54:47 zfs create pool/backup/vmware-winxp
+2008-11-05.10:29:45 zfs create pool/casa
+2008-11-05.12:40:55 zfs create pool/casa/data
+2008-11-12.15:01:07 zfs create pool/vm/gentoo
+2008-11-15.19:54:13 zfs create pool/backup/sedna
+2008-11-17.12:32:46 zfs snapshot pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">casa at 2008-11-17T12</A>:32:46
+2008-11-17.12:35:14 zfs snapshot pool/casa/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">data at 2008-11-17T12</A>:35:13
+2008-11-21.16:59:51 zpool import -f 17751373224295458742
+2008-11-21.17:03:27 zpool import -f 17751373224295458742
+2008-11-25.19:07:11 zpool import -f 17751373224295458742
+2008-11-30.14:38:02 zfs destroy pool/vm/gentoo
+2008-12-02.13:03:28 zfs destroy pool/vm/fedora
+2008-12-02.13:03:42 zfs destroy pool/vm/kubuntu
+2008-12-02.16:31:14 zpool import -f 17751373224295458742
+2008-12-02.16:49:39 zpool import -f 17751373224295458742
+2008-12-02.16:55:54 zpool export -f pool
+2008-12-02.16:57:37 zpool import pool
+2008-12-02.16:58:25 zpool scrub pool
+2008-12-15.19:35:03 zpool import -f 17751373224295458742
+2008-12-20.17:45:08 zpool export pool
+2008-12-20.17:45:40 zpool import pool
+2008-12-20.17:52:20 zpool clear pool
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001207.html">[zfs-discuss] snapshots
+</A></li>
+	<LI>Next message: <A HREF="001242.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1237">[ date ]</a>
+              <a href="thread.html#1237">[ thread ]</a>
+              <a href="subject.html#1237">[ subject ]</a>
+              <a href="author.html#1237">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zpool status -v freezes system
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zpool%20status%20-v%20freezes%20system&In-Reply-To=%3Cfbaadd320812182230y4f248ae5nc22a2d5c8fc5e7e0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001176.html">
+   <LINK REL="Next"  HREF="001178.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zpool status -v freezes system</H1>
+    <B>Mr. Zorg ...</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zpool%20status%20-v%20freezes%20system&In-Reply-To=%3Cfbaadd320812182230y4f248ae5nc22a2d5c8fc5e7e0%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] zpool status -v freezes system">zorg at sogeeky.net
+       </A><BR>
+    <I>Thu Dec 18 22:30:50 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001176.html">[zfs-discuss] zpool status -v freezes system
+</A></li>
+        <LI>Next message: <A HREF="001178.html">[zfs-discuss] zpool status -v freezes system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1177">[ date ]</a>
+              <a href="thread.html#1177">[ thread ]</a>
+              <a href="subject.html#1177">[ subject ]</a>
+              <a href="author.html#1177">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK, so this is interesting.  After completing the resilver, I then ran
+a scrub.  Here's the zpool status just before the scrub finished, and
+just afterwards.  Note that after the scrub it is no longer reporting
+data errors.  Does that mean there is no corruption after all?  I
+hadn't gotten around to trying an opensolaris distro yet to run zpool
+status -v, but now it looks like I don't need to?
+
+$ zpool status
+  pool: Storage
+ state: ONLINE
+status: One or more devices has experienced an error resulting in data
+	corruption.  Applications may be affected.
+action: Restore the file in question if possible.  Otherwise restore the
+	entire pool from backup.
+   see: <A HREF="http://www.sun.com/msg/ZFS-8000-8A">http://www.sun.com/msg/ZFS-8000-8A</A>
+ scrub: scrub in progress, 96.93% done, 0h13m to go
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	Storage      ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk8s2  ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	spares
+	  disk6s2    AVAIL
+
+errors: 163 data errors, use '-v' for a list
+
+$ zpool status
+  pool: Storage
+ state: ONLINE
+ scrub: scrub completed with 0 errors on Thu Dec 18 21:43:58 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	Storage      ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk8s2  ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	spares
+	  disk6s2    AVAIL
+
+errors: No known data errors
+
+
+On Thu, Dec 18, 2008 at 9:22 PM, Boyd Waters &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at nrao.edu</A>&gt; wrote:
+&gt;<i> If you're going to use Nexenta, be aware that the userspace tools are GNU
+</I>&gt;<i> (not BSD). In particular, the 'ls' command doesn't recognize the '-@' option
+</I>&gt;<i> to display extended attributes.
+</I>&gt;<i>
+</I>&gt;<i> OpenSolaris has gotten pretty nice these days. (it's still not close to Mac
+</I>&gt;<i> OSX for desktop use.)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Dec 18, 2008, at 4:58 PM, Dustin Webb wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> If using another OS is the only way then I would checkout Nexenta
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001176.html">[zfs-discuss] zpool status -v freezes system
+</A></li>
+	<LI>Next message: <A HREF="001178.html">[zfs-discuss] zpool status -v freezes system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1177">[ date ]</a>
+              <a href="thread.html#1177">[ thread ]</a>
+              <a href="subject.html#1177">[ subject ]</a>
+              <a href="author.html#1177">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

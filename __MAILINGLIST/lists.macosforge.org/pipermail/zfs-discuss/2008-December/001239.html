@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Mirror of a Stripe or raidz?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Mirror%20of%20a%20Stripe%20or%20raidz%3F&In-Reply-To=%3C636fd28e0812290211m7fa3a9fam1169201f5cc8ae54%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001241.html">
+   <LINK REL="Next"  HREF="001243.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Mirror of a Stripe or raidz?</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Mirror%20of%20a%20Stripe%20or%20raidz%3F&In-Reply-To=%3C636fd28e0812290211m7fa3a9fam1169201f5cc8ae54%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Mirror of a Stripe or raidz?">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Mon Dec 29 02:11:34 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001241.html">[zfs-discuss] Kernel Panic
+</A></li>
+        <LI>Next message: <A HREF="001243.html">[zfs-discuss] Permissions are not enabled on the disk (-9973)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1239">[ date ]</a>
+              <a href="thread.html#1239">[ thread ]</a>
+              <a href="subject.html#1239">[ subject ]</a>
+              <a href="author.html#1239">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Dec 1, 2008 at 12:08 AM, Aaron &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ax2ron at mac.com</A>&gt; wrote:
+&gt;<i> Since snapshots aren't fully baked in OS X yet
+</I>
+Really? Why do you think that? I've got over 1000 snapshots on my ZFS
+filesystems on one pool. True, the .zfs autodir doesn't work, and the
+send/recv you can't pipe directly, but those don't impact the utility
+of snapshots.
+
+&gt;<i> I would like to pickup a 1TB drive and increase my storage space and
+</I>&gt;<i> redundancy by:
+</I>&gt;<i> a. converting the raidz pool to a striped pool and mirror it onto the 1TB
+</I>&gt;<i> drive (3x320 stripe + 1TB mirror of the stripe)
+</I>
+Not sure what you mean here; a raidz pool is already striped. Do you
+mean just lose the redundancy data? Is this for speed?
+
+&gt;<i> b. Keep the raidz pool as is and do replication of that pool onto the 1TB
+</I>&gt;<i> drive as a separate 1 drive zfs &quot;pool&quot;
+</I>
+I'd be tempted to use the 1TB drive as a pair of drives (most of the
+enclosures are in fact 2x500G drives) and then address them
+independently as ZFS mirrors. That way, you'd get reliability and
+access the spools independently (though the transfer rate is probably
+the limiting feature here, rather than the speed). If you want to
+increase speed, get two of them and mirror complementary disks.
+
+I wrote up about the Iomega Ultramax, which I'm using as  an external
+FW HD pair:
+
+<A HREF="http://alblue.blogspot.com/2008/04/review-iomega-ultramax-and-hfz-vs-zfs.html">http://alblue.blogspot.com/2008/04/review-iomega-ultramax-and-hfz-vs-zfs.html</A>
+
+In fact, these drives have a small partition at the front of the drive
+for HFS+ (for the OS) and the rest is ZFS, so I'd be tempted to throw
+all the drives at ZFS or ZFS partitions.
+
+Alex
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001241.html">[zfs-discuss] Kernel Panic
+</A></li>
+	<LI>Next message: <A HREF="001243.html">[zfs-discuss] Permissions are not enabled on the disk (-9973)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1239">[ date ]</a>
+              <a href="thread.html#1239">[ thread ]</a>
+              <a href="subject.html#1239">[ subject ]</a>
+              <a href="author.html#1239">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

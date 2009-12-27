@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Now zpool status is giving me a kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181325h5a2388a0mfd1b218c8530dbab%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000997.html">
+   <LINK REL="Next"  HREF="001000.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Now zpool status is giving me a kernel panic</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Now%20zpool%20status%20is%20giving%20me%20a%20kernel%20panic&In-Reply-To=%3C762437f0810181325h5a2388a0mfd1b218c8530dbab%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Now zpool status is giving me a kernel panic">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Sat Oct 18 13:25:13 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000997.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+        <LI>Next message: <A HREF="001000.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#999">[ date ]</a>
+              <a href="thread.html#999">[ thread ]</a>
+              <a href="subject.html#999">[ subject ]</a>
+              <a href="author.html#999">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If the problem is with the raidz, is there any way of telling ZFS not to
+look for it and just make do with the mirror? The data I have all fits in
+the mirror and I haven't (yet) written anything into the disks since adding
+the raidz, so I imagine it's possible that the data is still just in the
+mirror and the raidz is still empty. One can hope. The problem right now is
+that if I do an import without connecting the raidz drives it (obviously)
+fails because the raidz isn't present.
+
+AARRRGGGHHHH!!!!
+
+On Sat, Oct 18, 2008 at 10:17 PM, Riscky Abacus &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">riscky at gmail.com</A>&gt; wrote:
+
+&gt;<i> I don't have any knowledge as to why this happens but I've found any
+</I>&gt;<i> raidz i've created where the drives all sit on the same USB hub
+</I>&gt;<i> consistently crash when running `zpool status -v`. I have a few ideas
+</I>&gt;<i> why that might be but nothing solid. I have a feeling this my be to
+</I>&gt;<i> due to the fact disk3s* numbers my be a different physical volume on
+</I>&gt;<i> subsequent reboots.
+</I>&gt;<i>
+</I>&gt;<i> Just take this little test case into account... remove all zfs
+</I>&gt;<i> volumes... reboot. Now find to flash drives or anyhting out you could
+</I>&gt;<i> use for this test.... put them on the same usb hub and turn them into
+</I>&gt;<i> a raidz.... now run `zpool status -v` no crash... reboot and run
+</I>&gt;<i> `zpool status -v` crash.
+</I>&gt;<i>
+</I>&gt;<i> I've also noticed that configuration also causes issues shutting down my
+</I>&gt;<i> system.
+</I>&gt;<i>
+</I>&gt;<i> This is all based on my tinkering with free time... and I haven't
+</I>&gt;<i> devoted much time to figuring out the root cause... I just don't think
+</I>&gt;<i> the file system plays well with usb, and has issues with hubs... after
+</I>&gt;<i> all zfs wasn't exactly designed for desktops but servers IMHO.
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Oct 18, 2008 at 4:04 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks for replying.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; All of my drives (5 of them) are on a USB hub. Since the Mac Mini has
+</I>&gt;<i> only 4
+</I>&gt;<i> &gt; USB ports (and one of them is taken up by the keyboard/mouse) I really
+</I>&gt;<i> have
+</I>&gt;<i> &gt; no other option. Why? Could moving some of them off of the hub (or
+</I>&gt;<i> changing
+</I>&gt;<i> &gt; hubs) help?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Sat, Oct 18, 2008 at 10:00 PM, Riscky Abacus &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">riscky at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Mario,
+</I>&gt;<i> &gt;&gt; Just based on my experience here... are any of your drives in your
+</I>&gt;<i> &gt;&gt; raidz USB devices? or on a USB hub?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Sat, Oct 18, 2008 at 2:29 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt; &gt; Another data point.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; I booted in single user mode, did the fsck and &quot;mount -uw /&quot; and then
+</I>&gt;<i> &gt;&gt; &gt; did a
+</I>&gt;<i> &gt;&gt; &gt; &quot;zpool import&quot;. When doing a &quot;zpool status -v&quot; I get a kernel panic
+</I>&gt;<i> &gt;&gt; &gt; right
+</I>&gt;<i> &gt;&gt; &gt; after the config is shown (with all devices showing as ONLINE and with
+</I>&gt;<i> 0
+</I>&gt;<i> &gt;&gt; &gt; errors) and before where the filenames should be. I still get the &quot;One
+</I>&gt;<i> &gt;&gt; &gt; or
+</I>&gt;<i> &gt;&gt; &gt; more devices has experienced an error&quot; status message.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; If I knew just which device is giving the problem I could just unplug
+</I>&gt;<i> it
+</I>&gt;<i> &gt;&gt; &gt; (since both groups in the pool have redundancy -- one with mirroring
+</I>&gt;<i> and
+</I>&gt;<i> &gt;&gt; &gt; one
+</I>&gt;<i> &gt;&gt; &gt; with raidz) but now I'm really leery of trying to do anything that
+</I>&gt;<i> might
+</I>&gt;<i> &gt;&gt; &gt; result in data corruption.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Any ideas? HELP!!
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; On Sat, Oct 18, 2008 at 7:59 PM, Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt;
+</I>&gt;<i> &gt;&gt; &gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; The impossible has, on occasion, let me down
+</I>&gt;<i> &gt;                                                        --R.U. Sirius
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>
+
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/150d378f/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081018/150d378f/attachment.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000997.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+	<LI>Next message: <A HREF="001000.html">[zfs-discuss] Now zpool status is giving me a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#999">[ date ]</a>
+              <a href="thread.html#999">[ thread ]</a>
+              <a href="subject.html#999">[ subject ]</a>
+              <a href="author.html#999">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

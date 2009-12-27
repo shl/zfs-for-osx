@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Faulted%20Drives%2C%0A%09fixed%20by%20export/import...%20but%20what%20causes%20it%3F&In-Reply-To=D25D225A-09E0-47E7-A3A2-733A778D1500%40jasonrm.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000964.html">
+   <LINK REL="Next"  HREF="000966.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?</H1>
+    <B>Rich McClellan</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Faulted%20Drives%2C%0A%09fixed%20by%20export/import...%20but%20what%20causes%20it%3F&In-Reply-To=D25D225A-09E0-47E7-A3A2-733A778D1500%40jasonrm.net"
+       TITLE="[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?">richmc at gmail.com
+       </A><BR>
+    <I>Tue Oct 14 23:14:20 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000964.html">[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+</A></li>
+        <LI>Next message: <A HREF="000966.html">[zfs-discuss] Faulted Drives, fixed by export/import... but what causes it?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#965">[ date ]</a>
+              <a href="thread.html#965">[ thread ]</a>
+              <a href="subject.html#965">[ subject ]</a>
+              <a href="author.html#965">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've seen this behavior too.  I'm using a set of disks that are iSCSI
+targets (multiple LUNs per target).
+
+It smells like a race condition and it may have nothing to do with ZFS.
+
+Rich
+
+On Tue, Oct 14, 2008 at 10:40 PM, Jason Richard McNeil
+&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jason at jasonrm.net</A>&gt; wrote:
+&gt;<i> As I mentioned in my previous email, I've only had one issue outside of the
+</I>&gt;<i> well known issues on the wiki.
+</I>&gt;<i> I've held off on this one for a bit thinking that it might just be me and
+</I>&gt;<i> doing something wrong, but it's happening enough that it is, well frankly
+</I>&gt;<i> starting to scare me. I think that it only happens when I either restart or
+</I>&gt;<i> cold boot after a while. I have almost constant read/write to the pool, and
+</I>&gt;<i> I run scrubs rather frequently, but unless I'm recovering from the following
+</I>&gt;<i> issues, I never have had an error.
+</I>&gt;<i> General system info:
+</I>&gt;<i> Mac Pro , 2.66GHz CPU , 6GB MEM
+</I>&gt;<i> 2 - 500GB Internal Drives (not part of the pool, RAID1)
+</I>&gt;<i> 2 - 500GB Internal Drives
+</I>&gt;<i> 4 - 640GB External Drives in a FirmTek SeriTek/5PM enclosure connected to a
+</I>&gt;<i> Highpoint RocketRAID 2314
+</I>&gt;<i> Cold boot. I'm quite certain that all the external drives are powered up and
+</I>&gt;<i> spinning before I turn on my system, and here is the symptom that I see.
+</I>&gt;<i>   pool: Indigo
+</I>&gt;<i>  state: DEGRADED
+</I>&gt;<i> status: One or more devices could not be used because the label is missing
+</I>&gt;<i> or
+</I>&gt;<i> invalid.  Sufficient replicas exist for the pool to continue
+</I>&gt;<i> functioning in a degraded state.
+</I>&gt;<i> action: Replace the device using 'zpool replace'.
+</I>&gt;<i>    see: <A HREF="http://www.sun.com/msg/ZFS-8000-4J">http://www.sun.com/msg/ZFS-8000-4J</A>
+</I>&gt;<i>  scrub: resilver completed with 0 errors on Sat Oct 11 01:30:46 2008
+</I>&gt;<i> config:
+</I>&gt;<i> NAME                      STATE     READ WRITE CKSUM
+</I>&gt;<i> Indigo                    DEGRADED     0     0     0
+</I>&gt;<i>  mirror                  DEGRADED     0     0     0
+</I>&gt;<i>    4541104571258798197   FAULTED      0     0     0  was /dev/disk5s2
+</I>&gt;<i>    disk6s2               ONLINE       0     0     0
+</I>&gt;<i>  mirror                  DEGRADED     0     0     0
+</I>&gt;<i>    disk5s2               ONLINE       0     0     0
+</I>&gt;<i>    18432184791024237345  FAULTED      0     0     0  was /dev/disk6s2
+</I>&gt;<i>  mirror                  ONLINE       0     0     0
+</I>&gt;<i>    disk0s2               ONLINE       0     0     0
+</I>&gt;<i>    disk3s2               ONLINE       0     0     0
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i> I am wondering if this is either an issue that is with how the HighPoint
+</I>&gt;<i> controller is working, or some larger issue.
+</I>&gt;<i> The above was one of the first times that it has &quot;misplaced&quot; two drives, as
+</I>&gt;<i> usually it's only one that it is unable to find.
+</I>&gt;<i> When it has been only one I have tried various forms of zfs replace (sudo,
+</I>&gt;<i> unmounting, force-unmounting). It returns an error saying the destination
+</I>&gt;<i> drive is already in use.
+</I>&gt;<i> Best solution I have found so far, is to log off all users, SSH in and force
+</I>&gt;<i> a unmount, do an export, then import and it has come back every time so far.
+</I>&gt;<i> I do have to do a scrub, but it only finds checksum errors, which,
+</I>&gt;<i> considering that it comes up without a drive and activity happens while
+</I>&gt;<i> missing a drive or two, it makes sense to me so far.
+</I>&gt;<i> Any ideas of what to try?
+</I>&gt;<i> Also, I don't have auto-login set, but I do have apache2 using a directory
+</I>&gt;<i> of one of the mountpoints as the document root. The odd thing is, that
+</I>&gt;<i> sometimes I will reboot and no issues at all, so I haven't found an exact
+</I>&gt;<i> cause yet. The HighPoint controller does consider the drives to be volumes,
+</I>&gt;<i> that I then &quot;export&quot; each drive volume from the controller as JBOD (total of
+</I>&gt;<i> 4 volumes, one per disk). Only based on the fact that the expect drive ID's
+</I>&gt;<i> are high enough to be on the controller, I'm suspecting some sort of delay
+</I>&gt;<i> there...
+</I>&gt;<i> If no one else is seeing this, then maybe it is just a odd combo of drives,
+</I>&gt;<i> controller, DISK-&gt;JBOD-&gt;slices, idk, something funny.
+</I>&gt;<i> Sorry for writing a novel, but I'm try to error on the side of too much
+</I>&gt;<i> info... of course, please let me know what most basic I've forgotten to
+</I>&gt;<i> include. ;)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000964.html">[zfs-discuss] Faulted Drives,	fixed by export/import... but what causes it?
+</A></li>
+	<LI>Next message: <A HREF="000966.html">[zfs-discuss] Faulted Drives, fixed by export/import... but what causes it?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#965">[ date ]</a>
+              <a href="thread.html#965">[ thread ]</a>
+              <a href="subject.html#965">[ subject ]</a>
+              <a href="author.html#965">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

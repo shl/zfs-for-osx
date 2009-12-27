@@ -1,0 +1,1614 @@
+From jw.hendy at gmail.com  Sun Mar  1 14:32:21 2009
+From: jw.hendy at gmail.com (John Hendy)
+Date: Sun, 1 Mar 2009 16:32:21 -0600
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <9efc39d30902280117j70f7ea95x56ed953bd26cecbe@mail.gmail.com>
+References: <9efc39d30902270901s35d4b6d2u23d4d8fdb3e97864@mail.gmail.com>
+	<20090227.184013.567220359449547631.hanche@math.ntnu.no>
+	<a037f7360902271053p7b7a10afy601acbec51ee3b62@mail.gmail.com>
+	<9efc39d30902280117j70f7ea95x56ed953bd26cecbe@mail.gmail.com>
+Message-ID: <a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+
+On Sat, Feb 28, 2009 at 3:17 AM, Robert Muench <robert.muench at gmail.com>wrote:
+
+> On Fri, Feb 27, 2009 at 7:53 PM, John Hendy <jw.hendy at gmail.com> wrote:
+>
+> > One thing I've found that I have not solved yet is how to share my zfs
+> pool
+> > [well] with FreeBSD, which I dual boot.
+>
+> Hi, is this a common "problem/feature" of ZFS or is it specific to FreeBSD?
+
+
+Not sure... I've only tried this with FreeBSD.
+
+
+>
+>
+> > To correctly do this, at least as
+> > far as I've figured out, the zpool likes to be exported from the current
+> OS
+> > before rebooting to the other.
+>
+> But if you shutdown OS-1 isn't the pool exported correctly? So that
+> booting into OS-2 makes no problems? Or do you want to use the same
+> pool from two or more OS at the same time?
+
+
+I would think it gets exported, but from my experience, if I just reboot
+from OS X into FreeBSD and do 'zpool import pool', it says that it appears
+to be in use by another operating system. This makes me question whether OS
+X really exports on reboot/shutdown. Not sure how to check... I don't recall
+for sure, but I don't think that OS X ever complains one way or the other if
+I export from FreeBSD or not.
+
+
+>
+>
+> > I also think that mounting is goofy in OS X with zfs. Every
+> pool/filesystem
+> > should be handled by zfs, but to do certain things, you have to unmount
+> it
+> > before you can 'zfs unmount' it. It's like the mounting of OS X prevents
+> zfs
+> > from doing it's thing. I just might not know what I'm doing though...
+>
+> So, you first have to unmount from OSX and than you can ZFS-unmount
+> it? Hm... strange.
+
+
+Yup - 'zfs unmount pool' gives me 'cannot unmount /Volumes/pool; resource
+busy'
+
+
+>
+>
+> I just tried the PGP whole-disk-encryption on a ZFS pool. But via the
+> GUI itnerface it's not working. Here the output of PGP's enumeration
+> of disks:
+>
+> Total number of installed fixed/removable storage
+> device (excluding floppy and CDROM): 5
+>
+> Disk disk0 (wde enabled) has 1 online volumes:
+>  volume "System" (disk0s2) is on partition 2
+>
+> Disk disk1 has 0 online volumes:
+>
+> Disk disk2 (wde enabled) has 1 online volumes:
+>  volume "Daten" (disk2s2) is on partition 2
+>
+> Disk disk3 (wde enabled) has 1 online volumes:
+>  volume "CORSAIR" (disk3s1) is on partition 1
+>
+> Disk disk4 (wde enabled) has 1 online volumes:
+>  volume "Backup" (disk4s1) is on partition 1
+>
+> What's strange is, that disk1 (that's my ZFS volume) isn't recognized
+> as an online volume. Why this? Is this the cause why it's not shown on
+> the desktop etc.? Do I need to OSX-mount it beside ZFS-mounting?
+>
+> > [...]
+> > Maybe this is not what you're looking for... but these are my thoughts!
+>
+> No problem, thanks for all the information. When starting with a new
+> filesystem more information is better then less :-)
+
+
+No problem. I love the resources and help from the online community so I
+figure I gotta pitch in whenever I find something I know even a little bit
+about!
+
+>
+>
+> --
+> Robert M. M?nch
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090301/81c54d90/attachment.html>
+
+From chris at young-alumni.com  Sun Mar  1 14:49:30 2009
+From: chris at young-alumni.com (Chris Ruiz)
+Date: Sun, 1 Mar 2009 16:49:30 -0600
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+References: <9efc39d30902270901s35d4b6d2u23d4d8fdb3e97864@mail.gmail.com>
+	<20090227.184013.567220359449547631.hanche@math.ntnu.no>
+	<a037f7360902271053p7b7a10afy601acbec51ee3b62@mail.gmail.com>
+	<9efc39d30902280117j70f7ea95x56ed953bd26cecbe@mail.gmail.com>
+	<a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+Message-ID: <A205CCC7-4693-4FCC-AC0F-093AA61599CD@young-alumni.com>
+
+
+On Mar 1, 2009, at 4:32 PM, John Hendy wrote:
+
+>
+>
+> On Sat, Feb 28, 2009 at 3:17 AM, Robert Muench <robert.muench at gmail.com 
+> > wrote:
+> On Fri, Feb 27, 2009 at 7:53 PM, John Hendy <jw.hendy at gmail.com>  
+> wrote:
+>
+> > One thing I've found that I have not solved yet is how to share my  
+> zfs pool
+> > [well] with FreeBSD, which I dual boot.
+>
+> Hi, is this a common "problem/feature" of ZFS or is it specific to  
+> FreeBSD?
+>
+> Not sure... I've only tried this with FreeBSD.
+
+If you want to share the pool between operating systems, you need to  
+'zpool export pool' on osx and 'zpool import -f pool' on freebsd.   
+Never forget to export your pool, especially if you are using  
+removable media.  You will need to use -f with import because the last  
+system that used the pool is not the system trying to import the pool.
+
+> > To correctly do this, at least as
+> > far as I've figured out, the zpool likes to be exported from the  
+> current OS
+> > before rebooting to the other.
+>
+> But if you shutdown OS-1 isn't the pool exported correctly? So that
+> booting into OS-2 makes no problems? Or do you want to use the same
+> pool from two or more OS at the same time?
+>
+> I would think it gets exported, but from my experience, if I just  
+> reboot from OS X into FreeBSD and do 'zpool import pool', it says  
+> that it appears to be in use by another operating system. This makes  
+> me question whether OS X really exports on reboot/shutdown. Not sure  
+> how to check... I don't recall for sure, but I don't think that OS X  
+> ever complains one way or the other if I export from FreeBSD or not.
+>
+>
+>
+> > I also think that mounting is goofy in OS X with zfs. Every pool/ 
+> filesystem
+> > should be handled by zfs, but to do certain things, you have to  
+> unmount it
+> > before you can 'zfs unmount' it. It's like the mounting of OS X  
+> prevents zfs
+> > from doing it's thing. I just might not know what I'm doing  
+> though...
+>
+> So, you first have to unmount from OSX and than you can ZFS-unmount
+> it? Hm... strange.
+>
+> Yup - 'zfs unmount pool' gives me 'cannot unmount /Volumes/pool;  
+> resource busy'
+
+You cannot unmount a pool because a pool is not a filesystem.  Only  
+filesystems may be unmounted.  Pools must be exported.  Please read  
+the opensolaris documentation on ZFS, it seems that you are unfamiliar  
+with how zfs works.  http://opensolaris.org/os/community/zfs/docs/
+
+> I just tried the PGP whole-disk-encryption on a ZFS pool. But via the
+> GUI itnerface it's not working. Here the output of PGP's enumeration
+> of disks:
+>
+> Total number of installed fixed/removable storage
+> device (excluding floppy and CDROM): 5
+>
+> Disk disk0 (wde enabled) has 1 online volumes:
+>  volume "System" (disk0s2) is on partition 2
+>
+> Disk disk1 has 0 online volumes:
+>
+> Disk disk2 (wde enabled) has 1 online volumes:
+>  volume "Daten" (disk2s2) is on partition 2
+>
+> Disk disk3 (wde enabled) has 1 online volumes:
+>  volume "CORSAIR" (disk3s1) is on partition 1
+>
+> Disk disk4 (wde enabled) has 1 online volumes:
+>  volume "Backup" (disk4s1) is on partition 1
+>
+> What's strange is, that disk1 (that's my ZFS volume) isn't recognized
+> as an online volume. Why this? Is this the cause why it's not shown on
+> the desktop etc.? Do I need to OSX-mount it beside ZFS-mounting?
+>
+> > [...]
+> > Maybe this is not what you're looking for... but these are my  
+> thoughts!
+>
+> No problem, thanks for all the information. When starting with a new
+> filesystem more information is better then less :-)
+>
+> No problem. I love the resources and help from the online community  
+> so I figure I gotta pitch in whenever I find something I know even a  
+> little bit about!
+
+
+Chris Ruiz
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090301/188eda9c/attachment.html>
+
+From raoul at amsi.org.au  Sun Mar  1 15:21:39 2009
+From: raoul at amsi.org.au (Raoul Callaghan)
+Date: Mon, 2 Mar 2009 10:21:39 +1100
+Subject: [zfs-discuss] SoftRaid 4 == ZFS to me..
+Message-ID: <D30B292F-C58D-4191-8673-4CEBB463346B@amsi.org.au>
+
+Hi,
+
+Mark from Softraid has just sent out some info about Softraid 4.0.
+
+> SoftRAID 4.0 should be out in about 1-2 months. It will be a paid  
+> upgrade, $69 US.
+>
+> It has many new features and we are excited to get SoftRAID 4 out to  
+> the market.
+>
+> SoftRAID 4 will include:
+> Snow Leopard, and 64 bit, compatibility
+> Fast Mirror rebuilds
+> Snapshot backup disks
+> Disk Certification
+> Data Validation
+> Email Notification
+> Command line interface
+> Automatic Software update
+> Smart Error reporting
+> Misc. error notification (busy CPU, full volume, etc.)
+> and more!
+
+
+Something tells me that SoftRaid just dumped their future kext  
+development and now specialise in building front-ends to cmd-line  
+binaries...  ;))
+
+Cheers
+
+Raoul
+
+"... The only problem with Microsoft is they just have no taste, they  
+have absolutely no taste and what that means is, and I don't mean that  
+in a small way, I mean that in a big way.
+In the sense that: they, they don't think of original ideas, and they  
+don't bring much culture into their product.
+And you say why is that important? well proportionally spaced fonts  
+come from typesetting and beautiful books, that's where one gets the  
+idea.  If it weren't for the mac they would never have that in their  
+products.
+And, so I guess I am saddened, not by Microsoft's success, I have no  
+problem with their success. They've earned their success; for the most  
+part.
+I have a problem with the fact that they make just really third grade  
+products ..."
+
+Steve Jobs, circa 1980's
+http://www.youtube.com/watch?v=oBISzVRmYIM
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090302/ea84983f/attachment-0001.html>
+
+From hanche at math.ntnu.no  Sun Mar  1 21:51:11 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 02 Mar 2009 06:51:11 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <A205CCC7-4693-4FCC-AC0F-093AA61599CD@young-alumni.com>
+References: <9efc39d30902280117j70f7ea95x56ed953bd26cecbe@mail.gmail.com>
+	<a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+	<A205CCC7-4693-4FCC-AC0F-093AA61599CD@young-alumni.com>
+Message-ID: <20090302.065111.151850830.hanche@math.ntnu.no>
+
++ Chris Ruiz <chris at young-alumni.com>:
+
+> If you want to share the pool between operating systems, you need 
+> to 'zpool export pool' on osx and 'zpool import -f pool' on 
+> freebsd.  Never forget to export your pool, especially if you are 
+> using removable media.  You will need to use -f with import because 
+> the last system that used the pool is not the system trying to 
+> import the pool.
+
+That is not right: You can definitely import the pool without the -f 
+flag. The point of -f is that it allows you to import a pool that has 
+not been properly exported. Without it, you would lose all the data 
+in the pool if the host dies while the pool is active and cannot be 
+revived. That this would be bad must surely be an understatement.
+
+There is another gotcha with sharing between osx and freebsd, though, 
+and that is associated with ACLs. On one such pool that I share 
+regularly, new files created on the OSX side get created with an ACL 
+that is interpreted on the freebsd side as "no access". So I end up 
+with files that I own (I use the same uid on both machines), with 
+mode -rw-r--r-- that I still cannot read. Doing chmod +t followed by 
+chmod -t on the files as root on the freebsd side cures the problem, 
+but it's a bother. I haven't found the time to investigate the 
+problem properly yet.
+
+- Harald
+
+From chris at young-alumni.com  Mon Mar  2 00:26:17 2009
+From: chris at young-alumni.com (Chris Ruiz)
+Date: Mon, 2 Mar 2009 02:26:17 -0600
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <20090302.065111.151850830.hanche@math.ntnu.no>
+References: <9efc39d30902280117j70f7ea95x56ed953bd26cecbe@mail.gmail.com>
+	<a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+	<A205CCC7-4693-4FCC-AC0F-093AA61599CD@young-alumni.com>
+	<20090302.065111.151850830.hanche@math.ntnu.no>
+Message-ID: <90B78CE1-F97D-4DF4-8ACC-EF10D2FEAB0F@young-alumni.com>
+
+
+On Mar 1, 2009, at 11:51 PM, Harald Hanche-Olsen wrote:
+
+>> If you want to share the pool between operating systems, you need  
+>> to 'zpool export pool' on osx and 'zpool import -f pool' on  
+>> freebsd.  Never forget to export your pool, especially if you are  
+>> using removable media.  You will need to use -f with import because  
+>> the last system that used the pool is not the system trying to  
+>> import the pool.
+>
+> That is not right: You can definitely import the pool without the -f  
+> flag. The point of -f is that it allows you to import a pool that  
+> has not been properly exported. Without it, you would lose all the  
+> data in the pool if the host dies while the pool is active and  
+> cannot be revived. That this would be bad must surely be an  
+> understatement.
+
+Just to clarify what you are saying, the -f flag is not needed.   
+Otherwise my information was correct.  The main point of my original  
+response was the the OP was not properly using ZFS to achieve the  
+results they intended.  The -f flag would not have been an issue,  
+although as you said, it is unnecessary.
+
+> There is another gotcha with sharing between osx and freebsd,  
+> though, and that is associated with ACLs. On one such pool that I  
+> share regularly, new files created on the OSX side get created with  
+> an ACL that is interpreted on the freebsd side as "no access". So I  
+> end up with files that I own (I use the same uid on both machines),  
+> with mode -rw-r--r-- that I still cannot read. Doing chmod +t  
+> followed by chmod -t on the files as root on the freebsd side cures  
+> the problem, but it's a bother. I haven't found the time to  
+> investigate the problem properly yet.
+
+FreeBSD does not have support for ACLs on ZFS.  If you run CURRENT,  
+freebsd does support FreeBSD file flags, if enabled on your filesystem  
+but not ACLs.  NFSv4 ACLs on FreeBSD are not implemented AFAIK, it's  
+ready to go on the ZFS side of things but hasn't been implemented in  
+the OS.  It should be OSX that sets an ACL that says "deny execute" on  
+anything not written to the filesystem from OSX, not FreeBSD.   
+Besides, there should be absolutely no reason for you to need to share  
+executable files between OSX and FreeBSD, so this should not be a  
+problem.  I have no problem accessing data written from OSX on ZFS on  
+FreeBSD, as you have described.
+
+Chris
+
+From hanche at math.ntnu.no  Mon Mar  2 01:07:58 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 02 Mar 2009 10:07:58 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <90B78CE1-F97D-4DF4-8ACC-EF10D2FEAB0F@young-alumni.com>
+References: <A205CCC7-4693-4FCC-AC0F-093AA61599CD@young-alumni.com>
+	<20090302.065111.151850830.hanche@math.ntnu.no>
+	<90B78CE1-F97D-4DF4-8ACC-EF10D2FEAB0F@young-alumni.com>
+Message-ID: <20090302.100758.686981496367099371.hanche@math.ntnu.no>
+
++ Chris Ruiz <chris at young-alumni.com>:
+
+> FreeBSD does not have support for ACLs on ZFS.  If you run CURRENT,
+
+I run 7-STABLE. As I said, I haven't had time to investigate
+properly. I'll see if I can find a moment later today to experiment
+and report back what actually happens. Maybe you can help me figure it
+out.
+
+- Harald
+
+From hanche at math.ntnu.no  Mon Mar  2 05:41:39 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 02 Mar 2009 14:41:39 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <20090302.100758.686981496367099371.hanche@math.ntnu.no>
+References: <20090302.065111.151850830.hanche@math.ntnu.no>
+	<90B78CE1-F97D-4DF4-8ACC-EF10D2FEAB0F@young-alumni.com>
+	<20090302.100758.686981496367099371.hanche@math.ntnu.no>
+Message-ID: <20090302.144139.48093150.hanche@math.ntnu.no>
+
++ Harald Hanche-Olsen <hanche at math.ntnu.no>:
+
+> + Chris Ruiz <chris at young-alumni.com>:
+>
+>> FreeBSD does not have support for ACLs on ZFS.  If you run CURRENT,
+>
+> I run 7-STABLE. As I said, I haven't had time to investigate
+> properly. I'll see if I can find a moment later today to experiment
+> and report back what actually happens. Maybe you can help me figure 
+> it
+> out.
+
+Now I had a chance to recheck. Here is what happens.
+
+First a word on setup: On the osx side, I have username hanche, group
+hanche, with uid=gid=13799. On the freebsd side, I have username
+hanche, uid=13799, but group 13799 doesn't exist. (It's a workplace
+computer, and though I have the root password and can do most what I
+want, I can't create groups willy-nilly. This may be irrelevant
+anyhow.)
+
+So I have a zfs pool named wd320a, and I put some files on it on the
+mac side. When I check them with ls -lF at e, no extended attributes or
+ACLs show up, the files are mode 644, and directories are mode 755.
+
+So far, so good, right? So I export the pool and import it on freebsd,
+and this is what happens. (I run as myself in one window, shell prompt
+";", and as root in another, shell prompt "#;". I have clipped the
+commands and results together in chronological order.)
+
+#; zpool import wd320a
+; ls -ld /wd320a/photo/2009/02/
+drwxr-xr-x  3 hanche  wheel  3 Feb 24 21:25 /wd320a/photo/2009/02//
+; ls -l /wd320a/photo/2009/02/
+total 0
+ls: : Permission denied
+; ls -l /wd320a/photo/2009/02/
+total 2
+drwxr-xr-x  2 hanche  wheel  20 Feb 24 21:31 24/
+#; chmod +t /wd320a/photo/2009/02
+#; chmod -t /wd320a/photo/2009/02
+; ls -l /wd320a/photo/2009/02/24/
+total 0
+ls: : Permission denied
+#; chmod +t /wd320a/photo/2009/02/24/
+#; chmod -t /wd320a/photo/2009/02/24/
+; ls -l /wd320a/photo/2009/02/24/
+[...]
+-rw-r--r--  1 hanche  13799   4207604 Feb 24 16:32 
+20090224T163212_1056.jpg
+; cp /wd320a/photo/2009/02/24/20090224T163212_1056.jpg /dev/null
+cp: /wd320a/photo/2009/02/24/20090224T163212_1056.jpg: Permission 
+denied
+#; chmod +t /wd320a/photo/2009/02/24/20090224T163212_1056.jpg
+#; chmod -t /wd320a/photo/2009/02/24/20090224T163212_1056.jpg
+; cp /wd320a/photo/2009/02/24/20090224T163212_1056.jpg /dev/null
+
+Odd, huh? So I move the pool back on osx. Now the file and directories
+that I did the chmod +t ... chmod -t ... dance on have acquired ACLs:
+
+; ls -lF at e /Volumes/wd320a/photo/2009/02/24/
+[...]
+-rw-r--r--+ 1 hanche  hanche   4207604 Feb 24 16:32 
+20090224T163212_1056.jpg
+ 0: FFFFEEEE-DDDD-CCCC-BBBB-AAAAFFFFFFFF deny execute
+; ls -ldF at e /Volumes/wd320a/photo/2009/02/24/
+drwxr-xr-x+ 2 hanche  wheel  20 Feb 24 21:31 
+/Volumes/wd320a/photo/2009/02/24//
+ 0: FFFFEEEE-DDDD-CCCC-BBBB-AAAAFFFFFFFF deny
+
+Actually, I don't know how to read that.
+In any case, it is mighty confusing.
+
+Oh, if I try the Finder File Info then the file originally has these
+permissions:
+
+hanche (Me)  Read & Write
+(unknown)    Read only
+everyone     Read only
+
+whereas the one I fiddled with on freebsd has those plus
+
+(unknown)    Custom
+
+whatever that might mean. Also, the padlock is closed and I have to
+give an admin password to change anything in this dialog. (I might add
+that my regular user does not have admin privileges.)
+
+- Harald
+
+From hanche at math.ntnu.no  Mon Mar  2 06:00:23 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 02 Mar 2009 15:00:23 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+References: <a037f7360902271053p7b7a10afy601acbec51ee3b62@mail.gmail.com>
+	<9efc39d30902280117j70f7ea95x56ed953bd26cecbe@mail.gmail.com>
+	<a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+Message-ID: <20090302.150023.44864624.hanche@math.ntnu.no>
+
++ John Hendy <jw.hendy at gmail.com>:
+
+> Yup - 'zfs unmount pool' gives me 'cannot unmount /Volumes/pool;
+> resource busy'
+
+I use the following script to unmount and export zfs pools.
+It's written for rc, but should be easy to rewrite for your favourite
+shell. Note the literal TAB character in the sed command.
+
+
+#!/opt/local/bin/rc
+if (!~ $#* 1) {echo Usage: $0 '<pool>' >[1=2]; exit 1}
+fn v {echo -- + $* >[1=2]; $*}
+if (!~ `{id -u} 0) {v exec sudo $0 $*}
+for (mp in `{zfs list -Hrt filesystem -o mountpoint,mounted -S name $1 |
+             sed -ne 's|	yes||p'}) {
+  # NOTE literal tab character above! (before the word "yes")
+  v diskutil unmount $mp || exit 1
+}
+v zpool export $1
+
+
+Brief explanation for the non-rc-literate: It reruns itself under sudo
+if it is not already running as uid 0. Then it lists all mounted
+filesystems under the named pool, and unmounts them from the bottom up
+(it's the -S name bit that sorts them for me), and finally it exports
+the pool. If any unmount operation fails, the script exits.
+
+- Harald
+
+From jw.hendy at gmail.com  Mon Mar  2 06:12:29 2009
+From: jw.hendy at gmail.com (John Hendy)
+Date: Mon, 2 Mar 2009 08:12:29 -0600
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <20090302.150023.44864624.hanche@math.ntnu.no>
+References: <a037f7360902271053p7b7a10afy601acbec51ee3b62@mail.gmail.com>
+	<9efc39d30902280117j70f7ea95x56ed953bd26cecbe@mail.gmail.com>
+	<a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+	<20090302.150023.44864624.hanche@math.ntnu.no>
+Message-ID: <a037f7360903020612m15114cb5m83a32bde665a0d8e@mail.gmail.com>
+
+On Mon, Mar 2, 2009 at 8:00 AM, Harald Hanche-Olsen <hanche at math.ntnu.no>wrote:
+
+> + John Hendy <jw.hendy at gmail.com>:
+>
+> > Yup - 'zfs unmount pool' gives me 'cannot unmount /Volumes/pool;
+> > resource busy'
+>
+> I use the following script to unmount and export zfs pools.
+> It's written for rc, but should be easy to rewrite for your favourite
+> shell. Note the literal TAB character in the sed command.
+>
+>
+> #!/opt/local/bin/rc
+> if (!~ $#* 1) {echo Usage: $0 '<pool>' >[1=2]; exit 1}
+> fn v {echo -- + $* >[1=2]; $*}
+> if (!~ `{id -u} 0) {v exec sudo $0 $*}
+> for (mp in `{zfs list -Hrt filesystem -o mountpoint,mounted -S name $1 |
+>             sed -ne 's|        yes||p'}) {
+>  # NOTE literal tab character above! (before the word "yes")
+>  v diskutil unmount $mp || exit 1
+> }
+> v zpool export $1
+>
+>
+> Brief explanation for the non-rc-literate: It reruns itself under sudo
+> if it is not already running as uid 0. Then it lists all mounted
+> filesystems under the named pool, and unmounts them from the bottom up
+> (it's the -S name bit that sorts them for me), and finally it exports
+> the pool. If any unmount operation fails, the script exits.
+>
+> - Harald
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+What if my pool (and the filesystem on it) holds my user folder? I have been
+unsuccessful in unmounting/exporting it, as it's in use whenever I'm logged
+on. Should I move only my data to zfs and keep all OS X data on /Users
+itself? I'll try this, although I'm really not good enough with the shell to
+comprehend your script (and re-write for bash or other). So...
+
+- What would I have to change to use this as a bash script, if you'd be able
+to offer that info...
+- Do you think I could run this at logout successfully (as a logout hook)?
+
+Thanks,
+John
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090302/2ebdf00c/attachment.html>
+
+From robert.muench at gmail.com  Mon Mar  2 08:00:20 2009
+From: robert.muench at gmail.com (Robert Muench)
+Date: Mon, 2 Mar 2009 17:00:20 +0100
+Subject: [zfs-discuss] ACLs
+Message-ID: <9efc39d30903020800l6d4a7956oc827eae154eeace4@mail.gmail.com>
+
+Following the other thread about ACLs I have some questions about ACLs
+and filesystems in general.
+
+1. Are ACLs stored on the filesystem in an OS independent manner?
+
+2. Is there any chance to get ACLs portable between OSs? Is it
+necessary to use the same UIDs on all systems? This sounds a bid odd
+to me, because this looks like a hard-coded OS specific attributed
+that's than used. Shouldn't ACLs be OS specific but file independent.
+
+-- 
+Robert M. M?nch
+
+From hanche at math.ntnu.no  Mon Mar  2 08:01:43 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 02 Mar 2009 17:01:43 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <a037f7360903020612m15114cb5m83a32bde665a0d8e@mail.gmail.com>
+References: <a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+	<20090302.150023.44864624.hanche@math.ntnu.no>
+	<a037f7360903020612m15114cb5m83a32bde665a0d8e@mail.gmail.com>
+Message-ID: <20090302.170143.179791369.hanche@math.ntnu.no>
+
++ John Hendy <jw.hendy at gmail.com>:
+
+> What if my pool (and the filesystem on it) holds my user folder? I
+> have been unsuccessful in unmounting/exporting it, as it's in use
+> whenever I'm logged on.
+
+Good question. I find lots of information on developper.apple.com
+about the login and startup procedure, but very little on shutdown and
+logout. And that is when you want to run cleanup scripts.
+
+> - What would I have to change to use this as a bash script, if you'd
+> be able to offer that info...
+
+Oh, well, I wasn't going to do that, but here is a quick-n-dirty
+translation. It even works in a simple case, but may not be
+sufficiently robust. Again, there needs to be a literal TAB character
+before the word "yes".
+
+
+#!/bin/sh
+if [ $# -ne 1 ]; then
+  echo Usage: $0 '<pool>' >&2
+  exit 1
+fi
+if [ "`id -u`" -ne 0 ]; then
+  echo Running under sudo ...
+  exec sudo $0 "$@"
+fi
+for mp in \
+  `zfs list -Hrt filesystem -o mountpoint,mounted -S name $1 |\
+   sed -ne 's|	yes||p'`; do
+    echo Unmounting $mp
+    diskutil unmount $mp || exit 1
+done
+echo Exporting $1
+zpool export $1
+
+
+> - Do you think I could run this at logout successfully (as a logout hook)?
+
+Only if the logout hook runs after all your other processes are
+shutdown, so that the home filesystem is not busy. I don't know if it
+does, or if there is a way to run a script at that time. On freebsd
+there is /etc/rc.shutdown, but osx doesn't seem to have anything like
+it.
+
+- Harald
+
+From jw.hendy at gmail.com  Mon Mar  2 08:50:58 2009
+From: jw.hendy at gmail.com (John Hendy)
+Date: Mon, 2 Mar 2009 10:50:58 -0600
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <20090302.170143.179791369.hanche@math.ntnu.no>
+References: <a037f7360903011432o1415a9f3k64b85a9e3958da0a@mail.gmail.com>
+	<20090302.150023.44864624.hanche@math.ntnu.no>
+	<a037f7360903020612m15114cb5m83a32bde665a0d8e@mail.gmail.com>
+	<20090302.170143.179791369.hanche@math.ntnu.no>
+Message-ID: <a037f7360903020850k5132bc71q7818833514886cf3@mail.gmail.com>
+
+Thanks for the continued input and bash translation!
+Re the logout procedure... the only info I've found was here:
+http://www.bombich.com/mactips/loginhooks.html
+
+I don't know that this will do things after the home filesystem is
+unmounted. Since as another user I was able to unmount my main user's
+filesystem and export the pool, then reboot and import the pool from FreeBSD
+successfully, I thought if I could repeat that procedure at logout, it might
+work...
+
+All I did was follow the instructions at the referenced site above with a
+script something like:
+
+#!/bin/sh
+sudo diskutil umount /Volumes/pool
+sudo zpool export pool
+exit 0
+
+But I'm not sure on that... I cant' look at my script right now as I'm at
+work.
+
+It hung at logout forever using this script. It could very well have been my
+poor scripting knowledge that did it, though. I'll try yours and see if that
+works.
+
+Thanks again,
+John
+
+On Mon, Mar 2, 2009 at 10:01 AM, Harald Hanche-Olsen <hanche at math.ntnu.no>wrote:
+
+> + John Hendy <jw.hendy at gmail.com>:
+>
+> > What if my pool (and the filesystem on it) holds my user folder? I
+> > have been unsuccessful in unmounting/exporting it, as it's in use
+> > whenever I'm logged on.
+>
+> Good question. I find lots of information on developper.apple.com
+> about the login and startup procedure, but very little on shutdown and
+> logout. And that is when you want to run cleanup scripts.
+>
+> > - What would I have to change to use this as a bash script, if you'd
+> > be able to offer that info...
+>
+> Oh, well, I wasn't going to do that, but here is a quick-n-dirty
+> translation. It even works in a simple case, but may not be
+> sufficiently robust. Again, there needs to be a literal TAB character
+> before the word "yes".
+>
+>
+> #!/bin/sh
+> if [ $# -ne 1 ]; then
+>  echo Usage: $0 '<pool>' >&2
+>  exit 1
+> fi
+> if [ "`id -u`" -ne 0 ]; then
+>  echo Running under sudo ...
+>  exec sudo $0 "$@"
+> fi
+> for mp in \
+>  `zfs list -Hrt filesystem -o mountpoint,mounted -S name $1 |\
+>    sed -ne 's|  yes||p'`; do
+>    echo Unmounting $mp
+>     diskutil unmount $mp || exit 1
+> done
+> echo Exporting $1
+> zpool export $1
+>
+>
+> > - Do you think I could run this at logout successfully (as a logout
+> hook)?
+>
+> Only if the logout hook runs after all your other processes are
+> shutdown, so that the home filesystem is not busy. I don't know if it
+> does, or if there is a way to run a script at that time. On freebsd
+> there is /etc/rc.shutdown, but osx doesn't seem to have anything like
+> it.
+>
+> - Harald
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090302/31464e88/attachment.html>
+
+From hanche at math.ntnu.no  Mon Mar  2 09:12:59 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 02 Mar 2009 18:12:59 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <a037f7360903020850k5132bc71q7818833514886cf3@mail.gmail.com>
+References: <a037f7360903020612m15114cb5m83a32bde665a0d8e@mail.gmail.com>
+	<20090302.170143.179791369.hanche@math.ntnu.no>
+	<a037f7360903020850k5132bc71q7818833514886cf3@mail.gmail.com>
+Message-ID: <20090302.181259.105815670215827975.hanche@math.ntnu.no>
+
++ John Hendy <jw.hendy at gmail.com>:
+
+> #!/bin/sh
+> sudo diskutil umount /Volumes/pool
+> sudo zpool export pool
+> exit 0
+> [...]
+> It hung at logout forever using this script. It could very well have
+> been my poor scripting knowledge that did it, though. I'll try yours
+> and see if that works.
+
+If there is only one filesystem in the pool, there is no advantage to
+my script over yours.
+
+- Harald
+
+From ndellofano at apple.com  Mon Mar  2 09:35:03 2009
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 2 Mar 2009 09:35:03 -0800
+Subject: [zfs-discuss] Questions from an amateur re: created pool,
+	then a file system then a 	ZIL and got kernel panics
+In-Reply-To: <49A9EF0F.8040809@gmail.com>
+References: <00151748dcc6b425120463eca033@google.com>
+	<49A9E227.3070101@jrv.org> <49A9EF0F.8040809@gmail.com>
+Message-ID: <75D46F58-C716-42BB-8618-4DD244C2F5C6@apple.com>
+
+Regretfully, Dtrace currently doesn't work to trace any kexts on OSX : 
+(  There is a linker issue that needs to be resolved.
+
+Noel
+
+On Feb 28, 2009, at 6:12 PM, Richard Elling wrote:
+
+> James R. Van Artsdalen wrote:
+>> alvinmoonesq at gmail.com wrote:
+>>
+>>> I've read that we can't do ZILs in Mac OS X so I'm wondering whether
+>>> the kernel panics are because of the ZILs or the sequence of  
+>>> creation.
+>>> Should I have created the FS last? The panics only happen when I try
+>>> to write to the file system, but after that, there are kernel panics
+>>> whenever I boot. BTW: the ZFS fs is located on four 2.5" WD Scorpio
+>>> Blacks (320GB) which are in two "Dual Portable Raid Enclosures" and
+>>> connected via esata expresscard 34
+>>>
+>>
+>> All ZFS pools have a ZIL (ZFS Intent Log).  Normally the ZIL is in  
+>> the
+>> pool storage with everything else.  The "log" feature lets you  
+>> reserve a
+>> disk for the ZIL and nothing else.  This probably isn't useful and  
+>> might
+>> even reduce reliability.  Just create the pool normally without
+>> specifying a log device - this is probably what you want anyway.
+>>
+>
+> There are two scenarios where a separate log really help, especially  
+> if the
+> separate log is on a low-write-latency device (eg. STEC Zeus or RAID  
+> array):
+>   1. NAS server
+>   2. database server
+>
+> For the vast majority of common uses, a separate log is rarely needed.
+>
+> This leads to a question of how do you know if your workload is  
+> affected?
+> I've written a dtrace script called zilstat to try to answer that  
+> question.
+> http://richardelling.blogspot.com/2009/02/zilstat-improved.html
+>
+> While I originally wrote that for Solaris, it should work very  
+> similarly for
+> OSX.  If someone would be so kind as to try it, I would appreciate the
+> effort.
+> -- richard-who-is-currently-sans-Mac :-(
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From hanche at math.ntnu.no  Mon Mar  2 09:48:36 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 02 Mar 2009 18:48:36 +0100 (CET)
+Subject: [zfs-discuss] First time user: Some questions
+In-Reply-To: <20090302.170143.179791369.hanche@math.ntnu.no>
+References: <20090302.150023.44864624.hanche@math.ntnu.no>
+	<a037f7360903020612m15114cb5m83a32bde665a0d8e@mail.gmail.com>
+	<20090302.170143.179791369.hanche@math.ntnu.no>
+Message-ID: <20090302.184836.846822760556887461.hanche@math.ntnu.no>
+
+As an experiment, I just created a logout hook that runs pstree with
+output to a file. Examination of the file afterwards indicates that
+the user's launchd and various other processes are still running when
+the logout hook is run. So that is not a suitable place to unmount the
+filesystem. I don't know enough about the innards of osx to suggest a
+better place to run such a program from.
+
+But here is an idea for a workaround: Create a new user, name it
+"unmount" if you wish. Create a login hook for that user which
+unmounts your home dir. Obviously, the "unmount" user must have its
+home directory somewhere that won't get unmounted by this. The login
+hook could also initiate a logout after it has run, in order to
+minimize the hazzle factor.
+
+Now the loginwindow process's LoginHook is global, and it is run as
+root with the username as first argument, so it could look a bit like
+this:
+
+#!/bin/sh
+case "$1" in
+  unmount)
+    /usr/sbin/diskutil unmount /Volumes/pool &&
+    /usr/sbin/zpool export pool
+    ;;
+esac
+
+(the double semicolon is not a mistake).
+
+
+
+- Harald
+
+From tilman at baumann.name  Fri Mar 13 04:09:48 2009
+From: tilman at baumann.name (Tilman Baumann)
+Date: Fri, 13 Mar 2009 12:09:48 +0100
+Subject: [zfs-discuss] crash report - plugged in external FW drive with zfs
+Message-ID: <0272E803-E332-4716-93A2-1C067BA9DC4A@baumann.name>
+
+I have just had my first zfs crash on ppc osx after I formated my  
+first drive yesterday.
+
+btw. is there a good way do unmount external zfs drives?
+Finder did not unmount my sub filesystem (how are they called?) and I  
+could not unmount the root fs since it was busy.
+I then used zfs umount foo/bar on the command line and some (long)  
+time later finder was fine with ejecting the root fs.
+That is too much hassle for a external drive. Is there any way to  
+optimise that?
+
+
+And here the crash report:
+Sadly not much of a back trace.
+Installed from zfs-119bin.tgz
+
+
+Copy and pasted from apples crash reporter. (I guess I should not send  
+them zfs related bugs since it is not their build)
+====
+Fri Mar 13 11:53:05 2009
+panic(cpu 0 caller 0x3CAD955C): "ZFS: I/O failure (write on <unknown>  
+off 0: zio 0x573e990 [L0 persistent error log] 4000L/400P  
+DVA[0]=<0:1f000:400> DVA[1]=<0:1c0015800:400> DVA[2]=<0:380001000:400>  
+fletcher4 lzjb BE contiguous birth=2609 fill=1  
+cksum=6388ba9048:42743f05e9fb:181420cfad1336:6326ea09a518acd): error "  
+"6"@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/ 
+zio.c:918
+Latest stack backtrace for cpu 0:
+       Backtrace:
+          0x0009BCF0 0x0009C694 0x00029EA0 0x3CAD955C 0x3CAD4FEC  
+0x3CAD5510 0x3CAD55C4 0x3CAD4FEC
+          0x3CAD8ACC 0x3CAD4FEC 0x3CB20068 0x3CAD4770 0x3CB4D018  
+0x000B0E54
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x3cabd000->0x3cba6fff
+Proceeding back via exception chain:
+    Exception state (sv=0x3c049500)
+       PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;  
+DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000 (Unknown)
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:39:01 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_PPC
+System model name: PowerBook5,4
+
+System details:
+Model: PowerBook5,4, BootROM 4.8.6f0, 1 processor, PowerPC G4  (1.1),  
+1.33 GHz, 2 GB
+Graphics: kHW_ATIrv360M11Item, ATY,RV360M11, spdisplays_agp_device, 64  
+MB
+Memory Module: SODIMM0/J25LOWER, 1 GB, DDR SDRAM, PC2700U-25330
+Memory Module: SODIMM1/J25UPPER, 1 GB, DDR SDRAM, PC2700U-25330
+AirPort: spairport_wireless_card_type_airport_extreme (0x14E4, 0x4E),  
+Broadcom BCM43xx 1.0 (4.170.25.8)
+Modem: Jump, V.92, Version 1.0
+Bluetooth: Version 2.1.3f8, 2 service, 1 devices, 1 incoming serial  
+ports
+Network Service: Ethernet, Ethernet, en0
+Network Service: Ethernet (en2), Ethernet, en2
+PCI Card: TXN,PCIXXXX-00, cardbus, PC Card
+Parallel ATA Device: MATSHITACD-RW  CW-8123
+Parallel ATA Device: WDC WD1600BEVE-22WZT0, 149,05 GB
+USB Device: Bluetooth USB Host Controller, (null) mA
+FireWire Device: FreeAgent FW, Seagate, 800mbit_speed
+FireWire Device: LaCie Hard Drive FireWire+, LaCie Group SA,  
+400mbit_speed
+
+From Jonathan.Edwards at Sun.COM  Fri Mar 13 07:25:14 2009
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Fri, 13 Mar 2009 10:25:14 -0400
+Subject: [zfs-discuss] crash report - plugged in external FW drive with
+	zfs
+In-Reply-To: <0272E803-E332-4716-93A2-1C067BA9DC4A@baumann.name>
+References: <0272E803-E332-4716-93A2-1C067BA9DC4A@baumann.name>
+Message-ID: <60F8DBB8-F5AD-4547-9325-5C1C179006F0@sun.com>
+
+on ZFS you have a pool that's imported, and then filesystems within  
+the pool .. eg:
+$ zpool list
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+Aeden                   464G    265G    199G    57%  ONLINE     -
+$ zfs list
+NAME                USED  AVAIL  REFER  MOUNTPOINT
+Aeden               265G   192G   583K  /Volumes/Aeden
+Aeden/Development  23.5K   192G  23.5K  /Volumes/Development
+Aeden/OSOL         6.01G   192G  6.01G  /Volumes/OSOL
+Aeden/Pictures     30.8G   192G  30.8G  /Volumes/Pictures
+Aeden/Serenity      228G   192G   228G  /Volumes/Serenity
+
+so simply doing an unmount on the filesystem isn't going to help you  
+with the pool being imported .. it looks like you pulled the drive   
+before you exported the pool and you got a standard ZIO failure trying  
+to write to a device that's not there anymore .. so - if you're using  
+an external drive, in the future you'll want to export the pool .. eg:
+$ zpool export Aeden
+or
+$ sudo zpool export -f Aeden
+
+to unmount the filesystems and export the pool in one shot .. then it  
+should be safe to remove the drive.
+
+hth
+---
+.je
+
+On Mar 13, 2009, at 7:09 AM, Tilman Baumann wrote:
+
+> I have just had my first zfs crash on ppc osx after I formated my  
+> first drive yesterday.
+>
+> btw. is there a good way do unmount external zfs drives?
+> Finder did not unmount my sub filesystem (how are they called?) and  
+> I could not unmount the root fs since it was busy.
+> I then used zfs umount foo/bar on the command line and some (long)  
+> time later finder was fine with ejecting the root fs.
+> That is too much hassle for a external drive. Is there any way to  
+> optimise that?
+>
+>
+> And here the crash report:
+> Sadly not much of a back trace.
+> Installed from zfs-119bin.tgz
+>
+>
+> Copy and pasted from apples crash reporter. (I guess I should not  
+> send them zfs related bugs since it is not their build)
+> ====
+> Fri Mar 13 11:53:05 2009
+> panic(cpu 0 caller 0x3CAD955C): "ZFS: I/O failure (write on  
+> <unknown> off 0: zio 0x573e990 [L0 persistent error log] 4000L/400P  
+> DVA[0]=<0:1f000:400> DVA[1]=<0:1c0015800:400>  
+> DVA[2]=<0:380001000:400> fletcher4 lzjb BE contiguous birth=2609  
+> fill=1 cksum=6388ba9048:42743f05e9fb: 
+> 181420cfad1336:6326ea09a518acd): error " "6"@/Volumes/pixie_dust/ 
+> home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zio.c:918
+> Latest stack backtrace for cpu 0:
+>      Backtrace:
+>         0x0009BCF0 0x0009C694 0x00029EA0 0x3CAD955C 0x3CAD4FEC  
+> 0x3CAD5510 0x3CAD55C4 0x3CAD4FEC
+>         0x3CAD8ACC 0x3CAD4FEC 0x3CB20068 0x3CAD4770 0x3CB4D018  
+> 0x000B0E54
+>      Kernel loadable modules in backtrace (with dependencies):
+>         com.apple.filesystems.zfs(8.0)@0x3cabd000->0x3cba6fff
+> Proceeding back via exception chain:
+>   Exception state (sv=0x3c049500)
+>      PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;  
+> DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000  
+> (Unknown)
+>
+> BSD process name corresponding to current thread: kernel_task
+>
+> Mac OS version:
+> 9G55
+>
+> Kernel version:
+> Darwin Kernel Version 9.6.0: Mon Nov 24 17:39:01 PST 2008;  
+> root:xnu-1228.9.59~1/RELEASE_PPC
+> System model name: PowerBook5,4
+>
+> System details:
+> Model: PowerBook5,4, BootROM 4.8.6f0, 1 processor, PowerPC G4   
+> (1.1), 1.33 GHz, 2 GB
+> Graphics: kHW_ATIrv360M11Item, ATY,RV360M11, spdisplays_agp_device,  
+> 64 MB
+> Memory Module: SODIMM0/J25LOWER, 1 GB, DDR SDRAM, PC2700U-25330
+> Memory Module: SODIMM1/J25UPPER, 1 GB, DDR SDRAM, PC2700U-25330
+> AirPort: spairport_wireless_card_type_airport_extreme (0x14E4,  
+> 0x4E), Broadcom BCM43xx 1.0 (4.170.25.8)
+> Modem: Jump, V.92, Version 1.0
+> Bluetooth: Version 2.1.3f8, 2 service, 1 devices, 1 incoming serial  
+> ports
+> Network Service: Ethernet, Ethernet, en0
+> Network Service: Ethernet (en2), Ethernet, en2
+> PCI Card: TXN,PCIXXXX-00, cardbus, PC Card
+> Parallel ATA Device: MATSHITACD-RW  CW-8123
+> Parallel ATA Device: WDC WD1600BEVE-22WZT0, 149,05 GB
+> USB Device: Bluetooth USB Host Controller, (null) mA
+> FireWire Device: FreeAgent FW, Seagate, 800mbit_speed
+> FireWire Device: LaCie Hard Drive FireWire+, LaCie Group SA,  
+> 400mbit_speed
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From hanche at math.ntnu.no  Fri Mar 13 07:34:55 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 13 Mar 2009 15:34:55 +0100 (CET)
+Subject: [zfs-discuss] crash report - plugged in external FW drive with
+ zfs
+In-Reply-To: <60F8DBB8-F5AD-4547-9325-5C1C179006F0@sun.com>
+References: <0272E803-E332-4716-93A2-1C067BA9DC4A@baumann.name>
+	<60F8DBB8-F5AD-4547-9325-5C1C179006F0@sun.com>
+Message-ID: <20090313.153455.691297591521611559.hanche@math.ntnu.no>
+
++ Jonathan Edwards <Jonathan.Edwards at Sun.COM>:
+
+> so - if you're using
+> an external drive, in the future you'll want to export the pool .. eg:
+> $ zpool export Aeden
+> or
+> $ sudo zpool export -f Aeden
+> 
+> to unmount the filesystems and export the pool in one shot .. then it
+> should be safe to remove the drive.
+
+Until Apple's ZFS team has ironed some more wrinkles out of the
+system, it is probably better to unmount zfs filesystems with diskutil
+before exporting the pool. I posted a script to do so to the list less
+than two weeks ago.
+
+- Harald
+
+From tilman at baumann.name  Fri Mar 13 07:42:30 2009
+From: tilman at baumann.name (Tilman Baumann)
+Date: Fri, 13 Mar 2009 15:42:30 +0100
+Subject: [zfs-discuss] crash report - plugged in external FW drive with
+ zfs
+In-Reply-To: <60F8DBB8-F5AD-4547-9325-5C1C179006F0@sun.com>
+References: <0272E803-E332-4716-93A2-1C067BA9DC4A@baumann.name>
+	<60F8DBB8-F5AD-4547-9325-5C1C179006F0@sun.com>
+Message-ID: <49BA70D6.2030506@baumann.name>
+
+Jonathan Edwards wrote:
+> on ZFS you have a pool that's imported, and then filesystems within the 
+> pool .. eg:
+> $ zpool list
+> NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+> Aeden                   464G    265G    199G    57%  ONLINE     -
+> $ zfs list
+> NAME                USED  AVAIL  REFER  MOUNTPOINT
+> Aeden               265G   192G   583K  /Volumes/Aeden
+> Aeden/Development  23.5K   192G  23.5K  /Volumes/Development
+> Aeden/OSOL         6.01G   192G  6.01G  /Volumes/OSOL
+> Aeden/Pictures     30.8G   192G  30.8G  /Volumes/Pictures
+> Aeden/Serenity      228G   192G   228G  /Volumes/Serenity
+> 
+> so simply doing an unmount on the filesystem isn't going to help you 
+> with the pool being imported .. it looks like you pulled the drive  
+> before you exported the pool and you got a standard ZIO failure trying 
+> to write to a device that's not there anymore .. so - if you're using an 
+> external drive, in the future you'll want to export the pool .. eg:
+> $ zpool export Aeden
+> or
+> $ sudo zpool export -f Aeden
+> 
+> to unmount the filesystems and export the pool in one shot .. then it 
+> should be safe to remove the drive.
+
+Oh, good to know.
+But I have to say, a bit odd.
+Export sounds more like sharing than like detaching.
+
+If I click eject on a filesystem on a external drive osx does not only 
+umount the fs but also ejects the drive from the bus.
+zfs probably needs to hook in there and safely export the pool first.
+
+-- 
+Imagination is more important than knowledge.
+  Albert Einstein
+
+From gabor at berczi.be  Tue Mar 24 07:50:41 2009
+From: gabor at berczi.be (Berczi Gabor)
+Date: Tue, 24 Mar 2009 15:50:41 +0100
+Subject: [zfs-discuss] panic on corrupted ZIL
+Message-ID: <09B57061-255E-4EBC-8D07-54F36A2060BA@berczi.be>
+
+Hello,
+
+I have unwillingly created a corrupted ZIL on a 260Gb ZFS pool,  
+resulting in "can't process intent log" on FreeBSD's import efforts,  
+and a kernel panic on OSX upon executing "zfs status|import|scrub  
+<poolname>".
+
+I'm now trying a rescue with FreeBSD as described here:
+http://www.mail-archive.com/freebsd-stable at freebsd.org/msg97368.html
+
+Just letting you know :)
+
+
+From gabor at berczi.be  Tue Mar 24 08:13:25 2009
+From: gabor at berczi.be (Berczi Gabor)
+Date: Tue, 24 Mar 2009 16:13:25 +0100
+Subject: [zfs-discuss] panic on corrupted ZIL
+In-Reply-To: <09B57061-255E-4EBC-8D07-54F36A2060BA@berczi.be>
+References: <09B57061-255E-4EBC-8D07-54F36A2060BA@berczi.be>
+Message-ID: <5100DEF1-01E4-410F-B3BA-2AD7B26F0CF5@berczi.be>
+
+No success.
+
+Output on FreeBSD:
+
+# zpool status -v store3
+   pool: store3
+  state: ONLINE
+status: One or more devices has experienced an error resulting in data
+         corruption.  Applications may be affected.
+action: Restore the file in question if possible.  Otherwise restore the
+         entire pool from backup.
+    see: http://www.sun.com/msg/ZFS-8000-8A
+  scrub: none requested
+config:
+
+         NAME        STATE     READ WRITE CKSUM
+         store3      ONLINE       0     0     4
+           da0s1     ONLINE       0     0     4
+
+errors: Permanent errors have been detected in the following files:
+
+         store3:<0x0>
+
+On Mar 24, 2009, at 3:50 PM, Berczi Gabor wrote:
+
+> Hello,
+>
+> I have unwillingly created a corrupted ZIL on a 260Gb ZFS pool,  
+> resulting in "can't process intent log" on FreeBSD's import efforts,  
+> and a kernel panic on OSX upon executing "zfs status|import|scrub  
+> <poolname>".
+>
+> I'm now trying a rescue with FreeBSD as described here:
+> http://www.mail-archive.com/freebsd-stable at freebsd.org/msg97368.html
+>
+> Just letting you know :)
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From lostlogic at lostlogicx.com  Wed Mar 25 00:40:14 2009
+From: lostlogic at lostlogicx.com (Brandon Low)
+Date: Wed, 25 Mar 2009 00:40:14 -0700
+Subject: [zfs-discuss] ARC barely used?
+Message-ID: <20090325074014.GD22982@lostlogicx.com>
+
+Hi,
+
+I appologize if this is documented or I'm being stupid by asking here.
+
+I recently converted 80 gigs of my macbook's drive to a ZFS storage pool
+and have been quite enjoying the ability to create many, differently
+tuned filesystems within it.  I'm running zfs-119 from
+zfs.macosforge.org.
+
+In this setup, my zoink reports:
+ZFS footprint:  134M used,  934M peak,  134M goal                26 threads
+ARC footprint:   68M used,  690M peak,  255M goal
+
+This is much much less than my HFS+ volumes, containing the same data,
+accessed in the same way would cache prior to my conversion.  Is there
+some good reason that my ARC is barely being used?  Shouldn't most any
+data that I've used from the filesystems in the pool be cached, up to
+the 3 gig maximum allowed by the calculations in arc.c? (I have 4GB of
+ram in my macbook).
+
+Thanks in advance for any responses,
+
+--Brandon
+
+
+From eableson at mac.com  Wed Mar 25 03:03:44 2009
+From: eableson at mac.com (Erik Ableson)
+Date: Wed, 25 Mar 2009 11:03:44 +0100
+Subject: [zfs-discuss] ARC barely used?
+In-Reply-To: <20090325074014.GD22982@lostlogicx.com>
+References: <20090325074014.GD22982@lostlogicx.com>
+Message-ID: <84081AE1-0E43-4A34-98ED-302CABA60C3E@mac.com>
+
+ From what I understand of the ARC logic it's limited to read caching  
+first off, so the effect of copying data to your volumes will not  
+result in the data being loaded into ARC. Following that, there's some  
+internal logic about identifying both frequently solicited data (MFU)  
+and current working data (MRU) - it doesn't just load up the ARC cache  
+unless there appears to be some compelling reason to do so.  It's not  
+just a straight MRU (Most Recently Used) like older caching models.  
+For example, streaming reads are generally not put into ARC since you  
+are better served going directly to disk instead of overwriting  
+currently cached data which has (probably) more value in cache based  
+on usage history.
+
+It's also a dynamic cache so when the OS imposes memory pressure by  
+requesting memory assignment to other processes, the cache will shrink  
+and OS X can be pretty aggressive about consuming memory for it's own  
+caching purposes. You'd need to be reading in 3Gb of data from disk to  
+get it into the cache in the first place, assuming your machine wasn't  
+doing anything else at all that required any memory.
+
+A more detailed summary can be found at:
+<http://www.c0t0d0s0.org/archives/5329-Some-insight-into-the-read-cache-of-ZFS-or-The-ARC.html 
+ >
+
+I'm not sure if there any specific tuning parameters applied to the  
+current OS X implementation.
+
+Cheers,
+
+Erik
+
+On 25 mars 09, at 08:40, Brandon Low wrote:
+> In this setup, my zoink reports:
+> ZFS footprint:  134M used,  934M peak,  134M goal                26  
+> threads
+> ARC footprint:   68M used,  690M peak,  255M goal
+>
+> This is much much less than my HFS+ volumes, containing the same data,
+> accessed in the same way would cache prior to my conversion.  Is there
+> some good reason that my ARC is barely being used?  Shouldn't most any
+> data that I've used from the filesystems in the pool be cached, up to
+> the 3 gig maximum allowed by the calculations in arc.c? (I have 4GB of
+> ram in my macbook).
+
+
+From david299792 at googlemail.com  Wed Mar 25 04:15:12 2009
+From: david299792 at googlemail.com (David Ritchie)
+Date: Wed, 25 Mar 2009 11:15:12 +0000
+Subject: [zfs-discuss] offline/online with changed device name & strange
+Message-ID: <7CBDD66C-7712-4570-BA5A-7D557CC01F8A@googlemail.com>
+
+(I sent this from the wrong address previously).
+
+UPDATE: I think I have found a way to solve the confusion. I did a  
+zpool export tank and then zpool import tank. It's now showing the  
+offline disk as disk5s2, so hopefully I can sort everything out now.
+
+-- David
+
+---ORIGINAL MESSAGE BELOW---
+
+Hi,
+
+I have a zpool that looks like this:-
+
+legion:~ david$ zpool status tank
+  pool: tank
+state: DEGRADED
+status: One or more devices has been taken offline by the administrator.
+	Sufficient replicas exist for the pool to continue functioning in a
+	degraded state.
+action: Online the device using 'zpool online' or replace the device  
+with
+	'zpool replace'.
+scrub: resilver completed with 0 errors on Tue Mar 24 23:24:52 2009
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         DEGRADED     0     0     0
+	  mirror     DEGRADED     0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk4s2  OFFLINE      0     0     0
+
+errors: No known data errors
+
+So I have a single mirrored vdev which is a 3-way mirror except that  
+one of the devices has been taken offline. Said device was disk4s2,  
+but now there is another disk4s2 (the top one) which is online. The  
+OFFLINE disk4s2 is presently attached as disk5s2.
+
+When I do 'zpool online disk4s2' the status shows 'resilver in  
+progress' for about a minute or less but the status remains as above  
+with only 2 disks online. This is exactly the same thing that happens  
+if I online disk1s2 (even though it's already online). This suggests  
+that it's onlining the currently online disk4s2 rather than the  
+offline disk (now disk5s2).
+
+Another strange thing is that I can't seem to offline either disk4s2  
+or disk1s2:-
+	cannot offline disk1s2: no valid replicas
+Surely I should be able to offline all but one disk in the mirror?  
+(I'm sure I have before). Is something confused?
+
+Disk devices being renamed doesn't normally seem to confuse ZFS, but I  
+can't find a way to specify the offline disk. Isn't there supposed to  
+be some kind of disk ID that ZFS puts on there, which is why it knows  
+that the offline disk4s2 is distinct from the online one? In which  
+case how do I find and specify this?
+
+
+Thanks,
+-- David
+
+From lee at ourstage.com  Wed Mar 25 17:44:18 2009
+From: lee at ourstage.com (Lee Fyock)
+Date: Wed, 25 Mar 2009 20:44:18 -0400
+Subject: [zfs-discuss] Moving drives from enclosure to internal?
+Message-ID: <932505D4-7344-4412-9FE2-186166B51FB5@ourstage.com>
+
+Hi--
+
+I have a pool made of two sets of mirrored drives in two dual-bay  
+enclosures connected to a Mac Mini via firewire.
+
+I'm thinking of moving at least one of the mirror sets into the  
+internal bays of a Mac Pro, while leaving the other set in an  
+enclosure, connected to the Mac Pro via firewire.
+
+Is there anything I need to do to accomplish this, or will ZFS pick up  
+the drives and do the right thing?
+
+Thanks,
+Lee
+
+
+From zorg at sogeeky.net  Wed Mar 25 19:11:06 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Wed, 25 Mar 2009 19:11:06 -0700
+Subject: [zfs-discuss] Moving drives from enclosure to internal?
+In-Reply-To: <932505D4-7344-4412-9FE2-186166B51FB5@ourstage.com>
+References: <932505D4-7344-4412-9FE2-186166B51FB5@ourstage.com>
+Message-ID: <5F762862-E3BB-4C36-9A92-0CB11F7E53F4@sogeeky.net>
+
+Although I am far from an expert, it is my understanding that it  
+should work. The pool does not use the disk names since that change  
+from boot to boot anyway.
+
+On Mar 25, 2009, at 5:44 PM, Lee Fyock <lee at ourstage.com> wrote:
+
+> Hi--
+>
+> I have a pool made of two sets of mirrored drives in two dual-bay  
+> enclosures connected to a Mac Mini via firewire.
+>
+> I'm thinking of moving at least one of the mirror sets into the  
+> internal bays of a Mac Pro, while leaving the other set in an  
+> enclosure, connected to the Mac Pro via firewire.
+>
+> Is there anything I need to do to accomplish this, or will ZFS pick  
+> up the drives and do the right thing?
+>
+> Thanks,
+> Lee
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From hanche at math.ntnu.no  Wed Mar 25 22:49:42 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Thu, 26 Mar 2009 06:49:42 +0100 (CET)
+Subject: [zfs-discuss] Moving drives from enclosure to internal?
+In-Reply-To: <5F762862-E3BB-4C36-9A92-0CB11F7E53F4@sogeeky.net>
+References: <932505D4-7344-4412-9FE2-186166B51FB5@ourstage.com>
+	<5F762862-E3BB-4C36-9A92-0CB11F7E53F4@sogeeky.net>
+Message-ID: <20090326.064942.51004048.hanche@math.ntnu.no>
+
++ "Mr. Zorg" <zorg at sogeeky.net>:
+
+> Although I am far from an expert, it is my understanding that it
+> should work. The pool does not use the disk names since that change
+> from boot to boot anyway.
+
+There have been many tales of woe here indicating the opposite, but if
+the pool is properly exported before the disk names change you should
+be okay. The troubles typically occur after disk crashes and similar
+adverse events that result in different device names after reboot, and
+where it has been impossible to export the pool first. (If it does
+happen, it might help to boot into single user mode and remove
+/etc/zfs/zpool.cache. You should be able to use zpool import -f
+afterwards.)
+
+- Harald
+
+From zorg at sogeeky.net  Wed Mar 25 23:47:12 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Wed, 25 Mar 2009 23:47:12 -0700
+Subject: [zfs-discuss] Moving drives from enclosure to internal?
+In-Reply-To: <20090326.064942.51004048.hanche@math.ntnu.no>
+References: <932505D4-7344-4412-9FE2-186166B51FB5@ourstage.com>
+	<5F762862-E3BB-4C36-9A92-0CB11F7E53F4@sogeeky.net>
+	<20090326.064942.51004048.hanche@math.ntnu.no>
+Message-ID: <F69C776A-FB96-41AE-BFE1-C45D7A334416@sogeeky.net>
+
+True. There have been a few. But, on the other hand, there  are people  
+like me who have a zfs pool on external drives (8 firewire drives in  
+my case) that work just fine. I've never exported my pool, my drive  
+names change after every boot and the only problems I've had were due  
+to failed power supplies. Go figure. It is still beta after all. :)
+
+Snow Leopard will fix everything, right?  LOL
+
+On Mar 25, 2009, at 10:49 PM, Harald Hanche-Olsen  
+<hanche at math.ntnu.no> wrote:
+
+> + "Mr. Zorg" <zorg at sogeeky.net>:
+>
+>> Although I am far from an expert, it is my understanding that it
+>> should work. The pool does not use the disk names since that change
+>> from boot to boot anyway.
+>
+> There have been many tales of woe here indicating the opposite, but if
+> the pool is properly exported before the disk names change you should
+> be okay. The troubles typically occur after disk crashes and similar
+> adverse events that result in different device names after reboot, and
+> where it has been impossible to export the pool first. (If it does
+> happen, it might help to boot into single user mode and remove
+> /etc/zfs/zpool.cache. You should be able to use zpool import -f
+> afterwards.)
+>
+> - Harald
+
+From s at avoidant.org  Thu Mar 26 00:22:20 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Thu, 26 Mar 2009 09:22:20 +0200
+Subject: [zfs-discuss] Moving drives from enclosure to internal?
+In-Reply-To: <F69C776A-FB96-41AE-BFE1-C45D7A334416@sogeeky.net>
+References: <932505D4-7344-4412-9FE2-186166B51FB5@ourstage.com>
+	<5F762862-E3BB-4C36-9A92-0CB11F7E53F4@sogeeky.net>
+	<20090326.064942.51004048.hanche@math.ntnu.no>
+	<F69C776A-FB96-41AE-BFE1-C45D7A334416@sogeeky.net>
+Message-ID: <862633FF-8B46-419F-9228-BD72AB9E5D19@avoidant.org>
+
+On 26/03/2009, at 08:47, Mr. Zorg wrote:
+
+> True. There have been a few. But, on the other hand, there  are  
+> people like me who have a zfs pool on external drives (8 firewire  
+> drives in my case) that work just fine. I've never exported my pool,  
+> my drive names change after every boot and the only problems I've  
+> had were due to failed power supplies. Go figure. It is still beta  
+> after all. :)
+
+I can only give my own experience, but I've had no problems whatsoever  
+with external drives.  6x1TB Seagates in a RAIDZ on my macBook Pro,  
+out through an SiL 3132 SATALink expresscard over eSATA, through an  
+Addonics port multiplier (http://avoidant.org/geniza.txt).  It all  
+Just Works, quite awesomely, I might add.
+
+> Snow Leopard will fix everything, right?  LOL
+
+The OS of the Messiah?
+
+--sambo
+
+From mattsnow at gmail.com  Fri Mar 27 09:15:29 2009
+From: mattsnow at gmail.com (Matt Snow)
+Date: Fri, 27 Mar 2009 09:15:29 -0700
+Subject: [zfs-discuss] Moving drives from enclosure to internal?
+In-Reply-To: <862633FF-8B46-419F-9228-BD72AB9E5D19@avoidant.org>
+References: <932505D4-7344-4412-9FE2-186166B51FB5@ourstage.com>
+	<5F762862-E3BB-4C36-9A92-0CB11F7E53F4@sogeeky.net>
+	<20090326.064942.51004048.hanche@math.ntnu.no>
+	<F69C776A-FB96-41AE-BFE1-C45D7A334416@sogeeky.net>
+	<862633FF-8B46-419F-9228-BD72AB9E5D19@avoidant.org>
+Message-ID: <6879ebc80903270915w59b78b4l7023bfffb5c63953@mail.gmail.com>
+
+a bit off topic, but when you open system profiler->SATA do you see these
+disks as having S.M.A.R.T. support?
+
+..Matt
+
+On Thu, Mar 26, 2009 at 12:22 AM, sammy ominsky <s at avoidant.org> wrote:
+
+> On 26/03/2009, at 08:47, Mr. Zorg wrote:
+>
+>  True. There have been a few. But, on the other hand, there  are people
+>> like me who have a zfs pool on external drives (8 firewire drives in my
+>> case) that work just fine. I've never exported my pool, my drive names
+>> change after every boot and the only problems I've had were due to failed
+>> power supplies. Go figure. It is still beta after all. :)
+>>
+>
+> I can only give my own experience, but I've had no problems whatsoever with
+> external drives.  6x1TB Seagates in a RAIDZ on my macBook Pro, out through
+> an SiL 3132 SATALink expresscard over eSATA, through an Addonics port
+> multiplier (http://avoidant.org/geniza.txt).  It all Just Works, quite
+> awesomely, I might add.
+>
+>  Snow Leopard will fix everything, right?  LOL
+>>
+>
+> The OS of the Messiah?
+>
+> --sambo
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090327/b274faed/attachment.html>
+

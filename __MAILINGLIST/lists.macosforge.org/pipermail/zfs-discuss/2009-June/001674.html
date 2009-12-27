@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] strange behavior once pool is destroyed
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20strange%20behavior%20once%20pool%20is%20destroyed&In-Reply-To=%3C4A3F0E94.6000006%40phys.washington.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001685.html">
+   <LINK REL="Next"  HREF="001686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] strange behavior once pool is destroyed</H1>
+    <B>Jared Nance</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20strange%20behavior%20once%20pool%20is%20destroyed&In-Reply-To=%3C4A3F0E94.6000006%40phys.washington.edu%3E"
+       TITLE="[zfs-discuss] strange behavior once pool is destroyed">nancejk at phys.washington.edu
+       </A><BR>
+    <I>Sun Jun 21 21:54:44 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001685.html">[zfs-discuss] Removing ZFS USB device
+</A></li>
+        <LI>Next message: <A HREF="001686.html">[zfs-discuss] Dismantling an array?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1674">[ date ]</a>
+              <a href="thread.html#1674">[ thread ]</a>
+              <a href="subject.html#1674">[ subject ]</a>
+              <a href="author.html#1674">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK, I have fixed the issue.  For those unfamiliar with the GPT Format,
+wikipedia has a nice article on it.  Basically there is a duplicate of
+the GUID partition record at the end of the drive, which is used as a
+backup.  Wiping the drive, particularly with %noformat% as an option,
+will preserve this final record and ZFS will remember it.  The elegant
+way to undo this is to hose the first and last 1MB or so of the drive
+using dd.  The inelegant method (which I used) is to use diskutil to
+format the drive in MBR format, and ask it to zero partition 1.  Since
+the old GPT partition will sit on the new partition, it will get zeroed. 
+
+Thanks for the help-
+Jared N
+&gt;<i> I believe you have to use dd to wipe the drive at certain points.
+</I>&gt;<i> look for it in the archives of the list.
+</I>&gt;<i> Dirk
+</I>&gt;<i> On 21 Jun 2009, at 22:45, Jared Nance wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi All-
+</I>&gt;&gt;<i> First of all, thanks in advance for any light you can shed on this
+</I>&gt;&gt;<i> subject.  My ZFS installation on OSX is behaving very strangely after I
+</I>&gt;&gt;<i> have destroyed a RAIDZ-1.  The setup is 3 external drives connected by
+</I>&gt;&gt;<i> USB (used to be FW800, but a low quality cable was causing many issues),
+</I>&gt;&gt;<i> RAIDZed.  I played around for a while, and eventually realized I could
+</I>&gt;&gt;<i> use a clean sweep.  So, I destroyed the pool, formatted the drives, and
+</I>&gt;&gt;<i> all of a sudden, ZFS refuses to re-create a pool of any kind of out
+</I>&gt;&gt;<i> these drives.  Furthermore, a disk label that I applied as an HFS+
+</I>&gt;&gt;<i> volume label seems to be quite persistent - no matter how many wipes I
+</I>&gt;&gt;<i> do, I cannot change the name.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Diskutil report:
+</I>&gt;&gt;<i> /dev/disk0
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:      GUID_partition_scheme                        *111.8 Gi   disk0
+</I>&gt;&gt;<i>   1:                        EFI                         200.0 Mi  
+</I>&gt;&gt;<i> disk0s1
+</I>&gt;&gt;<i>   2:                  Apple_HFS Macintosh HD            111.5 Gi  
+</I>&gt;&gt;<i> disk0s2
+</I>&gt;&gt;<i> /dev/disk1
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:      GUID_partition_scheme                        *596.2 Gi   disk1
+</I>&gt;&gt;<i>   1:                        EFI                         200.0 Mi  
+</I>&gt;&gt;<i> disk1s1
+</I>&gt;&gt;<i>   2:                 Apple_RAID                         595.9 Gi  
+</I>&gt;&gt;<i> disk1s2
+</I>&gt;&gt;<i>   3:                 Apple_Boot Boot OSX                128.0 Mi  
+</I>&gt;&gt;<i> disk1s3
+</I>&gt;&gt;<i> /dev/disk2
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:      GUID_partition_scheme                        *596.2 Gi   disk2
+</I>&gt;&gt;<i>   1:                        EFI                         200.0 Mi  
+</I>&gt;&gt;<i> disk2s1
+</I>&gt;&gt;<i>   2:                 Apple_RAID                         595.9 Gi  
+</I>&gt;&gt;<i> disk2s2
+</I>&gt;&gt;<i>   3:                 Apple_Boot Boot OSX                128.0 Mi  
+</I>&gt;&gt;<i> disk2s3
+</I>&gt;&gt;<i> /dev/disk3
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:                  Apple_HFS deepfreeze             *595.9 Gi   disk3
+</I>&gt;&gt;<i> /dev/disk4
+</I>&gt;&gt;<i>   #:                       TYPE NAME                    SIZE
+</I>&gt;&gt;<i> IDENTIFIER
+</I>&gt;&gt;<i>   0:      GUID_partition_scheme                        *596.2 Gi   disk4
+</I>&gt;&gt;<i>   1:                        EFI                         200.0 Mi  
+</I>&gt;&gt;<i> disk4s1
+</I>&gt;&gt;<i>   2:                        ZFS d1                      595.9 Gi  
+</I>&gt;&gt;<i> disk4s2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If I try to create a simple pool of one drive:
+</I>&gt;&gt;<i> heaviside-2% zpool create testpool /dev/disk4s2
+</I>&gt;&gt;<i> cannot create 'testpool': one or more vdevs refer to the same device
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Using any other drive results in the same issue.  Does anybody know
+</I>&gt;&gt;<i> what's going on?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jared Nance
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001685.html">[zfs-discuss] Removing ZFS USB device
+</A></li>
+	<LI>Next message: <A HREF="001686.html">[zfs-discuss] Dismantling an array?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1674">[ date ]</a>
+              <a href="thread.html#1674">[ thread ]</a>
+              <a href="subject.html#1674">[ subject ]</a>
+              <a href="author.html#1674">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

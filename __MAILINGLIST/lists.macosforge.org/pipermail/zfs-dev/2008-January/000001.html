@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Zfs-dev] zpool creates pools with mismatched zpool version
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-dev%40lists.macosforge.org?Subject=%5BZfs-dev%5D%20zpool%20creates%20pools%20with%20mismatched%20zpool%20version&In-Reply-To=2F01EE93-0425-448A-8129-672F8BDBC0DD%40sun.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000000.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Zfs-dev] zpool creates pools with mismatched zpool version</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-dev%40lists.macosforge.org?Subject=%5BZfs-dev%5D%20zpool%20creates%20pools%20with%20mismatched%20zpool%20version&In-Reply-To=2F01EE93-0425-448A-8129-672F8BDBC0DD%40sun.com"
+       TITLE="[Zfs-dev] zpool creates pools with mismatched zpool version">ndellofano at apple.com
+       </A><BR>
+    <I>Thu Jan 10 14:42:08 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000000.html">[Zfs-dev] zpool creates pools with mismatched zpool version
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Andy,
+
+Yeah sorry, this is confusing and weird but there is explanation :)  
+We're forcing version 6 creation for backward compatibility.
+Basically this is an artifact of the fact that though the Mac ZFS bits  
+now synced with Solaris SNV Build 72, which is ZFS on disk version 8,  
+we (Mac OSX ZFS) still create version 6 pools for compatibility with  
+the ZFS readonly version which was released with Leopard(which was SNV  
+build 61 and thus is version 6). The two on disk format changes that  
+were added don&#8217;t actually add any new features to ZFS on OSX yet  
+(delegated administration and separate intent logs aren&#8217;t enabled) so  
+we don't lose any new features because of the version change. Since  
+the read only version of ZFS released with Leopard was only at ZFS on  
+disk version 6, we didn&#8217;t want to introduce a ZFS write-able version  
+that would be incompatible. Hence, new pools are getting created as  
+version 6, and zfs version 1, so that you can use your pools on  
+systems with the original Leopard zfs readonly bits, and also on  
+systems you have the new writeable ZFS bits installed.  This is why  
+zpool status is telling you your pool is out of date.
+
+Never fear, we will update the pool creation to use version 8 (and zfs  
+version 2) as soon as we can release updated zfs readonly bits in a  
+Leopard Software Update.
+
+I'll add this to the ZFS FAQ on a new webpage I'm creating for us to  
+save on confusion, since I'm sure other people will have questions on  
+this too.
+
+thanks for using ZFS!
+
+Noel :)
+
+
+
+On Jan 10, 2008, at 4:24 AM, Andy Fox - Software Support Engineering -  
+Sun EMEA wrote:
+
+&gt;<i> Hi There,
+</I>&gt;<i>
+</I>&gt;<i> I've just installed the latest ZFS bits and pieces on my MacPro  
+</I>&gt;<i> running 10.5.1.
+</I>&gt;<i>
+</I>&gt;<i> When creating a zpool, I've come across an interesting anomaly.
+</I>&gt;<i>
+</I>&gt;<i> I used the following commands:
+</I>&gt;<i>
+</I>&gt;<i> diskutil partitiondisk /dev/disk8 GPTFormat ZFS %noformat% 100%
+</I>&gt;<i> zpool create USB250GB /dev/disk8s2
+</I>&gt;<i>
+</I>&gt;<i> I then did a 'zpool scrub', followed by 'zpool status', and see the  
+</I>&gt;<i> following:
+</I>&gt;<i>
+</I>&gt;<i> bash-3.2# zpool status
+</I>&gt;<i>  pool: USB250GB
+</I>&gt;<i> state: ONLINE
+</I>&gt;<i> status: The pool is formatted using an older on-disk format.  The  
+</I>&gt;<i> pool can
+</I>&gt;<i> 	still be used, but some features are unavailable.
+</I>&gt;<i> action: Upgrade the pool using 'zpool upgrade'.  Once this is done,  
+</I>&gt;<i> the
+</I>&gt;<i> 	pool will no longer be accessible on older software versions.
+</I>&gt;<i> scrub: scrub completed with 0 errors on Thu Jan 10 09:17:17 2008
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	NAME        STATE     READ WRITE CKSUM
+</I>&gt;<i> 	USB250GB    ONLINE       0     0     0
+</I>&gt;<i> 	  disk8s2   ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> This prompted me to do a 'zpool upgrade', which shows the following:
+</I>&gt;<i>
+</I>&gt;<i> bash-3.2# zpool upgrade
+</I>&gt;<i> This system is currently running ZFS pool version 8.
+</I>&gt;<i>
+</I>&gt;<i> The following pools are out of date, and can be upgraded.  After being
+</I>&gt;<i> upgraded, these pools will no longer be accessible by older software  
+</I>&gt;<i> versions.
+</I>&gt;<i>
+</I>&gt;<i> VER  POOL
+</I>&gt;<i> ---  ------------
+</I>&gt;<i> 6   USB250GB
+</I>&gt;<i>
+</I>&gt;<i> Use 'zpool upgrade -v' for a list of available versions and their  
+</I>&gt;<i> associated
+</I>&gt;<i> features.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> It seems that 'zpool create' is building a pool using an older pool  
+</I>&gt;<i> version than
+</I>&gt;<i> the system supports. I've tried the same thing under the latest  
+</I>&gt;<i> build of Nevada
+</I>&gt;<i> (build 80), and this doesn't happen.
+</I>&gt;<i>
+</I>&gt;<i> The pool can be successfully upgraded to version 8, and everything  
+</I>&gt;<i> works
+</I>&gt;<i> fine afterwards.
+</I>&gt;<i>
+</I>&gt;<i> I've checked that I'm using the correct zpool binary, and I am.
+</I>&gt;<i>
+</I>&gt;<i> It's not really a bug, but it's also not expected behaviour.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Andy.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Zfs-dev mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-dev">Zfs-dev at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-dev">http://lists.macosforge.org/mailman/listinfo/zfs-dev</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-dev/attachments/20080110/6ef03d22/attachment.html">http://lists.macosforge.org/pipermail/zfs-dev/attachments/20080110/6ef03d22/attachment.html</A>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000000.html">[Zfs-dev] zpool creates pools with mismatched zpool version
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-dev">More information about the Zfs-dev
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] How to erase cached zpool member info?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20How%20to%20erase%20cached%20zpool%20member%20info%3F&In-Reply-To=47E33231.40107%40jrv.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000361.html">
+   <LINK REL="Next"  HREF="000366.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] How to erase cached zpool member info?</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20How%20to%20erase%20cached%20zpool%20member%20info%3F&In-Reply-To=47E33231.40107%40jrv.org"
+       TITLE="[zfs-discuss] How to erase cached zpool member info?">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Mar 21 09:58:52 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000361.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+        <LI>Next message: <A HREF="000366.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#363">[ date ]</a>
+              <a href="thread.html#363">[ thread ]</a>
+              <a href="subject.html#363">[ subject ]</a>
+              <a href="author.html#363">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yeah so looks like you're having a hostil label takeover issue :)
+
+  So for OSX, we actually don't use the /etc/zfs/zpool.cache file to  
+store cached pool information like Solaris does.  This is because in  
+Solaris, device paths and ids are static entities and never change,  
+even across reboots.  Hence they can store disk path info for each  
+pool for quick lookups but in OSX we can't since we generate device  
+ids and paths automatically. They can change at a moments notice.
+
+So, with that info, in OSX we simply sniff each disk we see and if it  
+looks like a ZFS drive then we sniff the label out for it's info.   
+Note that on ZFS drives we write 4 lables to them:
+
+[ L0 ] [L1] ........................... [L2][L3]
+
+these labels hold the vdevs for the pool, the pool guid name of the  
+pool, and lots of other handy info.  It seems that this information  
+never got cleared out, i.e. you didn't do a zpool destroy on this pool  
+in it's last system?? If you did, apologies, as this shouldn't be an  
+issue and I'll check it out.
+
+If you didn't do a zpool destroy and are trying to reuse the disks for  
+a new ZFS pool you will need to clear the labels out by hand  
+(reformatting will only catch the labels at the front, not the back,  
+hence doing this by hand ensures a clean drive).  We are working on a  
+new utility which will clear the labels for you in one fell swoop.
+
+In the meantime I recommend using dd to clear the labels out.  Each  
+ZFS label is 256K.  Each disk looks like this:
+
+&lt;------ 200 MB EFI label -------&gt; &lt;----512K L0, L1 ZFS labels --- 
+ &gt;  ................................................... &lt;--512K L2, L3  
+ZFS labels--&gt; {end}
+
+I use dd and usually clear the first and last megs or so just to be  
+complete.  Something like
+#sudo dd if=/dev/zero of=/dev/disk2 bs=1m skip=200 count=1
+#sudo dd if=/dev/zero of=/dev/disk2 bs=1m skip=153599
+
+once for the front and once for the back.  For the back you just need  
+to know how big your drive is and subtract off the 1m and write to the  
+end of the drive.  If you need help or questions, feel free to email me.
+
+Noel
+
+
+
+On Mar 20, 2008, at 8:57 PM, James R. Van Artsdalen wrote:
+
+&gt;<i> How do I erase the cached zpool information?
+</I>&gt;<i>
+</I>&gt;<i> I have tremendous trouble reusing disks under OSX/ZFS if they have  
+</I>&gt;<i> ever
+</I>&gt;<i> been used for ZFS elsewhere: kernel panics, etc.  I'm suspicious the
+</I>&gt;<i> problem may actually bogus state in some zfs cache since &quot;zpool  
+</I>&gt;<i> import&quot;
+</I>&gt;<i> gives me nonsensical output:
+</I>&gt;<i>
+</I>&gt;<i> bash-3.2# zpool import
+</I>&gt;<i>  pool: xxx-1
+</I>&gt;<i>    id: 1218651719753128900
+</I>&gt;<i> state: FAULTED
+</I>&gt;<i> status: The pool was last accessed by another system.
+</I>&gt;<i> action: The pool cannot be imported due to damaged devices or data.
+</I>&gt;<i>   see: <A HREF="http://www.sun.com/msg/ZFS-8000-EY">http://www.sun.com/msg/ZFS-8000-EY</A>
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i>    xxx-1                   UNAVAIL  insufficient replicas
+</I>&gt;<i>      raidz1                 UNAVAIL  insufficient replicas
+</I>&gt;<i>        da0                  UNAVAIL  cannot open
+</I>&gt;<i>        9526628723727662261  UNAVAIL  cannot open
+</I>&gt;<i>        da1                  UNAVAIL  cannot open
+</I>&gt;<i>        disk2                UNAVAIL  cannot open
+</I>&gt;<i>        disk4                UNAVAIL  cannot open
+</I>&gt;<i> bash-3.2#
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> No pool with that name has every been attached to this host.  There  
+</I>&gt;<i> was
+</I>&gt;<i> such a pool attached to a FreeBSD host and then the disks recycled.
+</I>&gt;<i>
+</I>&gt;<i> There is a file /etc/zfs/zpool.cache but this doesn't appear to  
+</I>&gt;<i> contain
+</I>&gt;<i> useful data:
+</I>&gt;<i>
+</I>&gt;<i> bash-3.2# od -x /etc/zfs/zpool.cache
+</I>&gt;<i> 0000000      0001    0000    0000    0000    0000    0100    0000     
+</I>&gt;<i> 0000
+</I>&gt;<i> 0000020      0000    0000
+</I>&gt;<i> 0000024
+</I>&gt;<i> bash-3.2#
+</I>&gt;<i>
+</I>&gt;<i> Once I get a zpool created it seems to work well, and I have never  
+</I>&gt;<i> had a
+</I>&gt;<i> corruption problem.  But there are disk-full boundary cases to deal
+</I>&gt;<i> with: it appears possible to fill a disk such that an unprivileged  
+</I>&gt;<i> user
+</I>&gt;<i> cannot recover (I've gotten a zpool full to the point that chmod  
+</I>&gt;<i> failed
+</I>&gt;<i> but rm seems to still work).
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000361.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+	<LI>Next message: <A HREF="000366.html">[zfs-discuss] How to erase cached zpool member info?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#363">[ date ]</a>
+              <a href="thread.html#363">[ thread ]</a>
+              <a href="subject.html#363">[ subject ]</a>
+              <a href="author.html#363">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

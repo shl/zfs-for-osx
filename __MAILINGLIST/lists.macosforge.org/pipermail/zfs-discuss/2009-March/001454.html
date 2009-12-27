@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] First time user: Some questions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3C20090302.150023.44864624.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001453.html">
+   <LINK REL="Next"  HREF="001455.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] First time user: Some questions</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20First%20time%20user%3A%20Some%20questions&In-Reply-To=%3C20090302.150023.44864624.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] First time user: Some questions">hanche at math.ntnu.no
+       </A><BR>
+    <I>Mon Mar  2 06:00:23 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001453.html">[zfs-discuss] First time user: Some questions
+</A></li>
+        <LI>Next message: <A HREF="001455.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1454">[ date ]</a>
+              <a href="thread.html#1454">[ thread ]</a>
+              <a href="subject.html#1454">[ subject ]</a>
+              <a href="author.html#1454">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ John Hendy &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jw.hendy at gmail.com</A>&gt;:
+
+&gt;<i> Yup - 'zfs unmount pool' gives me 'cannot unmount /Volumes/pool;
+</I>&gt;<i> resource busy'
+</I>
+I use the following script to unmount and export zfs pools.
+It's written for rc, but should be easy to rewrite for your favourite
+shell. Note the literal TAB character in the sed command.
+
+
+#!/opt/local/bin/rc
+if (!~ $#* 1) {echo Usage: $0 '&lt;pool&gt;' &gt;[1=2]; exit 1}
+fn v {echo -- + $* &gt;[1=2]; $*}
+if (!~ `{id -u} 0) {v exec sudo $0 $*}
+for (mp in `{zfs list -Hrt filesystem -o mountpoint,mounted -S name $1 |
+             sed -ne 's|	yes||p'}) {
+  # NOTE literal tab character above! (before the word &quot;yes&quot;)
+  v diskutil unmount $mp || exit 1
+}
+v zpool export $1
+
+
+Brief explanation for the non-rc-literate: It reruns itself under sudo
+if it is not already running as uid 0. Then it lists all mounted
+filesystems under the named pool, and unmounts them from the bottom up
+(it's the -S name bit that sorts them for me), and finally it exports
+the pool. If any unmount operation fails, the script exits.
+
+- Harald
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001453.html">[zfs-discuss] First time user: Some questions
+</A></li>
+	<LI>Next message: <A HREF="001455.html">[zfs-discuss] First time user: Some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1454">[ date ]</a>
+              <a href="thread.html#1454">[ thread ]</a>
+              <a href="subject.html#1454">[ subject ]</a>
+              <a href="author.html#1454">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

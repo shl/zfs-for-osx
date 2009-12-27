@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%09ZFS%3F&In-Reply-To=mailman.870.1204807109.11791.zfs-discuss%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000301.html">
+   <LINK REL="Next"  HREF="000279.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%09ZFS%3F&In-Reply-To=mailman.870.1204807109.11791.zfs-discuss%40lists.macosforge.org"
+       TITLE="[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?">i_see at macnews.de
+       </A><BR>
+    <I>Thu Mar  6 14:22:28 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000301.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+        <LI>Next message: <A HREF="000279.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#278">[ date ]</a>
+              <a href="thread.html#278">[ thread ]</a>
+              <a href="subject.html#278">[ subject ]</a>
+              <a href="author.html#278">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+If you want to effectively want to run your system of a ZFS-Volume/ 
+root-pool you could try this:
+1. Install a barebones-Mac OS on a HFS partition.
+2. Configure your root pool
+3. create a Disk-image of sufficient size to hold all relevant data
+4. perform a union mount of the image via hdiutil late in the boot  
+process (You could do so by polling when your pool is available and  
+then performing the mount)
+
+This way you achieve:
+- None of the problems related to emptying the trash, copying files/ 
+folders with non-ascii characters, using special attributes etc.
+- All data changes are reflected in your zfs-pool
+- Everything that is required to have zfs available is taken from zfs
+-You can even mount the HFS+-System as read-only
+
+Potential issues:
+-When installing new software that requires changes to the boot  
+process, you might have to perform multiple reboots to modify your  
+base Filesystem.
+-If you are using sparse images or sparsebundles freed space is not  
+automatically recovered. (this could also be done during the boot  
+process, before mounting the image.
+-Extra care is required in the shutdown process, that the image is  
+unmounted and the pool gets exported right before the machine is  
+powered down. Otherwise you might hang on shutdown, as you sometimes  
+do when you forget to export your pools. (Has someone already written  
+a script that will export or forcibly export pools during shutdown?)
+
+The main reason I don't want to use ZFS for that now, is that I want  
+to have a usable system with just the internal HD of my mac-mini  
+present. I do try to move most reasonably important data into my pool  
+soon after it is created, but the system can temporarily work without  
+that.
+
+If anyone tries above method, I'd be interested to know how well it  
+works.
+--
+ralf bertling
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000301.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+	<LI>Next message: <A HREF="000279.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#278">[ date ]</a>
+              <a href="thread.html#278">[ thread ]</a>
+              <a href="subject.html#278">[ subject ]</a>
+              <a href="author.html#278">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

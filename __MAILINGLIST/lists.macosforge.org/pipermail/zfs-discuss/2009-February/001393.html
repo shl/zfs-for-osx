@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] One big pool / Several ones ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3CD1CF374F-7AFA-4A84-ACCA-ABC4A3DEB4D0%40sbod.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001391.html">
+   <LINK REL="Next"  HREF="001398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] One big pool / Several ones ?</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3CD1CF374F-7AFA-4A84-ACCA-ABC4A3DEB4D0%40sbod.at%3E"
+       TITLE="[zfs-discuss] One big pool / Several ones ?">zfs at sbod.at
+       </A><BR>
+    <I>Mon Feb 16 10:08:44 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001391.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+        <LI>Next message: <A HREF="001398.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1393">[ date ]</a>
+              <a href="thread.html#1393">[ thread ]</a>
+              <a href="subject.html#1393">[ subject ]</a>
+              <a href="author.html#1393">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 16.02.2009, at 18:59, Richard Elling wrote:
+
+&gt;<i> Franz Schmalzl wrote:
+</I>&gt;&gt;<i> Hey there beloved list :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> After using zfs on osx almost 1 year it&#180;s time to move on :)
+</I>&gt;&gt;<i> Since 2 of my Western Digital Harddrives died at the same time  
+</I>&gt;&gt;<i> ( grrrr )
+</I>&gt;&gt;<i> I decided it&#180;s time to build an opensolaris server.... ,-)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I&#180;m waving raidz goodbye and will be using zfs mirrors, i think...
+</I>&gt;<i>
+</I>&gt;<i> IMHO, a good idea.  <A HREF="http://baarf.com">http://baarf.com</A> :-)
+</I>
+That&#180;s nice :)
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, here&#180;s my  question:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Do you think its better to combine all of my mirrors ( i will be  
+</I>&gt;&gt;<i> using 8 drives, i.e . 4 mirror pairs ) into one pool
+</I>&gt;&gt;<i> or build 4 pools consisting of one mirror pair each ?
+</I>&gt;<i>
+</I>&gt;<i> Better in what way? A single mirror (or RAID-1) has better data  
+</I>&gt;<i> protection
+</I>&gt;<i> than a stripe of mirrors (or RAID-1+0). But the stripe of mirrors  
+</I>&gt;<i> has more
+</I>&gt;<i> space and better performance.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When using the first method, if one mirror dies, all my data is  
+</I>&gt;&gt;<i> gone ( again )
+</I>&gt;&gt;<i> But having 4 pools is annoying...
+</I>&gt;<i>
+</I>&gt;<i> In general, fewer is better -- easier to manage and lower TCO.
+</I>
+Right... but more vulnerable to a failing hardrive as well...
+
+
+I think i&#180;ll stick to building a couple of pools....
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there a way to &quot;stripe&quot; ( i know stripe is the wrong term here )  
+</I>&gt;&gt;<i> my data across all of the pools, but only loose data on one of the  
+</I>&gt;&gt;<i> mirror pairs if it dies ?
+</I>&gt;<i>
+</I>&gt;<i> It really depends on the failure mode. For ZFS, you have more options.
+</I>&gt;<i> For example, on my wife's home directory (containing her Pictures),  
+</I>&gt;<i> I set
+</I>&gt;<i> copies=2. This offers better redundancy for those things which are  
+</I>&gt;<i> most
+</I>&gt;<i> important. By contrast, my junk is in a file system with copies=1.   
+</I>&gt;<i> The
+</I>&gt;<i> zfs copies mechanism works over and above the zpool data protection.
+</I>&gt;<i> I find this difficult to describe in text, so a picture is worth  
+</I>&gt;<i> 1,000 words.
+</I>&gt;<i> <A HREF="http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection">http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection</A>
+</I>&gt;<i>
+</I>
+
+
+
+
+&gt;<i> HTH,
+</I>
+It did,
+
+
+Thank you very much!
+
+
+
+
+Franz
+
+&gt;<i>
+</I>&gt;<i> -- richard
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001391.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+	<LI>Next message: <A HREF="001398.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1393">[ date ]</a>
+              <a href="thread.html#1393">[ thread ]</a>
+              <a href="subject.html#1393">[ subject ]</a>
+              <a href="author.html#1393">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

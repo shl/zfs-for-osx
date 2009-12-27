@@ -1,0 +1,4631 @@
+From alex.blewitt at gmail.com  Sun Nov  2 14:59:23 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sun, 2 Nov 2008 22:59:23 +0000
+Subject: [zfs-discuss] Binary installer for ZFS-119
+Message-ID: <636fd28e0811021459k356238e1m3566d5ba3ccd4a66@mail.gmail.com>
+
+It's taken me a long time, but I've put together a binary installer
+(.pkg) for the 119 ZFS binaries available (from
+http://zfs.macosforge.org/trac/wiki/downloads) to make it easier for
+people to play around with ZFS.  It saves you having to get the right
+sequence of copy commands and ensuring the permissions are sorted out
+etc. So if you've got friends who are interested in playing with ZFS
+but don't want to follow the simple instructions, I've put an
+installer together via
+http://alblue.blogspot.com/2008/11/zfs-119-on-mac-os-x.html
+
+No doubt No?l et al will tell me ZFS-120 is just around the corner ...
+
+Alex
+
+From David.Evans at cl.cam.ac.uk  Thu Nov  6 05:23:41 2008
+From: David.Evans at cl.cam.ac.uk (David Evans)
+Date: Thu, 6 Nov 2008 13:23:41 +0000
+Subject: [zfs-discuss] Panic on importing a pool from the filesystem
+Message-ID: <20081106132341.GA25138@cl.cam.ac.uk>
+
+  Hi, all.
+
+  Have a Solaris 10 VM; its disks live on an HFS+ filesystem.  It can happily
+deal with pools created on and exported from OS X...yay!  But I get a
+panic when running
+
+zpool import -d /the/path/to/thhe/vmwarevm/directory
+
+I'd expect it to just complain rather than completely explode.  This is
+the binary distribution of 119.
+
+  Panic log:
+
+Thu Nov  6 08:38:29 2008
+panic(cpu 0 caller 0x001DBECE): "vnode_rele_ext: vp 0x8492880 kusecount
+-ve : -1"@/SourceCache/xnu/xnu-1228.7.58/bsd/vfs/vfs_subr.c:1621
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x365bb998 : 0x12b0fa (0x459234 0x365bb9cc 0x133243 0x0) 
+0x365bb9e8 : 0x1dbece (0x4675d0 0x8492880 0xffffffff 0x1f6513) 
+0x365bba28 : 0x1dc03e (0x8492880 0xb72ea40 0x0 0x0) 
+0x365bba48 : 0x1eb8d1 (0x8492880 0xb72ea40 0x0 0x12fc48) 
+0x365bba98 : 0x1dbdca (0x8492880 0xb72ea40 0xb72ea40 0xb72ea40) 
+0x365bbab8 : 0x35484e56 (0x8492880 0xb72ea40 0xb72ea40 0x0) 
+0x365bbb18 : 0x3547f370 (0xb0a2400 0x365bbb58 0x365bbb50 0x0) 
+0x365bbb78 : 0x3547bc90 (0xb0a2400 0x216 0x365bbbc8 0x35458800) 
+0x365bbbb8 : 0x3547f370 (0x3f5a800 0x365bbbf8 0x365bbbf0 0x35458875) 
+0x365bbc18 : 0x3547316a (0x3f5a800 0x354d60dc 0x0 0x0) 
+0x365bbcb8 : 0x35473b33 (0x1 0x0 0x365bbce0 0x3f5a800) 
+0x365bbcf8 : 0x3548939b (0xb30fe60 0x17c8418c 0xb4f0400 0x0) 
+0x365bbd38 : 0x3548ba23 (0xb4f0000 0x0 0x0 0x7d384000) 
+0x365bbd78 : 0x202e0c (0x1f000000 0xcf1c5a06 0xb4f0000 0x3) 
+0x365bbdb8 : 0x1f619c (0x365bbde8 0x246 0x365bbe18 0x1da35d) 
+0x365bbe18 : 0x1ec476 (0x5ea21c0 0xcf1c5a06 0xb4f0000 0x3) 
+	Backtrace continues...
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x35428000->0x354f3fff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBookAir1,1 (Mac-F42C8CC8)
+
+  Cheers!
+
+-- 
+David Evans                                     David.Evans at cl.cam.ac.uk
+Research Associate                        http://www.cl.cam.ac.uk/~de239
+Computer Laboratory, University of Cambridge
+
+From mcamou at tecnoguru.com  Thu Nov  6 06:47:29 2008
+From: mcamou at tecnoguru.com (Mario Camou)
+Date: Thu, 6 Nov 2008 15:47:29 +0100
+Subject: [zfs-discuss] Possible mmap problem
+Message-ID: <762437f0811060647s76a864d1qb4e6748117550fe5@mail.gmail.com>
+
+Hi,
+
+I've tried running rtorrent saving the files to my ZFS volume (3 mirrored
+pairs). I've seen 2 problems which do not occur on HFS+:
+
+1. rtorrent crashes on sartup about 70-80% of the time. I would think
+there's some sort of race condition or something because sometimes it *DOES*
+start up correctly.
+
+2. Once a file has finished downloading and rtorrent does its hash check, it
+finds that many blocks don't pass the check and has to re-download them.
+
+Researching this second problem I found a posting in the rtorrent site (at
+http://libtorrent.rakshasa.no/ticket/483) in which a comment states:
+
+I did the following test on my ZFS partition: open a file (O_CREAT|O_RDWR),
+> truncate it to 700 MB, mmap(?, MAP_SHARED, PROT_WRITE , ?), write to the
+> memory, and then munmap() it. The data did *not* get flushed to disk.
+>
+> I need to call msync() to ensure that data ends up on the disk. This is
+> unlike the HFS+ partition.
+>
+> I have reported the problem to Apple, I would think this is a bug in ZFS,
+> although I can't really get from the documentation, that msync() is implicit
+> in munmap().
+>
+So, is this an indication of a ZFS bug, an rtorrent bug or both?
+
+Thanks,
+
+-Mario.
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081106/d83e18ea/attachment.html>
+
+From William.Winnett at Sun.COM  Thu Nov  6 13:04:29 2008
+From: William.Winnett at Sun.COM (Bill Winnett)
+Date: Thu, 06 Nov 2008 16:04:29 -0500
+Subject: [zfs-discuss] =?iso-8859-1?q?zfs_directory_names_with_umlaut_O=27?=
+ =?iso-8859-1?q?s_=28i=2Ee=2E_=D6=29=2C_cause_goofy_behavior_with_finder?=
+ =?iso-8859-1?q?=2E?=
+Message-ID: <8C89E371-DA17-4EB2-BF35-D71A1A45139E@sun.com>
+
+
+zfs directory names with umlaut O's (i.e. ?), cause goofy behavior  
+with finder.
+
+To see what I mean, create at least 3 sub directories with the  
+following names
+
+? - directory1
+? - directory2
+? - directory3
+
+fill those directories with 20~30 files
+
+Now, use the mouse to expand/collapse the listing of the directories.  
+Finally collapse all directories.
+Leave the directory where the umlaut dir's are.  Come back, notice how  
+the directories automatically expand the listings.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081106/80f74462/attachment.html>
+
+From William.Winnett at Sun.COM  Fri Nov  7 07:13:36 2008
+From: William.Winnett at Sun.COM (Bill Winnett)
+Date: Fri, 07 Nov 2008 10:13:36 -0500
+Subject: [zfs-discuss] zfs directory names with umlaut O's (i.e. ?),
+	cause goofy behavior with finder.
+Message-ID: <F1291473-6D60-4112-93BE-0EE6AD477546@sun.com>
+
+
+It seems the mailing list scrubs extended characters of any kind.  The  
+"?" marks below are umlaut O, in capital form.
+
+
+Since posting this problem, I have also found other issues.  Sometimes  
+using finder to move larger files from a hfs+ filesystem to a zfs sub  
+dir with umlaut O in the directory name, the file gets lost.   The  
+file does not seem to get posted in the directory listing after the  
+copy completes.  I have even found sub directories to completely  
+disappear, even opening a terminal session and navigating to the work  
+area and running find or ls, does not find the directory.  Strange  
+behavior to say the least.
+
+
+Date: Thu, 06 Nov 2008 16:04:29 -0500
+From: Bill Winnett <William.Winnett at Sun.COM>
+Subject: [zfs-discuss] zfs directory names with umlaut O's (i.e. ?),
+	cause goofy behavior with finder.
+To: zfs-discuss at lists.macosforge.org
+Message-ID: <8C89E371-DA17-4EB2-BF35-D71A1A45139E at sun.com>
+Content-Type: text/plain; charset="iso-8859-1"; Format="flowed";
+	DelSp="yes"
+
+
+zfs directory names with umlaut O's (i.e. ?), cause goofy behavior
+with finder.
+
+To see what I mean, create at least 3 sub directories with the
+following names
+
+? - directory1
+? - directory2
+? - directory3
+
+fill those directories with 20~30 files
+
+Now, use the mouse to expand/collapse the listing of the directories.
+Finally collapse all directories.
+Leave the directory where the umlaut dir's are.  Come back, notice how
+the directories automatically expand the listings.
+-------------- next part --------------
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081107/5eeb94fa/attachment.html>
+
+From oliver.oli+0815 at gmail.com  Fri Nov  7 07:18:43 2008
+From: oliver.oli+0815 at gmail.com (Oliver Oli)
+Date: Fri, 7 Nov 2008 16:18:43 +0100
+Subject: [zfs-discuss] zfs directory names with umlaut O's (i.e. ?),
+	cause goofy behavior with finder.
+In-Reply-To: <F1291473-6D60-4112-93BE-0EE6AD477546@sun.com>
+References: <F1291473-6D60-4112-93BE-0EE6AD477546@sun.com>
+Message-ID: <66f535320811070718y7bb25d51jc47e780a2f962602@mail.gmail.com>
+
+I think I experienced some strange behaviour with ? too. I cannot remember
+exactly, but I think I had problems with moving or copying the directory.
+
+On Fri, Nov 7, 2008 at 4:13 PM, Bill Winnett <William.Winnett at sun.com>wrote:
+
+>
+> It seems the mailing list scrubs extended characters of any kind.  The "?"
+> marks below are umlaut O, in capital form.
+>
+>
+> Since posting this problem, I have also found other issues.  Sometimes
+> using finder to move larger files from a hfs+ filesystem to a zfs sub dir
+> with umlaut O in the directory name, the file gets lost.   The file does not
+> seem to get posted in the directory listing after the copy completes.  I
+> have even found sub directories to completely disappear, even opening a
+> terminal session and navigating to the work area and running find or ls,
+> does not find the directory.  Strange behavior to say the least.
+>
+>
+> Date: Thu, 06 Nov 2008 16:04:29 -0500
+> From: Bill Winnett <William.Winnett at Sun.COM>
+> Subject: [zfs-discuss] zfs directory names with umlaut O's (i.e. ?),
+> cause goofy behavior with finder.
+> To: zfs-discuss at lists.macosforge.org
+> Message-ID: <8C89E371-DA17-4EB2-BF35-D71A1A45139E at sun.com>
+> Content-Type: text/plain; charset="iso-8859-1"; Format="flowed";
+> DelSp="yes"
+>
+>
+> zfs directory names with umlaut O's (i.e. ?), cause goofy behavior
+> with finder.
+>
+> To see what I mean, create at least 3 sub directories with the
+> following names
+>
+> ? - directory1
+> ? - directory2
+> ? - directory3
+>
+> fill those directories with 20~30 files
+>
+> Now, use the mouse to expand/collapse the listing of the directories.
+> Finally collapse all directories.
+> Leave the directory where the umlaut dir's are.  Come back, notice how
+> the directories automatically expand the listings.
+> -------------- next part --------------
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081107/cab24f4b/attachment.html>
+
+From petite.abeille at gmail.com  Mon Nov 10 11:35:28 2008
+From: petite.abeille at gmail.com (Petite Abeille)
+Date: Mon, 10 Nov 2008 20:35:28 +0100
+Subject: [zfs-discuss] zfs kernel panic
+Message-ID: <0285D98A-8459-4B68-B924-022826512AE4@gmail.com>
+
+Hello,
+
+Not sure if this is the appropriate place to report such thing, but  
+every now and then I'm getting the following kernel panic while  
+creating a bunch of directories:
+
+panic(cpu 0 caller 0x0019E034): "trying to interlock destroyed mutex  
+0x19160fb8"@/SourceCache/xnu/xnu-1228.7.58/osfmk/i386/locks_i386.c:1760
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x79a978d8 : 0x12b0fa (0x459234 0x79a9790c 0x133243 0x0)
+0x79a97928 : 0x19e034 (0x460f54 0x19160fb8 0x937f900 0xf711e00)
+0x79a97948 : 0x19b108 (0x19160fb8 0x293 0x79a97978 0x5afc110b)
+0x79a97958 : 0x5afc110b (0x19160fb8 0x0 0x1 0x19160f80)
+0x79a97978 : 0x5afa44c2 (0x19160fb8 0x1e343580 0x4 0x7dcad030)
+0x79a979a8 : 0x5afa6df6 (0xd3cfb00 0x69d0020 0x0 0x2eefcb90)
+0x79a97a48 : 0x5afa6f0d (0x19160f80 0x69d0020 0x8 0x0)
+0x79a97aa8 : 0x5afa3908 (0x19160f80 0x69d0020 0x8 0x0)
+0x79a97b08 : 0x5afcc976 (0x76ae0b0 0xd596ad 0x0 0x69d0020)
+0x79a97b88 : 0x5af6ae63 (0x1a12e000 0x7be0ef78 0x1e343580 0x1)
+0x79a97c08 : 0x1f3a83 (0x79a97c24 0x0 0x0 0x0)
+0x79a97c58 : 0x1dbc89 (0xf4800e0 0x79a97e4c 0x79a97e24 0x79a97e8c)
+0x79a97cb8 : 0x1e70d9 (0xf4800e0 0x79a97e4c 0x79a97e24 0x79a97e8c)
+0x79a97e68 : 0x1e7302 (0x79a97e8c 0xfeaa7430 0x1 0x0)
+0x79a97f78 : 0x3ddd6e (0x7072310 0x80fc220 0x80fc264 0x685c0c0)
+0x79a97fc8 : 0x19f3b3 (0x803e440 0x0 0x10 0x803e440)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x5af66000->0x5b031fff
+
+BSD process name corresponding to current thread: lua
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBook3,1 (Mac-F22788C8)
+
+HTH.
+
+Cheers,
+
+--
+PA.
+http://alt.textdrive.com/nanoki/
+
+From zorg at sogeeky.net  Tue Nov 11 18:21:52 2008
+From: zorg at sogeeky.net (Mr. Zorg ...)
+Date: Tue, 11 Nov 2008 18:21:52 -0800
+Subject: [zfs-discuss] ZFS vs. Seagate 1.5TB drives?
+In-Reply-To: <C87DBE55-9EC1-4FC5-95B8-B77A14AAF855@thinkpink.com>
+References: <C87DBE55-9EC1-4FC5-95B8-B77A14AAF855@thinkpink.com>
+Message-ID: <fbaadd320811111821w68234556le4f15ad4240703c0@mail.gmail.com>
+
+Hey guys, slashdot is running an article stating that Seagate has
+formally acknowledged issues with these new 1.5TB drives.  Take a
+look.
+
+http://hardware.slashdot.org/article.pl?sid=08/11/11/2125227
+
+On Fri, Oct 31, 2008 at 9:43 AM, Brian Pinkerton <bp at thinkpink.com> wrote:
+> Has anyone tried ZFS with the new Seagate 1.5TB drives?  It looks like there
+> may be some timeout issues with flushing the write cache on this model of
+> the drive that affects HFS with journaling (Mac) and XFS (linux).  I'm
+> guessing this will hit ZFS too, but I wanted to ask to see if anyone's had
+> direct experience.
+>
+> tia,
+> bri
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From mrezny at hexaneinc.com  Fri Nov 14 17:57:09 2008
+From: mrezny at hexaneinc.com (Matthew Rezny)
+Date: Fri, 14 Nov 2008 18:57:09 -0700
+Subject: [zfs-discuss] ZFS mountpoint in limbo
+Message-ID: <1BD1B630-5327-4F73-99D9-E5ED5F41F335@hexaneinc.com>
+
+I have had very good results with ZFS across a large array on my dual  
+G5. I recently started using ZFS on a single external drive on my  
+MacBook Pro via eSATA. I have trouble with logout/reboot hanging  
+recently, which happened when attempting to install software updates  
+that required a reboot. Before doing I hard reboot, I attempted to  
+unmount the ZFS volumes and ran into one that is mounted but claims  
+not to be, as shown below.
+
+$ sudo zfs list
+NAME                         USED  AVAIL  REFER  MOUNTPOINT
+ZFSextern                   3.23G   270G   274K  /Volumes/ZFSextern
+ZFSextern/Virtual_Machines  3.23G   270G  3.23G  /Volumes/ZFSextern/ 
+Virtual_Machines
+$ sudo zfs umount ZFSextern/Virtual_Machines
+cannot unmount 'ZFSextern/Virtual_Machines': not currently mounted
+$ sudo zfs umount ZFSextern
+cannot unmount '/Volumes/ZFSextern': Resource busy
+
+
+
+From mike666 at mac.com  Sat Nov 15 02:56:23 2008
+From: mike666 at mac.com (Mike Prather)
+Date: Sat, 15 Nov 2008 02:56:23 -0800
+Subject: [zfs-discuss] adding drives to a raidz volume
+Message-ID: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+
+I know this is a colossally noob-ish question but I can't seem to find  
+an exact answer anywhere else.
+
+As I buy them, can I add new disks to an existing raidz device  
+(without losing data, of course) such that this:
+
+	testz
+	  raidz1
+	    disk6s2
+	    disk7s2
+	    disk8s2
+
+will become this:
+
+	testz
+	  raidz1
+	    disk6s2
+	    disk7s2
+	    disk8s2
+	    disk9s2
+
+??
+
+Or do I *have* to wait until I can get a group of disks into another  
+raidz device and add that to the pool?
+
+Thanks bunches - I am eagerly awaiting the next build :),
+Mike
+
+"I'm never quite so stupid as when I'm being smart." -Schultz
+
+
+
+From franzschmalzl at spamfreemail.de  Sat Nov 15 06:00:19 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Sat, 15 Nov 2008 15:00:19 +0100
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+Message-ID: <F437F678-D892-4891-9112-B0C2BBEDD07C@spamfreemail.de>
+
+> Or do I *have* to wait until I can get a group of disks into another  
+> raidz device and add that to the pool?
+
+Exactly, you cannot add drives to a raidz vdev, but only another raidz  
+to an existing pool.
+
+
+Kind regards,
+
+Franz
+
+
+
+
+On 15.11.2008, at 11:56, Mike Prather wrote:
+
+> I know this is a colossally noob-ish question but I can't seem to  
+> find an exact answer anywhere else.
+>
+> As I buy them, can I add new disks to an existing raidz device  
+> (without losing data, of course) such that this:
+>
+> 	testz
+> 	  raidz1
+> 	    disk6s2
+> 	    disk7s2
+> 	    disk8s2
+>
+> will become this:
+>
+> 	testz
+> 	  raidz1
+> 	    disk6s2
+> 	    disk7s2
+> 	    disk8s2
+> 	    disk9s2
+>
+> ??
+>
+> Or do I *have* to wait until I can get a group of disks into another  
+> raidz device and add that to the pool?
+>
+> Thanks bunches - I am eagerly awaiting the next build :),
+> Mike
+>
+> "I'm never quite so stupid as when I'm being smart." -Schultz
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From Jonathan.Edwards at Sun.COM  Sat Nov 15 06:16:44 2008
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Sat, 15 Nov 2008 09:16:44 -0500
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+Message-ID: <21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+
+
+On Nov 15, 2008, at 5:56 AM, Mike Prather wrote:
+
+> I know this is a colossally noob-ish question but I can't seem to  
+> find an exact answer anywhere else.
+>
+> As I buy them, can I add new disks to an existing raidz device  
+> (without losing data, of course) such that this:
+>
+> 	testz
+> 	  raidz1
+> 	    disk6s2
+> 	    disk7s2
+> 	    disk8s2
+>
+> will become this:
+>
+> 	testz
+> 	  raidz1
+> 	    disk6s2
+> 	    disk7s2
+> 	    disk8s2
+> 	    disk9s2
+>
+> ??
+>
+> Or do I *have* to wait until I can get a group of disks into another  
+> raidz device and add that to the pool?
+
+right, you'll want to wait until you have a new group of disks to add  
+as new devices get added to the root vdev .. in other words:
+	testz
+	  raidz1
+	    disk6s2
+	    disk7s2
+	    disk8s2
+	  raidz1
+	    disk9s2
+	    disk10s2
+	    disk11s2
+
+if you only added a single device it would like this (and you might  
+have to use the -f flag):
+	testz
+	  raidz1
+	    disk6s2
+	    disk7s2
+	    disk8s2
+	  disk9s2
+
+it wouldn't get added to the existing raidz vdev, you'd have  
+mismatched stripe groups, and inconsistent data protection.
+
+now on another side point .. 3 disk raidz sets may not be that ideal,  
+particularly if you're using large disks as you'll end up using 33% of  
+your capacity in parity - mirrored sets will perform better on reads  
+(since you'll read from both sides of the mirror), depending on what  
+you're designing for.
+
+From Jonathan.Edwards at Sun.COM  Sat Nov 15 06:20:45 2008
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Sat, 15 Nov 2008 09:20:45 -0500
+Subject: [zfs-discuss] ZFS mountpoint in limbo
+In-Reply-To: <1BD1B630-5327-4F73-99D9-E5ED5F41F335@hexaneinc.com>
+References: <1BD1B630-5327-4F73-99D9-E5ED5F41F335@hexaneinc.com>
+Message-ID: <7347B6D4-041A-4900-B5D8-5A5AA888C608@sun.com>
+
+
+On Nov 14, 2008, at 8:57 PM, Matthew Rezny wrote:
+
+> I have had very good results with ZFS across a large array on my  
+> dual G5. I recently started using ZFS on a single external drive on  
+> my MacBook Pro via eSATA. I have trouble with logout/reboot hanging  
+> recently, which happened when attempting to install software updates  
+> that required a reboot. Before doing I hard reboot, I attempted to  
+> unmount the ZFS volumes and ran into one that is mounted but claims  
+> not to be, as shown below.
+>
+> $ sudo zfs list
+> NAME                         USED  AVAIL  REFER  MOUNTPOINT
+> ZFSextern                   3.23G   270G   274K  /Volumes/ZFSextern
+> ZFSextern/Virtual_Machines  3.23G   270G  3.23G  /Volumes/ZFSextern/ 
+> Virtual_Machines
+> $ sudo zfs umount ZFSextern/Virtual_Machines
+> cannot unmount 'ZFSextern/Virtual_Machines': not currently mounted
+> $ sudo zfs umount ZFSextern
+> cannot unmount '/Volumes/ZFSextern': Resource busy
+
+i typically just export the pool before i reboot on my MBP .. make  
+sure you shut down everything that is accessing the pool and then:
+
+$ sudo zpool export ZFSextern
+
+or
+
+$ sudo zpool export -f ZFSextern
+
+From mike666 at mac.com  Sat Nov 15 14:25:21 2008
+From: mike666 at mac.com (Mike Prather)
+Date: Sat, 15 Nov 2008 14:25:21 -0800
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+	<21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+Message-ID: <E8AC11E1-0B3D-46D2-A284-52AC627149F5@mac.com>
+
+Thanks to all for the quick and kind responses - I figured that was  
+the case but just wanted to confirm.  I wasn't able to make it work  
+with test images - got the results demonstrated below by Jonathan.
+
+I guess the next question would naturally be: Is it at all feasible  
+for this to be possible at some future date?  I know the current push  
+is to simply(!) get zfs up to par for Mac OS X but the ability to add  
+disks to striped/parity sets would be a tremendous boon for future  
+versions. That would certainly be truly dynamic striping and would  
+make zfs THE filesystem for the common nerd!  I'd think as storage  
+moves towards solid state and the true random access that provides,  
+that might make it easier, no?
+
+Mike
+
+"And let he who hath not a backup be visited by evil upon his hard  
+drive, for therein lies the money.  And further let he who doth not  
+learn from this lesson be forever known as Fool."  Mike 6:66
+
+On Nov 15, 2008, at 6:16 AM, Jonathan Edwards wrote:
+
+>
+> On Nov 15, 2008, at 5:56 AM, Mike Prather wrote:
+>
+>> I know this is a colossally noob-ish question but I can't seem to  
+>> find an exact answer anywhere else.
+>>
+>> As I buy them, can I add new disks to an existing raidz device  
+>> (without losing data, of course) such that this:
+>>
+>> 	testz
+>> 	  raidz1
+>> 	    disk6s2
+>> 	    disk7s2
+>> 	    disk8s2
+>>
+>> will become this:
+>>
+>> 	testz
+>> 	  raidz1
+>> 	    disk6s2
+>> 	    disk7s2
+>> 	    disk8s2
+>> 	    disk9s2
+>>
+>> ??
+>>
+>> Or do I *have* to wait until I can get a group of disks into  
+>> another raidz device and add that to the pool?
+>
+> right, you'll want to wait until you have a new group of disks to  
+> add as new devices get added to the root vdev .. in other words:
+> 	testz
+> 	  raidz1
+> 	    disk6s2
+> 	    disk7s2
+> 	    disk8s2
+> 	  raidz1
+> 	    disk9s2
+> 	    disk10s2
+> 	    disk11s2
+>
+> if you only added a single device it would like this (and you might  
+> have to use the -f flag):
+> 	testz
+> 	  raidz1
+> 	    disk6s2
+> 	    disk7s2
+> 	    disk8s2
+> 	  disk9s2
+>
+> it wouldn't get added to the existing raidz vdev, you'd have  
+> mismatched stripe groups, and inconsistent data protection.
+>
+> now on another side point .. 3 disk raidz sets may not be that  
+> ideal, particularly if you're using large disks as you'll end up  
+> using 33% of your capacity in parity - mirrored sets will perform  
+> better on reads (since you'll read from both sides of the mirror),  
+> depending on what you're designing for.
+
+
+From zorg at sogeeky.net  Sat Nov 15 14:32:49 2008
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Sat, 15 Nov 2008 14:32:49 -0800
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <E8AC11E1-0B3D-46D2-A284-52AC627149F5@mac.com>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+	<21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+	<E8AC11E1-0B3D-46D2-A284-52AC627149F5@mac.com>
+Message-ID: <D0B29A45-FB91-4CB0-92C8-EFBBA77331B0@sogeeky.net>
+
+I think it is technically possible to do, but very tricky. You'd want  
+to do it in an atomic way that doesn't but your data at risk if  
+something should fail during the operation. It is far cheaper and  
+easier to just buy a handful of disks than it is to implement this  
+feature. The only people who really care about such functionality is  
+us poor nerds who can only afford one drive at a time. :)
+
+On Nov 15, 2008, at 2:25 PM, Mike Prather <mike666 at mac.com> wrote:
+
+> Thanks to all for the quick and kind responses - I figured that was  
+> the case but just wanted to confirm.  I wasn't able to make it work  
+> with test images - got the results demonstrated below by Jonathan.
+>
+> I guess the next question would naturally be: Is it at all feasible  
+> for this to be possible at some future date?  I know the current  
+> push is to simply(!) get zfs up to par for Mac OS X but the ability  
+> to add disks to striped/parity sets would be a tremendous boon for  
+> future versions. That would certainly be truly dynamic striping and  
+> would make zfs THE filesystem for the common nerd!  I'd think as  
+> storage moves towards solid state and the true random access that  
+> provides, that might make it easier, no?
+>
+> Mike
+>
+> "And let he who hath not a backup be visited by evil upon his hard  
+> drive, for therein lies the money.  And further let he who doth not  
+> learn from this lesson be forever known as Fool."  Mike 6:66
+>
+> On Nov 15, 2008, at 6:16 AM, Jonathan Edwards wrote:
+>
+>>
+>> On Nov 15, 2008, at 5:56 AM, Mike Prather wrote:
+>>
+>>> I know this is a colossally noob-ish question but I can't seem to  
+>>> find an exact answer anywhere else.
+>>>
+>>> As I buy them, can I add new disks to an existing raidz device  
+>>> (without losing data, of course) such that this:
+>>>
+>>>    testz
+>>>      raidz1
+>>>        disk6s2
+>>>        disk7s2
+>>>        disk8s2
+>>>
+>>> will become this:
+>>>
+>>>    testz
+>>>      raidz1
+>>>        disk6s2
+>>>        disk7s2
+>>>        disk8s2
+>>>        disk9s2
+>>>
+>>> ??
+>>>
+>>> Or do I *have* to wait until I can get a group of disks into  
+>>> another raidz device and add that to the pool?
+>>
+>> right, you'll want to wait until you have a new group of disks to  
+>> add as new devices get added to the root vdev .. in other words:
+>>    testz
+>>      raidz1
+>>        disk6s2
+>>        disk7s2
+>>        disk8s2
+>>      raidz1
+>>        disk9s2
+>>        disk10s2
+>>        disk11s2
+>>
+>> if you only added a single device it would like this (and you might  
+>> have to use the -f flag):
+>>    testz
+>>      raidz1
+>>        disk6s2
+>>        disk7s2
+>>        disk8s2
+>>      disk9s2
+>>
+>> it wouldn't get added to the existing raidz vdev, you'd have  
+>> mismatched stripe groups, and inconsistent data protection.
+>>
+>> now on another side point .. 3 disk raidz sets may not be that  
+>> ideal, particularly if you're using large disks as you'll end up  
+>> using 33% of your capacity in parity - mirrored sets will perform  
+>> better on reads (since you'll read from both sides of the mirror),  
+>> depending on what you're designing for.
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From alex.blewitt at gmail.com  Sat Nov 15 15:10:09 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sat, 15 Nov 2008 23:10:09 +0000
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <D0B29A45-FB91-4CB0-92C8-EFBBA77331B0@sogeeky.net>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+	<21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+	<E8AC11E1-0B3D-46D2-A284-52AC627149F5@mac.com>
+	<D0B29A45-FB91-4CB0-92C8-EFBBA77331B0@sogeeky.net>
+Message-ID: <4D561C73-3C26-4B61-8145-7CBC0711BD3D@gmail.com>
+
+The idea has been discussed on the Sun dev lists but not implemented  
+there yet. Given that the OSX protect is (a) to just get it ported/ 
+running on OSX and (b) to merge ahead to some of the more recent stuff  
+that Sun has done, it's likely to remain on the wish list for a while.
+
+Note that it is fairly likely the way to upgrade a zfs pool for home  
+users is simply to buy another n drives that are (much) larger than  
+your current set of drives, and by a sequence of one-for-one  
+replacements increase your size that way. That can be done either for  
+a mirrored or raid set.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 15 Nov 2008, at 22:32, "Mr. Zorg" <zorg at sogeeky.net> wrote:
+
+> I think it is technically possible to do, but very tricky. You'd  
+> want to do it in an atomic way that doesn't but your data at risk if  
+> something should fail during the operation. It is far cheaper and  
+> easier to just buy a handful of disks than it is to implement this  
+> feature. The only people who really care about such functionality is  
+> us poor nerds who can only afford one drive at a time. :)
+>
+> On Nov 15, 2008, at 2:25 PM, Mike Prather <mike666 at mac.com> wrote:
+>
+>> Thanks to all for the quick and kind responses - I figured that was  
+>> the case but just wanted to confirm.  I wasn't able to make it work  
+>> with test images - got the results demonstrated below by Jonathan.
+>>
+>> I guess the next question would naturally be: Is it at all feasible  
+>> for this to be possible at some future date?  I know the current  
+>> push is to simply(!) get zfs up to par for Mac OS X but the ability  
+>> to add disks to striped/parity sets would be a tremendous boon for  
+>> future versions. That would certainly be truly dynamic striping and  
+>> would make zfs THE filesystem for the common nerd!  I'd think as  
+>> storage moves towards solid state and the true random access that  
+>> provides, that might make it easier, no?
+>>
+>> Mike
+>>
+>> "And let he who hath not a backup be visited by evil upon his hard  
+>> drive, for therein lies the money.  And further let he who doth not  
+>> learn from this lesson be forever known as Fool."  Mike 6:66
+>>
+>> On Nov 15, 2008, at 6:16 AM, Jonathan Edwards wrote:
+>>
+>>>
+>>> On Nov 15, 2008, at 5:56 AM, Mike Prather wrote:
+>>>
+>>>> I know this is a colossally noob-ish question but I can't seem to  
+>>>> find an exact answer anywhere else.
+>>>>
+>>>> As I buy them, can I add new disks to an existing raidz device  
+>>>> (without losing data, of course) such that this:
+>>>>
+>>>>   testz
+>>>>     raidz1
+>>>>       disk6s2
+>>>>       disk7s2
+>>>>       disk8s2
+>>>>
+>>>> will become this:
+>>>>
+>>>>   testz
+>>>>     raidz1
+>>>>       disk6s2
+>>>>       disk7s2
+>>>>       disk8s2
+>>>>       disk9s2
+>>>>
+>>>> ??
+>>>>
+>>>> Or do I *have* to wait until I can get a group of disks into  
+>>>> another raidz device and add that to the pool?
+>>>
+>>> right, you'll want to wait until you have a new group of disks to  
+>>> add as new devices get added to the root vdev .. in other words:
+>>>   testz
+>>>     raidz1
+>>>       disk6s2
+>>>       disk7s2
+>>>       disk8s2
+>>>     raidz1
+>>>       disk9s2
+>>>       disk10s2
+>>>       disk11s2
+>>>
+>>> if you only added a single device it would like this (and you  
+>>> might have to use the -f flag):
+>>>   testz
+>>>     raidz1
+>>>       disk6s2
+>>>       disk7s2
+>>>       disk8s2
+>>>     disk9s2
+>>>
+>>> it wouldn't get added to the existing raidz vdev, you'd have  
+>>> mismatched stripe groups, and inconsistent data protection.
+>>>
+>>> now on another side point .. 3 disk raidz sets may not be that  
+>>> ideal, particularly if you're using large disks as you'll end up  
+>>> using 33% of your capacity in parity - mirrored sets will perform  
+>>> better on reads (since you'll read from both sides of the mirror),  
+>>> depending on what you're designing for.
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From bwaters at nrao.edu  Sat Nov 15 16:13:18 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Sat, 15 Nov 2008 17:13:18 -0700
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <4D561C73-3C26-4B61-8145-7CBC0711BD3D@gmail.com>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+	<21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+	<E8AC11E1-0B3D-46D2-A284-52AC627149F5@mac.com>
+	<D0B29A45-FB91-4CB0-92C8-EFBBA77331B0@sogeeky.net>
+	<4D561C73-3C26-4B61-8145-7CBC0711BD3D@gmail.com>
+Message-ID: <5A5F26CD-59B3-4E9A-8011-E4742F31F6BC@nrao.edu>
+
+
+On Nov 15, 2008, at 4:10 PM, Alex Blewitt wrote:
+
+> Given that the OSX project is (a) to just get it ported/running on  
+> OSX and (b) to merge ahead to some of the more recent stuff that Sun  
+> has done
+
+
+Great thread about adding disks to raidz... here's an off-topic notion:
+
+I think that ZFS on OSX is very close to being on par with Sun, its a  
+question of clearing up 2 or 3 crashers.
+
+The really hard part is explaining ZFS features to OSX's VFS (virtual  
+filesystem) layer, cleaning up the Finder, and so on. So that  
+snapshots are visible. So that filesystems appear in the Finder with  
+their filesystem name, instead of their top-level pool name. And so  
+on...
+
+So Alex is right about the project's (a) and (b) targets, but add a  
+(c) target -- integration with OSX user-space.
+
+
+Given all that, I wouldn't expect to see raidz expansion any time soon.
+
+But I could be wrong, as OSX is a consumer-oriented platform, and  
+ideal place for this. Making it safe enough for Grandma might be hard.
+
+
+From abelian.group at yahoo.com  Sat Nov 15 19:14:07 2008
+From: abelian.group at yahoo.com (Abelian Group)
+Date: Sat, 15 Nov 2008 19:14:07 -0800 (PST)
+Subject: [zfs-discuss] Fw:  adding drives to a raidz volume
+Message-ID: <781642.83116.qm@web59604.mail.ac4.yahoo.com>
+
+
+
+Would really love to see ZFS L2ARC and ZIL (SLOG) features on OSX. 
+
+
+
+
+
+________________________________
+From: Boyd Waters <bwaters at nrao.edu>
+To: zfs-discuss at lists.macosforge.org
+Sent: Saturday, November 15, 2008 4:13:18 PM
+Subject: Re: [zfs-discuss] adding drives to a raidz volume
+
+
+On Nov 15, 2008, at 4:10 PM, Alex Blewitt wrote:
+
+> Given that the OSX project is (a) to just get it ported/running on OSX and (b) to merge ahead to some of the more recent stuff that Sun has done
+
+
+Great thread about adding disks to raidz... here's an off-topic notion:
+
+I think that ZFS on OSX is very close to being on par with Sun, its a question of clearing up 2 or 3 crashers.
+
+The really hard part is explaining ZFS features to OSX's VFS (virtual filesystem) layer, cleaning up the Finder, and so on. So that snapshots are visible. So that filesystems appear in the Finder with their filesystem name, instead of their top-level pool name. And so on...
+
+So Alex is right about the project's (a) and (b) targets, but add a (c) target -- integration with OSX user-space.
+
+
+Given all that, I wouldn't expect to see raidz expansion any time soon.
+
+But I could be wrong, as OSX is a consumer-oriented platform, and ideal place for this. Making it safe enough for Grandma might be hard.
+
+_______________________________________________
+zfs-discuss mailing list
+zfs-discuss at lists.macosforge.org
+http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+      
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081115/3592a5f6/attachment-0001.html>
+
+From Jonathan.Edwards at Sun.COM  Sat Nov 15 19:36:45 2008
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Sat, 15 Nov 2008 22:36:45 -0500
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <4D561C73-3C26-4B61-8145-7CBC0711BD3D@gmail.com>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+	<21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+	<E8AC11E1-0B3D-46D2-A284-52AC627149F5@mac.com>
+	<D0B29A45-FB91-4CB0-92C8-EFBBA77331B0@sogeeky.net>
+	<4D561C73-3C26-4B61-8145-7CBC0711BD3D@gmail.com>
+Message-ID: <E6B1B694-F5E0-4E69-AA9A-67D8BF1C9DA5@sun.com>
+
+
+On Nov 15, 2008, at 6:10 PM, Alex Blewitt wrote:
+
+> Note that it is fairly likely the way to upgrade a zfs pool for home  
+> users is simply to buy another n drives that are (much) larger than  
+> your current set of drives, and by a sequence of one-for-one  
+> replacements increase your size that way. That can be done either  
+> for a mirrored or raid set.
+
+yep - that can work as you're also solving the problem of re-laying  
+out the data which is why it's not just trivial to just add a disk to  
+an existing raidz stripe .. your data layout and parity would be all  
+out of whack
+
+you can always just add more disks in separate stripe groups to the  
+pool which will also have the side effect of increasing the amount of  
+parity protection you have in the pool, but if you're going raidz -  
+adding a single disk isn't going to help you much in the pool unless  
+you're adding a spare.
+
+---
+.je
+
+From petite.abeille at gmail.com  Sun Nov 16 09:18:48 2008
+From: petite.abeille at gmail.com (Petite Abeille)
+Date: Sun, 16 Nov 2008 18:18:48 +0100
+Subject: [zfs-discuss] panic
+Message-ID: <F5296B1F-C35A-4964-B226-22695AE97F8F@gmail.com>
+
+In case anyone is keeping track of such things...
+
+panic(cpu 1 caller 0x001A8CEC): Kernel trap at 0x00cb052a, type  
+14=page fault, registers:
+CR0: 0x8001003b, CR2: 0x00000085, CR3: 0x011b2000, CR4: 0x00000660
+EAX: 0x00000051, EBX: 0x00000051, ECX: 0x09654100, EDX: 0x00000001
+CR2: 0x00000085, EBP: 0x76ca3958, ESI: 0x09654100, EDI: 0x15448fb8
+EFL: 0x00010202, EIP: 0x00cb052a, CS:  0x00000008, DS:  0x163c0010
+Error code: 0x00000000
+
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x76ca3768 : 0x12b0fa (0x459234 0x76ca379c 0x133243 0x0)
+0x76ca37b8 : 0x1a8cec (0x4627a0 0xcb052a 0xe 0x461f50)
+0x76ca3898 : 0x19eed5 (0x76ca38b0 0x206 0x76ca3958 0xcb052a)
+0x76ca38a8 : 0xcb052a (0xe 0x48 0x76ca0010 0xcd0010)
+0x76ca3958 : 0xca3a5a (0x51 0x0 0x0 0x8c914a0)
+0x76ca3978 : 0xcbe4ba (0x1 0x9654100 0x3 0x89ac3030)
+0x76ca39a8 : 0xcc0df6 (0x6de1840 0x6b50022 0x0 0xf0c914a0)
+0x76ca3a48 : 0xcc0f0d (0x15448f80 0x6b50022 0x8 0x0)
+0x76ca3aa8 : 0xcbd908 (0x15448f80 0x6b50022 0x8 0x0)
+0x76ca3b08 : 0xce6976 (0x6cac250 0xd5bc6a 0x0 0x6b50022)
+0x76ca3b88 : 0xc84e63 (0x1ea3a540 0x80436560 0x9654100 0x1)
+0x76ca3c08 : 0x1f3a83 (0x76ca3c24 0x0 0x0 0x0)
+0x76ca3c58 : 0x1dbc89 (0xbba2560 0x76ca3e4c 0x76ca3e24 0x76ca3e8c)
+0x76ca3cb8 : 0x1e70d9 (0xbba2560 0x76ca3e4c 0x76ca3e24 0x76ca3e8c)
+0x76ca3e68 : 0x1e7302 (0x76ca3e8c 0x206 0x76ca3ee8 0x367561)
+0x76ca3f78 : 0x3ddd6e (0x6b66a00 0x880ed80 0x880edc4 0xffffffff)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xc80000->0xd4bfff
+
+BSD process name corresponding to current thread: lua
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBook3,1 (Mac-F22788C8)
+
+Cheers,
+
+--
+PA.
+http://alt.textdrive.com/nanoki/
+
+  
+
+From mailinglists at MailNewsRSS.com  Sun Nov 16 18:17:08 2008
+From: mailinglists at MailNewsRSS.com (Jason Todd Slack-Moehrle)
+Date: Sun, 16 Nov 2008 18:17:08 -0800
+Subject: [zfs-discuss] ZFS Ready for my data
+Message-ID: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+
+Hi All,
+
+What is the general consensus about ZFS being ready to hold me data? I  
+was considering partitioning my drive and moving my home (~) directory  
+(all my data that I care about) to a new ZFS partition.
+
+I keep good backups, but what is everyones opinions?
+
+Obvious benefits?
+
+Obvious reasons not to yet?
+
+Thanks,
+-Jason
+
+
+
+From csuter at sutes.co.uk  Sun Nov 16 18:36:19 2008
+From: csuter at sutes.co.uk (Chris Suter)
+Date: Mon, 17 Nov 2008 13:36:19 +1100
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+Message-ID: <19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+
+On Mon, Nov 17, 2008 at 1:17 PM, Jason Todd Slack-Moehrle
+<mailinglists at mailnewsrss.com> wrote:
+
+> What is the general consensus about ZFS being ready to hold me data? I was
+> considering partitioning my drive and moving my home (~) directory (all my
+> data that I care about) to a new ZFS partition.
+>
+> I keep good backups, but what is everyones opinions?
+>
+> Obvious benefits?
+>
+> Obvious reasons not to yet?
+
+I'm currently operating in that way (mainly so that my data is on a
+separate partition to the OS files that I'm messing about with). I've
+spotted a couple of things:
+
+1. I use Xcode a lot and it will often tell me a file has been changed
+when it hasn't actually.
+
+2. At present I've just used a symlink to point my Users folder to the
+ZFS partition but that's not ideal --- if I'm quick and log in before
+it's had a chance to mount it, I run into problems. I'm sure there's a
+way of fixing this but I haven't had the time to look into it yet;
+it's possibly better to change the Directory Services database rather
+than use a symlink.
+
+3. I've somehow lost all the entries listed under PLACES in Finder. I
+suspect that might be because of #2 above.
+
+-- Chris
+
+From andrew.chace at gmail.com  Sun Nov 16 18:55:33 2008
+From: andrew.chace at gmail.com (Andrew Chace)
+Date: Sun, 16 Nov 2008 20:55:33 -0600
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+Message-ID: <B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+
+Chris,
+
+Regarding symlinks, I haven't had a chance to set up ZFS in Mac OS X  
+yet, but in Solaris and FreeBSD, you can set mount points for ZFS  
+filesystems. Something like:
+
+	zfs set mountpoint=/Users/andrew zpool/andrew
+
+See the "Mount Points" section in the "zfs(1) man page [http://docs.sun.com/app/docs/doc/819-2240/zfs-1m 
+]. I would assume that this can also be done in Mac OS X.
+
+-Andrew
+
+On Nov 16, 2008, at 8:36 PM, Chris Suter wrote:
+
+> On Mon, Nov 17, 2008 at 1:17 PM, Jason Todd Slack-Moehrle
+> <mailinglists at mailnewsrss.com> wrote:
+>
+>> What is the general consensus about ZFS being ready to hold me  
+>> data? I was
+>> considering partitioning my drive and moving my home (~) directory  
+>> (all my
+>> data that I care about) to a new ZFS partition.
+>>
+>> I keep good backups, but what is everyones opinions?
+>>
+>> Obvious benefits?
+>>
+>> Obvious reasons not to yet?
+>
+> I'm currently operating in that way (mainly so that my data is on a
+> separate partition to the OS files that I'm messing about with). I've
+> spotted a couple of things:
+>
+> 1. I use Xcode a lot and it will often tell me a file has been changed
+> when it hasn't actually.
+>
+> 2. At present I've just used a symlink to point my Users folder to the
+> ZFS partition but that's not ideal --- if I'm quick and log in before
+> it's had a chance to mount it, I run into problems. I'm sure there's a
+> way of fixing this but I haven't had the time to look into it yet;
+> it's possibly better to change the Directory Services database rather
+> than use a symlink.
+>
+> 3. I've somehow lost all the entries listed under PLACES in Finder. I
+> suspect that might be because of #2 above.
+>
+> -- Chris
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From csuter at sutes.co.uk  Sun Nov 16 19:10:35 2008
+From: csuter at sutes.co.uk (Chris Suter)
+Date: Mon, 17 Nov 2008 14:10:35 +1100
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+Message-ID: <19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+
+On Mon, Nov 17, 2008 at 1:55 PM, Andrew Chace <andrew.chace at gmail.com> wrote:
+
+> Regarding symlinks, I haven't had a chance to set up ZFS in Mac OS X yet,
+> but in Solaris and FreeBSD, you can set mount points for ZFS filesystems.
+> Something like:
+>
+>        zfs set mountpoint=/Users/andrew zpool/andrew
+>
+> See the "Mount Points" section in the "zfs(1) man page
+> [http://docs.sun.com/app/docs/doc/819-2240/zfs-1m]. I would assume that this
+> can also be done in Mac OS X.
+
+That's not the problem. The problem is that loginwindow allows you to
+log in before the ZFS volume has been mounted. For most people I doubt
+it's a problem but I have an external drive with a lot of partitions
+and I think that slows down diskarbitrationd sufficiently so that
+there's trouble if I'm a bit eager to log in. I would have thought
+there's a solution to this but as I said, I haven't had a chance to
+look into it yet.
+
+Incidentally, what you describe above may not work since all automatic
+mounting of volumes on OS X goes via diskarbitrationd which has its
+own ideas about where things should be mounted. I'm not saying what
+you suggested won't work, just that I wouldn't be surprised if it
+didn't.
+
+-- Chris
+
+From mrezny at hexaneinc.com  Sun Nov 16 13:36:59 2008
+From: mrezny at hexaneinc.com (Matthew Rezny)
+Date: Sun, 16 Nov 2008 14:36:59 -0700
+Subject: [zfs-discuss] ZFS mountpoint in limbo
+In-Reply-To: <7347B6D4-041A-4900-B5D8-5A5AA888C608@sun.com>
+References: <1BD1B630-5327-4F73-99D9-E5ED5F41F335@hexaneinc.com>
+	<7347B6D4-041A-4900-B5D8-5A5AA888C608@sun.com>
+Message-ID: <DB347B44-DEE1-4770-A80E-348336FD1240@hexaneinc.com>
+
+Yes, I was able to do a sudo zpool export -f ZFSextern before doing  
+sudo reboot. However, that doesn't address the issue of why the file  
+system could not be simply unmounted. There is some error there that  
+could perhaps come up in other scenarios, such as when rearranging  
+mountpoints where one might want some umounted but others to remain  
+mounted in the same pool.
+
+On Nov 15, 2008, at 7:20 AM, Jonathan Edwards wrote:
+
+>
+> On Nov 14, 2008, at 8:57 PM, Matthew Rezny wrote:
+>
+>> I have had very good results with ZFS across a large array on my  
+>> dual G5. I recently started using ZFS on a single external drive on  
+>> my MacBook Pro via eSATA. I have trouble with logout/reboot hanging  
+>> recently, which happened when attempting to install software  
+>> updates that required a reboot. Before doing I hard reboot, I  
+>> attempted to unmount the ZFS volumes and ran into one that is  
+>> mounted but claims not to be, as shown below.
+>>
+>> $ sudo zfs list
+>> NAME                         USED  AVAIL  REFER  MOUNTPOINT
+>> ZFSextern                   3.23G   270G   274K  /Volumes/ZFSextern
+>> ZFSextern/Virtual_Machines  3.23G   270G  3.23G  /Volumes/ZFSextern/ 
+>> Virtual_Machines
+>> $ sudo zfs umount ZFSextern/Virtual_Machines
+>> cannot unmount 'ZFSextern/Virtual_Machines': not currently mounted
+>> $ sudo zfs umount ZFSextern
+>> cannot unmount '/Volumes/ZFSextern': Resource busy
+>
+> i typically just export the pool before i reboot on my MBP .. make  
+> sure you shut down everything that is accessing the pool and then:
+>
+> $ sudo zpool export ZFSextern
+>
+> or
+>
+> $ sudo zpool export -f ZFSextern
+
+
+
+From ndellofano at apple.com  Sun Nov 16 23:40:05 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Sun, 16 Nov 2008 23:40:05 -0800
+Subject: [zfs-discuss] ZFS mountpoint in limbo
+In-Reply-To: <DB347B44-DEE1-4770-A80E-348336FD1240@hexaneinc.com>
+References: <1BD1B630-5327-4F73-99D9-E5ED5F41F335@hexaneinc.com>
+	<7347B6D4-041A-4900-B5D8-5A5AA888C608@sun.com>
+	<DB347B44-DEE1-4770-A80E-348336FD1240@hexaneinc.com>
+Message-ID: <8BB8224C-FF08-4FC4-8E86-7C39B95401A7@apple.com>
+
+I think you are confusing what the mountpoint is with whether or not  
+the filesystem is actually mounted.  These are two separate issues.   
+The mountpoint is where the filesystem is mounted, but is not an  
+indicator of whether  the filesystem is mounted currently or not.  See  
+example below:
+
+[locals-macbook-pro-91 23:31] % zfs list
+NAME                          USED  AVAIL  REFER  MOUNTPOINT
+pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/pixie_dust/ 
+solaris
+pixie_dust/solaris at 10_23_07   620K      -  2.95G  -
+<~>
+
+[locals-macbook-pro-91 23:31] % sudo zfs unmount pixie_dust/solaris
+
+<~>
+[locals-macbook-pro-91 23:32] % zfs list
+NAME                          USED  AVAIL  REFER  MOUNTPOINT
+pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/pixie_dust/ 
+solaris
+pixie_dust/solaris at 10_23_07   620K      -  2.95G  -
+
+<~>
+[locals-macbook-pro-91 23:33] % zfs get mounted
+NAME                         			PROPERTY  	 
+VALUE                        SOURCE
+pixie_dust                      		mounted         	 
+yes                          -
+pixie_dust/solaris           		mounted      		 
+no                           -
+pixie_dust/solaris at 10_23_07  mounted   		-                            -
+
+The mountpoint stays the same, the mounted property however does not.   
+If you wish to know what is mounted currently, do a 'zfs get mounted'  
+and that will tell you.  Remember that in ZFS in unmounting a  
+filesystem, the filesystem is still in the ZFS namespace and ZFS still  
+knows it's there even if it's currently unmounted.  It doesn't drop  
+off the cliff into nonexistence like it does in a traditional UNIX  
+filesystem.
+
+hope this helps,
+Noel
+
+On Nov 16, 2008, at 1:36 PM, Matthew Rezny wrote:
+
+> Yes, I was able to do a sudo zpool export -f ZFSextern before doing  
+> sudo reboot. However, that doesn't address the issue of why the file  
+> system could not be simply unmounted. There is some error there that  
+> could perhaps come up in other scenarios, such as when rearranging  
+> mountpoints where one might want some umounted but others to remain  
+> mounted in the same pool.
+>
+> On Nov 15, 2008, at 7:20 AM, Jonathan Edwards wrote:
+>
+>>
+>> On Nov 14, 2008, at 8:57 PM, Matthew Rezny wrote:
+>>
+>>> I have had very good results with ZFS across a large array on my  
+>>> dual G5. I recently started using ZFS on a single external drive  
+>>> on my MacBook Pro via eSATA. I have trouble with logout/reboot  
+>>> hanging recently, which happened when attempting to install  
+>>> software updates that required a reboot. Before doing I hard  
+>>> reboot, I attempted to unmount the ZFS volumes and ran into one  
+>>> that is mounted but claims not to be, as shown below.
+>>>
+>>> $ sudo zfs list
+>>> NAME                         USED  AVAIL  REFER  MOUNTPOINT
+>>> ZFSextern                   3.23G   270G   274K  /Volumes/ZFSextern
+>>> ZFSextern/Virtual_Machines  3.23G   270G  3.23G  /Volumes/ 
+>>> ZFSextern/Virtual_Machines
+>>> $ sudo zfs umount ZFSextern/Virtual_Machines
+>>> cannot unmount 'ZFSextern/Virtual_Machines': not currently mounted
+>>> $ sudo zfs umount ZFSextern
+>>> cannot unmount '/Volumes/ZFSextern': Resource busy
+>>
+>> i typically just export the pool before i reboot on my MBP .. make  
+>> sure you shut down everything that is accessing the pool and then:
+>>
+>> $ sudo zpool export ZFSextern
+>>
+>> or
+>>
+>> $ sudo zpool export -f ZFSextern
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From kona8lend at gmail.com  Sun Nov 16 23:56:08 2008
+From: kona8lend at gmail.com (Kona Blend)
+Date: Mon, 17 Nov 2008 02:56:08 -0500
+Subject: [zfs-discuss] bug: strange sync issues
+In-Reply-To: <19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+Message-ID: <3BA55FF4-64E3-4B76-8F13-95810CD13B94@gmail.com>
+
+Hello fellow ZFS enthusiasts,
+
+I'd like to report a bug that for quite some time shown its face on my  
+system. First, it's the latest zfs119 bits, on Mac OS X 10.5.5, Mac  
+Pro system, 10GB RAM. Maybe this is the same bug which is effecting  
+Chris (see appended email re: Xcode issue).
+
+DESCRIPTION
+
+The filesystem becomes confused after an undefined period of time on  
+the order of things. Creating a directory, then doing an operation  
+that requires the directory (such as using it as a destination for  
+copy) results in an error indicating the directory does not exist.
+
+By the time the error is reported, the script is stopped, the  
+directory does exist. This script exposes the bug. The strange thing  
+is the script does not expose the bug immediately, but rather some  
+after running for say 5 or 10 seconds (but never more than 30 seconds)  
+and ends with error "mydir does not exist" or similar.
+
+#!/bin/sh -e
+#
+while true;
+do
+     mkdir mydir
+     cp /etc/hosts mydir
+     rm -fr mydir
+done
+
+WORKAROUND
+
+Reboot system, things stay good for an undefined amount of time. Can  
+be a few days, sometimes as many as 5 or 6 days, but never more than a  
+week; at which time the bug presents again and reboot is required.
+
+SPECULATION
+
+The situation sounds like whenever the system enters "bug state" then  
+the filesystem behaves as though some operations are now a race  
+condition (asynchronous?).
+
+I'm sorry that I cannot narrow the bug down further. It's been with me  
+for months now, and I've seen no pattern with open applications, or my  
+activity which may narrow things further.
+
+-KB
+
+On 16-Nov-08, at 9:36 PM, Chris Suter wrote:
+
+> 1. I use Xcode a lot and it will often tell me a file has been changed
+> when it hasn't actually.
+>
+> -- Chris
+
+From ndellofano at apple.com  Mon Nov 17 00:04:42 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 17 Nov 2008 00:04:42 -0800
+Subject: [zfs-discuss] adding drives to a raidz volume
+In-Reply-To: <E6B1B694-F5E0-4E69-AA9A-67D8BF1C9DA5@sun.com>
+References: <6A29379A-E221-45E0-9576-873DA69C7D6A@mac.com>
+	<21E14ED1-9F10-4C45-892C-B665A3B8DCAC@sun.com>
+	<E8AC11E1-0B3D-46D2-A284-52AC627149F5@mac.com>
+	<D0B29A45-FB91-4CB0-92C8-EFBBA77331B0@sogeeky.net>
+	<4D561C73-3C26-4B61-8145-7CBC0711BD3D@gmail.com>
+	<E6B1B694-F5E0-4E69-AA9A-67D8BF1C9DA5@sun.com>
+Message-ID: <E06A3798-A4C4-4E63-A905-39647D2E9D36@apple.com>
+
+So in essence, I'd like to say great job guys and I agree with "all of  
+the above" :)
+
+1. like Zorg mentions, this is tricky business.  In fact, the math is  
+outright ugly, and with the size of a single disk that you're adding,  
+once the magic did actually happen, this procedure is really only  
+gonna buy you a few gigs to hold you over for a while, which makes the  
+whole deal that much less appealing, since you're going to have to add  
+more space soon again.
+2. As Jonathan Edwards adds, relaying out all of your current data,  
+while maintaing stability and data integrity is a non-trivial task
+3.  as Alex says and Boyd mention, we've got other more immediate  
+issues to tackle.
+      Step one, make everything on OSX platform work.
+      Step two, make it stable.
+      Step 3, conquer the rest of the world (note there may be an  
+infinitesimal number of steps between 2 and 3 I'm leaving unmentioned  
+here)
+
+for extra credit and the curious, you can read Adam Leventhal's blog  
+about this if you're interested:
+http://blogs.sun.com/ahl/entry/expand_o_matic_raid_z
+
+Noel
+
+On Nov 15, 2008, at 7:36 PM, Jonathan Edwards wrote:
+
+>
+> On Nov 15, 2008, at 6:10 PM, Alex Blewitt wrote:
+>
+>> Note that it is fairly likely the way to upgrade a zfs pool for  
+>> home users is simply to buy another n drives that are (much) larger  
+>> than your current set of drives, and by a sequence of one-for-one  
+>> replacements increase your size that way. That can be done either  
+>> for a mirrored or raid set.
+>
+> yep - that can work as you're also solving the problem of re-laying  
+> out the data which is why it's not just trivial to just add a disk  
+> to an existing raidz stripe .. your data layout and parity would be  
+> all out of whack
+>
+> you can always just add more disks in separate stripe groups to the  
+> pool which will also have the side effect of increasing the amount  
+> of parity protection you have in the pool, but if you're going raidz  
+> - adding a single disk isn't going to help you much in the pool  
+> unless you're adding a spare.
+>
+> ---
+> .je
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From werner.donne at re.be  Mon Nov 17 00:27:44 2008
+From: werner.donne at re.be (=?ISO-8859-1?Q?Werner_Donn=E9?=)
+Date: Mon, 17 Nov 2008 09:27:44 +0100
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+Message-ID: <55A68312-5D4C-41E3-8AAC-1D83E299A152@re.be>
+
+Hi Jason,
+
+I do this with a set of USB disks. ZFS has never given me any problems  
+with
+respect to data or performance. However, booting the system is not so  
+easy.
+The reason is that not all USB disks are ready in time, so after the  
+first
+boot I mostly have a degraded pool. This requires fiddling and rebooting
+until it is right.
+
+Regards,
+
+Werner.
+
+On 17 Nov 2008, at 03:17, Jason Todd Slack-Moehrle wrote:
+
+> Hi All,
+>
+> What is the general consensus about ZFS being ready to hold me data?  
+> I was considering partitioning my drive and moving my home (~)  
+> directory (all my data that I care about) to a new ZFS partition.
+>
+> I keep good backups, but what is everyones opinions?
+>
+> Obvious benefits?
+>
+> Obvious reasons not to yet?
+>
+> Thanks,
+> -Jason
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+--
+Werner Donn?  --  Re                                     http://www.pincette.biz
+Engelbeekstraat 8                                               http://www.re.be
+BE-3300 Tienen
+tel: (+32) 486 425803	e-mail: werner.donne at re.be
+
+
+
+
+
+
+From kevin_elliott at apple.com  Mon Nov 17 09:42:49 2008
+From: kevin_elliott at apple.com (Kevin Elliott)
+Date: Mon, 17 Nov 2008 09:42:49 -0800
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+Message-ID: <11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+
+
+On Nov 16, 2008, at 7:10 PM, Chris Suter wrote:
+
+> On Mon, Nov 17, 2008 at 1:55 PM, Andrew Chace  
+> <andrew.chace at gmail.com> wrote:
+>
+>> Regarding symlinks, I haven't had a chance to set up ZFS in Mac OS  
+>> X yet,
+>> but in Solaris and FreeBSD, you can set mount points for ZFS  
+>> filesystems.
+>> Something like:
+>>
+>>       zfs set mountpoint=/Users/andrew zpool/andrew
+>>
+>> See the "Mount Points" section in the "zfs(1) man page
+>> [http://docs.sun.com/app/docs/doc/819-2240/zfs-1m]. I would assume  
+>> that this
+>> can also be done in Mac OS X.
+>
+> That's not the problem. The problem is that loginwindow allows you to
+> log in before the ZFS volume has been mounted. For most people I doubt
+> it's a problem but I have an external drive with a lot of partitions
+> and I think that slows down diskarbitrationd sufficiently so that
+> there's trouble if I'm a bit eager to log in. I would have thought
+> there's a solution to this but as I said, I haven't had a chance to
+> look into it yet.
+
+
+Most of the time the problem isn't that diskarbitrationd is slowed down,
+it's that diskarbitrationd didn't even start mounting  external  
+volumes until you
+login.  When you've got a lot of partitions that can take a while.  The
+link below describes a hidden setting you can configure to tell diskarb
+to start mounting volume immediately:
+
+http://www.macosxhints.com/article.php?story=20031103155828117
+
+-Kevin Elliott
+
+From bwaters at nrao.edu  Mon Nov 17 11:54:42 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Mon, 17 Nov 2008 12:54:42 -0700
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+Message-ID: <DE534802-9B36-4512-9741-B6A1E13682FB@nrao.edu>
+
+Be careful about ZFS for your $HOME directory; you'll get weird  
+failure modes in existing software because Spotlight doesn't work.
+
+In particular, I found that I was not able to sync my iPhone from  
+iTunes -- it kept complaining about "Contacts" being corrupted.
+
+Also you won't be able to use the search box in Mail.app ... and so on.
+
+I finally moved ~/Library to an HFS partition, and then a symlink to  
+it on my ZFS $HOME. Now everything seems fine. Spotlight still has no  
+clue about the bulk of my data, but at least I don't get these wonky  
+failures in Apple applications.
+
+
+(and yeah, I have to wait a bit for the ZFS volumes to be mounted  
+before logging in... thanks for that tip, Kevin!)
+
+
+On Nov 17, 2008, at 10:42 AM, Kevin Elliott wrote:
+
+>>>      zfs set mountpoint=/Users/andrew zpool/andrew
+
+From andy at aligature.com  Mon Nov 17 12:03:09 2008
+From: andy at aligature.com (Andrew Webber)
+Date: Mon, 17 Nov 2008 15:03:09 -0500
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <DE534802-9B36-4512-9741-B6A1E13682FB@nrao.edu>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<DE534802-9B36-4512-9741-B6A1E13682FB@nrao.edu>
+Message-ID: <60b50dc10811171203i5a02254ap929c8d94803d057c@mail.gmail.com>
+
+FYI...
+
+I have my home directory on a ZFS partition and I've never experienced a
+problem with iTunes and iPhone contacts syncing.
+
+I *have* had problems with the drive not being mounted on login and
+spotlight missing all of my personal files.
+
+
+On Mon, Nov 17, 2008 at 2:54 PM, Boyd Waters <bwaters at nrao.edu> wrote:
+
+> Be careful about ZFS for your $HOME directory; you'll get weird failure
+> modes in existing software because Spotlight doesn't work.
+>
+> In particular, I found that I was not able to sync my iPhone from iTunes --
+> it kept complaining about "Contacts" being corrupted.
+>
+> Also you won't be able to use the search box in Mail.app ... and so on.
+>
+> I finally moved ~/Library to an HFS partition, and then a symlink to it on
+> my ZFS $HOME. Now everything seems fine. Spotlight still has no clue about
+> the bulk of my data, but at least I don't get these wonky failures in Apple
+> applications.
+>
+>
+> (and yeah, I have to wait a bit for the ZFS volumes to be mounted before
+> logging in... thanks for that tip, Kevin!)
+>
+>
+> On Nov 17, 2008, at 10:42 AM, Kevin Elliott wrote:
+>
+>      zfs set mountpoint=/Users/andrew zpool/andrew
+>>>>
+>>> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081117/cfe85f1b/attachment.html>
+
+From bwaters at nrao.edu  Mon Nov 17 12:12:45 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Mon, 17 Nov 2008 13:12:45 -0700
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <60b50dc10811171203i5a02254ap929c8d94803d057c@mail.gmail.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<DE534802-9B36-4512-9741-B6A1E13682FB@nrao.edu>
+	<60b50dc10811171203i5a02254ap929c8d94803d057c@mail.gmail.com>
+Message-ID: <ED4B6F6B-A8E1-4BA9-B741-A5573C49871C@nrao.edu>
+
+
+On Nov 17, 2008, at 1:03 PM, Andrew Webber wrote:
+
+> I have my home directory on a ZFS partition and I've never  
+> experienced a problem with iTunes and iPhone contacts syncing.
+
+Cool... I am a dotMac (Mobile Me) user. I wonder if that has anything  
+to do with it...
+
+
+
+From alex.blewitt at gmail.com  Mon Nov 17 13:05:07 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Mon, 17 Nov 2008 21:05:07 +0000
+Subject: [zfs-discuss] Places home icon showing as pool name, not user name
+Message-ID: <636fd28e0811171305n1e934009n7d8b1e98cb44d4a4@mail.gmail.com>
+
+I've installed ZFS119 onto Mac OS X 10.5.5 (9F2114) on a MacBook Pro.
+Logging in as a networked user with a NFSHomeDirectory: /Users/alex
+and ZFS mounted the home directory (Data/Users/alex mounted as
+/Users/alex). I can log in OK but in the 'places' icon in Finder, my
+home dir is shown as 'Data' instead of 'alex'. Not a big bug, but
+thought I'd report it here as I'm not sure if there are better places
+to do it (radar?)
+
+Alex
+
+From franzschmalzl at spamfreemail.de  Mon Nov 17 14:10:26 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Mon, 17 Nov 2008 23:10:26 +0100
+Subject: [zfs-discuss] Fwd:  ZFS Ready for my data
+References: <662651A7-DD7D-4102-9AC4-A720CC4D3A08@apple.com>
+Message-ID: <322BA847-E3B2-4934-861E-CF71ED0CC1C2@spamfreemail.de>
+
+Yes i certainly should :) I had some issues  with my pool not mounting  
+at login and tried to tell leopard to mount everything at boot.
+It simply had no effect on anything. I think it is related to some  
+changes made in Leopard with the mounting subsystem.
+To my shame I cannot recall exactly why, but I can pretty much say it  
+does not work anymore.
+
+( Maybe it's just the usual " It only does not work in *here*  
+problem  :-)
+
+
+Kind regards,
+Franz
+
+>
+> It certainly should.  What's not working?
+>
+> -Kevin
+>
+>
+>
+> On Nov 17, 2008, at 11:00 AM, ruebezahl wrote:
+>
+>> Does not work anymore, not even with 10.4.....
+>>
+>>
+>>
+>> On 17.11.2008, at 18:42, Kevin Elliott wrote:
+>>
+>>>
+>>> On Nov 16, 2008, at 7:10 PM, Chris Suter wrote:
+>>>
+>>>> On Mon, Nov 17, 2008 at 1:55 PM, Andrew Chace <andrew.chace at gmail.com 
+>>>> > wrote:
+>>>>
+>>>>> Regarding symlinks, I haven't had a chance to set up ZFS in Mac  
+>>>>> OS X yet,
+>>>>> but in Solaris and FreeBSD, you can set mount points for ZFS  
+>>>>> filesystems.
+>>>>> Something like:
+>>>>>
+>>>>>    zfs set mountpoint=/Users/andrew zpool/andrew
+>>>>>
+>>>>> See the "Mount Points" section in the "zfs(1) man page
+>>>>> [http://docs.sun.com/app/docs/doc/819-2240/zfs-1m]. I would  
+>>>>> assume that this
+>>>>> can also be done in Mac OS X.
+>>>>
+>>>> That's not the problem. The problem is that loginwindow allows  
+>>>> you to
+>>>> log in before the ZFS volume has been mounted. For most people I  
+>>>> doubt
+>>>> it's a problem but I have an external drive with a lot of  
+>>>> partitions
+>>>> and I think that slows down diskarbitrationd sufficiently so that
+>>>> there's trouble if I'm a bit eager to log in. I would have thought
+>>>> there's a solution to this but as I said, I haven't had a chance to
+>>>> look into it yet.
+>>>
+>>>
+>>> Most of the time the problem isn't that diskarbitrationd is slowed  
+>>> down,
+>>> it's that diskarbitrationd didn't even start mounting  external  
+>>> volumes until you
+>>> login.  When you've got a lot of partitions that can take a  
+>>> while.  The
+>>> link below describes a hidden setting you can configure to tell  
+>>> diskarb
+>>> to start mounting volume immediately:
+>>>
+>>> http://www.macosxhints.com/article.php?story=20031103155828117
+>>>
+>>> -Kevin Elliott
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+
+
+From ndellofano at apple.com  Mon Nov 17 14:36:14 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 17 Nov 2008 14:36:14 -0800
+Subject: [zfs-discuss] Places home icon showing as pool name,
+	not user name
+In-Reply-To: <636fd28e0811171305n1e934009n7d8b1e98cb44d4a4@mail.gmail.com>
+References: <636fd28e0811171305n1e934009n7d8b1e98cb44d4a4@mail.gmail.com>
+Message-ID: <A2C169F4-5994-4B3F-825C-375F5D852A1F@apple.com>
+
+This bug has been fixed recently.  We were reporting the spa name  
+instead of the filesystem name.
+Sorry!
+It will be fixed in the next rev.
+
+thanks!
+Noel
+
+On Nov 17, 2008, at 1:05 PM, Alex Blewitt wrote:
+
+> I've installed ZFS119 onto Mac OS X 10.5.5 (9F2114) on a MacBook Pro.
+> Logging in as a networked user with a NFSHomeDirectory: /Users/alex
+> and ZFS mounted the home directory (Data/Users/alex mounted as
+> /Users/alex). I can log in OK but in the 'places' icon in Finder, my
+> home dir is shown as 'Data' instead of 'alex'. Not a big bug, but
+> thought I'd report it here as I'm not sure if there are better places
+> to do it (radar?)
+>
+> Alex
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From mailinglists at MailNewsRSS.com  Mon Nov 17 17:09:52 2008
+From: mailinglists at MailNewsRSS.com (Jason Todd Slack-Moehrle)
+Date: Mon, 17 Nov 2008 17:09:52 -0800
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <DE534802-9B36-4512-9741-B6A1E13682FB@nrao.edu>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<DE534802-9B36-4512-9741-B6A1E13682FB@nrao.edu>
+Message-ID: <48F26253-D425-44C9-81DB-47052196C516@MailNewsRSS.com>
+
+Hi All,
+
+> Be careful about ZFS for your $HOME directory; you'll get weird  
+> failure modes in existing software because Spotlight doesn't work.
+
+I have actually disabled Spotlight completely and related. Dashboard  
+too.
+
+> Also you won't be able to use the search box in Mail.app ... and so  
+> on.
+
+Hmm, I use this sometimes.
+
+> I finally moved ~/Library to an HFS partition, and then a symlink to  
+> it on my ZFS $HOME. Now everything seems fine. Spotlight still has  
+> no clue about the bulk of my data, but at least I don't get these  
+> wonky failures in Apple applications.
+
+OK, could be a work around if I need.
+
+> (and yeah, I have to wait a bit for the ZFS volumes to be mounted  
+> before logging in... thanks for that tip, Kevin!)
+
+I was going to partition my internal macBook drive, would I still  
+suffer from this? Or is it mainly external hard drives that experience  
+this?
+
+Pros and cons to having a ZFS partition?
+
+-Jason
+
+
+From csuter at sutes.co.uk  Mon Nov 17 17:29:52 2008
+From: csuter at sutes.co.uk (Chris Suter)
+Date: Tue, 18 Nov 2008 12:29:52 +1100
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+Message-ID: <19ca54260811171729m27b38207n4e5ea44d506b90ac@mail.gmail.com>
+
+On Tue, Nov 18, 2008 at 4:42 AM, Kevin Elliott <kevin_elliott at apple.com> wrote:
+
+> Most of the time the problem isn't that diskarbitrationd is slowed down,
+> it's that diskarbitrationd didn't even start mounting  external volumes
+> until you login.  When you've got a lot of partitions that can take a while.  The
+> link below describes a hidden setting you can configure to tell diskarb
+> to start mounting volume immediately:
+>
+> http://www.macosxhints.com/article.php?story=20031103155828117
+
+Well it definitely works more reliably if you wait a while before
+logging in. I'm guessing this is because Disk Arbitration still does
+stuff before log-in (probing and other pre-mount stuff). Whilst the
+solution you link to above helps, a more fine grained equivalent to
+the above would be to put something in /etc/fstab and use the "auto"
+option.
+
+Having said all that, I've looked into it a bit and it looks like the
+HomeDirMechanism plugin (the Security Agent plugin that sorts out home
+directories) will mount home directories automatically provided the
+home directory location has a "/Volumes/" prefix. It would have been
+nice if they'd used realpath before checking this
+(rdar://problem/6379785 ? others please file duplicates).
+
+I've changed my home directory location (using dscl) and now
+everything seems to work fine.
+
+-- Chris
+
+From ndellofano at apple.com  Mon Nov 17 18:31:05 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 17 Nov 2008 18:31:05 -0800
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <48F26253-D425-44C9-81DB-47052196C516@MailNewsRSS.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<DE534802-9B36-4512-9741-B6A1E13682FB@nrao.edu>
+	<48F26253-D425-44C9-81DB-47052196C516@MailNewsRSS.com>
+Message-ID: <6D2FFE0A-1243-4F31-93C0-323F62678916@apple.com>
+
+> I was going to partition my internal macBook drive, would I still  
+> suffer from this? Or is it mainly external hard drives that  
+> experience this?
+>
+> Pros and cons to having a ZFS partition?
+
+I keep my home directory on a partition of my internal drive on my  
+MacBook Pro and don't have any issues with logging in.
+
+Also, FYI for everyone,  instead of changing the mountpoint of your  
+ZFS filesystem you wish to use as your home directory, you can also  
+just change the location of your home directory in your system  
+preferences/Accounts pane.  See the faq for details on how to do this:
+http://zfs.macosforge.org/trac/wiki/faq
+
+
+Noel
+
+On Nov 17, 2008, at 5:09 PM, Jason Todd Slack-Moehrle wrote:
+
+> Hi All,
+>
+>> Be careful about ZFS for your $HOME directory; you'll get weird  
+>> failure modes in existing software because Spotlight doesn't work.
+>
+> I have actually disabled Spotlight completely and related. Dashboard  
+> too.
+>
+>> Also you won't be able to use the search box in Mail.app ... and so  
+>> on.
+>
+> Hmm, I use this sometimes.
+>
+>> I finally moved ~/Library to an HFS partition, and then a symlink  
+>> to it on my ZFS $HOME. Now everything seems fine. Spotlight still  
+>> has no clue about the bulk of my data, but at least I don't get  
+>> these wonky failures in Apple applications.
+>
+> OK, could be a work around if I need.
+>
+>> (and yeah, I have to wait a bit for the ZFS volumes to be mounted  
+>> before logging in... thanks for that tip, Kevin!)
+>
+> I was going to partition my internal macBook drive, would I still  
+> suffer from this? Or is it mainly external hard drives that  
+> experience this?
+>
+> Pros and cons to having a ZFS partition?
+>
+> -Jason
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From mrezny at hexaneinc.com  Mon Nov 17 18:34:24 2008
+From: mrezny at hexaneinc.com (Matthew Rezny)
+Date: Mon, 17 Nov 2008 19:34:24 -0700
+Subject: [zfs-discuss] ZFS mountpoint in limbo
+In-Reply-To: <8BB8224C-FF08-4FC4-8E86-7C39B95401A7@apple.com>
+References: <1BD1B630-5327-4F73-99D9-E5ED5F41F335@hexaneinc.com>
+	<7347B6D4-041A-4900-B5D8-5A5AA888C608@sun.com>
+	<DB347B44-DEE1-4770-A80E-348336FD1240@hexaneinc.com>
+	<8BB8224C-FF08-4FC4-8E86-7C39B95401A7@apple.com>
+Message-ID: <CC7119F3-00D5-48EF-9C73-B0E206EBC0DB@hexaneinc.com>
+
+No?l, thank you for replying and clarifying.
+
+At the time, I was looking at the continued presence of the file  
+system in Finder as an indication that it was still mounted. I was  
+assuming that the reason the parent file system was marked as busy was  
+that the child file system was still mounted. Perhaps it was merely  
+Finder viewing the volumes that had it marked as busy. Next time I run  
+into the situation, I will look at the mounted property to see what  
+that says and whether it matches what Finder sees.
+
+On Nov 17, 2008, at 12:40 AM, No?l Dellofano wrote:
+
+> I think you are confusing what the mountpoint is with whether or not  
+> the filesystem is actually mounted.  These are two separate issues.   
+> The mountpoint is where the filesystem is mounted, but is not an  
+> indicator of whether  the filesystem is mounted currently or not.   
+> See example below:
+>
+> [locals-macbook-pro-91 23:31] % zfs list
+> NAME                          USED  AVAIL  REFER  MOUNTPOINT
+> pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+> pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/ 
+> pixie_dust/solaris
+> pixie_dust/solaris at 10_23_07   620K      -  2.95G  -
+> <~>
+>
+> [locals-macbook-pro-91 23:31] % sudo zfs unmount pixie_dust/solaris
+>
+> <~>
+> [locals-macbook-pro-91 23:32] % zfs list
+> NAME                          USED  AVAIL  REFER  MOUNTPOINT
+> pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+> pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/ 
+> pixie_dust/solaris
+> pixie_dust/solaris at 10_23_07   620K      -  2.95G  -
+>
+> <~>
+> [locals-macbook-pro-91 23:33] % zfs get mounted
+> NAME                         			PROPERTY  	 
+> VALUE                        SOURCE
+> pixie_dust                      		mounted         	 
+> yes                          -
+> pixie_dust/solaris           		mounted      		 
+> no                           -
+> pixie_dust/solaris at 10_23_07  mounted    
+> 		-                            -
+>
+> The mountpoint stays the same, the mounted property however does  
+> not.  If you wish to know what is mounted currently, do a 'zfs get  
+> mounted' and that will tell you.  Remember that in ZFS in unmounting  
+> a filesystem, the filesystem is still in the ZFS namespace and ZFS  
+> still knows it's there even if it's currently unmounted.  It doesn't  
+> drop off the cliff into nonexistence like it does in a traditional  
+> UNIX filesystem.
+>
+> hope this helps,
+> Noel
+>
+> On Nov 16, 2008, at 1:36 PM, Matthew Rezny wrote:
+>
+>> Yes, I was able to do a sudo zpool export -f ZFSextern before doing  
+>> sudo reboot. However, that doesn't address the issue of why the  
+>> file system could not be simply unmounted. There is some error  
+>> there that could perhaps come up in other scenarios, such as when  
+>> rearranging mountpoints where one might want some umounted but  
+>> others to remain mounted in the same pool.
+>>
+>> On Nov 15, 2008, at 7:20 AM, Jonathan Edwards wrote:
+>>
+>>>
+>>> On Nov 14, 2008, at 8:57 PM, Matthew Rezny wrote:
+>>>
+>>>> I have had very good results with ZFS across a large array on my  
+>>>> dual G5. I recently started using ZFS on a single external drive  
+>>>> on my MacBook Pro via eSATA. I have trouble with logout/reboot  
+>>>> hanging recently, which happened when attempting to install  
+>>>> software updates that required a reboot. Before doing I hard  
+>>>> reboot, I attempted to unmount the ZFS volumes and ran into one  
+>>>> that is mounted but claims not to be, as shown below.
+>>>>
+>>>> $ sudo zfs list
+>>>> NAME                         USED  AVAIL  REFER  MOUNTPOINT
+>>>> ZFSextern                   3.23G   270G   274K  /Volumes/ZFSextern
+>>>> ZFSextern/Virtual_Machines  3.23G   270G  3.23G  /Volumes/ 
+>>>> ZFSextern/Virtual_Machines
+>>>> $ sudo zfs umount ZFSextern/Virtual_Machines
+>>>> cannot unmount 'ZFSextern/Virtual_Machines': not currently mounted
+>>>> $ sudo zfs umount ZFSextern
+>>>> cannot unmount '/Volumes/ZFSextern': Resource busy
+>>>
+>>> i typically just export the pool before i reboot on my MBP .. make  
+>>> sure you shut down everything that is accessing the pool and then:
+>>>
+>>> $ sudo zpool export ZFSextern
+>>>
+>>> or
+>>>
+>>> $ sudo zpool export -f ZFSextern
+>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+
+
+From ndellofano at apple.com  Mon Nov 17 18:50:11 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 17 Nov 2008 18:50:11 -0800
+Subject: [zfs-discuss] ZFS mountpoint in limbo
+In-Reply-To: <CC7119F3-00D5-48EF-9C73-B0E206EBC0DB@hexaneinc.com>
+References: <1BD1B630-5327-4F73-99D9-E5ED5F41F335@hexaneinc.com>
+	<7347B6D4-041A-4900-B5D8-5A5AA888C608@sun.com>
+	<DB347B44-DEE1-4770-A80E-348336FD1240@hexaneinc.com>
+	<8BB8224C-FF08-4FC4-8E86-7C39B95401A7@apple.com>
+	<CC7119F3-00D5-48EF-9C73-B0E206EBC0DB@hexaneinc.com>
+Message-ID: <8AFBE72E-0368-4AA2-9392-4ED25A676C67@apple.com>
+
+No worries, glad it helped.  Oh, and note that you'll always currently  
+see that the ZFS filesystems are "busy" and you'll have to force  
+unmount them.  This issue is because of this bug:
+<rdar://problem/4999210> can't zpool destroy once fseventsd gets its  
+hands on a ZFS filesystem (can't unmount)
+
+we will be fixing it shortly.  Just know it for the meantime, you're  
+not crazy, it's something else that's making the filesystem busy :)
+
+Noel
+
+On Nov 17, 2008, at 6:34 PM, Matthew Rezny wrote:
+
+> No?l, thank you for replying and clarifying.
+>
+> At the time, I was looking at the continued presence of the file  
+> system in Finder as an indication that it was still mounted. I was  
+> assuming that the reason the parent file system was marked as busy  
+> was that the child file system was still mounted. Perhaps it was  
+> merely Finder viewing the volumes that had it marked as busy. Next  
+> time I run into the situation, I will look at the mounted property  
+> to see what that says and whether it matches what Finder sees.
+>
+> On Nov 17, 2008, at 12:40 AM, No?l Dellofano wrote:
+>
+>> I think you are confusing what the mountpoint is with whether or  
+>> not the filesystem is actually mounted.  These are two separate  
+>> issues.  The mountpoint is where the filesystem is mounted, but is  
+>> not an indicator of whether  the filesystem is mounted currently or  
+>> not.  See example below:
+>>
+>> [locals-macbook-pro-91 23:31] % zfs list
+>> NAME                          USED  AVAIL  REFER  MOUNTPOINT
+>> pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+>> pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/ 
+>> pixie_dust/solaris
+>> pixie_dust/solaris at 10_23_07   620K      -  2.95G  -
+>> <~>
+>>
+>> [locals-macbook-pro-91 23:31] % sudo zfs unmount pixie_dust/solaris
+>>
+>> <~>
+>> [locals-macbook-pro-91 23:32] % zfs list
+>> NAME                          USED  AVAIL  REFER  MOUNTPOINT
+>> pixie_dust                   55.5G  9.95G  74.9M  /Volumes/pixie_dust
+>> pixie_dust/solaris           2.95G  9.95G  2.95G  /Volumes/ 
+>> pixie_dust/solaris
+>> pixie_dust/solaris at 10_23_07   620K      -  2.95G  -
+>>
+>> <~>
+>> [locals-macbook-pro-91 23:33] % zfs get mounted
+>> NAME                         			PROPERTY  	 
+>> VALUE                        SOURCE
+>> pixie_dust                      		mounted         	 
+>> yes                          -
+>> pixie_dust/solaris           		mounted      		 
+>> no                           -
+>> pixie_dust/solaris at 10_23_07  mounted    
+>> 		-                            -
+>>
+>> The mountpoint stays the same, the mounted property however does  
+>> not.  If you wish to know what is mounted currently, do a 'zfs get  
+>> mounted' and that will tell you.  Remember that in ZFS in  
+>> unmounting a filesystem, the filesystem is still in the ZFS  
+>> namespace and ZFS still knows it's there even if it's currently  
+>> unmounted.  It doesn't drop off the cliff into nonexistence like it  
+>> does in a traditional UNIX filesystem.
+>>
+>> hope this helps,
+>> Noel
+>>
+>> On Nov 16, 2008, at 1:36 PM, Matthew Rezny wrote:
+>>
+>>> Yes, I was able to do a sudo zpool export -f ZFSextern before  
+>>> doing sudo reboot. However, that doesn't address the issue of why  
+>>> the file system could not be simply unmounted. There is some error  
+>>> there that could perhaps come up in other scenarios, such as when  
+>>> rearranging mountpoints where one might want some umounted but  
+>>> others to remain mounted in the same pool.
+>>>
+>>> On Nov 15, 2008, at 7:20 AM, Jonathan Edwards wrote:
+>>>
+>>>>
+>>>> On Nov 14, 2008, at 8:57 PM, Matthew Rezny wrote:
+>>>>
+>>>>> I have had very good results with ZFS across a large array on my  
+>>>>> dual G5. I recently started using ZFS on a single external drive  
+>>>>> on my MacBook Pro via eSATA. I have trouble with logout/reboot  
+>>>>> hanging recently, which happened when attempting to install  
+>>>>> software updates that required a reboot. Before doing I hard  
+>>>>> reboot, I attempted to unmount the ZFS volumes and ran into one  
+>>>>> that is mounted but claims not to be, as shown below.
+>>>>>
+>>>>> $ sudo zfs list
+>>>>> NAME                         USED  AVAIL  REFER  MOUNTPOINT
+>>>>> ZFSextern                   3.23G   270G   274K  /Volumes/ 
+>>>>> ZFSextern
+>>>>> ZFSextern/Virtual_Machines  3.23G   270G  3.23G  /Volumes/ 
+>>>>> ZFSextern/Virtual_Machines
+>>>>> $ sudo zfs umount ZFSextern/Virtual_Machines
+>>>>> cannot unmount 'ZFSextern/Virtual_Machines': not currently mounted
+>>>>> $ sudo zfs umount ZFSextern
+>>>>> cannot unmount '/Volumes/ZFSextern': Resource busy
+>>>>
+>>>> i typically just export the pool before i reboot on my MBP ..  
+>>>> make sure you shut down everything that is accessing the pool and  
+>>>> then:
+>>>>
+>>>> $ sudo zpool export ZFSextern
+>>>>
+>>>> or
+>>>>
+>>>> $ sudo zpool export -f ZFSextern
+>>>
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From bwaters at nrao.edu  Tue Nov 18 08:07:01 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Tue, 18 Nov 2008 09:07:01 -0700
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <19ca54260811171729m27b38207n4e5ea44d506b90ac@mail.gmail.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<19ca54260811171729m27b38207n4e5ea44d506b90ac@mail.gmail.com>
+Message-ID: <4AA2EA5D-43DC-47F2-963B-AA8F0686377B@nrao.edu>
+
+
+On Nov 17, 2008, at 6:29 PM, Chris Suter wrote:
+
+> the HomeDirMechanism plugin (the Security Agent plugin that sorts  
+> out home directories) will mount home directories automatically  
+> provided the home directory location has a "/Volumes/" prefix. It  
+> would have been nice if they'd used realpath before checking this (rdar://problem/6379785 
+>  ? others please file duplicates).
+>
+> I've changed my home directory location (using dscl) and now  
+> everything seems to work fine.
+
+
+Interesting, not sure I understand.
+
+I had changed my home directory (using dscl) to /Volumes/pool/bwaters  
+-- that's a ZFS filesystem on my raidz pool.
+
+When I cold-boot, if I am too quick at the login prompt, it will think  
+a moment, then shake its head and say that I cannot log in at this  
+time. I simply wait a bit and try again, and it gets me into a Finder  
+session just great, with the correct $HOME
+
+Isn't that the diskarbitrationd issue that has been discussed on this  
+thread? Or are we talking about a more serious "failure"?
+
+Because aside from the wait-before-logging-in, ZFS home directory  
+always mounts fine for me.
+
+
+From kevin_elliott at apple.com  Tue Nov 18 08:44:11 2008
+From: kevin_elliott at apple.com (Kevin Elliott)
+Date: Tue, 18 Nov 2008 08:44:11 -0800
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <4AA2EA5D-43DC-47F2-963B-AA8F0686377B@nrao.edu>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<19ca54260811171729m27b38207n4e5ea44d506b90ac@mail.gmail.com>
+	<4AA2EA5D-43DC-47F2-963B-AA8F0686377B@nrao.edu>
+Message-ID: <E63CBD5A-376D-4889-A469-50BCD19D47B8@apple.com>
+
+
+On Nov 18, 2008, at 8:07 AM, Boyd Waters wrote:
+> I had changed my home directory (using dscl) to /Volumes/pool/ 
+> bwaters -- that's a ZFS filesystem on my raidz pool.
+>
+> When I cold-boot, if I am too quick at the login prompt, it will  
+> think a moment, then shake its head and say that I cannot log in at  
+> this time. I simply wait a bit and try again, and it gets me into a  
+> Finder session just great, with the correct $HOME
+>
+> Isn't that the diskarbitrationd issue that has been discussed on  
+> this thread? Or are we talking about a more serious "failure"?
+
+Maybe?  By default, diskarbitrationd doesn't mount "external" volumes,  
+which in this case means volumes that have an IOKit property of  
+"External".  That can cause problems if your home directory is on an  
+external device, or, in some cases, on an internal device that  
+incorrectly describes it's location.  Now, it's also possible that you  
+just have a lot of internal volumes, DiskArb takes a long time to  
+process them, and your home dir isn't mounted when you try and login.   
+Which particular problem you have depends on your individual  
+configuration....
+
+SO...  maybe this will help your problem?
+
+-Kevin
+
+From bwaters at nrao.edu  Tue Nov 18 11:02:06 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Tue, 18 Nov 2008 12:02:06 -0700
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <E63CBD5A-376D-4889-A469-50BCD19D47B8@apple.com>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<19ca54260811171729m27b38207n4e5ea44d506b90ac@mail.gmail.com>
+	<4AA2EA5D-43DC-47F2-963B-AA8F0686377B@nrao.edu>
+	<E63CBD5A-376D-4889-A469-50BCD19D47B8@apple.com>
+Message-ID: <35752B70-6290-4115-B152-90A1E5AA7A5E@nrao.edu>
+
+
+On Nov 18, 2008, at 9:44 AM, Kevin Elliott wrote:
+
+>> Isn't that the diskarbitrationd issue that has been discussed on  
+>> this thread? Or are we talking about a more serious "failure"?
+>
+> Maybe?  By default, diskarbitrationd doesn't mount "external"  
+> volumes, which in this case means volumes that have an IOKit  
+> property of "External".  That can cause problems if your home  
+> directory is on an external device
+
+
+Right, OK, we're all talking about the same thing, I think.
+
+My ZFS pools show up in the Finder as "removable" -- they have a white  
+disk icon, and an "eject" arrow next to them in the sidebar.
+
+Even though the raidz is across the four internal disks in the Mac Pro  
+drive bays.
+
+
+From csuter at sutes.co.uk  Tue Nov 18 11:12:48 2008
+From: csuter at sutes.co.uk (Chris Suter)
+Date: Wed, 19 Nov 2008 06:12:48 +1100
+Subject: [zfs-discuss] ZFS Ready for my data
+In-Reply-To: <4AA2EA5D-43DC-47F2-963B-AA8F0686377B@nrao.edu>
+References: <13441A98-5336-4864-8185-2ABB4B1A8863@MailNewsRSS.com>
+	<19ca54260811161836u6b36f440oc92d3736d7ff334c@mail.gmail.com>
+	<B44A40DD-9B59-4455-8DBC-3FC22946A612@gmail.com>
+	<19ca54260811161910g59f5b0ffk4962166da393d3f2@mail.gmail.com>
+	<11910227-83D9-448B-B32C-D9C56F35B9B4@apple.com>
+	<19ca54260811171729m27b38207n4e5ea44d506b90ac@mail.gmail.com>
+	<4AA2EA5D-43DC-47F2-963B-AA8F0686377B@nrao.edu>
+Message-ID: <19ca54260811181112x68b6ac79ne091122416944029@mail.gmail.com>
+
+On Wed, Nov 19, 2008 at 3:07 AM, Boyd Waters <bwaters at nrao.edu> wrote:
+
+>
+> On Nov 17, 2008, at 6:29 PM, Chris Suter wrote:
+>
+>  the HomeDirMechanism plugin (the Security Agent plugin that sorts out home
+>> directories) will mount home directories automatically provided the home
+>> directory location has a "/Volumes/" prefix. It would have been nice if
+>> they'd used realpath before checking this (rdar://problem/6379785 ? others
+>> please file duplicates).
+>>
+>> I've changed my home directory location (using dscl) and now everything
+>> seems to work fine.
+>
+>
+Just to follow up on this: I was wrong, the /Volumes/ prefix hasn't fixed
+it. There's definitely something in the HomeDirMechanism that looks like
+it's supposed to mount the volume but it looks like it's broken.
+
+-- Chris
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081119/cb665a60/attachment.html>
+
+From rogerws at rogers.com  Tue Nov 18 21:55:46 2008
+From: rogerws at rogers.com (Roger Singh)
+Date: Tue, 18 Nov 2008 21:55:46 -0800 (PST)
+Subject: [zfs-discuss] ZFS create failure
+Message-ID: <553720.78040.qm@web88007.mail.re2.yahoo.com>
+
+I am trying to create a zpool on a partition, everything looks fine however I get 
+
+wecoyote:~ root# diskutil list
+/dev/disk0
+?? #:?????????????????????? TYPE NAME??????????????????? SIZE?????? IDENTIFIER
+?? 0:????? GUID_partition_scheme??????????????????????? *298.1 Gi?? disk0
+?? 1:??????????????????????? EFI???????????????????????? 200.0 Mi?? disk0s1
+?? 2:????????????????? Apple_HFS Macintosh HD??????????? 190.0 Gi?? disk0s2
+?? 3:??????????????????????? ZFS???????????????????????? 107.6 Gi?? disk0s3
+wecoyote:~ root# zpool create mypool disk0s3
+cannot create 'mypool': invalid argument for this pool operation
+
+Am i doing something wrong or have I run into a known issue? 
+
+-Roger
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081118/747f515d/attachment.html>
+
+From ndellofano at apple.com  Wed Nov 19 00:11:02 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 19 Nov 2008 00:11:02 -0800
+Subject: [zfs-discuss] ZFS create failure
+In-Reply-To: <553720.78040.qm@web88007.mail.re2.yahoo.com>
+References: <553720.78040.qm@web88007.mail.re2.yahoo.com>
+Message-ID: <9BE69F64-D519-4DD0-9EA9-690CEB97B755@apple.com>
+
+I've never seen this behavior.  Are you running zfs-119? What build  
+are you running and what kind of machine?
+
+Noel
+
+On Nov 18, 2008, at 9:55 PM, Roger Singh wrote:
+
+> I am trying to create a zpool on a partition, everything looks fine  
+> however I get
+>
+> wecoyote:~ root# diskutil list
+> /dev/disk0
+>    #:                       TYPE NAME                    SIZE        
+> IDENTIFIER
+>    0:      GUID_partition_scheme                        *298.1 Gi    
+> disk0
+>    1:                        EFI                         200.0 Mi    
+> disk0s1
+>    2:                  Apple_HFS Macintosh HD            190.0 Gi    
+> disk0s2
+>    3:                        ZFS                         107.6 Gi    
+> disk0s3
+> wecoyote:~ root# zpool create mypool disk0s3
+> cannot create 'mypool': invalid argument for this pool operation
+>
+> Am i doing something wrong or have I run into a known issue?
+>
+> -Roger
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081119/1aa576f2/attachment-0001.html>
+
+From alex.blewitt at gmail.com  Thu Nov 20 04:24:45 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Thu, 20 Nov 2008 12:24:45 +0000
+Subject: [zfs-discuss] Mounting subdirectories via NFS
+Message-ID: <636fd28e0811200424n7631100aj111b40aad1a74dc7@mail.gmail.com>
+
+I'm having a problem with NFS exports and ZFS. I'm using ZFS 119 on a
+Mac Mini (10.5.5) and have a structure:
+
+Data/Users/alex
+
+I have /Users on an HFS partition and /Users/alex mounted via ZFS:
+
+Data/Users/alex on /Users/alex (zfs, NFS exported, local)
+
+The Data/Users ZFS isn't mounted:
+
+mini:Users alex$ zfs get mounted Data/Users
+NAME        PROPERTY  VALUE       SOURCE
+Data/Users  mounted   no          -
+
+In my /etc/exports, I have:
+
+/Users -alldirs
+
+I can mount /Users on a client machine, and I see the subdir alex:
+
+client:Users alex$ pwd
+/net/mighty/Users
+client:Users alex$ ls -l
+drwxr-xr-x   3 root  admin  102 18 Nov 01:39 alex
+
+However, the directory is empty:
+
+client:Users alex$ ls -l alex
+client:Users alex$
+
+I can't mount the subdir directly, despite -alldirs:
+
+client:Users alex$ mount -t nfs mini:/Users/alex
+mount_nfs: can't access /Users/alex: Permission denied
+
+If I export it explicitly, it works:
+
+/Users/alex -alldirs
+
+client:Users alex$ mount -t nfs mini:/Users/alex
+
+It would be a pain to have to do this for each user/fs in the
+/etc/exports list - is there something I'm missing?
+
+Alex
+
+From macko at apple.com  Thu Nov 20 08:06:06 2008
+From: macko at apple.com (Mike Mackovitch)
+Date: Thu, 20 Nov 2008 08:06:06 -0800
+Subject: [zfs-discuss] Mounting subdirectories via NFS
+In-Reply-To: <636fd28e0811200424n7631100aj111b40aad1a74dc7@mail.gmail.com>
+References: <636fd28e0811200424n7631100aj111b40aad1a74dc7@mail.gmail.com>
+Message-ID: <20081120160606.GA59987@wacko.local>
+
+On Thu, Nov 20, 2008 at 12:24:45PM +0000, Alex Blewitt wrote:
+> I'm having a problem with NFS exports and ZFS.
+
+Actually it seems to be working as it should.
+
+> In my /etc/exports, I have:
+> 
+> /Users -alldirs
+> 
+> I can mount /Users on a client machine, and I see the subdir alex:
+
+> However, the directory is empty:
+
+That's because the subdirectory "alex" (on the exported file system
+that the "/Users" directory is on) is empty.
+
+> I can't mount the subdir directly, despite -alldirs:
+
+You mean you can't mount the file system that happens to be mounted
+on that subdirectory on the server.
+
+> If I export it explicitly, it works:
+
+> It would be a pain to have to do this for each user/fs in the
+> /etc/exports list - is there something I'm missing?
+
+I think you are misinterpreting what "-alldirs" does.
+
+The exports(5) man page states that export entries are for exporting
+*file systems*.  The -alldirs option is used to allow mounting of any
+directory *within* the exported file system.
+
+As described in the exports(5) man page, the NFS server requires (and
+has always required) that each exported file system be explicitly
+specified in the exports list.  This is not unique to exporting ZFS.
+
+If you would like the ability to automatically export all file systems
+mounted underneath an exported directory, I would suggest you file an
+enhancement request: http://developer.apple.com/bugreporter/
+
+THanks
+--macko
+
+From alex.blewitt at gmail.com  Thu Nov 20 15:43:26 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Thu, 20 Nov 2008 23:43:26 +0000
+Subject: [zfs-discuss] Log messages 'add_fsevent: no name hard-link!
+Message-ID: <636fd28e0811201543ofa8eb0ewbcd8ce2b1ef843ab@mail.gmail.com>
+
+I'm getting a lot of messages in my server's log (when mounting via
+NFS a ZFS fs) which look like:
+
+Nov 20 23:37:07 mini kernel[0]: add_fsevent: no name hard-link!
+dropping the event. (event 0 vp == 0x7b30d90 (-UNKNOWN-FILE)).
+
+It looks the same as reported in this thread:
+
+http://discussions.apple.com/thread.jspa?threadID=1411082
+
+ZFS 119, Mac OS X 10.5.5 yada yada, both client and server
+
+Looks like it's coming from somewhere around here:
+
+http://fxr.watson.org/fxr/source/bsd/vfs/vfs_fsevents.c?v=xnu-1228#L989
+
+Alex
+
+From dwebb at erbco.com  Fri Nov 21 14:11:43 2008
+From: dwebb at erbco.com (Dustin Webb)
+Date: Fri, 21 Nov 2008 17:11:43 -0500
+Subject: [zfs-discuss] Permission Denied
+Message-ID: <6139E8BD-60D2-42A7-A9E4-BCCE725C38D5@erbco.com>
+
+Hey, I've been using ZFS on OS X for about a year now, before that I  
+was using it on Nexenta.  Just recently my motherboard died so I had  
+to install a new OS X.  My permissions got all screwy on my ZFS pool.   
+The Admin group account isn't recognized on the pool.  If I look at  
+the permissions with get info there is an unknown account.  If I  
+remove it then it shows up again when I try to add the admin group.  I  
+can add my admin accounts separately but not the group.  Also, I'm not  
+sure if this an issue with OS X or the ZFS system but if I tell the  
+permissions to propagate down then it does so randomly.  Some files  
+and folders pick up the changes but others do not.
+
+Thanks for any help, I'm really looking forward to the full  
+implementation of ZFS in OS X.  It's a very exciting FS.
+
+Dustin
+
+
+From wkr at cs.ucsb.edu  Fri Nov 21 17:02:35 2008
+From: wkr at cs.ucsb.edu (William Robertson)
+Date: Fri, 21 Nov 2008 17:02:35 -0800
+Subject: [zfs-discuss] zfs panics
+Message-ID: <20081122010235.GC20881@bergman.cs.ucsb.edu>
+
+Hi,
+
+I'm running into some stability issues with ZFS on OS X, and I was
+wondering whether anyone could shed some light on them.
+
+I have a SATA drive array (Sonnet Fusion D500P) connected to a
+fully-patched MBP with zfs-119 over an Expresscard/34 adapter (Sonnet
+Tempo card, Sil3132 chipset I believe).  I've had kernel panics occur
+both when creating a raidz1 on the array, and during moderate I/O.  I've
+looked over the known issues, but I don't think I've run into any of
+them.
+
+What is strange is that zfs doesn't seem to play well with another
+external drive attached to the machine (over USB2).  For instance, I was
+not able to place GPT labels on the drives in the array without killing
+the machine until I unmounted the USB drive.  After that, however, I was
+able to create a zpool and filesystems as normal.
+
+Later, though, the machine died when I remounted the USB drive and tried
+to transfer data from that drive to the array using rsync.
+
+Does anyone have any ideas on what might be causing this?
+
+-- 
+William Robertson
+Computer Security Group, UC Santa Barbara
+http://www.cs.ucsb.edu/~wkr/
+
+
+From alex.blewitt at gmail.com  Fri Nov 21 17:02:50 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sat, 22 Nov 2008 01:02:50 +0000
+Subject: [zfs-discuss] ZFS and nested NFS exports (and crontab for backup)
+Message-ID: <636fd28e0811211702y5895e33ne8274cf318c4470f@mail.gmail.com>
+
+Well, after much trial and tribulations, I've finally got my home
+drives over NFS with a ZFS backend. All I need now is for a stable
+NFS4 that can handle xattrs over the wire and I'm golden :-) Mind you,
+that's not going to come until 10.7 "Rain puppy".
+
+The good:
+* I've got ZFS on the back-end, with snapshots and everything.
+* Compression is a bonus, especially for /Library/Documentation.
+Doesn't seem to impact files that much - I have it on for all shares
+at the moment. Largest compression ratio is 1.31x, (developer stuff,
+CVS repo etc.)
+* xattr properties are cool
+* copies=2 is great for data when you're on a laptop
+* crontab is your friend:
+@reboot /usr/sbin/zfs scrub Data
+@daily /usr/sbin/zfs scrub Data
+#If you really want to get silly
+@hourly /usr/sbin/zfs snapshot -r Data at AutoH-`date +"\%FT\%H:\%M"`
+@daily /usr/sbin/zfs snapshot -r Data at AutoD-`date +"\%F"`
+@weekly /usr/sbin/zfs snapshot -r Data at AutoW-`date +"\%Y-\%U"`
+@monthly /usr/sbin/zfs snapshot -r Data at AutoM-`date +"\%Y-\%m"`
+@yearly /usr/sbin/zfs snapshot -r Data at AutoY-`date +"\%Y"`
+# do a spot of housecleaning - somewhat assumes the daily ones have run ..
+@hourly /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+Data at AutoH- | /usr/bin/sort -r | tail -n +26 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+@daily /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+Data at AutoD- | /usr/bin/sort -r | tail -n +9 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+@weekly /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+Data at AutoW- | /usr/bin/sort -r | tail -n +7 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+@monthly /usr/sbin/zfs list -t snapshot -o name | /usr/bin/grep
+Data at AutoM- | /usr/bin/sort -r | tail -n +14 | /usr/bin/xargs -n 1
+/usr/sbin/zfs destroy
+
+The bad:
+* I've had one kernel panic. Mind you, that's on a fresh (i.e. buggy)
+MacBook Pro and the graphics card had several glitches. Not sure if it
+was ZFS related, but I sent the report in anyway.
+* No friendly GUI Mac support. Hey, I smell a business idea ...
+
+The ugly:
+* NFS mounting. Really, don't do it. Well, I say that - but the
+alternative (AFP) is worse. I'd say that ZFS is great for single
+machine systems at the moment - the ability to create nested data
+structures is great, especially for the automated backups (above).
+** But as my last post indicated (to my lack of knowledge, really)
+each ZFS FS needs its own entry in /etc/exports. With a lot of file
+systems, that's a problem - and given that ZFS encourages a lot of
+file systems, it's a big issue. Worse still is the zfs share (or lack
+thereof) support.
+** Note to self; how hard could zfs share be? It's just a cat >>
+/etc/exports and corresponding deletion for zfs unshare ...
+** Client-side mounting. AutoFS doesn't really like nested automounts.
+If you have static mounts (via dscl /Search -list /Mounts) then it
+complains every time there's a nested level in there. you need to list
+every mount point or otherwise your file system tree is more holey
+than a bullet ridden swiss cheese.
+** DS import and export. Could I do it? Could I buggery. Ended up
+doing an ldap export and import. Sob, demise of NetInfo etc. Server
+Admin isn't great ether - you can poke in a share line by line if you
+have time (add opts, add tcp, add nointr, add soft, add VFSLink ...)
+but imagine doing that for many file systems. Hmm, there's that
+business idea again ... or maybe it's my toast burning.
+** Even when you've done that, it's the three-finger salute (one
+finger for Mac users, I guess) to get the automounter to *realise*
+that you've managed to kick ldap into submission.
+** Figure out (after reboot) that sudo automount -vc would have done the trick
+** OK, you can do /net/mini/Users/alex instead. That works, but you
+need to either symlink /Users/alex or put /net/mini/Users/alex in the
+VFSDir record. And that goes wahoonie shaped when you try and log in
+to mini, because it then says you can't local mount a networked dir,
+please sod off.
+** I had to buy a mini a month before they were upgraded (or
+cancelled, depending on belief). Bugger. Oh well, at least it's got
+4G(*) in it.
+
+Even if you do something funky with auto_home to mount user's
+directories across NFS, its still a pain to have 1 NFS export per user
+(pretty much back to the bad old days of AFP) - and it pretty much
+negates the ability for a user to have multiple ZFS file systems (one
+for Music, one for Documents etc. with different
+encryption/compression levels). Of course these would only be
+manageable on the 'home' server, but remote mounting would be a
+nightmare.
+
+Anyway, I thought I'd share my impressions with everyone on the list
+and hope the set of crontab magic incarnations is useful. I'll be
+blogging about it tomorrow via
+http://alblue.blogspot.com/search/label/zfs which would be a good
+canonical URL to bookmark for the above crontab entries
+
+Alex
+
+(*) Yes, it is possible to stick 4G in a mini. You just have to take
+it gently and use plenty of lube. I bought a Crucial jobby
+(http://www.crucial.com/store/partspecs.aspx?IMODULE=CT2KIT25664AC667).
+Note that whilst you can shove 4G where the sun don't shine, and it
+says 4G in warm fluffy letters on the 'About' box, the intel chipset
+on board can only see ~3G of it:
+mini$ sysctl -a | grep mem
+hw.physmem = 2147483648
+hw.usermem = 1125699584
+hw.memsize = 4294967296
+PhysMem:  975M wired,  431M active,  113M inactive, 2548M used, 1548M free.
+
+Heck, still gives me a good Gb of space for ZFS's nefarious caching
+needs and leaves plenty left over for a trip down memory lane. And
+with my latest hourly snapshot complete, I'm going to retire for the
+evening...
+Data/Users/alex at AutoH-2008-11-22T01:00                     1.41M
+-  52.0G  -
+
+From mailinglists at MailNewsRSS.com  Fri Nov 21 17:04:29 2008
+From: mailinglists at MailNewsRSS.com (Jason Todd Slack-Moehrle)
+Date: Fri, 21 Nov 2008 17:04:29 -0800
+Subject: [zfs-discuss] Benefits
+Message-ID: <884C3AB8-103B-4D58-B560-68F5F4447503@MailNewsRSS.com>
+
+Hi All,
+
+What are the benefits of taking my laptop drive, partitioning it,  
+formatting it ZFS and moving  my ~ directory to that partition?
+
+Thanks,
+
+-Jason
+
+
+From alex.blewitt at gmail.com  Fri Nov 21 17:41:05 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sat, 22 Nov 2008 01:41:05 +0000
+Subject: [zfs-discuss] Benefits
+In-Reply-To: <884C3AB8-103B-4D58-B560-68F5F4447503@MailNewsRSS.com>
+References: <884C3AB8-103B-4D58-B560-68F5F4447503@MailNewsRSS.com>
+Message-ID: <636fd28e0811211741o1d0c107coff78890c26fa15a5@mail.gmail.com>
+
+Automatic snapshots :-)
+
+http://alblue.blogspot.com/2008/11/crontab-generated-zfs-snapshots.html
+
+Also; compression, automatic checksumming, always-sane on-disk format,
+ability to send snapshots via zfs send and zfs recv elsewhere ...
+
+I don't necessarily know if it's worth taking an existing system and
+doing that, unless you were planning to upgrade the hard drive anyway
+or were doing a clean-install from DVD. But if you were setting up a
+new system, I'd recommend setting up a small (20-50g, depending on
+size of HD) HFS+ partition for the OS and the remainder as ZFS.
+
+Alex
+
+On Sat, Nov 22, 2008 at 1:04 AM, Jason Todd Slack-Moehrle
+<mailinglists at mailnewsrss.com> wrote:
+> Hi All,
+>
+> What are the benefits of taking my laptop drive, partitioning it, formatting
+> it ZFS and moving  my ~ directory to that partition?
+>
+> Thanks,
+>
+> -Jason
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From mailinglists at mailnewsrss.com  Fri Nov 21 18:05:24 2008
+From: mailinglists at mailnewsrss.com (Jason Todd Slack-Moehrle)
+Date: Fri, 21 Nov 2008 18:05:24 -0800
+Subject: [zfs-discuss] Benefits
+In-Reply-To: <636fd28e0811211741o1d0c107coff78890c26fa15a5@mail.gmail.com>
+References: <884C3AB8-103B-4D58-B560-68F5F4447503@MailNewsRSS.com>
+	<636fd28e0811211741o1d0c107coff78890c26fa15a5@mail.gmail.com>
+Message-ID: <D5097744-41F2-40F7-B8DA-3F31CCB224F4@mailnewsrss.com>
+
+Hi Alex,
+
+Can one have an OS X partition, ZFS parition and a Bootcamp Partition?
+
+Seems possible, but not sure.
+
+-Jason
+
+On Nov 21, 2008, at 5:41 PM, Alex Blewitt wrote:
+
+> Automatic snapshots :-)
+>
+> http://alblue.blogspot.com/2008/11/crontab-generated-zfs- 
+> snapshots.html
+>
+> Also; compression, automatic checksumming, always-sane on-disk format,
+> ability to send snapshots via zfs send and zfs recv elsewhere ...
+>
+> I don't necessarily know if it's worth taking an existing system and
+> doing that, unless you were planning to upgrade the hard drive anyway
+> or were doing a clean-install from DVD. But if you were setting up a
+> new system, I'd recommend setting up a small (20-50g, depending on
+> size of HD) HFS+ partition for the OS and the remainder as ZFS.
+>
+> Alex
+>
+> On Sat, Nov 22, 2008 at 1:04 AM, Jason Todd Slack-Moehrle
+> <mailinglists at mailnewsrss.com> wrote:
+>> Hi All,
+>>
+>> What are the benefits of taking my laptop drive, partitioning it,  
+>> formatting
+>> it ZFS and moving  my ~ directory to that partition?
+>>
+>> Thanks,
+>>
+>> -Jason
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+
+
+From csuter at sutes.co.uk  Fri Nov 21 18:14:28 2008
+From: csuter at sutes.co.uk (Chris Suter)
+Date: Sat, 22 Nov 2008 13:14:28 +1100
+Subject: [zfs-discuss] Benefits
+In-Reply-To: <D5097744-41F2-40F7-B8DA-3F31CCB224F4@mailnewsrss.com>
+References: <884C3AB8-103B-4D58-B560-68F5F4447503@MailNewsRSS.com>
+	<636fd28e0811211741o1d0c107coff78890c26fa15a5@mail.gmail.com>
+	<D5097744-41F2-40F7-B8DA-3F31CCB224F4@mailnewsrss.com>
+Message-ID: <19ca54260811211814t422ef7ebj1a5cad46137c70d0@mail.gmail.com>
+
+On Sat, Nov 22, 2008 at 1:05 PM, Jason Todd Slack-Moehrle <
+mailinglists at mailnewsrss.com> wrote:
+
+Can one have an OS X partition, ZFS parition and a Bootcamp Partition?
+
+
+Yes, but you need to be a little careful when doing the partitioning.
+BootCamp Assistant won't work if you've got a non-standard partition
+arrangement so if you want to use BootCamp Assistant you'd have to use that
+first and then repartition (taking care not to move the Windows partition or
+upset the MBR).
+
+-- Chris
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081122/afb2eb59/attachment.html>
+
+From bwaters at nrao.edu  Sat Nov 22 13:34:34 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Sat, 22 Nov 2008 14:34:34 -0700
+Subject: [zfs-discuss] zfs panics
+In-Reply-To: <20081122010235.GC20881@bergman.cs.ucsb.edu>
+References: <20081122010235.GC20881@bergman.cs.ucsb.edu>
+Message-ID: <3A0A78C4-7FC8-4106-82F5-21D25EF2700A@nrao.edu>
+
+First:
+
+   Are you exporting your ZFS pool before ejecting the (external)  
+volume?
+
+Before ejecting the disk, do
+
+  $ sudo zfs -f pool
+
+  where "pool" is the name of your ZFS pool. Maybe that will sort  
+things out?
+
+
+
+Second:
+
+   Can you post your kernel stack trace from the panic? That would  
+help a lot.
+
+When you reboot, you should see a crash report window. There are three  
+sections to that text area: the third section holds the stack trace.  
+You can copy that text and paste it in an email reply.
+
+Alternatively, you can open the Console utility in /Applications/ 
+Utilities/Console, on the left side of the window is the Log List. In  
+that list under LOG FILES, you'll see /Library/Logs: open the  
+PanicReporter section. Click on the most recent panic report and  
+select its text in the text area on the right. Copy it into an email...
+
+Or just from a Bash prompt, something like
+  # cat /Library/Logs/*.panic | mail -s "crash reports" zfs-discuss at lists.macosforge.org
+
+(why does a gui make things complicated?)
+
+
+Finally:
+
+   FWIW, I've used an ExpressCard Sil3132 eSATA adapter with a raidz1  
+on an external enclosure, and I don't recall any more stability issues  
+that with my Mac Pro's "native" internal raidz.
+
+
+Hope that helps!
+
+
+On Nov 21, 2008, at 6:02 PM, William Robertson wrote:
+
+> Hi,
+>
+> I'm running into some stability issues with ZFS on OS X, and I was
+> wondering whether anyone could shed some light on them.
+>
+> I have a SATA drive array (Sonnet Fusion D500P) connected to a
+> fully-patched MBP with zfs-119 over an Expresscard/34 adapter (Sonnet
+> Tempo card, Sil3132 chipset I believe).  I've had kernel panics occur
+> both when creating a raidz1 on the array, and during moderate I/O.   
+> I've
+> looked over the known issues, but I don't think I've run into any of
+> them.
+>
+> What is strange is that zfs doesn't seem to play well with another
+> external drive attached to the machine (over USB2).  For instance, I  
+> was
+> not able to place GPT labels on the drives in the array without  
+> killing
+> the machine until I unmounted the USB drive.  After that, however, I  
+> was
+> able to create a zpool and filesystems as normal.
+>
+> Later, though, the machine died when I remounted the USB drive and  
+> tried
+> to transfer data from that drive to the array using rsync.
+>
+> Does anyone have any ideas on what might be causing this?
+>
+> -- 
+> William Robertson
+> Computer Security Group, UC Santa Barbara
+> http://www.cs.ucsb.edu/~wkr/
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From zfs at sbod.at  Sun Nov 23 06:59:17 2008
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Sun, 23 Nov 2008 15:59:17 +0100
+Subject: [zfs-discuss] (no subject)
+Message-ID: <4E0978F6-D85C-4D4F-963F-BF9834D43B82@sbod.at>
+
+s
+
+From bwaters at nrao.edu  Sun Nov 23 10:50:32 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Sun, 23 Nov 2008 11:50:32 -0700
+Subject: [zfs-discuss] zfs panics
+In-Reply-To: <3A0A78C4-7FC8-4106-82F5-21D25EF2700A@nrao.edu>
+References: <20081122010235.GC20881@bergman.cs.ucsb.edu>
+	<3A0A78C4-7FC8-4106-82F5-21D25EF2700A@nrao.edu>
+Message-ID: <EA4956C0-E920-4346-8C6B-CF89FA647C03@nrao.edu>
+
+
+On Nov 22, 2008, at 2:34 PM, Boyd Waters wrote:
+
+> First:
+>
+>  Are you exporting your ZFS pool before ejecting the (external)  
+> volume?
+>
+> Before ejecting the disk, do
+>
+> $ sudo zfs -f pool
+
+
+Oops.. I meant
+
+  sudo zfs export -f pool
+
+
+Sorry.
+
+
+
+From bwaters at nrao.edu  Sun Nov 23 17:30:51 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Sun, 23 Nov 2008 18:30:51 -0700
+Subject: [zfs-discuss] cannot create snapshot - dataset is busy
+Message-ID: <3650D7C7-B903-49F2-9BAE-B0F5EE365298@nrao.edu>
+
+Why am I getting this sort of error?
+
+> root at galatea ~ # zfs snapshot pool/bwaters at 2008-11-23T18:27:50
+> cannot create snapshot 'pool/bwaters at 2008-11-23T18:27:50': dataset  
+> is busy
+
+
+I am using ZFS-119 on 10.5.5 (9F33) -- "pool/bwaters" is a raidz1 pool  
+with lots of filesystems on it.
+
+
+root at galatea ~ # zpool upgrade -v
+This system is currently running ZFS pool version 8.
+
+
+
+
+From alex.blewitt at gmail.com  Mon Nov 24 02:01:46 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Mon, 24 Nov 2008 10:01:46 +0000
+Subject: [zfs-discuss] cannot create snapshot - dataset is busy
+In-Reply-To: <3650D7C7-B903-49F2-9BAE-B0F5EE365298@nrao.edu>
+References: <3650D7C7-B903-49F2-9BAE-B0F5EE365298@nrao.edu>
+Message-ID: <80B2FFA6-9836-44CD-9C2F-B4C7D5AAC952@gmail.com>
+
+Was there a scrub occurring at the time on the pool?
+
+Alex
+
+Sent from my (new) iPhone
+
+On 24 Nov 2008, at 01:30, Boyd Waters <bwaters at nrao.edu> wrote:
+
+> Why am I getting this sort of error?
+>
+>> root at galatea ~ # zfs snapshot pool/bwaters at 2008-11-23T18:27:50
+>> cannot create snapshot 'pool/bwaters at 2008-11-23T18:27:50': dataset  
+>> is busy
+>
+>
+> I am using ZFS-119 on 10.5.5 (9F33) -- "pool/bwaters" is a raidz1  
+> pool with lots of filesystems on it.
+>
+>
+> root at galatea ~ # zpool upgrade -v
+> This system is currently running ZFS pool version 8.
+>
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From bwaters at nrao.edu  Mon Nov 24 09:40:50 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Mon, 24 Nov 2008 10:40:50 -0700
+Subject: [zfs-discuss] cannot create snapshot - dataset is busy
+In-Reply-To: <80B2FFA6-9836-44CD-9C2F-B4C7D5AAC952@gmail.com>
+References: <3650D7C7-B903-49F2-9BAE-B0F5EE365298@nrao.edu>
+	<80B2FFA6-9836-44CD-9C2F-B4C7D5AAC952@gmail.com>
+Message-ID: <D8DB9AE5-8A51-4FFD-ADEB-61A54C7EB4E3@nrao.edu>
+
+
+On Nov 24, 2008, at 3:01 AM, Alex Blewitt wrote:
+
+> Was there a scrub occurring at the time on the pool?
+
+
+Good question, but no...
+
+
+root at galatea ~ # zpool status pool
+   pool: pool
+  state: ONLINE
+  scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	pool         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+
+???
+
+cannot create snapshot 'pool/bwaters at 2008-11-24T10:39:21': dataset is  
+busy
+
+
+
+From ndellofano at apple.com  Mon Nov 24 12:37:35 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Mon, 24 Nov 2008 12:37:35 -0800
+Subject: [zfs-discuss] Permission Denied
+In-Reply-To: <6139E8BD-60D2-42A7-A9E4-BCCE725C38D5@erbco.com>
+References: <6139E8BD-60D2-42A7-A9E4-BCCE725C38D5@erbco.com>
+Message-ID: <7B6A3F69-3645-4BAD-9E68-FC8664D3A182@apple.com>
+
+'sudo chown -R' is your friend :) Use the terminal and do that for  
+whatever owner:group you'd like to change your pool to.
+
+eg.
+
+sudo chown -R noel:staff /Volumes/mypool
+
+Noel
+
+On Nov 21, 2008, at 2:11 PM, Dustin Webb wrote:
+
+> Hey, I've been using ZFS on OS X for about a year now, before that I  
+> was using it on Nexenta.  Just recently my motherboard died so I had  
+> to install a new OS X.  My permissions got all screwy on my ZFS  
+> pool.  The Admin group account isn't recognized on the pool.  If I  
+> look at the permissions with get info there is an unknown account.   
+> If I remove it then it shows up again when I try to add the admin  
+> group.  I can add my admin accounts separately but not the group.   
+> Also, I'm not sure if this an issue with OS X or the ZFS system but  
+> if I tell the permissions to propagate down then it does so  
+> randomly.  Some files and folders pick up the changes but others do  
+> not.
+>
+> Thanks for any help, I'm really looking forward to the full  
+> implementation of ZFS in OS X.  It's a very exciting FS.
+>
+> Dustin
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From mark at theleistners.com  Mon Nov 24 16:55:35 2008
+From: mark at theleistners.com (Mark Leistner)
+Date: Mon, 24 Nov 2008 19:55:35 -0500
+Subject: [zfs-discuss] Panic on large move
+Message-ID: <790ed9bc0811241655t5d48bcfr4a913d8aa1153c35@mail.gmail.com>
+
+I got a panic on a large move (Aperture Library file).  I was using the
+command line tools, here is the text from the panic.
+
+I then tried to rm the resulting corrupt library files and that also caused
+a panic.  I'm now trying to restore from a vault... hope that goes well ;)
+
+Mon Nov 24 19:35:57 2008
+panic(cpu 2 caller 0x7BD67103): "mutex_enter: locking against
+myself!"@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_context.c:449
+Backtrace (CPU 2), Frame : Return Address (4 potential args on stack)
+0x5ed17428 : 0x12b0fa (0x459234 0x5ed1745c 0x133243 0x0)
+0x5ed17478 : 0x7bd67103 (0x7bdc1ff8 0x7f2d06c 0x5ed174c8 0x7bd0eae6)
+0x5ed17498 : 0x7bd140fc (0x87874998 0x1 0x5ed174c8 0x7bd3c875)
+0x5ed174d8 : 0x1f3f6a (0x5ed174f4 0x206 0x5ed174fc 0x4f6f40)
+0x5ed17518 : 0x1db5ea (0x128ab8c0 0x7ed2fa4 0x0 0x0)
+0x5ed17568 : 0x1db806 (0x128ab8c0 0x1 0x5ed175b8 0x1f5e51)
+0x5ed175b8 : 0x1dbaae (0x0 0x7ed2fa4 0x5ed175f8 0x925a5aa8)
+0x5ed175d8 : 0x1dbae4 (0x128ab8c0 0x7911200 0x7970c00 0x7f2d000)
+0x5ed175f8 : 0x7bd6b881 (0x128ab8c0 0xbdbb0 0x0 0x0)
+0x5ed176a8 : 0x7bd0e05f (0x5ed177e8 0x0 0x0 0x5ed177e8)
+0x5ed17808 : 0x7bd0e22c (0x5ed1793c 0x1 0x5ed17878 0xffffffff)
+0x5ed17848 : 0x1f6857 (0x78f5260 0xbdbb0 0x0 0x5ed1793c)
+0x5ed17898 : 0x1d52fb (0x78f5260 0xbdbb0 0x0 0x5ed1793c)
+0x5ed17958 : 0x1c3718 (0x5ed17a00 0x1 0x1 0x0)
+0x5ed17f78 : 0x3ddd6e (0x775f030 0x7ed2ea0 0x7ed2ee4 0x0)
+0x5ed17fc8 : 0x19f3b3 (0x104f5760 0x0 0x1a20b5 0x78a2e40)
+    Backtrace continues...
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x7bd0c000->0x7bdd7fff
+
+BSD process name corresponding to current thread: Finder
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacPro3,1 (Mac-F42C88C8)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081124/51decf6f/attachment.html>
+
+From mailinglists at MailNewsRSS.com  Mon Nov 24 18:30:35 2008
+From: mailinglists at MailNewsRSS.com (Jason Todd Slack-Moehrle)
+Date: Mon, 24 Nov 2008 18:30:35 -0800
+Subject: [zfs-discuss] ZFS Setup - Confused!
+Message-ID: <50C848A5-4488-49A9-8596-4F32FD2BED65@MailNewsRSS.com>
+
+Hi All,
+
+OK, so I want to setup a 3 partition setup on my MacBook. I have  
+upgraded to a 500gb internal drive.
+
+So I did the following after turning it on:
+
+disktuil resizeVolume disk0s2 120G ZFS Data 295G msdos Windows 50G
+
+It created my three partitions.
+
+I then installed Leopard on the 120GB Partition and Window on the 50GB  
+Partition.
+
+Now I want to format the ZFS partition I called 'Data'. DiskUtility  
+sees that partition, but I cannot do anything with it.
+
+I went to the ZFS MacOSForge website and looked at the Getting Started  
+and I dont quite see what to do since I have created my partitions  
+myself.
+
+Here is what I have:
+
+~ slack$ diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS Leopard                 119.9 Gi    
+disk0s2
+    3:                        ZFS                         294.9 Gi    
+disk0s3
+    4:       Microsoft Basic Data                         50.6 Gi     
+disk0s4
+jason-t-slacks-macbook:~ slack$
+
+How do I get started with what I have now?
+
+Thanks!
+
+-Jason
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081124/84490a24/attachment.html>
+
+From james-zfsosx at jrv.org  Mon Nov 24 18:53:50 2008
+From: james-zfsosx at jrv.org (James R. Van Artsdalen)
+Date: Mon, 24 Nov 2008 20:53:50 -0600
+Subject: [zfs-discuss] ZFS Setup - Confused!
+In-Reply-To: <50C848A5-4488-49A9-8596-4F32FD2BED65@MailNewsRSS.com>
+References: <50C848A5-4488-49A9-8596-4F32FD2BED65@MailNewsRSS.com>
+Message-ID: <492B68BE.7030508@jrv.org>
+
+$ sudo zpool create zfs-pool-name disk0s3
+
+Jason Todd Slack-Moehrle wrote:
+> Hi All,
+>
+> OK, so I want to setup a 3 partition setup on my MacBook. I have
+> upgraded to a 500gb internal drive.
+>
+> So I did the following after turning it on:
+>
+> disktuil resizeVolume disk0s2 120G ZFS Data 295G msdos Windows 50G
+>
+> It created my three partitions.
+>
+> I then installed Leopard on the 120GB Partition and Window on the 50GB
+> Partition.
+>
+> Now I want to format the ZFS partition I called 'Data'. DiskUtility
+> sees that partition, but I cannot do anything with it.
+>
+> I went to the ZFS MacOSForge website and looked at the Getting Started
+> and I dont quite see what to do since I have created my partitions myself.
+>
+> Here is what I have:
+>
+> ~ slack$ diskutil list
+> /dev/disk0
+>    #:                       TYPE NAME                    SIZE      
+> IDENTIFIER
+>    0:      GUID_partition_scheme                        *465.8 Gi   disk0
+>    1:                        EFI                         200.0 Mi  
+> disk0s1
+>    2:                  Apple_HFS Leopard                 119.9 Gi  
+> disk0s2
+>    3:                        ZFS                         294.9 Gi  
+> disk0s3
+>    4:       Microsoft Basic Data                         50.6 Gi   
+> disk0s4
+> jason-t-slacks-macbook:~ slack$
+>
+> How do I get started with what I have now?
+>
+> Thanks!
+>
+> -Jason
+>
+>
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>   
+
+From alex.blewitt at gmail.com  Tue Nov 25 03:54:44 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Tue, 25 Nov 2008 11:54:44 +0000
+Subject: [zfs-discuss] ZFS Setup - Confused!
+In-Reply-To: <492B68BE.7030508@jrv.org>
+References: <50C848A5-4488-49A9-8596-4F32FD2BED65@MailNewsRSS.com>
+	<492B68BE.7030508@jrv.org>
+Message-ID: <636fd28e0811250354h5c6224f7vde50ffbfb0373845@mail.gmail.com>
+
+You might also need:
+
+diskutil eraseVolume ZFS %noformat% /dev/disk0s3
+
+prior to creating the zpool, if it doesn't work as is.
+
+Alex
+
+On Tue, Nov 25, 2008 at 2:53 AM, James R. Van Artsdalen
+<james-zfsosx at jrv.org> wrote:
+> $ sudo zpool create zfs-pool-name disk0s3
+>
+> Jason Todd Slack-Moehrle wrote:
+>> Hi All,
+>>
+>> OK, so I want to setup a 3 partition setup on my MacBook. I have
+>> upgraded to a 500gb internal drive.
+>>
+>> So I did the following after turning it on:
+>>
+>> disktuil resizeVolume disk0s2 120G ZFS Data 295G msdos Windows 50G
+>>
+>> It created my three partitions.
+>>
+>> I then installed Leopard on the 120GB Partition and Window on the 50GB
+>> Partition.
+>>
+>> Now I want to format the ZFS partition I called 'Data'. DiskUtility
+>> sees that partition, but I cannot do anything with it.
+>>
+>> I went to the ZFS MacOSForge website and looked at the Getting Started
+>> and I dont quite see what to do since I have created my partitions myself.
+>>
+>> Here is what I have:
+>>
+>> ~ slack$ diskutil list
+>> /dev/disk0
+>>    #:                       TYPE NAME                    SIZE
+>> IDENTIFIER
+>>    0:      GUID_partition_scheme                        *465.8 Gi   disk0
+>>    1:                        EFI                         200.0 Mi
+>> disk0s1
+>>    2:                  Apple_HFS Leopard                 119.9 Gi
+>> disk0s2
+>>    3:                        ZFS                         294.9 Gi
+>> disk0s3
+>>    4:       Microsoft Basic Data                         50.6 Gi
+>> disk0s4
+>> jason-t-slacks-macbook:~ slack$
+>>
+>> How do I get started with what I have now?
+>>
+>> Thanks!
+>>
+>> -Jason
+>>
+>>
+>> ------------------------------------------------------------------------
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From dev-lists at thefloreas.com  Tue Nov 25 11:48:05 2008
+From: dev-lists at thefloreas.com (Nathan Florea)
+Date: Tue, 25 Nov 2008 11:48:05 -0800
+Subject: [zfs-discuss] ZFS Volumes in Server Admin's File Sharing tab
+Message-ID: <3F7D99D5-89FD-42B5-90DD-518EFAA14148@thefloreas.com>
+
+By default, the File Sharing tab doesn't allow one to access ZFS  
+volumes.  However, one can access them by creating a softlink on a  
+visible volume to the ZFS volume.  For example, I've created a "zfs"  
+folder in /Users, in which I put softlinks to all of my ZFS volumes.   
+Now, in the File Sharing tab, by clicking on Volumes and Browse and  
+navigating to /Users/zfs, I can access directly any of my ZFS volumes.
+This is very useful, because setting ACEs and propagating them from  
+the command-line is a PITA and this lets one set them via Server  
+Admin's GUI.  It also lets one setup shares via the GUI (although I  
+haven't, so test a ZFS share before doing so).
+
+Nathan Florea
+
+From dev-lists at thefloreas.com  Tue Nov 25 13:28:17 2008
+From: dev-lists at thefloreas.com (Nathan Florea)
+Date: Tue, 25 Nov 2008 13:28:17 -0800
+Subject: [zfs-discuss] ACLs on ZFS
+Message-ID: <8C52B62D-6470-4FFB-9742-CBE039BE95E3@thefloreas.com>
+
+I have run into a couple of problems with ACLs on ZFS using the r119  
+binaries.  The first two were brought up by Brad Allred back in  
+September, but he didn't get a response and I am hoping something has  
+changed since then.
+
+1. ACLs don't inherit.
+Despite setting the aclmode and aclinherit attributes to  
+"passthrough", there is no change in behavior.  This makes managing  
+ACLs on ZFS volumes extremely frustrating and almost completely  
+eliminates their value except for files and folders that will never  
+change.  Which is an edge case.  It would be nice if it worked for the  
+common case.
+
+
+2. Group ACEs don't work.
+Brad says this broke with the 10.5.5 update.  Here some additional  
+details:
+Group ACEs get resolved to their group ID and then resolved to a  
+user.  If a user has the same UID as the GID, the ACE will be applied  
+as that user.  If there is no user with that group id, an ACE gets  
+added with GUID (not GID; no "user:" or "group:" at the beginning)  
+"FFFFEEEE-DDDD-CCCC-BBBB-AAAA00000000" with the last zeros replaced  
+with the GID in hex.
+For example:
+I have a group named local_group with GID 1025.
+I have a user named local_user with UID 1025.
+I apply an ACE of "local_group allow write" via chmod or through the  
+Server Admin GUI and the file has an ACE of "user:local_user allow  
+write".
+I remove the ACE and delete the local user local_user.
+I apply an ACE of "local_group allow write" and the file has an ACE of  
+"FFFFEEEE-DDDD-CCCC-BBBB-AAAA00000401".
+
+So there are two problems.  First, it tries to resolve GIDs into  
+UIDs.  Second, it doesn't associate the group's GUID with the ACE, but  
+rather tries to generate one using the group's GID.
+
+
+3. Inheritance attributes can't be set on files via chmod.
+Inheritance attributes don't apply to files, but you can still set  
+them.  For example, setting an ACE of "local_user allow  
+file_inheritance" on a file will create an ACE of "user:local_user  
+allow ".  So an ACE is still set, but it is blank.  On HFS+, one can  
+do this via chmod or the Server Admin GUI.  On ZFS volumes, one can do  
+this via the Server Admin GUI, but not via chmod.  Instead, chmod  
+produces the error "chmod: Failed to set ACL on file 'test.txt':  
+Invalid argument".  This is problematic because it prevents  
+recursively setting permissions on directories if you want to set any  
+inheritance attributes.  It is interesting that the Server Admin GUI  
+acts exactly the same with ZFS, including creating empty ACEs on files.
+For example:
+I may want to set a directory to allow a user to read, write, and  
+append to it and all sub-directories and files.  On HFS+, I can just  
+use 'chmod -R +a "local_user allow  
+read,write,append,file_inherit,directory_inherit" my_directory'.  If I  
+try that on a ZFS directory, I will get the aforementioned error on  
+the first file encountered and it will die.  This makes it more  
+difficult to set inheritance attributes on directories.  Given that  
+inheritance doesn't actually work, I suppose this is academic, but  
+when that does get fixed, it would be nice if they were easy to set  
+from the command line.
+
+
+What is the status of ZFS on Leopard?  Given the lack of an update in  
+4 months, I'm worried that it has been abandoned.  I understand that a  
+lot of attention is being focused on 10.6, but it would be nice if we  
+could at least get some source updates.  What if 10.5.6 breaks  
+something more critical that group ACEs on ZFS?  Is there any  
+commitment to this going forward or should I cross my figures that no  
+security updates breaks something until 10.6 arrives?  Should I be  
+filing Radar bugs for the issues above?  Should I create new tickets  
+on the MacOS Forge site?
+
+Cheers,
+Nathan Florea
+
+From mailinglists at MailNewsRSS.com  Tue Nov 25 20:35:22 2008
+From: mailinglists at MailNewsRSS.com (Jason Todd Slack-Moehrle)
+Date: Tue, 25 Nov 2008 20:35:22 -0800
+Subject: [zfs-discuss] ZFS Setup - Confused!
+In-Reply-To: <492B68BE.7030508@jrv.org>
+References: <50C848A5-4488-49A9-8596-4F32FD2BED65@MailNewsRSS.com>
+	<492B68BE.7030508@jrv.org>
+Message-ID: <BDEC454E-EB8A-4A1C-92C3-1B8FE00A577D@MailNewsRSS.com>
+
+So after doing this, should an icon that looks like a disk-image with  
+my pool name?
+
+That is what I see now.
+
+Safe to start writing data?
+
+Is there a guide to snapshots, etc, etc?
+
+-Jason
+
+On Nov 24, 2008, at 6:53 PM, James R. Van Artsdalen wrote:
+
+> $ sudo zpool create zfs-pool-name disk0s3
+>
+> Jason Todd Slack-Moehrle wrote:
+>> Hi All,
+>>
+>> OK, so I want to setup a 3 partition setup on my MacBook. I have
+>> upgraded to a 500gb internal drive.
+>>
+>> So I did the following after turning it on:
+>>
+>> disktuil resizeVolume disk0s2 120G ZFS Data 295G msdos Windows 50G
+>>
+>> It created my three partitions.
+>>
+>> I then installed Leopard on the 120GB Partition and Window on the  
+>> 50GB
+>> Partition.
+>>
+>> Now I want to format the ZFS partition I called 'Data'. DiskUtility
+>> sees that partition, but I cannot do anything with it.
+>>
+>> I went to the ZFS MacOSForge website and looked at the Getting  
+>> Started
+>> and I dont quite see what to do since I have created my partitions  
+>> myself.
+>>
+>> Here is what I have:
+>>
+>> ~ slack$ diskutil list
+>> /dev/disk0
+>>   #:                       TYPE NAME                    SIZE
+>> IDENTIFIER
+>>   0:      GUID_partition_scheme                        *465.8 Gi    
+>> disk0
+>>   1:                        EFI                         200.0 Mi
+>> disk0s1
+>>   2:                  Apple_HFS Leopard                 119.9 Gi
+>> disk0s2
+>>   3:                        ZFS                         294.9 Gi
+>> disk0s3
+>>   4:       Microsoft Basic Data                         50.6 Gi
+>> disk0s4
+>> jason-t-slacks-macbook:~ slack$
+>>
+>> How do I get started with what I have now?
+>>
+>> Thanks!
+>>
+>> -Jason
+>>
+>>
+>> ------------------------------------------------------------------------
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+
+
+From mailinglists at MailNewsRSS.com  Tue Nov 25 20:52:51 2008
+From: mailinglists at MailNewsRSS.com (Jason Todd Slack-Moehrle)
+Date: Tue, 25 Nov 2008 20:52:51 -0800
+Subject: [zfs-discuss] ZFS Setup - Confused!
+In-Reply-To: <BDEC454E-EB8A-4A1C-92C3-1B8FE00A577D@MailNewsRSS.com>
+References: <50C848A5-4488-49A9-8596-4F32FD2BED65@MailNewsRSS.com>
+	<492B68BE.7030508@jrv.org>
+	<BDEC454E-EB8A-4A1C-92C3-1B8FE00A577D@MailNewsRSS.com>
+Message-ID: <8F777768-7030-4E70-8C2D-AD4F23E9EF90@MailNewsRSS.com>
+
+hmm, but I cannot write to it.
+
+There must be some documentation that I am missing.
+
+-Jason
+
+On Nov 25, 2008, at 8:35 PM, Jason Todd Slack-Moehrle wrote:
+
+> So after doing this, should an icon that looks like a disk-image  
+> with my pool name?
+>
+> That is what I see now.
+>
+> Safe to start writing data?
+>
+> Is there a guide to snapshots, etc, etc?
+>
+> -Jason
+>
+> On Nov 24, 2008, at 6:53 PM, James R. Van Artsdalen wrote:
+>
+>> $ sudo zpool create zfs-pool-name disk0s3
+>>
+>> Jason Todd Slack-Moehrle wrote:
+>>> Hi All,
+>>>
+>>> OK, so I want to setup a 3 partition setup on my MacBook. I have
+>>> upgraded to a 500gb internal drive.
+>>>
+>>> So I did the following after turning it on:
+>>>
+>>> disktuil resizeVolume disk0s2 120G ZFS Data 295G msdos Windows 50G
+>>>
+>>> It created my three partitions.
+>>>
+>>> I then installed Leopard on the 120GB Partition and Window on the  
+>>> 50GB
+>>> Partition.
+>>>
+>>> Now I want to format the ZFS partition I called 'Data'. DiskUtility
+>>> sees that partition, but I cannot do anything with it.
+>>>
+>>> I went to the ZFS MacOSForge website and looked at the Getting  
+>>> Started
+>>> and I dont quite see what to do since I have created my partitions  
+>>> myself.
+>>>
+>>> Here is what I have:
+>>>
+>>> ~ slack$ diskutil list
+>>> /dev/disk0
+>>>  #:                       TYPE NAME                    SIZE
+>>> IDENTIFIER
+>>>  0:      GUID_partition_scheme                        *465.8 Gi    
+>>> disk0
+>>>  1:                        EFI                         200.0 Mi
+>>> disk0s1
+>>>  2:                  Apple_HFS Leopard                 119.9 Gi
+>>> disk0s2
+>>>  3:                        ZFS                         294.9 Gi
+>>> disk0s3
+>>>  4:       Microsoft Basic Data                         50.6 Gi
+>>> disk0s4
+>>> jason-t-slacks-macbook:~ slack$
+>>>
+>>> How do I get started with what I have now?
+>>>
+>>> Thanks!
+>>>
+>>> -Jason
+>>>
+>>>
+>>> ------------------------------------------------------------------------
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From zfs at sbod.at  Wed Nov 26 05:19:28 2008
+From: zfs at sbod.at (Franz Schmalzl)
+Date: Wed, 26 Nov 2008 14:19:28 +0100
+Subject: [zfs-discuss] ZFS Setup - Confused!
+In-Reply-To: <8F777768-7030-4E70-8C2D-AD4F23E9EF90@MailNewsRSS.com>
+References: <50C848A5-4488-49A9-8596-4F32FD2BED65@MailNewsRSS.com>
+	<492B68BE.7030508@jrv.org>
+	<BDEC454E-EB8A-4A1C-92C3-1B8FE00A577D@MailNewsRSS.com>
+	<8F777768-7030-4E70-8C2D-AD4F23E9EF90@MailNewsRSS.com>
+Message-ID: <6322D862-2C6F-4A2D-96AC-7F6474664A26@sbod.at>
+
+> hmm, but I cannot write to it.
+
+I think you may want to apply an chmod -R youruser:yourgroup on the  
+pool.
+
+Regarding your question about a guide, consider reading this: http://docs.sun.com/app/docs/doc/819-5461
+
+
+Regards,
+
+Franz
+
+
+On 26.11.2008, at 05:52, Jason Todd Slack-Moehrle wrote:
+
+> hmm, but I cannot write to it.
+>
+> There must be some documentation that I am missing.
+>
+> -Jason
+>
+> On Nov 25, 2008, at 8:35 PM, Jason Todd Slack-Moehrle wrote:
+>
+>> So after doing this, should an icon that looks like a disk-image  
+>> with my pool name?
+>>
+>> That is what I see now.
+>>
+>> Safe to start writing data?
+>>
+>> Is there a guide to snapshots, etc, etc?
+>>
+>> -Jason
+>>
+>> On Nov 24, 2008, at 6:53 PM, James R. Van Artsdalen wrote:
+>>
+>>> $ sudo zpool create zfs-pool-name disk0s3
+>>>
+>>> Jason Todd Slack-Moehrle wrote:
+>>>> Hi All,
+>>>>
+>>>> OK, so I want to setup a 3 partition setup on my MacBook. I have
+>>>> upgraded to a 500gb internal drive.
+>>>>
+>>>> So I did the following after turning it on:
+>>>>
+>>>> disktuil resizeVolume disk0s2 120G ZFS Data 295G msdos Windows 50G
+>>>>
+>>>> It created my three partitions.
+>>>>
+>>>> I then installed Leopard on the 120GB Partition and Window on the  
+>>>> 50GB
+>>>> Partition.
+>>>>
+>>>> Now I want to format the ZFS partition I called 'Data'. DiskUtility
+>>>> sees that partition, but I cannot do anything with it.
+>>>>
+>>>> I went to the ZFS MacOSForge website and looked at the Getting  
+>>>> Started
+>>>> and I dont quite see what to do since I have created my  
+>>>> partitions myself.
+>>>>
+>>>> Here is what I have:
+>>>>
+>>>> ~ slack$ diskutil list
+>>>> /dev/disk0
+>>>> #:                       TYPE NAME                    SIZE
+>>>> IDENTIFIER
+>>>> 0:      GUID_partition_scheme                        *465.8 Gi    
+>>>> disk0
+>>>> 1:                        EFI                         200.0 Mi
+>>>> disk0s1
+>>>> 2:                  Apple_HFS Leopard                 119.9 Gi
+>>>> disk0s2
+>>>> 3:                        ZFS                         294.9 Gi
+>>>> disk0s3
+>>>> 4:       Microsoft Basic Data                         50.6 Gi
+>>>> disk0s4
+>>>> jason-t-slacks-macbook:~ slack$
+>>>>
+>>>> How do I get started with what I have now?
+>>>>
+>>>> Thanks!
+>>>>
+>>>> -Jason
+>>>>
+>>>>
+>>>> ------------------------------------------------------------------------
+>>>>
+>>>> _______________________________________________
+>>>> zfs-discuss mailing list
+>>>> zfs-discuss at lists.macosforge.org
+>>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From garrett.power at gmail.com  Wed Nov 26 22:28:10 2008
+From: garrett.power at gmail.com (Garrett Power)
+Date: Thu, 27 Nov 2008 01:28:10 -0500
+Subject: [zfs-discuss] zfs scrub hangs
+Message-ID: <D46FE76A-4D65-460F-8ABC-C5FC3A2CAEB7@gmail.com>
+
+	I am having issues when doing a zpool scrub on my raidz setup. My  
+setup is configured of 5 1TB drives in a raidz configuration. They are  
+housed in a 5 drive bay esata enclosure that uses a port multiplier.  
+After doing the latest mac updates for 10.5.5 i.e. security update, it  
+seems that when doing a scrub on the raidz, it will hang. It will hang  
+from 26+%. It hung at one point at 46% and another time at 51% and so  
+on. I have never had an issue when doing a scrub. Is anyone else  
+having any problems? Could it be the security update?
+
+	As mentioned above, I am running on Mac OS 10.5.5. The hardware is a  
+G5 dual 1.8 with 2.5GB of ram. The hangs that I am describing are the  
+finder will freeze up, but I can still load up applications that are  
+not finder specific. I can not issue any zfs or zpool commands and I  
+can not list the contents of the raidz pool with the command line  
+prompt. I have not received any kernel panics. The only way for me to  
+reboot the machine is by holding down the power button on the G5.  
+Finder will not reboot correctly. I have looked at the logs and do not  
+see anything suspicious.
+
+	Can anyone give me any suggestions? Is there anything I can do to  
+grab more data to help me solve this problem? Everything seems to be  
+fine. For example, I can read the data fine or copy data to the pool  
+fine, but when doing a scrub it will hang up.
+
+Thanks for any help that can be provided,
+
+Garrett Power
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1605 bytes
+Desc: not available
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081127/ec2b0a7c/attachment.bin>
+
+From alex.blewitt at gmail.com  Fri Nov 28 11:06:33 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Fri, 28 Nov 2008 19:06:33 +0000
+Subject: [zfs-discuss] Automatic scrub?
+Message-ID: <636fd28e0811281106g687d68d9y3ddafb7cbd8b9cd0@mail.gmail.com>
+
+I'm not sure if I'm missing something (or if it's just cron's time
+getting out of whack) but I just found my pool giving itself a scrub:
+
+mini:~ alex$ zpool status
+  pool: Data
+ state: ONLINE
+ scrub: scrub in progress, 0.27% done, 8h33m to go
+config:
+
+It had just completed a set of zfs snapshot/destroys as part of my
+hourly backup process I posted earlier. Oddly, I can't find a
+user-requested scrub in the list:
+
+mini:~ alex$ zfs history | last
+2008-11-28.17:00:01 zfs snapshot -r Data at AutoH-2008-11-28T17:00
+2008-11-28.17:00:04 zfs destroy -r Data at AutoH-2008-11-27T16:00
+2008-11-28.18:00:01 zfs snapshot -r Data at AutoH-2008-11-28T18:00
+2008-11-28.18:00:04 zfs destroy -r Data at AutoH-2008-11-27T17:00
+2008-11-28.19:00:01 zfs snapshot -r Data at AutoH-2008-11-28T19:00
+2008-11-28.19:00:04 zfs destroy -r Data at AutoH-2008-11-27T18:00
+2008-11-28.19:02:07 zpool scrub Data -s
+2008-11-28.19:02:12 zpool scrub -s Data
+
+(the 19:02:07 was me trying to cancel it and getting the args the
+wrong way around). So between 19:00 and 19:02, it had started a scrub
+on my behalf and without recording it in the history list.
+
+Is this a known issue? Does it always do a scrub after destroying a
+snapshot(s)?
+
+Alex
+
+From mattsnow at gmail.com  Sat Nov 29 11:20:01 2008
+From: mattsnow at gmail.com (Matt Snow)
+Date: Sat, 29 Nov 2008 11:20:01 -0800
+Subject: [zfs-discuss] Automatic scrub?
+In-Reply-To: <636fd28e0811281106g687d68d9y3ddafb7cbd8b9cd0@mail.gmail.com>
+References: <636fd28e0811281106g687d68d9y3ddafb7cbd8b9cd0@mail.gmail.com>
+Message-ID: <6879ebc80811291120q8add2a0o9b5f7f76e31fce52@mail.gmail.com>
+
+What is the rest of `zpool status` output? Are there any read/write/checksum
+errors? could be a disk going bad.
+
+..Matt
+
+On Fri, Nov 28, 2008 at 11:06 AM, Alex Blewitt <alex.blewitt at gmail.com>wrote:
+
+> I'm not sure if I'm missing something (or if it's just cron's time
+> getting out of whack) but I just found my pool giving itself a scrub:
+>
+> mini:~ alex$ zpool status
+>  pool: Data
+>  state: ONLINE
+>  scrub: scrub in progress, 0.27% done, 8h33m to go
+> config:
+>
+> It had just completed a set of zfs snapshot/destroys as part of my
+> hourly backup process I posted earlier. Oddly, I can't find a
+> user-requested scrub in the list:
+>
+> mini:~ alex$ zfs history | last
+> 2008-11-28.17:00:01 zfs snapshot -r Data at AutoH-2008-11-28T17:00
+> 2008-11-28.17:00:04 zfs destroy -r Data at AutoH-2008-11-27T16:00
+> 2008-11-28.18:00:01 zfs snapshot -r Data at AutoH-2008-11-28T18:00
+> 2008-11-28.18:00:04 zfs destroy -r Data at AutoH-2008-11-27T17:00
+> 2008-11-28.19:00:01 zfs snapshot -r Data at AutoH-2008-11-28T19:00
+> 2008-11-28.19:00:04 zfs destroy -r Data at AutoH-2008-11-27T18:00
+> 2008-11-28.19:02:07 zpool scrub Data -s
+> 2008-11-28.19:02:12 zpool scrub -s Data
+>
+> (the 19:02:07 was me trying to cancel it and getting the args the
+> wrong way around). So between 19:00 and 19:02, it had started a scrub
+> on my behalf and without recording it in the history list.
+>
+> Is this a known issue? Does it always do a scrub after destroying a
+> snapshot(s)?
+>
+> Alex
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081129/da82ab8f/attachment.html>
+
+From alex.blewitt at gmail.com  Sat Nov 29 11:44:53 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sat, 29 Nov 2008 19:44:53 +0000
+Subject: [zfs-discuss] Automatic scrub?
+In-Reply-To: <6879ebc80811291120q8add2a0o9b5f7f76e31fce52@mail.gmail.com>
+References: <636fd28e0811281106g687d68d9y3ddafb7cbd8b9cd0@mail.gmail.com>
+	<6879ebc80811291120q8add2a0o9b5f7f76e31fce52@mail.gmail.com>
+Message-ID: <A107989A-1CDE-42EB-8B0A-86265AB3FB00@gmail.com>
+
+Nope, no errors in any scrub done so far, nor anything else  
+noticeable. I truncated the message for brevity.
+
+The question was "why is it doing this scrub" when I hadn't asked it  
+to. It had just finished doing a set of snapshots/destroys, but no  
+scrubs.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 29 Nov 2008, at 19:20, "Matt Snow" <mattsnow at gmail.com> wrote:
+
+> What is the rest of `zpool status` output? Are there any read/write/ 
+> checksum errors? could be a disk going bad.
+>
+> ..Matt
+>
+> On Fri, Nov 28, 2008 at 11:06 AM, Alex Blewitt  
+> <alex.blewitt at gmail.com> wrote:
+> I'm not sure if I'm missing something (or if it's just cron's time
+> getting out of whack) but I just found my pool giving itself a scrub:
+>
+> mini:~ alex$ zpool status
+>  pool: Data
+>  state: ONLINE
+>  scrub: scrub in progress, 0.27% done, 8h33m to go
+> config:
+>
+> It had just completed a set of zfs snapshot/destroys as part of my
+> hourly backup process I posted earlier. Oddly, I can't find a
+> user-requested scrub in the list:
+>
+> mini:~ alex$ zfs history | last
+> 2008-11-28.17:00:01 zfs snapshot -r Data at AutoH-2008-11-28T17:00
+> 2008-11-28.17:00:04 zfs destroy -r Data at AutoH-2008-11-27T16:00
+> 2008-11-28.18:00:01 zfs snapshot -r Data at AutoH-2008-11-28T18:00
+> 2008-11-28.18:00:04 zfs destroy -r Data at AutoH-2008-11-27T17:00
+> 2008-11-28.19:00:01 zfs snapshot -r Data at AutoH-2008-11-28T19:00
+> 2008-11-28.19:00:04 zfs destroy -r Data at AutoH-2008-11-27T18:00
+> 2008-11-28.19:02:07 zpool scrub Data -s
+> 2008-11-28.19:02:12 zpool scrub -s Data
+>
+> (the 19:02:07 was me trying to cancel it and getting the args the
+> wrong way around). So between 19:00 and 19:02, it had started a scrub
+> on my behalf and without recording it in the history list.
+>
+> Is this a known issue? Does it always do a scrub after destroying a
+> snapshot(s)?
+>
+> Alex
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081129/ab3128ec/attachment.html>
+
+From alex.blewitt at gmail.com  Sat Nov 29 12:43:21 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sat, 29 Nov 2008 20:43:21 +0000
+Subject: [zfs-discuss] Automatic scrub?
+In-Reply-To: <A107989A-1CDE-42EB-8B0A-86265AB3FB00@gmail.com>
+References: <636fd28e0811281106g687d68d9y3ddafb7cbd8b9cd0@mail.gmail.com>
+	<6879ebc80811291120q8add2a0o9b5f7f76e31fce52@mail.gmail.com>
+	<A107989A-1CDE-42EB-8B0A-86265AB3FB00@gmail.com>
+Message-ID: <636fd28e0811291243s492b5e4j59df6d4928a7a05e@mail.gmail.com>
+
+On Sat, Nov 29, 2008 at 7:44 PM, Alex Blewitt <alex.blewitt at gmail.com> wrote:
+> Nope, no errors in any scrub done so far, nor anything else noticeable. I
+> truncated the message for brevity.
+> The question was "why is it doing this scrub" when I hadn't asked it to. It
+> had just finished doing a set of snapshots/destroys, but no scrubs.
+> Alex
+
+It's still having a good old scrub to itself ...
+
+mini:~ alex$ zpool status Data
+  pool: Data
+ state: ONLINE
+ scrub: scrub in progress, 46.37% done, 0h46m to go
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	Data         ONLINE       0     0     0
+	  mirror     ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+A thought occurs; I'm doing a daily scrub and it looks like a scrub
+will take 1:30 or so. But I'm doing snapshots (and corresponding
+destroys) hourly. I wonder if it doesn't have time to finish the
+nightly scrub between 00:00 and 01:00, and thus at 01:00 re-starts the
+scrubbing, ad infinitum?
+
+mini:~ alex$ zpool history Data
+ ...
+2008-11-29.00:00:00 zpool scrub Data
+2008-11-29.00:00:01 zfs snapshot -r Data at AutoD-2008-11-29
+2008-11-29.00:00:01 zfs snapshot -r Data at AutoH-2008-11-29T00:00
+2008-11-29.00:00:19 zfs destroy -r Data at AutoH-2008-11-27T23:00
+2008-11-29.00:00:19 zfs destroy -r Data at AutoD-2008-11-21
+2008-11-29.01:00:02 zfs snapshot -r Data at AutoH-2008-11-29T01:00
+2008-11-29.01:00:06 zfs destroy -r Data at AutoH-2008-11-28T00:00
+2008-11-29.02:00:01 zfs snapshot -r Data at AutoH-2008-11-29T02:00
+2008-11-29.02:00:06 zfs destroy -r Data at AutoH-2008-11-28T01:00
+2008-11-29.03:00:03 zfs snapshot -r Data at AutoH-2008-11-29T03:00
+ ...
+
+Alex
+
+From lists at loveturtle.net  Sat Nov 29 18:55:54 2008
+From: lists at loveturtle.net (Dillon Kass)
+Date: Sat, 29 Nov 2008 21:55:54 -0500
+Subject: [zfs-discuss] Automatic scrub?
+In-Reply-To: <636fd28e0811291243s492b5e4j59df6d4928a7a05e@mail.gmail.com>
+References: <636fd28e0811281106g687d68d9y3ddafb7cbd8b9cd0@mail.gmail.com>	<6879ebc80811291120q8add2a0o9b5f7f76e31fce52@mail.gmail.com>	<A107989A-1CDE-42EB-8B0A-86265AB3FB00@gmail.com>
+	<636fd28e0811291243s492b5e4j59df6d4928a7a05e@mail.gmail.com>
+Message-ID: <493200BA.70408@loveturtle.net>
+
+On 11/29/08 3:43 PM, Alex Blewitt wrote:
+> I wonder if it doesn't have time to finish the
+> nightly scrub between 00:00 and 01:00, and thus at 01:00 re-starts the
+> scrubbing, ad infinitum?
+
+Sounds like exactly what is happening to me. I believe that was fixed in 
+OS a little while ago...We'll probably get that when ever we get the 
+latest bits.
+
+From garrett.power at gmail.com  Sat Nov 29 22:40:47 2008
+From: garrett.power at gmail.com (Garrett Power)
+Date: Sun, 30 Nov 2008 01:40:47 -0500
+Subject: [zfs-discuss] zfs scrub hangs
+In-Reply-To: <C9A55CEB-154D-431A-A511-EE3304305F60@eecs.wsu.edu>
+References: <D46FE76A-4D65-460F-8ABC-C5FC3A2CAEB7@gmail.com>
+	<C9A55CEB-154D-431A-A511-EE3304305F60@eecs.wsu.edu>
+Message-ID: <B74AF4D9-DDC9-45E7-8706-0A0E468D94C1@gmail.com>
+
+Does anyone have any suggestions? I now received a kernel panic when  
+doing a zpool export -f on my raidz pool. I was doing an export to put  
+in a new fan into my enclosure and the system crapped out. Here is the  
+following information from the panic:
+
+Sat Nov 29 11:37:02 2008
+panic(cpu 0 caller 0x00AD97C4): "[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/dnode_sync.c  
+line 397: pass < 100"@/Volumes/pixie_dust/home/ndellofano/zfs-work/ 
+zfs-119/zfs_kext/zfs/dnode_sync.c:397
+Latest stack backtrace for cpu 0:
+       Backtrace:
+          0x0009B518 0x0009BEBC 0x00029DD8 0x00AD97C4 0x00AD072C  
+0x00AA6248 0x00105D70 0x000F57B8
+          0x000F5C24 0x0030ABDC 0x000B2CC8 0x80430000
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xaa4000->0xb8dfff
+Proceeding back via exception chain:
+    Exception state (sv=0x5daad500)
+       PC=0x9593770C; MSR=0x0000D030; DAR=0xE0024000;  
+DSISR=0x42000000; LR=0x0004B5E4; R1=0xBFFFBA30; XCP=0x00000030 (0xC00  
+- System call)
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:31:44 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_PPC
+System model name: PowerMac7,2
+
+This was a panic for doing an export on the raidz pool. Is there going  
+to be another update for zfs soon? Should I reinstall mac 10.5 on my  
+G5 and not do the latest security updates if that option is possible?  
+I would really hate to loose my stability and not be able to do any  
+scrubs.
+
+- Garrett
+
+>
+> On Nov 26, 2008, at 10:28 PM, "Garrett Power garrett.power-at- 
+> gmail.com |ZFS macosforge.org|" <7i4pkazbb40t at sneakemail.com> wrote:
+>
+>>   I am having issues when doing a zpool scrub on my raidz setup. My  
+>> setup is configured of 5 1TB drives in a raidz configuration. They  
+>> are housed in a 5 drive bay esata enclosure that uses a port  
+>> multiplier. After doing the latest mac updates for 10.5.5 i.e.  
+>> security update, it seems that when doing a scrub on the raidz, it  
+>> will hang. It will hang from 26+%. It hung at one point at 46% and  
+>> another time at 51% and so on. I have never had an issue when doing  
+>> a scrub. Is anyone else having any problems? Could it be the  
+>> security update?
+>>
+>>   As mentioned above, I am running on Mac OS 10.5.5. The hardware  
+>> is a G5 dual 1.8 with 2.5GB of ram. The hangs that I am describing  
+>> are the finder will freeze up, but I can still load up applications  
+>> that are not finder specific. I can not issue any zfs or zpool  
+>> commands and I can not list the contents of the raidz pool with the  
+>> command line prompt. I have not received any kernel panics. The  
+>> only way for me to reboot the machine is by holding down the power  
+>> button on the G5. Finder will not reboot correctly. I have looked  
+>> at the logs and do not see anything suspicious.
+>>
+>>   Can anyone give me any suggestions? Is there anything I can do to  
+>> grab more data to help me solve this problem? Everything seems to  
+>> be fine. For example, I can read the data fine or copy data to the  
+>> pool fine, but when doing a scrub it will hang up.
+>>
+>> Thanks for any help that can be provided,
+>>
+>> Garrett Power
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1605 bytes
+Desc: not available
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081130/96bba1de/attachment-0001.bin>
+
+From alex.blewitt at gmail.com  Sun Nov 30 05:35:50 2008
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sun, 30 Nov 2008 13:35:50 +0000
+Subject: [zfs-discuss] Automatic scrub?
+In-Reply-To: <493200BA.70408@loveturtle.net>
+References: <636fd28e0811281106g687d68d9y3ddafb7cbd8b9cd0@mail.gmail.com>
+	<6879ebc80811291120q8add2a0o9b5f7f76e31fce52@mail.gmail.com>
+	<A107989A-1CDE-42EB-8B0A-86265AB3FB00@gmail.com>
+	<636fd28e0811291243s492b5e4j59df6d4928a7a05e@mail.gmail.com>
+	<493200BA.70408@loveturtle.net>
+Message-ID: <636fd28e0811300535h712f4d43v4a4f484275130e2@mail.gmail.com>
+
+On Sun, Nov 30, 2008 at 2:55 AM, Dillon Kass <lists at loveturtle.net> wrote:
+> On 11/29/08 3:43 PM, Alex Blewitt wrote:
+>>
+>> I wonder if it doesn't have time to finish the
+>> nightly scrub between 00:00 and 01:00, and thus at 01:00 re-starts the
+>> scrubbing, ad infinitum?
+>
+> Sounds like exactly what is happening to me. I believe that was fixed in OS
+> a little while ago...We'll probably get that when ever we get the latest
+> bits.
+
+Yeah,I turned off the hourly snapshot and the nightly scrub took an
+hour and a half, completed with no problems. Oh well, I'll just tweak
+my crontab to give it a 2h window overnight.
+
+Alex
+
+From nigelcat at mac.com  Sun Nov 30 18:01:23 2008
+From: nigelcat at mac.com (James Lindeman)
+Date: Sun, 30 Nov 2008 20:01:23 -0600
+Subject: [zfs-discuss] New filesystems won't mount
+Message-ID: <E4FEF3DC-7802-46E8-A165-68D3FCCA7169@mac.com>
+
+I've got a pool called "main" with filesystems I created "archives"  
+and "updates", so:
+
+/main
+/main/archives
+/main/updates
+
+After rebooting, the filesystems /main/archives and /main/updates  
+won't mount. I suspect that it is because I didn't use "sudo zfs  
+create" to create those filesystems. My other problem is that I now  
+have these unmountable filesystems that I can't destroy because they  
+are kind of in limbo. They show up in "zfs list", but if I try "zfs  
+destroy",  I get an error that the folder /Volumes/main/archives" does  
+not exist. Anyone have an idea how to destroy these?
+James Lindeman
+
+From hanche at math.ntnu.no  Sun Nov 30 22:50:37 2008
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Mon, 01 Dec 2008 07:50:37 +0100 (CET)
+Subject: [zfs-discuss] New filesystems won't mount
+In-Reply-To: <E4FEF3DC-7802-46E8-A165-68D3FCCA7169@mac.com>
+References: <E4FEF3DC-7802-46E8-A165-68D3FCCA7169@mac.com>
+Message-ID: <20081201.075037.222836119.hanche@math.ntnu.no>
+
++ James Lindeman <nigelcat at mac.com>:
+
+> I suspect that it is because I didn't use "sudo zfs create" to 
+> create those filesystems.
+
+Then how did you create them? (Is there another way?) What do you get 
+from the commands
+
+  sudo zpool status main
+  sudo zpool history main
+
+?
+
+- Harald
+
+From rogerws at rogers.com  Wed Nov 19 19:38:48 2008
+From: rogerws at rogers.com (Roger Singh)
+Date: Thu, 20 Nov 2008 03:38:48 -0000
+Subject: [zfs-discuss] ZFS create failure
+In-Reply-To: <9BE69F64-D519-4DD0-9EA9-690CEB97B755@apple.com>
+Message-ID: <631165.5260.qm@web88003.mail.re2.yahoo.com>
+
+It is zfs-119 on 
+
+Model Name:??? MacBook Pro
+Model Identifier:??? MacBookPro3,1
+Processor Name:??? Intel Core 2 Duo
+Processor Speed:??? 2.2 GHz
+Number Of Processors:??? 1
+Total Number Of Cores:??? 2
+L2 Cache:??? 4 MB
+Memory:??? 4 GB
+Bus Speed:??? 800 MHz
+Boot ROM Version:??? MBP31.0070.B07
+SMC Version:??? 1.16f8
+
+
+--- On Wed, 11/19/08, No?l Dellofano <ndellofano at apple.com> wrote:
+From: No?l Dellofano <ndellofano at apple.com>
+Subject: Re: [zfs-discuss] ZFS create failure
+To: "Roger Singh" <rogerws at rogers.com>
+Cc: zfs-discuss at lists.macosforge.org
+Received: Wednesday, November 19, 2008, 8:11 AM
+
+I've never seen this behavior. ?Are you running zfs-119? What build are you running and what kind of machine?
+Noel
+On Nov 18, 2008, at 9:55 PM, Roger Singh wrote:
+I am trying to create a zpool on a partition, everything looks fine however I get 
+
+wecoyote:~ root# diskutil list
+/dev/disk0
+?? #:?????????????????????? TYPE NAME??????????????????? SIZE?????? IDENTIFIER
+?? 0:????? GUID_partition_scheme??????????????????????? *298.1 Gi?? disk0
+?? 1:??????????????????????? EFI???????????????????????? 200.0 Mi?? disk0s1
+?? 2:????????????????? Apple_HFS Macintosh HD??????????? 190.0 Gi?? disk0s2
+?? 3:??????????????????????? ZFS???????????????????????? 107.6 Gi?? disk0s3
+wecoyote:~ root# zpool create mypool disk0s3
+cannot create 'mypool': invalid argument for this pool operation
+
+Am i doing something wrong or have I run into a known issue? 
+
+-Roger
+_______________________________________________
+zfs-discuss mailing list
+zfs-discuss at lists.macosforge.org
+http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081120/14160aab/attachment.html>
+
+From rogerws at rogers.com  Wed Nov 19 20:41:51 2008
+From: rogerws at rogers.com (Roger Singh)
+Date: Thu, 20 Nov 2008 04:41:51 -0000
+Subject: [zfs-discuss] ZFS create failure
+In-Reply-To: <9BE69F64-D519-4DD0-9EA9-690CEB97B755@apple.com>
+Message-ID: <196718.30226.qm@web88004.mail.re2.yahoo.com>
+
+Thank you for making me double check the build level. It turns out that I did not overwrite the zpool binary in /usr/sbin. The pool and filesystem are created 
+
+--- On Wed, 11/19/08, No?l Dellofano <ndellofano at apple.com> wrote:
+From: No?l Dellofano <ndellofano at apple.com>
+Subject: Re: [zfs-discuss] ZFS create failure
+To: "Roger Singh" <rogerws at rogers.com>
+Cc: zfs-discuss at lists.macosforge.org
+Received: Wednesday, November 19, 2008, 8:11 AM
+
+I've never seen this behavior. ?Are you running zfs-119? What build are you running and what kind of machine?
+Noel
+On Nov 18, 2008, at 9:55 PM, Roger Singh wrote:
+I am trying to create a zpool on a partition, everything looks fine however I get 
+
+wecoyote:~ root# diskutil list
+/dev/disk0
+?? #:?????????????????????? TYPE NAME??????????????????? SIZE?????? IDENTIFIER
+?? 0:????? GUID_partition_scheme??????????????????????? *298.1 Gi?? disk0
+?? 1:??????????????????????? EFI???????????????????????? 200.0 Mi?? disk0s1
+?? 2:????????????????? Apple_HFS Macintosh HD??????????? 190.0 Gi?? disk0s2
+?? 3:??????????????????????? ZFS???????????????????????? 107.6 Gi?? disk0s3
+wecoyote:~ root# zpool create mypool disk0s3
+cannot create 'mypool': invalid argument for this pool operation
+
+Am i doing something wrong or have I run into a known issue? 
+
+-Roger
+_______________________________________________
+zfs-discuss mailing list
+zfs-discuss at lists.macosforge.org
+http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081120/9a9e66a8/attachment.html>
+
+From nullptr at gmail.com  Mon Nov 24 10:17:35 2008
+From: nullptr at gmail.com (William Robertson)
+Date: Mon, 24 Nov 2008 18:17:35 -0000
+Subject: [zfs-discuss] zfs panics
+In-Reply-To: <3A0A78C4-7FC8-4106-82F5-21D25EF2700A@nrao.edu>
+References: <20081122010235.GC20881@bergman.cs.ucsb.edu>
+	<3A0A78C4-7FC8-4106-82F5-21D25EF2700A@nrao.edu>
+Message-ID: <8762A9FB-2508-451C-87A2-DEB0D2E6A396@cs.ucsb.edu>
+
+Hi Boyd (and list),
+
+Thanks for the help!  It looks like it actually is a problem with the  
+SATA adapter.  I set up an HFS+-based RAID and managed to reproduce  
+the crashes.  The vendor has acknowledged that there are known issues  
+with the SiI chipset.
+
+Sorry for the false alarm.
+
+-- Wil
+
+On Nov 22, 2008, at 13:34, Boyd Waters wrote:
+> First:
+>
+>  Are you exporting your ZFS pool before ejecting the (external)  
+> volume?
+>
+> Before ejecting the disk, do
+>
+> $ sudo zfs -f pool
+>
+> where "pool" is the name of your ZFS pool. Maybe that will sort  
+> things out?
+>
+>
+>
+> Second:
+>
+>  Can you post your kernel stack trace from the panic? That would  
+> help a lot.
+>
+> When you reboot, you should see a crash report window. There are  
+> three sections to that text area: the third section holds the stack  
+> trace. You can copy that text and paste it in an email reply.
+>
+> Alternatively, you can open the Console utility in /Applications/ 
+> Utilities/Console, on the left side of the window is the Log List.  
+> In that list under LOG FILES, you'll see /Library/Logs: open the  
+> PanicReporter section. Click on the most recent panic report and  
+> select its text in the text area on the right. Copy it into an  
+> email...
+>
+> Or just from a Bash prompt, something like
+> # cat /Library/Logs/*.panic | mail -s "crash reports" zfs-discuss at lists.macosforge.org
+>
+> (why does a gui make things complicated?)
+>
+>
+> Finally:
+>
+>  FWIW, I've used an ExpressCard Sil3132 eSATA adapter with a raidz1  
+> on an external enclosure, and I don't recall any more stability  
+> issues that with my Mac Pro's "native" internal raidz.
+>
+>
+> Hope that helps!
+
+
+
+
+From nullptr at gmail.com  Tue Nov 25 08:47:31 2008
+From: nullptr at gmail.com (William Robertson)
+Date: Tue, 25 Nov 2008 16:47:31 -0000
+Subject: [zfs-discuss] zfs panics
+In-Reply-To: <3A0A78C4-7FC8-4106-82F5-21D25EF2700A@nrao.edu>
+References: <20081122010235.GC20881@bergman.cs.ucsb.edu>
+	<3A0A78C4-7FC8-4106-82F5-21D25EF2700A@nrao.edu>
+Message-ID: <8762A9FB-2508-451C-87A2-DEB0D2E6A396@cs.ucsb.edu>
+
+Hi Boyd (and list),
+
+Thanks for the help!  It looks like it actually is a problem with the  
+SATA adapter.  I set up an HFS+-based RAID and managed to reproduce  
+the crashes.  The vendor has acknowledged that there are known issues  
+with the SiI chipset.
+
+Sorry for the false alarm.
+
+-- Wil
+
+On Nov 22, 2008, at 13:34, Boyd Waters wrote:
+> First:
+>
+> Are you exporting your ZFS pool before ejecting the (external) volume?
+>
+> Before ejecting the disk, do
+>
+> $ sudo zfs -f pool
+>
+> where "pool" is the name of your ZFS pool. Maybe that will sort  
+> things out?
+>
+>
+>
+> Second:
+>
+> Can you post your kernel stack trace from the panic? That would help  
+> a lot.
+>
+> When you reboot, you should see a crash report window. There are  
+> three sections to that text area: the third section holds the stack  
+> trace. You can copy that text and paste it in an email reply.
+>
+> Alternatively, you can open the Console utility in /Applications/ 
+> Utilities/Console, on the left side of the window is the Log List.  
+> In that list under LOG FILES, you'll see /Library/Logs: open the  
+> PanicReporter section. Click on the most recent panic report and  
+> select its text in the text area on the right. Copy it into an  
+> email...
+>
+> Or just from a Bash prompt, something like
+> # cat /Library/Logs/*.panic | mail -s "crash reports" zfs-discuss at lists.macosforge.org
+>
+> (why does a gui make things complicated?)
+>
+>
+> Finally:
+>
+> FWIW, I've used an ExpressCard Sil3132 eSATA adapter with a raidz1  
+> on an external enclosure, and I don't recall any more stability  
+> issues that with my Mac Pro's "native" internal raidz.
+>
+>
+> Hope that helps!
+
+
+
+From ax2ron at mac.com  Sun Nov 30 16:07:25 2008
+From: ax2ron at mac.com (Aaron)
+Date: Mon, 01 Dec 2008 00:07:25 -0000
+Subject: [zfs-discuss] Mirror of a Stripe or raidz?
+Message-ID: <D3D8D91A-D327-4278-985A-F00289A6D2A0@mac.com>
+
+Hi All,
+
+I've totally fallen in love with ZFS.  I started on OpenSolaris and  
+have migrated to using it on OS X.  As we all have seen things aren't  
+quite there yet with OS X / Finder integration and there are  
+definitely bugs with interaction with DiskUtility.
+
+Anyway, I am trying to figure out the best way to backup or replicate  
+(yes, I know the difference) my storage pool. I have 4x 320GB Seagate  
+7200.10 drives.  I also have 3x USB Seagate 250 GB drives.  These have  
+given me nothing but headache and won't stay connected, so they have  
+been deemed unreliable for ZFS (sigh - I was hoping to use these as a  
+backup for the main pool.)
+
+1 - OS X & 2 HFS+ partitions
+2,3,4 - ZFS raidz pool
+
+I would like to pickup a 1TB drive and increase my storage space and  
+redundancy by:
+a. converting the raidz pool to a striped pool and mirror it onto the  
+1TB drive (3x320 stripe + 1TB mirror of the stripe)
+b. Keep the raidz pool as is and do replication of that pool onto the  
+1TB drive as a separate 1 drive zfs "pool"
+c. Go crazy and use NexentaSTOR on a VM to export the storage with  
+iSCSI and have a real HFS+ volume on the Mac (I actually did this, but  
+performance is abysmal.  Average of 5MB/s writes and peaks at about  
+20MB/s.  Reads are no faster.)
+
+Since snapshots aren't fully baked in OS X yet, I think the easiest  
+thing would be option a.  (Feedback welcome! I haven't played with  
+snapshots yet) but I can't figure how how to do a mirror of a stripe.
+
+I'm also considering buying another small SATA drive for OS X so I  
+would have 4x 320GB for a pool.
+
+Basically my question is: what is a good, simple backup or replication  
+plan for this scenario?
+
+Thoughts?
+Aaron
+
+

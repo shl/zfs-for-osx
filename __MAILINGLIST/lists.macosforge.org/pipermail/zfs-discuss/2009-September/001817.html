@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] The cat is out of the bag
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20The%20cat%20is%20out%20of%20the%20bag&In-Reply-To=%3C084DEE7A-DDB8-4708-B184-CE4EB4B276E7%40ncsa.illinois.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001808.html">
+   <LINK REL="Next"  HREF="001809.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] The cat is out of the bag</H1>
+    <B>Matt Elliott</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20The%20cat%20is%20out%20of%20the%20bag&In-Reply-To=%3C084DEE7A-DDB8-4708-B184-CE4EB4B276E7%40ncsa.illinois.edu%3E"
+       TITLE="[zfs-discuss] The cat is out of the bag">melliott at ncsa.illinois.edu
+       </A><BR>
+    <I>Tue Sep  1 13:22:01 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001808.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+        <LI>Next message: <A HREF="001809.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1817">[ date ]</a>
+              <a href="thread.html#1817">[ thread ]</a>
+              <a href="subject.html#1817">[ subject ]</a>
+              <a href="author.html#1817">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>When running with the bits from 10A286 I get the following when trying  
+to import my pool
+
+# sudo zpool import -a
+Assertion failed: (nvlist_lookup_uint64(zhp-&gt;zpool_config,  
+&quot;pool_guid&quot;, &amp;theguid) == 0), function pool_active, file /SourceCache/ 
+zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line 371.
+Abort trap
+
+I guess I'm waiting till more communication from Apple before  
+upgrading more systems to 10.6.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001808.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+	<LI>Next message: <A HREF="001809.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1817">[ date ]</a>
+              <a href="thread.html#1817">[ thread ]</a>
+              <a href="subject.html#1817">[ subject ]</a>
+              <a href="author.html#1817">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

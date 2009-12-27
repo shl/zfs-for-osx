@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] missing space found by du
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20missing%20space%20found%20by%20du&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000398.html">
+   <LINK REL="Next"  HREF="000391.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] missing space found by du</H1>
+    <B>Brett Ault-McCoy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20missing%20space%20found%20by%20du&In-Reply-To="
+       TITLE="[zfs-discuss] missing space found by du">btm at pobox.com
+       </A><BR>
+    <I>Fri Apr  4 05:32:29 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000398.html">[zfs-discuss] Kernel Panics
+</A></li>
+        <LI>Next message: <A HREF="000391.html">[zfs-discuss] missing space found by du
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#384">[ date ]</a>
+              <a href="thread.html#384">[ thread ]</a>
+              <a href="subject.html#384">[ subject ]</a>
+              <a href="author.html#384">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I had a problem with free space disappearing on my zfs pool today.  I had
+11G free showing and I deleted about 12G from a filesystem.  There isn't a
+snapshot of this filesystem so the space should have been freed up, but
+after the delete (using 'rm' from the command line) it still showed 11G
+free.  I thought it must have been due to some process having those files
+open, but I couldn't find anything that looked like a likely culprit.  So, I
+found another large file to delete, ran lsof on it to make sure nothing had
+it open, and deleted it.  It was &gt;2G, but I still showed 11G free.  I
+decided to try unmounting the filesystem to make sure nothing was holding
+the files open.  However, a 'zfs umount' hung.  I tried doing a 'zpool
+export' of the pool and that wound up hanging as well.  I finally had to
+reboot my machine to get things working again.  When it came back up the
+pool still showed 9G free (I'd written some more to it between when I'd
+first started messing with it and finally rebooted).  I ran 'du' on the
+filesystem that I'd been messing with and came up with 87G, but the 'USED'
+and 'REFER' columns under 'zfs list' showed 112G.  The USED for the pool was
+showing 219G, so I ran a du across the entire pool.  When it finished it
+said there was 194G in the pool.  I ran 'zfs list' to check and it now shows
+194G used for the pool and only 87G for the filesystem in question and now
+shows 34G AVAIL.
+
+So, it would seem that some sort of asynchronous garbage collection is
+happening that just took a while to notice the freed space, or the du caused
+it to notice the free space or something.  Does anyone have any ideas what
+would have caused this?
+
+++Brett;
+
+
+zfs list output before running a du across the entire pool:
+
+NAME                            USED  AVAIL  REFER  MOUNTPOINT
+A                               219G  8.98G   310K  /Volumes/A
+A/Applications                 1.34G  8.98G  1.34G  /Volumes/A/Applications
+A/Downloads                     155M  8.98G   155M  /Volumes/A/Downloads
+A/Movies                        112G  8.98G   112G  /Volumes/A/Movies
+A/Pictures                     36.9G  8.98G  36.9G  /Volumes/A/Pictures
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">Pictures at 20080307211826</A>        18K      -  36.8G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">Pictures at 20080314134126</A>        19K      -  36.8G  -
+A/PicturesOld                  2.49G  8.98G  2.49G  /Volumes/A/PicturesOld
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">PicturesOld at 20080304101257</A>     16K      -  2.49G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">PicturesOld at 20080311144506</A>     16K      -  2.49G  -
+A/Stuff                         193K  8.98G   193K  /Volumes/A/Stuff
+A/iTunes                       59.7G  8.98G  59.7G  /Volumes/A/iTunes
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080326102020</A>        93.5K      -  59.7G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080326144342</A>          88K      -  59.7G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080331133543</A>         148K      -  59.7G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080403130441</A>          93K      -  59.7G  -
+A/opt                          6.78G  8.98G  6.78G  /Volumes/A/opt
+
+End result from du:
+
+194G    .
+
+
+zfs list output after running a du across the entire pool:
+
+NAME                            USED  AVAIL  REFER  MOUNTPOINT
+A                               194G  34.3G   308K  /Volumes/A
+A/Applications                 1.34G  34.3G  1.34G  /Volumes/A/Applications
+A/Downloads                     155M  34.3G   155M  /Volumes/A/Downloads
+A/Movies                       86.7G  34.3G  86.7G  /Volumes/A/Movies
+A/Pictures                     36.9G  34.3G  36.9G  /Volumes/A/Pictures
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">Pictures at 20080307211826</A>        18K      -  36.8G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">Pictures at 20080314134126</A>        19K      -  36.8G  -
+A/PicturesOld                  2.49G  34.3G  2.49G  /Volumes/A/PicturesOld
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">PicturesOld at 20080304101257</A>     16K      -  2.49G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">PicturesOld at 20080311144506</A>     16K      -  2.49G  -
+A/Stuff                         190K  34.3G   190K  /Volumes/A/Stuff
+A/iTunes                       59.7G  34.3G  59.7G  /Volumes/A/iTunes
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080326102020</A>        93.5K      -  59.7G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080326144342</A>          88K      -  59.7G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080331133543</A>         148K      -  59.7G  -
+A/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">iTunes at 20080403130441</A>          93K      -  59.7G  -
+A/opt                          6.78G  34.3G  6.78G  /Volumes/A/opt
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080404/a7ecd6c2/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080404/a7ecd6c2/attachment-0001.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000398.html">[zfs-discuss] Kernel Panics
+</A></li>
+	<LI>Next message: <A HREF="000391.html">[zfs-discuss] missing space found by du
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#384">[ date ]</a>
+              <a href="thread.html#384">[ thread ]</a>
+              <a href="subject.html#384">[ subject ]</a>
+              <a href="author.html#384">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS as read/write
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20as%20read/write&In-Reply-To=354275CA-8734-4EBC-A679-DF78F7069C49%40sogeeky.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000280.html">
+   <LINK REL="Next"  HREF="000282.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS as read/write</H1>
+    <B>Dan Villiom Podlaski Christiansen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20as%20read/write&In-Reply-To=354275CA-8734-4EBC-A679-DF78F7069C49%40sogeeky.net"
+       TITLE="[zfs-discuss] ZFS as read/write">danchr at daimi.au.dk
+       </A><BR>
+    <I>Fri Mar  7 09:19:34 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000280.html">[zfs-discuss] ZFS as read/write
+</A></li>
+        <LI>Next message: <A HREF="000282.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#281">[ date ]</a>
+              <a href="thread.html#281">[ thread ]</a>
+              <a href="subject.html#281">[ subject ]</a>
+              <a href="author.html#281">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 7 Mar 2008, at 05:09, Mr. Zorg wrote:
+&gt;<i> Yes, zfs pools are created as root and unlike other external volumes,
+</I>&gt;<i> the zfs pool honors uid bits. As sudo, cd to /Volumes then apply a
+</I>&gt;<i> chown to the user(s)/group(s) you want to have access. You could
+</I>&gt;<i> probably also use acls, but I haven't quite mastered those. :)
+</I>
+I suspect this qualifies as a bug in ZFS 102A. After a bit of testing  
+with creating a new file system in an existing pool, I believe ZFS  
+will set the ownership of the file system root directory to the user  
+that issues the &#8216;zfs create&#8217; command. If you create a new file system  
+in an existing file system &#8212; or pool &#8212; but don't have write  
+permissions to the parent root directory, the create will succeed but  
+the mount fail. You should be able to fix that by changing the mount  
+point.
+
+After fiddling a bit around with creating, destroying and mounting ZFS  
+file systems on an existing pool, I can't help but wonder how ZFS  
+determines and handles ownership of pools; it doesn't seem to be  
+mentioned in the man pages.
+
+--
+
+Dan Villiom Podlaski Christiansen
+stud.scient., <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">danchr at daimi.au.dk</A>
+
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1945 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080307/6a7f4fa7/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080307/6a7f4fa7/attachment-0001.bin</A> 
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000280.html">[zfs-discuss] ZFS as read/write
+</A></li>
+	<LI>Next message: <A HREF="000282.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#281">[ date ]</a>
+              <a href="thread.html#281">[ thread ]</a>
+              <a href="subject.html#281">[ subject ]</a>
+              <a href="author.html#281">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

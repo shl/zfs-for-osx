@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CD5167F9F-27E6-4C4B-A0B1-400E87706AC9%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001615.html">
+   <LINK REL="Next"  HREF="001617.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3CD5167F9F-27E6-4C4B-A0B1-400E87706AC9%40sun.com%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Tue Jun  9 17:42:22 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001615.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001617.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1616">[ date ]</a>
+              <a href="thread.html#1616">[ thread ]</a>
+              <a href="subject.html#1616">[ subject ]</a>
+              <a href="author.html#1616">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>what's your 'diskutil list' and 'zpool status -v' look like now?
+
+from your previous output it appears that the vdev label got corrupted  
+somehow on the disk, and there's another disk that you appear to be  
+using for backup, but it's hard to tell which is which right now
+
+btw - the /dev/disk value shouldn't matter as the zfs pool information  
+is stored on the disks themselves (not tied to the /dev entry) .. we  
+used to always demonstrate this by building a pool, exporting it,  
+moving the disks all around and re-importing it.
+
+---
+.je
+
+On Jun 9, 2009, at 5:47 PM, Carl Magnuson wrote:
+
+&gt;<i> Doh!  After adding pool name I still get the device is busy error:
+</I>&gt;<i> cannot replace 1751454142452109774 with /dev/disk8s2: /dev/disk8s2  
+</I>&gt;<i> is busy
+</I>&gt;<i>
+</I>&gt;<i> Even with the -f flag and running as root it will not let me replace  
+</I>&gt;<i> it.  Is there some way to get the drive in a state that isn't busy?   
+</I>&gt;<i> Or will disk utility let me reformat it and then I can try adding it  
+</I>&gt;<i> to the pool?
+</I>&gt;<i>
+</I>&gt;<i> Thanks again,
+</I>&gt;<i>
+</I>&gt;<i> Carl
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Jun 9, 2009, at 4:38 PM, Germano Caronni wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> remember the previous posters statement about backups ;-)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I attempted:
+</I>&gt;&gt;<i> g5:~ bobcat$ zpool replace 1751454142452109774 /dev/disk8s2
+</I>&gt;&gt;<i> cannot open '1751454142452109774': name must begin with a letter
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> zpool replace [-f] pool device [new_device]
+</I>&gt;&gt;<i> you missed the pool name.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001615.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001617.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1616">[ date ]</a>
+              <a href="thread.html#1616">[ thread ]</a>
+              <a href="subject.html#1616">[ subject ]</a>
+              <a href="author.html#1616">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

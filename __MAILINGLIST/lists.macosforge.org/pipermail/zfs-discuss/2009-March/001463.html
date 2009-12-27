@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] crash report - plugged in external FW drive with	zfs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20crash%20report%20-%20plugged%20in%20external%20FW%20drive%20with%0A%09zfs&In-Reply-To=%3C60F8DBB8-F5AD-4547-9325-5C1C179006F0%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001462.html">
+   <LINK REL="Next"  HREF="001464.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] crash report - plugged in external FW drive with	zfs</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20crash%20report%20-%20plugged%20in%20external%20FW%20drive%20with%0A%09zfs&In-Reply-To=%3C60F8DBB8-F5AD-4547-9325-5C1C179006F0%40sun.com%3E"
+       TITLE="[zfs-discuss] crash report - plugged in external FW drive with	zfs">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Fri Mar 13 07:25:14 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001462.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+        <LI>Next message: <A HREF="001464.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1463">[ date ]</a>
+              <a href="thread.html#1463">[ thread ]</a>
+              <a href="subject.html#1463">[ subject ]</a>
+              <a href="author.html#1463">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>on ZFS you have a pool that's imported, and then filesystems within  
+the pool .. eg:
+$ zpool list
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+Aeden                   464G    265G    199G    57%  ONLINE     -
+$ zfs list
+NAME                USED  AVAIL  REFER  MOUNTPOINT
+Aeden               265G   192G   583K  /Volumes/Aeden
+Aeden/Development  23.5K   192G  23.5K  /Volumes/Development
+Aeden/OSOL         6.01G   192G  6.01G  /Volumes/OSOL
+Aeden/Pictures     30.8G   192G  30.8G  /Volumes/Pictures
+Aeden/Serenity      228G   192G   228G  /Volumes/Serenity
+
+so simply doing an unmount on the filesystem isn't going to help you  
+with the pool being imported .. it looks like you pulled the drive   
+before you exported the pool and you got a standard ZIO failure trying  
+to write to a device that's not there anymore .. so - if you're using  
+an external drive, in the future you'll want to export the pool .. eg:
+$ zpool export Aeden
+or
+$ sudo zpool export -f Aeden
+
+to unmount the filesystems and export the pool in one shot .. then it  
+should be safe to remove the drive.
+
+hth
+---
+.je
+
+On Mar 13, 2009, at 7:09 AM, Tilman Baumann wrote:
+
+&gt;<i> I have just had my first zfs crash on ppc osx after I formated my  
+</I>&gt;<i> first drive yesterday.
+</I>&gt;<i>
+</I>&gt;<i> btw. is there a good way do unmount external zfs drives?
+</I>&gt;<i> Finder did not unmount my sub filesystem (how are they called?) and  
+</I>&gt;<i> I could not unmount the root fs since it was busy.
+</I>&gt;<i> I then used zfs umount foo/bar on the command line and some (long)  
+</I>&gt;<i> time later finder was fine with ejecting the root fs.
+</I>&gt;<i> That is too much hassle for a external drive. Is there any way to  
+</I>&gt;<i> optimise that?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> And here the crash report:
+</I>&gt;<i> Sadly not much of a back trace.
+</I>&gt;<i> Installed from zfs-119bin.tgz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Copy and pasted from apples crash reporter. (I guess I should not  
+</I>&gt;<i> send them zfs related bugs since it is not their build)
+</I>&gt;<i> ====
+</I>&gt;<i> Fri Mar 13 11:53:05 2009
+</I>&gt;<i> panic(cpu 0 caller 0x3CAD955C): &quot;ZFS: I/O failure (write on  
+</I>&gt;<i> &lt;unknown&gt; off 0: zio 0x573e990 [L0 persistent error log] 4000L/400P  
+</I>&gt;<i> DVA[0]=&lt;0:1f000:400&gt; DVA[1]=&lt;0:1c0015800:400&gt;  
+</I>&gt;<i> DVA[2]=&lt;0:380001000:400&gt; fletcher4 lzjb BE contiguous birth=2609  
+</I>&gt;<i> fill=1 cksum=6388ba9048:42743f05e9fb: 
+</I>&gt;<i> 181420cfad1336:6326ea09a518acd): error &quot; &quot;6&quot;@/Volumes/pixie_dust/ 
+</I>&gt;<i> home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zio.c:918
+</I>&gt;<i> Latest stack backtrace for cpu 0:
+</I>&gt;<i>      Backtrace:
+</I>&gt;<i>         0x0009BCF0 0x0009C694 0x00029EA0 0x3CAD955C 0x3CAD4FEC  
+</I>&gt;<i> 0x3CAD5510 0x3CAD55C4 0x3CAD4FEC
+</I>&gt;<i>         0x3CAD8ACC 0x3CAD4FEC 0x3CB20068 0x3CAD4770 0x3CB4D018  
+</I>&gt;<i> 0x000B0E54
+</I>&gt;<i>      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>         com.apple.filesystems.zfs(8.0)@0x3cabd000-&gt;0x3cba6fff
+</I>&gt;<i> Proceeding back via exception chain:
+</I>&gt;<i>   Exception state (sv=0x3c049500)
+</I>&gt;<i>      PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;  
+</I>&gt;<i> DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000  
+</I>&gt;<i> (Unknown)
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9G55
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.6.0: Mon Nov 24 17:39:01 PST 2008;  
+</I>&gt;<i> root:xnu-1228.9.59~1/RELEASE_PPC
+</I>&gt;<i> System model name: PowerBook5,4
+</I>&gt;<i>
+</I>&gt;<i> System details:
+</I>&gt;<i> Model: PowerBook5,4, BootROM 4.8.6f0, 1 processor, PowerPC G4   
+</I>&gt;<i> (1.1), 1.33 GHz, 2 GB
+</I>&gt;<i> Graphics: kHW_ATIrv360M11Item, ATY,RV360M11, spdisplays_agp_device,  
+</I>&gt;<i> 64 MB
+</I>&gt;<i> Memory Module: SODIMM0/J25LOWER, 1 GB, DDR SDRAM, PC2700U-25330
+</I>&gt;<i> Memory Module: SODIMM1/J25UPPER, 1 GB, DDR SDRAM, PC2700U-25330
+</I>&gt;<i> AirPort: spairport_wireless_card_type_airport_extreme (0x14E4,  
+</I>&gt;<i> 0x4E), Broadcom BCM43xx 1.0 (4.170.25.8)
+</I>&gt;<i> Modem: Jump, V.92, Version 1.0
+</I>&gt;<i> Bluetooth: Version 2.1.3f8, 2 service, 1 devices, 1 incoming serial  
+</I>&gt;<i> ports
+</I>&gt;<i> Network Service: Ethernet, Ethernet, en0
+</I>&gt;<i> Network Service: Ethernet (en2), Ethernet, en2
+</I>&gt;<i> PCI Card: TXN,PCIXXXX-00, cardbus, PC Card
+</I>&gt;<i> Parallel ATA Device: MATSHITACD-RW  CW-8123
+</I>&gt;<i> Parallel ATA Device: WDC WD1600BEVE-22WZT0, 149,05 GB
+</I>&gt;<i> USB Device: Bluetooth USB Host Controller, (null) mA
+</I>&gt;<i> FireWire Device: FreeAgent FW, Seagate, 800mbit_speed
+</I>&gt;<i> FireWire Device: LaCie Hard Drive FireWire+, LaCie Group SA,  
+</I>&gt;<i> 400mbit_speed
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001462.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+	<LI>Next message: <A HREF="001464.html">[zfs-discuss] crash report - plugged in external FW drive with zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1463">[ date ]</a>
+              <a href="thread.html#1463">[ thread ]</a>
+              <a href="subject.html#1463">[ subject ]</a>
+              <a href="author.html#1463">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs directory names with umlaut O's (i.e. ?),	cause goofy behavior with finder.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20directory%20names%20with%20umlaut%20O%27s%20%28i.e.%20%3F%29%2C%0A%09cause%20goofy%20behavior%20with%20finder.&In-Reply-To=%3C66f535320811070718y7bb25d51jc47e780a2f962602%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001042.html">
+   <LINK REL="Next"  HREF="001044.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs directory names with umlaut O's (i.e. ?),	cause goofy behavior with finder.</H1>
+    <B>Oliver Oli</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20directory%20names%20with%20umlaut%20O%27s%20%28i.e.%20%3F%29%2C%0A%09cause%20goofy%20behavior%20with%20finder.&In-Reply-To=%3C66f535320811070718y7bb25d51jc47e780a2f962602%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] zfs directory names with umlaut O's (i.e. ?),	cause goofy behavior with finder.">oliver.oli+0815 at gmail.com
+       </A><BR>
+    <I>Fri Nov  7 07:18:43 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001042.html">[zfs-discuss] zfs directory names with umlaut O's (i.e. ?),	cause goofy behavior with finder.
+</A></li>
+        <LI>Next message: <A HREF="001044.html">[zfs-discuss] zfs kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1043">[ date ]</a>
+              <a href="thread.html#1043">[ thread ]</a>
+              <a href="subject.html#1043">[ subject ]</a>
+              <a href="author.html#1043">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think I experienced some strange behaviour with &#228; too. I cannot remember
+exactly, but I think I had problems with moving or copying the directory.
+
+On Fri, Nov 7, 2008 at 4:13 PM, Bill Winnett &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">William.Winnett at sun.com</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> It seems the mailing list scrubs extended characters of any kind.  The &quot;?&quot;
+</I>&gt;<i> marks below are umlaut O, in capital form.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Since posting this problem, I have also found other issues.  Sometimes
+</I>&gt;<i> using finder to move larger files from a hfs+ filesystem to a zfs sub dir
+</I>&gt;<i> with umlaut O in the directory name, the file gets lost.   The file does not
+</I>&gt;<i> seem to get posted in the directory listing after the copy completes.  I
+</I>&gt;<i> have even found sub directories to completely disappear, even opening a
+</I>&gt;<i> terminal session and navigating to the work area and running find or ls,
+</I>&gt;<i> does not find the directory.  Strange behavior to say the least.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Date: Thu, 06 Nov 2008 16:04:29 -0500
+</I>&gt;<i> From: Bill Winnett &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">William.Winnett at Sun.COM</A>&gt;
+</I>&gt;<i> Subject: [zfs-discuss] zfs directory names with umlaut O's (i.e. ?),
+</I>&gt;<i> cause goofy behavior with finder.
+</I>&gt;<i> To: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">8C89E371-DA17-4EB2-BF35-D71A1A45139E at sun.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;; Format=&quot;flowed&quot;;
+</I>&gt;<i> DelSp=&quot;yes&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> zfs directory names with umlaut O's (i.e. ?), cause goofy behavior
+</I>&gt;<i> with finder.
+</I>&gt;<i>
+</I>&gt;<i> To see what I mean, create at least 3 sub directories with the
+</I>&gt;<i> following names
+</I>&gt;<i>
+</I>&gt;<i> ? - directory1
+</I>&gt;<i> ? - directory2
+</I>&gt;<i> ? - directory3
+</I>&gt;<i>
+</I>&gt;<i> fill those directories with 20~30 files
+</I>&gt;<i>
+</I>&gt;<i> Now, use the mouse to expand/collapse the listing of the directories.
+</I>&gt;<i> Finally collapse all directories.
+</I>&gt;<i> Leave the directory where the umlaut dir's are.  Come back, notice how
+</I>&gt;<i> the directories automatically expand the listings.
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081107/cab24f4b/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081107/cab24f4b/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001042.html">[zfs-discuss] zfs directory names with umlaut O's (i.e. ?),	cause goofy behavior with finder.
+</A></li>
+	<LI>Next message: <A HREF="001044.html">[zfs-discuss] zfs kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1043">[ date ]</a>
+              <a href="thread.html#1043">[ thread ]</a>
+              <a href="subject.html#1043">[ subject ]</a>
+              <a href="author.html#1043">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

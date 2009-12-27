@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Fwd: flash sound
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Fwd%3A%20flash%20sound&In-Reply-To=33644d3c0803131713w60e4197fpd6cfe2df4b6e4d33%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000327.html">
+   <LINK REL="Next"  HREF="000313.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Fwd: flash sound</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Fwd%3A%20flash%20sound&In-Reply-To=33644d3c0803131713w60e4197fpd6cfe2df4b6e4d33%40mail.gmail.com"
+       TITLE="[zfs-discuss] Fwd: flash sound">ndellofano at apple.com
+       </A><BR>
+    <I>Fri Mar 14 10:22:56 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000327.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+        <LI>Next message: <A HREF="000313.html">[zfs-discuss] ZFS and external enclosure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#328">[ date ]</a>
+              <a href="thread.html#328">[ thread ]</a>
+              <a href="subject.html#328">[ subject ]</a>
+              <a href="author.html#328">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So if you have a bug you can reproduce, send it here to this list,  
+with what it is and how to reproduce it.  Bugs filed through the wiki  
+are on a separate world then the rest of Apple's bugs so don't merge  
+into the normal bug database.  So send the bugs here, and I'll file a  
+bug with the info and report the info to the group here :)
+
+For ztest, you don't see it because we haven't ported it yet :) It's  
+on the list of things to get done since it would definately be a good  
+addition to testing and help us and you guys catch more bugs.
+
+Thanks much for beating on ZFS and for your patience!
+
+Noel
+
+On Mar 13, 2008, at 5:13 PM, James Snyder wrote:
+
+&gt;<i> Sweet :-) I'm looking forward to it.
+</I>&gt;<i>
+</I>&gt;<i> I'm happy to continue abusing builds in daily use, especially if it
+</I>&gt;<i> might shave a panic or two off.
+</I>&gt;<i>
+</I>&gt;<i> I do have one other quick question, and that is this:  If we do have
+</I>&gt;<i> trouble with something and can reproduce it what is the best place to
+</I>&gt;<i> report that?  Should an Apple bug report be filed, should we post
+</I>&gt;<i> here, should we use the track bug tracker?  Do things from the system
+</I>&gt;<i> crash reporter make their way through?
+</I>&gt;<i>
+</I>&gt;<i> Additionally, I noticed that ztest isn't isn't one of the build
+</I>&gt;<i> targets in the older source release.  I wouldn't mind running a test
+</I>&gt;<i> or two other than beating it up during daily usage if there's any use
+</I>&gt;<i> to running such things on an end-user system.  I'm not familiar with
+</I>&gt;<i> the unit tests included in there, and so don't know if they are things
+</I>&gt;<i> that would be useful outside of doing internal regression testing or
+</I>&gt;<i> not.
+</I>&gt;<i>
+</I>&gt;<i> Best.
+</I>&gt;<i>
+</I>&gt;<i> -jsnyder
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Mar 13, 2008 at 6:46 PM, No&#235;l Dellofano  
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Not to pester, but might there be another source or binary update
+</I>&gt;&gt;&gt;<i> coming in the near future?  If not, I'm still quite happy with what
+</I>&gt;&gt;&gt;<i> I've got :-)  I assume 102A is still the most current available.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Yes!
+</I>&gt;&gt;<i> A new one is coming shortly which has a bunch of goodness in it
+</I>&gt;&gt;<i> including mmap coherency as well.  i'm going to give it a once over  
+</I>&gt;&gt;<i> on
+</I>&gt;&gt;<i> my user installed machine and then post it.  It should be up soon.
+</I>&gt;&gt;<i> Thanks for your patience! :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mar 12, 2008, at 9:10 AM, James Snyder wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've experienced the firefox issue as well.  I was going to submit a
+</I>&gt;&gt;&gt;<i> report regarding it, and could do so still if few other people are
+</I>&gt;&gt;&gt;<i> having this problem, but it sounds like I'm not the only one.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Regarding Flash sound, I'm NOT having this problem (Sound works in
+</I>&gt;&gt;&gt;<i> Firefox &amp; Safari).  If it helps at all, here are my zfs mounts:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> NAME                       USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;&gt;&gt;<i> Aquarium                  36.8G  60.7G  56.5K  none
+</I>&gt;&gt;&gt;<i> Aquarium/jsnyder          35.4G  60.7G  23.1G  /Users/jsnyder
+</I>&gt;&gt;&gt;<i> Aquarium/jsnyder/Sources  10.3G  60.7G  10.2G  /Users/jsnyder/ 
+</I>&gt;&gt;&gt;<i> Sources
+</I>&gt;&gt;&gt;<i> Aquarium/opt              1.40G  60.7G  1.39G  /opt
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> My flash version is:
+</I>&gt;&gt;&gt;<i> 9,0,115,0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm working out of /Users/jsnyder...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Not to pester, but might there be another source or binary update
+</I>&gt;&gt;&gt;<i> coming in the near future?  If not, I'm still quite happy with what
+</I>&gt;&gt;&gt;<i> I've got :-)  I assume 102A is still the most current available.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Tue, Mar 11, 2008 at 6:58 PM, Franz Schmalzl
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">franzschmalzl at spamfreemail.de</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> not immediately, other then nested filesystems in zfs pools are
+</I>&gt;&gt;&gt;&gt;&gt;<i> still confusing Finder and the upper layers since they aren't  
+</I>&gt;&gt;&gt;&gt;&gt;<i> really
+</I>&gt;&gt;&gt;&gt;&gt;<i> sure how to handle them.  My guess is this has somethign to do  
+</I>&gt;&gt;&gt;&gt;&gt;<i> with
+</I>&gt;&gt;&gt;&gt;&gt;<i> that problem that upper layers where the flash is trying to  
+</I>&gt;&gt;&gt;&gt;&gt;<i> run.  I
+</I>&gt;&gt;&gt;&gt;&gt;<i> will add this information to the bug I have tracking issues like
+</I>&gt;&gt;&gt;&gt;&gt;<i> this with userland and nested filesystems.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> yap, that was my first guess too..
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> it's not just flash by the way, firefox is confused to ( whon
+</I>&gt;&gt;&gt;&gt;<i> installing addons e.g.)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> as you said.. osx doesn't handle it the best way at the moment
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> apologies for the weirdnes.... still getting stuff like this
+</I>&gt;&gt;&gt;&gt;&gt;<i> hammered out..
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> no problem :)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> kind regards
+</I>&gt;&gt;&gt;&gt;<i> franz
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Noel
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> On Mar 11, 2008, at 3:26 PM, Franz Schmalzl wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> ok this is very odd, but i have got the solution
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> again my zfs setup
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> NAME                 USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> hometank            58,4G   302G  16,6M  /Users
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> hometank/ruebezahl  58,4G   302G  58,4G  /Users/ruebezahl
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> when my homefolder is storden in a zfs filesystem inside my  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> zpool
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> flash sound is not working
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> when my homefolder is stored on the root of my zpool it works
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> ( i tried with a test user, first created his homefolder on the
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> root of hometank ---&gt; flash sound worked; then created another  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> zfs
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> filesystem and created a new user inside ---&gt; sound was gone )
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> noel, can you explain ?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> James Snyder
+</I>&gt;&gt;&gt;<i> Biomedical Engineering
+</I>&gt;&gt;&gt;<i> Northwestern University
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> James Snyder
+</I>&gt;<i> Biomedical Engineering
+</I>&gt;<i> Northwestern University
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000327.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+	<LI>Next message: <A HREF="000313.html">[zfs-discuss] ZFS and external enclosure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#328">[ date ]</a>
+              <a href="thread.html#328">[ thread ]</a>
+              <a href="subject.html#328">[ subject ]</a>
+              <a href="author.html#328">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

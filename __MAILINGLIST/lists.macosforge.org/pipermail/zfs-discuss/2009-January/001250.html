@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ACE Inheritance problems
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ACE%20Inheritance%20problems&In-Reply-To=%3Cc3efa4270901011803y765041fby3be1c3422aa2b890%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001249.html">
+   <LINK REL="Next"  HREF="001251.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ACE Inheritance problems</H1>
+    <B>Thomas Barnes</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ACE%20Inheritance%20problems&In-Reply-To=%3Cc3efa4270901011803y765041fby3be1c3422aa2b890%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] ACE Inheritance problems">thomas.barnestormer at gmail.com
+       </A><BR>
+    <I>Thu Jan  1 18:03:34 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001249.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+        <LI>Next message: <A HREF="001251.html">[zfs-discuss] 2x panic()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1250">[ date ]</a>
+              <a href="thread.html#1250">[ thread ]</a>
+              <a href="subject.html#1250">[ subject ]</a>
+              <a href="author.html#1250">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I really appreciate all of your work on this port; I have been both a
+MAC and Solaris fan for many years; when I heard there was to be a zfs
+port for os x, I could barely contain myself.
+
+I have noticed that ACEs will not inherit on a ZFS filesystem nor
+directories created under. E.g
+
+Build 119
+OS:  10.5.5 Intel
+ZFS Setup
+zfs get
+BarneStormers/Users        type           filesystem                      -
+BarneStormers/Users        creation       Thu Jan  1 18:03 2009           -
+BarneStormers/Users        used           41K                             -
+BarneStormers/Users        available      457G                            -
+BarneStormers/Users        referenced     41K                             -
+BarneStormers/Users        compressratio  1.00x                           -
+BarneStormers/Users        mounted        yes                             -
+BarneStormers/Users        quota          none
+   default
+BarneStormers/Users        reservation    none
+   default
+BarneStormers/Users        recordsize     128K
+   default
+BarneStormers/Users        mountpoint     /Volumes/BarneStormers/Users
+   default
+BarneStormers/Users        sharenfs       off
+   default
+BarneStormers/Users        checksum       on
+   default
+BarneStormers/Users        compression    off
+   default
+BarneStormers/Users        atime          on
+   default
+BarneStormers/Users        devices        on
+   default
+BarneStormers/Users        exec           on
+   default
+BarneStormers/Users        setuid         on
+   default
+BarneStormers/Users        readonly       off
+   default
+BarneStormers/Users        zoned          off
+   default
+BarneStormers/Users        snapdir        hidden
+   default
+BarneStormers/Users        aclmode        passthrough                     local
+BarneStormers/Users        aclinherit     passthrough                     local
+BarneStormers/Users        canmount       on
+   default
+BarneStormers/Users        shareiscsi     off
+   default
+BarneStormers/Users        xattr          on
+   default
+BarneStormers/Users        copies         1
+   default
+BarneStormers/Users        version        2                               -
+
+
+on the HPFS file system, it works:
+
+set up a dir in my home
+
+gleeb:tbarnes root# mkdir test
+gleeb:tbarnes root# ls -lae test
+total 0
+drwxr-xr-x   2 root     tbarnes    68 Jan  1 20:44 .
+drwxr-xr-x+ 62 tbarnes  tbarnes  2108 Jan  1 20:44 ..
+ 0: group:everyone deny delete
+
+add a ACE on the test dir
+gleeb:tbarnes root# chmod +a \
+&quot;tbarnes allow list,search,delete,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,add_file,add_subdirectory,delete_child,directory_inherit,file_inherit&quot;
+test
+
+The ACE is applied
+gleeb:tbarnes root# ls -lae test
+total 0
+drwxr-xr-x+  2 root     tbarnes    68 Jan  1 20:44 .
+ 0: user:tbarnes allow
+list,add_file,search,delete,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,file_inherit,directory_inherit
+drwxr-xr-x+ 62 tbarnes  tbarnes  2108 Jan  1 20:44 ..
+ 0: group:everyone deny delete
+
+Make a test inside test, check inheritance:
+gleeb:test root# mkdir test-in-test
+gleeb:test root# ls -lae
+total 0
+drwxr-xr-x+  3 root     tbarnes   102 Jan  1 20:49 .
+ 0: user:tbarnes allow
+list,add_file,search,delete,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,file_inherit,directory_inherit
+drwxr-xr-x+ 62 tbarnes  tbarnes  2108 Jan  1 20:44 ..
+ 0: group:everyone deny delete
+drwxr-xr-x+  2 root     tbarnes    68 Jan  1 20:49 test-in-test
+ 0: user:tbarnes inherited allow
+list,add_file,search,delete,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,file_inherit,directory_inherit
+
+ZFS:
+
+Go to the zfs Volume, setup a directory
+gleeb:test root# cd /Volumes/BarneStormers/Users/
+gleeb:Users root# mkdir Thomas
+gleeb:Users root# chmod =a &quot;tbarnes allow
+list,search,delete,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,add_file,add_subdirectory,delete_child,directory_inherit,file_inherit&quot;
+Thomas
+
+gleeb:Users root# ls -lae
+total 9
+drwxr-xr-x  3 root  wheel  3 Jan  1 20:52 .
+drwxr-xr-x@ 5 root  wheel  6 Jan  1 18:03 ..
+drwxr-xr-x+ 2 root  wheel  2 Jan  1 20:52 Thomas
+ 0: user:tbarnes allow
+list,add_file,search,delete,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,file_inherit,directory_inherit
+
+make a dir in Thomas, the inheritance fails; note above, the mode is
+set to passthrough for mode and inheritance
+
+gleeb:Thomas root# mkdir test
+gleeb:Thomas root# ls -lae
+total 9
+drwxr-xr-x+ 3 root  wheel  3 Jan  1 20:55 .
+ 0: user:tbarnes allow
+list,add_file,search,delete,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,file_inherit,directory_inherit
+drwxr-xr-x  3 root  wheel  3 Jan  1 20:52 ..
+drwxr-xr-x  2 root  wheel  2 Jan  1 20:55 test
+
+So I thought, since root was not in the ACE, it was a writexattr
+problem. So I made a directory as the regular user in finder and
+notice the same results
+
+gleeb:Thomas tbarnes$ cd untitled\ folder/
+gleeb:untitled folder tbarnes$ ls -lae
+total 6
+drwxr-xr-x  2 tbarnes  wheel  2 Jan  1 21:00 .
+drwxr-xr-x+ 4 root     wheel  5 Jan  1 21:00 ..
+ 0: user:tbarnes allow
+list,add_file,search,delete,add_subdirectory,delete_child,readattr,writeattr,readextattr,writeextattr,readsecurity,writesecurity,chown,file_inherit,directory_inherit
+
+Thank you for your time
+
+
+-Thomas Barnes
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">thomas.barnestormer at gmail.com</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001249.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+	<LI>Next message: <A HREF="001251.html">[zfs-discuss] 2x panic()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1250">[ date ]</a>
+              <a href="thread.html#1250">[ thread ]</a>
+              <a href="subject.html#1250">[ subject ]</a>
+              <a href="author.html#1250">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

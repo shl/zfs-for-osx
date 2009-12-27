@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS create failure
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20create%20failure&In-Reply-To=%3C196718.30226.qm%40web88004.mail.re2.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001232.html">
+   <LINK REL="Next"  HREF="001085.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS create failure</H1>
+    <B>Roger Singh</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20create%20failure&In-Reply-To=%3C196718.30226.qm%40web88004.mail.re2.yahoo.com%3E"
+       TITLE="[zfs-discuss] ZFS create failure">rogerws at rogers.com
+       </A><BR>
+    <I>Wed Nov 19 20:41:51 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001232.html">[zfs-discuss] ZFS create failure
+</A></li>
+        <LI>Next message: <A HREF="001085.html">[zfs-discuss] Mounting subdirectories via NFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1233">[ date ]</a>
+              <a href="thread.html#1233">[ thread ]</a>
+              <a href="subject.html#1233">[ subject ]</a>
+              <a href="author.html#1233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you for making me double check the build level. It turns out that I did not overwrite the zpool binary in /usr/sbin. The pool and filesystem are created 
+
+--- On Wed, 11/19/08, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+From: No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;
+Subject: Re: [zfs-discuss] ZFS create failure
+To: &quot;Roger Singh&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">rogerws at rogers.com</A>&gt;
+Cc: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+Received: Wednesday, November 19, 2008, 8:11 AM
+
+I've never seen this behavior. &#160;Are you running zfs-119? What build are you running and what kind of machine?
+Noel
+On Nov 18, 2008, at 9:55 PM, Roger Singh wrote:
+I am trying to create a zpool on a partition, everything looks fine however I get 
+
+wecoyote:~ root# diskutil list
+/dev/disk0
+&#160;&#160; #:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; TYPE NAME&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; SIZE&#160;&#160;&#160;&#160;&#160;&#160; IDENTIFIER
+&#160;&#160; 0:&#160;&#160;&#160;&#160;&#160; GUID_partition_scheme&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; *298.1 Gi&#160;&#160; disk0
+&#160;&#160; 1:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; EFI&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 200.0 Mi&#160;&#160; disk0s1
+&#160;&#160; 2:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; Apple_HFS Macintosh HD&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 190.0 Gi&#160;&#160; disk0s2
+&#160;&#160; 3:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ZFS&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 107.6 Gi&#160;&#160; disk0s3
+wecoyote:~ root# zpool create mypool disk0s3
+cannot create 'mypool': invalid argument for this pool operation
+
+Am i doing something wrong or have I run into a known issue? 
+
+-Roger
+_______________________________________________
+zfs-discuss mailing list
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081120/9a9e66a8/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081120/9a9e66a8/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001232.html">[zfs-discuss] ZFS create failure
+</A></li>
+	<LI>Next message: <A HREF="001085.html">[zfs-discuss] Mounting subdirectories via NFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1233">[ date ]</a>
+              <a href="thread.html#1233">[ thread ]</a>
+              <a href="subject.html#1233">[ subject ]</a>
+              <a href="author.html#1233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

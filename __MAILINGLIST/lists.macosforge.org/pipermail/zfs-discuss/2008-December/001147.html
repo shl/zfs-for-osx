@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Case of the missing file system
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Case%20of%20the%20missing%20file%20system&In-Reply-To=%3Cf8207d190812051829v4ef76e61oc09985eb446709b0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001146.html">
+   <LINK REL="Next"  HREF="001148.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Case of the missing file system</H1>
+    <B>Aaron Berland</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Case%20of%20the%20missing%20file%20system&In-Reply-To=%3Cf8207d190812051829v4ef76e61oc09985eb446709b0%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Case of the missing file system">fruitboi at gmail.com
+       </A><BR>
+    <I>Fri Dec  5 18:29:59 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001146.html">[zfs-discuss] ZFS Kernel Panic
+</A></li>
+        <LI>Next message: <A HREF="001148.html">[zfs-discuss] ColdFusion Developer 8 and ZFS issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1147">[ date ]</a>
+              <a href="thread.html#1147">[ thread ]</a>
+              <a href="subject.html#1147">[ subject ]</a>
+              <a href="author.html#1147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I finally dug down into snapshots.  I made a snapshot of my entire zpool
+sending it to a file on my new, empty pool.  Here is my bash history.  You
+can see I forgot about piped sends not working.
+
+407  zfs snapshot macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A>
+  408  zfs send macz/ab/@dec04-2008-migration | zfs recv puddle/ab
+  409  zfs send macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A> | zfs recv puddle/ab
+  410  zfs list
+  411  zfs send macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A> | zfs recv puddle/ab
+  412  zfs send macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A> &gt;
+puddle/back/migration_snapfile
+  413  zfs send macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A> &gt;
+/Volumes/puddle/back/migration_snap
+...
+424  zfs recv puddle/ab &lt;migration_snap
+
+MacStor:puddle ab$ zfs list
+NAME                             USED  AVAIL  REFER  MOUNTPOINT
+lil                              208G  20.7G   396K  /Volumes/lil
+lil/junk                         208G  20.7G   208G  /Volumes/lil/junk
+macz                             519G  30.0G  74.6K  /Volumes/macz
+macz/ab                          517G  30.0G   517G  /Volumes/macz/ab
+macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at sunday</A>                   108K      -   517G  -
+macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A>        0      -   517G  -
+macz/backup                      411K  30.0G   411K  /Volumes/macz/backup
+macz/corey                      31.3K  30.0G  31.3K  /Volumes/macz/corey
+.....
+macz/deb                        1.52G  30.0G  1.52G  /Volumes/macz/deb
+puddle                          1.02T   324G  89.2K  /Volumes/puddle
+puddle/ab                        523G   324G   523G  /Volumes/puddle/ab
+puddle/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A>      0      -   523G  -
+puddle/back                      525G   324G   525G  /Volumes/puddle/back
+
+We can clearly see that the puddle pool has a zfs filesystem &amp; snap of the
+corresponding receive for puddle/ab.
+
+MacStor:puddle ab$ ls
+back
+
+But puddle/ab is not in the directory and I cannot access the files!
+
+One thing to note is that I started the recv and went to bed and my laptop
+went to sleep.  The ssh connection from my MBP to my zfs box was reset so I
+did not get any errors that may have been thrown.  Can't find anything in
+Console, but I think it wrapped.
+
+I exported the pool and tried to import it.. Poof! It's gone?!
+
+MacStor:Volumes ab$ zpool export puddle
+MacStor:Volumes ab$ zpool import puddle
+cannot import 'puddle': no such pool available
+MacStor:Volumes ab$ zpool import
+no pools available to import
+MacStor:Volumes ab$ zfs list
+NAME                           USED  AVAIL  REFER  MOUNTPOINT
+lil                            208G  20.7G   393K  /Volumes/lil
+lil/junk                       208G  20.7G   208G  /Volumes/lil/junk
+macz                           519G  30.0G  77.9K  /Volumes/macz
+macz/ab                        517G  30.0G   517G  /Volumes/macz/ab
+macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at sunday</A>                 108K      -   517G  -
+macz/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ab at dec04-2008-migration</A>  78.6K      -   517G  -
+macz/backup                    414K  30.0G   414K  /Volumes/macz/backup
+macz/corey                    33.3K  30.0G  33.3K  /Volumes/macz/corey
+macz/deb                      1.52G  30.0G  1.52G  /Volumes/macz/deb
+
+I logged my user out of the gui and then tried the import via ssh and it did
+work.  Now I can see and browse puddle/ab   Whew!
+
+Is this a bug with the Mac ZFS port or something I did wrong?
+
+Aaron
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081205/54e799c6/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081205/54e799c6/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001146.html">[zfs-discuss] ZFS Kernel Panic
+</A></li>
+	<LI>Next message: <A HREF="001148.html">[zfs-discuss] ColdFusion Developer 8 and ZFS issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1147">[ date ]</a>
+              <a href="thread.html#1147">[ thread ]</a>
+              <a href="subject.html#1147">[ subject ]</a>
+              <a href="author.html#1147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

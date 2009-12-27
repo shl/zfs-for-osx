@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] volume not automounting since 10.6
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20volume%20not%20automounting%20since%2010.6&In-Reply-To=%3C8dfb5c790909102038h5142efbfkfc30311a013125c9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001848.html">
+   <LINK REL="Next"  HREF="001850.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] volume not automounting since 10.6</H1>
+    <B>charlienail</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20volume%20not%20automounting%20since%2010.6&In-Reply-To=%3C8dfb5c790909102038h5142efbfkfc30311a013125c9%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] volume not automounting since 10.6">charlienail at gmail.com
+       </A><BR>
+    <I>Thu Sep 10 20:38:53 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001848.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+        <LI>Next message: <A HREF="001850.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1849">[ date ]</a>
+              <a href="thread.html#1849">[ thread ]</a>
+              <a href="subject.html#1849">[ subject ]</a>
+              <a href="author.html#1849">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>i was under the impression that installing various versions of zfs
+(119 or the from the SL beta before it was removed) would be no
+different than using zfs under leopard.
+
+i'm not sure what you mean by 'the code to notice the presence of a
+ZFS filesystem on an attached device.' OS X definitely notices the
+presence of ZFS, it is marked ZFS in disk utility and i get a warning
+that the partition is no longer supported before i mount it.
+
+my use of zfs at this point involves read access to a video library
+that's on a raidz pool, i've been watching all my shows and movies
+without error except for the automounting which i haven't found
+mentioned anywhere else.
+
+thanks for the tip owen, i'm going to give it a try.
+
+daniel, i tried zpool list from the terminal and it doesn't find any
+pools. perhaps because i haven't been exporting the pool before
+shutting down?
+
+2009/9/10 Harald Hanche-Olsen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hanche at math.ntnu.no</A>&gt;:
+&gt;<i> + Eren &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">charlienail at gmail.com</A>&gt;:
+</I>&gt;<i>
+</I>&gt;&gt;<i> ever since i installed 10.6 and installed zfs-119 on top to access my
+</I>&gt;&gt;<i> zfs pool i've had to mount it manually after each boot by running
+</I>&gt;&gt;<i> 'sudo zpool import -f [pool]'
+</I>&gt;<i>
+</I>&gt;<i> You're a brave person.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I don't understand why this is, the pool used to be mounted on boot
+</I>&gt;&gt;<i> under leopard and i was using the same version of zfs from
+</I>&gt;&gt;<i> macosforge.
+</I>&gt;<i>
+</I>&gt;<i> I guess you haven't followed this mailing list lately, or you would
+</I>&gt;<i> have known that ZFS support was dropped from 10.6. I am pretty sure
+</I>&gt;<i> that the code to notice the presence of a ZFS filesystem on an
+</I>&gt;<i> attached device was not part of the zfs-119 bits. With that part gone
+</I>&gt;<i> from 10.6, I think the most likely answer to your question ...
+</I>&gt;<i>
+</I>&gt;&gt;<i> is there a way to make this automatic again like it used to be?
+</I>&gt;<i>
+</I>&gt;<i> ... is no, at least not easily.
+</I>&gt;<i>
+</I>&gt;<i> But I find it interesting to learn that zfs-119 still works on 10.6.
+</I>&gt;<i>
+</I>&gt;<i> - Harald
+</I>&gt;<i>
+</I></PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001848.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+	<LI>Next message: <A HREF="001850.html">[zfs-discuss] volume not automounting since 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1849">[ date ]</a>
+              <a href="thread.html#1849">[ thread ]</a>
+              <a href="subject.html#1849">[ subject ]</a>
+              <a href="author.html#1849">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

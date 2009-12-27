@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=924BAD42-F7DA-47DE-84B0-3E53E1183B51%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000737.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=924BAD42-F7DA-47DE-84B0-3E53E1183B51%40apple.com"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">caronni at gmail.com
+       </A><BR>
+    <I>Sat Aug  2 00:25:55 PDT 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000737.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#734">[ date ]</a>
+              <a href="thread.html#734">[ thread ]</a>
+              <a href="subject.html#734">[ subject ]</a>
+              <a href="author.html#734">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Following Jonathan's suggestions, even a much smaller pool will do it.
+So here the exact instructions I just used on my Mac (more data
+below):
+
+sudo zpool (to get the modules loaded)
+mkfile 100M /Users/clear/pool1
+zpool create z /Users/clear/pool1
+zfs create z/crashfs
+sudo rsync -aHPSv /dev/ /etc/ /Volumes/z/crashfs/1
+[spinning ball]
+
+When I got the spinning ball, I shortly depressed the power button.
+*Maybe* this caused the following console entries:
+
+02.08.08 08:57:29 com.apple.launchctl.System[2] BootCacheControl:
+could not fetch history: Cannot allocate memory
+02.08.08 08:57:29 com.apple.launchctl.System[2] BootCacheControl:
+could not stop cache/fetch history: Cannot allocate memory
+02.08.08 08:57:34 com.apple.quicklook[131] unrecognized rendering
+intent `FICL:RI_to_be_removed'.
+02.08.08 08:57:34 com.apple.quicklook[131] unrecognized rendering
+intent `FICL:RI_to_be_removed'.
+
+Then I power-cycled. Here as much system configuration as I can think
+of. Anything more I can get you? Any way to get more debugging info
+out of the system?
+
+Germano
+
+Model Name:	MacBook Pro
+  Model Identifier:	MacBookPro4,1
+  Processor Name:	Intel Core 2 Duo
+  Processor Speed:	2.5 GHz
+  Number Of Processors:	1
+  Total Number Of Cores:	2
+  L2 Cache:	6 MB
+  Memory:	2 GB
+  Bus Speed:	800 MHz
+  Boot ROM Version:	MBP41.00C1.B03
+  SMC Version:	1.27f1
+  Serial Number:	W881...
+  Sudden Motion Sensor:
+  State:	Enabled
+
+System Software Overview:
+
+  System Version:	Mac OS X 10.5.4 (9E17)
+  Kernel Version:	Darwin 9.4.0
+  Boot Volume:	Mac
+  Boot Mode:	Normal
+  Computer Name:	mac
+
+mac:~ ...$ kextstat
+Index Refs Address    Size       Wired      Name (Version) &lt;Linked Against&gt;
+    1    1 0x0        0x0        0x0        com.apple.kernel (9.4.0)
+    2   45 0x0        0x0        0x0        com.apple.kpi.bsd (9.4.0)
+    3    3 0x0        0x0        0x0        com.apple.kpi.dsep (9.4.0)
+    4   64 0x0        0x0        0x0        com.apple.kpi.iokit (9.4.0)
+    5   68 0x0        0x0        0x0        com.apple.kpi.libkern (9.4.0)
+    6   63 0x0        0x0        0x0        com.apple.kpi.mach (9.4.0)
+    7   32 0x0        0x0        0x0        com.apple.kpi.unsupported (9.4.0)
+    8    1 0x0        0x0        0x0
+com.apple.iokit.IONVRAMFamily (9.4.0)
+    9    1 0x0        0x0        0x0        com.apple.driver.AppleNMI (9.4.0)
+   10    1 0x0        0x0        0x0
+com.apple.iokit.IOSystemManagementFamily (9.4.0)
+   11    1 0x0        0x0        0x0
+com.apple.iokit.ApplePlatformFamily (9.4.0)
+   12   24 0x0        0x0        0x0        com.apple.kernel.6.0 (7.9.9)
+   13    1 0x0        0x0        0x0        com.apple.kernel.bsd (7.9.9)
+   14    1 0x0        0x0        0x0        com.apple.kernel.iokit (7.9.9)
+   15    1 0x0        0x0        0x0        com.apple.kernel.libkern (7.9.9)
+   16    1 0x0        0x0        0x0        com.apple.kernel.mach (7.9.9)
+   17   18 0x5cd000   0x10000    0xf000
+com.apple.iokit.IOPCIFamily (2.4.1) &lt;7 6 5 4&gt;
+   18    9 0x635000   0x4000     0x3000
+com.apple.iokit.IOACPIFamily (1.2.0) &lt;12&gt;
+   19    3 0x706000   0x3d000    0x3c000
+com.apple.driver.AppleACPIPlatform (1.2.1) &lt;18 17 12 7 5 4&gt;
+   20    0 0x5c8000   0x5000     0x4000     com.apple.BootCache (30) &lt;7 6 5 4 2&gt;
+   21    9 0x686000   0x18000    0x17000
+com.apple.iokit.IOStorageFamily (1.5.2) &lt;7 6 5 4 2&gt;
+   22    0 0x791000   0x10000    0xf000
+com.apple.driver.DiskImages (194) &lt;21 7 6 5 4 2&gt;
+   23    6 0x7fa000   0x39000    0x38000
+com.apple.iokit.IOHIDFamily (1.5.2) &lt;7 6 5 4 2&gt;
+   24    0 0xb51000   0x1a000    0x19000
+com.apple.driver.AppleIntelCPUPowerManagement (9.39.0) &lt;12 7 6 5 4 2&gt;
+   25    0 0x64f000   0x3000     0x2000
+com.apple.security.TMSafetyNet (3) &lt;7 6 5 3 2&gt;
+   26    0 0x7d5000   0x8000     0x7000
+com.apple.nke.applicationfirewall (1.0.77) &lt;7 6 5 4 2&gt;
+   27    0 0xa36000   0x18000    0x17000
+com.apple.security.seatbelt (107.1) &lt;7 6 5 3 2&gt;
+   28    0 0x7f7000   0x3000     0x2000     com.apple.driver.AppleAPIC
+(1.2.0) &lt;12&gt;
+   29    2 0x645000   0x3000     0x2000
+com.apple.iokit.IOSMBusFamily (1.1) &lt;6 5 4&gt;
+   30    0 0xb6b000   0x5000     0x4000
+com.apple.driver.AppleACPIEC (1.2.1) &lt;29 19 18 12&gt;
+   31    0 0x657000   0x4000     0x3000
+com.apple.driver.AppleSMBIOS (1.0.14) &lt;12&gt;
+   32    0 0x1087000  0x4000     0x3000
+com.apple.driver.AppleACPIButtons (1.2.1) &lt;23 19 18 7 6 5 4 2&gt;
+   33    0 0x743000   0x3000     0x2000
+com.apple.driver.AppleACPIPCI (1.2.1) &lt;19 18 17 12&gt;
+   34    0 0x785000   0x3000     0x2000     com.apple.driver.AppleHPET
+(1.1) &lt;18 7 6 5 4&gt;
+   35    0 0xa2d000   0x5000     0x4000     com.apple.driver.AppleRTC
+(1.0.5) &lt;18 6 5 4 2&gt;
+   36    1 0x846000   0x3000     0x2000
+com.apple.driver.AppleEFIRuntime (1.1.0) &lt;7 5 4&gt;
+   37    0 0x648000   0x7000     0x6000
+com.apple.driver.AppleSmartBatteryManager (136.0.0) &lt;29 6 5 4 2&gt;
+   38    0 0x849000   0x6000     0x5000
+com.apple.driver.AppleEFINVRAM (1.1.0) &lt;36 7 6 5 4&gt;
+   39    4 0x5dd000   0x16000    0x15000
+com.apple.iokit.IONetworkingFamily (1.6.0) &lt;7 6 5 4 2&gt;
+   40    1 0x866000   0x1f000    0x1e000
+com.apple.iokit.IO80211Family (211.1) &lt;39 7 6 5 4 2&gt;
+   41    0 0x885000   0x12d000   0x12c000
+com.apple.driver.AirPortBrcm43xx (314.46.9) &lt;40 39 17 7 6 5 4 2&gt;
+   42    0 0x5f3000   0x40000    0x3f000
+com.apple.iokit.AppleYukon2 (3.1.10b2) &lt;39 17 12 4 2&gt;
+   43   12 0x59e000   0x28000    0x27000
+com.apple.iokit.IOUSBFamily (3.1.5) &lt;7 6 5 4&gt;
+   44    0 0x7b3000   0xe000     0xd000
+com.apple.driver.AppleUSBUHCI (3.1.5) &lt;43 17 7 6 5 4&gt;
+   45    0 0x7a1000   0x12000    0x11000
+com.apple.driver.AppleUSBEHCI (3.1.5) &lt;43 17 7 6 5 4&gt;
+   47    2 0x9d2000   0xd000     0xc000
+com.apple.iokit.IOATAFamily (1.7.3f1) &lt;6 5 4 2&gt;
+   48    0 0xb2d000   0x9000     0x8000
+com.apple.driver.AppleIntelPIIXATA (2.0.0) &lt;47 17 6 5 4&gt;
+   49    2 0x6a7000   0x3f000    0x3e000
+com.apple.iokit.IOFireWireFamily (3.4.4) &lt;6 5 4 2&gt;
+   50    0 0x6e6000   0x20000    0x1f000
+com.apple.driver.AppleFWOHCI (3.4.4) &lt;49 17 7 6 5 4 2&gt;
+   51    0 0x5c6000   0x2000     0x1000
+com.apple.iokit.IOUSBUserClient (3.0.7) &lt;43 6 5 4&gt;
+   52    0 0xb75000   0xb000     0xa000
+com.apple.driver.AppleUSBHub (3.1.5) &lt;43 6 5 4&gt;
+   53    2 0xb41000   0x6000     0x5000
+com.apple.iokit.IOAHCIFamily (1.0.4) &lt;6 5 4 2&gt;
+   54    0 0xb47000   0xa000     0x9000
+com.apple.driver.AppleAHCIPort (1.5.1) &lt;53 17 6 5 4 2&gt;
+   55    0 0x108b000  0x10000    0xf000
+com.apple.iokit.IOAHCIBlockStorage (1.1.0) &lt;53 21 6 5 4 2&gt;
+   56    4 0x66d000   0x19000    0x18000
+com.apple.iokit.IOSCSIArchitectureModelFamily (2.0.3) &lt;6 5 4 2&gt;
+   57    0 0xa32000   0x4000     0x3000
+com.apple.iokit.IOATAPIProtocolTransport (1.5.2) &lt;56 47 12&gt;
+   59    0 0x9cd000   0x5000     0x4000
+com.apple.driver.XsanFilter (2.7.91) &lt;21 12&gt;
+   60    0 0x69e000   0x6000     0x5000
+com.apple.iokit.SCSITaskUserClient (2.0.3) &lt;56 21 6 5 4 2&gt;
+   61    3 0x746000   0x8000     0x7000
+com.apple.iokit.IOCDStorageFamily (1.5) &lt;21 6 5 4 2&gt;
+   62    2 0x74e000   0x6000     0x5000
+com.apple.iokit.IODVDStorageFamily (1.5) &lt;61 21 6 5 4 2&gt;
+   63    1 0x754000   0x5000     0x4000
+com.apple.iokit.IOBDStorageFamily (1.5) &lt;62 61 21 6 5 4 2&gt;
+   64    1 0x759000   0x16000    0x15000
+com.apple.iokit.IOSCSIBlockCommandsDevice (2.0.3) &lt;56 21 6 5 4 2&gt;
+   65    0 0x76f000   0x16000    0x15000
+com.apple.iokit.IOSCSIMultimediaCommandsDevice (2.0.3) &lt;64 63 62 61 56
+21 6 5 4 2&gt;
+   66    0 0x633000   0x2000     0x1000
+com.apple.driver.AppleUSBMergeNub (3.0.7) &lt;43 5 4&gt;
+   67    0 0x7c1000   0x4000     0x3000
+com.apple.driver.AppleUSBComposite (3.0.0) &lt;43 5 4&gt;
+   68    4 0x833000   0x5000     0x4000
+com.apple.iokit.IOUSBHIDDriver (3.1.0) &lt;43 23 6 5 4&gt;
+   69    0 0xb8a000   0x4000     0x3000
+com.apple.driver.AppleUSBTCKeyboard (1.6.5b3) &lt;68 43 23 12&gt;
+   71    0 0x838000   0xb000     0xa000
+com.apple.driver.AppleUSBMultitouch (183.28) &lt;68 43 23 6 5 4 2&gt;
+   72    0 0x843000   0x3000     0x2000
+com.apple.driver.AppleUSBTCButtons (1.6.5b3) &lt;68 43 23 12&gt;
+   73    2 0x9ef000   0x37000    0x36000
+com.apple.iokit.IOBluetoothFamily (2.1f17) &lt;7 6 5 4 2&gt;
+   74    1 0xa26000   0x7000     0x6000
+com.apple.driver.AppleUSBBluetoothHCIController (2.1f17) &lt;73 43 12&gt;
+   75    0 0xb28000   0x5000     0x4000
+com.apple.driver.BroadcomUSBBluetoothHCIController (2.1f17) &lt;74 73 12&gt;
+   76    4 0xb8e000   0x1c000    0x1b000
+com.apple.iokit.IOGraphicsFamily (1.5.2) &lt;17 7 6 5 4&gt;
+   77    3 0xbaa000   0xe000     0xd000
+com.apple.iokit.IONDRVSupport (1.5.2) &lt;76 17 7 6 5 4&gt;
+   78    0 0x1083000  0x4000     0x3000
+com.apple.driver.AppleBacklight (1.4.3) &lt;77 76 17 12 6 5 4&gt;
+   79    4 0x639000   0x9000     0x8000     com.apple.driver.AppleSMC
+(2.0.1d2) &lt;18 7 6 5 4&gt;
+   80    1 0x7dd000   0xe000     0xd000
+com.apple.driver.IOPlatformPluginFamily (3.1.6d0) &lt;12&gt;
+   81    0 0x7eb000   0xc000     0xb000
+com.apple.driver.ACPI_SMC_PlatformPlugin (3.1.6d0) &lt;80 79 18 17 12 7 6
+5 4&gt;
+   82    0 0xb3c000   0x5000     0x4000
+com.apple.driver.AppleIRController (108) &lt;68 43 23 12&gt;
+   83    0 0xb36000   0x6000     0x5000     com.apple.kext.AppleSMCLMU
+(1.3.8d2) &lt;79 6 5 4&gt;
+   84    1 0xa4e000   0x3000     0x2000
+com.apple.kext.OSvKernDSPLib (1.1) &lt;6 5&gt;
+   85    3 0xa51000   0x17000    0x16000
+com.apple.iokit.IOAudioFamily (1.6.4b7) &lt;84 6 5 4 2&gt;
+   86    0 0x107b000  0x4000     0x3000
+com.apple.driver.AudioIPCDriver (1.0.4) &lt;85 6 5 4 2&gt;
+   87    0 0x788000   0x9000     0x8000
+com.apple.iokit.IOFireWireIP (1.7.1) &lt;49 39 6 5 4 2&gt;
+   88    2 0x84f000   0x7000     0x6000
+com.apple.iokit.IOHDAFamily (1.5.7a24) &lt;6 5 4 2&gt;
+   89    0 0x856000   0xd000     0xc000
+com.apple.driver.AppleHDAController (1.5.7a24) &lt;88 17 6 5 4 2&gt;
+   90    2 0xbb8000   0x240000   0x23f000   com.apple.NVDAResman
+(5.2.8) &lt;77 76 17 12 6 5 4 2&gt;
+   91    0 0xdf8000   0x1f4000   0x1f3000   com.apple.nvidia.nv50hal
+(5.2.8) &lt;90 17 12&gt;
+   92    0 0x6a4000   0x3000     0x2000     com.apple.driver.AppleLPC
+(1.2.3) &lt;17 6 5 4&gt;
+   93    0 0x642000   0x3000     0x2000
+com.apple.Dont_Steal_Mac_OS_X (6.0.2) &lt;79 7 5 4 2&gt;
+   94    0 0x7cf000   0x6000     0x5000
+com.apple.driver.SMCMotionSensor (2.0.6d2) &lt;79 6 5 4&gt;
+   95    0 0xfec000   0x8f000    0x8e000    com.apple.GeForce (5.2.8)
+&lt;90 77 76 17 12 6 5 4 2&gt;
+   96    1 0xa68000   0x53000    0x52000
+com.apple.driver.DspFuncLib (1.5.7a24) &lt;85 6 5 4 2&gt;
+   97    0 0xabb000   0x62000    0x61000    com.apple.driver.AppleHDA
+(1.5.7a24) &lt;96 88 85 18 6 5 4 2&gt;
+   99    0 0xb1d000   0xb000     0xa000
+com.apple.filesystems.autofs (2.0.1) &lt;7 6 5 4 2&gt;
+  100    0 0x9b2000   0x1b000    0x1a000    com.apple.filesystems.ntfs
+(2.1) &lt;7 6 5 2&gt;
+  101    1 0x65b000   0x9000     0x8000
+com.apple.iokit.IOSerialFamily (9.1) &lt;7 6 5 4 2&gt;
+  102    0 0x664000   0x9000     0x8000
+com.apple.iokit.IOBluetoothSerialManager (2.1f17) &lt;101 12&gt;
+  104    0 0x652000   0x5000     0x4000
+com.apple.driver.AppleHWSensor (1.7.1d0) &lt;12&gt;
+  105    0 0x34a70000 0xcc000    0xcb000    com.apple.filesystems.zfs
+(8.0) &lt;7 6 5 2&gt;
+
+rsync -v
+rsync  version 2.6.3  protocol version 28
+Copyright (C) 1996-2004 by Andrew Tridgell and others
+&lt;<A HREF="http://rsync.samba.org/">http://rsync.samba.org/</A>&gt;
+Capabilities: 64-bit files, socketpairs, hard links, symlinks, batchfiles,
+              inplace, IPv6, 32-bit system inums, 64-bit internal inums
+
+$ ls -al /System/Library/Extensions/zfs.kext/Contents/MacOS/zfs
+-rw-r--r--@ 1 root  wheel  2898140 22 Jul 19:45
+/System/Library/Extensions/zfs.kext/Contents/MacOS/zfs
+$ md5 /System/Library/Extensions/zfs.kext/Contents/MacOS/zfs
+MD5 (/System/Library/Extensions/zfs.kext/Contents/MacOS/zfs) =
+075a5491bca49cd1a3aca3473c3c0914
+
+
+
+
+
+On Thu, Jul 31, 2008 at 23:46, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+&gt;<i> Hey all,
+</I>&gt;<i> I need some help.  Neither Don nor I are able to recreate this bug, with
+</I>&gt;<i> both of us trying different scenarios on different machines.
+</I>&gt;<i> We're using Germano's instructions:
+</I>&gt;<i> mkfile 20g /foo
+</I>&gt;<i> zpool create z /foo
+</I>&gt;<i> zfs create z/crashfs
+</I>&gt;<i> sudo rsync -aHPSv /dev /etc /usr /Volumes/z/crashfs/1
+</I>&gt;<i> [watch the spinning ball of death]
+</I>&gt;<i>
+</I>&gt;<i> I also tried using a disk drive instead of a file as a vdev.  Additionally
+</I>&gt;<i> tried rsyncing into a top level pool, as well as child filesystems like the
+</I>&gt;<i> one above.  I'm running  Leopard 9E17 on my Mac Pro, with zfs-119.  Is that
+</I>&gt;<i> what everyone else is running that is seeing this?  I can't get a hang.
+</I>&gt;<i>
+</I>&gt;<i> ideas or suggestions?  Am i missing a step?
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I></PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000737.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#734">[ date ]</a>
+              <a href="thread.html#734">[ thread ]</a>
+              <a href="subject.html#734">[ subject ]</a>
+              <a href="author.html#734">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

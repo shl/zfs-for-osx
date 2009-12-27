@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic while opening directory; since then on every zpool import.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20while%20opening%20directory%3B%0A%20since%20then%20on%20every%20zpool%20import.&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000620.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic while opening directory; since then on every zpool import.</H1>
+    <B>Maarten Billemont</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20while%20opening%20directory%3B%0A%20since%20then%20on%20every%20zpool%20import.&In-Reply-To="
+       TITLE="[zfs-discuss] Kernel Panic while opening directory; since then on every zpool import.">lhunath at gmail.com
+       </A><BR>
+    <I>Sun Jun  1 09:59:02 PDT 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000620.html">[zfs-discuss] zfs-117: remote filesystem names still wrong in	Finder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#619">[ date ]</a>
+              <a href="thread.html#619">[ thread ]</a>
+              <a href="subject.html#619">[ subject ]</a>
+              <a href="author.html#619">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>While opening a directory in ''Path Finder'' on my ZFS fs the kernel  
+paniced.  I rebooted and did a new zpool import on the fs (it is located  
+on an external hard drive) which triggered the following panic with the  
+same message as the first one I described (I lost the details for that one  
+as a result of the latter panic).
+
+Sun Jun  1 18:48:01 2008
+panic(cpu 1 caller 0x34B00AF9): &quot;ZFS: bad checksum (read on &lt;unknown&gt; off  
+0: zio 0x5725998 [L1 ZFS plain file] 4000L/400P DVA[0]=&lt;0:90032fc00:400&gt;  
+DVA[1]=&lt;0:22266de800:400&gt; fletcher4 lzjb LE contiguous birth=361645 fill=2  
+cksum=5b071f0f0c:3c0463dd46e8:151936455654ac:5392fefbe1c5a3f): error &quot;  
+&quot;88&quot;@/Users/local/zfs-111/zfs_kext/zfs/zio.c:918
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x34673e38 : 0x12b0fa (0x459294 0x34673e6c 0x133243 0x0)
+0x34673e88 : 0x34b00af9 (0x34b6c8f0 0x34b6c8d4 0x34b692b8 0x34b90330)
+0x34673f08 : 0x34afd1cd (0x5725998 0x11 0x34673f28 0x34b43f74)
+0x34673f48 : 0x34b5c18e (0x5725998 0xb7ea180 0x1f1bd 0x34b7cf74)
+0x34673fc8 : 0x19ebdc (0x5f73ce8 0x0 0x1a20b5 0x4241ba0)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x34ae9000-&gt;0x34ba4fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9D34
+
+Kernel version:
+Darwin Kernel Version 9.3.0: Fri May 23 00:49:16 PDT 2008;  
+root:xnu-1228.5.18~1/RELEASE_I386
+System model name: MacBookPro3,1 (Mac-F4238BC8)
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000620.html">[zfs-discuss] zfs-117: remote filesystem names still wrong in	Finder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#619">[ date ]</a>
+              <a href="thread.html#619">[ thread ]</a>
+              <a href="subject.html#619">[ subject ]</a>
+              <a href="author.html#619">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

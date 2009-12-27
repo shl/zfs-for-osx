@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Share Question
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20Share%20Question&In-Reply-To=c61bd13c0804021641k7f251003t75e02136a6cecd5e%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000442.html">
+   <LINK REL="Next"  HREF="000445.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Share Question</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20Share%20Question&In-Reply-To=c61bd13c0804021641k7f251003t75e02136a6cecd5e%40mail.gmail.com"
+       TITLE="[zfs-discuss] ZFS Share Question">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Apr  9 13:34:51 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000442.html">[zfs-discuss] ZFS Share Question
+</A></li>
+        <LI>Next message: <A HREF="000445.html">[zfs-discuss] ZFS Share Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#444">[ date ]</a>
+              <a href="thread.html#444">[ thread ]</a>
+              <a href="subject.html#444">[ subject ]</a>
+              <a href="author.html#444">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Welcome :)
+
+the sharenfs property isn't supported in Mac OSX ZFS because OSX  
+doesn't have a share command (as in Solaris <A HREF="http://docs.sun.com/app/docs/doc/816-1055/6m7gh31j0?a=view">http://docs.sun.com/app/docs/doc/816-1055/6m7gh31j0?a=view</A>) 
+  or any notion of being able to dynamically share and unshare  
+resources.
+
+Hence you can use NFS and AFP and friends with ZFS but you need to  
+share it the old fashioned way.
+
+Noel
+p.s. this is also the case with iscsi, zones and a few other zfs  
+properties that just don't make sense on an OSX system
+
+On Apr 2, 2008, at 4:41 PM, Joe Dunn wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Long time lurker, first time poster ;)
+</I>&gt;<i>
+</I>&gt;<i> Wondering if the sharenfs works in the zfs-102A binary? I am getting  
+</I>&gt;<i> the following
+</I>&gt;<i>
+</I>&gt;<i> mbp:~ user$ sudo zfs set sharenfs=on zfstest
+</I>&gt;<i> cannot set property for 'zfstest': the sharenfs property is not yet  
+</I>&gt;<i> supported
+</I>&gt;<i>
+</I>&gt;<i> Please feel free to ask any questions of me if I missed something.  
+</I>&gt;<i> I've been playing with zfs in freebsd in vmware, this is the first  
+</I>&gt;<i> time i've used hardware.
+</I>&gt;<i>
+</I>&gt;<i> Cheers
+</I>&gt;<i>
+</I>&gt;<i> Joe
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000442.html">[zfs-discuss] ZFS Share Question
+</A></li>
+	<LI>Next message: <A HREF="000445.html">[zfs-discuss] ZFS Share Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#444">[ date ]</a>
+              <a href="thread.html#444">[ thread ]</a>
+              <a href="subject.html#444">[ subject ]</a>
+              <a href="author.html#444">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

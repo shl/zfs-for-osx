@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] chksum error on RAID.Z - severity?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20chksum%20error%20on%20RAID.Z%20-%20severity%3F&In-Reply-To=FA167D28-477F-4985-B243-E573BC664A39%40thinkpink.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000941.html">
+   <LINK REL="Next"  HREF="000943.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] chksum error on RAID.Z - severity?</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20chksum%20error%20on%20RAID.Z%20-%20severity%3F&In-Reply-To=FA167D28-477F-4985-B243-E573BC664A39%40thinkpink.com"
+       TITLE="[zfs-discuss] chksum error on RAID.Z - severity?">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Tue Oct  7 11:31:01 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000941.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+        <LI>Next message: <A HREF="000943.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#942">[ date ]</a>
+              <a href="thread.html#942">[ thread ]</a>
+              <a href="subject.html#942">[ subject ]</a>
+              <a href="author.html#942">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>How did you find out it was the cable ?
+On 07 Oct 2008, at 15:34, Brian Pinkerton wrote:
+
+&gt;<i> I've had this kind of transient problem as well.  In my case, one of
+</I>&gt;<i> the SATA cables inside my enclosure had gone bad (how the heck does
+</I>&gt;<i> this happen?)  I replaced the cable, rebuilt the mirror, and ZFS was
+</I>&gt;<i> happy.
+</I>&gt;<i>
+</I>&gt;<i> bri
+</I>&gt;<i>
+</I>&gt;<i> On Oct 7, 2008, at 6:27 AM, Christian He&#223;mann wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On 26.09.2008, at 10:26, Christian He&#223;mann wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Me again...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> After adding three more disks to my RAID.Z Pool (now 2x 3 disks) I
+</I>&gt;&gt;&gt;<i> issued a scrub just to be sure everything is fine.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Well, apparently it isn't, since zpool tells me I have chksum errors
+</I>&gt;&gt;&gt;<i> (85% done, 5 errors so far) on one of the additional disks (which
+</I>&gt;&gt;&gt;<i> isn't new and the smallest of all: old 3x 750GB, new 500/200/120GB).
+</I>&gt;&gt;&gt;<i> That same disk worked fine as a standalone ZFS device until
+</I>&gt;&gt;&gt;<i> yesterday,
+</I>&gt;&gt;&gt;<i> with scrubs without any error messages.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Well, seems I have to talk to myself, since no one wants to answer
+</I>&gt;&gt;<i> me. ;-)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I decided not to replace the disk and didn't encounter any further
+</I>&gt;&gt;<i> problems (didn't do another scrub, though, due to the bug which  
+</I>&gt;&gt;<i> causes
+</I>&gt;&gt;<i> the scrub to restart as soon as a snapshot is added - any chance for
+</I>&gt;&gt;<i> its fix to be implemented in OS X soon?).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> After a planned reboot and therefore new mount, I issued another
+</I>&gt;&gt;<i> scrub, with a nearly completely filled pool (~5GB available) and: no
+</I>&gt;&gt;<i> more chksum errors.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I don't believe the blocks in question were all free during that  
+</I>&gt;&gt;<i> time,
+</I>&gt;&gt;<i> so either the disk marked them as bad (don't think so) or it was  
+</I>&gt;&gt;<i> not a
+</I>&gt;&gt;<i> sign for a bad disk, but some other problem - maybe during write/ 
+</I>&gt;&gt;<i> read,
+</I>&gt;&gt;<i> maybe due to the kernel panics the system had to endure, maybe one of
+</I>&gt;&gt;<i> the ZFS bugs displaying chksum errors which aren't there...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Anyway, if anyone is interested, my personal conclusion: Don't Panic!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Best regards,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Christian
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000941.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+	<LI>Next message: <A HREF="000943.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#942">[ date ]</a>
+              <a href="thread.html#942">[ thread ]</a>
+              <a href="subject.html#942">[ subject ]</a>
+              <a href="author.html#942">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

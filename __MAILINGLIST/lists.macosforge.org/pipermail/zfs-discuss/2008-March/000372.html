@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Increasing the capacity of a RAID-Z pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Increasing%20the%20capacity%20of%20a%20RAID-Z%20pool&In-Reply-To=mailman.910.1206501937.1359.zfs-discuss%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000371.html">
+   <LINK REL="Next"  HREF="000373.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Increasing the capacity of a RAID-Z pool</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Increasing%20the%20capacity%20of%20a%20RAID-Z%20pool&In-Reply-To=mailman.910.1206501937.1359.zfs-discuss%40lists.macosforge.org"
+       TITLE="[zfs-discuss] Increasing the capacity of a RAID-Z pool">i_see at macnews.de
+       </A><BR>
+    <I>Tue Mar 25 23:42:33 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000371.html">[zfs-discuss] Increasing the capacity of a RAID-Z pool
+</A></li>
+        <LI>Next message: <A HREF="000373.html">[zfs-discuss] How to force a resilver of a faulted disc?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#372">[ date ]</a>
+              <a href="thread.html#372">[ thread ]</a>
+              <a href="subject.html#372">[ subject ]</a>
+              <a href="author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+as I understood it, for now you can.
+1. add vdevs (raidz or mirrored, or even simply drives or files if you  
+don't care about your data)
+2. swap out all disks in a vdev with larger ones. The capacity of   
+vdev is currently determined by the smallest device.
+if you have 8 disks in a raidz1 vdev you'll have roughly 7*(capacity  
+of the smallest disk), if you use raidz2, its 6*(capacity of the  
+smallest disk)
+As far as I understood the zfs-team is working on methods to do more  
+flexible re-organization of pools, since for normal operations you  
+basicly need the double (triple) capacity to do zfs send and receive  
+of the data in order to rearrange drives.
+
+However the good news is, there is no need to export and import the  
+pool to see the capacity grow. ZFS performs all maintenance operations  
+online.
+(This is just for clarification - I'd rather have a offline &quot;Alter  
+vdev&quot; tool than nothing, although in the long run it will be very nice  
+to &quot;evacuate&quot; ,restripe, etc disks/vdevs while working online.)
+Hope this helps,
+	ralf
+PS:  No&#235;l or anyone with special access. I also missed this info in  
+the FAQ. Is there any timeframe as to when we are likely to see  
+improvement on that situation?
+&gt;<i>
+</I>&gt;<i> Thornton Adrian wrote:
+</I>&gt;&gt;<i> Hoping I can get a clear answer on this one - there seems to be   
+</I>&gt;&gt;<i> conflicting info drifting around the intertubes. I have a RAID-Z  
+</I>&gt;&gt;<i> pool  of eight 320gb disks, whose capacity is currently about 2tb.  
+</I>&gt;&gt;<i> I would  like to increase the capacity of the pool. I understand  
+</I>&gt;&gt;<i> that I can not  add more disks to the pool, but it sounds as if I  
+</I>&gt;&gt;<i> can swap out disks  for larger ones and resilver to achieve the  
+</I>&gt;&gt;<i> same end.
+</I>&gt;&gt;<i>
+</I>&gt;<i> No, that's not the right way to think of it.
+</I>&gt;<i>
+</I>&gt;<i> You have a pool with one vdev, and that vdev is a RAIDZ.  The pool  
+</I>&gt;<i> can be expanded by adding vdevs but the RAIDZ cannot be expanded -  
+</I>&gt;<i> indeed no vdev can be expanded in storage capacity as far as I  
+</I>&gt;<i> know.  To add more capacity to the pool you have to add a new vdev.
+</I>&gt;<i>
+</I>&gt;<i> (in other words you can add drives to the pool, just not to the  
+</I>&gt;<i> existing RAIDZ: you can create a new MIRROR or RAIDZ vdev and add  
+</I>&gt;<i> that vdev to the pool.  The concepts of MIRROR and RAIDZ only apply  
+</I>&gt;<i> to individual vdevs, not to the pool itself)
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000371.html">[zfs-discuss] Increasing the capacity of a RAID-Z pool
+</A></li>
+	<LI>Next message: <A HREF="000373.html">[zfs-discuss] How to force a resilver of a faulted disc?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#372">[ date ]</a>
+              <a href="thread.html#372">[ thread ]</a>
+              <a href="subject.html#372">[ subject ]</a>
+              <a href="author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me	a kernel panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20HELP%20PLEASE%21%21%21%20Re%3A%20Now%20zpool%20status%20is%20giving%20me%0A%09a%20kernel%20panic&In-Reply-To=%3C762437f0810191622l5442abc3y889e9b6982dadfc6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001013.html">
+   <LINK REL="Next"  HREF="001010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me	a kernel panic</H1>
+    <B>Mario Camou</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20HELP%20PLEASE%21%21%21%20Re%3A%20Now%20zpool%20status%20is%20giving%20me%0A%09a%20kernel%20panic&In-Reply-To=%3C762437f0810191622l5442abc3y889e9b6982dadfc6%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me	a kernel panic">mcamou at tecnoguru.com
+       </A><BR>
+    <I>Sun Oct 19 16:22:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001013.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me a kernel panic
+</A></li>
+        <LI>Next message: <A HREF="001010.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me	a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1009">[ date ]</a>
+              <a href="thread.html#1009">[ thread ]</a>
+              <a href="subject.html#1009">[ subject ]</a>
+              <a href="author.html#1009">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you for your help.
+
+In the end I got a Solaris LiveCD and booted it using VMWare. A &quot;zpool
+status -v&quot; actually works. I'll let it resilver (it currently says it will
+take about 39 hours) and see about recovering the data.
+
+One question. If &quot;zpool status -v&quot; includes a directory name, does that mean
+that the whole directory is useless? I.e., that all the files in it have
+been lost?
+
+In that case ... ouch....
+
+On Mon, Oct 20, 2008 at 12:13 AM, Aric Gregson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">aorchid at mac.com</A>&gt; wrote:
+
+&gt;<i> On Mon, 20 Oct 2008 00:14:03 +0200
+</I>&gt;<i> Mario Camou &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">mcamou at tecnoguru.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Well, for one thing, the resilvering says it will take about
+</I>&gt;<i> &gt; 30-something hours to finish (assuming it doesn't panic at some
+</I>&gt;<i> &gt; point). Also, the &quot;12k+ data errors&quot; message doesn't reassure me. I
+</I>&gt;<i> &gt; would just like to unplug the &quot;empty&quot; drive, reformat it and copy the
+</I>&gt;<i> &gt; data over to it.
+</I>&gt;<i>
+</I>&gt;<i> Hmm. Not sure about how to do that. I suspect it has been discussed
+</I>&gt;<i> on the ZFS discussion list at OpenSolaris, but I did not pay attention
+</I>&gt;<i> to it. I have noticed that the resilvering on Mac tends to report a
+</I>&gt;<i> longer time than it actually takes, but resilvering can take days
+</I>&gt;<i> depending upon the zpool and what happened. I would still probably just
+</I>&gt;<i> let it resilver and then deal with it.
+</I>&gt;<i>
+</I>&gt;<i> You should be able to look at the other list and see what has been
+</I>&gt;<i> discussed about the disks. I'm sorry, but I don't remember if your's is
+</I>&gt;<i> a mirror or a raidz. If you have a raidz the errors may very well be
+</I>&gt;<i> spread out over the different drives, so removing one bad one may not
+</I>&gt;<i> be an option.
+</I>&gt;<i>
+</I>&gt;<i> aric
+</I>&gt;<i>
+</I>
+
+
+-- 
+The impossible has, on occasion, let me down
+                                                       --R.U. Sirius
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081020/f6ed110c/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081020/f6ed110c/attachment.html</A> 
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001013.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me a kernel panic
+</A></li>
+	<LI>Next message: <A HREF="001010.html">[zfs-discuss] HELP PLEASE!!! Re: Now zpool status is giving me	a kernel panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1009">[ date ]</a>
+              <a href="thread.html#1009">[ thread ]</a>
+              <a href="subject.html#1009">[ subject ]</a>
+              <a href="author.html#1009">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] data corruption
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20data%20corruption&In-Reply-To=39462AF1-1B9C-4AC7-A3BC-04B23220DCD7%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000438.html">
+   <LINK REL="Next"  HREF="000452.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] data corruption</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20data%20corruption&In-Reply-To=39462AF1-1B9C-4AC7-A3BC-04B23220DCD7%40spamfreemail.de"
+       TITLE="[zfs-discuss] data corruption">bwaters at nrao.edu
+       </A><BR>
+    <I>Wed Apr  9 11:39:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000438.html">[zfs-discuss] data corruption
+</A></li>
+        <LI>Next message: <A HREF="000452.html">[zfs-discuss] VMWare Fusion and mmap on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#439">[ date ]</a>
+              <a href="thread.html#439">[ thread ]</a>
+              <a href="subject.html#439">[ subject ]</a>
+              <a href="author.html#439">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Apr 9, 2008, at 12:14 PM, Franz Schmalzl wrote:
+&gt;<i> the filesystems vere obvioulsy not corrupted because the ones who i  
+</I>&gt;<i> care of are just sparsebundles, and they mount fine....
+</I>
+I'm not sure I trust that completely.
+
+I recall that when I used FileVault last year (quite a few OS  
+revisions ago, 10.4.7 or thereabouts), a crash could corrupt files -  
+usually graphic image files or sounds. As if some multi-media metadata  
+trolling had those files open when it crashed, and those files were  
+*scragged*.
+
+The encrypted filesystem passed an fsck_hfs, but had corrupted file  
+data. Generally I'd recover from a backup in that case. It's also  
+possible to run DiskWarrior on sparsebundles, you might want to do  
+something like that.
+
+
+My data-corruption problem had *nothing* to do with ZFS, of course,  
+and I haven't seen it in a while. But I have seen disk images that  
+passed fsck and yet had data corruption at the file level.
+
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000438.html">[zfs-discuss] data corruption
+</A></li>
+	<LI>Next message: <A HREF="000452.html">[zfs-discuss] VMWare Fusion and mmap on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#439">[ date ]</a>
+              <a href="thread.html#439">[ thread ]</a>
+              <a href="subject.html#439">[ subject ]</a>
+              <a href="author.html#439">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

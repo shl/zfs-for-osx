@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] nfs on top of zfs does not work?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nfs%20on%20top%20of%20zfs%20does%20not%20work%3F&In-Reply-To=%3C3D4F28DD-583F-470B-B6ED-13EE48C2633C%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001418.html">
+   <LINK REL="Next"  HREF="001423.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] nfs on top of zfs does not work?</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nfs%20on%20top%20of%20zfs%20does%20not%20work%3F&In-Reply-To=%3C3D4F28DD-583F-470B-B6ED-13EE48C2633C%40gmail.com%3E"
+       TITLE="[zfs-discuss] nfs on top of zfs does not work?">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Wed Feb 18 12:50:12 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001418.html">[zfs-discuss] nfs on top of zfs does not work?
+</A></li>
+        <LI>Next message: <A HREF="001423.html">[zfs-discuss] nfs on top of zfs does not work?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1422">[ date ]</a>
+              <a href="thread.html#1422">[ thread ]</a>
+              <a href="subject.html#1422">[ subject ]</a>
+              <a href="author.html#1422">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have this set up at home and it works for me, so it is possible.
+
+However, nested filesystems aren't shared the same way you might  
+expect/want, thereby making lots of filesystems somewhat useless.
+
+If you have a zfs fs exported as /home, and another fs stephanie  
+underneath that, then remote clients will be able to mount /home and  
+see an empty dir stephanie.
+
+You'll need to export/mount /home/stephanie explicitly to see the  
+contents.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 18 Feb 2009, at 19:38, sjeanpluv &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">sjeanpluv at yahoo.com</A>&gt; wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>    I recently moved my home directory HFS to ZFS.
+</I>&gt;<i> Prior, I had NFS enabled to share my home directory so that it is  
+</I>&gt;<i> accessible on my
+</I>&gt;<i> network by other UNIX systems.
+</I>&gt;<i> With ZFS, I am still able to nfs mount my home directory on the UNIX  
+</I>&gt;<i> clients, but
+</I>&gt;<i> see nothing.
+</I>&gt;<i>
+</I>&gt;<i> Feedbacks appreciated, thank you.
+</I>&gt;<i> -Stephane
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090218/76ef77f2/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090218/76ef77f2/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001418.html">[zfs-discuss] nfs on top of zfs does not work?
+</A></li>
+	<LI>Next message: <A HREF="001423.html">[zfs-discuss] nfs on top of zfs does not work?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1422">[ date ]</a>
+              <a href="thread.html#1422">[ thread ]</a>
+              <a href="subject.html#1422">[ subject ]</a>
+              <a href="author.html#1422">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

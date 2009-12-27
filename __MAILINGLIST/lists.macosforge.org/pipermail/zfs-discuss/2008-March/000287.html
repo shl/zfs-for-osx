@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] and another one...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20and%20another%20one...&In-Reply-To=F0ACF839-6D5F-4212-B714-ED7485A5704D%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000286.html">
+   <LINK REL="Next"  HREF="000288.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] and another one...</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20and%20another%20one...&In-Reply-To=F0ACF839-6D5F-4212-B714-ED7485A5704D%40spamfreemail.de"
+       TITLE="[zfs-discuss] and another one...">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Sun Mar  9 08:31:48 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000286.html">[zfs-discuss] follow up: encryption,filevault,homedir
+</A></li>
+        <LI>Next message: <A HREF="000288.html">[zfs-discuss] and another one...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#287">[ date ]</a>
+              <a href="thread.html#287">[ thread ]</a>
+              <a href="subject.html#287">[ subject ]</a>
+              <a href="author.html#287">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok disregard all my questions
+
+answered them by myself, sorry for any inconvenience....
+
+
+but another one came up regarding snapshots
+(i know, don't kill me :-)
+
+
+i cannot find any aswers to in the zfs admin guide, so here it comes:
+
+
+state that i have 2 disks, one external and one internal
+
+so i have my fancy zpool on my internal disk
+and made some snapshots
+
+hometank
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hometank at snap1</A>
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hometank at snap2</A>
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hometank at snap3</A>
+
+
+i sent these snapshots to my external disks (into a file, because it's  
+not yet zfs'ed) for backup purposes
+snap 2 being incremental of 1, 3 being incremental of 2
+
+zfs send <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hometank at snap1</A> &gt; /&lt;pathtomyexternaldisk&gt;/&lt;snapshotdir&gt;/snap1
+zfs send -i <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hometank at snap1</A> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hometank at snap2</A>  ....
+and so on
+
+now i deleted all of my snapshots on hometank because they started to  
+eat up space
+
+later i my dog came, hacked my password and deleted some of my files  
+and i want to go back to the state of snap2
+
+since snap2 is incremental of snap1, would i have to copy everything  
+back?
+
+
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000286.html">[zfs-discuss] follow up: encryption,filevault,homedir
+</A></li>
+	<LI>Next message: <A HREF="000288.html">[zfs-discuss] and another one...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#287">[ date ]</a>
+              <a href="thread.html#287">[ thread ]</a>
+              <a href="subject.html#287">[ subject ]</a>
+              <a href="author.html#287">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

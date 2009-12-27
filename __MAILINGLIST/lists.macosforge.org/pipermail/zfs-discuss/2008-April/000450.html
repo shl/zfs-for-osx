@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Handbrake on ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Handbrake%20on%20ZFS&In-Reply-To=3EF46CF4-B83D-4864-A572-EF86E5AF1539%40asgaard.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000443.html">
+   <LINK REL="Next"  HREF="000451.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Handbrake on ZFS</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Handbrake%20on%20ZFS&In-Reply-To=3EF46CF4-B83D-4864-A572-EF86E5AF1539%40asgaard.org"
+       TITLE="[zfs-discuss] Handbrake on ZFS">info at martin-hauser.net
+       </A><BR>
+    <I>Thu Apr 10 00:27:55 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000443.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+        <LI>Next message: <A HREF="000451.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#450">[ date ]</a>
+              <a href="thread.html#450">[ thread ]</a>
+              <a href="subject.html#450">[ subject ]</a>
+              <a href="author.html#450">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Very interesting, now that you mention it, my handbrake is on a case  
+sensitive HFS+ and encodes from and to a ZFS (which is also case  
+sensitive as we all know).
+
+Maybe Sean's copy of Handbrake is stored on case insensetive HFS+ and  
+that makes the difference ??
+
+Martin
+
+On Apr 7, 2008, at 20:44 PM, Christopher LILJENSTOLPE wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i> Greetings,
+</I>&gt;<i>
+</I>&gt;<i> 	Can it be case insensitivity in Handbrake?
+</I>&gt;<i>
+</I>&gt;<i> 	Chris
+</I>&gt;<i>
+</I>&gt;<i> On 07 Apr 2008, at 05.16, Martin Hauser wrote:
+</I>&gt;&gt;<i> Hmm,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am encoding from .mpg files, maybe the difference is in directory  
+</I>&gt;&gt;<i> handling, as DVD's are oriented that way?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 7, 2008, at 13:43 PM, James R. Van Artsdalen wrote:
+</I>&gt;&gt;&gt;<i> I can reproduce his problem here using the Handbrake 0.9.2 GUI  
+</I>&gt;&gt;&gt;<i> with no network involved.  It hangs after clicking OK to select  
+</I>&gt;&gt;&gt;<i> the source material - it doesn't get to the point of encoding  
+</I>&gt;&gt;&gt;<i> anything.  Handbrake does respond to a cmd-Q and is using about 5%  
+</I>&gt;&gt;&gt;<i> CPU at that point.  The source material is a DVD copied to the  
+</I>&gt;&gt;&gt;<i> hard disk.  It selects source material OK from a &quot;Mac OS Extended&quot;  
+</I>&gt;&gt;&gt;<i> disk.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Martin Hauser wrote:
+</I>&gt;&gt;&gt;&gt;<i> I do not have any problems with handbrake running on a local ZFS.  
+</I>&gt;&gt;&gt;&gt;<i> I encode from and to ZFS volumes, always using a custom mp4  
+</I>&gt;&gt;&gt;&gt;<i> setup. I assume it's a problem with ZFS + networking ?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> kind regards
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Martin
+</I>&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> - ---
+</I>&gt;<i> &#26446;&#26607;&#30591;
+</I>&gt;<i> Check my PGP key here:
+</I>&gt;<i> <A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAgAGBQJH+mt8AAoJEGmx2Mt/+Iw/YHcIAJKNkqo5bdUKe5I1IV9cmxrA
+</I>&gt;<i> 17hQ3SQ58n1QlIWQROPQXZuf/uGvYlp38LjQQF5Cs9CY0RrwbeORdGGcJL7ceo91
+</I>&gt;<i> gvSstxaYi5Dx/EvNUEpurejIWo4SsPG53Iyv1s1gQneOmMX2ft9u3Y9tx0O9G3z/
+</I>&gt;<i> Z2It1REpmfywGROx25M6bKhnfL7V/ZoCRB1JdEmbtoP9DtZxUJSJ1Kge4P4cgw64
+</I>&gt;<i> pg5UJvnRz5cZ1mxLSB+uSOwxQqyZn9Zt4Sb28ReEwuCcsRGRPHWU0YT1A8OTwnKf
+</I>&gt;<i> sURvxOfqPlixiSPHdxkFjPQq5JToiBbx9hbLWxQxhW4k7TPvNCZZgO5wJtOyu/k=
+</I>&gt;<i> =wzgk
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080410/d712a722/PGP.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080410/d712a722/PGP.bin</A>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000443.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+	<LI>Next message: <A HREF="000451.html">[zfs-discuss] Handbrake on ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#450">[ date ]</a>
+              <a href="thread.html#450">[ thread ]</a>
+              <a href="subject.html#450">[ subject ]</a>
+              <a href="author.html#450">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

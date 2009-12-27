@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ACLs on ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ACLs%20on%20ZFS&In-Reply-To=%3C8C52B62D-6470-4FFB-9742-CBE039BE95E3%40thefloreas.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001106.html">
+   <LINK REL="Next"  HREF="001111.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ACLs on ZFS</H1>
+    <B>Nathan Florea</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ACLs%20on%20ZFS&In-Reply-To=%3C8C52B62D-6470-4FFB-9742-CBE039BE95E3%40thefloreas.com%3E"
+       TITLE="[zfs-discuss] ACLs on ZFS">dev-lists at thefloreas.com
+       </A><BR>
+    <I>Tue Nov 25 13:28:17 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001106.html">[zfs-discuss] ZFS Volumes in Server Admin's File Sharing tab
+</A></li>
+        <LI>Next message: <A HREF="001111.html">[zfs-discuss] zfs scrub hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1107">[ date ]</a>
+              <a href="thread.html#1107">[ thread ]</a>
+              <a href="subject.html#1107">[ subject ]</a>
+              <a href="author.html#1107">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have run into a couple of problems with ACLs on ZFS using the r119  
+binaries.  The first two were brought up by Brad Allred back in  
+September, but he didn't get a response and I am hoping something has  
+changed since then.
+
+1. ACLs don't inherit.
+Despite setting the aclmode and aclinherit attributes to  
+&quot;passthrough&quot;, there is no change in behavior.  This makes managing  
+ACLs on ZFS volumes extremely frustrating and almost completely  
+eliminates their value except for files and folders that will never  
+change.  Which is an edge case.  It would be nice if it worked for the  
+common case.
+
+
+2. Group ACEs don't work.
+Brad says this broke with the 10.5.5 update.  Here some additional  
+details:
+Group ACEs get resolved to their group ID and then resolved to a  
+user.  If a user has the same UID as the GID, the ACE will be applied  
+as that user.  If there is no user with that group id, an ACE gets  
+added with GUID (not GID; no &quot;user:&quot; or &quot;group:&quot; at the beginning)  
+&quot;FFFFEEEE-DDDD-CCCC-BBBB-AAAA00000000&quot; with the last zeros replaced  
+with the GID in hex.
+For example:
+I have a group named local_group with GID 1025.
+I have a user named local_user with UID 1025.
+I apply an ACE of &quot;local_group allow write&quot; via chmod or through the  
+Server Admin GUI and the file has an ACE of &quot;user:local_user allow  
+write&quot;.
+I remove the ACE and delete the local user local_user.
+I apply an ACE of &quot;local_group allow write&quot; and the file has an ACE of  
+&quot;FFFFEEEE-DDDD-CCCC-BBBB-AAAA00000401&quot;.
+
+So there are two problems.  First, it tries to resolve GIDs into  
+UIDs.  Second, it doesn't associate the group's GUID with the ACE, but  
+rather tries to generate one using the group's GID.
+
+
+3. Inheritance attributes can't be set on files via chmod.
+Inheritance attributes don't apply to files, but you can still set  
+them.  For example, setting an ACE of &quot;local_user allow  
+file_inheritance&quot; on a file will create an ACE of &quot;user:local_user  
+allow &quot;.  So an ACE is still set, but it is blank.  On HFS+, one can  
+do this via chmod or the Server Admin GUI.  On ZFS volumes, one can do  
+this via the Server Admin GUI, but not via chmod.  Instead, chmod  
+produces the error &quot;chmod: Failed to set ACL on file 'test.txt':  
+Invalid argument&quot;.  This is problematic because it prevents  
+recursively setting permissions on directories if you want to set any  
+inheritance attributes.  It is interesting that the Server Admin GUI  
+acts exactly the same with ZFS, including creating empty ACEs on files.
+For example:
+I may want to set a directory to allow a user to read, write, and  
+append to it and all sub-directories and files.  On HFS+, I can just  
+use 'chmod -R +a &quot;local_user allow  
+read,write,append,file_inherit,directory_inherit&quot; my_directory'.  If I  
+try that on a ZFS directory, I will get the aforementioned error on  
+the first file encountered and it will die.  This makes it more  
+difficult to set inheritance attributes on directories.  Given that  
+inheritance doesn't actually work, I suppose this is academic, but  
+when that does get fixed, it would be nice if they were easy to set  
+from the command line.
+
+
+What is the status of ZFS on Leopard?  Given the lack of an update in  
+4 months, I'm worried that it has been abandoned.  I understand that a  
+lot of attention is being focused on 10.6, but it would be nice if we  
+could at least get some source updates.  What if 10.5.6 breaks  
+something more critical that group ACEs on ZFS?  Is there any  
+commitment to this going forward or should I cross my figures that no  
+security updates breaks something until 10.6 arrives?  Should I be  
+filing Radar bugs for the issues above?  Should I create new tickets  
+on the MacOS Forge site?
+
+Cheers,
+Nathan Florea
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001106.html">[zfs-discuss] ZFS Volumes in Server Admin's File Sharing tab
+</A></li>
+	<LI>Next message: <A HREF="001111.html">[zfs-discuss] zfs scrub hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1107">[ date ]</a>
+              <a href="thread.html#1107">[ thread ]</a>
+              <a href="subject.html#1107">[ subject ]</a>
+              <a href="author.html#1107">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

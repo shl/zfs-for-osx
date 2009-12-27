@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-117: remote filesystem names still wrong in	Finder
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20remote%20filesystem%20names%20still%20wrong%20in%0A%09Finder&In-Reply-To=9720F36C-618D-4ECC-8CC4-FA52523D577C%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000624.html">
+   <LINK REL="Next"  HREF="000621.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-117: remote filesystem names still wrong in	Finder</H1>
+    <B>Lorenzo Perone</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs-117%3A%20remote%20filesystem%20names%20still%20wrong%20in%0A%09Finder&In-Reply-To=9720F36C-618D-4ECC-8CC4-FA52523D577C%40apple.com"
+       TITLE="[zfs-discuss] zfs-117: remote filesystem names still wrong in	Finder">lopez.on.the.lists at yellowspace.net
+       </A><BR>
+    <I>Tue Jun  3 03:34:48 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000624.html">[zfs-discuss] zfs-117: remote filesystem names still wrong in	Finder
+</A></li>
+        <LI>Next message: <A HREF="000621.html">[zfs-discuss] Suggestion: An external tool for RAID-Z expansion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#626">[ date ]</a>
+              <a href="thread.html#626">[ thread ]</a>
+              <a href="subject.html#626">[ subject ]</a>
+              <a href="author.html#626">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm on 9D34 + zfs-117, but still have the name problem in the Finder:
+no matter where on the Finder (be it in the window title
+or on the shortcuts bar on the left of Finder windows),
+all zfs filesystems have the name of the pool.
+In my case I set some mountpoints manually. Can this be the cause?
+
+(in any case, also the filesystems on the default mountpoint
+/Volumes/&lt;pool&gt;/&lt;fs&gt; show up with the pool's name).
+Here's my zfs list (some filesystems/shapshots omitted):
+
+
+NAME                            USED  AVAIL  REFER  MOUNTPOINT
+Zorro                           121G  74,4G   109K  /Volumes/Zorro
+Zorro/Downloads                15,4G  74,4G  15,4G  /Downloads
+Zorro/Movies                   10,1G  74,4G  10,1G  /Movies
+Zorro/Music                    1011M  74,4G  1011M  /Music
+Zorro/VirtualPCs               39,3G  74,4G  38,4G  /VirtualPCs
+Zorro/Work                      791M  74,4G   791M  /Volumes/Zorro/Work
+Zorro/isos                     18,0G  74,4G  18,0G  /Volumes/Zorro/isos
+Zorro/lopez                    10,8G  74,4G  10,1G  /lopez
+Zorro/opt                      9,22G  74,4G  9,22G  /opt
+
+As an example, here's a
+
+[zeta:~] root# zfs get all Zorro/Movies
+
+NAME          PROPERTY       VALUE                 SOURCE
+Zorro/Movies  type           filesystem            -
+Zorro/Movies  creation       Do Apr 17 21:09 2008  -
+Zorro/Movies  used           10,1G                 -
+Zorro/Movies  available      74,4G                 -
+Zorro/Movies  referenced     10,1G                 -
+Zorro/Movies  compressratio  1.00x                 -
+Zorro/Movies  mounted        yes                   -
+Zorro/Movies  quota          none                  default
+Zorro/Movies  reservation    none                  default
+Zorro/Movies  recordsize     128K                  default
+Zorro/Movies  mountpoint     /Movies               local
+Zorro/Movies  sharenfs       off                   default
+Zorro/Movies  checksum       on                    default
+Zorro/Movies  compression    off                   default
+Zorro/Movies  atime          on                    default
+Zorro/Movies  devices        on                    default
+Zorro/Movies  exec           on                    default
+Zorro/Movies  setuid         on                    default
+Zorro/Movies  readonly       off                   default
+Zorro/Movies  zoned          off                   default
+Zorro/Movies  snapdir        hidden                default
+Zorro/Movies  aclmode        groupmask             default
+Zorro/Movies  aclinherit     secure                default
+Zorro/Movies  canmount       on                    default
+Zorro/Movies  shareiscsi     off                   default
+Zorro/Movies  xattr          on                    default
+Zorro/Movies  copies         1                     default
+Zorro/Movies  version        2                     -
+
+
+If there's anything I can test/do/post to help debugging I'll be
+glad to do it.
+
+Apart from those Finder problems* everything else works like a
+charm. That is: my filevault home, watching movies, using
+eyetv, making copies, using parallels virtual machines, building/
+using macports in /opt...
+
+*annoying but, for now, sort of solved by using icons.
+For that part: the Finder seems to recognize them as volumes
+somehow, since applying an icon saves a  .VolumeIcon.icns in it.. :
+
+Thanx for the newest bits and for Your continued feedback to the list!
+
+Regards,
+
+Lorenzo
+
+On 02.06.2008, at 20:03, No&#235;l Dellofano wrote:
+
+&gt;<i> Are you on 9D34?  Or another release?  I do know we are still having
+</I>&gt;<i> issues with properly representing ZFS filesystems in Finder.  However
+</I>&gt;<i> on my machine, where i have a pool with 2 ZFS filesystems in it,
+</I>&gt;<i> Finder shows my pool and the names of my ZFS filesystems in it, except
+</I>&gt;<i> it represents my filesystems as alias's which is annoying and we're
+</I>&gt;<i> still wroking to fix this issue.  What Leopard are you on? Do you have
+</I>&gt;<i> any other options/mounts set on your ZFS filesystem?
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On May 31, 2008, at 6:40 PM, Jonathan Borden wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> In my Finder when browsing the machine that holds the ZFS pools I
+</I>&gt;&gt;<i> still get:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> gene
+</I>&gt;&gt;<i> gene1
+</I>&gt;&gt;<i> gene2
+</I>&gt;&gt;<i> gene3
+</I>&gt;&gt;<i> ...
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000624.html">[zfs-discuss] zfs-117: remote filesystem names still wrong in	Finder
+</A></li>
+	<LI>Next message: <A HREF="000621.html">[zfs-discuss] Suggestion: An external tool for RAID-Z expansion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#626">[ date ]</a>
+              <a href="thread.html#626">[ thread ]</a>
+              <a href="subject.html#626">[ subject ]</a>
+              <a href="author.html#626">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

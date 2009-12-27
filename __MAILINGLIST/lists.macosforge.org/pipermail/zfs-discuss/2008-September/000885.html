@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20iDisk%20and%20ZFS%20Stability%20Problem%3F%20%28or%20just%20an%0A%09iDisk%20problem%29&In-Reply-To=71A02FB2-FAAC-4F44-A735-0305963D31BA%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000884.html">
+   <LINK REL="Next"  HREF="000886.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20iDisk%20and%20ZFS%20Stability%20Problem%3F%20%28or%20just%20an%0A%09iDisk%20problem%29&In-Reply-To=71A02FB2-FAAC-4F44-A735-0305963D31BA%40apple.com"
+       TITLE="[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)">zorg at sogeeky.net
+       </A><BR>
+    <I>Fri Sep 26 21:08:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000884.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)
+</A></li>
+        <LI>Next message: <A HREF="000886.html">[zfs-discuss] Handbrake 0.9.2 solved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#885">[ date ]</a>
+              <a href="thread.html#885">[ thread ]</a>
+              <a href="subject.html#885">[ subject ]</a>
+              <a href="author.html#885">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Now if only apple were so forthcoming on other projects!  A little  
+open dialog goes a long way. :)
+
+Notice how none of us are pissed off at zfs being buggy?  Compare that  
+with iPhone 2.0/2.1...  LOL
+
+Thanks, No&#235;l. Do other people know you're doing this?  :)
+
+On Sep 26, 2008, at 6:43 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;  
+wrote:
+
+&gt;<i> hey Aric, thanks for doing the homework.  That's good info to know.
+</I>&gt;<i> Sorry your experience is so bad :(
+</I>&gt;<i>
+</I>&gt;<i> I'll see if I can find internally whos working on the iDisk Freezing
+</I>&gt;<i> issue and if it's coming in an update hopefully soon...
+</I>&gt;<i>
+</I>&gt;<i> thanks!
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Sep 26, 2008, at 12:27 PM, Aric Gregson wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Apologies. It seems that this remains a Mac Finder issue, as I doubt
+</I>&gt;&gt;<i> that all of these persons on the discussion forum have formatted  
+</I>&gt;&gt;<i> their
+</I>&gt;&gt;<i> computers to ZFS.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;<A HREF="http://discussions.apple.com/thread.jspa?">http://discussions.apple.com/thread.jspa?</A> 
+</I>&gt;&gt;<i> threadID=1703193&amp;tstart=135&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, 26 Sep 2008 12:19:41 -0700
+</I>&gt;&gt;<i> Aric Gregson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">aorchid at mac.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Mac ZFS Community,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> We recently (days ago) migrated two users' entire home directories  
+</I>&gt;&gt;&gt;<i> to
+</I>&gt;&gt;&gt;<i> a ZFS formatted internal drives (mirrored, entire slice both disks).
+</I>&gt;&gt;&gt;<i> This was after using ZFS for Final Cut for many months without any
+</I>&gt;&gt;&gt;<i> problems.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Currently, when attempting to mount our own iDisk to view contents  
+</I>&gt;&gt;&gt;<i> or
+</I>&gt;&gt;&gt;<i> copy a file to or from the iDisk, the Finder freezes---sort of. The
+</I>&gt;&gt;&gt;<i> copy to or from iDisk does not work, it says that it is copying, but
+</I>&gt;&gt;&gt;<i> actually never completes the process, a file of the same name and 0
+</I>&gt;&gt;&gt;<i> bytes shows up on the iDisk. iDisk sync is off, because I thought
+</I>&gt;&gt;&gt;<i> this was the problem two days ago.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Meanwhile, the Finder allows one to open applications, click through
+</I>&gt;&gt;&gt;<i> windows and open files, but will not update any new files on the
+</I>&gt;&gt;&gt;<i> computer. For example, if you save a new file to the Desktop, the
+</I>&gt;&gt;&gt;<i> Finder will not show you the file, even though it exists in
+</I>&gt;&gt;&gt;<i> Terminal (and in Finder upon reboot).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Additionally, you cannot copy anything from a mounted disk (dmg,  
+</I>&gt;&gt;&gt;<i> USB)
+</I>&gt;&gt;&gt;<i> to anywhere on the computer, ZFS or HFS+ formatted disks, until the
+</I>&gt;&gt;&gt;<i> Finder restarts (restarting the computer).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Logout does not work in these cases either, I have to do a manual
+</I>&gt;&gt;&gt;<i> reboot from Terminal. I haven't tried to specifically kill Finder,  
+</I>&gt;&gt;&gt;<i> as
+</I>&gt;&gt;&gt;<i> I am not clear on how to do that in Mac.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Has anyone experienced anything vaguely similar? Is this an iDisk
+</I>&gt;&gt;&gt;<i> issue or does the iDisk/Finder combination have problems with ZFS?
+</I>&gt;&gt;&gt;<i> That said, cadaver does not have issues with ZFS and iDisk
+</I>&gt;&gt;&gt;<i> connections, as I can copy files to and from our iDisk using Solaris
+</I>&gt;&gt;&gt;<i> (on ZFS). In my experience, the Finder/iDisk combination has been
+</I>&gt;&gt;&gt;<i> unusable on Mac in the past, perhaps this is just a continuation of
+</I>&gt;&gt;&gt;<i> the same.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks for any ideas.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> uname -a
+</I>&gt;&gt;&gt;<i> Darwin PowerMac1.local 9.5.0 Darwin Kernel Version 9.5.0: Wed Sep  3
+</I>&gt;&gt;&gt;<i> 11:29:43 PDT 2008; root:xnu-1228.7.58~1/RELEASE_I386 i386
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> aric
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> Aric Gregson
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000884.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an	iDisk problem)
+</A></li>
+	<LI>Next message: <A HREF="000886.html">[zfs-discuss] Handbrake 0.9.2 solved?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#885">[ date ]</a>
+              <a href="thread.html#885">[ thread ]</a>
+              <a href="subject.html#885">[ subject ]</a>
+              <a href="author.html#885">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

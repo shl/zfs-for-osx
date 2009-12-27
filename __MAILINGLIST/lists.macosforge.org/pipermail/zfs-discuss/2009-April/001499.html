@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Performance and Spare...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Performance%20and%20Spare...&In-Reply-To=%3CC604B9AB.F868%25Ted%40philotv.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001498.html">
+   <LINK REL="Next"  HREF="001500.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Performance and Spare...</H1>
+    <B>Ted Simbajon</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Performance%20and%20Spare...&In-Reply-To=%3CC604B9AB.F868%25Ted%40philotv.com%3E"
+       TITLE="[zfs-discuss] Performance and Spare...">Ted at philotv.com
+       </A><BR>
+    <I>Fri Apr 10 08:54:03 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001498.html">[zfs-discuss] cannot create snapshot: dataset is busy
+</A></li>
+        <LI>Next message: <A HREF="001500.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1499">[ date ]</a>
+              <a href="thread.html#1499">[ thread ]</a>
+              <a href="subject.html#1499">[ subject ]</a>
+              <a href="author.html#1499">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well here's another detail I forgot to mention.
+
+2 of the Storage Server (2x[16Disk:2 Escalade]) runs ATTO 3300 which is
+2Gbps FC card, because of this, this will bring my entire infrastructure
+down to 2Gbps.
+
+But still, it should be faster than 1 single disk 1394a write speed. Now, im
+not sure of I want to redo this again since im not sure if I can fix it from
+the start.
+
+At almost at 6TB mark!. :)
+
+
+----
+Hydra:~ hydra$ zpool iostat 1
+               capacity     operations    bandwidth
+pool         used  avail   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+Array       5.99T  4.67T      3    163   254K  17.2M
+Array       5.99T  4.67T      0    189      0  23.5M
+Array       5.99T  4.67T      4    283  71.0K  20.0M
+Array       5.99T  4.67T     20     70  2.49M  7.85M
+Array       5.99T  4.67T     13    206  1.24M  12.9M
+Array       5.99T  4.67T      4      0   635K      0
+Array       5.99T  4.67T      0    148      0  18.1M
+Array       5.99T  4.67T      0    177      0  21.9M
+Array       5.99T  4.67T      0    242      0  28.5M
+Array       5.99T  4.67T      0    186      0  23.1M
+Array       5.99T  4.67T      0    234      0  28.8M
+Array       5.99T  4.67T      7    155   701K  6.24M
+Array       5.99T  4.67T      0      0   127K      0
+Array       5.99T  4.67T      2     41   381K  4.48M
+Array       5.99T  4.67T      0    229      0  28.2M
+Array       5.99T  4.67T      0    178      0  22.1M
+Array       5.99T  4.67T      0    234      0  27.9M
+Array       5.99T  4.67T      0    180      0  22.4M
+Array       5.99T  4.67T      6    288   137K  22.0M
+Array       5.99T  4.67T      1      0   1017      0
+Array       5.99T  4.67T     12      0  1.60M      0
+Array       5.99T  4.67T      0    166      0  20.6M
+Array       5.99T  4.67T      0    227      0  27.4M
+Array       5.99T  4.67T      0    185      0  23.0M
+Array       5.99T  4.67T      0    234      0  27.8M
+Array       5.99T  4.67T      0    190      0  23.3M
+Array       5.99T  4.67T     10    150   707K  4.99M
+Array       5.99T  4.67T     11      0  1.49M      0
+Array       5.99T  4.67T      1     58   254K  7.33M
+----
+
+My only biggest concern is the two disk outside of my Raidz2.
+
+Can someone confirm that there are data on these 2 simple disk?.
+To me it looks like, these 2 disk is a part of &quot;Array&quot; which Array is
+composed of 3 Volumes, 1(raidz2) and 2(simple volume).
+
+This might be my problem with my write preformance...
+
+----
+Hydra:~ hydra$ zpool status
+  pool: Array
+ state: ONLINE
+ scrub: scrub stopped with 0 errors on Wed Apr  8 16:26:00 2009
+config:
+
+    NAME           STATE     READ WRITE CKSUM
+    Array          ONLINE       0     0     0
+      raidz2       ONLINE       0     0     0
+        disk9s2    ONLINE       0     0     0
+        disk5s2    ONLINE       0     0     0
+        disk12s2   ONLINE       0     0     0
+        disk8s2    ONLINE       0     0     0
+        disk18s2   ONLINE       0     0     0
+        disk19s2   ONLINE       0     0     0
+        disk20s2   ONLINE       0     0     0
+        disk28s2   ONLINE       0     0     0
+        disk25s2   ONLINE       0     0     0
+        disk21s2   ONLINE       0     0     0
+        disk29s2   ONLINE       0     0     0
+        disk33s2   ONLINE       0     0     0
+        disk36s2   ONLINE       0     0     0
+        disk35s2   ONLINE       0     0     0
+        disk42s2   ONLINE       0     0     0
+        disk39s2   ONLINE       0     0     0
+        disk56s2   ONLINE       0     0     0
+        disk41s2   ONLINE       0     0     0
+        disk50s2   ONLINE       0     0     0
+        disk44s2   ONLINE       0     0     0
+        disk49s2   ONLINE       0     0     0
+        disk58s2   ONLINE       0     0     0
+        disk51s2   ONLINE       0     0     0
+        disk69s2   ONLINE       0     0     0
+        disk63s2   ONLINE       0     0     0
+        disk60s2   ONLINE       0     0     0
+        disk71s2   ONLINE       0     0     0
+        disk82s2   ONLINE       0     0     0
+        disk77s2   ONLINE       0     0     0
+        disk70s2   ONLINE       0     0     0
+        disk90s2   ONLINE       0     0     0
+        disk62s2   ONLINE       0     0     0
+        disk81s2   ONLINE       0     0     0
+        disk74s2   ONLINE       0     0     0
+        disk94s2   ONLINE       0     0     0
+        disk87s2   ONLINE       0     0     0
+        disk83s2   ONLINE       0     0     0
+        disk84s2   ONLINE       0     0     0
+        disk101s2  ONLINE       0     0     0
+        disk92s2   ONLINE       0     0     0
+        disk91s2   ONLINE       0     0     0
+        disk104s2  ONLINE       0     0     0
+        disk124s2  ONLINE       0     0     0
+        disk112s2  ONLINE       0     0     0
+        disk110s2  ONLINE       0     0     0
+        disk120s2  ONLINE       0     0     0
+        disk115s2  ONLINE       0     0     0
+        disk130s2  ONLINE       0     0     0
+        disk135s2  ONLINE       0     0     0
+        disk150s2  ONLINE       0     0     0
+        disk132s2  ONLINE       0     0     0
+        disk129s2  ONLINE       0     0     0
+        disk122s2  ONLINE       0     0     0
+        disk121s2  ONLINE       0     0     0
+        disk131s2  ONLINE       0     0     0
+        disk165s2  ONLINE       0     0     0
+        disk137s2  ONLINE       0     0     0
+        disk133s2  ONLINE       0     0     0
+        disk145s2  ONLINE       0     0     0
+        disk164s2  ONLINE       0     0     0
+        disk141s2  ONLINE       0     0     0
+        disk148s2  ONLINE       0     0     0
+      disk10s2     ONLINE       0     0     0
+      disk157s2    ONLINE       0     0     0
+
+errors: No known data errors
+-------
+
+Thanks.
+
+---
+Ted
+
+
+&gt;<i> From: &quot;erik.ableson&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">eableson at me.com</A>&gt;
+</I>&gt;<i> Date: Fri, 10 Apr 2009 10:03:25 +0200
+</I>&gt;<i> To: Ted Simbajon &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ted at philotv.com</A>&gt;
+</I>&gt;<i> Cc: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] Performance and Spare...
+</I>&gt;<i> 
+</I>&gt;<i> Hmmm - given that environment, I would expect much better
+</I>&gt;<i> performance.  That said, if the objective is to furnish shared storage
+</I>&gt;<i> to more than one machine, I would have a tendency towards using
+</I>&gt;<i> OpenSolaris for managing the disks and then publish the data via iSCSI
+</I>&gt;<i> or NFS to the Mac machines.  The current ZFS build on the Mac is a few
+</I>&gt;<i> version behind and the OpenSolaris build is much more mature. You'll
+</I>&gt;<i> be able to boost your performance with the addition of SSD cache
+</I>&gt;<i> devices if required which is not (from what I understand) a priority
+</I>&gt;<i> in the OS X build.
+</I>&gt;<i> 
+</I>&gt;<i> For comparison on a small scale, I can pull down 128 Mb/s write and
+</I>&gt;<i> 156MB/s read on a small install composed of 4 SATA disks on a generic
+</I>&gt;<i> PC with a 2.6Ghz Core 2 Duo.  Bottlenecks aside (like the IDE buses in
+</I>&gt;<i> the Escalades), your FC infrastructure should be able to handle about
+</I>&gt;<i> 400MB/s and you certainly have enough disks to attain that kind of
+</I>&gt;<i> performance. With just the 4 disks I can saturate a GbE connection, so
+</I>&gt;<i> with 64 (properly configured) you should be able to saturate a 4Gbps
+</I>&gt;<i> FC connection.
+</I>&gt;<i> 
+</I>&gt;<i> Example on my home server:
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at shemhazai</A>:~# time dd if=/dev/zero of=/siovale/bench/bigfile bs=8k
+</I>&gt;<i> count=750000
+</I>&gt;<i> 750000+0 records in
+</I>&gt;<i> 750000+0 records out
+</I>&gt;<i> 6144000000 bytes (6.1 GB) copied, 47.9947 s, 128 MB/s
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">root at shemhazai</A>:~# time dd of=/dev/null if=/siovale/bench/bigfile bs=8k
+</I>&gt;<i> count=750000
+</I>&gt;<i> 750000+0 records in
+</I>&gt;<i> 750000+0 records out
+</I>&gt;<i> 6144000000 bytes (6.1 GB) copied, 39.4134 s, 156 MB/s
+</I>&gt;<i> 
+</I>&gt;<i> Cheers,
+</I>&gt;<i> 
+</I>&gt;<i> Erik
+</I>&gt;<i> 
+</I>&gt;<i> On 9 avr. 09, at 17:50, Ted Simbajon wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> There are 64x 170GB &quot;IDE&quot; disk and 8 of these disk is being
+</I>&gt;&gt;<i> controlled by a
+</I>&gt;&gt;<i> &quot;3ware Escalade&quot; which is housed in a 3U server. 1 server houses 2
+</I>&gt;&gt;<i> controller which sums to 16 Disk per server and I have 4 of these
+</I>&gt;&gt;<i> servers.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> All these storage servers are connected to a Qlogic Sandbox 1400
+</I>&gt;&gt;<i> (4Gbps
+</I>&gt;&gt;<i> &quot;bits&quot;) via an ATTO 3300 (2Gbps) HBA. The MAC machine (G5 2x2.5Ghz
+</I>&gt;&gt;<i> w/ 7GB
+</I>&gt;&gt;<i> RAM) is connected to the same Sandbox via an ATTO FC-42XS card. On
+</I>&gt;&gt;<i> top of
+</I>&gt;&gt;<i> the 64x170GB &quot;IDE&quot; Disk Targets that one of the ports of the ATTO
+</I>&gt;&gt;<i> FC-42XS
+</I>&gt;&gt;<i> sees, it also sees a 128x500GB &quot;SATA&quot; disk Targets which is an &quot;Avid
+</I>&gt;&gt;<i> Unity&quot;
+</I>&gt;&gt;<i> via a Qlogic 52xx Sandbox.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> So, keeping those in-mind. I looked at the old Logs and it kindda
+</I>&gt;&gt;<i> matches
+</I>&gt;&gt;<i> what I have right now (ZFS RAIDZ2) which is about ~25 - 30 MB/s.
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001498.html">[zfs-discuss] cannot create snapshot: dataset is busy
+</A></li>
+	<LI>Next message: <A HREF="001500.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1499">[ date ]</a>
+              <a href="thread.html#1499">[ thread ]</a>
+              <a href="subject.html#1499">[ subject ]</a>
+              <a href="author.html#1499">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

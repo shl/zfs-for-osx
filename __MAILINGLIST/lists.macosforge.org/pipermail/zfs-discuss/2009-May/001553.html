@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3Ca037f7360905050916l5af550ta1a54689431c14d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001552.html">
+   <LINK REL="Next"  HREF="001554.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation</H1>
+    <B>John Hendy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3Ca037f7360905050916l5af550ta1a54689431c14d%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation">jw.hendy at gmail.com
+       </A><BR>
+    <I>Tue May  5 09:16:21 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001552.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+        <LI>Next message: <A HREF="001554.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1553">[ date ]</a>
+              <a href="thread.html#1553">[ thread ]</a>
+              <a href="subject.html#1553">[ subject ]</a>
+              <a href="author.html#1553">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've been using ZFS on it's own slice as well with not -many- problems. My
+[limited-experience-derived] comments:
+- I used this site,
+<A HREF="http://blog.igorminar.com/2009/01/using-zfs-with-mac-os-x-105.html,">http://blog.igorminar.com/2009/01/using-zfs-with-mac-os-x-105.html,</A> for help
+in addition to the macosforge site.
+- I originally had my whole Users folder on ZFS for the purpose of wanting
+to share data with my freeBSD installation on a separate partition.
+- I stopped that because I could never export the zpool; it was always busy
+with the info in ~/Library
+- I have not been successful with simply issuing 'zpool export vault' (vault
+is the name of my pool)
+--- I get 'could not export, pool busy' or something everytime
+--- I have to drag my pool to the trash to 'unmount/eject' it (or 'diskutil
+unmount disk0s3) before I can 'zpool export' it.
+--- Is this what everyone else does? I found that puzzling initially and did
+not find a lot of references to this fact in the documentation. Everyone
+I've told of this tells me that I don't have to do anything with mount since
+zpool is not managed by legacy mounting... yet I find this NOT to be the
+case with respect to OS X. I don't have to 'unmount' it from freeBSD before
+I reboot, I just 'zpool export'... from OS X, I do have to unmount it before
+I can export it.
+--- I do not know the typical handling of zpools from other OS's, but
+freeBSD always complains that the zpool is in use if I do not export it from
+OS X prior to reboot; OS X never complains about the pool being in use if I
+do not export it from freeBSD, though. Is OS X just hiding it's complaints
+or does freeBSD auto export on reboot an d OS X does not?
+- Spotlight finds things on the pool, but upon every reboot it seems that it
+will start to look for something and then have to re-index my zpool before
+it'll search via spotlight...
+- Trash seems to be working since the last time I did all this; it used to
+give me a warning every time I did command+delete, asking if I wanted to
+delete such and such immediately (bypassing the typical trash phase).
+
+Feel free to ignore these thoughts/questions if my comments have hijacked
+the topic too much. Alex, I can see your point about the documentation. I
+guess since I dual boot, I always assumed that 'whole disk' was speaking
+about everything OTHER THAN the usual disk0s1 for EFI? I'm also not as
+advanced as many, many people, so it probably never occurred to me to read
+it literally since that's not something in the scope of what I want to do
+anyway.
+
+I do agree that there's no point in everyone getting flamy about it. It is
+an 'indirectly' supported 3rd party modification to get read-write support,
+which tends to imply that it could break and/or not be perfect for what we
+wish to use it for. Even Apple stuff, which is directly supported, breaks ;)
+Maybe the macosforce people could make a simple modification to the
+instructions or include a disclaimer to satisfy everyone - use it for x, but
+it won't do y.
+
+Anyway, just some thoughts.
+
+
+-John
+
+
+
+
+
+On Tue, May 5, 2009 at 10:54 AM, Adrian Thornton &lt;
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">canadrian at electricteaparty.net</A>&gt; wrote:
+
+&gt;<i> Alex Bowden,
+</I>&gt;<i>
+</I>&gt;<i> zpool status isn't going to give you anything if your pool is unmounted.
+</I>&gt;<i> It'll say there are no pools. You need to do &quot;zpool import&quot; and it will list
+</I>&gt;<i> the pools available for import.
+</I>&gt;<i>
+</I>&gt;<i> At any rate, I made the same mistake when I first set up my OS X pool. I
+</I>&gt;<i> used the whole disk because that's what the Sun instructions said worked
+</I>&gt;<i> best. It never re-mounted when I rebooted - i.e. &quot;zpool status&quot; would turn
+</I>&gt;<i> up nothing, and &quot;zpool import&quot; would list it as available for import, so I'd
+</I>&gt;<i> have to type &quot;zpool import Archives&quot; (Archives being the name of my RAIDZ).
+</I>&gt;<i> I also experienced a catastrophic loss of everything while iteratively
+</I>&gt;<i> replacing all the disks with larger ones, and hat other weirdness between.
+</I>&gt;<i> When I started from scratch with the bigger disks, I had learned my lesson -
+</I>&gt;<i> follow the OS X ZFS instructions and use the slices instead of the whole
+</I>&gt;<i> disks. It's been rock-solid since then.
+</I>&gt;<i>
+</I>&gt;<i> I understand how ticked you probably are at losing everything. I know I
+</I>&gt;<i> was. But you have to remember that ZFS on OS X isn't intended for production
+</I>&gt;<i> use at this point anyway. You kinda have to do what I did and admit, &quot;well,
+</I>&gt;<i> I guess I should have known something like this would happen,&quot; and move on
+</I>&gt;<i> with it. No need for raised tempers.
+</I>&gt;<i>
+</I>&gt;<i> Meanwhile, try &quot;zpool import&quot; rather than &quot;zpool status&quot; and see if it
+</I>&gt;<i> lists your pool.
+</I>&gt;<i>
+</I>&gt;<i> - Adrian
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, May 5, 2009 at 09:23, Alex Bowden &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex at designlifecycle.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Alex Blewitt
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you for your response.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Firstly your final comment
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;follow the instructions on the getting started page, and not what you
+</I>&gt;&gt;<i> think they say.&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In turn may I I suggest that you try reading my email on something larger
+</I>&gt;&gt;<i> that your (new) iphone and you may find out what I actually said.  And not
+</I>&gt;&gt;<i> what you think I said.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Let me repeat.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The instructions, where it gives you a recipe to type, work fine.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But the dialogue text clearly recommends that for best results, one should
+</I>&gt;&gt;<i> use the whole disk.  That is in the first paragraph.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Using the whole disk means /dev/disk2 NOT /dev/disk2s2 with a 100% slice
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When I use the whole disk, then after a reboot the zpool is gone.  Not
+</I>&gt;&gt;<i> unmounted .  Gone.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> i.e.  &quot;zpool status&quot; doesn't know of its existence.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It is repeatable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It is broken.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If it wasn't nailed to its perch it would be pushing up daisies.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It is a dead parrot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If there hasn't been any public development since 119 then I suggest that
+</I>&gt;&gt;<i> it has probably been broken since 119,  or that something else that has
+</I>&gt;&gt;<i> changed has triggered the effect.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have made no comments about 10.5 or 10.6 or backporting,  but the
+</I>&gt;&gt;<i> problems occured under 10.5.6 with the 119 zfs.kext.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You probably wouldn't notice that it was broken because you would do what
+</I>&gt;&gt;<i> it expects.  Not what the getting started notes actually recommend.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Perhaps you are too blinded by expecting people to have automounter
+</I>&gt;&gt;<i> problems to not see complaints about zpools vanishing.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Because there was nothing in Teng Yao's email to lead you to give the
+</I>&gt;&gt;<i> &quot;read the instructions&quot; answer there either.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If its broken, and everybody knows that its broken, then why not just say
+</I>&gt;&gt;<i> so at the top of the instructions.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Alex
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 5 May 2009, at 12:36, Alex Blewitt wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I suspect your analysis - that you were ranting - isn't far off the mark.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There has been no public development of ZFS since 119 and at this point,
+</I>&gt;&gt;<i> there won't be any for 10.5.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 10.6 is round the corner and will have tighter integration with the OS,
+</I>&gt;&gt;<i> especially finder/spotlight. Those won't be backported to 10.5.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The reason for the partition on a disk (rather than the &quot;well known&quot; whole
+</I>&gt;&gt;<i> disk thing) is to allow the kernel to mount it automatically. It can still
+</I>&gt;&gt;<i> be mounted manually if you want. The instructions do say to follow this
+</I>&gt;&gt;<i> advice - and FWIW if you give the OSX a &quot;full&quot; disk (albeit in a partition)
+</I>&gt;&gt;<i> then I believe the whole disk optimisations kick in.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Diskutil (GUI) will have support in 10.6 but not 10.5.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There are two recurring issues on this list;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1) I used a USB disk with a non-replicated FS and when I pulled it the
+</I>&gt;&gt;<i> machine froze
+</I>&gt;&gt;<i> 2) my pool doesn't mount on boot
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For 1, later versions of ZFS in Solaris have an option to not panic on ZFS
+</I>&gt;&gt;<i> failure. However, it is not and will never be in 10.5. Anyway, if you're not
+</I>&gt;&gt;<i> replicating data you're at a risk of data loss.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For 2, follow the instructions on the getting started page, and not what
+</I>&gt;&gt;<i> you think they say.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Alex
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sent from my (new) iPhone
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 5 May 2009, at 11:37, Alex Bowden &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex at designlifecycle.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There is something very wrong with the MacOS ZFS documentation (and also
+</I>&gt;&gt;<i> to an extent software).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have been using ZFS under Solaris for a couple of years and know it to a
+</I>&gt;&gt;<i> superb facility.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Otherwise, my initial experience on the Mac would have caused me to bin
+</I>&gt;&gt;<i> it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Lets start with the Documentation.  The main ZFS documentation set
+</I>&gt;&gt;<i> documents ZFS so what I am looking for from the Mac side is simply to
+</I>&gt;&gt;<i> document the differences and issues in using the software under MacOS.   If
+</I>&gt;&gt;<i> fails dismally.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It fails so badly that I, and others, are loosing zpools  (Oh, God, I
+</I>&gt;&gt;<i> lost every thing after a reboot !!!).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Lets start with the &quot;getting started&quot;.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Paragraph one.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;*In all cases, the disks need to use the GUID Partition Table (GPT)* and
+</I>&gt;&gt;<i> ZFS typically works best when it owns the entire disk due in part to how
+</I>&gt;&gt;<i> conservative it is with the write cache.&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now it is well documented that ZFS works best when it owns the entire
+</I>&gt;&gt;<i> disk, partly I believe because it can then control the caching strategy for
+</I>&gt;&gt;<i> the disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The trouble is that under MacOS it seems to be essential that you DON'T
+</I>&gt;&gt;<i> give ZFS the whole disk.  If you do it will work fine until you reboot and
+</I>&gt;&gt;<i> then it'll trash your zpool.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The examples work rather better than the stated advice.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # diskutil partitiondisk /dev/disk2 GPTFormat ZFS %noformat% 100%
+</I>&gt;&gt;<i>  # zpool create puddle /dev/disk2s2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> OK,  that works fine BUT
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> A) It does NOT give ZFS the whole disk.  It gives a single partition i.e.
+</I>&gt;&gt;<i>  slice 2 of the disk.   This is most of the disk but not the whole of it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> B) It silently introduces a new concept which is a partition of type ZFS
+</I>&gt;&gt;<i> which isn't even offered as an option in diskutil.app but which seems to be
+</I>&gt;&gt;<i> essential for a stable zpool.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> C) Why introduce a new user to a single disk zpool.   Thats about as
+</I>&gt;&gt;<i> useful as a banking regulator.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And I am left trying to guess whether the Mac ZFS handles a 100% ZFS slice
+</I>&gt;&gt;<i> in a GPT partition as being the whole disk for caching purposes, or whether
+</I>&gt;&gt;<i> I end up with a degraded ZFS because it doesn't have the whole disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What else don't you tell us.  Lets look ahead a little.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Well how about the zfs command.  Anyone used to ZFS will know that the ZFS
+</I>&gt;&gt;<i> filesystem created by the zpool command is not generally used as a working
+</I>&gt;&gt;<i> filesystems but as an administrative bucket for the zpool.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> After creating the zpool it is then normal to add your ZFS filesystems
+</I>&gt;&gt;<i> using the zpool command.  This is completely unmentioned, which helps gloss
+</I>&gt;&gt;<i> over the problems mounting other ZFS file systems once created.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Then there is the fact that about one or two ZFS partition creation
+</I>&gt;&gt;<i> commands,  the disk system gets manically busy for an indeterminate period
+</I>&gt;&gt;<i> of time, &quot;diskutil list&quot; returns unstable results and the machine is likely
+</I>&gt;&gt;<i> to freeze.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It seems to be best to build one ZFS partition at time.  Wait for all disk
+</I>&gt;&gt;<i> activity to stop, and then reboot, before building the next one.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So now lets look at the software.  The good news is that it is possible to
+</I>&gt;&gt;<i> build a working ZFS filesystem if you a) do that is expected rather than
+</I>&gt;&gt;<i> what the &quot;getting started&quot; says works best and b) build the ZFS partitions
+</I>&gt;&gt;<i> very gently.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But if instead you follow the worded instructions, ZFS manual, general ZFS
+</I>&gt;&gt;<i> documentation etc, and give it the whole disk
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  zpool create lake raidz /dev/disk2 /dev/disk3 /dev/disk4 /dev/disk5
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You now have a whole pile of trouble.  loss of the whole zpool when you
+</I>&gt;&gt;<i> reboot is just the beginning.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Because while you go off and start again trying to set up your system.
+</I>&gt;&gt;<i>  zfs gets clever and starts trying to recover the zpool.  I never succeeds,
+</I>&gt;&gt;<i> but it wont easily stop either.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There is a very pretty situation in diskutil.app where all the partitions
+</I>&gt;&gt;<i> that were part of &quot;lake&quot; keep appearing and vanishing again, out of phase
+</I>&gt;&gt;<i> with each other, at about one second intervals.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Reformat the disks as MBR all free space and then back as GPT (usually
+</I>&gt;&gt;<i> clears anything), but no,  zfs still finds them again.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Documetation is very clear that you must delete the zpool using the zpool
+</I>&gt;&gt;<i> destroy command.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But you can't do that when ZFS think that the pool doesn't exist.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In the end the only way I managed to move forward was to zero the disks
+</I>&gt;&gt;<i> with Ranish from a live linux cd.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And this is all the consequence of following the standard advise in the
+</I>&gt;&gt;<i> MacOS ZFS &quot;getting started&quot;, e.g. that &quot;ZFS typically works best when it
+</I>&gt;&gt;<i> owns the entire disk&quot;.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I note that on this list only last week Teng Yao had the same problem (Oh,
+</I>&gt;&gt;<i> God, I lost every thing after a reboot !!!)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and Alex Blewitt helpfully replied that
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;The documentation suggested /dev/disk0s2 would have been better,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> rather than /dev/disk0, as otherwise ti doesn't mount on boot. That
+</I>&gt;&gt;<i> sounds like what's happened here.&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Er - Well actually it doesn't.  That may be what it does in the example,  but it clearly advises that you use the whole disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	
+</I>&gt;&gt;<i> Sorry if I am ranting a little but this is a serious mess.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	 &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Alex at designlifecycle.com</A>&gt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Alex at designlifecycle.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090505/3b18af85/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090505/3b18af85/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001552.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+	<LI>Next message: <A HREF="001554.html">[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1553">[ date ]</a>
+              <a href="thread.html#1553">[ thread ]</a>
+              <a href="subject.html#1553">[ subject ]</a>
+              <a href="author.html#1553">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

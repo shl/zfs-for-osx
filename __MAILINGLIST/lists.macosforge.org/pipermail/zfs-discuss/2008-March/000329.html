@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs crashing regularly now
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20crashing%20regularly%20now&In-Reply-To=B632C8AB-7F73-4269-A83A-B13F5D7C9C04%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000324.html">
+   <LINK REL="Next"  HREF="000291.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs crashing regularly now</H1>
+    <B>Brett Ault-McCoy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20crashing%20regularly%20now&In-Reply-To=B632C8AB-7F73-4269-A83A-B13F5D7C9C04%40apple.com"
+       TITLE="[zfs-discuss] zfs crashing regularly now">btm at pobox.com
+       </A><BR>
+    <I>Fri Mar 14 16:53:58 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000324.html">[zfs-discuss] zfs crashing regularly now
+</A></li>
+        <LI>Next message: <A HREF="000291.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#329">[ date ]</a>
+              <a href="thread.html#329">[ thread ]</a>
+              <a href="subject.html#329">[ subject ]</a>
+              <a href="author.html#329">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, the machine it was on is out of commission now and one of the drives
+is dead (got knocked off the table).
+Anyway, the problem went away after I 'zpool export'd all of the pools and
+re-imported them.
+
+Thanks for the info.
+
+++Brett;
+
+
+On Thu, Mar 13, 2008 at 10:41 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">ndellofano at apple.com</A>&gt;
+wrote:
+
+&gt;<i> So the crash below is due to a corrupted disk(file in your case &quot;LO
+</I>&gt;<i> ZFS plain file&quot;) or if the file disappeared suddenly and the ZFS can't
+</I>&gt;<i> find it to write to it.  It seems that it's possible that the file you
+</I>&gt;<i> backed the pool with is corrupted and therefore repeatedly crashing.
+</I>&gt;<i> I would recommend destroying the pool and recreating it, since you're
+</I>&gt;<i> backing store(vdev) has become corrupt.  Did you destroy both pools
+</I>&gt;<i> which were having issues or only one?
+</I>&gt;<i> I'm a little confused on your setup, as far as which pools you
+</I>&gt;<i> destroyed/kept. Can you send a zpool status?
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Mar 9, 2008, at 10:46 AM, Brett Ault-McCoy wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; I started using zfs a few weeks ago.  Until recently it's been very
+</I>&gt;<i> &gt; stable and I haven't had any crashes or problems.  However, about
+</I>&gt;<i> &gt; two days ago it started crashing and is now doing so somewhat
+</I>&gt;<i> &gt; regularly.  The initial crash was due to having a zfs pool made out
+</I>&gt;<i> &gt; of some files residing on another machine being accessed over CIFS.
+</I>&gt;<i> &gt; The other machine was shut down while the zfs pool was active and
+</I>&gt;<i> &gt; crashed the machine.  I no longer have that pool (zpool destroy) but
+</I>&gt;<i> &gt; I'm still having crashes periodically.  The problem report from the
+</I>&gt;<i> &gt; crashes is:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Sun Mar  9 17:38:07 2008
+</I>&gt;<i> &gt; panic(cpu 0 caller 0x375768B0): &quot;ZFS: I/O failure (write on
+</I>&gt;<i> &gt; &lt;unknown&gt; off 0: zio 0x2008ef0 [L0 ZFS plain file] 20000L/20000P
+</I>&gt;<i> &gt; DVA[0]=&lt;0:2a82fe0000:20000&gt; fletcher2 uncompressed BE contiguous
+</I>&gt;<i> &gt; birth=878877 fill=1 cksum=2f7d0e17f8bcf08c:
+</I>&gt;<i> &gt; 48cc3c8f3c1207d2:1ce4de75a16901ab:f103c54640173d99): error &quot; &quot;5&quot;@/
+</I>&gt;<i> &gt; Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/zfs_kext/
+</I>&gt;<i> &gt; zfs/zio.c:918
+</I>&gt;<i> &gt; Latest stack backtrace for cpu 0:
+</I>&gt;<i> &gt;       Backtrace:
+</I>&gt;<i> &gt;          0x0009B2F8 0x0009BC9C 0x00029DC4 0x375768B0 0x37572340
+</I>&gt;<i> &gt; 0x37572864 0x37572918 0x37572340
+</I>&gt;<i> &gt;          0x37575E20 0x37572340 0x375BD33C 0x37571AC4 0x375E9C08
+</I>&gt;<i> &gt; 0x000B0454
+</I>&gt;<i> &gt;       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i> &gt;          com.apple.filesystems.zfs(8.0)@0x3755a000-&gt;0x37643fff
+</I>&gt;<i> &gt; Proceeding back via exception chain:
+</I>&gt;<i> &gt;    Exception state (sv=0x24c56280)
+</I>&gt;<i> &gt;       PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;
+</I>&gt;<i> &gt; DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000
+</I>&gt;<i> &gt; (Unknown)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Mac OS version:
+</I>&gt;<i> &gt; 9C31
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Kernel version:
+</I>&gt;<i> &gt; Darwin Kernel Version 9.2.0: Tue Feb  5 16:15:19 PST 2008;
+</I>&gt;<i> &gt; root:xnu-1228.3.13~1/RELEASE_PPC
+</I>&gt;<i> &gt; System model name: PowerMac3,5
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The original crash also resulted in a corrupted file on a local HFS+
+</I>&gt;<i> &gt; volume that had had a pool on and I had to destroy that pool.  I
+</I>&gt;<i> &gt; assumed that was due to HFS+ inconsistancy during the crash.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; My thought on how to maybe clear the problem up is to export the
+</I>&gt;<i> &gt; pools I have to get back to clean state and then re-import them all.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Has anyone else seen anything similar?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ++Brett;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080314/a41bd02f/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080314/a41bd02f/attachment.html</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000324.html">[zfs-discuss] zfs crashing regularly now
+</A></li>
+	<LI>Next message: <A HREF="000291.html">[zfs-discuss] ZFS as read/write
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#329">[ date ]</a>
+              <a href="thread.html#329">[ thread ]</a>
+              <a href="subject.html#329">[ subject ]</a>
+              <a href="author.html#329">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

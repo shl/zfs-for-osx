@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 8
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20zfs-discuss%20Digest%2C%20Vol%204%2C%20Issue%208&In-Reply-To=20080407121516.58FF7240AB6%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000447.html">
+   <LINK REL="Next"  HREF="000416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 8</H1>
+    <B>Stuart Chalk</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20zfs-discuss%20Digest%2C%20Vol%204%2C%20Issue%208&In-Reply-To=20080407121516.58FF7240AB6%40lists.macosforge.org"
+       TITLE="[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 8">schalk at unf.edu
+       </A><BR>
+    <I>Mon Apr  7 09:00:20 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000447.html">[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris
+</A></li>
+        <LI>Next message: <A HREF="000416.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#415">[ date ]</a>
+              <a href="thread.html#415">[ thread ]</a>
+              <a href="subject.html#415">[ subject ]</a>
+              <a href="author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You have till tonight at 11pm.
+
+On Apr 7, 2008, at 8:15 AM, <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>  
+wrote:
+
+&gt;<i> Send zfs-discuss mailing list submissions to
+</I>&gt;<i> 	<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>
+</I>&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i> 	<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;<i> 	<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>
+</I>&gt;<i>
+</I>&gt;<i> You can reach the person managing the list at
+</I>&gt;<i> 	<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-owner at lists.macosforge.org</A>
+</I>&gt;<i>
+</I>&gt;<i> When replying, please edit your Subject line so it is more specific
+</I>&gt;<i> than &quot;Re: Contents of zfs-discuss digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>   1. Re: Handbrake on ZFS (Alex Blewitt)
+</I>&gt;<i>   2. Re: Performance problems - AFP! (Robert Rehnmark)
+</I>&gt;<i>   3. Re: Handbrake on ZFS (Martin Hauser)
+</I>&gt;<i>   4. Re: Handbrake on ZFS (James R. Van Artsdalen)
+</I>&gt;<i>   5. Re: Handbrake on ZFS (Martin Hauser)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Mon, 7 Apr 2008 08:57:52 +0100
+</I>&gt;<i> From: Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">alex.blewitt at gmail.com</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] Handbrake on ZFS
+</I>&gt;<i> To: Sean Hafeez &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">sah.list at gmail.com</A>&gt;
+</I>&gt;<i> Cc: <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">CFA57BDA-2C10-4CD5-B899-D425AD960427 at gmail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;us-ascii&quot;
+</I>&gt;<i>
+</I>&gt;<i> I presume it's a local, rather than networked share? I've found that
+</I>&gt;<i> ZFS over NFS doesn't like locking on my setup. That fails when
+</I>&gt;<i> extended attributes are set (e.g. via xattr). It might be doing the
+</I>&gt;<i> same thing with Handbrake.
+</I>&gt;<i>
+</I>&gt;<i> Alex.
+</I>&gt;<i>
+</I>&gt;<i> On Apr 7, 2008, at 07:47, Sean Hafeez wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I goofed - you can ignore the system log. That is from the DVD
+</I>&gt;&gt;<i> ripper prg, not the Handbrake encoder. So no errors there. It just
+</I>&gt;&gt;<i> does not work. Does not seem to like something on ZFS.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Sean
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Apr 6, 2008, at 10:49 PM, Joe Dunn wrote:
+</I>&gt;&gt;&gt;<i> What version of handbrake? Might be something to tell the handbrake
+</I>&gt;&gt;&gt;<i> developer about. I see this message listed on apple's website
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/DeprecationAppendix/AppendixADeprecatedAPI.html">http://developer.apple.com/documentation/Cocoa/Reference/Foundation/Classes/NSString_Class/DeprecationAppendix/AppendixADeprecatedAPI.html</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Seems like that got rid of that in 10.4.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I could be totally wrong, and if so hopefully someone smarter then
+</I>&gt;&gt;&gt;<i> me points it out :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Joe
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Sun, Apr 6, 2008 at 11:08 PM, Sean Hafeez &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">sah.list at gmail.com</A>&gt;
+</I>&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;<i> RAIDZ
+</I>&gt;&gt;&gt;<i> Here is the output from the Handbrake GUI
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [20:03:36] hb_init: checking cpu count
+</I>&gt;&gt;&gt;<i> [20:03:36] hb_init: starting libhb thread
+</I>&gt;&gt;&gt;<i> [20:03:36] thread b0147000 started (&quot;libhb&quot;)
+</I>&gt;&gt;&gt;<i> [20:04:05] macgui: trying to open video_ts folder (parent directory
+</I>&gt;&gt;&gt;<i> chosen)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Then it just stops like I never pointed it to the DVD image.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Here is the system.log:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Apr  6 20:00:03 rioja MacTheRipper[661]: MTR: DVDCopyTileVobX (ts)1
+</I>&gt;&gt;&gt;<i> (v)4
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:09 rioja MacTheRipper[661]: MTR: copyContent
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:11 rioja MacTheRipper[661]: we got here
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:11 rioja MacTheRipper[661]: MTR: resetUI_state
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: extractMethod
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: getDiskSize
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: DVDFreeTitlesInfo
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:16 rioja MacTheRipper[661]: MTR: DVDFreeTitleSetInfo
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:22 rioja MacTheRipper[661]: MTR: popupControl
+</I>&gt;&gt;&gt;<i> Apr  6 20:03:31 rioja MacTheRipper[661]: MTR: savePrefs
+</I>&gt;&gt;&gt;<i> Apr  6 20:04:05 rioja HandBrake[734]: *** +[NSString
+</I>&gt;&gt;&gt;<i> stringWithCString:]: NULL cString
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> zpool list:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH
+</I>&gt;&gt;&gt;<i> ALTROOT
+</I>&gt;&gt;&gt;<i> data2                  1.16T    672G    518G    56%  ONLINE     -
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -Sean
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Apr 6, 2008, at 8:04 AM, Joe Dunn wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hi Sean
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Is the volume mirrored or in raidz configuration? Anything in your
+</I>&gt;&gt;&gt;&gt;<i> syslog about what is happening?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Cheers
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Joe
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Sun, Apr 6, 2008 at 2:20 AM, Sean Hafeez &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">sah.list at gmail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;&gt;<i> So I have been ripping my DVDs to watch on my AppleTV. In the past
+</I>&gt;&gt;&gt;&gt;<i> I have stored the files to be converted with Handbrake on my RAID
+</I>&gt;&gt;&gt;&gt;<i> box. I switched that box over to ZFS a few weeks ago. Handbrake
+</I>&gt;&gt;&gt;&gt;<i> seems to choke on the files when trying to open them now. If I
+</I>&gt;&gt;&gt;&gt;<i> copy them over to an HFS+ volume it works just fine.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/86905a80/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/86905a80/attachment-0001.html</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 2
+</I>&gt;<i> Date: Mon, 7 Apr 2008 11:38:06 +0200
+</I>&gt;<i> From: Robert Rehnmark &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">robert at rehnmark.net</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] Performance problems - AFP!
+</I>&gt;<i> To: ZFS on OSX mailing list mailing list
+</I>&gt;<i> 	&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">F1CE4772-22AB-46EC-A755-39CEE0B588DA at rehnmark.net</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+</I>&gt;<i>
+</I>&gt;<i> Ugh!
+</I>&gt;<i> The pools work fine locally but when used over Apple File Sharing
+</I>&gt;<i> Protocol it tends to read/write in short bursts.
+</I>&gt;<i> The effect is speeds cut in half or worse.
+</I>&gt;<i>
+</I>&gt;<i> Can anybody verify this or maybe even share a solution?
+</I>&gt;<i>
+</I>&gt;<i> Please.
+</I>&gt;<i>
+</I>&gt;<i> /Robert
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 6 apr 2008 kl. 16:35 skrev Robert Rehnmark:
+</I>&gt;&gt;<i> When I copy files over the network to/from my server (10.5.2 client
+</I>&gt;&gt;<i> single-disk volume) I get 66-70 MB/sec.
+</I>&gt;&gt;<i> If I do the same thing to the same machine with a single-disk zpool
+</I>&gt;&gt;<i> I get 0-30/40 MB/sec.
+</I>&gt;&gt;<i> To a zpool mirror I get 0-55 MB/sec.
+</I>&gt;&gt;<i> The performance/operation is very &quot;janky&quot; and when the speed is up
+</I>&gt;&gt;<i> the CPU use allmost  tops out too.
+</I>&gt;&gt;<i> Does this have anything to do with caching etc.?
+</I>&gt;&gt;<i> The pools are version 8, allmost empty and made from the same disks.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I want to be able to use ZFS but if I am not able to fix the
+</I>&gt;&gt;<i> performance problems HFS+ with daily backups will be preferred.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I want to hear about ather peoples experiences and tips, please.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /Robert
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 3
+</I>&gt;<i> Date: Mon, 7 Apr 2008 12:03:13 +0200
+</I>&gt;<i> From: Martin Hauser &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">info at martin-hauser.net</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] Handbrake on ZFS
+</I>&gt;<i> To: Sean Hafeez &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">sah.list at gmail.com</A>&gt;
+</I>&gt;<i> Cc: ZFS on OSX mailing list mailing list
+</I>&gt;<i> 	&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">11DDD05B-E100-4115-A5A7-07224EECE11A at martin-hauser.net</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;us-ascii&quot;
+</I>&gt;<i>
+</I>&gt;<i> I do not have any problems with handbrake running on a local ZFS. I
+</I>&gt;<i> encode from and to ZFS volumes, always using a custom mp4 setup. I
+</I>&gt;<i> assume it's a problem with ZFS + networking ?
+</I>&gt;<i>
+</I>&gt;<i> kind regards
+</I>&gt;<i>
+</I>&gt;<i> Martin
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> A non-text attachment was scrubbed...
+</I>&gt;<i> Name: PGP.sig
+</I>&gt;<i> Type: application/pgp-signature
+</I>&gt;<i> Size: 186 bytes
+</I>&gt;<i> Desc: This is a digitally signed message part
+</I>&gt;<i> Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/c3e2bb80/PGP-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/c3e2bb80/PGP-0001.bin</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 4
+</I>&gt;<i> Date: Mon, 07 Apr 2008 06:43:19 -0500
+</I>&gt;<i> From: &quot;James R. Van Artsdalen&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">james-zfsosx at jrv.org</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] Handbrake on ZFS
+</I>&gt;<i> To: Martin Hauser &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">info at martin-hauser.net</A>&gt;
+</I>&gt;<i> Cc: ZFS on OSX mailing list mailing list
+</I>&gt;<i> 	&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">47FA08D7.2010901 at jrv.org</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;<i>
+</I>&gt;<i> I can reproduce his problem here using the Handbrake 0.9.2 GUI with no
+</I>&gt;<i> network involved.  It hangs after clicking OK to select the source
+</I>&gt;<i> material - it doesn't get to the point of encoding anything.   
+</I>&gt;<i> Handbrake
+</I>&gt;<i> does respond to a cmd-Q and is using about 5% CPU at that point.  The
+</I>&gt;<i> source material is a DVD copied to the hard disk.  It selects source
+</I>&gt;<i> material OK from a &quot;Mac OS Extended&quot; disk.
+</I>&gt;<i>
+</I>&gt;<i> Martin Hauser wrote:
+</I>&gt;&gt;<i> I do not have any problems with handbrake running on a local ZFS. I
+</I>&gt;&gt;<i> encode from and to ZFS volumes, always using a custom mp4 setup. I
+</I>&gt;&gt;<i> assume it's a problem with ZFS + networking ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> kind regards
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Martin
+</I>&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 5
+</I>&gt;<i> Date: Mon, 7 Apr 2008 14:16:27 +0200
+</I>&gt;<i> From: Martin Hauser &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">info at martin-hauser.net</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] Handbrake on ZFS
+</I>&gt;<i> To: James R.Van Artsdalen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">james-zfsosx at jrv.org</A>&gt;
+</I>&gt;<i> Cc: ZFS on OSX mailing list mailing list
+</I>&gt;<i> 	&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">C433CDE9-FEAF-4D7D-B8A3-7D5136FF96F1 at martin-hauser.net</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;us-ascii&quot;
+</I>&gt;<i>
+</I>&gt;<i> Hmm,
+</I>&gt;<i>
+</I>&gt;<i> I am encoding from .mpg files, maybe the difference is in directory
+</I>&gt;<i> handling, as DVD's are oriented that way?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Apr 7, 2008, at 13:43 PM, James R. Van Artsdalen wrote:
+</I>&gt;&gt;<i> I can reproduce his problem here using the Handbrake 0.9.2 GUI with
+</I>&gt;&gt;<i> no network involved.  It hangs after clicking OK to select the
+</I>&gt;&gt;<i> source material - it doesn't get to the point of encoding anything.
+</I>&gt;&gt;<i> Handbrake does respond to a cmd-Q and is using about 5% CPU at that
+</I>&gt;&gt;<i> point.  The source material is a DVD copied to the hard disk.  It
+</I>&gt;&gt;<i> selects source material OK from a &quot;Mac OS Extended&quot; disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Martin Hauser wrote:
+</I>&gt;&gt;&gt;<i> I do not have any problems with handbrake running on a local ZFS. I
+</I>&gt;&gt;&gt;<i> encode from and to ZFS volumes, always using a custom mp4 setup. I
+</I>&gt;&gt;&gt;<i> assume it's a problem with ZFS + networking ?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> kind regards
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Martin
+</I>&gt;&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> A non-text attachment was scrubbed...
+</I>&gt;<i> Name: PGP.sig
+</I>&gt;<i> Type: application/pgp-signature
+</I>&gt;<i> Size: 186 bytes
+</I>&gt;<i> Desc: This is a digitally signed message part
+</I>&gt;<i> Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/0f2ebade/PGP.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080407/0f2ebade/PGP.bin</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> End of zfs-discuss Digest, Vol 4, Issue 8
+</I>&gt;<i> *****************************************
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000447.html">[zfs-discuss] Version incompatibility when importing zpool from
+	Solaris
+</A></li>
+	<LI>Next message: <A HREF="000416.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#415">[ date ]</a>
+              <a href="thread.html#415">[ thread ]</a>
+              <a href="subject.html#415">[ subject ]</a>
+              <a href="author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

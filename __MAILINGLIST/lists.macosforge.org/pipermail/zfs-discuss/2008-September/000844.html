@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Finder eject vs. multiple pools
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Finder%20eject%20vs.%20multiple%20pools&In-Reply-To=405AE051-61D4-4355-BA6A-C7821AFB9B94%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000843.html">
+   <LINK REL="Next"  HREF="000848.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Finder eject vs. multiple pools</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Finder%20eject%20vs.%20multiple%20pools&In-Reply-To=405AE051-61D4-4355-BA6A-C7821AFB9B94%40apple.com"
+       TITLE="[zfs-discuss] Finder eject vs. multiple pools">zorg at sogeeky.net
+       </A><BR>
+    <I>Fri Sep 12 19:07:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000843.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+        <LI>Next message: <A HREF="000848.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#844">[ date ]</a>
+              <a href="thread.html#844">[ thread ]</a>
+              <a href="subject.html#844">[ subject ]</a>
+              <a href="author.html#844">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey, you may have just hinted at a possible workaround...  Ever given  
+any thought to emulating the necessary /dev nodes needed to make  
+everything happy?
+
+P.S.  If I'm speaking nievely about things I don't understand, feel  
+free to tell me so. :)
+
+On Sep 12, 2008, at 6:50 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;  
+wrote:
+
+&gt;<i> you sir made the right call :)
+</I>&gt;<i> So in general I strongly encourage using command line for right now.
+</I>&gt;<i> I&quot;m still working with the diskarb people here at Apple as well as the
+</I>&gt;<i> Finder kids to work ZFS into the rest of the system.  Right now, most
+</I>&gt;<i> of the system is dumbfounded when not presented with a simple /dev
+</I>&gt;<i> node.  Everyone has the assumption that you have one filesystem per
+</I>&gt;<i> device, which isn't the case for ZFS so it doesn't really mesh well  
+</I>&gt;<i> yet.
+</I>&gt;<i> Working on it...
+</I>&gt;<i>
+</I>&gt;<i> Noel :)
+</I>&gt;<i>
+</I>&gt;<i> On Sep 11, 2008, at 10:54 AM, Brian Pinkerton wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> After doing some backups today from a couple of ZFS file systems on a
+</I>&gt;&gt;<i> &quot;permanent&quot; pool, I tried using the Finder to eject the backup disks
+</I>&gt;&gt;<i> (a couple of 1TB drives with a single striped ZFS pool) and got the
+</I>&gt;&gt;<i> Finder message:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    The device containing &quot;Backup2&quot; also contains 5 other volumes that
+</I>&gt;&gt;<i> will not be ejected.  Are you sure...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Looks like the Finder somehow considers all ZFS filesystems to be on
+</I>&gt;&gt;<i> the same device, even if they're on completely separate devices/ 
+</I>&gt;&gt;<i> pools.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I wasn't brave enough to just say &quot;yes&quot;, but &quot;zfs export -f Backup2&quot;
+</I>&gt;&gt;<i> worked just fine. :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> bri
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000843.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+	<LI>Next message: <A HREF="000848.html">[zfs-discuss] Finder eject vs. multiple pools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#844">[ date ]</a>
+              <a href="thread.html#844">[ thread ]</a>
+              <a href="subject.html#844">[ subject ]</a>
+              <a href="author.html#844">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

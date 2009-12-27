@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] (fixed) Re:  zpool offline problem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%28fixed%29%20Re%3A%20%20zpool%20offline%20problem&In-Reply-To=%3C60B2A2C2-648D-4C18-91E0-2FCBDF14BE7E%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001383.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] (fixed) Re:  zpool offline problem</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%28fixed%29%20Re%3A%20%20zpool%20offline%20problem&In-Reply-To=%3C60B2A2C2-648D-4C18-91E0-2FCBDF14BE7E%40mac.com%3E"
+       TITLE="[zfs-discuss] (fixed) Re:  zpool offline problem">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Fri Jan 30 10:10:12 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001383.html">[zfs-discuss] zpool offline problem
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1384">[ date ]</a>
+              <a href="thread.html#1384">[ thread ]</a>
+              <a href="subject.html#1384">[ subject ]</a>
+              <a href="author.html#1384">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I swapped the disks around in the bays until
+the online disks were using disk0 disk2 and disk3.
+Maybe some luck was involved as well.
+resilvering now.
+On 30 Jan 2009, at 15:04, Dirk Schelfhout wrote:
+
+&gt;<i> Can I hot plug sata disks inside the macpro ?
+</I>&gt;<i> This way I can force the device nrs to be the way I want them. ( I  
+</I>&gt;<i> think )
+</I>&gt;<i> I would boot without the 3 sata disks that make up the raidz.
+</I>&gt;<i> Plug them in after I verified the device nrs of the other disks.
+</I>&gt;<i>
+</I>&gt;<i> What would happen if I ran :
+</I>&gt;<i> zpool replace backup disk1s2 disk0s2
+</I>&gt;<i> ( if disk0s2 was the new zfs partiton )
+</I>&gt;<i> Would it try to replace the offline disk ?
+</I>&gt;<i> Dirk
+</I>&gt;<i> On 30 Jan 2009, at 07:02, Dirk Schelfhout wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> After replacing a disk and booting up, the disk device numbers have  
+</I>&gt;&gt;<i> changed.
+</I>&gt;&gt;<i> So know I get this annoying output :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> zpool status
+</I>&gt;&gt;<i> pool: backup
+</I>&gt;&gt;<i> state: DEGRADED
+</I>&gt;&gt;<i> status: One or more devices has been taken offline by the  
+</I>&gt;&gt;<i> administrator.
+</I>&gt;&gt;<i> 	Sufficient replicas exist for the pool to continue functioning in a
+</I>&gt;&gt;<i> 	degraded state.
+</I>&gt;&gt;<i> action: Online the device using 'zpool online' or replace the  
+</I>&gt;&gt;<i> device with
+</I>&gt;&gt;<i> 	'zpool replace'.
+</I>&gt;&gt;<i> scrub: resilver completed with 0 errors on Fri Jan 30 07:00:57 2009
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 	NAME         STATE     READ WRITE CKSUM
+</I>&gt;&gt;<i> 	backup       DEGRADED     0     0     0
+</I>&gt;&gt;<i> 	  raidz1     DEGRADED     0     0     0
+</I>&gt;&gt;<i> 	    disk1s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk3s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk2s2  ONLINE       0     0     0
+</I>&gt;&gt;<i> 	    disk1s2  OFFLINE      0     0     0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> errors: No known data errors
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The only thing different is that I am now not booted through refit.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Should I try a replace on disk1s2 ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any other way to do this ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Dirk
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001383.html">[zfs-discuss] zpool offline problem
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1384">[ date ]</a>
+              <a href="thread.html#1384">[ thread ]</a>
+              <a href="subject.html#1384">[ subject ]</a>
+              <a href="author.html#1384">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

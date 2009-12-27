@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] don't rename a clone or Bad Things Happen
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20don%27t%20rename%20a%20clone%20or%20Bad%20Things%20Happen&In-Reply-To=AE61CCFF-7A0D-4CD0-8B77-1ECC2FD5D286%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000065.html">
+   <LINK REL="Next"  HREF="000069.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] don't rename a clone or Bad Things Happen</H1>
+    <B>james sansbury</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20don%27t%20rename%20a%20clone%20or%20Bad%20Things%20Happen&In-Reply-To=AE61CCFF-7A0D-4CD0-8B77-1ECC2FD5D286%40apple.com"
+       TITLE="[zfs-discuss] don't rename a clone or Bad Things Happen">q0rban at gmail.com
+       </A><BR>
+    <I>Wed Jan 23 18:01:37 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000065.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+        <LI>Next message: <A HREF="000069.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#67">[ date ]</a>
+              <a href="thread.html#67">[ thread ]</a>
+              <a href="subject.html#67">[ subject ]</a>
+              <a href="author.html#67">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Hey, welcome to the list :)
+</I>&gt;<i>
+</I>
+Thanks!
+
+ Are you seeing something weird?
+&gt;<i>
+</I>
+I am... And I couldn't find it on my quick glance through the archives.
+
+First, some details as to what I'm working with.  I have a raid-z pool that
+I created on Solaris 10, then upgraded to OpenSolaris Nevada (upgraded the
+pool as well), and then just today took the plunge and exported it to try
+and import into Leopard (ZFS 102a).
+
+Everything seemed to go very smoothly, until I need to change some
+permissions on some very large folders (300+GB).  A *chown -Rv user
+folder*seems to work fine for about 2 minutes and then just hangs.  I
+tried to
+break out of the process.  Nothing.  I tried to open another terminal and
+force unmount the pool.  Nothing.  I tried to eject the drives in Disk
+Utility.  Nothing.  So then after waiting another 10 minutes or so I just
+unplugged the drives.  Nothing.
+
+I tried to shutdown and it wouldn't shut down so I just powered off, booted
+up, tried everything again with all the same results, except that this time
+I tried plugging back in the drives and letting it sit.  By doing this I was
+at least able to get a kernel panic out of it! ;)
+
+Wed Jan 23 20:20:05 2008
+panic(cpu 1 caller 0x478C7DEC): &quot;ZFS: I/O failure (write on &lt;unknown&gt; off 0:
+zio 0x8dbc558 [L0 DMU dnode] 4000L/1400P DVA[0]=&lt;0:4504f10400:1c00&gt;
+DVA[1]=&lt;0:1402931400:1c00&gt; fletcher4 lzjb LE contiguous birth=2435919
+fill=32 cksum=1558cb8da00:3b800ab2fc2bc:63bff7300fb1ce0:bb30349fa21c1523):
+error &quot;
+&quot;6&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/zfs_kext/zfs/zio.c:918
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x47f2be48 : 0x12b0e1 (0x455670 0x47f2be7c 0x133238 0x0)
+0x47f2be98 : 0x478c7dec (0x47935b90 0x47935b84 0x47931690 0x479646ec)
+0x47f2bf18 : 0x478c44c0 (0x8dbc558 0x2b9 0x47f2bf38 0x4790b267)
+0x47f2bf58 : 0x479230b0 (0x8dbc558 0x1 0x4796e110 0x5255a88)
+0x47f2bfc8 : 0x19e2ec (0x5255a88 0x0 0x1a10b5 0x8bfde40)
+Backtrace terminated-invalid frame pointer 0
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x478b0000-&gt;0x4797bfff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9B18
+
+Kernel version:
+Darwin Kernel Version 9.1.0: Wed Oct 31 17:46:22 PDT 2007; root:
+xnu-1228.0.2~1/RELEASE_I386
+System model name: MacBookPro2,2 (Mac-F42187C8)
+
+
+
+&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Jan 23, 2008, at 5:25 PM, james sansbury wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hi Noel,
+</I>&gt;<i>
+</I>&gt;<i> I just signed up for the zfs-discuss e-mail list.  Is there a current bug
+</I>&gt;<i> list to peruse, or should I just e-mail the bugs I've found to the list?
+</I>&gt;<i> I'd hate to report a bug that's already a well known issue.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for all your work on this project,
+</I>&gt;<i>
+</I>&gt;<i> James
+</I>&gt;<i>
+</I>&gt;<i> On Jan 23, 2008 8:14 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Oh yikes.  This is very not good.  Opening up a bug now going on the
+</I>&gt;<i> &gt; top of my queue.  Apologies to all cats, dogs and blown up clones in
+</I>&gt;<i> &gt; question.....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; p.s.  Thanks for the continued bad ass testing...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Noel :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Jan 23, 2008, at 4:20 PM, Boyd Waters wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; zfs-102A read/write
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; zfs clone tank/<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">myDisk at mySnapshot</A> tank/myDisk__mySnapshot
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; (good)
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; /usr/local/bin/rsync-3.0 -avEx /Volumes/192.168.168.23/exported-nfs-
+</I>&gt;<i> &gt; &gt; disk/  /Volumes/tank/myDisk__mySnapshot
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; (ok)
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; zfs rename tank/myDisk__mySnapshot tank/myDisk__newStuff
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; POOF! -- all CPUs go to 100% utilization and just stay there. Mouse
+</I>&gt;<i> &gt; &gt; stops moving. Cats and dogs move in together. Machine locked up
+</I>&gt;<i> &gt; &gt; tight, no apparent disk activity. I go help someone with another
+</I>&gt;<i> &gt; &gt; computer, come back 15 minutes later, turn off the power.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Wed Jan 23 17:09:09 2008
+</I>&gt;<i> &gt; &gt; panic(cpu 2 caller 0x00EAFC73): &quot;[ZFS]: assertion failed in /Volumes/
+</I>&gt;<i> &gt; &gt; pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/zfs_kext/zfs/
+</I>&gt;<i> &gt; &gt; dnode_sync.c line 397: pass &lt; 100&quot;@/Volumes/pixie_dust/home/
+</I>&gt;<i> &gt; &gt; ndellofano/zfs-work/wiki/zfs-102A/zfs_kext/zfs/dnode_sync.c:397
+</I>&gt;<i> &gt; &gt; Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt; 0x8111fb28 : 0x12b0e1 (0x456e30 0x8111fb5c 0x13321a 0x0)
+</I>&gt;<i> &gt; &gt; 0x8111fb78 : 0xeafc73 (0xf1b400 0xf1abf4 0x18d 0xf1b3f4)
+</I>&gt;<i> &gt; &gt; 0x8111fc98 : 0xea872d (0x264f54b0 0x1 0x111fcf8 0x0)
+</I>&gt;<i> &gt; &gt; 0x8111fcd8 : 0xe85f0a (0x29dccda0 0x1 0x1 0x21a4ed86)
+</I>&gt;<i> &gt; &gt; 0x8111fd28 : 0x1f0448 (0xc95e000 0x0 0x15b6ece4 0x1d2c69)
+</I>&gt;<i> &gt; &gt; 0x8111fd58 : 0x1decb4 (0xc95e000 0x0 0x15b6ece4 0x1f4d49)
+</I>&gt;<i> &gt; &gt; 0x8111fda8 : 0x1def88 (0xc95e000 0x0 0x1 0x15b6ece4)
+</I>&gt;<i> &gt; &gt; 0x8111fdd8 : 0x1df12d (0xc95e000 0x0 0x15b6ece4 0x0)
+</I>&gt;<i> &gt; &gt; 0x8111ff78 : 0x3dbcab (0xbc03a00 0x15b6ebe0 0x15b6ec24 0x0)
+</I>&gt;<i> &gt; &gt; 0x8111ffc8 : 0x19f084 (0xbce2d40 0x0 0x1a20b5 0xbce2d40)
+</I>&gt;<i> &gt; &gt; 0xbfffdd58 : 0x9d2e8181 (0xe5b5d417 0xb7c37690 0xb610702b 0xca42c4d2)
+</I>&gt;<i> &gt; &gt; Backtrace terminated-invalid frame pointer 0x15e5b8e6
+</I>&gt;<i> &gt; &gt;      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i> &gt; &gt;         com.apple.filesystems.zfs(8.0)@0xe84000-&gt;0xf4ffff
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; BSD process name corresponding to current thread: zfs
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Mac OS version:
+</I>&gt;<i> &gt; &gt; 9C16
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Kernel version:
+</I>&gt;<i> &gt; &gt; Darwin Kernel Version 9.2.0: Tue Jan  8 10:59:40 PST 2008;
+</I>&gt;<i> &gt; &gt; root:xnu-1228.3.7~1/RELEASE_I386
+</I>&gt;<i> &gt; &gt; System model name: MacPro1,1 (Mac-F4208DC8)
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>
+</I>&gt;<i> &quot;A society in which consumption has to be
+</I>&gt;<i> artificially stimulated in order to keep production
+</I>&gt;<i> going is a society founded on trash and waste,
+</I>&gt;<i> and such a society is a house built upon sand.&quot;
+</I>&gt;<i>
+</I>&gt;<i> -- Dorothy Sayers
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+
+&quot;A society in which consumption has to be
+artificially stimulated in order to keep production
+going is a society founded on trash and waste,
+and such a society is a house built upon sand.&quot;
+
+-- Dorothy Sayers
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080123/2306cc3e/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080123/2306cc3e/attachment-0001.html</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000065.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+	<LI>Next message: <A HREF="000069.html">[zfs-discuss] don't rename a clone or Bad Things Happen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#67">[ date ]</a>
+              <a href="thread.html#67">[ thread ]</a>
+              <a href="subject.html#67">[ subject ]</a>
+              <a href="author.html#67">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

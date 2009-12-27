@@ -1,0 +1,1308 @@
+From alex.blewitt at gmail.com  Fri Jul  3 16:13:22 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sat, 4 Jul 2009 00:13:22 +0100
+Subject: [zfs-discuss] zfs-discuss Digest, Vol 18, Issue 22
+In-Reply-To: <4A4A8B58.3000706@phys.washington.edu>
+References: <mailman.27.1246370403.89898.zfs-discuss@lists.macosforge.org>	<A9C90B7E-AE78-4490-BEE2-E5F0FC835B67@mac.com>
+	<46B09628-4795-4BC5-AEBD-1565046371C1@gmail.com>
+	<4A4A8B58.3000706@phys.washington.edu>
+Message-ID: <C838E94C-4706-4094-845A-8CB718DB3CBA@gmail.com>
+
+<sigh> And again ...
+On 30 Jun 2009, at 23:02, Jared Nance wrote:
+
+> Right, neither do I.  Things were stable until the last release for  
+> me.
+>
+> JN
+>
+> Alex Blewitt wrote:
+>> I don't, and I've been using ZFS for a long time. The issues have  
+>> just
+>> started along the last couple of point releases of OSX.
+>>
+>> Alex
+>>
+>> Sent from my (new) iPhone
+>>
+>> On 30 Jun 2009, at 22:02, Mike Prather <mike666 at mac.com
+>> <mailto:mike666 at mac.com>> wrote:
+>>
+>>> Do either of you use Apple Remote Desktop admin?  If so make sure  
+>>> any
+>>> automatic report generation options for your zfs machines are turned
+>>> off.  I was getting the same thing after my initial zfs setup and
+>>> this was the culprit.
+>>>
+>>> Mike
+>>>
+>>> On Jun 30, 2009, at 7:00 AM, zfs-discuss- 
+>>> request at lists.macosforge.org
+>>> <mailto:zfs-discuss-request at lists.macosforge.org> wrote:
+>>>
+>>>> Alex-
+>>>> Indeed I have had almost exactly the same issue.  My setup is 3  
+>>>> external
+>>>> hard drives in a ZRAID1 pool.  Everything is fine until late  
+>>>> evening, at
+>>>> which point I can no longer stat my zfs pool at all - zpool status
+>>>> works, zfs list is fine, but when I try to run anything at FS  
+>>>> level e.g.
+>>>> ls, the system locks up completely.  Not a kernel panic, but  
+>>>> becomes
+>>>> totally unresponsive and requires a reboot.  I moved two of the  
+>>>> drives
+>>>> to a standard software RAID1, and kept one as a zpool, just for
+>>>> experimental purposes - my thought was that perhaps it was some i/o
+>>>> issue that was causing the problem.  However, even when the zpool
+>>>> contains no data that the OS is accessing regularly, the lockup  
+>>>> occurs.
+>>>> Very distressing.
+>>>>
+>>>> Jared N
+>>>>
+>>>>
+>>>> Alex Blewitt wrote:
+>>>>> I've noticed since 10.5.6 (or 10.5.7) I've been getting kernel  
+>>>>> panics
+>>>>> more regularly than I used to before (i.e. not). The symptom is  
+>>>>> the
+>>>>> same; a kernel panic which requires rebooting.
+>>>>>
+>>>>> At midnight, I have a (potentially raceful) condition of a zpool  
+>>>>> scrub
+>>>>> and a zfs snapshot.
+>>>>>
+>>>>> @daily  /usr/sbin/zpool scrub Data
+>>>>> @daily  /usr/sbin/zfs snapshot -r Data at AutoD-`date +"\%F"`
+>>>>>
+>>>>> Over the last week, my laptop  (when it's been on over midnight)  
+>>>>> has
+>>>>> kernel paniced at exactly midnight. In addition, my Mac Mini  
+>>>>> (with its
+>>>>> external disks making up the Data pool) has the same process.  
+>>>>> The Mac
+>>>>> Mini tends to barf over midnight, though sometimes not until the  
+>>>>> early
+>>>>> hours (presumably, when the ZFS scrub is finishing; it takes a lot
+>>>>> longer on that box due to the size of data it has to process).
+>>>>>
+>>>>> There are no problems with the pool itself; upon reboot, the  
+>>>>> disk is
+>>>>> there and a subsequent scrub does not trigger the kernel panic.  
+>>>>> I can
+>>>>> go days (on the Mini) without needing this, but the laptop seems  
+>>>>> to
+>>>>> have triggered the kernel panic fairly regularly. Of course,  
+>>>>> crontab
+>>>>> doesn't run when the machine is off, so I only see this over the
+>>>>> midnight boundary (like tonight) when I happen to be up.
+>>>>>
+>>>>> Has anyone else noticed a lack of stability since applying the  
+>>>>> 10.5.6
+>>>>> or 10.5.7 patches? Before then, I never used to get a kernel  
+>>>>> panic and
+>>>>> I've been using the same pool continuously since then.
+>>>>>
+>>>>> Alex
+>>>>> _______________________________________________
+>>>>> zfs-discuss mailing list
+>>>>> zfs-discuss at lists.macosforge.org
+>>>>> <mailto:zfs-discuss at lists.macosforge.org>
+>>>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>>
+>>>>
+>>>>
+>>>> ------------------------------
+>>>>
+>>>> _______________________________________________
+>>>> zfs-discuss mailing list
+>>>> zfs-discuss at lists.macosforge.org
+>>>> <mailto:zfs-discuss at lists.macosforge.org>
+>>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>>
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> <mailto:zfs-discuss at lists.macosforge.org>
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>> ------------------------------------------------------------------------
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+
+
+From dirkschelfhout at mac.com  Wed Jul  8 15:07:39 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Thu, 09 Jul 2009 00:07:39 +0200
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+Message-ID: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+
+Finally got it running on a mac mini.
+not so happy with nfs. SetFile doesn't seem to work on it.
+And file permissions make it a mess.
+so no backup to sparse bundles with time machine.
+I think I am going to prefer this solution over the macpro. silence,  
+less power consumption.
+
+What should I read to get something running with iscsi ?
+
+( If anyone runs in the problem where opensolaris installer fails to  
+create a partition, just use
+fdisk on osx to set he partiton id to solaris2 (BF) , that took a long  
+time for me to find . After I found this
+I stumbled on some other workaround, but this one is easier )
+
+Dirk
+
+From alex.blewitt at gmail.com  Wed Jul  8 16:08:02 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Thu, 9 Jul 2009 00:08:02 +0100
+Subject: [zfs-discuss] Nightly crash (again)
+Message-ID: <95C291C8-BF36-4C49-9EFC-3AB798AB2D2E@gmail.com>
+
+OK, so it's definitely ZFS that's causing these crashes. Here's what  
+the zpool history looks like at this stage:
+
+2009-07-09.00:02:44 zpool scrub Data
+2009-07-09.00:02:44 zfs snapshot -r Data at AutoH-2009-07-09T00:02
+2009-07-09.00:02:45 zfs snapshot -r Data at AutoD-2009-07-09
+
+So it seems to be a combination of a zfs snapshot and zpool being  
+kicked off at the same time.
+
+I found an earlier one where the reboot was triggered by a single  
+snapshot and scrub occuring concurrently (the import is me rebooting).
+
+2009-07-04.00:00:00 zpool scrub Data
+2009-07-04.00:00:00 zfs snapshot -r Data at AutoD-2009-07-04
+2009-07-04.00:00:38 zpool import -f 10901725609628700814
+
+Here's the stack report:
+
+Interval Since Last Panic Report:  10836 sec
+Panics Since Last Report:          2
+Anonymous UUID:                    4D621934-CC51-49D3-9B4F-2763B46072F9
+
+Thu Jul  9 00:03:44 2009
+panic(cpu 0 caller 0x00BB8CEE): "db->db_dnode == dn failed, 215226064  
+== 215134288"@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/ 
+zfs_kext/zfs/dbuf.c:1661
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+
+ndellofano, this looks like your build - maybe there's a known bug here?
+
+Alex
+
+From hanche at math.ntnu.no  Wed Jul  8 16:37:37 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Thu, 09 Jul 2009 01:37:37 +0200 (CEST)
+Subject: [zfs-discuss] Nightly crash (again)
+In-Reply-To: <95C291C8-BF36-4C49-9EFC-3AB798AB2D2E@gmail.com>
+References: <95C291C8-BF36-4C49-9EFC-3AB798AB2D2E@gmail.com>
+Message-ID: <20090709.013737.229392053.hanche@math.ntnu.no>
+
++ Alex Blewitt <alex.blewitt at gmail.com>:
+
+> OK, so it's definitely ZFS that's causing these crashes. Here's what
+> the zpool history looks like at this stage:
+> 
+> 2009-07-09.00:02:44 zpool scrub Data
+> 2009-07-09.00:02:44 zfs snapshot -r Data at AutoH-2009-07-09T00:02
+> 2009-07-09.00:02:45 zfs snapshot -r Data at AutoD-2009-07-09
+> 
+> So it seems to be a combination of a zfs snapshot and zpool being
+> kicked off at the same time.
+
+Yeah, probably a bad idea. There is a known bug in zfs:
+
+  http://bugs.opensolaris.org/view_bug.do?bug_id=6343667
+  Synopsis: scrub/resilver has to start over when a snapshot is taken
+
+This is fixed in zfs version 10 or so, I believe.
+
+  http://blogs.sun.com/ahrens/entry/new_scrub_code
+
+While a panic is certainly more dramatic than having to restart a
+scrub, the two might well be related. Conceivably, there might be a
+race condition where the need to restart the scrub is not detected in
+time if the snapshot is started immediately after the scrub.
+
+- Harald
+
+From baronda.2 at osu.edu  Wed Jul  8 17:08:53 2009
+From: baronda.2 at osu.edu (Silas Baronda)
+Date: Wed, 8 Jul 2009 20:08:53 -0400
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+Message-ID: <3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+
+On Wed, Jul 8, 2009 at 6:07 PM, Dirk Schelfhout <dirkschelfhout at mac.com>wrote:
+
+> Finally got it running on a mac mini.
+> not so happy with nfs. SetFile doesn't seem to work on it.
+> And file permissions make it a mess.
+> so no backup to sparse bundles with time machine.
+> I think I am going to prefer this solution over the macpro. silence, less
+> power consumption.
+
+
+So you installed OpenSolaris on your mac mini?  If so which version did you
+use?
+
+
+>
+>
+> What should I read to get something running with iscsi ?
+
+
+Are you talking about an initiator?  If so there is globalSAN initiator.
+ This link looks like a pretty good integration with mac.
+http://opensolaris.org/jive/thread.jspa?threadID=105178&tstart=0
+
+
+>
+>
+> ( If anyone runs in the problem where opensolaris installer fails to create
+> a partition, just use
+> fdisk on osx to set he partiton id to solaris2 (BF) , that took a long time
+> for me to find . After I found this
+> I stumbled on some other workaround, but this one is easier )
+
+Thanks
+
+>
+>
+> Dirk
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090708/ccf9f0ac/attachment.html>
+
+From raoul at amsi.org.au  Wed Jul  8 19:42:51 2009
+From: raoul at amsi.org.au (Raoul Callaghan)
+Date: Thu, 9 Jul 2009 12:42:51 +1000
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+	<3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+Message-ID: <44BEBA2F-F8D5-4CB0-AAB4-3E481FA0B230@amsi.org.au>
+
+I installed NexentaCore 2 (RC3) on a Mac Mini last weekend.
+
+I had a couple of attempts at it, as the installer script didn't seem  
+to like a static ip in the end.  (kept stalling right at the end)
+
+I'm a bit concerned about the lack of ZFS being mentioned with snow  
+leopard so I'm looking for alternatives.
+
+About a month ago, I was wondering if I could get a Mac Mini to  
+address 8 or more drives without using FW or USB.
+At present, I have a G4 mobo inside an old ANS500 case using ZFS with  
+8 x 250GB PATA drives. (10.5.7)
+I've never had a single problem with this setup and have replaced 3  
+drives over a 2.5 year period due to errors.
+I've never used USB or FW buses with ZFS, and I think this has kept me  
+well away from a lot of trouble I see in this forum.
+
+It's only due to the PATA to SATA transition that I'm looking to  
+update this server.
+
+Wanting to stick with the idea of not to use USB or FW buses for ZFS,  
+I did some homework, spent some money on the Mac Mini, and now can   
+connect 10 SATA drives to a Mac mini.
+I don't know of anyone else in the world who's done this,  (or are  
+stupid enough to) or have posted it anyway.
+
+it's a bit, ah... ahem... weird at present, but it is only a proof-of- 
+concept to see if it would actually work.
+http://homepage.mac.com/tangles/embarrasing-but-works.png
+
+It works, and works rather well.  I striped the two 1TB drives within  
+OS X at present, just to gauge a speed. (99MB/sec sustained)
+Because the Mac Mini is to be installed inside the ANS500 case, (Apple  
+Network Server 500), aesthetics have no relevance here.  8))
+
+I'll write it up properly once I get a jig happening to hold the Sata  
+card in place.
+
+Cheers,
+
+Raoul Callaghan
+I.T. Manager
+Australian Mathematical Sciences Institute
+111 Barry Street
+The University of Melbourne
+Victoria 3010 Australia
+p: 03 8344 1783
+f:  03 9349 4106
+e: raoul at amsi.org.au
+
+"... The only problem with Microsoft is they just have no taste, they  
+have absolutely no taste and what that means is, and I don't mean that  
+in a small way, I mean that in a big way.
+In the sense that: they, they don't think of original ideas, and they  
+don't bring much culture into their product.
+And you say why is that important? well proportionally spaced fonts  
+come from typesetting and beautiful books, that's where one gets the  
+idea.  If it weren't for the mac they would never have that in their  
+products.
+And, so I guess I am saddened, not by Microsoft's success, I have no  
+problem with their success. They've earned their success; for the most  
+part.
+I have a problem with the fact that they make just really third grade  
+products ..."
+
+Steve Jobs, circa 1980's
+http://www.youtube.com/watch?v=oBISzVRmYIM
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090709/33ec8ffb/attachment-0001.html>
+
+From zfs at encode.mine.nu  Wed Jul  8 22:56:01 2009
+From: zfs at encode.mine.nu (Nathan Coad)
+Date: Thu, 9 Jul 2009 15:56:01 +1000
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <44BEBA2F-F8D5-4CB0-AAB4-3E481FA0B230@amsi.org.au>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+	<3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+	<44BEBA2F-F8D5-4CB0-AAB4-3E481FA0B230@amsi.org.au>
+Message-ID: <D853D2C7-8D3C-4939-A9DC-E9A0A234B78A@encode.mine.nu>
+
+
+On 09/07/2009, at 12:42 PM, Raoul Callaghan wrote:
+
+>
+>
+> it's a bit, ah... ahem... weird at present, but it is only a proof- 
+> of-concept to see if it would actually work.
+> http://homepage.mac.com/tangles/embarrasing-but-works.png
+>
+> It works, and works rather well.  I striped the two 1TB drives  
+> within OS X at present, just to gauge a speed. (99MB/sec sustained)
+> Because the Mac Mini is to be installed inside the ANS500 case,  
+> (Apple Network Server 500), aesthetics have no relevance here.  8))
+>
+> I'll write it up properly once I get a jig happening to hold the  
+> Sata card in place.
+
+Interesting.  What card is that, and what interface are you using to  
+connect it to the mini?
+
+Nathan
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090709/afc9634d/attachment.html>
+
+From dirkschelfhout at mac.com  Thu Jul  9 02:47:55 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Thu, 09 Jul 2009 11:47:55 +0200
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+	<3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+Message-ID: <96D37318-03C3-4087-BC67-6D2DE81EBBBE@mac.com>
+
+2009.06
+had to put the nge network drivers on a cd which was a bit annoying.
+And had to install these after the os install.
+On 09 Jul 2009, at 02:08, Silas Baronda wrote:
+
+> So you installed OpenSolaris on your mac mini?  If so which version  
+> did you use?
+
+
+From dirkschelfhout at mac.com  Thu Jul  9 04:32:31 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Thu, 09 Jul 2009 13:32:31 +0200
+Subject: [zfs-discuss] netatalk build instructions
+Message-ID: <743AF051-F64D-4F77-8662-BFC6FA01B772@mac.com>
+
+this guy wrote up instructions :
+http://cafenate.wordpress.com/2009/02/08/building-netatalk-on-opensolaris-200811/
+
+got it running, am connected , will see how it goes.
+
+Dirk
+
+From dirkschelfhout at mac.com  Thu Jul  9 15:07:58 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Fri, 10 Jul 2009 00:07:58 +0200
+Subject: [zfs-discuss] netatalk build instructions
+In-Reply-To: <743AF051-F64D-4F77-8662-BFC6FA01B772@mac.com>
+References: <743AF051-F64D-4F77-8662-BFC6FA01B772@mac.com>
+Message-ID: <E0393C88-13C6-440F-9B79-B9BF1451FDB0@mac.com>
+
+Happy with netatalk so far.
+but in terminal sometimes files show up twice , like this : ( on the  
+mac )
+intelBook:ZFSshare schelfd$ ls
+Network Trash Folder			intelBook_001b63b66c75.sparsebundle
+Temporary Items				intelBook_001b63b66c75.sparsebundle
+Temporary Items				
+
+Why is this happening ?
+
+used a free partition on the macmini as cache :
+zpool status
+   pool: rpool
+  state: ONLINE
+  scrub: none requested
+config:
+
+         NAME        STATE     READ WRITE CKSUM
+         rpool       ONLINE       0     0     0
+           c10d0s0   ONLINE       0     0     0
+
+errors: No known data errors
+
+   pool: safe
+  state: ONLINE
+  scrub: none requested
+config:
+
+         NAME          STATE     READ WRITE CKSUM
+         safe          ONLINE       0     0     0
+           raidz1      ONLINE       0     0     0
+             c8t0d0p0  ONLINE       0     0     0
+             c9t0d0p0  ONLINE       0     0     0
+             c7t0d0p0  ONLINE       0     0     0
+         cache
+           c10d0p4     ONLINE       0     0     0
+
+errors: No known data errors
+
+On 09 Jul 2009, at 13:32, Dirk Schelfhout wrote:
+
+> this guy wrote up instructions :
+> http://cafenate.wordpress.com/2009/02/08/building-netatalk-on-opensolaris-200811/
+>
+> got it running, am connected , will see how it goes.
+>
+> Dirk
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From lopez.on.the.lists at yellowspace.net  Sat Jul 11 11:39:11 2009
+From: lopez.on.the.lists at yellowspace.net (Lorenzo Perone)
+Date: Sat, 11 Jul 2009 20:39:11 +0200
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <44BEBA2F-F8D5-4CB0-AAB4-3E481FA0B230@amsi.org.au>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+	<3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+	<44BEBA2F-F8D5-4CB0-AAB4-3E481FA0B230@amsi.org.au>
+Message-ID: <AE6DDA40-FD93-44ED-B84C-22CCF54EC16C@yellowspace.net>
+
+
+On 09.07.2009, at 04:42, Raoul Callaghan wrote:
+
+> It works, and works rather well.  I striped the two 1TB drives  
+> within OS X at present, just to gauge a speed. (99MB/sec sustained)
+> Because the Mac Mini is to be installed inside the ANS500 case,  
+> (Apple Network Server 500), aesthetics have no relevance here.  8))
+
+way cool! :-)
+
+regards,
+
+Lorenzo
+
+From raoul at amsi.org.au  Sun Jul 12 17:03:37 2009
+From: raoul at amsi.org.au (Raoul Callaghan)
+Date: Mon, 13 Jul 2009 10:03:37 +1000
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+	<3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+Message-ID: <C68E1718-8D9F-4659-BD33-D90EECAA9AC8@amsi.org.au>
+
+Okay,
+
+I got hoondimac.com registered.  Will post a detailed write up of  
+below's efforts for all to see shortly.
+
+Anyone here used Solaris' ZFS with iSCSI and share out to Macs by  
+chance?
+
+I'm not really keen on setting up netatalk if I can help it. (http://cafenate.wordpress.com/2009/02/08/building-netatalk-on-opensolaris-200811/ 
+)
+
+Will let people know once site it up..
+
+Cheers,
+
+> I installed NexentaCore 2 (RC3) on a Mac Mini last weekend.
+>
+> I had a couple of attempts at it, as the installer script didn't  
+> seem to like a static ip in the end.  (kept stalling right at the end)
+>
+> I'm a bit concerned about the lack of ZFS being mentioned with snow  
+> leopard so I'm looking for alternatives.
+>
+> About a month ago, I was wondering if I could get a Mac Mini to  
+> address 8 or more drives without using FW or USB.
+> At present, I have a G4 mobo inside an old ANS500 case using ZFS  
+> with 8 x 250GB PATA drives. (10.5.7)
+> I've never had a single problem with this setup and have replaced 3  
+> drives over a 2.5 year period due to errors.
+> I've never used USB or FW buses with ZFS, and I think this has kept  
+> me well away from a lot of trouble I see in this forum.
+>
+> It's only due to the PATA to SATA transition that I'm looking to  
+> update this server.
+>
+> Wanting to stick with the idea of not to use USB or FW buses for  
+> ZFS, I did some homework, spent some money on the Mac Mini, and now  
+> can  connect 10 SATA drives to a Mac mini.
+> I don't know of anyone else in the world who's done this,  (or are  
+> stupid enough to) or have posted it anyway.
+>
+> it's a bit, ah... ahem... weird at present, but it is only a proof- 
+> of-concept to see if it would actually work.
+> http://homepage.mac.com/tangles/embarrasing-but-works.png
+>
+> It works, and works rather well.  I striped the two 1TB drives  
+> within OS X at present, just to gauge a speed. (99MB/sec sustained)
+> Because the Mac Mini is to be installed inside the ANS500 case,  
+> (Apple Network Server 500), aesthetics have no relevance here.  8))
+>
+> I'll write it up properly once I get a jig happening to hold the  
+> Sata card in place.
+>
+> Cheers,
+
+Raoul Callaghan
+I.T. Manager
+Australian Mathematical Sciences Institute
+111 Barry Street
+The University of Melbourne
+Victoria 3010 Australia
+p: 03 8344 1783
+f:  03 9349 4106
+e: raoul at amsi.org.au
+
+"... The only problem with Microsoft is they just have no taste, they  
+have absolutely no taste and what that means is, and I don't mean that  
+in a small way, I mean that in a big way.
+In the sense that: they, they don't think of original ideas, and they  
+don't bring much culture into their product.
+And you say why is that important? well proportionally spaced fonts  
+come from typesetting and beautiful books, that's where one gets the  
+idea.  If it weren't for the mac they would never have that in their  
+products.
+And, so I guess I am saddened, not by Microsoft's success, I have no  
+problem with their success. They've earned their success; for the most  
+part.
+I have a problem with the fact that they make just really third grade  
+products ..."
+
+Steve Jobs, circa 1980's
+http://www.youtube.com/watch?v=oBISzVRmYIM
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090713/56983e7c/attachment.html>
+
+From dirkschelfhout at mac.com  Sun Jul 12 18:05:49 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Mon, 13 Jul 2009 03:05:49 +0200
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <C68E1718-8D9F-4659-BD33-D90EECAA9AC8@amsi.org.au>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+	<3977537a0907081708g7a838bfaq9f8667415917264a@mail.gmail.com>
+	<C68E1718-8D9F-4659-BD33-D90EECAA9AC8@amsi.org.au>
+Message-ID: <5C2F79BC-0F2E-480F-B461-A304C7EA2763@mac.com>
+
+not super happy with opensolaris,
+with nfs for me it is a disaster.
+with netatalk its ok.
+but somehow things are only stable with a daily reboot.
+I don't understand why there are no problem messages in syslog.
+I used to be a solaris expert in a previous life, not a good one it  
+seems.
+knowledge fleets so easily........
+
+
+On 13 Jul 2009, at 02:03, Raoul Callaghan wrote:
+
+> Okay,
+>
+> I got hoondimac.com registered.  Will post a detailed write up of  
+> below's efforts for all to see shortly.
+>
+> Anyone here used Solaris' ZFS with iSCSI and share out to Macs by  
+> chance?
+>
+> I'm not really keen on setting up netatalk if I can help it. (http://cafenate.wordpress.com/2009/02/08/building-netatalk-on-opensolaris-200811/ 
+> )
+>
+> Will let people know once site it up..
+>
+> Cheers,
+>
+>> I installed NexentaCore 2 (RC3) on a Mac Mini last weekend.
+>>
+>> I had a couple of attempts at it, as the installer script didn't  
+>> seem to like a static ip in the end.  (kept stalling right at the  
+>> end)
+>>
+>> I'm a bit concerned about the lack of ZFS being mentioned with snow  
+>> leopard so I'm looking for alternatives.
+>>
+>> About a month ago, I was wondering if I could get a Mac Mini to  
+>> address 8 or more drives without using FW or USB.
+>> At present, I have a G4 mobo inside an old ANS500 case using ZFS  
+>> with 8 x 250GB PATA drives. (10.5.7)
+>> I've never had a single problem with this setup and have replaced 3  
+>> drives over a 2.5 year period due to errors.
+>> I've never used USB or FW buses with ZFS, and I think this has kept  
+>> me well away from a lot of trouble I see in this forum.
+>>
+>> It's only due to the PATA to SATA transition that I'm looking to  
+>> update this server.
+>>
+>> Wanting to stick with the idea of not to use USB or FW buses for  
+>> ZFS, I did some homework, spent some money on the Mac Mini, and now  
+>> can  connect 10 SATA drives to a Mac mini.
+>> I don't know of anyone else in the world who's done this,  (or are  
+>> stupid enough to) or have posted it anyway.
+>>
+>> it's a bit, ah... ahem... weird at present, but it is only a proof- 
+>> of-concept to see if it would actually work.
+>> http://homepage.mac.com/tangles/embarrasing-but-works.png
+>>
+>> It works, and works rather well.  I striped the two 1TB drives  
+>> within OS X at present, just to gauge a speed. (99MB/sec sustained)
+>> Because the Mac Mini is to be installed inside the ANS500 case,  
+>> (Apple Network Server 500), aesthetics have no relevance here.  8))
+>>
+>> I'll write it up properly once I get a jig happening to hold the  
+>> Sata card in place.
+>>
+>> Cheers,
+>
+> Raoul Callaghan
+> I.T. Manager
+> Australian Mathematical Sciences Institute
+> 111 Barry Street
+> The University of Melbourne
+> Victoria 3010 Australia
+> p: 03 8344 1783
+> f:  03 9349 4106
+> e: raoul at amsi.org.au
+>
+> "... The only problem with Microsoft is they just have no taste,  
+> they have absolutely no taste and what that means is, and I don't  
+> mean that in a small way, I mean that in a big way.
+> In the sense that: they, they don't think of original ideas, and  
+> they don't bring much culture into their product.
+> And you say why is that important? well proportionally spaced fonts  
+> come from typesetting and beautiful books, that's where one gets the  
+> idea.  If it weren't for the mac they would never have that in their  
+> products.
+> And, so I guess I am saddened, not by Microsoft's success, I have no  
+> problem with their success. They've earned their success; for the  
+> most part.
+> I have a problem with the fact that they make just really third  
+> grade products ..."
+>
+> Steve Jobs, circa 1980's
+> http://www.youtube.com/watch?v=oBISzVRmYIM
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090713/60b43605/attachment-0001.html>
+
+From Jonathan.Edwards at Sun.COM  Tue Jul 14 06:15:20 2009
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Tue, 14 Jul 2009 09:15:20 -0400
+Subject: [zfs-discuss] zfs and nfs running on opensolaris
+In-Reply-To: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+References: <22E75A7C-6034-49D5-9D9B-92A6435E61CD@mac.com>
+Message-ID: <B3526336-D67B-4E5A-8C75-3AFB947085A2@sun.com>
+
+
+On Jul 8, 2009, at 6:07 PM, Dirk Schelfhout wrote:
+
+> Finally got it running on a mac mini.
+> not so happy with nfs. SetFile doesn't seem to work on it.
+> And file permissions make it a mess.
+> so no backup to sparse bundles with time machine.
+
+SetFile is only really going to work with the EAs in HFS+ .. what bits  
+are you attempting to set with this?
+
+ZFS uses NFSv4 style extended ACLs and ACEs that you can access with / 
+bin/chmod (and /bin/ls .. note: /bin is a symlink to /usr/bin, and  
+opensolaris puts /usr/gnu/bin first on the default path for all those  
+presumably coming from the GNU/Linux world) .. then for sharing, take  
+a look at the CIFs server (eg: zfs set sharesmb=on) and idmap to map  
+users between domains.
+
+For iSCSI .. you might want to set this outside of ZFS .. it's a  
+little obtuse, but take a look at itadm for the target and iscsiadm  
+for the initiator .. try this to get started:
+http://wikis.sun.com/display/OpenSolarisInfo/COMSTAR+Administration
+
+---
+.je
+
+From zfs at devros.com  Sat Jul 18 17:57:30 2009
+From: zfs at devros.com (ed hammond)
+Date: Sat, 18 Jul 2009 20:57:30 -0400
+Subject: [zfs-discuss] wrong size pool creation
+Message-ID: <EC29F851-0236-4E2C-892D-2AEFFF8525C2@devros.com>
+
+I have a bunch of WD 500 gig drives behind a areca 1260 card.  I have  
+formatted the drives correctly and they show up with the right  
+capacity, but when I try and create a pool on them, they only format  
+as 7 gigs.  I've tried as a zraid, a raid 0, and even just a single  
+drive pool and always the same result.  Attached is the terminal  
+output from the single drive pool test.  Any thoughts would be greatly  
+appreciated.  This is running the 119 version on 10.5.7.
+
+bash-3.2# diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *76.7 Gi     
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS boot                    2.7 Gi      
+disk0s2
+    3:                  Apple_HFS leopard                 73.5 Gi     
+disk0s3
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk2
+    1:                        EFI                         200.0 Mi    
+disk2s1
+    2:                        ZFS                         465.4 Gi    
+disk2s2
+
+bash-3.2# zpool create single /dev/disk1s2
+
+bash-3.2# diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *76.7 Gi     
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS boot                    2.7 Gi      
+disk0s2
+    3:                  Apple_HFS leopard                 73.5 Gi     
+disk0s3
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *7.6 Gi      
+disk1
+    1:                        EFI                         200.0 Mi    
+disk1s1
+    2:                        ZFS                         7.2 Gi      
+disk1s2
+
+zfs list also lists the pool as only being 7.5 gigs :(
+
+TIA,
+
+-ed
+
+From zfs at devros.com  Sat Jul 18 18:39:19 2009
+From: zfs at devros.com (ed hammond)
+Date: Sat, 18 Jul 2009 21:39:19 -0400
+Subject: [zfs-discuss] Fwd: wrong size pool creation
+References: <7DF884B7-B70B-4E40-B7CE-4BDCA45F54E6@edhammond.com>
+Message-ID: <B9730221-DE53-48F4-AC1D-C4C153CFBF46@devros.com>
+
+Wrong "from" address...
+
+Begin forwarded message:
+
+> From: ed hammond <ed at edhammond.com>
+> Date: July 18, 2009 9:37:51 PM EDT
+> To: zfs-discuss at lists.macosforge.org
+> Subject: Fwd: wrong size pool creation
+>
+> Sorry, had the first diskutil pasted in wrong.  Corrected below.
+>
+> Begin forwarded message:
+>
+>> From: ed hammond <zfs at devros.com>
+>> Date: July 18, 2009 8:57:30 PM EDT
+>> To: zfs-discuss at lists.macosforge.org
+>> Subject: wrong size pool creation
+>>
+>> I have a bunch of WD 500 gig drives behind a areca 1260 card.  I  
+>> have formatted the drives correctly and they show up with the right  
+>> capacity, but when I try and create a pool on them, they only  
+>> format as 7 gigs.  I've tried as a zraid, a raid 0, and even just a  
+>> single drive pool and always the same result.  Attached is the  
+>> terminal output from the single drive pool test.  Any thoughts  
+>> would be greatly appreciated.  This is running the 119 version on  
+>> 10.5.7.
+>>
+>> bash-3.2# diskutil list
+>> /dev/disk0
+>>   #:                       TYPE NAME                    SIZE        
+>> IDENTIFIER
+>>   0:      GUID_partition_scheme                        *76.7 Gi     
+>> disk0
+>>   1:                        EFI                         200.0 Mi    
+>> disk0s1
+>>   2:                  Apple_HFS boot                    2.7 Gi      
+>> disk0s2
+>>   3:                  Apple_HFS leopard                 73.5 Gi     
+>> disk0s3
+>> /dev/disk1
+>>   #:                       TYPE NAME                    SIZE        
+>> IDENTIFIER
+>>   0:      GUID_partition_scheme                        *465.8 Gi    
+>> disk1
+>>   1:                        EFI                         200.0 Mi    
+>> disk1s1
+>>   2:                        ZFS                         465.4 Gi    
+>> disk1s2
+>>
+>> bash-3.2# zpool create single /dev/disk1s2
+>>
+>> bash-3.2# diskutil list
+>> /dev/disk0
+>>   #:                       TYPE NAME                    SIZE        
+>> IDENTIFIER
+>>   0:      GUID_partition_scheme                        *76.7 Gi     
+>> disk0
+>>   1:                        EFI                         200.0 Mi    
+>> disk0s1
+>>   2:                  Apple_HFS boot                    2.7 Gi      
+>> disk0s2
+>>   3:                  Apple_HFS leopard                 73.5 Gi     
+>> disk0s3
+>> /dev/disk1
+>>   #:                       TYPE NAME                    SIZE        
+>> IDENTIFIER
+>>   0:      GUID_partition_scheme                        *7.6 Gi      
+>> disk1
+>>   1:                        EFI                         200.0 Mi    
+>> disk1s1
+>>   2:                        ZFS                         7.2 Gi      
+>> disk1s2
+>>
+>> zfs list also lists the pool as only being 7.5 gigs :(
+>>
+>> TIA,
+>>
+>> -ed
+>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090718/292d847b/attachment.html>
+
+From hanche at math.ntnu.no  Sat Jul 18 18:44:25 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Sat, 18 Jul 2009 21:44:25 -0400 (EDT)
+Subject: [zfs-discuss] wrong size pool creation
+In-Reply-To: <EC29F851-0236-4E2C-892D-2AEFFF8525C2@devros.com>
+References: <EC29F851-0236-4E2C-892D-2AEFFF8525C2@devros.com>
+Message-ID: <20090718.214425.247524927.hanche@math.ntnu.no>
+
++ ed hammond <zfs at devros.com>:
+
+> I have a bunch of WD 500 gig drives behind a areca 1260 card.  I have
+> formatted the drives correctly and they show up with the right
+> capacity, but when I try and create a pool on them, they only format
+> as 7 gigs.
+
+Actually, things look funny before you even create the pool:
+
+> bash-3.2# diskutil list
+> [...]
+> /dev/disk1
+>    #: TYPE NAME SIZE IDENTIFIER
+>    0:      GUID_partition_scheme                        *465.8 Gi   disk2
+>    1: EFI 200.0 Mi disk2s1
+>    2: ZFS 465.4 Gi disk2s2
+
+Partitions named disk2s1 and disk2s2 inside /dev/disk1,
+that seems mighty odd indeed.
+
+- Harald
+
+From alex.blewitt at gmail.com  Sat Jul 18 23:19:04 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Sun, 19 Jul 2009 07:19:04 +0100
+Subject: [zfs-discuss] Fwd: wrong size pool creation
+In-Reply-To: <B9730221-DE53-48F4-AC1D-C4C153CFBF46@devros.com>
+References: <7DF884B7-B70B-4E40-B7CE-4BDCA45F54E6@edhammond.com>
+	<B9730221-DE53-48F4-AC1D-C4C153CFBF46@devros.com>
+Message-ID: <5F08E66A-9B96-4612-A3E8-FC5B6A3BF59D@gmail.com>
+
+What diskutil command did you use to format them in the first place?  
+Once diskutil thinks they are 7G then no amount of putting them in  
+different pools is going to change that.
+
+Sent from my (new) iPhone
+
+From nancejk at phys.washington.edu  Sun Jul 19 09:25:57 2009
+From: nancejk at phys.washington.edu (Jared Nance)
+Date: Sun, 19 Jul 2009 09:25:57 -0700
+Subject: [zfs-discuss] Fwd: wrong size pool creation
+In-Reply-To: <B9730221-DE53-48F4-AC1D-C4C153CFBF46@devros.com>
+References: <7DF884B7-B70B-4E40-B7CE-4BDCA45F54E6@edhammond.com>
+	<B9730221-DE53-48F4-AC1D-C4C153CFBF46@devros.com>
+Message-ID: <4A634915.2060908@phys.washington.edu>
+
+Is there any GPT formatting remnant at the end of the drives?  I had
+some issues with that a while back.  You might try erasing the existing
+GPT using `gpt destroy`.
+
+JN
+
+ed hammond wrote:
+> Wrong "from" address...
+>
+> Begin forwarded message:
+>
+>> *From: *ed hammond <ed at edhammond.com <mailto:ed at edhammond.com>>
+>> *Date: *July 18, 2009 9:37:51 PM EDT
+>> *To: *zfs-discuss at lists.macosforge.org
+>> <mailto:zfs-discuss at lists.macosforge.org>
+>> *Subject: **Fwd: wrong size pool creation *
+>>
+>> Sorry, had the first diskutil pasted in wrong.  Corrected below.
+>>
+>> Begin forwarded message:
+>>
+>>> *From: *ed hammond <zfs at devros.com <mailto:zfs at devros.com>>
+>>> *Date: *July 18, 2009 8:57:30 PM EDT
+>>> *To: *zfs-discuss at lists.macosforge.org
+>>> <mailto:zfs-discuss at lists.macosforge.org>
+>>> *Subject: **wrong size pool creation *
+>>>
+>>> I have a bunch of WD 500 gig drives behind a areca 1260 card.  I
+>>> have formatted the drives correctly and they show up with the right
+>>> capacity, but when I try and create a pool on them, they only format
+>>> as 7 gigs.  I've tried as a zraid, a raid 0, and even just a single
+>>> drive pool and always the same result.  Attached is the terminal
+>>> output from the single drive pool test.  Any thoughts would be
+>>> greatly appreciated.  This is running the 119 version on 10.5.7.
+>>>
+>>> bash-3.2# diskutil list
+>>> /dev/disk0
+>>>   #:                       TYPE NAME                    SIZE
+>>>       IDENTIFIER
+>>>   0:      GUID_partition_scheme                        *76.7 Gi    disk0
+>>>   1:                        EFI                         200.0 Mi
+>>>   disk0s1
+>>>   2:                  Apple_HFS boot                    2.7 Gi
+>>>     disk0s2
+>>>   3:                  Apple_HFS leopard                 73.5 Gi
+>>>    disk0s3
+>>> /dev/disk1
+>>>   #:                       TYPE NAME                    SIZE
+>>>       IDENTIFIER
+>>>   0:      GUID_partition_scheme                        *465.8 Gi   disk1
+>>>   1:                        EFI                         200.0 Mi
+>>>   disk1s1
+>>>   2:                        ZFS                         465.4 Gi
+>>>   disk1s2
+>>>
+>>> bash-3.2# zpool create single /dev/disk1s2
+>>>
+>>> bash-3.2# diskutil list
+>>> /dev/disk0
+>>>   #:                       TYPE NAME                    SIZE
+>>>       IDENTIFIER
+>>>   0:      GUID_partition_scheme                        *76.7 Gi    disk0
+>>>   1:                        EFI                         200.0 Mi
+>>>   disk0s1
+>>>   2:                  Apple_HFS boot                    2.7 Gi
+>>>     disk0s2
+>>>   3:                  Apple_HFS leopard                 73.5 Gi
+>>>    disk0s3
+>>> /dev/disk1
+>>>   #:                       TYPE NAME                    SIZE
+>>>       IDENTIFIER
+>>>   0:      GUID_partition_scheme                        *7.6 Gi     disk1
+>>>   1:                        EFI                         200.0 Mi
+>>>   disk1s1
+>>>   2:                        ZFS                         7.2 Gi
+>>>     disk1s2
+>>>
+>>> zfs list also lists the pool as only being 7.5 gigs :(
+>>>
+>>> TIA,
+>>>
+>>> -ed
+>>
+>
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>   
+
+
+From zfs at devros.com  Sun Jul 19 11:47:09 2009
+From: zfs at devros.com (ed hammond)
+Date: Sun, 19 Jul 2009 14:47:09 -0400
+Subject: [zfs-discuss] Fwd: wrong size pool creation
+In-Reply-To: <5F08E66A-9B96-4612-A3E8-FC5B6A3BF59D@gmail.com>
+References: <7DF884B7-B70B-4E40-B7CE-4BDCA45F54E6@edhammond.com>
+	<B9730221-DE53-48F4-AC1D-C4C153CFBF46@devros.com>
+	<5F08E66A-9B96-4612-A3E8-FC5B6A3BF59D@gmail.com>
+Message-ID: <09B0594F-1E5C-4560-84DB-5225E9A4D0E7@devros.com>
+
+I used:
+
+diskutil partitiondisk /dev/disk1 GPTFormat ZFS %noformat% 100%
+
+On Jul 19, 2009, at 2:19 AM, Alex Blewitt wrote:
+
+> What diskutil command did you use to format them in the first place?  
+> Once diskutil thinks they are 7G then no amount of putting them in  
+> different pools is going to change that.
+>
+> Sent from my (new) iPhone
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090719/9f0dcc22/attachment.html>
+
+From nancejk at phys.washington.edu  Sun Jul 19 11:52:04 2009
+From: nancejk at phys.washington.edu (Jared Nance)
+Date: Sun, 19 Jul 2009 11:52:04 -0700
+Subject: [zfs-discuss] Fwd: wrong size pool creation
+In-Reply-To: <09B0594F-1E5C-4560-84DB-5225E9A4D0E7@devros.com>
+References: <7DF884B7-B70B-4E40-B7CE-4BDCA45F54E6@edhammond.com>	<B9730221-DE53-48F4-AC1D-C4C153CFBF46@devros.com>	<5F08E66A-9B96-4612-A3E8-FC5B6A3BF59D@gmail.com>
+	<09B0594F-1E5C-4560-84DB-5225E9A4D0E7@devros.com>
+Message-ID: <4A636B54.60401@phys.washington.edu>
+
+If the disks were previously in another pool, then this command won't
+get rid of the end-of-disk GPT label.  You have to kill it off using gpt.
+
+JN
+
+ed hammond wrote:
+> I used:
+>
+> diskutil partitiondisk /dev/disk1 GPTFormat ZFS %noformat% 100% 
+>
+> On Jul 19, 2009, at 2:19 AM, Alex Blewitt wrote:
+>
+>> What diskutil command did you use to format them in the first place?
+>> Once diskutil thinks they are 7G then no amount of putting them in
+>> different pools is going to change that.
+>>
+>> Sent from my (new) iPhone
+>
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>   
+
+
+From dirkschelfhout at mac.com  Thu Jul 23 09:32:59 2009
+From: dirkschelfhout at mac.com (Dirk Schelfhout)
+Date: Thu, 23 Jul 2009 18:32:59 +0200
+Subject: [zfs-discuss] globalsan
+Message-ID: <ABE53E4D-92F1-4A3E-8806-19620775610D@mac.com>
+
+I got it connected to opensolaris.
+a 100 g disk shows up in disk utility.
+No matter what I try , I can't format this disk. ( yes I read I have  
+to choose apple partition and no journaling )
+
+Can anyone point me in the right direction ?
+The disks do spin up on the opensolaris system when I try to format  
+the 100g disk.
+I am a complete newbie to this.
+
+Thanks,
+
+Dirk
+
+These Are the errors that show up in console :
+tail /var/log/system.log
+Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 beginning  
+recovery
+Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 completing  
+recovery
+Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 connection to  
+target "iqn.1986-03.com.sun:02:42826d54-6355-c26c-bc49-bea7b4064318"  
+in state 4 failed with error 1301 (task has taken too long to complete)
+Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 beginning  
+recovery
+Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition failed for  
+disk SUN COMSTAR Media  Input/output error
+Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 completing  
+recovery
+Jul 23 18:14:53 intelBook kernel[0]: disk2: I/O error.
+Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition complete.
+Jul 23 18:14:53 intelBook Disk Utility[13553]:
+Jul 23 18:14:53 intelBook Disk Utility[13553]: Error with partition:  
+Input/output error
+
+
+From Jonathan.Edwards at Sun.COM  Thu Jul 23 12:41:23 2009
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Thu, 23 Jul 2009 15:41:23 -0400
+Subject: [zfs-discuss] globalsan
+In-Reply-To: <ABE53E4D-92F1-4A3E-8806-19620775610D@mac.com>
+References: <ABE53E4D-92F1-4A3E-8806-19620775610D@mac.com>
+Message-ID: <C63B6775-6A75-489A-8FFA-4BE18F1150D9@sun.com>
+
+you've got a COMSTAR iSCSI LUN presented off an opensolaris host to a  
+mac globalsan initiator?
+
+what's the backing store here, and are you using CHAP or no?
+
+On Jul 23, 2009, at 12:32 PM, Dirk Schelfhout wrote:
+
+> I got it connected to opensolaris.
+> a 100 g disk shows up in disk utility.
+> No matter what I try , I can't format this disk. ( yes I read I have  
+> to choose apple partition and no journaling )
+>
+> Can anyone point me in the right direction ?
+> The disks do spin up on the opensolaris system when I try to format  
+> the 100g disk.
+> I am a complete newbie to this.
+>
+> Thanks,
+>
+> Dirk
+>
+> These Are the errors that show up in console :
+> tail /var/log/system.log
+> Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 beginning  
+> recovery
+> Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 completing  
+> recovery
+> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 connection to  
+> target "iqn.1986-03.com.sun:02:42826d54-6355-c26c-bc49-bea7b4064318"  
+> in state 4 failed with error 1301 (task has taken too long to  
+> complete)
+> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 beginning  
+> recovery
+> Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition failed for  
+> disk SUN COMSTAR Media  Input/output error
+> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 completing  
+> recovery
+> Jul 23 18:14:53 intelBook kernel[0]: disk2: I/O error.
+> Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition complete.
+> Jul 23 18:14:53 intelBook Disk Utility[13553]:
+> Jul 23 18:14:53 intelBook Disk Utility[13553]: Error with partition:  
+> Input/output error
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From Jonathan.Edwards at Sun.COM  Thu Jul 23 13:08:13 2009
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Thu, 23 Jul 2009 16:08:13 -0400
+Subject: [zfs-discuss] globalsan
+In-Reply-To: <C63B6775-6A75-489A-8FFA-4BE18F1150D9@sun.com>
+References: <ABE53E4D-92F1-4A3E-8806-19620775610D@mac.com>
+	<C63B6775-6A75-489A-8FFA-4BE18F1150D9@sun.com>
+Message-ID: <8751E00E-26F4-4F6E-A819-1DC643EF364E@sun.com>
+
+oh .. also use build 113 or higher .. dan maslowski had the answer:
+http://opensolaris.org/jive/thread.jspa?threadID=96863&tstart=89
+
+btw - if you setup your publisher to pkg.opensolaris.org/dev and  
+update .. resist going to 118 - there's some broken-ness around FCOE  
+that can make it more difficult to boot (have to hack an SMF  
+manifest), and 119 will be broken too .. 120 should be more stable  
+when it comes out, or 117 should be fine.
+
+On Jul 23, 2009, at 3:41 PM, Jonathan Edwards wrote:
+
+> you've got a COMSTAR iSCSI LUN presented off an opensolaris host to  
+> a mac globalsan initiator?
+>
+> what's the backing store here, and are you using CHAP or no?
+>
+> On Jul 23, 2009, at 12:32 PM, Dirk Schelfhout wrote:
+>
+>> I got it connected to opensolaris.
+>> a 100 g disk shows up in disk utility.
+>> No matter what I try , I can't format this disk. ( yes I read I  
+>> have to choose apple partition and no journaling )
+>>
+>> Can anyone point me in the right direction ?
+>> The disks do spin up on the opensolaris system when I try to format  
+>> the 100g disk.
+>> I am a complete newbie to this.
+>>
+>> Thanks,
+>>
+>> Dirk
+>>
+>> These Are the errors that show up in console :
+>> tail /var/log/system.log
+>> Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 beginning  
+>> recovery
+>> Jul 23 18:14:38 intelBook kernel[0]: session 0x3b9b400 completing  
+>> recovery
+>> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 connection  
+>> to target "iqn.1986-03.com.sun:02:42826d54-6355-c26c-bc49- 
+>> bea7b4064318" in state 4 failed with error 1301 (task has taken too  
+>> long to complete)
+>> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 beginning  
+>> recovery
+>> Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition failed for  
+>> disk SUN COMSTAR Media  Input/output error
+>> Jul 23 18:14:53 intelBook kernel[0]: session 0x3b9b400 completing  
+>> recovery
+>> Jul 23 18:14:53 intelBook kernel[0]: disk2: I/O error.
+>> Jul 23 18:14:53 intelBook Disk Utility[13553]: Partition complete.
+>> Jul 23 18:14:53 intelBook Disk Utility[13553]:
+>> Jul 23 18:14:53 intelBook Disk Utility[13553]: Error with  
+>> partition: Input/output error
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS mmap bug with PHP?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To=40D942B8-E79E-4388-B940-18A091867B3E%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000172.html">
+   <LINK REL="Next"  HREF="000157.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS mmap bug with PHP?</H1>
+    <B>Mr. Zorg</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20mmap%20bug%20with%20PHP%3F&In-Reply-To=40D942B8-E79E-4388-B940-18A091867B3E%40apple.com"
+       TITLE="[zfs-discuss] ZFS mmap bug with PHP?">zorg at sogeeky.net
+       </A><BR>
+    <I>Mon Feb 18 18:50:34 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000172.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+        <LI>Next message: <A HREF="000157.html">[zfs-discuss] 10.5.2 update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#173">[ date ]</a>
+              <a href="thread.html#173">[ thread ]</a>
+              <a href="subject.html#173">[ subject ]</a>
+              <a href="author.html#173">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>At the same time, the core code that understands the fs structure, how  
+to create volumes, manage them, etc, I should think is well isolated  
+from these lower level issues. And that seems to be the case given all  
+the comments here about how solid its actually been with data  
+integrity. The only issues seem to be quirky ones due to the  
+differences you describe. Is that about right, No&#235;l?
+
+On Feb 18, 2008, at 3:20 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;  
+wrote:
+
+&gt;&gt;<i> Does the below statement mean mmap doesn't work on the solaris
+</I>&gt;&gt;<i> version ?
+</I>&gt;<i>
+</I>&gt;<i> No, mmap works fine on the Solaris version.  This issue was specific
+</I>&gt;<i> to our port on OSX.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I mean what has to be changed, added and why ? Isn't it just a
+</I>&gt;&gt;<i> finished product by sun ?
+</I>&gt;<i>
+</I>&gt;<i> Yes ZFS is a finished product by Sun and it works well and is in use
+</I>&gt;<i> at a number of business in production.  However, in order to port a
+</I>&gt;<i> filesystem a lot of changes have to be made since the rest of the
+</I>&gt;<i> system isn't Solaris, it's Mac OSX, so things work differently.
+</I>&gt;<i> As Boyd mentioned, the VFS layer in OS X is quite different from
+</I>&gt;<i> Solaris, hence much of the ZFS ZPL code (the upper most layer of the
+</I>&gt;<i> filesystem) needed to change in order to accommodate this.  In
+</I>&gt;<i> addition, the OS X kernel is much different then the Solaris kernel,
+</I>&gt;<i> so there are changes that need to be made in order to accommodate that
+</I>&gt;<i> as well.   Disk interfacing and driver layers are also different, and
+</I>&gt;<i> the memory allocation schemes are different so adjustments to how ZFS
+</I>&gt;<i> works and what it expects in those areas had to be changed as well.
+</I>&gt;<i> Basically, a number of things needed to be changed and its still a
+</I>&gt;<i> work in progress.  Take a look at the source and compare the two if
+</I>&gt;<i> you're interested in more specifics.  But basically, they are two
+</I>&gt;<i> different operating systems that each work quite differently, hence
+</I>&gt;<i> just picking up the filesystem and dropping it into another operating
+</I>&gt;<i> system isn't exactly seamless :)
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Feb 15, 2008, at 5:27 PM, Dirk Schelfhout wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> For some time I have been puzzled about zfs on osx.
+</I>&gt;&gt;<i> What makes the file system different on osx than on solaris ?
+</I>&gt;&gt;<i> I mean what has to be changed, added and why ? Isn't it just a
+</I>&gt;&gt;<i> finished product by sun ?
+</I>&gt;&gt;<i> Does the below statement mean mmap doesn't work on the solaris
+</I>&gt;&gt;<i> version ?
+</I>&gt;&gt;<i> Dirk
+</I>&gt;&gt;<i> On 16 Feb 2008, at 02:04, No&#235;l Dellofano wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> the zfs-102A bits are not mmap coherent, hence this is likely  
+</I>&gt;&gt;&gt;<i> causing
+</I>&gt;&gt;&gt;<i> the weirdness you're seeing.  I'm releasing new bits on macosforge
+</I>&gt;&gt;&gt;<i> soon, which have the mmap coherency working so hang tight :)
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000172.html">[zfs-discuss] ZFS mmap bug with PHP?
+</A></li>
+	<LI>Next message: <A HREF="000157.html">[zfs-discuss] 10.5.2 update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#173">[ date ]</a>
+              <a href="thread.html#173">[ thread ]</a>
+              <a href="subject.html#173">[ subject ]</a>
+              <a href="author.html#173">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

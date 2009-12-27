@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] snapshots
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3CD7A64948-626A-4136-A391-C3A3272D116E%40MailNewsRSS.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001189.html">
+   <LINK REL="Next"  HREF="001194.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] snapshots</H1>
+    <B>Jason Todd Slack-Moehrle</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3CD7A64948-626A-4136-A391-C3A3272D116E%40MailNewsRSS.com%3E"
+       TITLE="[zfs-discuss] snapshots">mailinglists at MailNewsRSS.com
+       </A><BR>
+    <I>Sat Dec 20 08:02:02 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001189.html">[zfs-discuss] snapshots
+</A></li>
+        <LI>Next message: <A HREF="001194.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1190">[ date ]</a>
+              <a href="thread.html#1190">[ thread ]</a>
+              <a href="subject.html#1190">[ subject ]</a>
+              <a href="author.html#1190">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Dillon,
+
+So, you can create multiple ZFS filesystems inside the one large ZFS  
+partition. And really, the one ZFS partition that I have is just one  
+big ZFS filesystem....
+
+And to be more clear, You have a ZFS partition that is really one  
+large ZFS filesystem and I create a second ZFS filesystem inside the  
+partition they share the entire space allocated so that is why you did  
+not specify a size, etc when you created the new filesystem below?
+
+And I starting to grok this?
+
+-Jason
+
+On Dec 20, 2008, at 7:41 AM, Dillon Kass wrote:
+
+&gt;<i> lets use my laptop as an example.
+</I>&gt;<i>
+</I>&gt;<i> My home dir is a zfs filesystem.
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">turtle at ramuh</A> ~ $ df -h .
+</I>&gt;<i> Filesystem          Size   Used  Avail Capacity  Mounted on
+</I>&gt;<i> ramuh/home/turtle   55Gi   28Gi   27Gi    52%    /Users/turtle
+</I>&gt;<i>
+</I>&gt;<i> the zfs filesystem for my home directory is ramuh/home/turtle
+</I>&gt;<i>
+</I>&gt;<i> my /Users/turtle/Library directory is a separate zfs filesystem, if  
+</I>&gt;<i> I snapshot ramuh/home/turtle the contents of library are excluded  
+</I>&gt;<i> from the snapshot because it's a different filesystem. consequently,  
+</I>&gt;<i> I can also snapshot my /Users/turtle/Library directory independantly  
+</I>&gt;<i> from the rest of my home dir.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">turtle at ramuh</A> ~ $ zfs list -t filesystem -r ramuh/home/turtle
+</I>&gt;<i> NAME                        USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i> ramuh/home/turtle          32.5G  26.9G  28.1G  /Users/turtle
+</I>&gt;<i> ramuh/home/turtle/Library  3.51G  26.9G  3.33G  /Users/turtle/Library
+</I>&gt;<i>
+</I>&gt;<i> lets say I want to exclude /Users/turtle/nosnapshot/ directory from  
+</I>&gt;<i> snapshots, just simply create a new fs.
+</I>&gt;<i>
+</I>&gt;<i> ramuh turtle # zfs create ramuh/home/turtle/nosnapshot
+</I>&gt;<i>
+</I>&gt;<i> ramuh turtle # df -h /Users/turtle/nosnapshot
+</I>&gt;<i> Filesystem                     Size   Used  Avail Capacity  Mounted on
+</I>&gt;<i> ramuh/home/turtle/nosnapshot   27Gi   18Ki   27Gi     1%    /Users/ 
+</I>&gt;<i> turtle/nosnapshot
+</I>&gt;<i>
+</I>&gt;<i> ramuh turtle # zfs list -t filesystem -r ramuh/home/turtle
+</I>&gt;<i> NAME                           USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i> ramuh/home/turtle             32.5G  26.9G  28.1G  /Users/turtle
+</I>&gt;<i> ramuh/home/turtle/Library     3.51G  26.9G  3.33G  /Users/turtle/ 
+</I>&gt;<i> Library
+</I>&gt;<i> ramuh/home/turtle/nosnapshot  21.5K  26.9G  21.5K  /Users/turtle/ 
+</I>&gt;<i> nosnapshot
+</I>&gt;<i>
+</I>&gt;<i> see?
+</I>&gt;<i>
+</I>&gt;<i> now If i create a snapshot ramuh/home/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">turtle at snapshot1</A> the contents  
+</I>&gt;<i> of the Library &amp; nosnapshot directory are ignored because they're a  
+</I>&gt;<i> different zfs filesystem.
+</I>&gt;<i>
+</I>&gt;<i> I hope that made sense.
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i> Dillon
+</I>&gt;<i>
+</I>&gt;<i> On 12/20/08 10:34 AM, Jason Todd Slack-Moehrle wrote:
+</I>&gt;&gt;<i> Hi All,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can you explain a little more?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How would we accomplish this?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have a 250gb ZFS partition that is dedicated for my home  
+</I>&gt;&gt;<i> directory. I would like to start taking snapshots, but things like  
+</I>&gt;&gt;<i> Music, Movies, etc I would like to exclude.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Would I have to wipe the 250gb partition and re-partition it to do  
+</I>&gt;&gt;<i> this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sorry I dont quite follow what you are saying.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Jason
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Dec 19, 2008, at 6:59 PM, No&#235;l Dellofano wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I second that.  Thats why ZFS filesystems have low overhead, they  
+</I>&gt;&gt;&gt;<i> are closer to directories then traditional filesystems.  Plus it  
+</I>&gt;&gt;&gt;<i> gives you a lot more fine grained control of your stuff.  For the  
+</I>&gt;&gt;&gt;<i> future we're considering possibly doing something in the line of  
+</I>&gt;&gt;&gt;<i> excluding certain directories, especially for backups and privacy  
+</I>&gt;&gt;&gt;<i> concerns.  However for now, multiple zfs filesystems is the best  
+</I>&gt;&gt;&gt;<i> way to go.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Noel
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Dec 19, 2008, at 3:18 PM, Robert Gordon wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Dec 19, 2008, at 4:31 PM, Christian Kendi wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 1. I was wondering how the progress is on the .snapshots feature  
+</I>&gt;&gt;&gt;&gt;&gt;<i> is?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 2. I'm using ZFS as my home directory now. There are certain  
+</I>&gt;&gt;&gt;&gt;&gt;<i> directories
+</I>&gt;&gt;&gt;&gt;&gt;<i> which i dont like to snapshot. For example, Movies and Music  
+</I>&gt;&gt;&gt;&gt;&gt;<i> makes no sense.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Is anyone aware of a possiblity to exclude certain directories  
+</I>&gt;&gt;&gt;&gt;&gt;<i> from getting
+</I>&gt;&gt;&gt;&gt;&gt;<i> snapshotted?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Make Movies and Music zfs filesystems.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ;-)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Robert.
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001189.html">[zfs-discuss] snapshots
+</A></li>
+	<LI>Next message: <A HREF="001194.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1190">[ date ]</a>
+              <a href="thread.html#1190">[ thread ]</a>
+              <a href="subject.html#1190">[ subject ]</a>
+              <a href="author.html#1190">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

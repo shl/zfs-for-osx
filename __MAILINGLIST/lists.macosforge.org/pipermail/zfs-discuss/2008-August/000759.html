@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Mounts in Finder for tank/foo?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Mounts%20in%20Finder%20for%20tank/foo%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000758.html">
+   <LINK REL="Next"  HREF="000760.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Mounts in Finder for tank/foo?</H1>
+    <B>Sean Hafeez</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Mounts%20in%20Finder%20for%20tank/foo%3F&In-Reply-To="
+       TITLE="[zfs-discuss] Mounts in Finder for tank/foo?">sah.list at gmail.com
+       </A><BR>
+    <I>Thu Aug  7 22:41:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000758.html">[zfs-discuss] nas
+</A></li>
+        <LI>Next message: <A HREF="000760.html">[zfs-discuss] snapshot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#759">[ date ]</a>
+              <a href="thread.html#759">[ thread ]</a>
+              <a href="subject.html#759">[ subject ]</a>
+              <a href="author.html#759">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Is this a known issue?
+
+data2          647G   268G   188G  /Volumes/data2
+data2/iTunes   459G   268G   459G  /Volumes/data2/iTunes
+
+Let's say I want to do:
+
+zfs set mountpoint=/Volumes/iTunes data/iTunes
+
+Which gives me:
+
+data2           454Gi  188Gi  266Gi    42%    /Volumes/data2
+data2/iTunes    727Gi  461Gi  266Gi    64%    /Volumes/iTunes
+
+Okay, so now I have this in the Volumes directory. Great, however I  
+cannot see it in Finder. Go -&gt; Folder /Volumes show it however since I  
+do not have show hidden files on (and I do not want to leave them on)  
+I cannot tell iTunes (in iTunes prefs) its directory as this does not  
+show up on the desktop as a mount.
+
+Hope that makes sense.
+
+Thanks,
+Sean
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000758.html">[zfs-discuss] nas
+</A></li>
+	<LI>Next message: <A HREF="000760.html">[zfs-discuss] snapshot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#759">[ date ]</a>
+              <a href="thread.html#759">[ thread ]</a>
+              <a href="subject.html#759">[ subject ]</a>
+              <a href="author.html#759">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

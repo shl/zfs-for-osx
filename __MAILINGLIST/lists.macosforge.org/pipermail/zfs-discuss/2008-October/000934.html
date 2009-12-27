@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] increased partiiton sizes for raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20increased%20partiiton%20sizes%20for%20raidz&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000944.html">
+   <LINK REL="Next"  HREF="000935.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] increased partiiton sizes for raidz</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20increased%20partiiton%20sizes%20for%20raidz&In-Reply-To="
+       TITLE="[zfs-discuss] increased partiiton sizes for raidz">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Mon Oct  6 00:41:04 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000944.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+        <LI>Next message: <A HREF="000935.html">[zfs-discuss] increased partiiton sizes for raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#934">[ date ]</a>
+              <a href="thread.html#934">[ thread ]</a>
+              <a href="subject.html#934">[ subject ]</a>
+              <a href="author.html#934">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I have a macpro in which I use 3 disks for a n hfs+ stripe and for a  
+raidz.
+My raidz was getting full, so I wanted to move more files to the raidz  
+and make the hfs+ stripe smaller.
+
+1 by 1 I repartitioned the disks and let zfs resilver the raidz. this  
+worked fine and after a reboot, it showed the extra size on raidz.
+
+But now diskutil won't let me recreate the hfs+ stripe.
+
+This is what 1 disk looks like now :
+root# diskutil list disk1
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk1
+    1:                        EFI                         200.0 Mi    
+disk1s1
+    2:                  Apple_HFS raidHfs                 49.9 Gi     
+disk1s2
+    3:                        ZFS backup                  415.4 Gi    
+disk1s3
+Macintosh:~ root#
+This is what I get from disk utility : ( the zfs raid is not mounted  
+at this time )
+from /var/log/system.log :
+root# diskutil list disk1
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk1
+    1:                        EFI                         200.0 Mi    
+disk1s1
+    2:                  Apple_HFS raidHfs                 49.9 Gi     
+disk1s2
+    3:                        ZFS backup                  415.4 Gi    
+disk1s3
+Macintosh:~ root#
+So it is trying to create a booter partition but fails.
+Any help welcome,
+
+Dirk
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000944.html">[zfs-discuss] ZFS hanging when a disk in a mirror goes offline
+</A></li>
+	<LI>Next message: <A HREF="000935.html">[zfs-discuss] increased partiiton sizes for raidz
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#934">[ date ]</a>
+              <a href="thread.html#934">[ thread ]</a>
+              <a href="subject.html#934">[ subject ]</a>
+              <a href="author.html#934">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

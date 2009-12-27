@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] memory limits
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=C4E37135-98A9-425B-B7CB-0B6014152D68%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000097.html">
+   <LINK REL="Next"  HREF="000113.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] memory limits</H1>
+    <B>B&#233;rczi G&#225;bor</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20memory%20limits&In-Reply-To=C4E37135-98A9-425B-B7CB-0B6014152D68%40apple.com"
+       TITLE="[zfs-discuss] memory limits">gabor at berczi.be
+       </A><BR>
+    <I>Tue Jan 29 00:57:38 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000097.html">[zfs-discuss] memory limits
+</A></li>
+        <LI>Next message: <A HREF="000113.html">[zfs-discuss] memory limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#110">[ date ]</a>
+              <a href="thread.html#110">[ thread ]</a>
+              <a href="subject.html#110">[ subject ]</a>
+              <a href="author.html#110">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jan 25, 2008, at 9:54 PM, No&#235;l Dellofano wrote:
+
+&gt;<i> Be warned that in general, the smaller you force the ARC, the worse  
+</I>&gt;<i> your performance will get.  Obviously this differs based on your  
+</I>&gt;<i> expected workload, but just a heads up :)
+</I>
+I have swapping switched off (under OSX it was always a great  
+performance degradation for me). The thing is, if XNU runs out of  
+memory, it will become unresponsible and freeze. ZFS doesn't really  
+help the situation :)
+
+Currently:
+PhysMem:  481M wired,   80M active,   38M inactive,  599M used,   30M  
+free.
+ZFS footprint:  314M used,  492M peak,  322M goal               299  
+threads
+ARC footprint:  224M used,  375M peak,  224M goal
+
+So I have 38+30 = 68Mb memory actually free, yet ZFS doesn't free more  
+memory. So maybe ZFS should set its memory limits also based on the  
+amount of free (free+inactive) memory. Turning paging back on would  
+evade data loss, but it would also end up in needless performance  
+degradation.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Jan 25, 2008, at 1:27 AM, B&#233;rczi G&#225;bor wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> What are the possibilities of limiting ZFS memory usage on OS X?
+</I>&gt;&gt;<i> (for example limiting the ARC size)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ZFS footprint:  346M used,  504M peak,  369M goal               299  
+</I>&gt;&gt;<i> threads
+</I>&gt;&gt;<i> ARC footprint:  232M used,  385M peak,  244M goal
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> Gabucino
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+-- 
+Gabucino
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000097.html">[zfs-discuss] memory limits
+</A></li>
+	<LI>Next message: <A HREF="000113.html">[zfs-discuss] memory limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#110">[ date ]</a>
+              <a href="thread.html#110">[ thread ]</a>
+              <a href="subject.html#110">[ subject ]</a>
+              <a href="author.html#110">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

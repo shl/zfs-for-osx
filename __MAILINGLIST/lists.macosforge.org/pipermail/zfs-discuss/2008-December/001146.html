@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Kernel Panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Kernel%20Panic&In-Reply-To=%3C43480f020812051812k54a32a5bi13c3bd3d5be18de5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001145.html">
+   <LINK REL="Next"  HREF="001147.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Kernel Panic</H1>
+    <B>Mike Heller</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20ZFS%20Kernel%20Panic&In-Reply-To=%3C43480f020812051812k54a32a5bi13c3bd3d5be18de5%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] ZFS Kernel Panic">michael.heller at gmail.com
+       </A><BR>
+    <I>Fri Dec  5 18:12:30 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001145.html">[zfs-discuss] Binary installer for ZFS-119
+</A></li>
+        <LI>Next message: <A HREF="001147.html">[zfs-discuss] Case of the missing file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1146">[ date ]</a>
+              <a href="thread.html#1146">[ thread ]</a>
+              <a href="subject.html#1146">[ subject ]</a>
+              <a href="author.html#1146">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Noel,
+
+I got this kernel panic yesterday.  The machine was basically idle, but I
+have implemented Alex's crontab to snapshot hourly.  I don't have scrubs
+scheduled.
+
+Regards,
+Mike
+
+Fri Dec  5 14:05:19 2008
+panic(cpu 0 caller 0x00B6DBD7): &quot;[ZFS]: assertion failed in
+/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/dnode_sync.c
+line 397: pass &lt;
+100&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/dnode_sync.c:397
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x47b1fa38 : 0x12b0fa (0x459234 0x47b1fa6c 0x133243 0x0)
+0x47b1fa88 : 0xb6dbd7 (0xbda4f4 0xbd9d40 0x18d 0xbda4e8)
+0x47b1fba8 : 0xb6665d (0x167734f8 0x0 0x47b1fc18 0x5a97600)
+0x47b1fbe8 : 0xb66866 (0x47b1fc28 0x0 0x5a97600 0x11cfca40)
+0x47b1fc48 : 0xb741ef (0x1210c600 0x12150800 0x47b1fc68 0xb9d18a)
+0x47b1fc68 : 0xb604a7 (0x7b616050 0x1210c600 0x0 0x11c61890)
+0x47b1fc88 : 0xb6112e (0x7b6160a0 0x11c61890 0x47b1fcb8 0xb9e4ab)
+0x47b1fcd8 : 0xb66455 (0x7b616050 0x11c61890 0x11c61890 0x0)
+0x47b1fcf8 : 0xba3c22 (0x11c61890 0x16ae0400 0x800 0x47b1fd1c)
+0x47b1fd38 : 0xba5a23 (0x16ae0000 0x0 0x0 0x7b4f5000)
+0x47b1fd78 : 0x202e0c (0x1f000000 0xcf1c5a11 0x16ae0000 0x3)
+0x47b1fdb8 : 0x1f619c (0x47b1fde8 0x246 0x47b1fe18 0x1da35d)
+0x47b1fe18 : 0x1ec476 (0xacddea0 0xcf1c5a11 0x16ae0000 0x3)
+0x47b1fe78 : 0x3661c2 (0x583f0f0 0xcf1c5a11 0x16ae0000 0x47b1ff50)
+0x47b1fe98 : 0x38cb52 (0x583f0f0 0xcf1c5a11 0x16ae0000 0x47b1ff50)
+0x47b1ff78 : 0x3ddd6e (0xc63d6f0 0xbd15340 0xbd15384 0xffffffff)
+Backtrace continues...
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0xb42000-&gt;0xc0dfff
+
+BSD process name corresponding to current thread: zfs
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBookPro2,2 (Mac-F42187C8)
+
+
+Model: MacBookPro2,2, BootROM MBP22.00A5.B07, 2 processors, Intel Core 2
+Duo, 2.33 GHz, 3 GB
+Graphics: kHW_ATIr520Item, ATY,RadeonX1600, spdisplays_pcie_device, 256 MB
+Memory Module: BANK 0/DIMM0, 2 GB, DDR2 SDRAM, 667 MHz
+Memory Module: BANK 1/DIMM1, 1 GB, DDR2 SDRAM, 667 MHz
+AirPort: spairport_wireless_card_type_airport_extreme, 1.4.8.0
+Bluetooth: Version 2.1.0f17, 2 service, 0 devices, 1 incoming serial ports
+Network Service: Parallels Shared Networking Adapter, Ethernet, en2
+Network Service: Parallels Host-Only Networking Adapter, Ethernet, en3
+Serial ATA Device: WDC WD2500BEVS-22UST0, 232.89 GB
+Parallel ATA Device: HL-DT-ST DVDRW GWA4080MA
+USB Device: Built-in iSight, Micron, high_speed, 500 mA
+USB Device: Bluetooth USB Host Controller, Apple, Inc., full_speed, 500 mA
+USB Device: IR Receiver, Apple Computer, Inc., full_speed, 500 mA
+USB Device: Apple Internal Keyboard / Trackpad, Apple Computer, full_speed,
+500 mA
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081205/6ff98a9c/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081205/6ff98a9c/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001145.html">[zfs-discuss] Binary installer for ZFS-119
+</A></li>
+	<LI>Next message: <A HREF="001147.html">[zfs-discuss] Case of the missing file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1146">[ date ]</a>
+              <a href="thread.html#1146">[ thread ]</a>
+              <a href="subject.html#1146">[ subject ]</a>
+              <a href="author.html#1146">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

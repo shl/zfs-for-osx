@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] RE: Time machine with ZFS backend
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RE%3A%20Time%20machine%20with%20ZFS%20backend&In-Reply-To=14AB7A2B-58DF-4A5C-8D14-A06DEDBE25CB%40electricteaparty.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000520.html">
+   <LINK REL="Next"  HREF="000524.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] RE: Time machine with ZFS backend</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20RE%3A%20Time%20machine%20with%20ZFS%20backend&In-Reply-To=14AB7A2B-58DF-4A5C-8D14-A06DEDBE25CB%40electricteaparty.net"
+       TITLE="[zfs-discuss] RE: Time machine with ZFS backend">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Sun Apr 20 00:03:15 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000520.html">[zfs-discuss] RE: Time machine with ZFS backend
+</A></li>
+        <LI>Next message: <A HREF="000524.html">[zfs-discuss] Re: Time machine with ZFS backend
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#523">[ date ]</a>
+              <a href="thread.html#523">[ thread ]</a>
+              <a href="subject.html#523">[ subject ]</a>
+              <a href="author.html#523">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Apr 19, 2008, at 8:49 PM, Adrian Thornton wrote:
+
+&gt;<i> Hey there, just wondering if anyone has anything else to say about  
+</I>&gt;<i> the below-described method. Also, just curious why Time Machine  
+</I>&gt;<i> would not work simply with a writable disk image on the ZFS pool,  
+</I>&gt;<i> without going to all the AFS/SSH trouble described below? If Time  
+</I>&gt;<i> Machine has a properly formatted disk image, why would it even care  
+</I>&gt;<i> what filesystem that disk image is stored on?
+</I>
+Time machine just won't let you choose a local sparsbundle.... that's  
+why the afp/ssh thing is needed....
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Adrian
+</I>&gt;<i>
+</I>&gt;&gt;<i> [zfs-discuss] Time machine with ZFS backend
+</I>&gt;&gt;<i> Franz Schmalzl franzschmalzl at spamfreemail.de
+</I>&gt;&gt;<i> Sat Mar 22 06:17:42 PDT 2008
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi list!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I just managed to get Time machine working on my external raidz...
+</I>&gt;&gt;<i> it's a bit dirty, but works
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Steps:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Create a zfs volume
+</I>&gt;&gt;<i> Share over the network via afp
+</I>&gt;&gt;<i> open up ssh tunnel to localhost, since afp won't let you connect to
+</I>&gt;&gt;<i> localhost
+</I>&gt;&gt;<i> (ssh user at localhost -L randomportnumber:localhost:548 )
+</I>&gt;&gt;<i> Command+K, <A HREF="apf://localhost:randomportnumber">apf://localhost:randomportnumber</A>)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (( of course randomportnumber hast to be a random port number ;),  
+</I>&gt;&gt;<i> like
+</I>&gt;&gt;<i> 1234 )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Your &quot;network&quot; share should get mounted  and you can use it for time
+</I>&gt;&gt;<i> machine witch creates i'ts sparsebundles...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> p.s.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> don't forget to apply
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> defaults write com.apple.systempreferences
+</I>&gt;&gt;<i> TMShowUnsupportedNetworkVolumes 1
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> regards
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> franz schmalzl
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000520.html">[zfs-discuss] RE: Time machine with ZFS backend
+</A></li>
+	<LI>Next message: <A HREF="000524.html">[zfs-discuss] Re: Time machine with ZFS backend
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#523">[ date ]</a>
+              <a href="thread.html#523">[ thread ]</a>
+              <a href="subject.html#523">[ subject ]</a>
+              <a href="author.html#523">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

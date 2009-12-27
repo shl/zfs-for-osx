@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS/TM/OSXS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS/TM/OSXS&In-Reply-To=b2a3f2d80802050702i31b70c69w107d7fb3b5cecbfa%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000136.html">
+   <LINK REL="Next"  HREF="000137.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS/TM/OSXS</H1>
+    <B>Erik ABLESON</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS/TM/OSXS&In-Reply-To=b2a3f2d80802050702i31b70c69w107d7fb3b5cecbfa%40mail.gmail.com"
+       TITLE="[zfs-discuss] ZFS/TM/OSXS">eableson at gmail.com
+       </A><BR>
+    <I>Tue Feb  5 07:31:43 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000136.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+        <LI>Next message: <A HREF="000137.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#202">[ date ]</a>
+              <a href="thread.html#202">[ thread ]</a>
+              <a href="subject.html#202">[ subject ]</a>
+              <a href="author.html#202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That shouldn't make any difference since the client will be seeing a  
+time machine approved share from the server.
+
+The question more about the behaviour of the new sparse image bundles  
+instead of a regular sparse image. I did manage to test a SuperDuper  
+backup to an image on ZFS which worked perfectly since the filesystem  
+only saw one big file. But from what I understand, bundles are just a  
+Finder abstraction of a directory so that might not work as well on a  
+ZFS backed share.
+
+
+Erik Ableson
++33 6 80 83 58 28
+
+Le 5 f&#233;vr. 08 &#224; 16:02, Solra Bizna &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">sbizna at tejat.net</A>&gt; a &#233;crit :
+
+&gt;<i> On Feb 5, 2008 6:57 AM, David Ritchie &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">david299792 at googlemail.com</A>&gt;  
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i> If anyone can suggest how I can make TM happy to back up directly to
+</I>&gt;&gt;<i> ZFS, I do have spare drives and I'm happy to let you know how it  
+</I>&gt;&gt;<i> goes.
+</I>&gt;<i> It may possibly work if you touch .com.apple.timemachine.supported on
+</I>&gt;<i> the root of the zpool (or maybe even one of the filesystems), but my
+</I>&gt;<i> guess is that it would fail in an odd way if it works at all.
+</I>&gt;<i> -:sigma.SB
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000136.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+	<LI>Next message: <A HREF="000137.html">[zfs-discuss] ZFS/TM/OSXS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#202">[ date ]</a>
+              <a href="thread.html#202">[ thread ]</a>
+              <a href="subject.html#202">[ subject ]</a>
+              <a href="author.html#202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

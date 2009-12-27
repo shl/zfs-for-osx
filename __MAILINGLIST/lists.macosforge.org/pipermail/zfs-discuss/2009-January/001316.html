@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] i should get paid for this
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20i%20should%20get%20paid%20for%20this&In-Reply-To=%3C7000746B-BD53-4E37-AF74-DF81A3FF9194%40ironsoftware.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001315.html">
+   <LINK REL="Next"  HREF="001319.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] i should get paid for this</H1>
+    <B>Christian Kendi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20i%20should%20get%20paid%20for%20this&In-Reply-To=%3C7000746B-BD53-4E37-AF74-DF81A3FF9194%40ironsoftware.de%3E"
+       TITLE="[zfs-discuss] i should get paid for this">ksh at ironsoftware.de
+       </A><BR>
+    <I>Thu Jan 15 19:50:43 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001315.html">[zfs-discuss] Zpool disaster
+</A></li>
+        <LI>Next message: <A HREF="001319.html">[zfs-discuss] Zpool disaster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1316">[ date ]</a>
+              <a href="thread.html#1316">[ thread ]</a>
+              <a href="subject.html#1316">[ subject ]</a>
+              <a href="author.html#1316">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>that one happend as i was unmounting a clone. i was trying to recover  
+some losses.
+clone isnt that good in comparison to .snapshot.
+
+n 15 22:23:00 2009
+panic(cpu 1 caller 0x00BB2BD7): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/dnode_sync.c  
+line 397: pass &lt; 100&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/ 
+zfs-119/zfs_kext/zfs/dnode_sync.c:397
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x36717b28 : 0x12b4f3 (0x45b13c 0x36717b5c 0x1335e4 0x0)
+0x36717b78 : 0xbb2bd7 (0xc1f4f4 0xc1ed40 0x18d 0xc1f4e8)
+0x36717c98 : 0xbab65d (0x63bd708 0x0 0xc23710 0x0)
+0x36717cd8 : 0xb88f9b (0x4f3bae0 0x0 0x0 0xf254ed2)
+0x36717d28 : 0x1f1566 (0x63b9258 0x0 0x8d32e84 0x1d3bbc)
+0x36717d58 : 0x1dfcb3 (0x63b9258 0x0 0x8d32e84 0x1f5e8e)
+0x36717da8 : 0x1dff8c (0x63b9258 0x0 0x1 0x8d32e84)
+0x36717dd8 : 0x1e0131 (0x63b9258 0x0 0x8d32e84 0x0)
+0x36717f78 : 0x3df460 (0x482199c 0x8d32d80 0x8d32dc4 0x0)
+0x36717fc8 : 0x1a0887 (0x6cb21a4 0x0 0x1a30b5 0x3f59128)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbffffe48
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xb87000-&gt;0xc52fff
+
+BSD process name corresponding to current thread: umount
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_I386
+System model name: MacBook1,1 (Mac-F4208CC8)
+
+
+
+
+---
+Christian Kendi
+Iron Software
+Gemeinschaftsstr. 2b
+85435 Erding, Germany
+mailto: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ksh at ironsoftware.de</A>
+us mobile: +1-321-507-0653
+mobile: +049 (0) 177 / 55 - 31 33 7
+phone: +049 (0) 1801 / 6666 26 23 48
+*****************************************
+Geschaeftsfuehrer: Christian Kendi
+Steuernr: 114/235/50572 * Amtsgericht: Erding
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090115/d79bba17/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090115/d79bba17/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: Mensaje firmado digitalmente
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090115/d79bba17/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090115/d79bba17/attachment.bin</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001315.html">[zfs-discuss] Zpool disaster
+</A></li>
+	<LI>Next message: <A HREF="001319.html">[zfs-discuss] Zpool disaster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1316">[ date ]</a>
+              <a href="thread.html#1316">[ thread ]</a>
+              <a href="subject.html#1316">[ subject ]</a>
+              <a href="author.html#1316">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

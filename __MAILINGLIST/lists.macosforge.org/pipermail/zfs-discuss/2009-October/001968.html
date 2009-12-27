@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-10a286 ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C13EAF01B-55D5-4AF9-AB77-949834499C20%40yellowspace.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001960.html">
+   <LINK REL="Next"  HREF="001969.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-10a286 ?</H1>
+    <B>Lorenzo Perone</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C13EAF01B-55D5-4AF9-AB77-949834499C20%40yellowspace.net%3E"
+       TITLE="[zfs-discuss] zfs-10a286 ?">lopez.on.the.lists at yellowspace.net
+       </A><BR>
+    <I>Tue Oct 20 03:22:33 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001960.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+        <LI>Next message: <A HREF="001969.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1968">[ date ]</a>
+              <a href="thread.html#1968">[ thread ]</a>
+              <a href="subject.html#1968">[ subject ]</a>
+              <a href="author.html#1968">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 18.10.2009, at 22:06, Harald Hanche-Olsen wrote:
+
+&gt;<i> + Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt;:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Don't move on to OSX Server - stay on FreeBSD. You're likely to get
+</I>&gt;&gt;<i> much better ongoing ZFS performance there: in addition, it wouldn't
+</I>&gt;&gt;<i> surprise me if the version that the 119 bits are capable of reading
+</I>&gt;&gt;<i> (8) is lower than the support in FreeBSD anyway, which means your  
+</I>&gt;&gt;<i> pool
+</I>&gt;&gt;<i> may not even be loadable.
+</I>&gt;<i>
+</I>&gt;<i> On FreeBSD 7.2:
+</I>&gt;<i>
+</I>&gt;<i> #; zpool upgrade
+</I>&gt;<i> This system is currently running ZFS version 6.
+</I>&gt;<i>
+</I>&gt;<i> I think FreeBSD 8 (which is not yet released) runs ZFS version 13,
+</I>&gt;<i> however. And there is ongoing work to move it up to ZFS version 19.
+</I>
+That is correct, FreeBSD 8 (due out soon) will have v13.
+Also, it has just been labeled production ready (the advice
+about ZFS being experimental has been removed).
+However, ZFS version 13 has been also merged since some time
+to FreeBSD 7-STABLE, so if you need it on the 7- branch
+just csup/build your system to RELENG_7 and you'll be just fine.
+
+&gt;<i> I agree with your assessment, though. Both freebsd and opensolaris
+</I>&gt;<i> ought to be excellent choices for a server. Actually, I wonder if it
+</I>&gt;<i> wouldn't be better for all parties, Apple included, if Apple stopped
+</I>&gt;<i> trying to sell and support OS X on servers and instead worked to
+</I>&gt;<i> develop software for other unix-based servers to support OS X users.
+</I>
+What I wonder about is, when Mac OS X will finally have a decent
+file system? ZFS sure was worth a try (*probably* stopped by
+the ORACLE/SUN merger licensing variables), but whatever
+replacement will eventually arrive, imo it's really horribly overdue.
+Especially after most of the system has been so elegantly optimized for
+parallel multitasking.
+
+HFS is really old and has some serious performance and reliability
+drawbacks (the most famous being the Catalog File, which has to
+be contended by any task updating the filesystem structure[1]).
+Almost all spinning wheels I see on SL are related to
+file system / volume handling.
+
+I'm no Linu[xs] fan, but I think Linus Torvalds has a point with his
+comments on HFS... [2]
+
+Cheers,
+
+
+Lorenzo
+
+[1] <A HREF="http://en.wikipedia.org/wiki/Hierarchical_File_System#Problems">http://en.wikipedia.org/wiki/Hierarchical_File_System#Problems</A>
+[2] <A HREF="http://www.smh.com.au/news/technology/torvalds-pans-apples-os-x/2008/02/05/1202090393959.html">http://www.smh.com.au/news/technology/torvalds-pans-apples-os-x/2008/02/05/1202090393959.html</A>
+
+
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001960.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+	<LI>Next message: <A HREF="001969.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1968">[ date ]</a>
+              <a href="thread.html#1968">[ thread ]</a>
+              <a href="subject.html#1968">[ subject ]</a>
+              <a href="author.html#1968">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

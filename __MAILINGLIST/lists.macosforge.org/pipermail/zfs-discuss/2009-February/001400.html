@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] One big pool / Several ones ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3C4999C49B.7010802%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001399.html">
+   <LINK REL="Next"  HREF="001403.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] One big pool / Several ones ?</H1>
+    <B>Richard Elling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20One%20big%20pool%20/%20Several%20ones%20%3F&In-Reply-To=%3C4999C49B.7010802%40gmail.com%3E"
+       TITLE="[zfs-discuss] One big pool / Several ones ?">richard.elling at gmail.com
+       </A><BR>
+    <I>Mon Feb 16 11:55:07 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001399.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+        <LI>Next message: <A HREF="001403.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1400">[ date ]</a>
+              <a href="thread.html#1400">[ thread ]</a>
+              <a href="subject.html#1400">[ subject ]</a>
+              <a href="author.html#1400">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Christian He&#223;mann wrote:
+&gt;<i> On 16.02.2009, at 18:59, Richard Elling wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> For example, on my wife's home directory (containing her Pictures), I 
+</I>&gt;&gt;<i> set
+</I>&gt;&gt;<i> copies=2. This offers better redundancy for those things which are most
+</I>&gt;&gt;<i> important. By contrast, my junk is in a file system with copies=1.  The
+</I>&gt;&gt;<i> zfs copies mechanism works over and above the zpool data protection.
+</I>&gt;&gt;<i> I find this difficult to describe in text, so a picture is worth 
+</I>&gt;&gt;<i> 1,000 words.
+</I>&gt;&gt;<i> <A HREF="http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection">http://blogs.sun.com/relling/entry/zfs_copies_and_data_protection</A>
+</I>&gt;<i>
+</I>&gt;<i> I know the copies-parameter and this blog entry, but I still don't get 
+</I>&gt;<i> it...
+</I>&gt;<i>
+</I>&gt;<i> Ok, in case something goes wrong and I lose one side of my stripe, I 
+</I>&gt;<i> can be (quite) sure the data is still written on the second disk.
+</I>
+You seem to only be considering a failure mode where the whole
+disk becomes suddenly, completely inaccessible.  As the data
+shows in the blog, this is not the most common failure mode.
+
+&gt;<i>
+</I>&gt;<i> Nonetheless, AFAIK, I can't mount one side of a stripe without the 
+</I>&gt;<i> other - so what's the point? Being able to extract my valuable data 
+</I>&gt;<i> with a hex editor? That can't be the whole point of this exercise...?
+</I>
+You do need all top-level vdevs to be available, but we do not
+refer to these as &quot;side of a stripe.&quot;  Mirrors are typically referred
+to as having sides.  If you are concerned about complete double
+failures of disk drives, then you will need to implement a double
+parity protection scheme: 3-way mirror or raidz2.  Or, as I sometimes
+like to say, pay for your paranoia.
+ -- richard
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001399.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+	<LI>Next message: <A HREF="001403.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1400">[ date ]</a>
+              <a href="thread.html#1400">[ thread ]</a>
+              <a href="subject.html#1400">[ subject ]</a>
+              <a href="author.html#1400">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

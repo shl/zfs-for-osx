@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Filename conventions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Filename%20conventions&In-Reply-To=F7A6F611-7E0C-4C70-AFEB-85A934004073%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000323.html">
+   <LINK REL="Next"  HREF="000331.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Filename conventions</H1>
+    <B>Eric A Hulteen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Filename%20conventions&In-Reply-To=F7A6F611-7E0C-4C70-AFEB-85A934004073%40apple.com"
+       TITLE="[zfs-discuss] Filename conventions">eric at hulteen.com
+       </A><BR>
+    <I>Sat Mar 15 16:12:05 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000323.html">[zfs-discuss] invalid vdev configuration after crash
+</A></li>
+        <LI>Next message: <A HREF="000331.html">[zfs-discuss] can't delete from full volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#330">[ date ]</a>
+              <a href="thread.html#330">[ thread ]</a>
+              <a href="subject.html#330">[ subject ]</a>
+              <a href="author.html#330">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>   What character constraints does ZFS have that 
+Mac OS Extended (Journaled) does not?
+
+   I'm trying to back up (copy) Mac OS X files to 
+ZFS.  I tried to use a NAS device for this but 
+ran into trouble because files with 
+Macintosh-legal characters in their names 
+couldn't be copied to SMB volumes.  I assumed 
+that this wouldn't be a problem with ZFS, but 
+unfortunately it appears that is.
+
+   I was copying a folder to a ZFS pool (5 x 1TB, 
+raidz2) and I got a Finder error (i.e., the file 
+&quot;05 Not This Time.mp3&quot; can't be coped because the 
+name is &quot;too long&quot; or contains &quot;characters the 
+disk cannot display&quot;).  I tried again (35 MB 
+total) and the Finder's &quot;Copy&quot; window stayed open 
+for four hours (reporting &quot;Estimating time 
+remaining...&quot;).  I was unable to quit/stop the 
+Copy and had to Force Quit the Finder (which 
+failed and I had to hold the Power button for 
+eight seconds).
+
+   I don't see how the names could be &quot;too long&quot;. 
+The files have no more than 24 characters in 
+their names (so even if every character was four 
+bytes it still wouldn't be too long).  The files 
+are French music titles that were looked up at 
+CDDB when I ripped a music CD (and there are no 
+more than two or three accented characters per 
+title).  These are the folder and filenames:
+
+Jazz a?? La Franc??aise (parent folder, a.k.a. 
+&quot;Jazz\ a\314\200\ La\ Franc\314\247aise&quot;)
+     01 A La Franc??aise.mp3
+     02 Garnerama.mp3
+     03 Bach To Swing.mp3
+     04 Etude In Blue.mp3
+     05 Not This Time.mp3
+     06 Blue Kiss From Brazil.mp3
+     07 Fiance??es En Folie.mp3
+
+   Is the limit on the whole pathname?
+
+/Volumes/Kate_backup_372/2008/2008_03_08/katemcjones/Music/iTunes/iTunes 
+Music/Claude Bolling Trio/Jazz &#224; La Fran&#231;aise/05 
+Not This Time.mp3
+
+Eric
+__________
+
+&gt;<i>Not quite sure exactly what kind of conventions you're referring to.  
+</I>&gt;<i>In general, we export UTF-8 kNFD trough the API but store kNFC on disk.
+</I>&gt;<i>There is a difference in the way names are 
+</I>&gt;<i>looked up and dealt with in ZFS then HFS.  In 
+</I>&gt;<i>ZFS everything is stored via hash in the ZAP 
+</I>&gt;<i>which has a 256 byte limit.  HFS can store 256 
+</I>&gt;<i>Unicode chars which when converted to UTF-8 can 
+</I>&gt;<i>exceed 256 bytes.  Hence perhaps you have some 
+</I>&gt;<i>extremely long filenames that have a lot of 
+</I>&gt;<i>accented or foreign chars in your data.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>Noel
+</I>&gt;<i>
+</I>&gt;<i>On Jan 17, 2008, at 4:40 PM, Michael Alexander wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>What are the file name conventions under MacOSX 
+</I>&gt;&gt;<i>and in general. While ZFS works very well in my 
+</I>&gt;&gt;<i>testing so far, some double byte character file 
+</I>&gt;&gt;<i>names seem to be a problem relative to HFS+, 
+</I>&gt;&gt;<i>but the pattern is not obvious yet. -m.a.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>_______________________________________________
+</I>&gt;&gt;<i>zfs-discuss mailing list
+</I>&gt;&gt;<i><A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i><A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000323.html">[zfs-discuss] invalid vdev configuration after crash
+</A></li>
+	<LI>Next message: <A HREF="000331.html">[zfs-discuss] can't delete from full volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#330">[ date ]</a>
+              <a href="thread.html#330">[ thread ]</a>
+              <a href="subject.html#330">[ subject ]</a>
+              <a href="author.html#330">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

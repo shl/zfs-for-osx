@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic on scrub
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic%20on%20scrub&In-Reply-To=7AE74633-1EFE-45C7-972F-5F1BBFCC5538%40justincooley.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000387.html">
+   <LINK REL="Next"  HREF="000390.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic on scrub</H1>
+    <B>Michael Eberlein</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Panic%20on%20scrub&In-Reply-To=7AE74633-1EFE-45C7-972F-5F1BBFCC5538%40justincooley.com"
+       TITLE="[zfs-discuss] Panic on scrub">eberlein at att.net
+       </A><BR>
+    <I>Fri Apr  4 14:10:46 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000387.html">[zfs-discuss] Panic on scrub
+</A></li>
+        <LI>Next message: <A HREF="000390.html">[zfs-discuss] On panics scrubbing and zpool status
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#389">[ date ]</a>
+              <a href="thread.html#389">[ thread ]</a>
+              <a href="subject.html#389">[ subject ]</a>
+              <a href="author.html#389">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Justin,
+
+   Here is the panic log I've been getting on my problems as listed  
+below - same problem.  I am using an Imac 24&quot; with 4 drives connected  
+via USB and firewire, though the problem persists with any manner of  
+swapping of the interfaces.
+
+I *KNOW* I have data corruption issues here, so I think that's an  
+underlying cause here.
+
+Any help appreciated.
+
+Mike
+
+Fri Apr  4 23:05:40 2008
+panic(cpu 1 caller 0x001A8C8A): Kernel trap at 0x003618c1, type  
+14=page fault, registers:
+CR0: 0x80010033, CR2: 0x0000000c, CR3: 0x011e1000, CR4: 0x00000660
+EAX: 0x00000000, EBX: 0x35f13de8, ECX: 0x1f000000, EDX: 0x00000000
+CR2: 0x0000000c, EBP: 0x35f13d18, ESI: 0x00000200, EDI: 0x09f14000
+EFL: 0x00010202, EIP: 0x003618c1, CS:  0x00000008, DS:  0x05840010
+Error code: 0x00000000
+
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x35f13b38 : 0x12b0f7 (0x4581f4 0x35f13b6c 0x133230 0x0)
+0x35f13b88 : 0x1a8c8a (0x461720 0x3618c1 0xe 0x460ed0)
+0x35f13c68 : 0x19ece5 (0x35f13c80 0x5693000 0x35f13d18 0x3618c1)
+0x35f13c78 : 0x3618c1 (0xe 0x48 0x4a8a0010 0x10)
+0x35f13d18 : 0xc71ff8 (0x0 0x6a11f 0x804000 0x0)
+0x35f13d38 : 0xc799dd (0x0 0x0 0x35f13d88 0x6a11f000)
+0x35f13d78 : 0x202bea (0x1f000000 0xcf1c5a20 0x9f14000 0x3)
+0x35f13db8 : 0x1f6039 (0x35f13de8 0x246 0x35f13e18 0x1da207)
+0x35f13e18 : 0x1ec2f6 (0x4941050 0xcf1c5a20 0x9f14000 0x3)
+0x35f13e78 : 0x3653a7 (0x4ccb970 0xcf1c5a20 0x9f14000 0x35f13f50)
+0x35f13e98 : 0x38bd28 (0x4ccb970 0xcf1c5a20 0x9f14000 0x35f13f50)
+0x35f13f78 : 0x3dcf13 (0x59cde70 0x5458340 0x5458384 0x4303)
+0x35f13fc8 : 0x19f1c3 (0x569bac0 0x0 0x1a20b5 0x569bac0)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffab18
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xc16000-&gt;0xce1fff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9C7010
+
+Kernel version:
+Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+root:xnu-1228.4.31~1/RELEASE_I386
+System model name: iMac7,1 (Mac-F42386C8)
+
+On Apr 4, 2008, at 4:20 PM, Justin Cooley wrote:
+
+&gt;<i> Will,
+</I>&gt;<i>
+</I>&gt;<i> I was just about to write to the list because I have also been  
+</I>&gt;<i> getting panics on scrubs.  My panics just started recently;  
+</I>&gt;<i> previously I was able to scrub the same pool.  My panic log is  
+</I>&gt;<i> pasted after Will's message below.
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Justin
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Message: 3
+</I>&gt;&gt;<i> Date: Thu, 03 Apr 2008 09:10:22 -0400
+</I>&gt;&gt;<i> From: Bill Winnett &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">William.Winnett at Sun.COM</A>&gt;
+</I>&gt;&gt;<i> Subject: [zfs-discuss] zfs assertion/kernel panic
+</I>&gt;&gt;<i> To: <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">4311F237-7743-4AC5-B960-E02DDA1AD2D0 at sun.com</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have a zfs set that consistently will crash the kernel when a scrub
+</I>&gt;&gt;<i> operation is performed.  This is not a serious problem for me, as the
+</I>&gt;&gt;<i> data is unimportant.
+</I>&gt;&gt;<i> However, what is important is that the zfs volume is composed of 4
+</I>&gt;&gt;<i> disks that includes a known disk with faulty sectors.  Is this  
+</I>&gt;&gt;<i> panic a
+</I>&gt;&gt;<i> result of the disk
+</I>&gt;&gt;<i> with faulty sectors, or does it point to some other issue?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thu Apr  3 00:04:26 2008
+</I>&gt;<i> panic(cpu 0 caller 0x001A8C8A): Kernel trap at 0x003618c1, type  
+</I>&gt;<i> 14=page fault, registers:
+</I>&gt;<i> CR0: 0x80010033, CR2: 0x0000000c, CR3: 0x00f8b000, CR4: 0x00000660
+</I>&gt;<i> EAX: 0x00000000, EBX: 0x345dfde8, ECX: 0x1f000000, EDX: 0x00000000
+</I>&gt;<i> CR2: 0x0000000c, EBP: 0x345dfd18, ESI: 0x00000200, EDI: 0x052ee000
+</I>&gt;<i> EFL: 0x00010202, EIP: 0x003618c1, CS:  0x00000008, DS:  0x03c00010
+</I>&gt;<i> Error code: 0x00000000
+</I>&gt;<i>
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x345dfb38 : 0x12b0f7 (0x4581f4 0x345dfb6c 0x133230 0x0)
+</I>&gt;<i> 0x345dfb88 : 0x1a8c8a (0x461720 0x3618c1 0xe 0x460ed0)
+</I>&gt;<i> 0x345dfc68 : 0x19ece5 (0x345dfc80 0x4c5e2e8 0x345dfd18 0x3618c1)
+</I>&gt;<i> 0x345dfc78 : 0x3618c1 (0xe 0x48 0x4b30010 0x190010)
+</I>&gt;<i> 0x345dfd18 : 0x54a20ff8 (0x0 0x1bf2a 0x3000 0x0)
+</I>&gt;<i> 0x345dfd38 : 0x54a289dd (0x0 0x0 0x345dfd58 0x1a236f)
+</I>&gt;<i> 0x345dfd78 : 0x202bea (0x1f000000 0xcf1c5a20 0x52ee000 0x3)
+</I>&gt;<i> 0x345dfdb8 : 0x1f6039 (0x345dfde8 0x246 0x345dfe18 0x1da207)
+</I>&gt;<i> 0x345dfe18 : 0x1ec2f6 (0x4ad7910 0xcf1c5a20 0x52ee000 0x3)
+</I>&gt;<i> 0x345dfe78 : 0x3653a7 (0x433f500 0xcf1c5a20 0x52ee000 0x345dff50)
+</I>&gt;<i> 0x345dfe98 : 0x38bd28 (0x433f500 0xcf1c5a20 0x52ee000 0x345dff50)
+</I>&gt;<i> 0x345dff78 : 0x3dcf13 (0x44b57b0 0x4c57680 0x4c576c4 0x3e5a3c0)
+</I>&gt;<i> 0x345dffc8 : 0x19f1c3 (0x4c4c120 0x0 0x1a20b5 0x4c4c120)
+</I>&gt;<i> No mapping exists for frame pointer
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0xbfffab38
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0x549c5000-&gt;0x54a90fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: zpool
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9C7010
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;  
+</I>&gt;<i> root:xnu-1228.4.31~1/RELEASE_I386
+</I>&gt;<i> System model name: MacBookAir1,1 (Mac-F42C8CC8)
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080404/16501d7c/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080404/16501d7c/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000387.html">[zfs-discuss] Panic on scrub
+</A></li>
+	<LI>Next message: <A HREF="000390.html">[zfs-discuss] On panics scrubbing and zpool status
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#389">[ date ]</a>
+              <a href="thread.html#389">[ thread ]</a>
+              <a href="subject.html#389">[ subject ]</a>
+              <a href="author.html#389">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

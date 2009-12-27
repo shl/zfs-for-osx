@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Questions from someone new to ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Questions%20from%20someone%20new%20to%20ZFS&In-Reply-To=93B20B70-8A00-4D93-8B3E-489C98275FA1%40physics.ucsd.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000180.html">
+   <LINK REL="Next"  HREF="000182.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Questions from someone new to ZFS</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Questions%20from%20someone%20new%20to%20ZFS&In-Reply-To=93B20B70-8A00-4D93-8B3E-489C98275FA1%40physics.ucsd.edu"
+       TITLE="[zfs-discuss] Questions from someone new to ZFS">bwaters at nrao.edu
+       </A><BR>
+    <I>Thu Feb 21 01:14:19 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000180.html">[zfs-discuss] Questions from someone new to ZFS
+</A></li>
+        <LI>Next message: <A HREF="000182.html">[zfs-discuss] Questions from someone new to ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#181">[ date ]</a>
+              <a href="thread.html#181">[ thread ]</a>
+              <a href="subject.html#181">[ subject ]</a>
+              <a href="author.html#181">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Feb 20, 2008, at 9:36 PM, Bryan Hill wrote:
+
+&gt;<i> Once ZFS is production-ready on OS X, what is the optimal way to  
+</I>&gt;<i> implement ZFS and a hardware RAID system such as the VTrak?  I've  
+</I>&gt;<i> read some opinions on the Opensolaris ZFS discussion list, and it  
+</I>&gt;<i> seems that people recommend using a RAID unit in a JBOD  
+</I>&gt;<i> configuration, and using ZFS to handle the redundancy.
+</I>
+The hardware RAID would give you system-transparent hot-swap. But  
+yeah, otherwise it's just a level of complexity that might be better  
+incorporated into the ZFS stack. So I'd use it in JBOD mode, but you'd  
+have to manage failed drives somehow (not certain about hot-swap). I'm  
+not familiar with the VTrak (I mean, I've read about them, but don't  
+have one).
+
+&gt;<i> So if one uses a JBOD configuration, is raidz optimal?  Or would you  
+</I>&gt;<i> use a pool made up of a collection of mirrored disks?
+</I>
+Read this:
+<A HREF="http://blogs.sun.com/roch/entry/when_to_and_not_to">http://blogs.sun.com/roch/entry/when_to_and_not_to</A>
+
+It may help you understand how to best trade off performance and raidz  
+overhead when you've got ~12-48 disks to play with.
+
+I'm not sure about &quot;tuning&quot; the file system for performance on lots of  
+little files. I've played with such systems using reiserfs and NTFS;  
+don't most file systems coalesce small files into the directory tree?  
+With ZFS I have no idea...
+
+
+- boyd
+
+Boyd Waters
+Scientific Programmer
+National Radio Astronomy Observatory
+Socorro, New Mexico, USA, Earth
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000180.html">[zfs-discuss] Questions from someone new to ZFS
+</A></li>
+	<LI>Next message: <A HREF="000182.html">[zfs-discuss] Questions from someone new to ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#181">[ date ]</a>
+              <a href="thread.html#181">[ thread ]</a>
+              <a href="subject.html#181">[ subject ]</a>
+              <a href="author.html#181">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

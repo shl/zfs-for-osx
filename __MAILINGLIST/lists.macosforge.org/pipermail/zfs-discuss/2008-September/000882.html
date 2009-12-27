@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk	problem)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20iDisk%20and%20ZFS%20Stability%20Problem%3F%20%28or%20just%20an%20iDisk%0A%09problem%29&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000881.html">
+   <LINK REL="Next"  HREF="000883.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk	problem)</H1>
+    <B>Aric Gregson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20iDisk%20and%20ZFS%20Stability%20Problem%3F%20%28or%20just%20an%20iDisk%0A%09problem%29&In-Reply-To="
+       TITLE="[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk	problem)">aorchid at mac.com
+       </A><BR>
+    <I>Fri Sep 26 12:19:41 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000881.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+        <LI>Next message: <A HREF="000883.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#882">[ date ]</a>
+              <a href="thread.html#882">[ thread ]</a>
+              <a href="subject.html#882">[ subject ]</a>
+              <a href="author.html#882">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Mac ZFS Community,
+
+We recently (days ago) migrated two users' entire home directories to a
+ZFS formatted internal drives (mirrored, entire slice both disks). This
+was after using ZFS for Final Cut for many months without any problems. 
+
+Currently, when attempting to mount our own iDisk to view contents or 
+copy a file to or from the iDisk, the Finder freezes---sort of. The copy
+to or from iDisk does not work, it says that it is copying, but actually
+never completes the process, a file of the same name and 0 bytes shows
+up on the iDisk. iDisk sync is off, because I thought this was the
+problem two days ago.
+
+Meanwhile, the Finder allows one to open applications, click through
+windows and open files, but will not update any new files on the
+computer. For example, if you save a new file to the Desktop, the
+Finder will not show you the file, even though it exists in
+Terminal (and in Finder upon reboot). 
+
+Additionally, you cannot copy anything from a mounted disk (dmg, USB) to
+anywhere on the computer, ZFS or HFS+ formatted disks, until the
+Finder restarts (restarting the computer).
+
+Logout does not work in these cases either, I have to do a manual
+reboot from Terminal. I haven't tried to specifically kill Finder, as I
+am not clear on how to do that in Mac.
+
+Has anyone experienced anything vaguely similar? Is this an iDisk issue
+or does the iDisk/Finder combination have problems with ZFS? That said,
+cadaver does not have issues with ZFS and iDisk connections, as I can
+copy files to and from our iDisk using Solaris (on ZFS). In my
+experience, the Finder/iDisk combination has been unusable on Mac in
+the past, perhaps this is just a continuation of the same.
+
+Thanks for any ideas. 
+
+&gt;<i> uname -a
+</I>Darwin PowerMac1.local 9.5.0 Darwin Kernel Version 9.5.0: Wed Sep  3
+11:29:43 PDT 2008; root:xnu-1228.7.58~1/RELEASE_I386 i386
+
+aric
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000881.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+	<LI>Next message: <A HREF="000883.html">[zfs-discuss] iDisk and ZFS Stability Problem? (or just an iDisk problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#882">[ date ]</a>
+              <a href="thread.html#882">[ thread ]</a>
+              <a href="subject.html#882">[ subject ]</a>
+              <a href="author.html#882">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

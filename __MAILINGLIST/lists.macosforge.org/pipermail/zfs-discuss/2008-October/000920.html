@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Another Panic to report
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Another%20Panic%20to%20report&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000922.html">
+   <LINK REL="Next"  HREF="000921.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Another Panic to report</H1>
+    <B>Bill Winnett</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Another%20Panic%20to%20report&In-Reply-To="
+       TITLE="[zfs-discuss] Another Panic to report">William.Winnett at Sun.COM
+       </A><BR>
+    <I>Wed Oct  1 10:42:52 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000922.html">[zfs-discuss] late mount
+</A></li>
+        <LI>Next message: <A HREF="000921.html">[zfs-discuss] late mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#920">[ date ]</a>
+              <a href="thread.html#920">[ thread ]</a>
+              <a href="subject.html#920">[ subject ]</a>
+              <a href="author.html#920">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi,
+
+Just had another panic, not really doing anything.  Issued a zpool  
+import -f &lt;filesystem&gt;, received panic below.  I've done this maybe a  
+hundred times before with the same set of disks and filesystem.
+No problems before, why it happens today, beats me.
+
+Leopard 10.5.4, zfs 119
+
+Wed Oct  1 13:37:15 2008
+panic(cpu 0 caller 0x00C71BD7): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/dnode_sync.c  
+line 397: pass &lt; 100&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/ 
+zfs-119/zfs_kext/zfs/dnode_sync.c:397
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x66cc3a68 : 0x12b0fa (0x4592a4 0x66cc3a9c 0x133243 0x0)
+0x66cc3ab8 : 0xc71bd7 (0xcde4f4 0xcddd40 0x18d 0xcde4e8)
+0x66cc3bd8 : 0xc6a65d (0x79e9b90 0x0 0x1 0x0)
+0x66cc3c18 : 0xc6a866 (0x66cc3c58 0x0 0x66cc3c78 0xc65098)
+0x66cc3c78 : 0xca9cda (0x0 0xace8c00 0x66cc3cb8 0x6a78420)
+0x66cc3c98 : 0xc8cc24 (0x7e08a00 0xcf09c0 0xcf09c0 0x6a78420)
+0x66cc3cb8 : 0xc91c74 (0x6a78420 0xcf445c 0x48e3b30c 0x0)
+0x66cc3cf8 : 0xca739b (0x6a78f60 0x23ac6252 0x99dd400 0x0)
+0x66cc3d38 : 0xca9a23 (0x99dd000 0x0 0x0 0x0)
+0x66cc3d78 : 0x20300f (0x1f000000 0xcf1c5a06 0x99dd000 0x3)
+0x66cc3db8 : 0x1f63a2 (0x66cc3de8 0x246 0x66cc3e18 0x1da567)
+0x66cc3e18 : 0x1ec67c (0x77a7560 0xcf1c5a06 0x99dd000 0x3)
+0x66cc3e78 : 0x3661ff (0x71b0a50 0xcf1c5a06 0x99dd000 0x66cc3f50)
+0x66cc3e98 : 0x38cb8f (0x71b0a50 0xcf1c5a06 0x99dd000 0x66cc3f50)
+0x66cc3f78 : 0x3ddde2 (0x71bb4d0 0x7b395a0 0x7b395e4 0x0)
+0x66cc3fc8 : 0x19f2c3 (0x7446dc0 0x0 0x1a20b5 0x7446dc0)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0xc46000-&gt;0xd11fff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;  
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: iMac7,1 (Mac-F4238CC8)
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081001/7d824123/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081001/7d824123/attachment-0001.html</A> 
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000922.html">[zfs-discuss] late mount
+</A></li>
+	<LI>Next message: <A HREF="000921.html">[zfs-discuss] late mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#920">[ date ]</a>
+              <a href="thread.html#920">[ thread ]</a>
+              <a href="subject.html#920">[ subject ]</a>
+              <a href="author.html#920">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

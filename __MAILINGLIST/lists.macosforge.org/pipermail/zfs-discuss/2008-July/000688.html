@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] new bits available: zfs-119!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20new%20bits%20available%3A%20zfs-119%21&In-Reply-To=a782ada90807161601s5bcc74f1h4cc24b5bc3a3c2a0%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000686.html">
+   <LINK REL="Next"  HREF="000689.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] new bits available: zfs-119!</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20new%20bits%20available%3A%20zfs-119%21&In-Reply-To=a782ada90807161601s5bcc74f1h4cc24b5bc3a3c2a0%40mail.gmail.com"
+       TITLE="[zfs-discuss] new bits available: zfs-119!">info at martin-hauser.net
+       </A><BR>
+    <I>Thu Jul 17 00:32:22 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000686.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+        <LI>Next message: <A HREF="000689.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#688">[ date ]</a>
+              <a href="thread.html#688">[ thread ]</a>
+              <a href="subject.html#688">[ subject ]</a>
+              <a href="author.html#688">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>the .dSYM directories are just debug information... you can safely  
+ignore those.
+not sure about zoink and zfs.util in general
+
+Martin
+
+On Jul 17, 2008, at 01:01 AM, Andrei Dorofeev wrote:
+
+&gt;<i> I noticed a few new files and directories in this new archive.
+</I>&gt;<i>
+</I>&gt;<i> build/Leopard_Release/zfs.util
+</I>&gt;<i> build/Leopard_Release/zfs.util.dSYM/
+</I>&gt;<i> build/Leopard_Release/zoink
+</I>&gt;<i> build/Leopard_Release/zoink.dSYM/...
+</I>&gt;<i>
+</I>&gt;<i> What are we supposed to copy these to?  Could you please update
+</I>&gt;<i> installation instructions?
+</I>&gt;<i>
+</I>&gt;<i> Thank you!
+</I>&gt;<i> -Andrei
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Jul 16, 2008 at 3:43 PM, No&#235;l Dellofano  
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Hey everyone,
+</I>&gt;&gt;<i> Just a quick heads up to say that new zfs bits and source are  
+</I>&gt;&gt;<i> available on
+</I>&gt;&gt;<i> the zfs macosforge site.  The new bits fix these (really annoying)  
+</I>&gt;&gt;<i> issues:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 6018669 cpanic(cpu 0 caller 0x001DBC35): &quot;vnode_put(0x704cc70):  
+</I>&gt;&gt;<i> iocount &lt;
+</I>&gt;&gt;<i> 1&quot;@/
+</I>&gt;&gt;<i> 5989423 Phantom folders/directories (unexpected ENOENT errors)
+</I>&gt;&gt;<i> 6035783 ZFS hang during rename/open
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There should be no more weirdo phantom folders and directories  
+</I>&gt;&gt;<i> hanging
+</I>&gt;&gt;<i> around.  Don found the issue was with the negative caching we were  
+</I>&gt;&gt;<i> using for
+</I>&gt;&gt;<i> the name cache.  Also, fixed a hang we had under load.  So if you  
+</I>&gt;&gt;<i> had a hang
+</I>&gt;&gt;<i> while doing ditto, cp, or anything else with a lot of load, please  
+</I>&gt;&gt;<i> retry as
+</I>&gt;&gt;<i> that issue should also be fixed now.  And hooray hooray, you  
+</I>&gt;&gt;<i> shouldn't vnode
+</I>&gt;&gt;<i> panic on shutdown anymore.
+</I>&gt;&gt;<i> As always let me know what you like/don't like and what is just  
+</I>&gt;&gt;<i> plain busted
+</I>&gt;&gt;<i> :)
+</I>&gt;&gt;<i> thanks for all your feedback and for using ZFS!!!
+</I>&gt;&gt;<i> Noel
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080717/65c2f8d0/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080717/65c2f8d0/attachment.bin</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080717/65c2f8d0/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080717/65c2f8d0/attachment-0001.bin</A> 
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000686.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+	<LI>Next message: <A HREF="000689.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#688">[ date ]</a>
+              <a href="thread.html#688">[ thread ]</a>
+              <a href="subject.html#688">[ subject ]</a>
+              <a href="author.html#688">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

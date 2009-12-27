@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] snapshots
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C20081220.202920.185448097.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001198.html">
+   <LINK REL="Next"  HREF="001200.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] snapshots</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20snapshots&In-Reply-To=%3C20081220.202920.185448097.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] snapshots">hanche at math.ntnu.no
+       </A><BR>
+    <I>Sat Dec 20 11:29:20 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001198.html">[zfs-discuss] snapshots
+</A></li>
+        <LI>Next message: <A HREF="001200.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1199">[ date ]</a>
+              <a href="thread.html#1199">[ thread ]</a>
+              <a href="subject.html#1199">[ subject ]</a>
+              <a href="author.html#1199">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>+ Boyd Waters &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at nrao.edu</A>&gt;:
+
+&gt;<i> Except when it stops working:
+</I>&gt;<i>
+</I>&gt;<i> $ snapshot
+</I>&gt;<i> cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-20T12</A>:15:14': dataset 
+</I>&gt;<i> is busy
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I've exported/imported, scrubbed, rebooted. I've tried logging in 
+</I>&gt;<i> as a console (root) user and scrubbing and then snapshot from that 
+</I>&gt;<i> user. No joy.
+</I>&gt;<i>
+</I>&gt;<i> What else should I try?
+</I>
+Is the scrub still in progress? That might be the reason for the 
+trouble. If all else fails, you might try unmounting the file system 
+and then taking a snapshot of it.
+
+- Harald
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001198.html">[zfs-discuss] snapshots
+</A></li>
+	<LI>Next message: <A HREF="001200.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1199">[ date ]</a>
+              <a href="thread.html#1199">[ thread ]</a>
+              <a href="subject.html#1199">[ subject ]</a>
+              <a href="author.html#1199">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

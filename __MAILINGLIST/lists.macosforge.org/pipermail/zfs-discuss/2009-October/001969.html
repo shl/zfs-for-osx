@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs-10a286 ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C0764C062-1D67-457E-933B-5A5AA706FC2A%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001968.html">
+   <LINK REL="Next"  HREF="001970.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs-10a286 ?</H1>
+    <B>David Ritchie</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs-10a286%20%3F&In-Reply-To=%3C0764C062-1D67-457E-933B-5A5AA706FC2A%40googlemail.com%3E"
+       TITLE="[zfs-discuss] zfs-10a286 ?">david299792 at googlemail.com
+       </A><BR>
+    <I>Tue Oct 20 04:24:36 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001968.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+        <LI>Next message: <A HREF="001970.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1969">[ date ]</a>
+              <a href="thread.html#1969">[ thread ]</a>
+              <a href="subject.html#1969">[ subject ]</a>
+              <a href="author.html#1969">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I've been following this list for some time and I, like many here I'm  
+sure, was really hoping that ZFS would be much more usable in SL - at  
+least with working Spotlight and .zfs snapshots directory. But alas.  
+I've been using ZFS in Leopard for some time now, and on the whole it  
+works very well and has been pretty stable since the latest release.
+
+What I'd really like, in an ideal world, is of course to be able to  
+boot and root from ZFS on my Mac(s) and have everything work as  
+expected. Almost as good as that would be to have my home directory on  
+ZFS. I haven't done that because spotlight doesn't work properly,  
+which I use a lot.
+
+At the moment I'm running most things on HFS and periodically rsyncing  
+my home to the local ZFS pool and snapshotting. Some things - mainly  
+VMWare vms - I run straight from the zpool.
+
+I installed SL on my laptop to see what the ZFS support was like, and  
+I've managed to get it working by downloading the 119 bits and putting  
+in a launchd script to forcibly import the zpool, but this seems  
+slightly worrying. Also, even though spotlight was working on the root  
+zfs file system it all went a bit wrong - it just kept reindexing all  
+the time - so I disabled it. On my laptop my home folder IS on ZFS,  
+but that means no spotlight! I don't use the laptop that much though.
+
+With all the uncertainty about the future of ZFS I'm starting to  
+wonder about running a file server with Solaris/FreeBSD and storing  
+stuff on that. I just set up OpenSolaris on a VM and compiled netatalk  
+on it. I can mount the test AFP share just fine and it seems to work -  
+I haven't tested performance at all. BUT spotlight doesn't work on it.
+
+So now I'm wondering what to do:-
+
+1. If I didn't need to run Mac OS X at all I'd probably just run  
+Solaris or FreeBSD on my machine and be done with it, but I really DO  
+want to use Mac OS X
+
+2. I could set up a file server and access my home directory from it.  
+What would performance be like? Can I get spotlight to work?
+
+3. I could have a file server for backup, run my home directory and  
+everything locally on HFS and just use the file server to access  
+backups and snapshots - similar to what I'm doing now but with easier  
+access to snapshots
+
+4. I could carry on as I am, maybe not upgrade to SL yet. Not very  
+convenient access to snapshots (unless I clone every snapshot)
+
+5. I could use iSCSI to mount a ZFS backed disk image and store my  
+home on that. That would give me spotlight and the reliability  
+advantages of ZFS (scrubbing, checksums &amp;c) but not very convenient  
+access to snapshots - it would involve mounting a snapshot to look for  
+stuff I presume
+
+6. I could use a ZFS file server for Time machine backups and thus use  
+TM instead of snapshots to get historical data (presumably it would  
+use disk images). Currently I have another disk which TM is backing up  
+to as well.
+
+
+So on the whole it might be better, now, to migrate my main file store  
+to another system and access it over GigE, but there just seem to be  
+niggling issues with that. What are other peoples thoughts on this  
+matter? I really like ZFS.
+
+
+cheers,
+-- David
+
+
+On 20 Oct 2009, at 11:22, Lorenzo Perone wrote:
+
+&gt;<i>
+</I>&gt;<i> On 18.10.2009, at 22:06, Harald Hanche-Olsen wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> + Alex Blewitt &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">alex.blewitt at gmail.com</A>&gt;:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Don't move on to OSX Server - stay on FreeBSD. You're likely to get
+</I>&gt;&gt;&gt;<i> much better ongoing ZFS performance there: in addition, it wouldn't
+</I>&gt;&gt;&gt;<i> surprise me if the version that the 119 bits are capable of reading
+</I>&gt;&gt;&gt;<i> (8) is lower than the support in FreeBSD anyway, which means your  
+</I>&gt;&gt;&gt;<i> pool
+</I>&gt;&gt;&gt;<i> may not even be loadable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On FreeBSD 7.2:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> #; zpool upgrade
+</I>&gt;&gt;<i> This system is currently running ZFS version 6.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I think FreeBSD 8 (which is not yet released) runs ZFS version 13,
+</I>&gt;&gt;<i> however. And there is ongoing work to move it up to ZFS version 19.
+</I>&gt;<i>
+</I>&gt;<i> That is correct, FreeBSD 8 (due out soon) will have v13.
+</I>&gt;<i> Also, it has just been labeled production ready (the advice
+</I>&gt;<i> about ZFS being experimental has been removed).
+</I>&gt;<i> However, ZFS version 13 has been also merged since some time
+</I>&gt;<i> to FreeBSD 7-STABLE, so if you need it on the 7- branch
+</I>&gt;<i> just csup/build your system to RELENG_7 and you'll be just fine.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I agree with your assessment, though. Both freebsd and opensolaris
+</I>&gt;&gt;<i> ought to be excellent choices for a server. Actually, I wonder if it
+</I>&gt;&gt;<i> wouldn't be better for all parties, Apple included, if Apple stopped
+</I>&gt;&gt;<i> trying to sell and support OS X on servers and instead worked to
+</I>&gt;&gt;<i> develop software for other unix-based servers to support OS X users.
+</I>&gt;<i>
+</I>&gt;<i> What I wonder about is, when Mac OS X will finally have a decent
+</I>&gt;<i> file system? ZFS sure was worth a try (*probably* stopped by
+</I>&gt;<i> the ORACLE/SUN merger licensing variables), but whatever
+</I>&gt;<i> replacement will eventually arrive, imo it's really horribly overdue.
+</I>&gt;<i> Especially after most of the system has been so elegantly optimized  
+</I>&gt;<i> for
+</I>&gt;<i> parallel multitasking.
+</I>&gt;<i>
+</I>&gt;<i> HFS is really old and has some serious performance and reliability
+</I>&gt;<i> drawbacks (the most famous being the Catalog File, which has to
+</I>&gt;<i> be contended by any task updating the filesystem structure[1]).
+</I>&gt;<i> Almost all spinning wheels I see on SL are related to
+</I>&gt;<i> file system / volume handling.
+</I>&gt;<i>
+</I>&gt;<i> I'm no Linu[xs] fan, but I think Linus Torvalds has a point with his
+</I>&gt;<i> comments on HFS... [2]
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Lorenzo
+</I>&gt;<i>
+</I>&gt;<i> [1] <A HREF="http://en.wikipedia.org/wiki/Hierarchical_File_System#Problems">http://en.wikipedia.org/wiki/Hierarchical_File_System#Problems</A>
+</I>&gt;<i> [2] <A HREF="http://www.smh.com.au/news/technology/torvalds-pans-apples-os-x/2008/02/05/1202090393959.html">http://www.smh.com.au/news/technology/torvalds-pans-apples-os-x/2008/02/05/1202090393959.html</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001968.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+	<LI>Next message: <A HREF="001970.html">[zfs-discuss] zfs-10a286 ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1969">[ date ]</a>
+              <a href="thread.html#1969">[ thread ]</a>
+              <a href="subject.html#1969">[ subject ]</a>
+              <a href="author.html#1969">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

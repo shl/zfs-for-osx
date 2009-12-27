@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] The cat is out of the bag
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20The%20cat%20is%20out%20of%20the%20bag&In-Reply-To=%3C33CB04F8-9D15-413A-9DCC-3389FC169842%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001790.html">
+   <LINK REL="Next"  HREF="001792.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] The cat is out of the bag</H1>
+    <B>Richard Elling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20The%20cat%20is%20out%20of%20the%20bag&In-Reply-To=%3C33CB04F8-9D15-413A-9DCC-3389FC169842%40gmail.com%3E"
+       TITLE="[zfs-discuss] The cat is out of the bag">richard.elling at gmail.com
+       </A><BR>
+    <I>Sat Aug 29 12:13:25 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001790.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+        <LI>Next message: <A HREF="001792.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1791">[ date ]</a>
+              <a href="thread.html#1791">[ thread ]</a>
+              <a href="subject.html#1791">[ subject ]</a>
+              <a href="author.html#1791">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Aug 29, 2009, at 10:03 AM, Troy Telford wrote:
+
+&gt;&gt;<i> No money no party, but money can come in many ways; for instance  
+</I>&gt;&gt;<i> people
+</I>&gt;&gt;<i> exist that promote their competence by means of FLOSS, and make  
+</I>&gt;&gt;<i> money on
+</I>&gt;&gt;<i> consultancy. Money don't necessarily come from the big ones; there  
+</I>&gt;&gt;<i> are
+</I>&gt;&gt;<i> corporates that have been created out of open source and live on  
+</I>&gt;&gt;<i> their own;
+</I>&gt;&gt;<i> furthermore, I don't know how many people are using ZFS on Mac OS  
+</I>&gt;&gt;<i> X, but if
+</I>&gt;&gt;<i> they are a big number, there could be even market chances for a  
+</I>&gt;&gt;<i> company that
+</I>&gt;&gt;<i> maintains ZFS for Mac OS X (GPL doesn't forbid making money out of  
+</I>&gt;&gt;<i> FLOSS
+</I>&gt;&gt;<i> either, I think CDDL is the same). Yes, I would personally pay (a  
+</I>&gt;&gt;<i> reasonable
+</I>&gt;&gt;<i> price) for it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And why exclude that Sun/Oracle couldn't give some sponsorship  
+</I>&gt;&gt;<i> (clearly not
+</I>&gt;&gt;<i> now, until the Oracle deal is finished)?
+</I>&gt;<i>
+</I>&gt;<i> I think the thing you're missing is this:  Money isn't necessarily the
+</I>&gt;<i> problem - there's plenty of projects that succeed just fine without
+</I>&gt;<i> money and/or professional development.
+</I>
+The roadside is littered with dozens of tetris clones, for example.
+But I can't think of a significant project which does not have $$ or
+professionals developing it.
+
+&gt;<i> But consider this:  The people who really _care_ about ZFS on OSX are
+</I>&gt;<i> on this mailing list.  Only we few.  It's beyond my skill level, and
+</I>&gt;<i> for the few who are skilled enough, it's hard enough that they don't
+</I>&gt;<i> want to battle the learning curve.
+</I>&gt;<i>
+</I>&gt;<i> Just because it's open source doesn't mean that anybody can work on
+</I>&gt;<i> it; the source code being open doesn't change the fact that it's a
+</I>&gt;<i> difficult project to work on -- well beyond the skill level of most
+</I>&gt;<i> coders (ie. mere mortals).
+</I>&gt;<i>
+</I>&gt;<i> Porting ZFS is a difficult thing, as it is _very_ different from the
+</I>&gt;<i> filesystems that preceded it.  Because it's so different, aspects in
+</I>&gt;<i> the OS that are made to make filesystem work easier simply don't
+</I>&gt;<i> apply.
+</I>
+One of the reasons it is not called the &quot;Zettabyte File System&quot; is
+because ZFS is much more than a file system.  Expecting it to
+port as a file system is asking too little of it.
+
+&gt;<i> (VFS layer, for example - ZFS has been accused of &quot;rampant VFS
+</I>&gt;<i> layer violations&quot;.  You have to hook into the kernel someplace else,
+</I>&gt;<i> as the pre-existing VFS layer is worthless for ZFS.  Even if it
+</I>&gt;<i> weren't for the license issue, the Linux devs had issues with ZFS
+</I>&gt;<i> because of &quot;rampant&quot; VFS layer violations/bypassing.  (It's still an
+</I>&gt;<i> issue with btrfs, with quite a bit of dissension because it also
+</I>&gt;<i> bypasses some of the VFS)
+</I>
+VFS was designed for people to port file systems to Linux more easily.
+Unfortunately, what the market needs is a better way to manage
+data, not just another file system. Until Linux changes to embrace
+this, it will continue to have disjoint file system and data management
+solutions.
+
+I suppose it goes without saying that ZFS ports relatively easily to
+the BSD variants :-)
+  -- richard
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001790.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+	<LI>Next message: <A HREF="001792.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1791">[ date ]</a>
+              <a href="thread.html#1791">[ thread ]</a>
+              <a href="subject.html#1791">[ subject ]</a>
+              <a href="author.html#1791">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

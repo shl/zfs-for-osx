@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zpool not imported automatically
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20not%20imported%20automatically&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000526.html">
+   <LINK REL="Next"  HREF="000529.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zpool not imported automatically</H1>
+    <B>Lorenzo Perone</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20not%20imported%20automatically&In-Reply-To="
+       TITLE="[zfs-discuss] zpool not imported automatically">lopez.on.the.lists at yellowspace.net
+       </A><BR>
+    <I>Mon Apr 21 09:59:39 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000526.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 28
+</A></li>
+        <LI>Next message: <A HREF="000529.html">[zfs-discuss] zpool not imported automatically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#528">[ date ]</a>
+              <a href="thread.html#528">[ thread ]</a>
+              <a href="subject.html#528">[ subject ]</a>
+              <a href="author.html#528">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi to everyone,
+
+Have a problem with my newly created ZFS pool.
+It won't import it automatically at boot.
+
+This is almost probably related to my installation of rEFIt,
+letting it make an MBR PM out of my GPT PM, and/or installing
+FreeBSD 7.0-RELEASE on a separate partition of my MacBook Pro
+(as it didn't happen before).
+
+However, it's nasty and I can't find a good readon for it ;)
+
+Here's my feedback.
+
+ENVIRONMENT:
+MacBook Pro 2,2 (2.1 GHz Core2Duo), 4GB RAM, 320GB HD.
+Mac OS X 10.5.2
+zfs-111 (newly downloaded the binaries from macosforge)
+
+DESCRIPTION:
+ZFS pools are no more imported automatically at boot (they used to)
+
+CONFIGURATION:
+I have one Zpool made out of one partition (disk0s3).
+
+BEHAVIOR:
+
+Upon boot, zpool does not import the pool automatically, as it
+used to do. Here's what happens in the console as root:
+
+# zpool list
+kernel[0]: zfs_context_init: footprint.maximum=2147483647,  
+footprint.target=102711296
+kernel[0]: kobj_open_file: &quot;/etc/zfs/zpool.cache&quot;, err 0 from vnode_open
+kernel[0]: fs_module_start: memory footprint 4822912 (kalloc 4822912,  
+kernel 0)
+no pools available
+
+# zpool import
+   pool: Zorro
+     id: 5221204521612907677
+  state: ONLINE
+status: The pool is formatted using an older on-disk version.
+action: The pool can be imported using its name or numeric identifier,  
+though
+	some features will not be available without an explicit 'zpool  
+upgrade'.
+config:
+
+	Zorro       ONLINE
+	  disk0s3   ONLINE
+
+# zpool import Zorro
+cannot import 'Zorro': pool may be in use on another system
+use '-f' to import anyway
+# zpool import -f Zorro
+
+-&gt; this succeeds
+
+Note: I tried a zpool upgrade, just for fun, as it is stated above.
+But it didn't help, because zfs told the version is already up to date
+and there is no reason to upgrade (which is true, I guess, as the
+pool was created with the same software)
+
+HISTORY OF ACTIONS:
+
+What I did between when it worked and when it stopped working:
+
+- I installed rEFIt (<A HREF="http://refit.sf.net/">http://refit.sf.net/</A> )
+- I had rEFIt make an MBR partition table which is a copy of my GPT  
+Table
+   (the ZFS partition is noted as &quot;Solaris&quot; partition)
+- I installed FreeBSD 7.0-RELEASE amd64 on the partition after it,
+   And then couldn't resist letting him have a look (just a &quot;look&quot;  
+with zfs import)
+   to see if it could recognize the ZFS partition (it did, yet warned  
+about different
+   protocol version, so I _did not_ import it: FreeBSD uses version 6,  
+OSX version 8).
+- Afterwards I tried deleting the /etc/zfs directory, no results so far.
+
+Relevant system.log entries:
+Apr 21 16:06:38 zeta kernel[0]: zfs_context_init:  
+footprint.maximum=2147483647, footprint.target=102711296
+Apr 21 16:06:38 zeta kernel[0]: kobj_open_file: &quot;/etc/zfs/ 
+zpool.cache&quot;, err 0 from vnode_open
+Apr 21 16:06:38 zeta kernel[0]: zfs_module_start: memory footprint  
+4822912 (kalloc 4822912, kernel 0)
+Apr 21 16:07:04 zeta fseventsd[29]: log dir: /Volumes/Zorro/.fseventsd  
+getting new uuid: E8D57080-37BC-4ABE-9655-F6D1D3B8D551
+Apr 21 16:07:10 zeta login[132]: DEAD_PROCESS: 132 console
+
+Upon shutdown (all volumes shown are part of the pool):
+Apr 21 16:04:56 zeta kextd[10]: error reconsidering volume /Downloads
+Apr 21 16:04:56 zeta kextd[10]: error reconsidering volume /Games
+Apr 21 16:04:56 zeta kextd[10]: error reconsidering volume /Movies
+Apr 21 16:04:56 zeta kextd[10]: error reconsidering volume /Music
+Apr 21 16:04:56 zeta kextd[10]: error reconsidering volume /VirtualPCs
+Apr 21 16:04:56 zeta shutdown[253]: SHUTDOWN_TIME: 1208786696 245286
+Apr 21 16:04:56 zeta kextd[10]: error reconsidering volume /Volumes/ 
+Zorro
+Apr 21 16:04:56 zeta shutdown[253]: reboot by admin:
+
+Any Ideas of what might be causing this and how to resolve it?
+It's not _that_ mac-like to go into &gt;console at every boot just to
+import the zpool and then log in with my real user ;)
+
+
+Thanx for reading,
+
+
+Regards,
+
+Lorenzo
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000526.html">[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 28
+</A></li>
+	<LI>Next message: <A HREF="000529.html">[zfs-discuss] zpool not imported automatically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#528">[ date ]</a>
+              <a href="thread.html#528">[ thread ]</a>
+              <a href="subject.html#528">[ subject ]</a>
+              <a href="author.html#528">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] must watch.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CBCEB2035-17C4-4B85-8E11-7FECC60EB5BB%40themacplace.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001932.html">
+   <LINK REL="Next"  HREF="001934.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] must watch.</H1>
+    <B>James Relph</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20must%20watch.&In-Reply-To=%3CBCEB2035-17C4-4B85-8E11-7FECC60EB5BB%40themacplace.co.uk%3E"
+       TITLE="[zfs-discuss] must watch.">james at themacplace.co.uk
+       </A><BR>
+    <I>Tue Oct 13 15:09:29 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001932.html">[zfs-discuss] must watch.
+</A></li>
+        <LI>Next message: <A HREF="001934.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1933">[ date ]</a>
+              <a href="thread.html#1933">[ thread ]</a>
+              <a href="subject.html#1933">[ subject ]</a>
+              <a href="author.html#1933">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Another question comes to mind, after reading Dominic's comments: Is
+</I>&gt;<i> there any test we (users) can do to determine whether a given disk
+</I>&gt;<i> drive, or a disk drive together with its bus bridge, can be trusted to
+</I>&gt;<i> honor the write barrier sync commands? Apple clearly tests all
+</I>&gt;<i> internal drives as part of their qualification, but I use a lot of
+</I>&gt;<i> third party equipment, too. I'd like to know I haven't bought crap.
+</I>&gt;<i>
+</I>
+There are SAS/SATA analysers that you can hook up to devices to see  
+what commands are being sent, so you could use one to check to see  
+whether a USB/Firewire bus is passing the commands.  They are  
+astonishingly expensive though.  I think that the only way you could  
+tell if an actual drive was supporting the commands would be to do  
+some pretty hairy digging around in the drive's firmware, so even if  
+you'd used your $30k SATA analyser and found a bridge that did support  
+the commands, you might then hook a drive up that didn't.
+
+Apple and Sun are both mentioned in various places (and obviously  
+Dominic confirmed that as far as Apple are concerned) as requiring all  
+their drives to support the command, so that's one way to guarantee  
+you get ones that do.  I would guess that there's probably  
+manufacturers selling &quot;enterprise&quot; quality drives that actually will  
+tell you or mention on the spec sheet that they support their  
+commands, but certainly it's not a commonly advertised feature.
+
+It's difficult, and after looking into it it does highlight the  
+importance of a filesystem that can work around drives or bridges that  
+don't honour the commands.  Obviously for a company in Sun's position,  
+where the hardware is generally a higher spec, and the admins are more  
+likely to be specifically trained, it's probably a lesser problem.   
+You have to wonder if this *is* the reason Apple pulled ZFS, you get a  
+lot of Apple admins who do the admin side as a second job to being a  
+teacher/studio manager etc., and they're probably much more likely to  
+hook up a USB/Firewire drive to an Xserve as storage than your average  
+Solaris admin.  Perhaps Apple decided they needed a better level of  
+pool recovery before they gave ZFS their stamp of approval by  
+including it with the OS.  Of course that doesn't explain why we  
+couldn't have a newer build on MacOSforge, but short of storming  
+Cupertino with pitchforks and flaming torches I doubt we'll find out  
+soon.
+
+Saying that, if someone wants to get some flaming torches sorted, I  
+could probably drum up a few pitchforks and maybe the odd scythe :-)
+
+James
+
+Website:		www.themacplace.co.uk
+Blog:		www.themacplace.co.uk/blog.html
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091013/b3ac301c/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20091013/b3ac301c/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001932.html">[zfs-discuss] must watch.
+</A></li>
+	<LI>Next message: <A HREF="001934.html">[zfs-discuss] must watch.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1933">[ date ]</a>
+              <a href="thread.html#1933">[ thread ]</a>
+              <a href="subject.html#1933">[ subject ]</a>
+              <a href="author.html#1933">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

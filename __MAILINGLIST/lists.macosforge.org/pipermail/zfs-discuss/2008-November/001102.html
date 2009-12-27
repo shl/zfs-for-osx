@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic on large move
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20on%20large%20move&In-Reply-To=%3C790ed9bc0811241655t5d48bcfr4a913d8aa1153c35%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001100.html">
+   <LINK REL="Next"  HREF="001103.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic on large move</H1>
+    <B>Mark Leistner</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20on%20large%20move&In-Reply-To=%3C790ed9bc0811241655t5d48bcfr4a913d8aa1153c35%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] Panic on large move">mark at theleistners.com
+       </A><BR>
+    <I>Mon Nov 24 16:55:35 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001100.html">[zfs-discuss] cannot create snapshot - dataset is busy
+</A></li>
+        <LI>Next message: <A HREF="001103.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1102">[ date ]</a>
+              <a href="thread.html#1102">[ thread ]</a>
+              <a href="subject.html#1102">[ subject ]</a>
+              <a href="author.html#1102">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I got a panic on a large move (Aperture Library file).  I was using the
+command line tools, here is the text from the panic.
+
+I then tried to rm the resulting corrupt library files and that also caused
+a panic.  I'm now trying to restore from a vault... hope that goes well ;)
+
+Mon Nov 24 19:35:57 2008
+panic(cpu 2 caller 0x7BD67103): &quot;mutex_enter: locking against
+myself!&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_context.c:449
+Backtrace (CPU 2), Frame : Return Address (4 potential args on stack)
+0x5ed17428 : 0x12b0fa (0x459234 0x5ed1745c 0x133243 0x0)
+0x5ed17478 : 0x7bd67103 (0x7bdc1ff8 0x7f2d06c 0x5ed174c8 0x7bd0eae6)
+0x5ed17498 : 0x7bd140fc (0x87874998 0x1 0x5ed174c8 0x7bd3c875)
+0x5ed174d8 : 0x1f3f6a (0x5ed174f4 0x206 0x5ed174fc 0x4f6f40)
+0x5ed17518 : 0x1db5ea (0x128ab8c0 0x7ed2fa4 0x0 0x0)
+0x5ed17568 : 0x1db806 (0x128ab8c0 0x1 0x5ed175b8 0x1f5e51)
+0x5ed175b8 : 0x1dbaae (0x0 0x7ed2fa4 0x5ed175f8 0x925a5aa8)
+0x5ed175d8 : 0x1dbae4 (0x128ab8c0 0x7911200 0x7970c00 0x7f2d000)
+0x5ed175f8 : 0x7bd6b881 (0x128ab8c0 0xbdbb0 0x0 0x0)
+0x5ed176a8 : 0x7bd0e05f (0x5ed177e8 0x0 0x0 0x5ed177e8)
+0x5ed17808 : 0x7bd0e22c (0x5ed1793c 0x1 0x5ed17878 0xffffffff)
+0x5ed17848 : 0x1f6857 (0x78f5260 0xbdbb0 0x0 0x5ed1793c)
+0x5ed17898 : 0x1d52fb (0x78f5260 0xbdbb0 0x0 0x5ed1793c)
+0x5ed17958 : 0x1c3718 (0x5ed17a00 0x1 0x1 0x0)
+0x5ed17f78 : 0x3ddd6e (0x775f030 0x7ed2ea0 0x7ed2ee4 0x0)
+0x5ed17fc8 : 0x19f3b3 (0x104f5760 0x0 0x1a20b5 0x78a2e40)
+    Backtrace continues...
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x7bd0c000-&gt;0x7bdd7fff
+
+BSD process name corresponding to current thread: Finder
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacPro3,1 (Mac-F42C88C8)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081124/51decf6f/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20081124/51decf6f/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001100.html">[zfs-discuss] cannot create snapshot - dataset is busy
+</A></li>
+	<LI>Next message: <A HREF="001103.html">[zfs-discuss] ZFS Setup - Confused!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1102">[ date ]</a>
+              <a href="thread.html#1102">[ thread ]</a>
+              <a href="subject.html#1102">[ subject ]</a>
+              <a href="author.html#1102">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

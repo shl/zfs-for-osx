@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] speed? nope...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20speed%3F%20nope...&In-Reply-To=%3C0312B948-8ECE-4E8D-A383-73FDB3CD2B62%40Sun.COM%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001348.html">
+   <LINK REL="Next"  HREF="001350.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] speed? nope...</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20speed%3F%20nope...&In-Reply-To=%3C0312B948-8ECE-4E8D-A383-73FDB3CD2B62%40Sun.COM%3E"
+       TITLE="[zfs-discuss] speed? nope...">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Wed Jan 21 19:57:15 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001348.html">[zfs-discuss] speed? nope...
+</A></li>
+        <LI>Next message: <A HREF="001350.html">[zfs-discuss] ZFS + Server Admin Tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1349">[ date ]</a>
+              <a href="thread.html#1349">[ thread ]</a>
+              <a href="subject.html#1349">[ subject ]</a>
+              <a href="author.html#1349">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This is actually pretty normal for streaming writes on zfs .. what  
+you're essentially seeing is a cyclical behaviour as the transaction  
+groups flush writes down to the disk, and essentially pauses as the  
+memory subsystem deals with the ARC filling up and evicting pages.   
+Where you will see good performance (particularly on large memory  
+systems) is a large file system buffer cache to deal with reads or  
+file updates that can be easily cached.  Of course if the ARC has  
+consumed so much that you're swapping in the VM then your performance  
+is going to be particularly bad since the darwin VM will create  
+pagefiles on your HFS+ root volume to read and write to which kind of  
+defeats the purpose.
+
+I don't think that they've enabled some of these tunables yet, but  
+restricting the ARC to a fixed size can be beneficial here since you  
+can often end up in a situation with more memory contention on other  
+processes.  As for increasing speed for replicating from another  
+filesystem - there's a couple of issues that typically come into play  
+here:
+1) crawling lots of metadata can be slow .. frequent readdir() open()  
+calls while crawling large metadata trees (lots of files) can impose a  
+lot of I/O slowdown on the system
+2) the IOP speeds and latencies of the disks in question .. generally  
+a 7200 RPM disk will only be able to do something on the order of  
+80-90 IOPS peak (typically 60-70) - so depending on what your transfer  
+size is - you're most likely going to be limited here on the disk.
+3) other mac Finder latencies .. use the DTrace port to take a look at  
+what's going on with your transfer with something like &quot;sudo dtruss -p  
+&lt;pid_of_finder&gt;&quot; .. doing a quick test from my local drive transfering  
+to my 5400RPM 250GB USB zfs volume i see a lot of 2MB pread/pwrite  
+calls and a heck of a lot of getuid(), geteuid() calls .. (methinks  
+there could be something goofy with permissions here)
+4) getting frustrated and shouting at your disks to go faster can add  
+latency and slow things down :) .. see the fishworks analytics viral  
+video over at <A HREF="http://www.youtube.com/watch?v=tDacjrSCeq4">http://www.youtube.com/watch?v=tDacjrSCeq4</A>
+
+On Jan 21, 2009, at 7:51 PM, Sterling Garwood wrote:
+
+&gt;<i> here is a zpool iostat on a 5 sec delay for a little bit ....
+</I>&gt;<i> as you can see I have 2 pools - the one I am building the mirror on  
+</I>&gt;<i> is 'zfsstg'
+</I>&gt;<i>
+</I>&gt;<i>               capacity     operations    bandwidth
+</I>&gt;<i> pool         used  avail   read  write   read  write
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0    187  1.13K
+</I>&gt;<i> zfsstg       265G   199G      1    154  95.4K  17.7M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     26    108  1.78M  6.79M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     35    120  2.86M  9.66M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     39    158  4.26M  12.9M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     53    121  4.79M  12.5M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     56     21  4.56M   669K
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     28    142  1.88M  12.3M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     16     41  1.03M  3.37M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     33    119  2.22M  12.4M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     23    138  2.25M  12.8M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;<i> mypool       367K   189G      0      0      0      0
+</I>&gt;<i> zfsstg       265G   199G     54     73  3.98M  7.59M
+</I>&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>
+btw - transaction groups will flush every 5 seconds by default .. i  
+believe we changed this in later revs of ZFS, but you may not be  
+getting the stat on after the full flush of the filesystem - you might  
+want to increase your interval to 30 or so - you tend to get better  
+averages over time .. also if your pool consisted of multiple disks  
+you can see the stats for each vdev in the pool with a &quot;zpool iostat - 
+v [interval]&quot; ..
+
+&gt;<i> I tried to get a normal Unix iostat on the Firewire drive but for  
+</I>&gt;<i> some reason Unix iostat can not see the HFS+ Firewire drive...hmmm  
+</I>&gt;<i> time to file a bug report.
+</I>
+you can specify the drive explicitly with something like &quot;iostat  
+[disk#] [interval]&quot; where disk# is the &quot;diskutil list&quot; disk# of your  
+firewire drive .. if you have a lot of disks, you may be getting  
+limited to just the stats on the first few .. so, for example, if  
+disk5 is the HFS+ firewire drive and disk2 is the ZFS drive I'd do:
+
+# iostat disk5 disk2 30
+
+at smaller intervals i'd expect that you'd see a lot of reads from the  
+HFS+ drive, and more infrequent pushes to the ZFS pool, whereas at  
+larger intervals you should see a closer balance between the 2
+
+hth
+---
+jonathan
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001348.html">[zfs-discuss] speed? nope...
+</A></li>
+	<LI>Next message: <A HREF="001350.html">[zfs-discuss] ZFS + Server Admin Tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1349">[ date ]</a>
+              <a href="thread.html#1349">[ thread ]</a>
+              <a href="subject.html#1349">[ subject ]</a>
+              <a href="author.html#1349">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

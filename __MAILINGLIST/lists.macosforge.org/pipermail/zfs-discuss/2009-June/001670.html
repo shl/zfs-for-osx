@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] strange behavior once pool is destroyed
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20strange%20behavior%20once%20pool%20is%20destroyed&In-Reply-To=%3C4A3E9C07.4040303%40phys.washington.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001669.html">
+   <LINK REL="Next"  HREF="001671.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] strange behavior once pool is destroyed</H1>
+    <B>Jared Nance</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20strange%20behavior%20once%20pool%20is%20destroyed&In-Reply-To=%3C4A3E9C07.4040303%40phys.washington.edu%3E"
+       TITLE="[zfs-discuss] strange behavior once pool is destroyed">nancejk at phys.washington.edu
+       </A><BR>
+    <I>Sun Jun 21 13:45:59 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001669.html">[zfs-discuss] Fwd:  zfs alternative
+</A></li>
+        <LI>Next message: <A HREF="001671.html">[zfs-discuss] strange behavior once pool is destroyed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1670">[ date ]</a>
+              <a href="thread.html#1670">[ thread ]</a>
+              <a href="subject.html#1670">[ subject ]</a>
+              <a href="author.html#1670">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi All-
+First of all, thanks in advance for any light you can shed on this
+subject.  My ZFS installation on OSX is behaving very strangely after I
+have destroyed a RAIDZ-1.  The setup is 3 external drives connected by
+USB (used to be FW800, but a low quality cable was causing many issues),
+RAIDZed.  I played around for a while, and eventually realized I could
+use a clean sweep.  So, I destroyed the pool, formatted the drives, and
+all of a sudden, ZFS refuses to re-create a pool of any kind of out
+these drives.  Furthermore, a disk label that I applied as an HFS+
+volume label seems to be quite persistent - no matter how many wipes I
+do, I cannot change the name. 
+
+Diskutil report:
+/dev/disk0
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *111.8 Gi   disk0
+   1:                        EFI                         200.0 Mi   disk0s1
+   2:                  Apple_HFS Macintosh HD            111.5 Gi   disk0s2
+/dev/disk1
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *596.2 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                 Apple_RAID                         595.9 Gi   disk1s2
+   3:                 Apple_Boot Boot OSX                128.0 Mi   disk1s3
+/dev/disk2
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *596.2 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                 Apple_RAID                         595.9 Gi   disk2s2
+   3:                 Apple_Boot Boot OSX                128.0 Mi   disk2s3
+/dev/disk3
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:                  Apple_HFS deepfreeze             *595.9 Gi   disk3
+/dev/disk4
+   #:                       TYPE NAME                    SIZE      
+IDENTIFIER
+   0:      GUID_partition_scheme                        *596.2 Gi   disk4
+   1:                        EFI                         200.0 Mi   disk4s1
+   2:                        ZFS d1                      595.9 Gi   disk4s2
+
+If I try to create a simple pool of one drive:
+heaviside-2% zpool create testpool /dev/disk4s2
+cannot create 'testpool': one or more vdevs refer to the same device
+
+Using any other drive results in the same issue.  Does anybody know
+what's going on? 
+
+Jared Nance
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001669.html">[zfs-discuss] Fwd:  zfs alternative
+</A></li>
+	<LI>Next message: <A HREF="001671.html">[zfs-discuss] strange behavior once pool is destroyed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1670">[ date ]</a>
+              <a href="thread.html#1670">[ thread ]</a>
+              <a href="subject.html#1670">[ subject ]</a>
+              <a href="author.html#1670">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

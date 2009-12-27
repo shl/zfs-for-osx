@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Disk speeds
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3CBACEEE95-0D86-4508-BE18-80116D00DE54%40avoidant.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001866.html">
+   <LINK REL="Next"  HREF="001869.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Disk speeds</H1>
+    <B>sammy ominsky</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3CBACEEE95-0D86-4508-BE18-80116D00DE54%40avoidant.org%3E"
+       TITLE="[zfs-discuss] Disk speeds">s at avoidant.org
+       </A><BR>
+    <I>Thu Sep 17 13:45:13 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001866.html">[zfs-discuss] 10a286 binaries on 10.6
+</A></li>
+        <LI>Next message: <A HREF="001869.html">[zfs-discuss] Disk speeds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1865">[ date ]</a>
+              <a href="thread.html#1865">[ thread ]</a>
+              <a href="subject.html#1865">[ subject ]</a>
+              <a href="author.html#1865">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I mentioned the other day that I got my raidz back up and running  
+happy on Snow leopard.  Today I saw a hard disk benchmark app I  
+thought I'd try.  The results are interesting.
+
+System specs:
+
+MBP 2.4GHz C2D
+4GB RAM
+Mac OS X 10.6.1
+internal 250GB 5400rpm SATA disk - [zefat] (system disk)
+
+zfs-119 using the optimized kext from Christian Kendi
+SiI3132- based eSATA ExpressCard - Addonics SATA port multiplier
+(Using the Sonnet SiI3132 driver even though the card isn't Sonnet- 
+branded.)
+5x1TB 7200rpm SATA disks raidz1 - [geniza]
+
+Using <A HREF="http://www.unscale.com/DST.html">http://www.unscale.com/DST.html</A> for the benchmark.
+
+My results: <A HREF="http://avoidant.org/disktest.png">http://avoidant.org/disktest.png</A>
+
+The geniza on the left is using Christian's first posted kext, the one  
+on the right is with his second, after patching for the Sun mailing  
+list bug.  I suspect the numbers on the left are skewed by the cache.
+
+Oh, Christian, here are your numbers (60 8MB files, using your second  
+posted kext):
+
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+983051 blocks
+real	0m8.761s
+user	0m0.125s
+sys	0m1.087s
+
+Second run:
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+983051 blocks
+real	0m8.462s
+user	0m0.108s
+sys	0m1.331s
+
+
+--sambo
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001866.html">[zfs-discuss] 10a286 binaries on 10.6
+</A></li>
+	<LI>Next message: <A HREF="001869.html">[zfs-discuss] Disk speeds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1865">[ date ]</a>
+              <a href="thread.html#1865">[ thread ]</a>
+              <a href="subject.html#1865">[ subject ]</a>
+              <a href="author.html#1865">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

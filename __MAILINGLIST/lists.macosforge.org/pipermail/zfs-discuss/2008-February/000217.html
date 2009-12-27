@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Using Mirror for Automatic Backup?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Using%20Mirror%20for%20Automatic%20Backup%3F&In-Reply-To=33644d3c0802241400x2c1b8cfn6b262d4b9e916f69%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000216.html">
+   <LINK REL="Next"  HREF="000218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Using Mirror for Automatic Backup?</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Using%20Mirror%20for%20Automatic%20Backup%3F&In-Reply-To=33644d3c0802241400x2c1b8cfn6b262d4b9e916f69%40mail.gmail.com"
+       TITLE="[zfs-discuss] Using Mirror for Automatic Backup?">jbsnyder at gmail.com
+       </A><BR>
+    <I>Tue Feb 26 06:00:12 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000216.html">[zfs-discuss] Using Mirror for Automatic Backup?
+</A></li>
+        <LI>Next message: <A HREF="000218.html">[zfs-discuss] ZFS Case Sensitivity and file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#217">[ date ]</a>
+              <a href="thread.html#217">[ thread ]</a>
+              <a href="subject.html#217">[ subject ]</a>
+              <a href="author.html#217">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I see that someone has done this with Solaris at least, I wonder if
+the resilvering/re-mirroring will take long with a hard disk instead
+of a stick?
+<A HREF="http://solarisdesktop.blogspot.com/2007/02/stick-to-zfs-or-laptop-with-mirrored.html">http://solarisdesktop.blogspot.com/2007/02/stick-to-zfs-or-laptop-with-mirrored.html</A>
+
+Anyone tried this with OS X?  I think I may try this today.
+
+On Sun, Feb 24, 2008 at 4:00 PM, James Snyder &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>&gt; wrote:
+&gt;<i> So, I'm interested in playing around with ZFS a little, since I've got
+</I>&gt;<i>  2 macs running leopard.  My question is related to doing automatic
+</I>&gt;<i>  backups?
+</I>&gt;<i>
+</I>&gt;<i>  When reading the FAQ, I noticed the &quot;Unplugging my USB drive with my
+</I>&gt;<i>  ZFS pool on it causes a panic&quot; question, and saw the comment about
+</I>&gt;<i>  this being the case unless a volume is mirror or raidz.  Now, I
+</I>&gt;<i>  understand that this is mainly designed for dealing with swapping
+</I>&gt;<i>  drives out under failure conditions, but it go me thinking about
+</I>&gt;<i>  another possibility.  Could one take say take a directory on a laptop
+</I>&gt;<i>  and have that be a zfs volume that is based off of a partition on the
+</I>&gt;<i>  internal drive and a partition on an external USB drive and basically
+</I>&gt;<i>  plug into that drive whenever it is physically available to do a
+</I>&gt;<i>  backup, and then most other times when untethered only use the
+</I>&gt;<i>  internal partition?  With a typical raid situation this, would require
+</I>&gt;<i>  a full sync to take place on re-attaching the drive, but I was
+</I>&gt;<i>  wondering if ZFS might handle this differently?  Also, I assume that
+</I>&gt;<i>  the external drive could be used by itself as a recovery source if the
+</I>&gt;<i>  internal drive blows up and requires replacement.
+</I>&gt;<i>
+</I>&gt;<i>  Is this a bad idea, should I just use zfs send if I want backup?  If
+</I>&gt;<i>  the proposed idea isn't a bad idea, is there a command which should be
+</I>&gt;<i>  executed prior to disconnecting the external drive to keep the state
+</I>&gt;<i>  on there slightly more sane or known?
+</I>&gt;<i>
+</I>&gt;<i>  --
+</I>&gt;<i>  James Snyder
+</I>&gt;<i>  Biomedical Engineering
+</I>&gt;<i>  Northwestern University
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000216.html">[zfs-discuss] Using Mirror for Automatic Backup?
+</A></li>
+	<LI>Next message: <A HREF="000218.html">[zfs-discuss] ZFS Case Sensitivity and file system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#217">[ date ]</a>
+              <a href="thread.html#217">[ thread ]</a>
+              <a href="subject.html#217">[ subject ]</a>
+              <a href="author.html#217">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Implicit growth of mirrored vdevs?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Implicit%20growth%20of%20mirrored%20vdevs%3F&In-Reply-To=%3C8DFF474A-3554-4C8D-ACD8-B2AD6E17E762%40macnews.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001143.html">
+   <LINK REL="Next"  HREF="001145.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Implicit growth of mirrored vdevs?</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Implicit%20growth%20of%20mirrored%20vdevs%3F&In-Reply-To=%3C8DFF474A-3554-4C8D-ACD8-B2AD6E17E762%40macnews.de%3E"
+       TITLE="[zfs-discuss] Implicit growth of mirrored vdevs?">i_see at macnews.de
+       </A><BR>
+    <I>Thu Dec  4 12:56:00 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001143.html">[zfs-discuss] StoreGPU, hashing on CUDA
+</A></li>
+        <LI>Next message: <A HREF="001145.html">[zfs-discuss] Binary installer for ZFS-119
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1144">[ date ]</a>
+              <a href="thread.html#1144">[ thread ]</a>
+              <a href="subject.html#1144">[ subject ]</a>
+              <a href="author.html#1144">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+I didn't post for a while but ran into a strange problem (w/ zfs-117  
+Mac OS 10.5.5) I upgraded to 119, but that does not fix the state of  
+my pool for now.
+
+Before I tell the whole story my theory is:
+On importing a pool (or activating a vdev) ZFS re-evaluates the size  
+of the VDEV based on the size all available devices. If the sizes of  
+your mirrored devices happen to differ and the smaller device is  
+unavailable at import time, ZFS automagically grows the pool, leaving  
+the smaller device in the cold.
+
+
+My pool consists of two mirrored vdevs with one side sitting on a 1TB  
+disk, the others are 2 small disks. All disks are external USB- 
+enclosures. Since I didn't go very far into partitioning, the  
+partitions on the big disk only roughly match the size of the external  
+disks, or to be exact to the size available to ZFS for diskXs2.
+
+When I tried to import my pool for the last time one enclosure/disk  
+was slow to become available, so the pool went into a degraded state  
+like this:
+
+   pool: Doggie
+  state: DEGRADED
+status: One or more devices could not be opened.  Sufficient replicas  
+exist for
+	the pool to continue functioning in a degraded state.
+action: Attach the missing device and online it using 'zpool online'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-2Q">http://www.sun.com/msg/ZFS-8000-2Q</A>
+  scrub: resilver completed with 0 errors on Wed Dec  3 23:21:57 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	Doggie       DEGRADED     0     0     0
+	  mirror     ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s4  ONLINE       0     0     0
+	  mirror     DEGRADED     0     0     0
+	    disk7s2  UNAVAIL      0     0     0  cannot open
+	    disk3s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+unfortunately, I don't know a way to ONLINE a device that has a  
+different name then ZFS thinks (it was probably disk5s2), so I  
+exportet the pool and tried to import it again. -
+I got &quot;Invalid vdev configuration&quot; or &quot;no pool available for import&quot;  
+no matte what I initially tried.
+Then I tried to trick ZFS into accepting the disk by mounting some  
+disk images and made sure my external disk was actually disk7s2
+ &gt; zpool online Doggie disk7s2
+*Kernel panic*
+
+After rebooting, I tried to replace the disk with itsself (sitting on  
+disk4s2)
+$ zpool replace Doggie disk7s2 disk4s2
+cannot replace disk7s2 with disk4s2: device is too small
+
+Trying the &quot;trick&quot; didn't help:
+$ zpool replace Doggie disk7s2
+cannot replace disk7s2 with disk7s2: device is too small
+
+Then I tried this only to find out my pool has actually grown:
+$ zpool iostat -v Doggie
+                 capacity     operations    bandwidth
+pool          used  avail   read  write   read  write
+-----------  -----  -----  -----  -----  -----  -----
+Doggie        202G   102G      0      0    116  1,04K
+   mirror      185G   507M      0      0     45    319
+     disk2s2      -      -      0      0    119    337
+     disk3s4      -      -      0      0    108    337
+   mirror     17,2G   102G      0      0     71    748
+     disk7s2      -      -      0      0      0      0
+     disk3s2      -      -      0      0    105    766
+-----------  -----  -----  -----  -----  -----  -----
+
+$ diskutil list disk7s2
+/dev/disk7
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *111.8 Gi    
+disk7
+    1:                        EFI                         200.0 Mi    
+disk7s1
+    2:                        ZFS                         111.5 Gi    
+disk7s2
+
+The second VDEV is now 120G though my external &quot;120G&quot; disk (which I  
+used to create the pool) only has 111.5G available for ZFS.
+So, due to the fact that ZFS pools don't like to shrink, cannot re- 
+attach my disk to the pool.
+
+Obviously, I can move the data around into a new pool and start over,  
+but I cannot tell why this would not happen again.
+If ZFS implicitly grows a vdev when the smallest device is unavailable  
+I would consider that a bug.
+
+@Noel: if it is of any help, I can collect some extra output for you.  
+However, since I got strange output from diskutil, I did a
+# diskutil partitiondisk /dev/disk7 GPTFormat ZFS %noformat% 100%
+The output from diskutil got lost but it was something like
+
+$ diskutil list disk7
+/dev/disk7
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *111.8 Gi    
+disk7
+    1:                        EFI                         200.0 Mi    
+disk7s1
+    2:                        ZFS                         299.8 Gi    
+disk7s2
+Note the size of the partition was significantly bigger then the size  
+of the disk. (It was roughly the size of the pool, but I got that  
+twice, and I do not know how that number gets there, (which might be a  
+different issue).
+
+Greetings from Aachen,
+	ralf
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001143.html">[zfs-discuss] StoreGPU, hashing on CUDA
+</A></li>
+	<LI>Next message: <A HREF="001145.html">[zfs-discuss] Binary installer for ZFS-119
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1144">[ date ]</a>
+              <a href="thread.html#1144">[ thread ]</a>
+              <a href="subject.html#1144">[ subject ]</a>
+              <a href="author.html#1144">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

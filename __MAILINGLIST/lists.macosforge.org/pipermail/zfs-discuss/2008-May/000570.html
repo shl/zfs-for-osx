@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Where's the self healing?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=6ff274f40805051113v37f0b9dei3e16465d4f5661b5%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000569.html">
+   <LINK REL="Next"  HREF="000574.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Where's the self healing?</H1>
+    <B>Jason R. McNeil</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%27s%20the%20self%20healing%3F&In-Reply-To=6ff274f40805051113v37f0b9dei3e16465d4f5661b5%40mail.gmail.com"
+       TITLE="[zfs-discuss] Where's the self healing?">jason at jasonrm.net
+       </A><BR>
+    <I>Mon May  5 11:45:31 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000569.html">[zfs-discuss] Where's the self healing?
+</A></li>
+        <LI>Next message: <A HREF="000574.html">[zfs-discuss] ZFS expandabliity update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#570">[ date ]</a>
+              <a href="thread.html#570">[ thread ]</a>
+              <a href="subject.html#570">[ subject ]</a>
+              <a href="author.html#570">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Scott Palmer wrote:
+&gt;<i> 
+</I>&gt;<i> On Mon, May 5, 2008 at 1:54 PM, Jason R. McNeil &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jason at jasonrm.net</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jason at jasonrm.net</A>&gt;&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i>     Scott Palmer wrote:
+</I>&gt;<i> 
+</I>&gt;<i>         scott-palmers-imac:~ scott$ zpool status
+</I>&gt;<i>          pool: tank
+</I>&gt;<i>          state: ONLINE
+</I>&gt;<i>         status: One or more devices has experienced an unrecoverable error.  An
+</I>&gt;<i>            attempt was made to correct the error.  Applications are unaffected.
+</I>&gt;<i>         action: Determine if the device needs to be replaced, and clear the errors
+</I>&gt;<i>            using 'zpool clear' or replace the device with 'zpool replace'.
+</I>&gt;<i>           see: <A HREF="http://www.sun.com/msg/ZFS-8000-9P">http://www.sun.com/msg/ZFS-8000-9P</A>
+</I>&gt;<i>          scrub: none requested
+</I>&gt;<i>         config:
+</I>&gt;<i> 
+</I>&gt;<i>            NAME         STATE     READ WRITE CKSUM
+</I>&gt;<i>            tank         ONLINE       0     0     0
+</I>&gt;<i>              mirror     ONLINE       0     0     0
+</I>&gt;<i>                disk1s2  ONLINE       0     0     0
+</I>&gt;<i>                disk2s2  ONLINE   6.43K 33.9K     0
+</I>&gt;<i> 
+</I>&gt;<i>         errors: No known data errors
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>         Huh?  Unrecoverable error?  I thought ZFS was all about recovering.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>     Scott,
+</I>&gt;<i>      The error message needs to be read a certain way. The &quot;unrecoverable
+</I>&gt;<i>     error&quot; is correct, but realize that it is only referring to ZFS being
+</I>&gt;<i>     aware that there was a problem with the underlying hardware. Reading
+</I>&gt;<i>     further note that &quot;applications are unaffected&quot;, implying that ZFS is
+</I>&gt;<i>     still confident that all your data is correct, despite the hardware
+</I>&gt;<i>     problems.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I realize that ZFS was happily using the other drive in the mirror and the data 
+</I>&gt;<i> was still there.  But certainly the condition should have read &quot;degraded&quot; since 
+</I>&gt;<i> the protection of a mirror was NOT in place at that time.  The powered down 
+</I>&gt;<i> drive certainly should NOT have read as ONLINE.  I shouldn't have to manually 
+</I>&gt;<i> take the drive off-line if it isn't even accessible.  (E.g. normally for a 
+</I>&gt;<i> mounted volume, OS X will raise a stink that you've disconnected a device that 
+</I>&gt;<i> wasn't properly unmounted.. I understand that there should be no in-you-face 
+</I>&gt;<i> pop-up -- but simply mention this because it indicates at some level the system 
+</I>&gt;<i> should be aware of the missing drive pretty much immediately.)
+</I>&gt;<i> 
+</I>I agree that ZFS should have behaved differently after the drive 
+removal. Again, I'll float the idea that this is due to something odd 
+with the implementation of ZFS on Mac OS X.
+&gt;<i> 
+</I>&gt;<i>     Also, when watching the ZFS self-healing videos and such online I
+</I>&gt;<i>     recall that ZFS doesn't do background checks (excluding a scrub) that
+</I>&gt;<i>     all the devices are still there or that the data is correct. For
+</I>&gt;<i>     example, if you dd zero's randomly across a mirror, ZFS will report that
+</I>&gt;<i>     everything is good until it reads the data in, realizes that one of the
+</I>&gt;<i>     mirrors is bad, and will use whichever mirror it need to in order to
+</I>&gt;<i>     pass the checksums.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> That's strange.. it's not exactly a &quot;background&quot; check that is needed since the 
+</I>&gt;<i> writes are obviously failing.  Is it so disconnected that ZFS isn't being told 
+</I>&gt;<i> of the physical write errors - in the same manner that it is returning success 
+</I>&gt;<i> to the application level?
+</I>Seems to be that ZFS isn't aware of what is going on with the actual 
+hardware, although ZFS is still going to produce good data so long as 
+there are sufficient replicas of the data (either mirrored, raidz1, 
+etc), but there does need to be some communication to ZFS when a drive 
+is removed, and that doesn't seem to be working.
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>     I can't say exactly why after thousands of errors it didn't flag the
+</I>&gt;<i>     pool as degraded,
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Right... Do you agree that it should have?
+</I>
+My initial thought is that even one error should flag a degraded status, 
+at a minimum on the drive itself, but overall I would expect the pool to 
+be flagged as well as this would be a clear case when there is no longer 
+guaranteed redundancy.
+
+I was mostly concerned that you were thinking that ZFS was losing your 
+data, but now I'm understanding better your actual concern.
+It is about the lack of ZFS correctly noticing that a drive has been 
+physically removed, and in fact still shows up as ONLINE.
+Even if we have to do the whole zpool replace dance, I imagine that ZFS 
+needs to be aware when a drops out.
+
+I didn't see anything on the Trac that seemed related, so I don't know 
+if this is just &quot;expected&quot; behavior still for the beta, or an unreported 
+bug.
+
+Jason R. M.
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000569.html">[zfs-discuss] Where's the self healing?
+</A></li>
+	<LI>Next message: <A HREF="000574.html">[zfs-discuss] ZFS expandabliity update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#570">[ date ]</a>
+              <a href="thread.html#570">[ thread ]</a>
+              <a href="subject.html#570">[ subject ]</a>
+              <a href="author.html#570">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

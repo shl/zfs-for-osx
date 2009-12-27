@@ -1,0 +1,4499 @@
+From the.atz at gmail.com  Mon Apr  6 07:15:59 2009
+From: the.atz at gmail.com (Atze de Vries)
+Date: Mon, 6 Apr 2009 16:15:59 +0200
+Subject: [zfs-discuss] Problem with Sharing with SMB
+Message-ID: <F1E7BD60-0D85-4A07-B032-504B8D6A82C2@gmail.com>
+
+Hello,
+
+I have a problem sharing some folders, which are on a zfs disk. A  
+windows user connecting to my share, can see the files, play movies  
+etc, all working fine, except from copying. When the windows user is  
+copying a file he gets this error
+
+Cannot copy <filename>. Cannot find file
+Please check if the pathname and filename are correctly supplied.
+
+(freely translated from dutch ;)
+
+The error shows when the file is fully copied.
+
+Anybody any idea?
+
+
+Greetinx Atze
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090406/0d91a743/attachment.html>
+
+From Ted at philotv.com  Mon Apr  6 10:24:30 2009
+From: Ted at philotv.com (Ted Simbajon)
+Date: Mon, 06 Apr 2009 10:24:30 -0700
+Subject: [zfs-discuss] RaidZ on SAN
+Message-ID: <C5FF88DE.F578%Ted@philotv.com>
+
+Hi There,
+
+Thank you for porting ZFS on OSX. This might be a bit much, but I was hoping
+that I could ask you a question.
+
+I have a RAIDZ setup on a Fibre SAN Environment with 80+ Disk and allocated
+64 disk on my RAIDZ setup "Array".
+
+So, /dev/disk1 to /dev/disk64 is a member of Array (RAIDZ) which works
+great. The Problem is when I reboot the Machine, the disk(n) number changes
+thus destroying (correct me if im wrong) Array.
+
+Any tips?
+
+
+----------------------
+Ted Simbajon
+Avid ACSR-MAC / IT Tech Support Engr.
+415-321-4551
+
+
+
+From zorg at sogeeky.net  Mon Apr  6 12:39:54 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Mon, 6 Apr 2009 12:39:54 -0700
+Subject: [zfs-discuss] RaidZ on SAN
+In-Reply-To: <C5FF88DE.F578%Ted@philotv.com>
+References: <C5FF88DE.F578%Ted@philotv.com>
+Message-ID: <F9849DFA-E19C-4222-86F1-C3619CCD7C4D@sogeeky.net>
+
+I'm just a user, but in my experience, if the disks were partitioned  
+and formatted according to the FAQ on the zfs on OS X wiki pages this  
+should not be a problem. I run a raidz on a handful of FireWire  
+drives. The disk numbers change every boot and it hasn't been a  
+problem for me.
+
+On Apr 6, 2009, at 10:24 AM, Ted Simbajon <Ted at philotv.com> wrote:
+
+> Hi There,
+>
+> Thank you for porting ZFS on OSX. This might be a bit much, but I  
+> was hoping
+> that I could ask you a question.
+>
+> I have a RAIDZ setup on a Fibre SAN Environment with 80+ Disk and  
+> allocated
+> 64 disk on my RAIDZ setup "Array".
+>
+> So, /dev/disk1 to /dev/disk64 is a member of Array (RAIDZ) which works
+> great. The Problem is when I reboot the Machine, the disk(n) number  
+> changes
+> thus destroying (correct me if im wrong) Array.
+>
+> Any tips?
+>
+>
+> ----------------------
+> Ted Simbajon
+> Avid ACSR-MAC / IT Tech Support Engr.
+> 415-321-4551
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From bwaters at nrao.edu  Mon Apr  6 13:50:59 2009
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Mon, 6 Apr 2009 14:50:59 -0600
+Subject: [zfs-discuss] RaidZ on SAN
+In-Reply-To: <F9849DFA-E19C-4222-86F1-C3619CCD7C4D@sogeeky.net>
+References: <C5FF88DE.F578%Ted@philotv.com>
+	<F9849DFA-E19C-4222-86F1-C3619CCD7C4D@sogeeky.net>
+Message-ID: <2b0225fb0904061350w4448dee7rb99ab3acef3ff658@mail.gmail.com>
+
+The key here is to make sure there's a GPT label on each disk, with a
+partition marked as ZFS, *before* you add it to the array.
+
+I was able to create a raidz with "raw" disks, it works just fine --
+until you want to export the pool. ZFS export tries to write something
+to the disk label, and there isn't one...
+
+Anyway. I'm moving my data off that array onto the new one, then I'll
+go back and partition those disks correctly.
+
+I think. (i am often wrong)
+
+From Ted at philotv.com  Mon Apr  6 15:16:06 2009
+From: Ted at philotv.com (Ted Simbajon)
+Date: Mon, 06 Apr 2009 15:16:06 -0700
+Subject: [zfs-discuss] RaidZ on SAN
+In-Reply-To: <2b0225fb0904061350w4448dee7rb99ab3acef3ff658@mail.gmail.com>
+Message-ID: <C5FFCD36.F619%Ted@philotv.com>
+
+That actually did it!
+
+Thanks Guys..
+
+
+---
+Ted
+
+
+> From: Boyd Waters <bwaters at nrao.edu>
+> Date: Mon, 6 Apr 2009 14:50:59 -0600
+> To: "Mr. Zorg" <zorg at sogeeky.net>
+> Cc: Ted Simbajon <ted at philotv.com>, "<zfs-discuss at lists.macosforge.org>"
+> <zfs-discuss at lists.macosforge.org>
+> Subject: Re: [zfs-discuss] RaidZ on SAN
+> 
+> The key here is to make sure there's a GPT label on each disk, with a
+> partition marked as ZFS, *before* you add it to the array.
+> 
+> I was able to create a raidz with "raw" disks, it works just fine --
+> until you want to export the pool. ZFS export tries to write something
+> to the disk label, and there isn't one...
+> 
+> Anyway. I'm moving my data off that array onto the new one, then I'll
+> go back and partition those disks correctly.
+> 
+> I think. (i am often wrong)
+
+
+
+From beier.andreas at gmail.com  Mon Apr  6 13:51:28 2009
+From: beier.andreas at gmail.com (Beier Andreas)
+Date: Mon, 6 Apr 2009 22:51:28 +0200
+Subject: [zfs-discuss] Zpool disaster
+In-Reply-To: <88975A88-D238-4FF1-ABD3-680C69FDAD92@gmail.com>
+References: <88975A88-D238-4FF1-ABD3-680C69FDAD92@gmail.com>
+Message-ID: <612FB580-7C76-4E42-9BF2-BB98C817218A@gmail.com>
+
+Dear List,
+
+* Christian Kendi <ksh at ironsoftware.de> [090116 00:04]:
+> well, he already stated that he used the force "-f" flag.
+>
+>>> ------------------------------------------------------------------------------------------------------------------
+>>> => zpool import -f 9004030332584099627
+>>> cannot import 'ZFS': I/O error
+
+I have the same Problem. My Harddisk was internal in my MacBookPro. I
+replaced it and put it into an usb enclosure. And now i get the same  
+error.
+(shows as faulted and -f gives I/O error)
+
+
+I ordered now a firewire enclosure to see if the problem still exists.  
+Even
+Nexenta couldn't use it in the usb- enclosure.
+
+My Backup is 3m old. So if this data is lost, that would be of course my
+fault. But it really sucks.
+
+I replaced the harddisk not because of problems, just because it was  
+getting
+to small...
+
+Andreas
+
+Am 05.01.2009 um 22:53 schrieb mathieu.email:
+
+> Hi,
+>
+> I have a big problem with my ZFS disk. After a kernel panic, I  
+> cannot import the pool anymore :
+>
+> ------------------------------------------------------------------------------------------------------------------
+> => zpool status
+> no pools available
+> => zpool list
+> no pools available
+>
+> ------------------------------------------------------------------------------------------------------------------
+> => zpool import
+>
+> pool: ZFS
+>       id: 9004030332584099627
+>  state: FAULTED
+> status: The pool metadata is corrupted.
+> action: The pool cannot be imported due to damaged devices or data.
+>             The pool may be active on on another system, but can be  
+> imported using
+>             the '-f' flag.
+>    see: http://www.sun.com/msg/ZFS-8000-72
+> config:
+>
+> 	ZFS            FAULTED  corrupted data
+> 	  disk2s2   ONLINE
+>
+>  pool: ZFS
+>       id: 5050959592823553345
+>  state: FAULTED
+> status: The pool was last accessed by another system.
+> action: The pool cannot be imported due to damaged devices or data.
+>    see: http://www.sun.com/msg/ZFS-8000-EY
+> config:
+>
+> 	ZFS         UNAVAIL  insufficient replicas
+> 	  disk1     UNAVAIL  cannot open
+>
+> ------------------------------------------------------------------------------------------------------------------
+> => zpool import -f 9004030332584099627
+> cannot import 'ZFS': I/O error
+> ------------------------------------------------------------------------------------------------------------------
+>
+> I am despaired as I have no backup and all my data are on this drive.
+>
+> Is there anything I can do ?
+>
+> Thank you for your help,
+>
+> Mathieu
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From beier.andreas at gmail.com  Tue Apr  7 03:40:51 2009
+From: beier.andreas at gmail.com (Beier Andreas)
+Date: Tue, 7 Apr 2009 12:40:51 +0200
+Subject: [zfs-discuss]  Zpool disaster
+References: <612FB580-7C76-4E42-9BF2-BB98C817218A@gmail.com>
+Message-ID: <C8E0A93B-376D-46E1-825E-C614CAA851F7@gmail.com>
+
+Dear List
+
+>>>> ------------------------------------------------------------------------------------------------------------------
+>>>> => zpool import -f 9004030332584099627
+>>>> cannot import 'ZFS': I/O error
+>
+>
+> I ordered now a firewire enclosure to see if the problem still  
+> exists. Even
+> Nexenta couldn't use it in the usb- enclosure.
+
+I tried the firewire enclosure and another usb-sata adapter.
+
+It shows the same error: cannot import 'ZFS': I/O error
+
+How could i get the Data out of my partition?
+
+Andreas
+
+From zorg at sogeeky.net  Tue Apr  7 09:06:50 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Tue, 7 Apr 2009 09:06:50 -0700
+Subject: [zfs-discuss] Zpool disaster
+In-Reply-To: <C8E0A93B-376D-46E1-825E-C614CAA851F7@gmail.com>
+References: <612FB580-7C76-4E42-9BF2-BB98C817218A@gmail.com>
+	<C8E0A93B-376D-46E1-825E-C614CAA851F7@gmail.com>
+Message-ID: <A0865A7B-030B-47FB-ADE8-533794D80945@sogeeky.net>
+
+Have you tried putting the drive back inside the computer to see if  
+you can read it then?
+
+On Apr 7, 2009, at 3:40 AM, Beier Andreas <beier.andreas at gmail.com>  
+wrote:
+
+> Dear List
+>
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> --- 
+>>>>> ------------------------------------------------------------------
+>>>>> => zpool import -f 9004030332584099627
+>>>>> cannot import 'ZFS': I/O error
+>>
+>>
+>> I ordered now a firewire enclosure to see if the problem still  
+>> exists. Even
+>> Nexenta couldn't use it in the usb- enclosure.
+>
+> I tried the firewire enclosure and another usb-sata adapter.
+>
+> It shows the same error: cannot import 'ZFS': I/O error
+>
+> How could i get the Data out of my partition?
+>
+> Andreas
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From chris at young-alumni.com  Tue Apr  7 14:13:48 2009
+From: chris at young-alumni.com (Chris Ruiz)
+Date: Tue, 7 Apr 2009 16:13:48 -0500
+Subject: [zfs-discuss] Zpool disaster
+In-Reply-To: <A0865A7B-030B-47FB-ADE8-533794D80945@sogeeky.net>
+References: <612FB580-7C76-4E42-9BF2-BB98C817218A@gmail.com>
+	<C8E0A93B-376D-46E1-825E-C614CAA851F7@gmail.com>
+	<A0865A7B-030B-47FB-ADE8-533794D80945@sogeeky.net>
+Message-ID: <68529C06-B03D-42C9-8112-CFD60D9C05EE@young-alumni.com>
+
+
+On Apr 7, 2009, at 11:06 AM, Mr. Zorg wrote:
+
+> Have you tried putting the drive back inside the computer to see if  
+> you can read it then?
+
+Please don't top post.
+
+> On Apr 7, 2009, at 3:40 AM, Beier Andreas <beier.andreas at gmail.com>  
+> wrote:
+>
+>> Dear List
+>>
+>>>>>> ------------------------------------------------------------------------------------------------------------------
+>>>>>> => zpool import -f 9004030332584099627
+>>>>>> cannot import 'ZFS': I/O error
+>>>
+>>>
+>>> I ordered now a firewire enclosure to see if the problem still  
+>>> exists. Even
+>>> Nexenta couldn't use it in the usb- enclosure.
+>>
+>> I tried the firewire enclosure and another usb-sata adapter.
+>>
+>> It shows the same error: cannot import 'ZFS': I/O error
+>>
+>> How could i get the Data out of my partition?
+
+It doesn't matter how you attach the drive to your system, the pool is  
+faulted.  The easiest way to mess up your pool is by forgetting to  
+export it before detaching the drive from your system.  Since the pool  
+only had a single device, zfs can not attempt to repair your pool.   
+You could use zdb to analyze your pool but this tool is not included  
+with the available port of zfs from apple.  Also, it helps reduce  
+confusion if you name your zpool something other than zfs or a long  
+string of numbers.
+
+Chris
+
+From jon at halfpast.net  Tue Apr  7 15:24:25 2009
+From: jon at halfpast.net (Jon Moog)
+Date: Tue, 7 Apr 2009 17:24:25 -0500
+Subject: [zfs-discuss] Zpool disaster
+In-Reply-To: <68529C06-B03D-42C9-8112-CFD60D9C05EE@young-alumni.com>
+References: <612FB580-7C76-4E42-9BF2-BB98C817218A@gmail.com>
+	<C8E0A93B-376D-46E1-825E-C614CAA851F7@gmail.com>
+	<A0865A7B-030B-47FB-ADE8-533794D80945@sogeeky.net>
+	<68529C06-B03D-42C9-8112-CFD60D9C05EE@young-alumni.com>
+Message-ID: <76418D77-E09C-4FE6-A65E-7F961BFB2EA1@halfpast.net>
+
+Why not? ;-)
+
+-Jon
+
+On Apr 7, 2009, at 4:13 PM, Chris Ruiz wrote:
+
+>
+> On Apr 7, 2009, at 11:06 AM, Mr. Zorg wrote:
+>
+>> Have you tried putting the drive back inside the computer to see if  
+>> you can read it then?
+>
+> Please don't top post.
+>
+>> On Apr 7, 2009, at 3:40 AM, Beier Andreas <beier.andreas at gmail.com>  
+>> wrote:
+>>
+>>> Dear List
+>>>
+>>>>>>> ------------------------------------------------------------------------------------------------------------------
+>>>>>>> => zpool import -f 9004030332584099627
+>>>>>>> cannot import 'ZFS': I/O error
+>>>>
+>>>>
+>>>> I ordered now a firewire enclosure to see if the problem still  
+>>>> exists. Even
+>>>> Nexenta couldn't use it in the usb- enclosure.
+>>>
+>>> I tried the firewire enclosure and another usb-sata adapter.
+>>>
+>>> It shows the same error: cannot import 'ZFS': I/O error
+>>>
+>>> How could i get the Data out of my partition?
+>
+> It doesn't matter how you attach the drive to your system, the pool  
+> is faulted.  The easiest way to mess up your pool is by forgetting  
+> to export it before detaching the drive from your system.  Since the  
+> pool only had a single device, zfs can not attempt to repair your  
+> pool.  You could use zdb to analyze your pool but this tool is not  
+> included with the available port of zfs from apple.  Also, it helps  
+> reduce confusion if you name your zpool something other than zfs or  
+> a long string of numbers.
+>
+> Chris
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+Sorry, I couldn't resist.
+
+
+From gadams at fgm.com  Tue Apr  7 15:46:43 2009
+From: gadams at fgm.com (Adams, Geoff)
+Date: Tue, 7 Apr 2009 18:46:43 -0400
+Subject: [zfs-discuss] Zpool disaster
+In-Reply-To: <76418D77-E09C-4FE6-A65E-7F961BFB2EA1@halfpast.net>
+References: <612FB580-7C76-4E42-9BF2-BB98C817218A@gmail.com>
+	<C8E0A93B-376D-46E1-825E-C614CAA851F7@gmail.com>
+	<A0865A7B-030B-47FB-ADE8-533794D80945@sogeeky.net>
+	<68529C06-B03D-42C9-8112-CFD60D9C05EE@young-alumni.com>
+	<76418D77-E09C-4FE6-A65E-7F961BFB2EA1@halfpast.net>
+Message-ID: <51A613BF-D38E-4852-8479-5F8AE23C0917@fgm.com>
+
+On 7 Apr 2009, at 6:24 PM, Jon Moog wrote:
+
+> Why not? ;-)
+>
+> -Jon
+>
+> On Apr 7, 2009, at 4:13 PM, Chris Ruiz wrote:
+>
+>> On Apr 7, 2009, at 11:06 AM, Mr. Zorg wrote:
+>>
+>>> Have you tried putting the drive back inside the computer to see  
+>>> if you can read it then?
+>>
+>> Please don't top post.
+>>
+>>> On Apr 7, 2009, at 3:40 AM, Beier Andreas  
+>>> <beier.andreas at gmail.com> wrote:
+>>>
+>>>> Dear List
+
+To quote Ben Artin:
+
+A: Because it reverses the logical flow of conversation.
+Q: Why is top posting frowned upon?
+
+And besides, look at the mess it made above! ;-)
+
+(More seriously, for those for whom this is a real question, I'll  
+point out that it also tends to discourage pruning unnecessary cruft  
+from quoted messages and responding to relevant bits in context.)
+
+- Geoff
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090407/6a60db4c/attachment.html>
+
+From Ted at philotv.com  Wed Apr  8 17:07:31 2009
+From: Ted at philotv.com (Ted Simbajon)
+Date: Wed, 08 Apr 2009 17:07:31 -0700
+Subject: [zfs-discuss] Performance and Spare...
+Message-ID: <C6028A53.F738%Ted@philotv.com>
+
+Hey guys, I know its a bit normal for a Raidz2 (raid6) to have a little bit
+of penalty plus+ the checksum zfs does on the background.
+
+As I new ZFS user, I want to cover all aspect of this filesystem since im
+Loving it!. 
+
+Does this look normal? Is disk10s2 & disk157s2 out of the raidz2 (Array)?
+And is it pretty normal to have a max write speed of about 25MBps?
+
+Thank you.
+
+
+
+
+#zpool status Array
+------------------
+  pool: Array
+ state: ONLINE
+ scrub: scrub stopped with 0 errors on Wed Apr  8 16:26:00 2009
+config:
+
+    NAME           STATE     READ WRITE CKSUM
+    Array          ONLINE       0     0     0
+      raidz2       ONLINE       0     0     0
+        disk9s2    ONLINE       0     0     0
+        disk5s2    ONLINE       0     0     0
+        disk12s2   ONLINE       0     0     0
+        disk8s2    ONLINE       0     0     0
+        disk18s2   ONLINE       0     0     0
+        disk19s2   ONLINE       0     0     0
+        disk20s2   ONLINE       0     0     0
+        disk28s2   ONLINE       0     0     0
+        disk25s2   ONLINE       0     0     0
+        disk21s2   ONLINE       0     0     0
+        disk29s2   ONLINE       0     0     0
+        disk33s2   ONLINE       0     0     0
+        disk36s2   ONLINE       0     0     0
+        disk35s2   ONLINE       0     0     0
+        disk42s2   ONLINE       0     0     0
+        disk39s2   ONLINE       0     0     0
+        disk56s2   ONLINE       0     0     0
+        disk41s2   ONLINE       0     0     0
+        disk50s2   ONLINE       0     0     0
+        disk44s2   ONLINE       0     0     0
+        disk49s2   ONLINE       0     0     0
+        disk58s2   ONLINE       0     0     0
+        disk51s2   ONLINE       0     0     0
+        disk69s2   ONLINE       0     0     0
+        disk63s2   ONLINE       0     0     0
+        disk60s2   ONLINE       0     0     0
+        disk71s2   ONLINE       0     0     0
+        disk82s2   ONLINE       0     0     0
+        disk77s2   ONLINE       0     0     0
+        disk70s2   ONLINE       0     0     0
+        disk90s2   ONLINE       0     0     0
+        disk62s2   ONLINE       0     0     0
+        disk81s2   ONLINE       0     0     0
+        disk74s2   ONLINE       0     0     0
+        disk94s2   ONLINE       0     0     0
+        disk87s2   ONLINE       0     0     0
+        disk83s2   ONLINE       0     0     0
+        disk84s2   ONLINE       0     0     0
+        disk101s2  ONLINE       0     0     0
+        disk92s2   ONLINE       0     0     0
+        disk91s2   ONLINE       0     0     0
+        disk104s2  ONLINE       0     0     0
+        disk124s2  ONLINE       0     0     0
+        disk112s2  ONLINE       0     0     0
+        disk110s2  ONLINE       0     0     0
+        disk120s2  ONLINE       0     0     0
+        disk115s2  ONLINE       0     0     0
+        disk130s2  ONLINE       0     0     0
+        disk135s2  ONLINE       0     0     0
+        disk150s2  ONLINE       0     0     0
+        disk132s2  ONLINE       0     0     0
+        disk129s2  ONLINE       0     0     0
+        disk122s2  ONLINE       0     0     0
+        disk121s2  ONLINE       0     0     0
+        disk131s2  ONLINE       0     0     0
+        disk165s2  ONLINE       0     0     0
+        disk137s2  ONLINE       0     0     0
+        disk133s2  ONLINE       0     0     0
+        disk145s2  ONLINE       0     0     0
+        disk164s2  ONLINE       0     0     0
+        disk141s2  ONLINE       0     0     0
+        disk148s2  ONLINE       0     0     0
+      disk10s2     ONLINE       0     0     0
+      disk157s2    ONLINE       0     0     0
+
+errors: No known data errors
+-----------------
+
+
+#zpool iostat
+-----------------
+               capacity     operations    bandwidth
+pool         used  avail   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+Array       3.56T  7.10T     19    139  1.40M  14.9M
+
+
+
+
+From richmc at gmail.com  Wed Apr  8 17:35:28 2009
+From: richmc at gmail.com (Richard McClellan)
+Date: Wed, 8 Apr 2009 17:35:28 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <C6028A53.F738%Ted@philotv.com>
+References: <C6028A53.F738%Ted@philotv.com>
+Message-ID: <CB3330DC-69BC-47A4-B7DD-E959BB926D65@gmail.com>
+
+
+On Apr 8, 2009, at 17:07 , Ted Simbajon wrote:
+
+> Hey guys, I know its a bit normal for a Raidz2 (raid6) to have a  
+> little bit
+> of penalty plus+ the checksum zfs does on the background.
+>
+> As I new ZFS user, I want to cover all aspect of this filesystem  
+> since im
+> Loving it!.
+>
+> Does this look normal? Is disk10s2 & disk157s2 out of the raidz2  
+> (Array)?
+> And is it pretty normal to have a max write speed of about 25MBps?
+>
+
+Without knowing more about your hardware it's difficult to say whether  
+that's slow or not. If all of those disks and the bus connecting them  
+are modern, then you should be seeing much higher r/w bandwidth.
+
+
+> Thank you.
+>
+>
+>
+>
+> #zpool status Array
+> ------------------
+>  pool: Array
+> state: ONLINE
+> scrub: scrub stopped with 0 errors on Wed Apr  8 16:26:00 2009
+> config:
+>
+>    NAME           STATE     READ WRITE CKSUM
+>    Array          ONLINE       0     0     0
+>      raidz2       ONLINE       0     0     0
+>        disk9s2    ONLINE       0     0     0
+>        disk5s2    ONLINE       0     0     0
+>        disk12s2   ONLINE       0     0     0
+>        disk8s2    ONLINE       0     0     0
+>        disk18s2   ONLINE       0     0     0
+>        disk19s2   ONLINE       0     0     0
+>        disk20s2   ONLINE       0     0     0
+>        disk28s2   ONLINE       0     0     0
+>        disk25s2   ONLINE       0     0     0
+>        disk21s2   ONLINE       0     0     0
+>        disk29s2   ONLINE       0     0     0
+>        disk33s2   ONLINE       0     0     0
+>        disk36s2   ONLINE       0     0     0
+>        disk35s2   ONLINE       0     0     0
+>        disk42s2   ONLINE       0     0     0
+>        disk39s2   ONLINE       0     0     0
+>        disk56s2   ONLINE       0     0     0
+>        disk41s2   ONLINE       0     0     0
+>        disk50s2   ONLINE       0     0     0
+>        disk44s2   ONLINE       0     0     0
+>        disk49s2   ONLINE       0     0     0
+>        disk58s2   ONLINE       0     0     0
+>        disk51s2   ONLINE       0     0     0
+>        disk69s2   ONLINE       0     0     0
+>        disk63s2   ONLINE       0     0     0
+>        disk60s2   ONLINE       0     0     0
+>        disk71s2   ONLINE       0     0     0
+>        disk82s2   ONLINE       0     0     0
+>        disk77s2   ONLINE       0     0     0
+>        disk70s2   ONLINE       0     0     0
+>        disk90s2   ONLINE       0     0     0
+>        disk62s2   ONLINE       0     0     0
+>        disk81s2   ONLINE       0     0     0
+>        disk74s2   ONLINE       0     0     0
+>        disk94s2   ONLINE       0     0     0
+>        disk87s2   ONLINE       0     0     0
+>        disk83s2   ONLINE       0     0     0
+>        disk84s2   ONLINE       0     0     0
+>        disk101s2  ONLINE       0     0     0
+>        disk92s2   ONLINE       0     0     0
+>        disk91s2   ONLINE       0     0     0
+>        disk104s2  ONLINE       0     0     0
+>        disk124s2  ONLINE       0     0     0
+>        disk112s2  ONLINE       0     0     0
+>        disk110s2  ONLINE       0     0     0
+>        disk120s2  ONLINE       0     0     0
+>        disk115s2  ONLINE       0     0     0
+>        disk130s2  ONLINE       0     0     0
+>        disk135s2  ONLINE       0     0     0
+>        disk150s2  ONLINE       0     0     0
+>        disk132s2  ONLINE       0     0     0
+>        disk129s2  ONLINE       0     0     0
+>        disk122s2  ONLINE       0     0     0
+>        disk121s2  ONLINE       0     0     0
+>        disk131s2  ONLINE       0     0     0
+>        disk165s2  ONLINE       0     0     0
+>        disk137s2  ONLINE       0     0     0
+>        disk133s2  ONLINE       0     0     0
+>        disk145s2  ONLINE       0     0     0
+>        disk164s2  ONLINE       0     0     0
+>        disk141s2  ONLINE       0     0     0
+>        disk148s2  ONLINE       0     0     0
+>      disk10s2     ONLINE       0     0     0
+>      disk157s2    ONLINE       0     0     0
+>
+> errors: No known data errors
+> -----------------
+>
+
+It would be weird if disk10 and disk157 weren't in the Array pool. I'm  
+pretty sure you would have had to force it (i.e., -f) in order to  
+create a pool out of a raidz2 and two simple vdevs.
+
+You might consider organizing things a little differently if you want  
+good performance.  Check out the ZFS Best Practices guide for  
+recommendations.
+
+>
+> #zpool iostat
+> -----------------
+>               capacity     operations    bandwidth
+> pool         used  avail   read  write   read  write
+> ----------  -----  -----  -----  -----  -----  -----
+> Array       3.56T  7.10T     19    139  1.40M  14.9M
+>
+>
+
+Try `zpool iostat Array 1` or zpool iostat -v Array 1` to see more  
+representative numbers.
+
+		Rich
+
+
+From richard.elling at gmail.com  Wed Apr  8 21:18:02 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Wed, 08 Apr 2009 21:18:02 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <C6028A53.F738%Ted@philotv.com>
+References: <C6028A53.F738%Ted@philotv.com>
+Message-ID: <49DD76FA.8050102@gmail.com>
+
+Ted Simbajon wrote:
+> Hey guys, I know its a bit normal for a Raidz2 (raid6) to have a little bit
+> of penalty plus+ the checksum zfs does on the background.
+>   
+
+Yes, but there are also configurations which are worse than others.
+For example, having more than about 9-10 vdevs in a raidz2 set
+is likely to be a bad idea for someone expecting decent performance.
+
+> As I new ZFS user, I want to cover all aspect of this filesystem since im
+> Loving it!. 
+>   
+
+cool!
+
+> Does this look normal?
+
+No.  Most folks would not put so many vdevs in a raidz[12] set.
+We've tried to make this known in both the man page and ZFS
+best practices guide, but it is possible to do, so people do it.
+
+>  Is disk10s2 & disk157s2 out of the raidz2 (Array)?
+>   
+
+Yes.  Did you "zpool add" these later?  The data therein is not
+protected.  Unfortunately, there is no way to "unadd" these.
+So you have two choices, if you value the data:
+    1. destroy the pool and rebuild
+    2. "zpool attach" vdevs to the singletons to protect the data
+
+> And is it pretty normal to have a max write speed of about 25MBps?
+>   
+
+I don't see any data on the max write speed.  A plain "zpool iostat"
+will show the bandwidth since the pool was imported.  If you wait
+a little while and try it again, the number will decrease.  If you want
+to look at IO bandwidth under load, then you'll want to add the
+time interval option, something like "zpool iostat 10"
+ -- richard
+
+
+From richmc at gmail.com  Wed Apr  8 22:18:41 2009
+From: richmc at gmail.com (Richard McClellan)
+Date: Wed, 8 Apr 2009 22:18:41 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <49DD76FA.8050102@gmail.com>
+References: <C6028A53.F738%Ted@philotv.com> <49DD76FA.8050102@gmail.com>
+Message-ID: <19BA5AFC-F92B-43A8-92EE-C93B8A74AD4D@gmail.com>
+
+
+On Apr 8, 2009, at 21:18 , Richard Elling wrote:
+
+> Ted Simbajon wrote:
+>> Hey guys, I know its a bit normal for a Raidz2 (raid6) to have a  
+>> little bit
+>> of penalty plus+ the checksum zfs does on the background.
+>>
+>
+> Yes, but there are also configurations which are worse than others.
+> For example, having more than about 9-10 vdevs in a raidz2 set
+> is likely to be a bad idea for someone expecting decent performance.
+>
+
+Richard, I think you meant to say it's inefficient to have more than  
+9-10 hard drives in a vdev.  Ted has three vdevs in his zpool named  
+Array: two are of type disk and one is raidz2.
+
+Ted, Richard gives good advice when he suggests creating multiple  
+raidz2 vdevs in your pool.  You might also look in to using mirror  
+vdevs since this will allow you to grow your pool two (or three) disks  
+at a time, rather than the ~10 that you'd need--assuming you redo the  
+pool with ~10 drives per vdev--to add another raidz2 vdev.  Check out  
+the ZFS Best Practices guide.
+
+		Regards,
+		Rich
+
+
+
+From Ted at philotv.com  Thu Apr  9 08:50:49 2009
+From: Ted at philotv.com (Ted Simbajon)
+Date: Thu, 09 Apr 2009 08:50:49 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <49DD76FA.8050102@gmail.com>
+Message-ID: <C6036769.F77F%Ted@philotv.com>
+
+Here is the rundown on my hardware.
+
+There are 64x 170GB "IDE" disk and 8 of these disk is being controlled by a
+"3ware Escalade" which is housed in a 3U server. 1 server houses 2
+controller which sums to 16 Disk per server and I have 4 of these servers.
+
+All these storage servers are connected to a Qlogic Sandbox 1400 (4Gbps
+"bits") via an ATTO 3300 (2Gbps) HBA. The MAC machine (G5 2x2.5Ghz w/ 7GB
+RAM) is connected to the same Sandbox via an ATTO FC-42XS card. On top of
+the 64x170GB "IDE" Disk Targets that one of the ports of the ATTO FC-42XS
+sees, it also sees a 128x500GB "SATA" disk Targets which is an "Avid Unity"
+via a Qlogic 52xx Sandbox.
+
+So, keeping those in-mind. I looked at the old Logs and it kindda matches
+what I have right now (ZFS RAIDZ2) which is about ~25 - 30 MB/s.
+
+Now, my biggest concern are the two disk outside of my Raidz2
+
+>Yes.  Did you "zpool add" these later?  The data therein is not protected.
+Unfortunately, there is no way to "unadd" these.
+
+No, I added All the Drives into the "Array" Raidz2 at once, all 64 of them,
+but didn't really noticed them until last night. Is there something I can do
+to correct them?
+
+With regards to the "mirroring", I can't since it's going to have about 9+TB
+of data after all these writings.
+
+
+>Yes, but there are also configurations which are worse than others. For
+example, having more than about 9-10 vdevs in a raidz2 set is likely to be a bad
+idea for someone expecting decent performance.
+
+Here is where it shows that I'm a New user, can I create a Volume "Array"
+with ~10TB of storage consisting of 6vdevs where each vdev is a raidz2
+consisting of 10-12 disk, so a total of 6vdevs?
+
+
+
+With great respect to you guys!
+
+
+----------------------
+Ted Simbajon
+Avid ACSR-MAC / IT Tech Support Engr.
+Philo TV / Lieberman Productions
+415-321-4551
+
+
+
+
+
+
+
+From richmc at gmail.com  Thu Apr  9 09:34:13 2009
+From: richmc at gmail.com (Rich McClellan)
+Date: Thu, 9 Apr 2009 09:34:13 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <C6036769.F77F%Ted@philotv.com>
+References: <49DD76FA.8050102@gmail.com> <C6036769.F77F%Ted@philotv.com>
+Message-ID: <203e36e30904090934w348fd24dk9138e591d27c9992@mail.gmail.com>
+
+On Thu, Apr 9, 2009 at 8:50 AM, Ted Simbajon <Ted at philotv.com> wrote:
+>
+> No, I added All the Drives into the "Array" Raidz2 at once, all 64 of them,
+> but didn't really noticed them until last night. Is there something I can do
+> to correct them?
+
+No, there's nothing you can do. They may actually be in the pool since
+ZFS normally won't allow you to create a pool out of one raidz2 vdev
+and two disk vdevs (requires -f flag to force it).
+
+>
+> Here is where it shows that I'm a New user, can I create a Volume "Array"
+> with ~10TB of storage consisting of 6vdevs where each vdev is a raidz2
+> consisting of 10-12 disk, so a total of 6vdevs?
+
+Regarding the size of the resulting pool being 10TB: no. Remember that
+in a raidz2 vdev you're losing two of your disks to redundancy.
+
+Regarding using multiple, smaller vdevs: yes, and that would be a best
+practice.  Assuming you can only use the 64 disks I'd recommend
+creating 8 raidz2 vdevs comprised of 8 hard drives each. This will
+yield ~8160GB of storage.  You'll probably see performance increase
+when creating your pool this way.  If you want to get somewhere
+between 8160GB and ~10TB, consider using raidz and a couple of hot
+spares.
+
+Whatever you do, read the ZFS documentation before going much farther :-)
+
+Rich
+
+From Ted at philotv.com  Thu Apr  9 11:14:14 2009
+From: Ted at philotv.com (Ted Simbajon)
+Date: Thu, 09 Apr 2009 11:14:14 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <203e36e30904090934w348fd24dk9138e591d27c9992@mail.gmail.com>
+Message-ID: <C6038906.F7AF%Ted@philotv.com>
+
+Also, This is the actual command I did to create "Array"
+
+#sudo zpool create Array raidz2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+/dev/disk6s2 /dev/disk7s2 /dev/disk8s2 /dev/disk9s2 /dev/disk10s2
+/dev/disk11s2 /dev/disk12s2 /dev/disk13s2 /dev/disk14s2 /dev/disk15s2
+/dev/disk16s2 /dev/disk17s2 /dev/disk18s2 /dev/disk19s2 /dev/disk20s2
+/dev/disk21s2 /dev/disk22s2 /dev/disk23s2 /dev/disk24s2 /dev/disk25s2
+/dev/disk26s2 /dev/disk27s2 /dev/disk28s2 /dev/disk29s2 /dev/disk30s2
+/dev/disk31s2 /dev/disk32s2 /dev/disk33s2 /dev/disk34s2 /dev/disk35s2
+/dev/disk36s2 /dev/disk37s2 /dev/disk38s2 /dev/disk39s2 /dev/disk40s2
+/dev/disk41s2 /dev/disk42s2 /dev/disk43s2 /dev/disk44s2 /dev/disk45s2
+/dev/disk46s2 /dev/disk47s2 /dev/disk48s2 /dev/disk49s2 /dev/disk50s2
+/dev/disk51s2 /dev/disk52s2 /dev/disk53s2 /dev/disk54s2 /dev/disk55s2
+/dev/disk56s2 /dev/disk57s2 /dev/disk58s2 /dev/disk59s2 /dev/disk60s2
+/dev/disk61s2 /dev/disk62s2 /dev/disk63s2 /dev/disk64s2
+
+So I don't understand why 2 disk is out.
+
+---
+Ted
+
+
+> From: Rich McClellan <richmc at gmail.com>
+> Date: Thu, 9 Apr 2009 09:34:13 -0700
+> To: Ted Simbajon <ted at philotv.com>
+> Cc: Richard Elling <richard.elling at gmail.com>,
+> <zfs-discuss at lists.macosforge.org>
+> Subject: Re: [zfs-discuss] Performance and Spare...
+> 
+> No, there's nothing you can do. They may actually be in the pool since
+
+
+
+From richmc at gmail.com  Thu Apr  9 15:24:54 2009
+From: richmc at gmail.com (Rich McClellan)
+Date: Thu, 9 Apr 2009 15:24:54 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <C6038906.F7AF%Ted@philotv.com>
+References: <203e36e30904090934w348fd24dk9138e591d27c9992@mail.gmail.com>
+	<C6038906.F7AF%Ted@philotv.com>
+Message-ID: <203e36e30904091524iccd337di51c26928f6367606@mail.gmail.com>
+
+On Thu, Apr 9, 2009 at 11:14 AM, Ted Simbajon <Ted at philotv.com> wrote:
+> Also, This is the actual command I did to create "Array"
+>
+> #sudo zpool create Array raidz2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+> /dev/disk6s2 /dev/disk7s2 /dev/disk8s2 /dev/disk9s2 /dev/disk10s2
+> /dev/disk11s2 /dev/disk12s2 /dev/disk13s2 /dev/disk14s2 /dev/disk15s2
+> /dev/disk16s2 /dev/disk17s2 /dev/disk18s2 /dev/disk19s2 /dev/disk20s2
+> /dev/disk21s2 /dev/disk22s2 /dev/disk23s2 /dev/disk24s2 /dev/disk25s2
+> /dev/disk26s2 /dev/disk27s2 /dev/disk28s2 /dev/disk29s2 /dev/disk30s2
+> /dev/disk31s2 /dev/disk32s2 /dev/disk33s2 /dev/disk34s2 /dev/disk35s2
+> /dev/disk36s2 /dev/disk37s2 /dev/disk38s2 /dev/disk39s2 /dev/disk40s2
+> /dev/disk41s2 /dev/disk42s2 /dev/disk43s2 /dev/disk44s2 /dev/disk45s2
+> /dev/disk46s2 /dev/disk47s2 /dev/disk48s2 /dev/disk49s2 /dev/disk50s2
+> /dev/disk51s2 /dev/disk52s2 /dev/disk53s2 /dev/disk54s2 /dev/disk55s2
+> /dev/disk56s2 /dev/disk57s2 /dev/disk58s2 /dev/disk59s2 /dev/disk60s2
+> /dev/disk61s2 /dev/disk62s2 /dev/disk63s2 /dev/disk64s2
+>
+> So I don't understand why 2 disk is out.
+
+The command above doesn't include several of the disks that are in the
+output you included in your first email: what's up?
+
+From richard.elling at gmail.com  Thu Apr  9 16:56:03 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Thu, 09 Apr 2009 16:56:03 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <203e36e30904091524iccd337di51c26928f6367606@mail.gmail.com>
+References: <203e36e30904090934w348fd24dk9138e591d27c9992@mail.gmail.com>	
+	<C6038906.F7AF%Ted@philotv.com>
+	<203e36e30904091524iccd337di51c26928f6367606@mail.gmail.com>
+Message-ID: <49DE8B13.2040005@gmail.com>
+
+
+
+Rich McClellan wrote:
+> On Thu, Apr 9, 2009 at 11:14 AM, Ted Simbajon <Ted at philotv.com> wrote:
+>   
+>> Also, This is the actual command I did to create "Array"
+>>
+>> #sudo zpool create Array raidz2 /dev/disk3s2 /dev/disk4s2 /dev/disk5s2
+>> /dev/disk6s2 /dev/disk7s2 /dev/disk8s2 /dev/disk9s2 /dev/disk10s2
+>> /dev/disk11s2 /dev/disk12s2 /dev/disk13s2 /dev/disk14s2 /dev/disk15s2
+>> /dev/disk16s2 /dev/disk17s2 /dev/disk18s2 /dev/disk19s2 /dev/disk20s2
+>> /dev/disk21s2 /dev/disk22s2 /dev/disk23s2 /dev/disk24s2 /dev/disk25s2
+>> /dev/disk26s2 /dev/disk27s2 /dev/disk28s2 /dev/disk29s2 /dev/disk30s2
+>> /dev/disk31s2 /dev/disk32s2 /dev/disk33s2 /dev/disk34s2 /dev/disk35s2
+>> /dev/disk36s2 /dev/disk37s2 /dev/disk38s2 /dev/disk39s2 /dev/disk40s2
+>> /dev/disk41s2 /dev/disk42s2 /dev/disk43s2 /dev/disk44s2 /dev/disk45s2
+>> /dev/disk46s2 /dev/disk47s2 /dev/disk48s2 /dev/disk49s2 /dev/disk50s2
+>> /dev/disk51s2 /dev/disk52s2 /dev/disk53s2 /dev/disk54s2 /dev/disk55s2
+>> /dev/disk56s2 /dev/disk57s2 /dev/disk58s2 /dev/disk59s2 /dev/disk60s2
+>> /dev/disk61s2 /dev/disk62s2 /dev/disk63s2 /dev/disk64s2
+>>
+>> So I don't understand why 2 disk is out.
+>>     
+>
+> The command above doesn't include several of the disks that are in the
+> output you included in your first email: what's up?
+>   
+
+Good thing we added a "zpool history" option :-)
+Note: I've lost the ability to track which version of which release had
+such changes.  Fortunately, "zpool upgrade -v" existed long, long ago,
+and it says "zpool history" arrived in zpool version 4.
+ -- richard
+
+
+From richard.elling at gmail.com  Thu Apr  9 16:57:48 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Thu, 09 Apr 2009 16:57:48 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <19BA5AFC-F92B-43A8-92EE-C93B8A74AD4D@gmail.com>
+References: <C6028A53.F738%Ted@philotv.com> <49DD76FA.8050102@gmail.com>
+	<19BA5AFC-F92B-43A8-92EE-C93B8A74AD4D@gmail.com>
+Message-ID: <49DE8B7C.40700@gmail.com>
+
+Richard McClellan wrote:
+>
+> On Apr 8, 2009, at 21:18 , Richard Elling wrote:
+>
+>> Ted Simbajon wrote:
+>>> Hey guys, I know its a bit normal for a Raidz2 (raid6) to have a 
+>>> little bit
+>>> of penalty plus+ the checksum zfs does on the background.
+>>>
+>>
+>> Yes, but there are also configurations which are worse than others.
+>> For example, having more than about 9-10 vdevs in a raidz2 set
+>> is likely to be a bad idea for someone expecting decent performance.
+>>
+>
+> Richard, I think you meant to say it's inefficient to have more than 
+> 9-10 hard drives in a vdev.  Ted has three vdevs in his zpool named 
+> Array: two are of type disk and one is raidz2.
+
+"vdev" might be considered an overloaded term.  I try to say "top-level
+vdev" when I am talking about the top-level vdevs, but you're absolutely
+right -- this can be confusing to folks.
+ -- richard
+
+
+From hanche at math.ntnu.no  Fri Apr 10 03:34:17 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 10 Apr 2009 12:34:17 +0200 (CEST)
+Subject: [zfs-discuss] cannot create snapshot: dataset is busy
+In-Reply-To: <292397E9-9BEC-4042-9159-1D7FB2293BC4@nrao.edu>
+Message-ID: <20090410.123417.111329822.hanche@math.ntnu.no>
+
+This one has reared its ugly head on the list a few times:
+
+; sudo zfs  snapshot wd320a/photo at 2009-04-10
+cannot create snapshot 'wd320a/photo at 2009-04-10': dataset is busy
+
+The usual workaround involves unmounting and remounting the filesystem. I can do that until I'm blue in the face, and it doesn't help. I think I should be able to snapshot a filesystem even while unmounted, but I get the same error then. Another poster (Boyd Waters, last December) reported that you get this error if the volume is mounted on a nonempty directory. Well, after I unmounted wd320a/photo there was indeed a directory /Volumes/wd320a/photo, but it was empty. I removed it anyway just to be sure. Didn't help.
+
+Finally, I resorted to importing the pool on a machine running FreeBSD 7.1 and doing the snapshot there. Worked like a charm. And not only that, afterwards I moved the pool back to my Mac, did various updates and made another snapshot. Again, it worked flawlessly.
+
+But before I did all that, I gathered the following information. Can anyone see anything here that might help explain the problem?
+
+- Harald
+
+
+; sudo zfs list -r wd320a
+NAME           USED  AVAIL  REFER  MOUNTPOINT
+wd320a         280G  13.5G  20.1G  /Volumes/wd320a
+wd320a/photo   260G  13.5G   260G  /Volumes/wd320a/photo
+
+; sudo lsof +D /Volumes/wd320a -x f
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+fseventsd  37 root    9u   REG  45,54        0  127 /Volumes/wd320a/.fseventsd/000000000e471a91
+
+; sudo zpool status wd320a
+  pool: wd320a
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+        still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+        pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        wd320a      ONLINE       0     0     0
+          disk2s1   ONLINE       0     0     0
+
+errors: No known data errors
+
+; sudo zfs get all wd320a
+NAME    PROPERTY       VALUE                  SOURCE
+wd320a  type           filesystem             -
+wd320a  creation       Wed Aug 27 10:41 2008  -
+wd320a  used           280G                   -
+wd320a  available      13.5G                  -
+wd320a  referenced     20.1G                  -
+wd320a  compressratio  1.00x                  -
+wd320a  mounted        yes                    -
+wd320a  quota          none                   default
+wd320a  reservation    none                   default
+wd320a  recordsize     128K                   default
+wd320a  mountpoint     /Volumes/wd320a        default
+wd320a  sharenfs       off                    default
+wd320a  checksum       on                     default
+wd320a  compression    off                    default
+wd320a  atime          on                     default
+wd320a  devices        on                     default
+wd320a  exec           on                     default
+wd320a  setuid         on                     default
+wd320a  readonly       off                    default
+wd320a  zoned          off                    default
+wd320a  snapdir        hidden                 default
+wd320a  aclmode        groupmask              default
+wd320a  aclinherit     secure                 default
+wd320a  canmount       on                     default
+wd320a  shareiscsi     off                    default
+wd320a  xattr          on                     default
+wd320a  copies         1                      default
+wd320a  version        1                      -
+
+; sudo zfs get all wd320a/photo
+NAME          PROPERTY       VALUE                  SOURCE
+wd320a/photo  type           filesystem             -
+wd320a/photo  creation       Wed Aug 27 10:42 2008  -
+wd320a/photo  used           260G                   -
+wd320a/photo  available      13.5G                  -
+wd320a/photo  referenced     260G                   -
+wd320a/photo  compressratio  1.00x                  -
+wd320a/photo  mounted        yes                    -
+wd320a/photo  quota          none                   default
+wd320a/photo  reservation    none                   default
+wd320a/photo  recordsize     128K                   default
+wd320a/photo  mountpoint     /Volumes/wd320a/photo  default
+wd320a/photo  sharenfs       off                    default
+wd320a/photo  checksum       on                     default
+wd320a/photo  compression    off                    default
+wd320a/photo  atime          on                     default
+wd320a/photo  devices        on                     default
+wd320a/photo  exec           on                     default
+wd320a/photo  setuid         on                     default
+wd320a/photo  readonly       off                    default
+wd320a/photo  zoned          off                    default
+wd320a/photo  snapdir        hidden                 default
+wd320a/photo  aclmode        groupmask              default
+wd320a/photo  aclinherit     secure                 default
+wd320a/photo  canmount       on                     default
+wd320a/photo  shareiscsi     off                    default
+wd320a/photo  xattr          on                     default
+wd320a/photo  copies         1                      default
+wd320a/photo  version        1                      -
+
+; sudo zpool history wd320a
+History for 'wd320a':
+2008-08-27.10:41:09 zpool create wd320a da0p1
+2008-08-27.10:42:11 zfs create wd320a/photo
+2008-08-27.18:02:54 zpool export wd320a
+2008-08-27.18:03:56 zpool import wd320a
+2008-08-27.18:57:12 zpool export wd320a
+2008-08-27.18:57:44 zpool import -f 17709161926253340618
+2008-08-27.19:10:55 zpool export wd320a
+2008-08-27.19:12:16 zpool import -f 17709161926253340618
+2008-08-27.19:12:52 zpool export wd320a
+2008-08-28.14:54:19 zpool import -f 17709161926253340618
+2008-08-28.14:57:01 zpool export wd320a
+2008-08-30.12:57:30 zpool import -f 17709161926253340618
+2008-08-30.13:52:55 zpool export wd320a
+2008-08-30.21:24:17 zpool import -f 17709161926253340618
+2008-08-31.06:57:49 zpool export wd320a
+2008-08-31.10:23:15 zpool import -f 17709161926253340618
+2008-08-31.11:11:49 zpool export wd320a
+2008-09-01.09:15:12 zpool import wd320a
+2008-09-01.09:16:45 zpool export wd320a
+2008-09-14.18:58:46 zpool import -f 17709161926253340618
+2008-09-14.19:19:16 zpool export wd320a
+2008-09-16.10:33:28 zpool import -f 17709161926253340618
+2008-09-16.11:12:23 zpool export wd320a
+2008-09-16.11:24:26 zpool import -f 17709161926253340618
+2008-09-16.11:29:55 zpool export wd320a
+2008-09-16.19:51:28 zpool import wd320a
+2008-09-16.19:57:38 zpool import -f 17709161926253340618
+2008-09-17.08:17:43 zpool export wd320a
+2008-09-17.09:58:33 zpool import -f 17709161926253340618
+2008-09-17.11:37:50 zpool export wd320a
+2008-09-17.21:11:40 zpool import -f 17709161926253340618
+2008-09-18.01:06:38 zpool export wd320a
+2008-09-18.01:11:38 zpool import -f 17709161926253340618
+2008-09-18.08:14:50 zpool export wd320a
+2008-09-18.09:42:50 zpool import -f 17709161926253340618
+2008-09-18.11:14:16 zpool export wd320a
+2008-09-18.15:43:28 zpool import -f 17709161926253340618
+2008-09-18.19:05:37 zpool export wd320a
+2008-09-18.23:19:54 zpool import -f 17709161926253340618
+2008-09-18.23:27:20 zpool export wd320a
+2008-09-29.06:15:51 zpool import -f 17709161926253340618
+2008-09-29.06:20:29 zpool export wd320a
+2008-10-01.08:15:28 zpool import -f 17709161926253340618
+2008-10-01.09:38:51 zpool export wd320a
+2008-11-20.15:58:57 zpool import -f 17709161926253340618
+2008-11-20.19:07:41 zpool export wd320a
+2008-11-30.19:53:30 zpool import -f 17709161926253340618
+2008-11-30.22:06:07 zpool export wd320a
+2008-12-26.16:53:10 zpool import -f 17709161926253340618
+2008-12-26.16:58:37 zpool export wd320a
+2008-12-30.18:09:48 zpool import -f 17709161926253340618
+2008-12-30.18:13:59 zpool export wd320a
+2008-12-30.18:15:15 zpool import -f 17709161926253340618
+2008-12-30.18:16:00 zpool export wd320a
+2009-01-08.17:41:20 zpool import -f 17709161926253340618
+2009-01-08.17:47:26 zpool export wd320a
+2009-01-09.16:03:05 zpool import -f 17709161926253340618
+2009-01-09.16:10:40 zpool export wd320a
+2009-01-11.14:55:31 zpool import -f 17709161926253340618
+2009-01-11.15:29:43 zpool export wd320a
+2009-01-20.14:40:53 zpool import -f 17709161926253340618
+2009-01-20.14:48:24 zpool export wd320a
+2009-01-20.19:03:35 zpool import wd320a
+2009-01-20.19:08:00 zpool export wd320a
+2009-02-13.20:17:14 zpool import -f 17709161926253340618
+2009-02-13.20:26:40 zpool export wd320a
+2009-02-13.20:28:27 zpool import wd320a
+2009-02-13.20:48:19 zpool export wd320a
+2009-03-02.14:04:33 zpool import -f 17709161926253340618
+2009-03-02.14:10:55 zpool export wd320a
+2009-03-02.14:12:25 zpool import wd320a
+2009-03-02.14:16:40 zpool export wd320a
+2009-03-02.14:17:04 zpool import -f 17709161926253340618
+2009-03-02.14:50:59 zpool export wd320a
+2009-03-02.16:52:01 zpool import -f 17709161926253340618
+2009-03-02.16:53:02 zpool export wd320a
+2009-03-12.12:20:54 zpool import -f 17709161926253340618
+2009-03-12.17:44:31 zpool export wd320a
+2009-03-13.17:27:11 zpool import -f 17709161926253340618
+2009-03-13.17:59:55 zpool export wd320a
+2009-03-21.16:05:03 zpool import -f 17709161926253340618
+2009-03-21.16:11:55 zpool export wd320a
+2009-03-21.22:06:20 zpool import -f 17709161926253340618
+2009-03-21.22:12:17 zpool export wd320a
+2009-03-22.10:10:59 zpool import -f 17709161926253340618
+2009-03-22.16:01:03 zpool export wd320a
+2009-03-22.18:05:02 zpool import -f 17709161926253340618
+2009-03-22.18:32:12 zpool export wd320a
+2009-04-10.11:21:19 zpool import -f 17709161926253340618
+2009-04-10.11:31:18 zpool export wd320a
+2009-04-10.11:31:27 zpool import wd320a
+2009-04-10.11:31:38 zpool export wd320a
+2009-04-10.11:31:43 zpool import wd320a
+2009-04-10.11:36:13 zpool export wd320a
+2009-04-10.11:45:38 zpool import wd320a
+2009-04-10.11:50:47 zpool export wd320a
+2009-04-10.11:50:52 zpool import wd320a
+2009-04-10.11:52:49 zpool export wd320a
+2009-04-10.11:53:36 zpool import -f 17709161926253340618
+
+From Ted at philotv.com  Fri Apr 10 08:54:03 2009
+From: Ted at philotv.com (Ted Simbajon)
+Date: Fri, 10 Apr 2009 08:54:03 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <A4F09748-B637-461B-A139-A238127FB34B@me.com>
+Message-ID: <C604B9AB.F868%Ted@philotv.com>
+
+Well here's another detail I forgot to mention.
+
+2 of the Storage Server (2x[16Disk:2 Escalade]) runs ATTO 3300 which is
+2Gbps FC card, because of this, this will bring my entire infrastructure
+down to 2Gbps.
+
+But still, it should be faster than 1 single disk 1394a write speed. Now, im
+not sure of I want to redo this again since im not sure if I can fix it from
+the start.
+
+At almost at 6TB mark!. :)
+
+
+----
+Hydra:~ hydra$ zpool iostat 1
+               capacity     operations    bandwidth
+pool         used  avail   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+Array       5.99T  4.67T      3    163   254K  17.2M
+Array       5.99T  4.67T      0    189      0  23.5M
+Array       5.99T  4.67T      4    283  71.0K  20.0M
+Array       5.99T  4.67T     20     70  2.49M  7.85M
+Array       5.99T  4.67T     13    206  1.24M  12.9M
+Array       5.99T  4.67T      4      0   635K      0
+Array       5.99T  4.67T      0    148      0  18.1M
+Array       5.99T  4.67T      0    177      0  21.9M
+Array       5.99T  4.67T      0    242      0  28.5M
+Array       5.99T  4.67T      0    186      0  23.1M
+Array       5.99T  4.67T      0    234      0  28.8M
+Array       5.99T  4.67T      7    155   701K  6.24M
+Array       5.99T  4.67T      0      0   127K      0
+Array       5.99T  4.67T      2     41   381K  4.48M
+Array       5.99T  4.67T      0    229      0  28.2M
+Array       5.99T  4.67T      0    178      0  22.1M
+Array       5.99T  4.67T      0    234      0  27.9M
+Array       5.99T  4.67T      0    180      0  22.4M
+Array       5.99T  4.67T      6    288   137K  22.0M
+Array       5.99T  4.67T      1      0   1017      0
+Array       5.99T  4.67T     12      0  1.60M      0
+Array       5.99T  4.67T      0    166      0  20.6M
+Array       5.99T  4.67T      0    227      0  27.4M
+Array       5.99T  4.67T      0    185      0  23.0M
+Array       5.99T  4.67T      0    234      0  27.8M
+Array       5.99T  4.67T      0    190      0  23.3M
+Array       5.99T  4.67T     10    150   707K  4.99M
+Array       5.99T  4.67T     11      0  1.49M      0
+Array       5.99T  4.67T      1     58   254K  7.33M
+----
+
+My only biggest concern is the two disk outside of my Raidz2.
+
+Can someone confirm that there are data on these 2 simple disk?.
+To me it looks like, these 2 disk is a part of "Array" which Array is
+composed of 3 Volumes, 1(raidz2) and 2(simple volume).
+
+This might be my problem with my write preformance...
+
+----
+Hydra:~ hydra$ zpool status
+  pool: Array
+ state: ONLINE
+ scrub: scrub stopped with 0 errors on Wed Apr  8 16:26:00 2009
+config:
+
+    NAME           STATE     READ WRITE CKSUM
+    Array          ONLINE       0     0     0
+      raidz2       ONLINE       0     0     0
+        disk9s2    ONLINE       0     0     0
+        disk5s2    ONLINE       0     0     0
+        disk12s2   ONLINE       0     0     0
+        disk8s2    ONLINE       0     0     0
+        disk18s2   ONLINE       0     0     0
+        disk19s2   ONLINE       0     0     0
+        disk20s2   ONLINE       0     0     0
+        disk28s2   ONLINE       0     0     0
+        disk25s2   ONLINE       0     0     0
+        disk21s2   ONLINE       0     0     0
+        disk29s2   ONLINE       0     0     0
+        disk33s2   ONLINE       0     0     0
+        disk36s2   ONLINE       0     0     0
+        disk35s2   ONLINE       0     0     0
+        disk42s2   ONLINE       0     0     0
+        disk39s2   ONLINE       0     0     0
+        disk56s2   ONLINE       0     0     0
+        disk41s2   ONLINE       0     0     0
+        disk50s2   ONLINE       0     0     0
+        disk44s2   ONLINE       0     0     0
+        disk49s2   ONLINE       0     0     0
+        disk58s2   ONLINE       0     0     0
+        disk51s2   ONLINE       0     0     0
+        disk69s2   ONLINE       0     0     0
+        disk63s2   ONLINE       0     0     0
+        disk60s2   ONLINE       0     0     0
+        disk71s2   ONLINE       0     0     0
+        disk82s2   ONLINE       0     0     0
+        disk77s2   ONLINE       0     0     0
+        disk70s2   ONLINE       0     0     0
+        disk90s2   ONLINE       0     0     0
+        disk62s2   ONLINE       0     0     0
+        disk81s2   ONLINE       0     0     0
+        disk74s2   ONLINE       0     0     0
+        disk94s2   ONLINE       0     0     0
+        disk87s2   ONLINE       0     0     0
+        disk83s2   ONLINE       0     0     0
+        disk84s2   ONLINE       0     0     0
+        disk101s2  ONLINE       0     0     0
+        disk92s2   ONLINE       0     0     0
+        disk91s2   ONLINE       0     0     0
+        disk104s2  ONLINE       0     0     0
+        disk124s2  ONLINE       0     0     0
+        disk112s2  ONLINE       0     0     0
+        disk110s2  ONLINE       0     0     0
+        disk120s2  ONLINE       0     0     0
+        disk115s2  ONLINE       0     0     0
+        disk130s2  ONLINE       0     0     0
+        disk135s2  ONLINE       0     0     0
+        disk150s2  ONLINE       0     0     0
+        disk132s2  ONLINE       0     0     0
+        disk129s2  ONLINE       0     0     0
+        disk122s2  ONLINE       0     0     0
+        disk121s2  ONLINE       0     0     0
+        disk131s2  ONLINE       0     0     0
+        disk165s2  ONLINE       0     0     0
+        disk137s2  ONLINE       0     0     0
+        disk133s2  ONLINE       0     0     0
+        disk145s2  ONLINE       0     0     0
+        disk164s2  ONLINE       0     0     0
+        disk141s2  ONLINE       0     0     0
+        disk148s2  ONLINE       0     0     0
+      disk10s2     ONLINE       0     0     0
+      disk157s2    ONLINE       0     0     0
+
+errors: No known data errors
+-------
+
+Thanks.
+
+---
+Ted
+
+
+> From: "erik.ableson" <eableson at me.com>
+> Date: Fri, 10 Apr 2009 10:03:25 +0200
+> To: Ted Simbajon <ted at philotv.com>
+> Cc: <zfs-discuss at lists.macosforge.org>
+> Subject: Re: [zfs-discuss] Performance and Spare...
+> 
+> Hmmm - given that environment, I would expect much better
+> performance.  That said, if the objective is to furnish shared storage
+> to more than one machine, I would have a tendency towards using
+> OpenSolaris for managing the disks and then publish the data via iSCSI
+> or NFS to the Mac machines.  The current ZFS build on the Mac is a few
+> version behind and the OpenSolaris build is much more mature. You'll
+> be able to boost your performance with the addition of SSD cache
+> devices if required which is not (from what I understand) a priority
+> in the OS X build.
+> 
+> For comparison on a small scale, I can pull down 128 Mb/s write and
+> 156MB/s read on a small install composed of 4 SATA disks on a generic
+> PC with a 2.6Ghz Core 2 Duo.  Bottlenecks aside (like the IDE buses in
+> the Escalades), your FC infrastructure should be able to handle about
+> 400MB/s and you certainly have enough disks to attain that kind of
+> performance. With just the 4 disks I can saturate a GbE connection, so
+> with 64 (properly configured) you should be able to saturate a 4Gbps
+> FC connection.
+> 
+> Example on my home server:
+> root at shemhazai:~# time dd if=/dev/zero of=/siovale/bench/bigfile bs=8k
+> count=750000
+> 750000+0 records in
+> 750000+0 records out
+> 6144000000 bytes (6.1 GB) copied, 47.9947 s, 128 MB/s
+> 
+> root at shemhazai:~# time dd of=/dev/null if=/siovale/bench/bigfile bs=8k
+> count=750000
+> 750000+0 records in
+> 750000+0 records out
+> 6144000000 bytes (6.1 GB) copied, 39.4134 s, 156 MB/s
+> 
+> Cheers,
+> 
+> Erik
+> 
+> On 9 avr. 09, at 17:50, Ted Simbajon wrote:
+> 
+>> There are 64x 170GB "IDE" disk and 8 of these disk is being
+>> controlled by a
+>> "3ware Escalade" which is housed in a 3U server. 1 server houses 2
+>> controller which sums to 16 Disk per server and I have 4 of these
+>> servers.
+>> 
+>> All these storage servers are connected to a Qlogic Sandbox 1400
+>> (4Gbps
+>> "bits") via an ATTO 3300 (2Gbps) HBA. The MAC machine (G5 2x2.5Ghz
+>> w/ 7GB
+>> RAM) is connected to the same Sandbox via an ATTO FC-42XS card. On
+>> top of
+>> the 64x170GB "IDE" Disk Targets that one of the ports of the ATTO
+>> FC-42XS
+>> sees, it also sees a 128x500GB "SATA" disk Targets which is an "Avid
+>> Unity"
+>> via a Qlogic 52xx Sandbox.
+>> 
+>> So, keeping those in-mind. I looked at the old Logs and it kindda
+>> matches
+>> what I have right now (ZFS RAIDZ2) which is about ~25 - 30 MB/s.
+> 
+
+
+
+From richmc at gmail.com  Fri Apr 10 22:12:52 2009
+From: richmc at gmail.com (Richard McClellan)
+Date: Fri, 10 Apr 2009 22:12:52 -0700
+Subject: [zfs-discuss] Performance and Spare...
+In-Reply-To: <C604B9AB.F868%Ted@philotv.com>
+References: <C604B9AB.F868%Ted@philotv.com>
+Message-ID: <6494C722-A223-44F9-A342-CFB8FED20586@gmail.com>
+
+
+On Apr 10, 2009, at 08:54 , Ted Simbajon wrote:
+
+> Well here's another detail I forgot to mention.
+>
+> 2 of the Storage Server (2x[16Disk:2 Escalade]) runs ATTO 3300 which  
+> is
+> 2Gbps FC card, because of this, this will bring my entire  
+> infrastructure
+> down to 2Gbps.
+
+You should be seeing much higher bandwidth throughput than you quoted  
+(~25MB/sec).
+
+>
+> But still, it should be faster than 1 single disk 1394a write speed.  
+> Now, im
+> not sure of I want to redo this again since im not sure if I can fix  
+> it from
+> the start.
+>
+
+What do you mean "fix it from the start"?  Setting up your pool with  
+~8 vdevs should take you about 15 minutes if you go slowly/methodically.
+
+> At almost at 6TB mark!. :)
+>
+>
+> ----
+> Hydra:~ hydra$ zpool iostat 1
+>               capacity     operations    bandwidth
+> pool         used  avail   read  write   read  write
+> ----------  -----  -----  -----  -----  -----  -----
+> Array       5.99T  4.67T      3    163   254K  17.2M
+> Array       5.99T  4.67T      0    189      0  23.5M
+> Array       5.99T  4.67T      4    283  71.0K  20.0M
+> Array       5.99T  4.67T     20     70  2.49M  7.85M
+> Array       5.99T  4.67T     13    206  1.24M  12.9M
+> Array       5.99T  4.67T      4      0   635K      0
+> Array       5.99T  4.67T      0    148      0  18.1M
+> Array       5.99T  4.67T      0    177      0  21.9M
+> Array       5.99T  4.67T      0    242      0  28.5M
+> Array       5.99T  4.67T      0    186      0  23.1M
+> Array       5.99T  4.67T      0    234      0  28.8M
+> Array       5.99T  4.67T      7    155   701K  6.24M
+> Array       5.99T  4.67T      0      0   127K      0
+> Array       5.99T  4.67T      2     41   381K  4.48M
+> Array       5.99T  4.67T      0    229      0  28.2M
+> Array       5.99T  4.67T      0    178      0  22.1M
+> Array       5.99T  4.67T      0    234      0  27.9M
+> Array       5.99T  4.67T      0    180      0  22.4M
+> Array       5.99T  4.67T      6    288   137K  22.0M
+> Array       5.99T  4.67T      1      0   1017      0
+> Array       5.99T  4.67T     12      0  1.60M      0
+> Array       5.99T  4.67T      0    166      0  20.6M
+> Array       5.99T  4.67T      0    227      0  27.4M
+> Array       5.99T  4.67T      0    185      0  23.0M
+> Array       5.99T  4.67T      0    234      0  27.8M
+> Array       5.99T  4.67T      0    190      0  23.3M
+> Array       5.99T  4.67T     10    150   707K  4.99M
+> Array       5.99T  4.67T     11      0  1.49M      0
+> Array       5.99T  4.67T      1     58   254K  7.33M
+> ----
+>
+> My only biggest concern is the two disk outside of my Raidz2.
+>
+> Can someone confirm that there are data on these 2 simple disk?.
+> To me it looks like, these 2 disk is a part of "Array" which Array is
+> composed of 3 Volumes, 1(raidz2) and 2(simple volume).
+>
+
+I've never made a pool with disk vdevs, but if they are treated like  
+mirror or raidz vdevs than a `zpool status` should list both the  
+vdev--"disk"--and the hard drive in it--"disk10s2"--as the raidz2  
+vdevs are listed.  So the output of `zpool status` would like  
+something like
+
+...
+Array
+   raidz2
+     diskNsM
+     ...
+   disk
+     disk10s2
+   disk
+     disk157s2
+
+
+You could also try adding -v to iostat (i.e., `zpool iostat -v Array  
+1`) and see how the load is spread across all of the devices. If the  
+hard drives in the raidz2 pool are getting a smaller fraction of IOPS,  
+reads, writes, etc., than the supposed "disk" vdevs, then you may have  
+three vdevs comprising the pools.
+
+Regardless, it's not a good idea to have just one vdev in the zpool,  
+so redo it :-)
+
+I missed the thread on disk labels changing when the computer starts  
+up/initiates connections to the SAN boxes.  Does the order vary within  
+a storage group (e.g., disks in SAN A are randomly out of order) or  
+across all of the storage groups (one time SAN B is seen first so it's  
+drives get the lower numbers, next time SAN A gets the lower numbers)  
+or are they all mixed up?  I've found with iSCSI targets that I have  
+to be careful about the order in which the targets are presented to  
+the OS.
+
+		Rich
+
+
+> This might be my problem with my write preformance...
+>
+> ----
+> Hydra:~ hydra$ zpool status
+>  pool: Array
+> state: ONLINE
+> scrub: scrub stopped with 0 errors on Wed Apr  8 16:26:00 2009
+> config:
+>
+>    NAME           STATE     READ WRITE CKSUM
+>    Array          ONLINE       0     0     0
+>      raidz2       ONLINE       0     0     0
+>        disk9s2    ONLINE       0     0     0
+>        disk5s2    ONLINE       0     0     0
+>        disk12s2   ONLINE       0     0     0
+>        disk8s2    ONLINE       0     0     0
+>        disk18s2   ONLINE       0     0     0
+>        disk19s2   ONLINE       0     0     0
+>        disk20s2   ONLINE       0     0     0
+>        disk28s2   ONLINE       0     0     0
+>        disk25s2   ONLINE       0     0     0
+>        disk21s2   ONLINE       0     0     0
+>        disk29s2   ONLINE       0     0     0
+>        disk33s2   ONLINE       0     0     0
+>        disk36s2   ONLINE       0     0     0
+>        disk35s2   ONLINE       0     0     0
+>        disk42s2   ONLINE       0     0     0
+>        disk39s2   ONLINE       0     0     0
+>        disk56s2   ONLINE       0     0     0
+>        disk41s2   ONLINE       0     0     0
+>        disk50s2   ONLINE       0     0     0
+>        disk44s2   ONLINE       0     0     0
+>        disk49s2   ONLINE       0     0     0
+>        disk58s2   ONLINE       0     0     0
+>        disk51s2   ONLINE       0     0     0
+>        disk69s2   ONLINE       0     0     0
+>        disk63s2   ONLINE       0     0     0
+>        disk60s2   ONLINE       0     0     0
+>        disk71s2   ONLINE       0     0     0
+>        disk82s2   ONLINE       0     0     0
+>        disk77s2   ONLINE       0     0     0
+>        disk70s2   ONLINE       0     0     0
+>        disk90s2   ONLINE       0     0     0
+>        disk62s2   ONLINE       0     0     0
+>        disk81s2   ONLINE       0     0     0
+>        disk74s2   ONLINE       0     0     0
+>        disk94s2   ONLINE       0     0     0
+>        disk87s2   ONLINE       0     0     0
+>        disk83s2   ONLINE       0     0     0
+>        disk84s2   ONLINE       0     0     0
+>        disk101s2  ONLINE       0     0     0
+>        disk92s2   ONLINE       0     0     0
+>        disk91s2   ONLINE       0     0     0
+>        disk104s2  ONLINE       0     0     0
+>        disk124s2  ONLINE       0     0     0
+>        disk112s2  ONLINE       0     0     0
+>        disk110s2  ONLINE       0     0     0
+>        disk120s2  ONLINE       0     0     0
+>        disk115s2  ONLINE       0     0     0
+>        disk130s2  ONLINE       0     0     0
+>        disk135s2  ONLINE       0     0     0
+>        disk150s2  ONLINE       0     0     0
+>        disk132s2  ONLINE       0     0     0
+>        disk129s2  ONLINE       0     0     0
+>        disk122s2  ONLINE       0     0     0
+>        disk121s2  ONLINE       0     0     0
+>        disk131s2  ONLINE       0     0     0
+>        disk165s2  ONLINE       0     0     0
+>        disk137s2  ONLINE       0     0     0
+>        disk133s2  ONLINE       0     0     0
+>        disk145s2  ONLINE       0     0     0
+>        disk164s2  ONLINE       0     0     0
+>        disk141s2  ONLINE       0     0     0
+>        disk148s2  ONLINE       0     0     0
+>      disk10s2     ONLINE       0     0     0
+>      disk157s2    ONLINE       0     0     0
+>
+> errors: No known data errors
+> -------
+>
+> Thanks.
+>
+> ---
+> Ted
+>
+>
+>> From: "erik.ableson" <eableson at me.com>
+>> Date: Fri, 10 Apr 2009 10:03:25 +0200
+>> To: Ted Simbajon <ted at philotv.com>
+>> Cc: <zfs-discuss at lists.macosforge.org>
+>> Subject: Re: [zfs-discuss] Performance and Spare...
+>>
+>> Hmmm - given that environment, I would expect much better
+>> performance.  That said, if the objective is to furnish shared  
+>> storage
+>> to more than one machine, I would have a tendency towards using
+>> OpenSolaris for managing the disks and then publish the data via  
+>> iSCSI
+>> or NFS to the Mac machines.  The current ZFS build on the Mac is a  
+>> few
+>> version behind and the OpenSolaris build is much more mature. You'll
+>> be able to boost your performance with the addition of SSD cache
+>> devices if required which is not (from what I understand) a priority
+>> in the OS X build.
+>>
+>> For comparison on a small scale, I can pull down 128 Mb/s write and
+>> 156MB/s read on a small install composed of 4 SATA disks on a generic
+>> PC with a 2.6Ghz Core 2 Duo.  Bottlenecks aside (like the IDE buses  
+>> in
+>> the Escalades), your FC infrastructure should be able to handle about
+>> 400MB/s and you certainly have enough disks to attain that kind of
+>> performance. With just the 4 disks I can saturate a GbE connection,  
+>> so
+>> with 64 (properly configured) you should be able to saturate a 4Gbps
+>> FC connection.
+>>
+>> Example on my home server:
+>> root at shemhazai:~# time dd if=/dev/zero of=/siovale/bench/bigfile  
+>> bs=8k
+>> count=750000
+>> 750000+0 records in
+>> 750000+0 records out
+>> 6144000000 bytes (6.1 GB) copied, 47.9947 s, 128 MB/s
+>>
+>> root at shemhazai:~# time dd of=/dev/null if=/siovale/bench/bigfile  
+>> bs=8k
+>> count=750000
+>> 750000+0 records in
+>> 750000+0 records out
+>> 6144000000 bytes (6.1 GB) copied, 39.4134 s, 156 MB/s
+>>
+>> Cheers,
+>>
+>> Erik
+>>
+>> On 9 avr. 09, at 17:50, Ted Simbajon wrote:
+>>
+>>> There are 64x 170GB "IDE" disk and 8 of these disk is being
+>>> controlled by a
+>>> "3ware Escalade" which is housed in a 3U server. 1 server houses 2
+>>> controller which sums to 16 Disk per server and I have 4 of these
+>>> servers.
+>>>
+>>> All these storage servers are connected to a Qlogic Sandbox 1400
+>>> (4Gbps
+>>> "bits") via an ATTO 3300 (2Gbps) HBA. The MAC machine (G5 2x2.5Ghz
+>>> w/ 7GB
+>>> RAM) is connected to the same Sandbox via an ATTO FC-42XS card. On
+>>> top of
+>>> the 64x170GB "IDE" Disk Targets that one of the ports of the ATTO
+>>> FC-42XS
+>>> sees, it also sees a 128x500GB "SATA" disk Targets which is an "Avid
+>>> Unity"
+>>> via a Qlogic 52xx Sandbox.
+>>>
+>>> So, keeping those in-mind. I looked at the old Logs and it kindda
+>>> matches
+>>> what I have right now (ZFS RAIDZ2) which is about ~25 - 30 MB/s.
+>>
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From riz at tastylime.net  Tue Apr 14 11:11:14 2009
+From: riz at tastylime.net (Jeff Rizzo)
+Date: Tue, 14 Apr 2009 11:11:14 -0700
+Subject: [zfs-discuss] ZFS and the globalSAN iSCSI initiator - i/o error?
+Message-ID: <6EF22DF9-3E4C-41FA-9523-D9A4642785EE@tastylime.net>
+
+Hi-
+
+I've been using ZFS on macos x for a little while (zfs-119), and it's  
+been great on local disks.  Wanting a little more flexibility in  
+creating disks for testing, I set up a few iSCSI targets on a NetBSD  
+box, and attached to them with the globalSAN initiator.  I partitioned  
+them fine (and can use them as HFS+ disks), but when I try to add them  
+to a zfs pool, I get an I/O error:
+
+rizbook:riz  ~> sudo diskutil partitiondisk /dev/disk2 GPTFormat ZFS  
+%noformat% 100%
+Password:
+Started partitioning on disk disk2
+Creating partition map
+[ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+Finished partitioning on disk disk2
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *50.0 Gi     
+disk2
+    1:                        EFI                         200.0 Mi    
+disk2s1
+    2:                        ZFS                         49.7 Gi     
+disk2s2
+rizbook:riz  ~> sudo zpool create puddle /dev/disk2s2
+cannot create 'puddle': I/O error
+
+# it works with a disk image (disk4 is a .dmg)
+rizbook:riz  ~> sudo diskutil partitiondisk /dev/disk4 GPTFormat ZFS  
+%noformat% 100%
+Started partitioning on disk disk4
+Creating partition map
+[ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+Finished partitioning on disk disk4
+/dev/disk4
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *1000.0 Mi   
+disk4
+    1:                        ZFS                         1000.0 Mi   
+disk4s1
+rizbook:riz  ~> sudo zpool create puddle /dev/disk4s1
+rizbook:riz  ~>
+rizbook:riz  ~> sudo zpool add puddle /dev/disk2s2
+cannot add to 'puddle': I/O error
+rizbook:riz  ~> sudo gpt show disk2
+      start      size  index  contents
+          0         1         PMBR
+          1         1         Pri GPT header
+          2         4         Pri GPT table
+          6     51200      1  GPT part - C12A7328-F81F-11D2- 
+BA4B-00A0C93EC93B
+      51206  13023221      2  GPT part -  
+6A898CC3-1DD2-11B2-99A6-080020736631
+   13074427     32768
+   13107195         4         Sec GPT table
+   13107199         1         Sec GPT header
+rizbook:riz  ~> sudo zpool add puddle disk2
+cannot add to 'puddle': I/O error
+
+Any thoughts as to how to figure out what's going on?  Is this a known  
+problem?
+
++j
+
+
+From richmc at gmail.com  Tue Apr 14 11:34:54 2009
+From: richmc at gmail.com (Rich McClellan)
+Date: Tue, 14 Apr 2009 11:34:54 -0700
+Subject: [zfs-discuss] ZFS and the globalSAN iSCSI initiator - i/o error?
+In-Reply-To: <6EF22DF9-3E4C-41FA-9523-D9A4642785EE@tastylime.net>
+References: <6EF22DF9-3E4C-41FA-9523-D9A4642785EE@tastylime.net>
+Message-ID: <203e36e30904141134t15b43353jc069b83fafcfeb92@mail.gmail.com>
+
+On Tue, Apr 14, 2009 at 11:11 AM, Jeff Rizzo <riz at tastylime.net> wrote:
+> Any thoughts as to how to figure out what's going on? ?Is this a known
+> problem?
+
+Have you checked the iSCSI target's logs?
+
+I've been using GlobalSAN's iSCSI initiator to connect to a Linux box
+(CentOS 5.x; iscsi-target-0.17) for quite awhile without any issues.
+
+Rich
+
+From riz at tastylime.net  Tue Apr 14 12:41:30 2009
+From: riz at tastylime.net (Jeff Rizzo)
+Date: Tue, 14 Apr 2009 12:41:30 -0700
+Subject: [zfs-discuss] ZFS and the globalSAN iSCSI initiator - i/o error?
+In-Reply-To: <203e36e30904141134t15b43353jc069b83fafcfeb92@mail.gmail.com>
+References: <6EF22DF9-3E4C-41FA-9523-D9A4642785EE@tastylime.net>
+	<203e36e30904141134t15b43353jc069b83fafcfeb92@mail.gmail.com>
+Message-ID: <60106BA0-CEEF-4E22-A313-6FF32346B363@tastylime.net>
+
+On Apr 14, 2009, at 11:34 AM, Rich McClellan wrote:
+
+> On Tue, Apr 14, 2009 at 11:11 AM, Jeff Rizzo <riz at tastylime.net>  
+> wrote:
+>> Any thoughts as to how to figure out what's going on?  Is this a  
+>> known
+>> problem?
+>
+> Have you checked the iSCSI target's logs?
+>
+> I've been using GlobalSAN's iSCSI initiator to connect to a Linux box
+> (CentOS 5.x; iscsi-target-0.17) for quite awhile without any issues.
+>
+
+Hm, there does seem to be an issue with the target - as it promptly  
+started working when I enabled debugging. I'll look into it further -  
+thanks for the success report!
+
++j
+
+
+From riz at tastylime.net  Tue Apr 14 13:25:28 2009
+From: riz at tastylime.net (Jeff Rizzo)
+Date: Tue, 14 Apr 2009 13:25:28 -0700
+Subject: [zfs-discuss] ZFS and the globalSAN iSCSI initiator - i/o error?
+In-Reply-To: <60106BA0-CEEF-4E22-A313-6FF32346B363@tastylime.net>
+References: <6EF22DF9-3E4C-41FA-9523-D9A4642785EE@tastylime.net>
+	<203e36e30904141134t15b43353jc069b83fafcfeb92@mail.gmail.com>
+	<60106BA0-CEEF-4E22-A313-6FF32346B363@tastylime.net>
+Message-ID: <150B8DC5-BF55-45FF-B30E-F903C4FC749F@tastylime.net>
+
+On Apr 14, 2009, at 12:41 PM, Jeff Rizzo wrote:
+
+
+> Hm, there does seem to be an issue with the target - as it promptly  
+> started working when I enabled debugging. I'll look into it further  
+> - thanks for the success report!
+>
+
+Following up somewhat embarrassedly to myself - apparently I had the  
+physical blocksize set to 4096.  Things work fine when it's 512 (the  
+default) - which is why debug mode worked.  :)
+
++j
+
+
+From lopez.on.the.lists at yellowspace.net  Wed Apr 15 01:48:43 2009
+From: lopez.on.the.lists at yellowspace.net (Lorenzo Perone)
+Date: Wed, 15 Apr 2009 10:48:43 +0200
+Subject: [zfs-discuss] ZFS and the globalSAN iSCSI initiator - i/o error?
+In-Reply-To: <6EF22DF9-3E4C-41FA-9523-D9A4642785EE@tastylime.net>
+References: <6EF22DF9-3E4C-41FA-9523-D9A4642785EE@tastylime.net>
+Message-ID: <35F211AB-04E5-4FCA-8706-2BB2E8EB0145@yellowspace.net>
+
+> rizbook:riz  ~> sudo zpool create puddle /dev/disk2s2
+> cannot create 'puddle': I/O error
+
+Hi,
+
+iirc, you should not give zpool the absolute path as this
+triggers the file storage type... I might be wrong, but did
+You try sudo zpool create puddle disk2s2 (without /dev/)?
+
+regards,
+
+Lorenzo
+
+
+
+From lostlogic at lostlogicx.com  Wed Apr 15 11:08:43 2009
+From: lostlogic at lostlogicx.com (Brandon Low)
+Date: Wed, 15 Apr 2009 11:08:43 -0700
+Subject: [zfs-discuss] Upgrading OSX
+Message-ID: <20090415180843.GL7586@lostlogicx.com>
+
+Hey List,
+
+I'm really enjoying using ZFS for most of my data on both of my macbooks
+and my portable hard disk.  Was wondering if I should expect anything
+weird when 10.5.7 comes out with regard to overwriting my kernel
+extensions or anything like that.
+
+Thanks!
+
+--Brandon
+
+From caronni at gmail.com  Wed Apr 15 12:02:26 2009
+From: caronni at gmail.com (Germano Caronni)
+Date: Wed, 15 Apr 2009 21:02:26 +0200
+Subject: [zfs-discuss] Upgrading OSX
+In-Reply-To: <20090415180843.GL7586@lostlogicx.com>
+References: <20090415180843.GL7586@lostlogicx.com>
+Message-ID: <327b821f0904151202n43812813o3d96c64bb34c7376@mail.gmail.com>
+
+I believe Snow Leopard will come with more stable and better
+integrated ZFS.On-disk
+format will also be upgraded  to 11 -- I think. (
+http://opensolaris.org/os/community/zfs/version/11/)
+So, yes, your kernel extensions are in danger, but it is a good danger ;-)
+
+Germano
+
+On Wed, Apr 15, 2009 at 20:08, Brandon Low <lostlogic at lostlogicx.com> wrote:
+
+> Hey List,
+>
+> I'm really enjoying using ZFS for most of my data on both of my macbooks
+> and my portable hard disk.  Was wondering if I should expect anything
+> weird when 10.5.7 comes out with regard to overwriting my kernel
+> extensions or anything like that.
+>
+> Thanks!
+>
+> --Brandon
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090415/983437f6/attachment.html>
+
+From zorg at sogeeky.net  Wed Apr 15 12:07:57 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Wed, 15 Apr 2009 12:07:57 -0700
+Subject: [zfs-discuss] Upgrading OSX
+In-Reply-To: <327b821f0904151202n43812813o3d96c64bb34c7376@mail.gmail.com>
+References: <20090415180843.GL7586@lostlogicx.com>
+	<327b821f0904151202n43812813o3d96c64bb34c7376@mail.gmail.com>
+Message-ID: <44717D0B-BE2C-499F-A6EF-D6171CF650CB@sogeeky.net>
+
+He was asking about 10.5.7 not 10.6. I agree kernel extentions would  
+be in danger during a 10.6 upgrade, but not 10.5.7...
+
+On Apr 15, 2009, at 12:02 PM, Germano Caronni <caronni at gmail.com> wrote:
+
+> I believe Snow Leopard will come with more stable and better  
+> integrated ZFS.
+> On-disk format will also be upgraded  to 11 -- I think. (http:// 
+> opensolaris.org/os/community/zfs/version/11/)
+> So, yes, your kernel extensions are in danger, but it is a good  
+> danger ;-)
+>
+> Germano
+>
+> On Wed, Apr 15, 2009 at 20:08, Brandon Low  
+> <lostlogic at lostlogicx.com> wrote:
+> Hey List,
+>
+> I'm really enjoying using ZFS for most of my data on both of my  
+> macbooks
+> and my portable hard disk.  Was wondering if I should expect anything
+> weird when 10.5.7 comes out with regard to overwriting my kernel
+> extensions or anything like that.
+>
+> Thanks!
+>
+> --Brandon
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090415/572159c7/attachment.html>
+
+From alex.blewitt at gmail.com  Wed Apr 15 12:38:12 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 15 Apr 2009 20:38:12 +0100
+Subject: [zfs-discuss] Upgrading OSX
+In-Reply-To: <44717D0B-BE2C-499F-A6EF-D6171CF650CB@sogeeky.net>
+References: <20090415180843.GL7586@lostlogicx.com>
+	<327b821f0904151202n43812813o3d96c64bb34c7376@mail.gmail.com>
+	<44717D0B-BE2C-499F-A6EF-D6171CF650CB@sogeeky.net>
+Message-ID: <44400C9C-9B11-41BA-AF25-A88D0F7E85E0@gmail.com>
+
+I've had success before with the other 10.5.x upgrades, but I'd  
+suggest doing a test install (or letting others do it) to be sure it's  
+not going to cause a problem. No doubt others on this group will be  
+able to chime in with their experiences as it's released.
+
+Myself, I tend to wait for a few days after the release to let it bed  
+down and see if there are problems. But then, I'm also the cautious  
+sort who installs the combo update too.
+
+Alex
+
+Sent from my (new) iPhone
+
+On 15 Apr 2009, at 20:07, "Mr. Zorg" <zorg at sogeeky.net> wrote:
+
+> He was asking about 10.5.7 not 10.6. I agree kernel extentions would  
+> be in danger during a 10.6 upgrade, but not 10.5.7...
+>
+> On Apr 15, 2009, at 12:02 PM, Germano Caronni <caronni at gmail.com>  
+> wrote:
+>
+>> I believe Snow Leopard will come with more stable and better  
+>> integrated ZFS.
+>> On-disk format will also be upgraded  to 11 -- I think. (http://opensolaris.org/os/community/zfs/version/11/ 
+>> )
+>> So, yes, your kernel extensions are in danger, but it is a good  
+>> danger ;-)
+>>
+>> Germano
+>>
+>> On Wed, Apr 15, 2009 at 20:08, Brandon Low  
+>> <lostlogic at lostlogicx.com> wrote:
+>> Hey List,
+>>
+>> I'm really enjoying using ZFS for most of my data on both of my  
+>> macbooks
+>> and my portable hard disk.  Was wondering if I should expect anything
+>> weird when 10.5.7 comes out with regard to overwriting my kernel
+>> extensions or anything like that.
+>>
+>> Thanks!
+>>
+>> --Brandon
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090415/a1c33196/attachment.html>
+
+From Ted at philotv.com  Wed Apr 15 14:13:53 2009
+From: Ted at philotv.com (Ted Simbajon)
+Date: Wed, 15 Apr 2009 14:13:53 -0700
+Subject: [zfs-discuss] Zpool status brings me down.
+In-Reply-To: <mailman.11.1239804174.27204.zfs-discuss@lists.macosforge.org>
+Message-ID: <C60B9C21.FA02%Ted@philotv.com>
+
+Ref
+
+> http://zfs.macosforge.org/trac/ticket/14
+
+I'm also getting the same problem.
+
+Anyway to fix this aside from staying away from "zpool status"
+
+Also, what cause this panic?
+
+
+Thank you.
+
+---
+Ted
+
+
+
+From s at avoidant.org  Wed Apr 15 15:35:21 2009
+From: s at avoidant.org (sammy ominsky)
+Date: Thu, 16 Apr 2009 01:35:21 +0300
+Subject: [zfs-discuss] Zpool status brings me down.
+In-Reply-To: <C60B9C21.FA02%Ted@philotv.com>
+References: <C60B9C21.FA02%Ted@philotv.com>
+Message-ID: <DE49C070-A7BF-477A-8E82-630B1DD2B419@avoidant.org>
+
+On 16/04/2009, at 00:13, Ted Simbajon wrote:
+
+> http://zfs.macosforge.org/trac/ticket/14
+>
+> I'm also getting the same problem.
+> Anyway to fix this aside from staying away from "zpool status"
+> Also, what cause this panic?
+
+I had the same problem.  I believe it's caused by corruption in the  
+array.  I had to copy all the data off my RAIDZ, recreate it, and copy  
+it all back.  It's fine now.
+
+I think I caused the problem by yanking a disk during a resilver  
+required by the replacement of a disk that had many errors with the  
+hot spare.  Essentially, I had 2 disks gone at once.  Bad me.  I got  
+impatient and wanted to know which of the disks I'd replaced.
+
+--sambo
+
+
+From bwaters at nrao.edu  Wed Apr 15 22:04:32 2009
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Wed, 15 Apr 2009 23:04:32 -0600
+Subject: [zfs-discuss] Upgrading OSX
+In-Reply-To: <44400C9C-9B11-41BA-AF25-A88D0F7E85E0@gmail.com>
+References: <20090415180843.GL7586@lostlogicx.com>
+	<327b821f0904151202n43812813o3d96c64bb34c7376@mail.gmail.com>
+	<44717D0B-BE2C-499F-A6EF-D6171CF650CB@sogeeky.net>
+	<44400C9C-9B11-41BA-AF25-A88D0F7E85E0@gmail.com>
+Message-ID: <2b0225fb0904152204s57723e11wde0be6c7fb8b4736@mail.gmail.com>
+
+i've been testing various versions of OS X. I can't possibly comment
+about proprietary Apple pre-release software, as I'm under NDA.
+
+But I don't mind telling you that I use ZFS for 4 TB (!) of personal
+data that I care about very much. I am very glad that I have backups
+of all this. But I'm also very glad that I'm using ZFS.
+
+You've got a backup strategy that you're comfortable with, right? you
+have actually used real restores from that backup? If you've got that,
+you should be OK with ZFS.
+
+:-!
+
+From lists at chipmunk-app.com  Thu Apr 16 02:10:55 2009
+From: lists at chipmunk-app.com (Ruotger Skupin)
+Date: Thu, 16 Apr 2009 11:10:55 +0200
+Subject: [zfs-discuss] Zpool status brings me down.
+In-Reply-To: <C60B9C21.FA02%Ted@philotv.com>
+References: <C60B9C21.FA02%Ted@philotv.com>
+Message-ID: <8546A346-9B53-4722-9D2D-25AEABBC119B@chipmunk-app.com>
+
+Hi,
+
+if you search the list, you will find that ZFS-119 has quite a few  
+problems. The sorry state of 119 is a well-known fact.
+
+Apple seems to have moved far away from what the 10.5 kernel supports  
+with the 10.6 kernel and its zfs sources. Thus it is quite unlikely,  
+that they'll fix those 119 bugs (IMHO). I hope that they will backport  
+those kernel changes to 10.5 once 10.6 is out to be able to support  
+ZFS (in a later on-disk format), but don't count on it. On top of that  
+a whole class of ZFS-119 problems seem to be Finder-related.
+
+I personally gave up on the 10.5/ZFS combination and plan to adopt  
+10.6 as soon as possible. Server if I must)
+
+Ruotger
+
+Am 15.04.2009 um 23:13 schrieb Ted Simbajon:
+
+> Ref
+>
+>> http://zfs.macosforge.org/trac/ticket/14
+>
+> I'm also getting the same problem.
+>
+> Anyway to fix this aside from staying away from "zpool status"
+>
+> Also, what cause this panic?
+>
+>
+> Thank you.
+>
+> ---
+> Ted
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From hanche at math.ntnu.no  Thu Apr 16 05:22:43 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Thu, 16 Apr 2009 14:22:43 +0200 (CEST)
+Subject: [zfs-discuss] Zpool status brings me down.
+In-Reply-To: <8546A346-9B53-4722-9D2D-25AEABBC119B@chipmunk-app.com>
+References: <C60B9C21.FA02%Ted@philotv.com>
+	<8546A346-9B53-4722-9D2D-25AEABBC119B@chipmunk-app.com>
+Message-ID: <20090416.142243.653352530117220422.hanche@math.ntnu.no>
+
++ Ruotger Skupin <lists at chipmunk-app.com>:
+
+> Apple seems to have moved far away from what the 10.5 kernel
+> supports with the 10.6 kernel and its zfs sources. Thus it is quite
+> unlikely, that they'll fix those 119 bugs (IMHO). I hope that they
+> will backport those kernel changes to 10.5 once 10.6 is out to be
+> able to support ZFS (in a later on-disk format), but don't count on
+> it.
+
+After the previous discussions of this topic on the list,
+that would come as a huge surprise to all of us.
+It seems certain beyond any reasonable doubt that 119 is the end of
+the line as far as zfs on 10.5 goes. Unless someone outside Apple
+wishes to pick up the slack. The source is available, after all?
+
+- Harald
+
+From cdl at asgaard.org  Thu Apr 16 11:37:03 2009
+From: cdl at asgaard.org (Christopher LILJENSTOLPE)
+Date: Thu, 16 Apr 2009 11:37:03 -0700
+Subject: [zfs-discuss] HFS+ in a ZFS world
+Message-ID: <E6993E72-7EBF-4454-A771-DEA44E9F4B7B@asgaard.org>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Greetings,
+
+	I'm sure I'm not the only one who has come up with this idea, but I'd  
+thought I'd share it, anyway.
+
+	I am moving my OSX server from an old G5 mac pro to a new mac mini  
+with the FW800 port.
+On the old server, I had a raid 0 mirror of two disks for hfs+ and  
+three disks in a raidz1.
+
+	The reason I had hfs+ was for home directories, time machine, and  
+aperture (which really doesn't like ZFS, or didn't in the past).
+
+	Hopefully, with 10.6, things will change, and I didn't want to go re- 
+format everything when 10.6 came out, so I have built the system with  
+5 drives in a raidz2 partition.
+
+	What I have then done is created a bunch of zfs file systems as  
+"containers" for hfs sparse images for the things that still need hfs 
++.  I then have a script that mounts those on boot.
+
+	Seems to be working so far.
+
+	Chris
+
+- ---
+???
+Check my PGP key here:
+https://www.asgaard.org/~cdl/cdl.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJJ53rTAAoJEGmx2Mt/+Iw/uXUH/AiI3EY2yK5LhMpgXsVDoPDz
+5E5dlYz37RraBvrflemgUcpKnFRxJDGKHO4aZyXms+tX5CxO5vNUFk+qzzuPn34j
+25SFkWd4SPTPnlXp7Av8+42CVKXYsqKKC7MQagFxeDzjy/E1yhty65tKsQfRX0Fw
+qVvsoF/qMkCQyvNTvx1jveCt4Sp+AVSIQAG9Q7/nrm8qwgYSNNYc+Cgkl/GwMx4/
+rCysoO2FZGedK3FYpjv1+IbiK9eNZHJghhrsioSMWwWh/QHkNN2QVuTczLaCXl8T
+1oCnlTyOMxGRnDxsDjlY4XJo/zip7i6bbhr1KH0IvM1ynLLFQtftwqFHcBbUDJQ=
+=gEbg
+-----END PGP SIGNATURE-----
+
+From riz at tastylime.net  Thu Apr 16 11:53:34 2009
+From: riz at tastylime.net (Jeff Rizzo)
+Date: Thu, 16 Apr 2009 11:53:34 -0700
+Subject: [zfs-discuss] HFS+ in a ZFS world
+In-Reply-To: <E6993E72-7EBF-4454-A771-DEA44E9F4B7B@asgaard.org>
+References: <E6993E72-7EBF-4454-A771-DEA44E9F4B7B@asgaard.org>
+Message-ID: <1FF195BD-524B-42B6-97E9-F7015857CF29@tastylime.net>
+
+How do you handle boot?  (I assume boot-on-ZFS isn't there yet, unless  
+I've missed something)
+
+Care to share your mountscripts?  (I'm sure I could come up with  
+something similar, but it's always nice to see what others are doing)
+
+Finally, what problems have you seen with Aperture?  I've currently  
+got a 350GB+ Aperture library on a ZFS - I've had trouble getting the  
+Vault to work, but hadn't noticed anything else huge.
+
+Thanks for your report!
+
++j
+
+On Apr 16, 2009, at 11:37 AM, Christopher LILJENSTOLPE wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Greetings,
+>
+> 	I'm sure I'm not the only one who has come up with this idea, but  
+> I'd thought I'd share it, anyway.
+>
+> 	I am moving my OSX server from an old G5 mac pro to a new mac mini  
+> with the FW800 port.
+> On the old server, I had a raid 0 mirror of two disks for hfs+ and  
+> three disks in a raidz1.
+>
+> 	The reason I had hfs+ was for home directories, time machine, and  
+> aperture (which really doesn't like ZFS, or didn't in the past).
+>
+> 	Hopefully, with 10.6, things will change, and I didn't want to go  
+> re-format everything when 10.6 came out, so I have built the system  
+> with 5 drives in a raidz2 partition.
+>
+> 	What I have then done is created a bunch of zfs file systems as  
+> "containers" for hfs sparse images for the things that still need hfs 
+> +.  I then have a script that mounts those on boot.
+>
+> 	Seems to be working so far.
+>
+> 	Chris
+>
+> - ---
+> ???
+> Check my PGP key here:
+> https://www.asgaard.org/~cdl/cdl.asc
+>
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQEcBAEBAgAGBQJJ53rTAAoJEGmx2Mt/+Iw/uXUH/AiI3EY2yK5LhMpgXsVDoPDz
+> 5E5dlYz37RraBvrflemgUcpKnFRxJDGKHO4aZyXms+tX5CxO5vNUFk+qzzuPn34j
+> 25SFkWd4SPTPnlXp7Av8+42CVKXYsqKKC7MQagFxeDzjy/E1yhty65tKsQfRX0Fw
+> qVvsoF/qMkCQyvNTvx1jveCt4Sp+AVSIQAG9Q7/nrm8qwgYSNNYc+Cgkl/GwMx4/
+> rCysoO2FZGedK3FYpjv1+IbiK9eNZHJghhrsioSMWwWh/QHkNN2QVuTczLaCXl8T
+> 1oCnlTyOMxGRnDxsDjlY4XJo/zip7i6bbhr1KH0IvM1ynLLFQtftwqFHcBbUDJQ=
+> =gEbg
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From cdl at asgaard.org  Thu Apr 16 12:02:51 2009
+From: cdl at asgaard.org (Christopher LILJENSTOLPE)
+Date: Thu, 16 Apr 2009 12:02:51 -0700
+Subject: [zfs-discuss] HFS+ in a ZFS world
+In-Reply-To: <1FF195BD-524B-42B6-97E9-F7015857CF29@tastylime.net>
+References: <E6993E72-7EBF-4454-A771-DEA44E9F4B7B@asgaard.org>
+	<1FF195BD-524B-42B6-97E9-F7015857CF29@tastylime.net>
+Message-ID: <4E383A6A-2C62-4B2E-840A-A616EBC42F14@asgaard.org>
+
+
+From robert.muench at gmail.com  Sat Apr 18 08:54:27 2009
+From: robert.muench at gmail.com (Robert Muench)
+Date: Sat, 18 Apr 2009 17:54:27 +0200
+Subject: [zfs-discuss] ZFS Volumes exported as RAW device?
+Message-ID: <9efc39d30904180854x5fa702y99b4da1421eac054@mail.gmail.com>
+
+Hi, does anyone know if there is a way to export a ZFS partition as a
+RAW device?
+
+As soon as this is possible it would be possible to use PGP whole disk
+encryption with ZFS partitions.
+
+The other option would be to merge the ZFS native encryption code into
+the OSX source-tree. But this can get nasty.
+
+-- 
+Robert M. M?nch
+
+From beier.andreas at gmail.com  Sun Apr 19 01:37:43 2009
+From: beier.andreas at gmail.com (Beier Andreas)
+Date: Sun, 19 Apr 2009 10:37:43 +0200
+Subject: [zfs-discuss] Zpool disaster
+In-Reply-To: <A0865A7B-030B-47FB-ADE8-533794D80945@sogeeky.net>
+References: <612FB580-7C76-4E42-9BF2-BB98C817218A@gmail.com>
+	<C8E0A93B-376D-46E1-825E-C614CAA851F7@gmail.com>
+	<A0865A7B-030B-47FB-ADE8-533794D80945@sogeeky.net>
+Message-ID: <4501A6FB-E693-438F-8D2F-8516A757C9D5@gmail.com>
+
+Dear List,
+
+
+Am 07.04.2009 um 18:06 schrieb Mr. Zorg:
+
+> Have you tried putting the drive back inside the computer to see if  
+> you can read it then?
+>
+> On Apr 7, 2009, at 3:40 AM, Beier Andreas <beier.andreas at gmail.com>  
+> wrote:
+>
+>>>>>> ------------------------------------------------------------------------------------------------------------------
+>>>>>> => zpool import -f 9004030332584099627
+>>>>>> cannot import 'ZFS': I/O error
+
+I tried now the following solutions to get my data back of the harddisk:
+
+- put it into an usb- enclosure
+- put it into a firewire- enclosure
+=> tested to read with >OSX ZFS 119 (NOK)
+=> tested with fuse-zfs on ubuntu (NOK)
+=> tested with nexenta on a real hardware (NOK)
+=> tested with Solaris 10 on vmware(NOK)
+
+- put it back into an MacBook Pro (not my one, because the rev. I have  
+is horrorible to change the harddrive, the newer ones are easier to  
+change).
+=> also NOK
+
+At the moment i have no other idea what else to test to get my data  
+back.
+
+Andreas
+
+From richard.elling at gmail.com  Sun Apr 19 16:50:51 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Sun, 19 Apr 2009 16:50:51 -0700
+Subject: [zfs-discuss] ZFS Tutorial at USENIX Technical Conference (USENIX09)
+Message-ID: <49EBB8DB.1040800@gmail.com>
+
+I will be conducting a tutorial on ZFS at the USENIX Technical 
+Conference in San Diego
+on June 14, 2009. I hope you can attend! Here is the blurb in the 
+conference agenda.
+
+There is still time for me to add content, so send me your wish list and 
+I'll try
+to accommodate.
+
+Additional information will be posted to my blog and consulting site.
+http://richardelling.blogspot.com
+http://www.richardelling.com
+
+
+S2 ZFS: A File System for Modern Hardware NEW! ?
+
+Who should attend: Systems engineers, integrators, and administrators 
+who are interested
+in deploying ZFS on Solaris, Mac OS X, or FreeBSD. Participants should 
+be familiar
+with storage devices, RAID systems, logical volume managers, backup, and 
+file system
+features. Special emphasis will be placed on integration considerations 
+for virtualization,
+NAS, and databases.
+
+File systems developed in the mid 20th century were severely constrained 
+by the
+storage hardware available at the time. ZFS was conceived with an eye 
+toward the
+hardware of the future and how storage would evolve. This perspective on 
+the
+future presented an opportunity to rethink how file systems use storage 
+hardware.
+The result of this endeavor is a new way of managing data which can 
+evolve as
+the hardware changes, while remaining compatible with earlier notions of 
+file system
+use. Along the way, new concepts such as the Hybrid Storage Pool provide 
+new
+opportunities for optimization, efficiency, and data protection. In this 
+tutorial, ZFS
+will be examined from the bottom up, to build a solid understanding of 
+the data-hardware
+interface, and then from the top down, to provide insight into the best 
+ways to use ZFS
+for applications.
+
+Take back to work: A solid understanding of the concepts behind ZFS and 
+how to
+make the best decisions when implementing storage at your site.
+
+Topics include:
+
+Evolution of hardware and file systems
+Storage pools
+RAID data protection
+Import/export and shared storage
+Pool parameters and features
+On-disk format
+Data sets
+Volumes
+POSIX-compliant file systems
+Snapshots
+Replication
+Practical considerations and best practices
+Deployment and migration
+Virtualization
+Sharing
+Performance, observability, and tuning
+Data protection
+Hybrid storage pools
+Backup, restore, and archiving
+
+I hope to see you in San Diego!
+-- richard
+
+
+From zorg at sogeeky.net  Sun Apr 19 19:44:37 2009
+From: zorg at sogeeky.net (Mr. Zorg ...)
+Date: Sun, 19 Apr 2009 19:44:37 -0700
+Subject: [zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+Message-ID: <fbaadd320904191944x6e3cf384sbdad14ad4e310fb2@mail.gmail.com>
+
+I've been one of those folks saying "it works just fine" on this list
+for a long time, but now I'm one of those saying "uh oh!".  My Mac
+Mini has taken to locking up whenever I do much of anything with my
+zfs pool.  Running zpool status shows all disks online and healthy.
+I'm reasonable confident the data is still fine, I just can't access
+it on my Mac.  I was able to export the pool and will now try
+accessing it under opensolaris.  Unfortunately, the live cd seems to
+be giving me trouble with the marvell network card in this thing, so
+I'll actually try installing it and installing the driver.  I tried
+running a zpool import from the live CD but it just sat there for 5+
+minutes.  How long should that take?  I'll search the list archives to
+see what tips I can glean, but if anyone wants to chime in on what to
+try next I'd greatly appreciate it.
+
+Thanks!
+
+From tilman at baumann.name  Mon Apr 20 01:38:17 2009
+From: tilman at baumann.name (Tilman Baumann)
+Date: Mon, 20 Apr 2009 09:38:17 +0100 (BST)
+Subject: [zfs-discuss] HFS+ in a ZFS world
+In-Reply-To: <E6993E72-7EBF-4454-A771-DEA44E9F4B7B@asgaard.org>
+References: <E6993E72-7EBF-4454-A771-DEA44E9F4B7B@asgaard.org>
+Message-ID: <3eda533629493ca4ebda19ab0b851549.squirrel@gnukia.org>
+
+
+Christopher LILJENSTOLPE schrieb:
+
+> 	The reason I had hfs+ was for home directories, time machine, and
+> aperture (which really doesn't like ZFS, or didn't in the past).
+
+Little side note on that.
+The reason why time machine does not like ZFS is that apple 'abused' the
+HFS+ filesystem a little bit to allow hardlinks for directories.
+Which is not too bad, if you use them you just need to know what to do.
+And AFAIK it does not conflict with POSIX.
+
+Are there any plans on allowing hardlinks to directory nodes on ZFS?
+I' know it sounds scary and stupid. But actually there is no reason not to
+have it.
+Details:
+http://arstechnica.com/apple/reviews/2007/10/mac-os-x-10-5.ars/14#symlinks-and-hard-links
+
+Of course, it would probably be smarter to provide time machine like
+functionality with ZFS tools. Like time slider.
+But for compatibility...
+
+-- 
+MFG
+ Tilman Baumann
+
+
+From alex.blewitt at gmail.com  Mon Apr 20 04:22:09 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Mon, 20 Apr 2009 12:22:09 +0100
+Subject: [zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+In-Reply-To: <fbaadd320904191944x6e3cf384sbdad14ad4e310fb2@mail.gmail.com>
+References: <fbaadd320904191944x6e3cf384sbdad14ad4e310fb2@mail.gmail.com>
+Message-ID: <95755729-E1D6-4634-8854-CFBCE19C282F@gmail.com>
+
+I've been seeing the same symptoms since the last Apple Software  
+update occurred. There wasn't any significant difference in data size  
+(as I was away on vacation) over that time, yet my macine appeared to  
+keep dying exactly at midnight every few days when my zpool scrub  
+happens. I've not managed to reliably diagnose the problem though,  
+although I suspect it's related to zfs.
+
+Maybe there's a slow memory leak somewhere and in the end the spool  
+scrub just doesn't gave enough to operate?
+
+Alex
+
+Sent from my (new) iPhone
+
+On 20 Apr 2009, at 03:44, "Mr. Zorg ..." <zorg at sogeeky.net> wrote:
+
+> I've been one of those folks saying "it works just fine" on this list
+> for a long time, but now I'm one of those saying "uh oh!".  My Mac
+> Mini has taken to locking up whenever I do much of anything with my
+> zfs pool.  Running zpool status shows all disks online and healthy.
+> I'm reasonable confident the data is still fine, I just can't access
+> it on my Mac.  I was able to export the pool and will now try
+> accessing it under opensolaris.  Unfortunately, the live cd seems to
+> be giving me trouble with the marvell network card in this thing, so
+> I'll actually try installing it and installing the driver.  I tried
+> running a zpool import from the live CD but it just sat there for 5+
+> minutes.  How long should that take?  I'll search the list archives to
+> see what tips I can glean, but if anyone wants to chime in on what to
+> try next I'd greatly appreciate it.
+>
+> Thanks!
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From zorg at sogeeky.net  Mon Apr 20 10:43:23 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Mon, 20 Apr 2009 10:43:23 -0700
+Subject: [zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+In-Reply-To: <95755729-E1D6-4634-8854-CFBCE19C282F@gmail.com>
+References: <fbaadd320904191944x6e3cf384sbdad14ad4e310fb2@mail.gmail.com>
+	<95755729-E1D6-4634-8854-CFBCE19C282F@gmail.com>
+Message-ID: <0C9B1241-CBF4-4181-93C2-2F7D010FE00D@sogeeky.net>
+
+Here's a status update. Neither OpenSolaris or FreeBSD would play nice  
+with my mini, so I went back to a fresh OS X install. I kept it at  
+10.5.2 with the 102A binaries thinking maybe something destabilized  
+during an update (like you suggested) but the same behavior exists. I  
+found I was able to run in single user mode without locking up. A  
+scrub showed tree checksome errors on one disk. I'm running a replace  
+on it now. Perhaps spotlight was triggering a panic by hitting those  
+checksum errors? :(
+
+I'll report back after the resilver is complete.
+
+On Apr 20, 2009, at 4:22 AM, Alex Blewitt <alex.blewitt at gmail.com>  
+wrote:
+
+> I've been seeing the same symptoms since the last Apple Software  
+> update occurred. There wasn't any significant difference in data  
+> size (as I was away on vacation) over that time, yet my macine  
+> appeared to keep dying exactly at midnight every few days when my  
+> zpool scrub happens. I've not managed to reliably diagnose the  
+> problem though, although I suspect it's related to zfs.
+>
+> Maybe there's a slow memory leak somewhere and in the end the spool  
+> scrub just doesn't gave enough to operate?
+>
+> Alex
+>
+> Sent from my (new) iPhone
+>
+> On 20 Apr 2009, at 03:44, "Mr. Zorg ..." <zorg at sogeeky.net> wrote:
+>
+>> I've been one of those folks saying "it works just fine" on this list
+>> for a long time, but now I'm one of those saying "uh oh!".  My Mac
+>> Mini has taken to locking up whenever I do much of anything with my
+>> zfs pool.  Running zpool status shows all disks online and healthy.
+>> I'm reasonable confident the data is still fine, I just can't access
+>> it on my Mac.  I was able to export the pool and will now try
+>> accessing it under opensolaris.  Unfortunately, the live cd seems to
+>> be giving me trouble with the marvell network card in this thing, so
+>> I'll actually try installing it and installing the driver.  I tried
+>> running a zpool import from the live CD but it just sat there for 5+
+>> minutes.  How long should that take?  I'll search the list archives  
+>> to
+>> see what tips I can glean, but if anyone wants to chime in on what to
+>> try next I'd greatly appreciate it.
+>>
+>> Thanks!
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+From zorg at sogeeky.net  Mon Apr 20 23:24:01 2009
+From: zorg at sogeeky.net (Mr. Zorg ...)
+Date: Mon, 20 Apr 2009 23:24:01 -0700
+Subject: [zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+In-Reply-To: <0C9B1241-CBF4-4181-93C2-2F7D010FE00D@sogeeky.net>
+References: <fbaadd320904191944x6e3cf384sbdad14ad4e310fb2@mail.gmail.com>
+	<95755729-E1D6-4634-8854-CFBCE19C282F@gmail.com>
+	<0C9B1241-CBF4-4181-93C2-2F7D010FE00D@sogeeky.net>
+Message-ID: <fbaadd320904202324n388d6a66if49f2b2c53f5ce17@mail.gmail.com>
+
+OK, so the resilver completed and I've tried rebooting both in normal
+mode and in safe mode and the system still locks up.  But it'll stay
+up all day in single user mode.  I'm fine with that, but I need to get
+my data off this drive and that's proving difficult too.  Looks like
+getting networking and/or usb disk mounting up and running isn't easy
+in single user mode.  I've googled till my fingers hurt and I'm not
+having much luck.  Can anyone out there tell me how to get networking
+up and/or how to mount a usb drive?  The only disks showing up in safe
+mode are my firewire zfs drives.  :/
+
+Arg.
+
+On Mon, Apr 20, 2009 at 10:43 AM, Mr. Zorg <zorg at sogeeky.net> wrote:
+> Here's a status update. Neither OpenSolaris or FreeBSD would play nice with
+> my mini, so I went back to a fresh OS X install. I kept it at 10.5.2 with
+> the 102A binaries thinking maybe something destabilized during an update
+> (like you suggested) but the same behavior exists. I found I was able to run
+> in single user mode without locking up. A scrub showed tree checksome errors
+> on one disk. I'm running a replace on it now. Perhaps spotlight was
+> triggering a panic by hitting those checksum errors? :(
+>
+> I'll report back after the resilver is complete.
+>
+> On Apr 20, 2009, at 4:22 AM, Alex Blewitt <alex.blewitt at gmail.com> wrote:
+>
+>> I've been seeing the same symptoms since the last Apple Software update
+>> occurred. There wasn't any significant difference in data size (as I was
+>> away on vacation) over that time, yet my macine appeared to keep dying
+>> exactly at midnight every few days when my zpool scrub happens. I've not
+>> managed to reliably diagnose the problem though, although I suspect it's
+>> related to zfs.
+>>
+>> Maybe there's a slow memory leak somewhere and in the end the spool scrub
+>> just doesn't gave enough to operate?
+>>
+>> Alex
+>>
+>> Sent from my (new) iPhone
+>>
+>> On 20 Apr 2009, at 03:44, "Mr. Zorg ..." <zorg at sogeeky.net> wrote:
+>>
+>>> I've been one of those folks saying "it works just fine" on this list
+>>> for a long time, but now I'm one of those saying "uh oh!". ?My Mac
+>>> Mini has taken to locking up whenever I do much of anything with my
+>>> zfs pool. ?Running zpool status shows all disks online and healthy.
+>>> I'm reasonable confident the data is still fine, I just can't access
+>>> it on my Mac. ?I was able to export the pool and will now try
+>>> accessing it under opensolaris. ?Unfortunately, the live cd seems to
+>>> be giving me trouble with the marvell network card in this thing, so
+>>> I'll actually try installing it and installing the driver. ?I tried
+>>> running a zpool import from the live CD but it just sat there for 5+
+>>> minutes. ?How long should that take? ?I'll search the list archives to
+>>> see what tips I can glean, but if anyone wants to chime in on what to
+>>> try next I'd greatly appreciate it.
+>>>
+>>> Thanks!
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From zorg at sogeeky.net  Tue Apr 21 00:13:08 2009
+From: zorg at sogeeky.net (Mr. Zorg)
+Date: Tue, 21 Apr 2009 00:13:08 -0700
+Subject: [zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+In-Reply-To: <fbaadd320904202324n388d6a66if49f2b2c53f5ce17@mail.gmail.com>
+References: <fbaadd320904191944x6e3cf384sbdad14ad4e310fb2@mail.gmail.com>
+	<95755729-E1D6-4634-8854-CFBCE19C282F@gmail.com>
+	<0C9B1241-CBF4-4181-93C2-2F7D010FE00D@sogeeky.net>
+	<fbaadd320904202324n388d6a66if49f2b2c53f5ce17@mail.gmail.com>
+Message-ID: <EEB17A99-E1B4-4AC1-9F42-B187FF36BE3A@sogeeky.net>
+
+Hooray!  I found what I needed. Steps to bring up networking in 10.5  
+safe mode can be found at the bottom of this page: http:// 
+www.macos.utah.edu/documentation/system_deployment/radmind/faqs/ 
+single_user_mode.html
+
+My data is happily copying away to two new network drives. Phew!
+
+On Apr 20, 2009, at 11:24 PM, "Mr. Zorg ..." <zorg at sogeeky.net> wrote:
+
+> OK, so the resilver completed and I've tried rebooting both in normal
+> mode and in safe mode and the system still locks up.  But it'll stay
+> up all day in single user mode.  I'm fine with that, but I need to get
+> my data off this drive and that's proving difficult too.  Looks like
+> getting networking and/or usb disk mounting up and running isn't easy
+> in single user mode.  I've googled till my fingers hurt and I'm not
+> having much luck.  Can anyone out there tell me how to get networking
+> up and/or how to mount a usb drive? The only disks showing up in safe
+> mode are my firewire zfs drives.  :/
+>
+> Arg.
+>
+> On Mon, Apr 20, 2009 at 10:43 AM, Mr. Zorg <zorg at sogeeky.net> wrote:
+>> Here's a status update. Neither OpenSolaris or FreeBSD would play  
+>> nice with
+>> my mini, so I went back to a fresh OS X install. I kept it at  
+>> 10.5.2 with
+>> the 102A binaries thinking maybe something destabilized during an  
+>> update
+>> (like you suggested) but the same behavior exists. I found I was  
+>> able to run
+>> in single user mode without locking up. A scrub showed tree  
+>> checksome errors
+>> on one disk. I'm running a replace on it now. Perhaps spotlight was
+>> triggering a panic by hitting those checksum errors? :(
+>>
+>> I'll report back after the resilver is complete.
+>>
+>> On Apr 20, 2009, at 4:22 AM, Alex Blewitt <alex.blewitt at gmail.com>  
+>> wrote:
+>>
+>>> I've been seeing the same symptoms since the last Apple Software  
+>>> update
+>>> occurred. There wasn't any significant difference in data size (as  
+>>> I was
+>>> away on vacation) over that time, yet my macine appeared to keep  
+>>> dying
+>>> exactly at midnight every few days when my zpool scrub happens.  
+>>> I've not
+>>> managed to reliably diagnose the problem though, although I  
+>>> suspect it's
+>>> related to zfs.
+>>>
+>>> Maybe there's a slow memory leak somewhere and in the end the  
+>>> spool scrub
+>>> just doesn't gave enough to operate?
+>>>
+>>> Alex
+>>>
+>>> Sent from my (new) iPhone
+>>>
+>>> On 20 Apr 2009, at 03:44, "Mr. Zorg ..." <zorg at sogeeky.net> wrote:
+>>>
+>>>> I've been one of those folks saying "it works just fine" on this  
+>>>> list
+>>>> for a long time, but now I'm one of those saying "uh oh!".  My Mac
+>>>> Mini has taken to locking up whenever I do much of anything with my
+>>>> zfs pool.  Running zpool status shows all disks online and healthy.
+>>>> I'm reasonable confident the data is still fine, I just can't  
+>>>> access
+>>>> it on my Mac.  I was able to export the pool and will now try
+>>>> accessing it under opensolaris.  Unfortunately, the live cd seems  
+>>>> to
+>>>> be giving me trouble with the marvell network card in this thing,  
+>>>> so
+>>>> I'll actually try installing it and installing the driver.  I tried
+>>>> running a zpool import from the live CD but it just sat there for  
+>>>> 5+
+>>>> minutes.  How long should that take?  I'll search the list  
+>>>> archives to
+>>>> see what tips I can glean, but if anyone wants to chime in on  
+>>>> what to
+>>>> try next I'd greatly appreciate it.
+>>>>
+>>>> Thanks!
+>>>> _______________________________________________
+>>>> zfs-discuss mailing list
+>>>> zfs-discuss at lists.macosforge.org
+>>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+
+From magnu213 at umn.edu  Tue Apr 21 11:29:42 2009
+From: magnu213 at umn.edu (Carl Magnuson)
+Date: Tue, 21 Apr 2009 13:29:42 -0500
+Subject: [zfs-discuss] Kernel Panic and Missing Pool
+In-Reply-To: <mailman.138.1239858279.597.zfs-discuss@lists.macosforge.org>
+References: <mailman.138.1239858279.597.zfs-discuss@lists.macosforge.org>
+Message-ID: <A923A88C-9816-4E06-BD28-69296A50AB62@umn.edu>
+
+I'm hoping somebody has some advice.  I came home to a frozen Mac Pro  
+(kernel panic) and after restart my pool did not mount as it usually  
+does.  I ran
+
+"zpool status" : "no pools available"
+  and then
+"zfs list" : "no datasets available"
+
+In disk utility I see two of the 7 or so disks in my pool with the  
+pool name (cpool - raidz2 with 1 hot spare), I don't remember if I  
+used to be able to see more of them, I believe they never all showed up.
+
+I haven't poked around any more for fear of doing more damage. Does  
+anybody have any advice on finding/reviving my ZFS pool?
+
+Thanks a lot,
+
+Carl
+
+
+
+From magnu213 at umn.edu  Tue Apr 21 13:09:41 2009
+From: magnu213 at umn.edu (Carl Magnuson)
+Date: Tue, 21 Apr 2009 15:09:41 -0500
+Subject: [zfs-discuss] Kernel Panic and Missing Pool
+In-Reply-To: <A923A88C-9816-4E06-BD28-69296A50AB62@umn.edu>
+References: <mailman.138.1239858279.597.zfs-discuss@lists.macosforge.org>
+	<A923A88C-9816-4E06-BD28-69296A50AB62@umn.edu>
+Message-ID: <EC271224-1098-4A38-B4EB-B3716821EA35@umn.edu>
+
+After running "sudo zpool import" which was suggested to me by a  
+helpful person, I receive the following error:
+
+   pool: cpool
+     id: 11949389578688040651
+  state: FAULTED
+status: One or more devices are missing from the system.
+action: The pool cannot be imported. Attach the missing
+	devices and try again.
+    see: http://www.sun.com/msg/ZFS-8000-3C
+config:
+
+	cpool        UNAVAIL  insufficient replicas
+	  raidz2     UNAVAIL  insufficient replicas
+	    disk3s2  ONLINE
+	    disk4s2  ONLINE
+	    disk5s2  UNAVAIL  cannot open
+	    disk7s2  UNAVAIL  cannot open
+	    disk6s2  UNAVAIL  cannot open
+	    disk3s2  ONLINE
+	    disk4s2  ONLINE
+
+I checked my external enclosures and everything seems to be hooked up  
+correctly, I'm having a hard time accepting that three of my drives  
+died nearly simultaneously.
+
+I next ran dmesg and got the following output:
+
+...
+zfs_context_init: footprint.maximum=2147483647,  
+footprint.target=102711296
+kobj_open_file: "/etc/zfs/zpool.cache", err 0 from vnode_open
+zfs_module_start: memory footprint 4810624 (kalloc 4810624, kernel 0)
+ALF ALERT: sockwall_cntl_updaterules ctl_enqueuedata rts err 55
+ALF ALERT: sockwall_cntl_updaterules ctl_enqueuedata rts err 55
+ALF ALERT: sockwall_cntl_updaterules ctl_enqueuedata rts err 55
+ALF ALERT: sockwall_cntl_updaterules ctl_enqueuedata rts err 55
+ALF ALERT: sockwall_cntl_updaterules ctl_enqueuedata rts err 55
+ALF ALERT: sockwall_cntl_updaterules ctl_enqueuedata rts err 55
+...
+
+Is it possible that the zpool.cache file was damaged in the kernel  
+panic, or some other corrupted file is causing this issue?
+
+Thanks,
+
+Carl
+
+
+From praseodym at gmail.com  Tue Apr 21 13:26:40 2009
+From: praseodym at gmail.com (Mark Janssen)
+Date: Tue, 21 Apr 2009 22:26:40 +0200
+Subject: [zfs-discuss] Kernel Panic and Missing Pool
+In-Reply-To: <EC271224-1098-4A38-B4EB-B3716821EA35@umn.edu>
+References: <mailman.138.1239858279.597.zfs-discuss@lists.macosforge.org>
+	<A923A88C-9816-4E06-BD28-69296A50AB62@umn.edu>
+	<EC271224-1098-4A38-B4EB-B3716821EA35@umn.edu>
+Message-ID: <b7dd15cb0904211326n58acbf13p94e0ec1152b66634@mail.gmail.com>
+
+On Tue, Apr 21, 2009 at 10:09 PM, Carl Magnuson <magnu213 at umn.edu> wrote:
+> After running "sudo zpool import" which was suggested to me by a helpful
+> person, I receive the following error:
+>
+> ?pool: cpool
+> ? ?id: 11949389578688040651
+> ?state: FAULTED
+> status: One or more devices are missing from the system.
+> action: The pool cannot be imported. Attach the missing
+> ? ? ? ?devices and try again.
+> ? see: http://www.sun.com/msg/ZFS-8000-3C
+> config:
+>
+> ? ? ? ?cpool ? ? ? ?UNAVAIL ?insufficient replicas
+> ? ? ? ? ?raidz2 ? ? UNAVAIL ?insufficient replicas
+> ? ? ? ? ? ?disk3s2 ?ONLINE
+> ? ? ? ? ? ?disk4s2 ?ONLINE
+> ? ? ? ? ? ?disk5s2 ?UNAVAIL ?cannot open
+> ? ? ? ? ? ?disk7s2 ?UNAVAIL ?cannot open
+> ? ? ? ? ? ?disk6s2 ?UNAVAIL ?cannot open
+> ? ? ? ? ? ?disk3s2 ?ONLINE
+> ? ? ? ? ? ?disk4s2 ?ONLINE
+>
+> I checked my external enclosures and everything seems to be hooked up
+> correctly, I'm having a hard time accepting that three of my drives died
+> nearly simultaneously.
+
+What are the seven disks called (i.e. the output of `diskutil list`)?
+They might have been renamed for some reason.
+
+From magnu213 at umn.edu  Tue Apr 21 13:41:54 2009
+From: magnu213 at umn.edu (Carl Magnuson)
+Date: Tue, 21 Apr 2009 15:41:54 -0500
+Subject: [zfs-discuss] Kernel Panic and Missing Pool
+In-Reply-To: <b7dd15cb0904211326n58acbf13p94e0ec1152b66634@mail.gmail.com>
+References: <mailman.138.1239858279.597.zfs-discuss@lists.macosforge.org>
+	<A923A88C-9816-4E06-BD28-69296A50AB62@umn.edu>
+	<EC271224-1098-4A38-B4EB-B3716821EA35@umn.edu>
+	<b7dd15cb0904211326n58acbf13p94e0ec1152b66634@mail.gmail.com>
+Message-ID: <2F64E272-B3A3-4691-BEE5-F850DF2ED656@umn.edu>
+
+diskutil list shows two of my pool disks as disk3 and disk4. There is  
+no disk7 listed (though it is shown in the "zpool import" error), and  
+it looks like the pool disks 5 and 6 are missing and two of my other  
+disks took their place, though it is odd that no disk moved to disk2.   
+The complete output is shown below.
+
+Thanks,
+
+Carl
+
+
+g5:~ bobcat$ diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *298.1 Gi    
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS Boot                    297.8 Gi    
+disk0s2
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     Apple_partition_scheme                        *232.9 Gi    
+disk1
+    1:        Apple_partition_map                         31.5 Ki     
+disk1s1
+    2:                  Apple_HFS Users                   232.8 Gi    
+disk1s3
+/dev/disk3
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk3
+    1:                        EFI                         200.0 Mi    
+disk3s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk3s2
+/dev/disk4
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk4
+    1:                        EFI                         200.0 Mi    
+disk4s1
+    2:                        ZFS cpool                   465.4 Gi    
+disk4s2
+/dev/disk5
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk5
+    1:                        EFI                         200.0 Mi    
+disk5s1
+    2:                  Apple_HFS Backup                  465.4 Gi    
+disk5s2
+/dev/disk6
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *931.5 Gi    
+disk6
+    1:                        EFI                         200.0 Mi    
+disk6s1
+    2:                  Apple_HFS Backup-G5               931.2 Gi    
+disk6s2
+/dev/disk7
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:                                                   *320.0 Ki    
+disk7
+/dev/disk8
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:                                                   *320.0 Ki    
+disk8
+
+
+
+
+On Apr 21, 2009, at 3:26 PM, Mark Janssen wrote:
+
+> On Tue, Apr 21, 2009 at 10:09 PM, Carl Magnuson <magnu213 at umn.edu>  
+> wrote:
+>> After running "sudo zpool import" which was suggested to me by a  
+>> helpful
+>> person, I receive the following error:
+>>
+>>  pool: cpool
+>>    id: 11949389578688040651
+>>  state: FAULTED
+>> status: One or more devices are missing from the system.
+>> action: The pool cannot be imported. Attach the missing
+>>        devices and try again.
+>>   see: http://www.sun.com/msg/ZFS-8000-3C
+>> config:
+>>
+>>        cpool        UNAVAIL  insufficient replicas
+>>          raidz2     UNAVAIL  insufficient replicas
+>>            disk3s2  ONLINE
+>>            disk4s2  ONLINE
+>>            disk5s2  UNAVAIL  cannot open
+>>            disk7s2  UNAVAIL  cannot open
+>>            disk6s2  UNAVAIL  cannot open
+>>            disk3s2  ONLINE
+>>            disk4s2  ONLINE
+>>
+>> I checked my external enclosures and everything seems to be hooked up
+>> correctly, I'm having a hard time accepting that three of my drives  
+>> died
+>> nearly simultaneously.
+>
+> What are the seven disks called (i.e. the output of `diskutil list`)?
+> They might have been renamed for some reason.
+
+
+From james-zfsosx at jrv.org  Tue Apr 21 14:53:22 2009
+From: james-zfsosx at jrv.org (James R. Van Artsdalen)
+Date: Tue, 21 Apr 2009 16:53:22 -0500
+Subject: [zfs-discuss] Kernel Panic and Missing Pool
+In-Reply-To: <2F64E272-B3A3-4691-BEE5-F850DF2ED656@umn.edu>
+References: <mailman.138.1239858279.597.zfs-discuss@lists.macosforge.org>	<A923A88C-9816-4E06-BD28-69296A50AB62@umn.edu>	<EC271224-1098-4A38-B4EB-B3716821EA35@umn.edu>	<b7dd15cb0904211326n58acbf13p94e0ec1152b66634@mail.gmail.com>
+	<2F64E272-B3A3-4691-BEE5-F850DF2ED656@umn.edu>
+Message-ID: <49EE4052.8030105@jrv.org>
+
+Carl Magnuson wrote:
+> diskutil list shows two of my pool disks as disk3 and disk4. There is no
+> disk7 listed (though it is shown in the "zpool import" error), and it
+> looks like the pool disks 5 and 6 are missing and two of my other disks
+> took their place, though it is odd that no disk moved to disk2.  The
+> complete output is shown below.
+
+Ignore the disk numbers output by zpool status: those are not meaningful
+here.
+
+This isn't a ZFS error (yet).  Some disks in the pool simply aren't
+being seen by OSX for whatever reason.  If diskutil can't see them then
+neither can higher layers of OSX such as ZFS.  Fix this first - make
+sure all pool members are visible to diskutil - then worry about ZFS.
+
+The number of disks missing is 5 - is there a 5-drive enclosure in use?
+ Check power & data cables, maybe cycle its power, etc.
+
+disk7 & disk8 look odd: are there a couple of eSATA port multiplier
+enclosures involved?
+
+
+From zorg at sogeeky.net  Tue Apr 21 20:52:50 2009
+From: zorg at sogeeky.net (Mr. Zorg ...)
+Date: Tue, 21 Apr 2009 20:52:50 -0700
+Subject: [zfs-discuss] Uh oh! Help! Mac Mini keeps locking up...
+In-Reply-To: <EEB17A99-E1B4-4AC1-9F42-B187FF36BE3A@sogeeky.net>
+References: <fbaadd320904191944x6e3cf384sbdad14ad4e310fb2@mail.gmail.com>
+	<95755729-E1D6-4634-8854-CFBCE19C282F@gmail.com>
+	<0C9B1241-CBF4-4181-93C2-2F7D010FE00D@sogeeky.net>
+	<fbaadd320904202324n388d6a66if49f2b2c53f5ce17@mail.gmail.com>
+	<EEB17A99-E1B4-4AC1-9F42-B187FF36BE3A@sogeeky.net>
+Message-ID: <fbaadd320904212052t3a5b0612obed36beba89794a1@mail.gmail.com>
+
+For those that may care, these same sequence of commands also allowed
+USB drives to be mounted, which is copying much better than a
+networked transfer.  :)
+
+On Tue, Apr 21, 2009 at 12:13 AM, Mr. Zorg <zorg at sogeeky.net> wrote:
+> Hooray! ?I found what I needed. Steps to bring up networking in 10.5 safe
+> mode can be found at the bottom of this page:
+> http://www.macos.utah.edu/documentation/system_deployment/radmind/faqs/single_user_mode.html
+>
+> My data is happily copying away to two new network drives. Phew!
+>
+> On Apr 20, 2009, at 11:24 PM, "Mr. Zorg ..." <zorg at sogeeky.net> wrote:
+>
+>> OK, so the resilver completed and I've tried rebooting both in normal
+>> mode and in safe mode and the system still locks up. ?But it'll stay
+>> up all day in single user mode. ?I'm fine with that, but I need to get
+>> my data off this drive and that's proving difficult too. ?Looks like
+>> getting networking and/or usb disk mounting up and running isn't easy
+>> in single user mode. ?I've googled till my fingers hurt and I'm not
+>> having much luck. ?Can anyone out there tell me how to get networking
+>> up and/or how to mount a usb drive? The only disks showing up in safe
+>> mode are my firewire zfs drives. ?:/
+>>
+>> Arg.
+>>
+>> On Mon, Apr 20, 2009 at 10:43 AM, Mr. Zorg <zorg at sogeeky.net> wrote:
+>>>
+>>> Here's a status update. Neither OpenSolaris or FreeBSD would play nice
+>>> with
+>>> my mini, so I went back to a fresh OS X install. I kept it at 10.5.2 with
+>>> the 102A binaries thinking maybe something destabilized during an update
+>>> (like you suggested) but the same behavior exists. I found I was able to
+>>> run
+>>> in single user mode without locking up. A scrub showed tree checksome
+>>> errors
+>>> on one disk. I'm running a replace on it now. Perhaps spotlight was
+>>> triggering a panic by hitting those checksum errors? :(
+>>>
+>>> I'll report back after the resilver is complete.
+>>>
+>>> On Apr 20, 2009, at 4:22 AM, Alex Blewitt <alex.blewitt at gmail.com> wrote:
+>>>
+>>>> I've been seeing the same symptoms since the last Apple Software update
+>>>> occurred. There wasn't any significant difference in data size (as I was
+>>>> away on vacation) over that time, yet my macine appeared to keep dying
+>>>> exactly at midnight every few days when my zpool scrub happens. I've not
+>>>> managed to reliably diagnose the problem though, although I suspect it's
+>>>> related to zfs.
+>>>>
+>>>> Maybe there's a slow memory leak somewhere and in the end the spool
+>>>> scrub
+>>>> just doesn't gave enough to operate?
+>>>>
+>>>> Alex
+>>>>
+>>>> Sent from my (new) iPhone
+>>>>
+>>>> On 20 Apr 2009, at 03:44, "Mr. Zorg ..." <zorg at sogeeky.net> wrote:
+>>>>
+>>>>> I've been one of those folks saying "it works just fine" on this list
+>>>>> for a long time, but now I'm one of those saying "uh oh!". ?My Mac
+>>>>> Mini has taken to locking up whenever I do much of anything with my
+>>>>> zfs pool. ?Running zpool status shows all disks online and healthy.
+>>>>> I'm reasonable confident the data is still fine, I just can't access
+>>>>> it on my Mac. ?I was able to export the pool and will now try
+>>>>> accessing it under opensolaris. ?Unfortunately, the live cd seems to
+>>>>> be giving me trouble with the marvell network card in this thing, so
+>>>>> I'll actually try installing it and installing the driver. ?I tried
+>>>>> running a zpool import from the live CD but it just sat there for 5+
+>>>>> minutes. ?How long should that take? ?I'll search the list archives to
+>>>>> see what tips I can glean, but if anyone wants to chime in on what to
+>>>>> try next I'd greatly appreciate it.
+>>>>>
+>>>>> Thanks!
+>>>>> _______________________________________________
+>>>>> zfs-discuss mailing list
+>>>>> zfs-discuss at lists.macosforge.org
+>>>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>
+
+From magnu213 at umn.edu  Tue Apr 21 21:01:37 2009
+From: magnu213 at umn.edu (Carl Magnuson)
+Date: Tue, 21 Apr 2009 23:01:37 -0500
+Subject: [zfs-discuss] Kernel Panic and Missing Pool
+In-Reply-To: <49EE4052.8030105@jrv.org>
+References: <mailman.138.1239858279.597.zfs-discuss@lists.macosforge.org>	<A923A88C-9816-4E06-BD28-69296A50AB62@umn.edu>	<EC271224-1098-4A38-B4EB-B3716821EA35@umn.edu>	<b7dd15cb0904211326n58acbf13p94e0ec1152b66634@mail.gmail.com>
+	<2F64E272-B3A3-4691-BEE5-F850DF2ED656@umn.edu>
+	<49EE4052.8030105@jrv.org>
+Message-ID: <3DB34638-44CA-49D9-A156-3FA016D6F6FD@umn.edu>
+
+You are right on all counts.  I am using two 5 disk enclosures with an  
+eSATA port multiplier.  After playing around I see that the indicator  
+lights on one of the enclosures aren't indicating as they should...  
+none of the 5 drives from that enclosure are showing up, but I can  
+pull one and put it elsewhere and it will indicating a problem with  
+the enclosure.
+
+Thanks for the help, sorry to bother everyone with a non ZFS problem,  
+it is appreciated.
+
+Carl
+
+
+
+
+On Apr 21, 2009, at 4:53 PM, James R. Van Artsdalen wrote:
+
+> Carl Magnuson wrote:
+>> diskutil list shows two of my pool disks as disk3 and disk4. There  
+>> is no
+>> disk7 listed (though it is shown in the "zpool import" error), and it
+>> looks like the pool disks 5 and 6 are missing and two of my other  
+>> disks
+>> took their place, though it is odd that no disk moved to disk2.  The
+>> complete output is shown below.
+>
+> Ignore the disk numbers output by zpool status: those are not  
+> meaningful
+> here.
+>
+> This isn't a ZFS error (yet).  Some disks in the pool simply aren't
+> being seen by OSX for whatever reason.  If diskutil can't see them  
+> then
+> neither can higher layers of OSX such as ZFS.  Fix this first - make
+> sure all pool members are visible to diskutil - then worry about ZFS.
+>
+> The number of disks missing is 5 - is there a 5-drive enclosure in  
+> use?
+> Check power & data cables, maybe cycle its power, etc.
+>
+> disk7 & disk8 look odd: are there a couple of eSATA port multiplier
+> enclosures involved?
+>
+
+
+From david.reed at me.com  Thu Apr 23 07:18:48 2009
+From: david.reed at me.com (David Reed)
+Date: Thu, 23 Apr 2009 10:18:48 -0400
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+Message-ID: <94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+
+I apologize if this is already addressed somewhere in the list  
+archives.  I've spent time looking for an answer but haven't found  
+one.  I also apologize for the length of this post.  I'm trying to  
+include as many details as possible so I don't waste anyone's time.
+
+Summary:
+When I use an external USB attached drive with ZFS performance drops  
+to about 40% of an HFS+ partition.  The same is true for Firewire  
+attached drives.
+
+Details:
+* I'm wanting to use an external ZFS drive to store data - photos in  
+particular.  So lots (100k+) of 1-12M files.
+* Downloaded and installed zfs-119 (on an MacBook Pro running 10.5.6)
+* I noticed when copying files to the drive that it would "pause"  
+every 3-5 seconds or so (I could hear the drive heads moving about and  
+then nothing for a second or two).
+* I switched to an "rsync" style copy (rsync -a --progress) so I could  
+see a little better what was happening.  Every 3-5 or so seconds it  
+would just "stop" in the middle of a copy for a few seconds.
+* I stopped the copy, deleted the files from the ZFS drive, and  
+started again... This time running zpool iostat 1 in a different shell  
+window.  (Output attached below - depending on the sampling and timing  
+you can see either the "0" for write bandwidth during the pauses or a  
+small number typically occurring every 3-4 seconds).
+* I checked my CPU during the process - not CPU bound (max was about  
+10% CPU usage including kernel)
+* The net impact of the pauses is to significantly slow down write  
+times.  To copy just 2.9GB of photos was taking about 3.5 to 4 minutes.
+* Thinking something was wrong with the drive, I tried another  
+external drive I have.  Same behavior... it "pauses" every so often.
+* Then thinking it must be the drive I was copying the files from I  
+tried copying from different drives.  Same behavior.
+* Then finally wondering if it was ZFS, I destroyed the ZFS partition  
+and recreated it (same spot on the physical disk) with HFS+.  I re-ran  
+the copy.  This time there were no "pauses" of the disk head movement  
+and the copy completed in slightly under 2 minutes.
+* I re-tried the HFS+ partition copy a few times and got the same  
+numbers plus/minus a few seconds.  Switching the partition back to ZFS  
+and re-doing the copy yet again I noticed the same performance issues  
+- about 4 minutes and frequent "pauses" in the copy process (as  
+evidenced by the iostat and listening to the drive head movement).
+* Wondering if it was USB related somehow I switched to using a  
+Firewire drive and repeated the tests.  Same basic results.  ZFS was  
+"pausing" during the writes to the disk.
+
+So, any suggestions on what to try next?  Are there any "tunables" I  
+should be aware of?  Copies are set to "1" and compression is  
+"off" (see the zfs get all output below).  I know ZFS does more, but  
+somehow I doubt that Sun engineers would have made ZFS have such bad  
+performance which makes me wonder if it's my system, or the zfs port  
+or something else.  Any thoughts?  Suggestions?   Can anyone recreate  
+the problem?
+
+Supporting Data:
+Data being copied for this test:
+* One directory with 7 sub-directories.
+* A total of 1065 files.  Average size for this batch of files about  
+2.8M
+
+zfs get all output
+$ zfs get all zfs-data
+NAME      PROPERTY       VALUE                  SOURCE
+zfs-data  type           filesystem             -
+zfs-data  creation       Thu Apr 23  8:58 2009  -
+zfs-data  used           2.94G                  -
+zfs-data  available      18.5G                  -
+zfs-data  referenced     2.94G                  -
+zfs-data  compressratio  1.00x                  -
+zfs-data  mounted        yes                    -
+zfs-data  quota          none                   default
+zfs-data  reservation    none                   default
+zfs-data  recordsize     128K                   local
+zfs-data  mountpoint     /Volumes/zfs-data      default
+zfs-data  sharenfs       off                    default
+zfs-data  checksum       on                     default
+zfs-data  compression    off                    default
+zfs-data  atime          on                     default
+zfs-data  devices        on                     default
+zfs-data  exec           on                     default
+zfs-data  setuid         on                     default
+zfs-data  readonly       off                    default
+zfs-data  zoned          off                    default
+zfs-data  snapdir        hidden                 default
+zfs-data  aclmode        groupmask              default
+zfs-data  aclinherit     secure                 default
+zfs-data  canmount       on                     default
+zfs-data  shareiscsi     off                    default
+zfs-data  xattr          on                     default
+zfs-data  copies         1                      default
+zfs-data  version        1                      -
+
+
+
+zpool iostat 1 output when copying files across...
+$ zpool iostat 1
+                capacity     operations    bandwidth
+pool         used  avail   read  write   read  write
+----------  -----  -----  -----  -----  -----  -----
+zfs-data     958M  20.8G      0    105  64.0K  2.76M
+zfs-data     958M  20.8G      0    117      0  12.4M
+zfs-data     958M  20.8G      0    217      0  27.2M
+zfs-data    1021M  20.8G      1    274   128K  24.0M
+zfs-data    1021M  20.8G      0      0      0      0
+zfs-data    1021M  20.8G      0    140  64.0K  15.8M
+zfs-data    1021M  20.8G      0    217      0  27.2M
+zfs-data    1.06G  20.7G      0    262  64.0K  21.1M
+zfs-data    1.06G  20.7G      0      0      0      0
+zfs-data    1.06G  20.7G      0     17      0  1.39M
+zfs-data    1.06G  20.7G      0    221      0  26.8M
+zfs-data    1.06G  20.7G      0    215      0  27.0M
+zfs-data    1.12G  20.6G      0    157      0  8.99M
+zfs-data    1.12G  20.6G      0      0      0      0
+zfs-data    1.12G  20.6G      0     42      0  3.31M
+zfs-data    1.12G  20.6G      1    188  35.0K  23.6M
+zfs-data    1.12G  20.6G      0    218      0  27.3M
+zfs-data    1.18G  20.6G      0    173  64.0K  10.0M
+zfs-data    1.18G  20.6G      0     99      0  11.3M
+zfs-data    1.20G  20.5G      0    114      0  8.55M
+zfs-data    1.20G  20.5G      0      0      0      0
+zfs-data    1.20G  20.5G      0      0      0      0
+zfs-data    1.20G  20.5G      0     97      0  10.2M
+zfs-data    1.20G  20.5G      0    217      0  27.1M
+zfs-data    1.26G  20.5G      0    284      0  26.0M
+zfs-data    1.26G  20.5G      0      0      0      0
+zfs-data    1.26G  20.5G      0      0      0      0
+zfs-data    1.26G  20.5G      0     79   128K  7.18M
+zfs-data    1.26G  20.5G      0    207  64.0K  26.0M
+zfs-data    1.26G  20.5G      0    215      0  27.0M
+zfs-data    1.33G  20.4G      0    118      0  4.00M
+zfs-data    1.33G  20.4G      0      0      0      0
+zfs-data    1.33G  20.4G      0      0      0      0
+zfs-data    1.33G  20.4G      0     45   128K  3.78M
+zfs-data    1.33G  20.4G      0    221   127K  27.7M
+zfs-data    1.33G  20.4G      0    213      0  26.4M
+zfs-data    1.39G  20.4G      0    119      0  5.24M
+zfs-data    1.39G  20.4G      0      0      0      0
+zfs-data    1.39G  20.4G      0    107      0  11.9M
+zfs-data    1.39G  20.4G      0    222      0  27.9M
+zfs-data    1.45G  20.3G      0    271  64.0K  23.9M
+zfs-data    1.45G  20.3G      0      0      0      0
+zfs-data    1.45G  20.3G      1     24   228K  2.02M
+zfs-data    1.45G  20.3G      0    208      0  26.1M
+zfs-data    1.45G  20.3G      0    218      0  26.9M
+zfs-data    1.51G  20.2G      2    151   192K  9.21M
+zfs-data    1.51G  20.2G      0      0      0      0
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090423/0839d9de/attachment-0001.html>
+
+From david.reed at me.com  Thu Apr 23 13:00:04 2009
+From: david.reed at me.com (David Reed)
+Date: Thu, 23 Apr 2009 16:00:04 -0400
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+	<94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+Message-ID: <DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+
+An update if it helps anyone with ideas....
+
+Writing a different set of file sizes to the disks don't show the  
+problem (at least not as acutely).   So if I'm copying lots of smaller  
+files (< 1M) I don't see the hit.  It seems to be related (right now)  
+to the file sizes.  Copying a lot of 2.8Mish files seems to show the  
+worst behavior.
+
+Any ideas?
+
+Thanks!
+
+On Apr 23, 2009, at 10:18 AM, David Reed wrote:
+
+> I apologize if this is already addressed somewhere in the list  
+> archives.  I've spent time looking for an answer but haven't found  
+> one.  I also apologize for the length of this post.  I'm trying to  
+> include as many details as possible so I don't waste anyone's time.
+>
+> Summary:
+> When I use an external USB attached drive with ZFS performance drops  
+> to about 40% of an HFS+ partition.  The same is true for Firewire  
+> attached drives.
+>
+> Details:
+> * I'm wanting to use an external ZFS drive to store data - photos in  
+> particular.  So lots (100k+) of 1-12M files.
+> * Downloaded and installed zfs-119 (on an MacBook Pro running 10.5.6)
+> * I noticed when copying files to the drive that it would "pause"  
+> every 3-5 seconds or so (I could hear the drive heads moving about  
+> and then nothing for a second or two).
+> * I switched to an "rsync" style copy (rsync -a --progress) so I  
+> could see a little better what was happening.  Every 3-5 or so  
+> seconds it would just "stop" in the middle of a copy for a few  
+> seconds.
+> * I stopped the copy, deleted the files from the ZFS drive, and  
+> started again... This time running zpool iostat 1 in a different  
+> shell window.  (Output attached below - depending on the sampling  
+> and timing you can see either the "0" for write bandwidth during the  
+> pauses or a small number typically occurring every 3-4 seconds).
+> * I checked my CPU during the process - not CPU bound (max was about  
+> 10% CPU usage including kernel)
+> * The net impact of the pauses is to significantly slow down write  
+> times.  To copy just 2.9GB of photos was taking about 3.5 to 4  
+> minutes.
+> * Thinking something was wrong with the drive, I tried another  
+> external drive I have.  Same behavior... it "pauses" every so often.
+> * Then thinking it must be the drive I was copying the files from I  
+> tried copying from different drives.  Same behavior.
+> * Then finally wondering if it was ZFS, I destroyed the ZFS  
+> partition and recreated it (same spot on the physical disk) with HFS 
+> +.  I re-ran the copy.  This time there were no "pauses" of the disk  
+> head movement and the copy completed in slightly under 2 minutes.
+> * I re-tried the HFS+ partition copy a few times and got the same  
+> numbers plus/minus a few seconds.  Switching the partition back to  
+> ZFS and re-doing the copy yet again I noticed the same performance  
+> issues - about 4 minutes and frequent "pauses" in the copy process  
+> (as evidenced by the iostat and listening to the drive head movement).
+> * Wondering if it was USB related somehow I switched to using a  
+> Firewire drive and repeated the tests.  Same basic results.  ZFS was  
+> "pausing" during the writes to the disk.
+>
+> So, any suggestions on what to try next?  Are there any "tunables" I  
+> should be aware of?  Copies are set to "1" and compression is  
+> "off" (see the zfs get all output below).  I know ZFS does more, but  
+> somehow I doubt that Sun engineers would have made ZFS have such bad  
+> performance which makes me wonder if it's my system, or the zfs port  
+> or something else.  Any thoughts?  Suggestions?   Can anyone  
+> recreate the problem?
+>
+> Supporting Data:
+> Data being copied for this test:
+> * One directory with 7 sub-directories.
+> * A total of 1065 files.  Average size for this batch of files about  
+> 2.8M
+>
+> zfs get all output
+> $ zfs get all zfs-data
+> NAME      PROPERTY       VALUE                  SOURCE
+> zfs-data  type           filesystem             -
+> zfs-data  creation       Thu Apr 23  8:58 2009  -
+> zfs-data  used           2.94G                  -
+> zfs-data  available      18.5G                  -
+> zfs-data  referenced     2.94G                  -
+> zfs-data  compressratio  1.00x                  -
+> zfs-data  mounted        yes                    -
+> zfs-data  quota          none                   default
+> zfs-data  reservation    none                   default
+> zfs-data  recordsize     128K                   local
+> zfs-data  mountpoint     /Volumes/zfs-data      default
+> zfs-data  sharenfs       off                    default
+> zfs-data  checksum       on                     default
+> zfs-data  compression    off                    default
+> zfs-data  atime          on                     default
+> zfs-data  devices        on                     default
+> zfs-data  exec           on                     default
+> zfs-data  setuid         on                     default
+> zfs-data  readonly       off                    default
+> zfs-data  zoned          off                    default
+> zfs-data  snapdir        hidden                 default
+> zfs-data  aclmode        groupmask              default
+> zfs-data  aclinherit     secure                 default
+> zfs-data  canmount       on                     default
+> zfs-data  shareiscsi     off                    default
+> zfs-data  xattr          on                     default
+> zfs-data  copies         1                      default
+> zfs-data  version        1                      -
+>
+>
+>
+> zpool iostat 1 output when copying files across...
+> $ zpool iostat 1
+>                capacity     operations    bandwidth
+> pool         used  avail   read  write   read  write
+> ----------  -----  -----  -----  -----  -----  -----
+> zfs-data     958M  20.8G      0    105  64.0K  2.76M
+> zfs-data     958M  20.8G      0    117      0  12.4M
+> zfs-data     958M  20.8G      0    217      0  27.2M
+> zfs-data    1021M  20.8G      1    274   128K  24.0M
+> zfs-data    1021M  20.8G      0      0      0      0
+> zfs-data    1021M  20.8G      0    140  64.0K  15.8M
+> zfs-data    1021M  20.8G      0    217      0  27.2M
+> zfs-data    1.06G  20.7G      0    262  64.0K  21.1M
+> zfs-data    1.06G  20.7G      0      0      0      0
+> zfs-data    1.06G  20.7G      0     17      0  1.39M
+> zfs-data    1.06G  20.7G      0    221      0  26.8M
+> zfs-data    1.06G  20.7G      0    215      0  27.0M
+> zfs-data    1.12G  20.6G      0    157      0  8.99M
+> zfs-data    1.12G  20.6G      0      0      0      0
+> zfs-data    1.12G  20.6G      0     42      0  3.31M
+> zfs-data    1.12G  20.6G      1    188  35.0K  23.6M
+> zfs-data    1.12G  20.6G      0    218      0  27.3M
+> zfs-data    1.18G  20.6G      0    173  64.0K  10.0M
+> zfs-data    1.18G  20.6G      0     99      0  11.3M
+> zfs-data    1.20G  20.5G      0    114      0  8.55M
+> zfs-data    1.20G  20.5G      0      0      0      0
+> zfs-data    1.20G  20.5G      0      0      0      0
+> zfs-data    1.20G  20.5G      0     97      0  10.2M
+> zfs-data    1.20G  20.5G      0    217      0  27.1M
+> zfs-data    1.26G  20.5G      0    284      0  26.0M
+> zfs-data    1.26G  20.5G      0      0      0      0
+> zfs-data    1.26G  20.5G      0      0      0      0
+> zfs-data    1.26G  20.5G      0     79   128K  7.18M
+> zfs-data    1.26G  20.5G      0    207  64.0K  26.0M
+> zfs-data    1.26G  20.5G      0    215      0  27.0M
+> zfs-data    1.33G  20.4G      0    118      0  4.00M
+> zfs-data    1.33G  20.4G      0      0      0      0
+> zfs-data    1.33G  20.4G      0      0      0      0
+> zfs-data    1.33G  20.4G      0     45   128K  3.78M
+> zfs-data    1.33G  20.4G      0    221   127K  27.7M
+> zfs-data    1.33G  20.4G      0    213      0  26.4M
+> zfs-data    1.39G  20.4G      0    119      0  5.24M
+> zfs-data    1.39G  20.4G      0      0      0      0
+> zfs-data    1.39G  20.4G      0    107      0  11.9M
+> zfs-data    1.39G  20.4G      0    222      0  27.9M
+> zfs-data    1.45G  20.3G      0    271  64.0K  23.9M
+> zfs-data    1.45G  20.3G      0      0      0      0
+> zfs-data    1.45G  20.3G      1     24   228K  2.02M
+> zfs-data    1.45G  20.3G      0    208      0  26.1M
+> zfs-data    1.45G  20.3G      0    218      0  26.9M
+> zfs-data    1.51G  20.2G      2    151   192K  9.21M
+> zfs-data    1.51G  20.2G      0      0      0      0
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090423/b9180275/attachment-0001.html>
+
+From richard.elling at gmail.com  Thu Apr 23 13:07:47 2009
+From: richard.elling at gmail.com (Richard Elling)
+Date: Thu, 23 Apr 2009 13:07:47 -0700
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>	<94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+	<DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+Message-ID: <49F0CA93.7000405@gmail.com>
+
+David Reed wrote:
+> An update if it helps anyone with ideas....  
+>
+> Writing a different set of file sizes to the disks don't show the 
+> problem (at least not as acutely).   So if I'm copying lots of smaller 
+> files (< 1M) I don't see the hit.  It seems to be related (right now) 
+> to the file sizes.  Copying a lot of 2.8Mish files seems to show the 
+> worst behavior.
+>
+> Any ideas?
+
+I'd suspect buffer overrun on the disk side.  If so, then the behaviour
+would be something like:
+    spit out some data
+    wait for a timeout
+    re-spit out data that was dropped by the storage
+
+On Solaris, you can change the zfs_vdev_max_pending which
+would allow finer control of this. Indeed, there are devices which
+require you to do this, or risk the porpoising behaviour I described.
+http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29
+
+ -- richard
+
+
+From swpalmer at gmail.com  Thu Apr 23 15:31:30 2009
+From: swpalmer at gmail.com (Scott Palmer)
+Date: Thu, 23 Apr 2009 18:31:30 -0400
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+	<94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+Message-ID: <F1AE7F11-9163-4F64-A7B3-E9406BBA35F2@gmail.com>
+
+For the record, I notice what appears to be similar pausing (going  
+just by looking at  the progress dialog of the file copy in Finder)  
+behavior when I write to a FAT formatted USB flash drive.  It could be  
+something completely different of course, it's just an observation.
+
+
+Scott
+
+
+On 23-Apr-09, at 10:18 AM, David Reed wrote:
+
+
+> * I noticed when copying files to the drive that it would "pause"  
+> every 3-5 seconds or so (I could hear the drive heads moving about  
+> and then nothing for a second or two).
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090423/db141b1c/attachment.html>
+
+From alex.blewitt at gmail.com  Fri Apr 24 01:35:42 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Fri, 24 Apr 2009 09:35:42 +0100
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+	<94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+	<DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+Message-ID: <52A4DF1A-C0C5-4D53-9AF4-EFD8E0D4B5DD@gmail.com>
+
+I did some tests on an external drive enclosure, and my findings were  
+that HFS outperformed a single ZFS drive, but that ZFS was better when  
+set up for RAID.
+
+http://alblue.blogspot.com/2008/04/review-iomega-ultramax-and-hfz-vs-zfs.html
+
+Bear in mind that ZFS may be writing to an intent log first, and then  
+replaying those to disk at a later time, so the pause may be it  
+writing out data.
+
+It's also worth noting that a ZFS partition has other features like  
+checksums which will affect the performance generally speaking. ZFS is  
+more CPU/memory intensive than HFS is.
+
+Having said that, the write log of 0 is particularly strange. ZFS will  
+wait (with 'sync' effectively) when writing and it may be that it's  
+just waiting for the buffers to the USB drive to report the data has  
+sync'd before continuing. HFS might just keep the buffer filled up.
+
+Alex
+
+On 23 Apr 2009, at 21:00, David Reed wrote:
+
+> An update if it helps anyone with ideas....
+>
+> Writing a different set of file sizes to the disks don't show the  
+> problem (at least not as acutely).   So if I'm copying lots of  
+> smaller files (< 1M) I don't see the hit.  It seems to be related  
+> (right now) to the file sizes.  Copying a lot of 2.8Mish files seems  
+> to show the worst behavior.
+>
+> Any ideas?
+>
+> Thanks!
+>
+> On Apr 23, 2009, at 10:18 AM, David Reed wrote:
+>
+>> I apologize if this is already addressed somewhere in the list  
+>> archives.  I've spent time looking for an answer but haven't found  
+>> one.  I also apologize for the length of this post.  I'm trying to  
+>> include as many details as possible so I don't waste anyone's time.
+>>
+>> Summary:
+>> When I use an external USB attached drive with ZFS performance  
+>> drops to about 40% of an HFS+ partition.  The same is true for  
+>> Firewire attached drives.
+>>
+>> Details:
+>> * I'm wanting to use an external ZFS drive to store data - photos  
+>> in particular.  So lots (100k+) of 1-12M files.
+>> * Downloaded and installed zfs-119 (on an MacBook Pro running 10.5.6)
+>> * I noticed when copying files to the drive that it would "pause"  
+>> every 3-5 seconds or so (I could hear the drive heads moving about  
+>> and then nothing for a second or two).
+>> * I switched to an "rsync" style copy (rsync -a --progress) so I  
+>> could see a little better what was happening.  Every 3-5 or so  
+>> seconds it would just "stop" in the middle of a copy for a few  
+>> seconds.
+>> * I stopped the copy, deleted the files from the ZFS drive, and  
+>> started again... This time running zpool iostat 1 in a different  
+>> shell window.  (Output attached below - depending on the sampling  
+>> and timing you can see either the "0" for write bandwidth during  
+>> the pauses or a small number typically occurring every 3-4 seconds).
+>> * I checked my CPU during the process - not CPU bound (max was  
+>> about 10% CPU usage including kernel)
+>> * The net impact of the pauses is to significantly slow down write  
+>> times.  To copy just 2.9GB of photos was taking about 3.5 to 4  
+>> minutes.
+>> * Thinking something was wrong with the drive, I tried another  
+>> external drive I have.  Same behavior... it "pauses" every so often.
+>> * Then thinking it must be the drive I was copying the files from I  
+>> tried copying from different drives.  Same behavior.
+>> * Then finally wondering if it was ZFS, I destroyed the ZFS  
+>> partition and recreated it (same spot on the physical disk) with HFS 
+>> +.  I re-ran the copy.  This time there were no "pauses" of the  
+>> disk head movement and the copy completed in slightly under 2  
+>> minutes.
+>> * I re-tried the HFS+ partition copy a few times and got the same  
+>> numbers plus/minus a few seconds.  Switching the partition back to  
+>> ZFS and re-doing the copy yet again I noticed the same performance  
+>> issues - about 4 minutes and frequent "pauses" in the copy process  
+>> (as evidenced by the iostat and listening to the drive head  
+>> movement).
+>> * Wondering if it was USB related somehow I switched to using a  
+>> Firewire drive and repeated the tests.  Same basic results.  ZFS  
+>> was "pausing" during the writes to the disk.
+>>
+>> So, any suggestions on what to try next?  Are there any "tunables"  
+>> I should be aware of?  Copies are set to "1" and compression is  
+>> "off" (see the zfs get all output below).  I know ZFS does more,  
+>> but somehow I doubt that Sun engineers would have made ZFS have  
+>> such bad performance which makes me wonder if it's my system, or  
+>> the zfs port or something else.  Any thoughts?  Suggestions?   Can  
+>> anyone recreate the problem?
+>>
+>> Supporting Data:
+>> Data being copied for this test:
+>> * One directory with 7 sub-directories.
+>> * A total of 1065 files.  Average size for this batch of files  
+>> about 2.8M
+>>
+>> zfs get all output
+>> $ zfs get all zfs-data
+>> NAME      PROPERTY       VALUE                  SOURCE
+>> zfs-data  type           filesystem             -
+>> zfs-data  creation       Thu Apr 23  8:58 2009  -
+>> zfs-data  used           2.94G                  -
+>> zfs-data  available      18.5G                  -
+>> zfs-data  referenced     2.94G                  -
+>> zfs-data  compressratio  1.00x                  -
+>> zfs-data  mounted        yes                    -
+>> zfs-data  quota          none                   default
+>> zfs-data  reservation    none                   default
+>> zfs-data  recordsize     128K                   local
+>> zfs-data  mountpoint     /Volumes/zfs-data      default
+>> zfs-data  sharenfs       off                    default
+>> zfs-data  checksum       on                     default
+>> zfs-data  compression    off                    default
+>> zfs-data  atime          on                     default
+>> zfs-data  devices        on                     default
+>> zfs-data  exec           on                     default
+>> zfs-data  setuid         on                     default
+>> zfs-data  readonly       off                    default
+>> zfs-data  zoned          off                    default
+>> zfs-data  snapdir        hidden                 default
+>> zfs-data  aclmode        groupmask              default
+>> zfs-data  aclinherit     secure                 default
+>> zfs-data  canmount       on                     default
+>> zfs-data  shareiscsi     off                    default
+>> zfs-data  xattr          on                     default
+>> zfs-data  copies         1                      default
+>> zfs-data  version        1                      -
+>>
+>>
+>>
+>> zpool iostat 1 output when copying files across...
+>> $ zpool iostat 1
+>>                capacity     operations    bandwidth
+>> pool         used  avail   read  write   read  write
+>> ----------  -----  -----  -----  -----  -----  -----
+>> zfs-data     958M  20.8G      0    105  64.0K  2.76M
+>> zfs-data     958M  20.8G      0    117      0  12.4M
+>> zfs-data     958M  20.8G      0    217      0  27.2M
+>> zfs-data    1021M  20.8G      1    274   128K  24.0M
+>> zfs-data    1021M  20.8G      0      0      0      0
+>> zfs-data    1021M  20.8G      0    140  64.0K  15.8M
+>> zfs-data    1021M  20.8G      0    217      0  27.2M
+>> zfs-data    1.06G  20.7G      0    262  64.0K  21.1M
+>> zfs-data    1.06G  20.7G      0      0      0      0
+>> zfs-data    1.06G  20.7G      0     17      0  1.39M
+>> zfs-data    1.06G  20.7G      0    221      0  26.8M
+>> zfs-data    1.06G  20.7G      0    215      0  27.0M
+>> zfs-data    1.12G  20.6G      0    157      0  8.99M
+>> zfs-data    1.12G  20.6G      0      0      0      0
+>> zfs-data    1.12G  20.6G      0     42      0  3.31M
+>> zfs-data    1.12G  20.6G      1    188  35.0K  23.6M
+>> zfs-data    1.12G  20.6G      0    218      0  27.3M
+>> zfs-data    1.18G  20.6G      0    173  64.0K  10.0M
+>> zfs-data    1.18G  20.6G      0     99      0  11.3M
+>> zfs-data    1.20G  20.5G      0    114      0  8.55M
+>> zfs-data    1.20G  20.5G      0      0      0      0
+>> zfs-data    1.20G  20.5G      0      0      0      0
+>> zfs-data    1.20G  20.5G      0     97      0  10.2M
+>> zfs-data    1.20G  20.5G      0    217      0  27.1M
+>> zfs-data    1.26G  20.5G      0    284      0  26.0M
+>> zfs-data    1.26G  20.5G      0      0      0      0
+>> zfs-data    1.26G  20.5G      0      0      0      0
+>> zfs-data    1.26G  20.5G      0     79   128K  7.18M
+>> zfs-data    1.26G  20.5G      0    207  64.0K  26.0M
+>> zfs-data    1.26G  20.5G      0    215      0  27.0M
+>> zfs-data    1.33G  20.4G      0    118      0  4.00M
+>> zfs-data    1.33G  20.4G      0      0      0      0
+>> zfs-data    1.33G  20.4G      0      0      0      0
+>> zfs-data    1.33G  20.4G      0     45   128K  3.78M
+>> zfs-data    1.33G  20.4G      0    221   127K  27.7M
+>> zfs-data    1.33G  20.4G      0    213      0  26.4M
+>> zfs-data    1.39G  20.4G      0    119      0  5.24M
+>> zfs-data    1.39G  20.4G      0      0      0      0
+>> zfs-data    1.39G  20.4G      0    107      0  11.9M
+>> zfs-data    1.39G  20.4G      0    222      0  27.9M
+>> zfs-data    1.45G  20.3G      0    271  64.0K  23.9M
+>> zfs-data    1.45G  20.3G      0      0      0      0
+>> zfs-data    1.45G  20.3G      1     24   228K  2.02M
+>> zfs-data    1.45G  20.3G      0    208      0  26.1M
+>> zfs-data    1.45G  20.3G      0    218      0  26.9M
+>> zfs-data    1.51G  20.2G      2    151   192K  9.21M
+>> zfs-data    1.51G  20.2G      0      0      0      0
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090424/4e02600d/attachment-0001.html>
+
+From kireeti.kompella at gmail.com  Fri Apr 24 01:41:26 2009
+From: kireeti.kompella at gmail.com (Kireeti Kompella)
+Date: Fri, 24 Apr 2009 01:41:26 -0700
+Subject: [zfs-discuss] snapshots ...
+Message-ID: <d64af7390904240141t45ce8b96o34dffe54eae080ce@mail.gmail.com>
+
+Hi,
+
+What's the status of the .zfs directory to view snapshots?  Still not
+available, use clones to access?
+
+Thanks,
+Kireeti
+
+From hanche at math.ntnu.no  Fri Apr 24 01:52:36 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Fri, 24 Apr 2009 10:52:36 +0200 (CEST)
+Subject: [zfs-discuss] snapshots ...
+In-Reply-To: <d64af7390904240141t45ce8b96o34dffe54eae080ce@mail.gmail.com>
+References: <d64af7390904240141t45ce8b96o34dffe54eae080ce@mail.gmail.com>
+Message-ID: <20090424.105236.41929607.hanche@math.ntnu.no>
+
++ Kireeti Kompella <kireeti.kompella at gmail.com>:
+
+> What's the status of the .zfs directory to view snapshots?  Still not
+> available, use clones to access?
+
+That's right.
+
+- Harald
+
+From kireeti.kompella at gmail.com  Sat Apr 25 18:22:58 2009
+From: kireeti.kompella at gmail.com (Kireeti Kompella)
+Date: Sat, 25 Apr 2009 18:22:58 -0700
+Subject: [zfs-discuss] This looks wrong ...
+Message-ID: <d64af7390904251822j12acca21j7790e2cb287fd902@mail.gmail.com>
+
+diophantus:~(0): zfs list
+NAME               USED  AVAIL  REFER  MOUNTPOINT
+zeta               783K  97.5G   404K  /Volumes/zeta
+zeta/zsys          292K  97.5G   273K  /Volumes/zeta/zsys
+zeta/zsys at system    19K      -   273K  -
+
+diophantus:~(0): zfs destroy zeta/zsys at system
+cannot destroy 'zeta/zsys at system': snapshot has dependent clones
+use '-R' to destroy the following datasets:
+zeta/zsys
+zeta
+
+diophantus:~(0): zfs destroy zeta/zsys
+cannot destroy 'zeta/zsys': filesystem has children
+use '-r' to destroy the following datasets:
+zeta/zsys at system
+
+diophantus:~(0): zfs destroy -r zeta/zsys
+cannot destroy 'zeta/zsys': filesystem has dependent clones
+use '-R' to destroy the following datasets:
+zeta
+
+diophantus:~(0): zfs destroy -R zeta/zsys
+cannot determine dependent datasets: recursive dependency at 'zeta/zsys'
+
+/* I could imagine the following only 'coz this is a zfs for play --
+wouldn't consider it for a *real* fs! */
+
+diophantus:~(0): zfs destroy -R zeta
+cannot determine dependent datasets: recursive dependency at 'zeta'
+
+diophantus:~(0): zfs destroy -Rf zeta
+cannot determine dependent datasets: recursive dependency at 'zeta'
+
+diophantus:~(0): zpool history
+History for 'zeta':
+2009-04-24.00:52:02 zpool create zeta disk1s3
+2009-04-24.00:53:12 zfs set snapdir=visible zeta
+2009-04-24.00:54:45 zfs snapshot zeta at system
+2009-04-24.00:59:03 zfs upgrade zeta
+2009-04-24.01:01:27 zfs create -o snapdir=visible zeta/filesystem
+2009-04-24.01:02:03 zfs snapshot zeta/filesystem at snap2
+2009-04-25.10:08:13 zfs clone zeta at system zeta/zsys
+2009-04-25.10:10:42 zfs promote zeta/zsys
+2009-04-25.10:17:18 zfs destroy zeta/filesystem at snap2
+2009-04-25.10:17:21 zfs destroy zeta/filesystem
+
+Running zfs-119 on 10.5.6.
+
+-- 
+Kireeti
+
+From hanche at math.ntnu.no  Sun Apr 26 00:27:25 2009
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Sun, 26 Apr 2009 09:27:25 +0200 (CEST)
+Subject: [zfs-discuss] This looks wrong ...
+In-Reply-To: <d64af7390904251822j12acca21j7790e2cb287fd902@mail.gmail.com>
+References: <d64af7390904251822j12acca21j7790e2cb287fd902@mail.gmail.com>
+Message-ID: <20090426.092725.219925910.hanche@math.ntnu.no>
+
++ Kireeti Kompella <kireeti.kompella at gmail.com>:
+
+> diophantus:~(0): zfs list
+> NAME               USED  AVAIL  REFER  MOUNTPOINT
+> zeta               783K  97.5G   404K  /Volumes/zeta
+> zeta/zsys          292K  97.5G   273K  /Volumes/zeta/zsys
+> zeta/zsys at system    19K      -   273K  -
+> 
+> diophantus:~(0): zfs destroy zeta/zsys at system
+> cannot destroy 'zeta/zsys at system': snapshot has dependent clones
+[...]
+
+> diophantus:~(0): zfs destroy zeta/zsys
+> cannot destroy 'zeta/zsys': filesystem has children
+[...]
+
+> diophantus:~(0): zpool history
+> History for 'zeta': [somewhat pruned]
+> 2009-04-24.00:52:02 zpool create zeta disk1s3
+> 2009-04-24.00:54:45 zfs snapshot zeta at system
+> 2009-04-24.00:59:03 zfs upgrade zeta
+> 2009-04-25.10:08:13 zfs clone zeta at system zeta/zsys
+> 2009-04-25.10:10:42 zfs promote zeta/zsys
+
+If you re-promote zeta, do things return to normal then?
+
+- Harald
+
+From kireeti.kompella at gmail.com  Sun Apr 26 00:38:35 2009
+From: kireeti.kompella at gmail.com (Kireeti Kompella)
+Date: Sun, 26 Apr 2009 00:38:35 -0700
+Subject: [zfs-discuss] This looks wrong ...
+In-Reply-To: <20090426.092725.219925910.hanche@math.ntnu.no>
+References: <d64af7390904251822j12acca21j7790e2cb287fd902@mail.gmail.com>
+	<20090426.092725.219925910.hanche@math.ntnu.no>
+Message-ID: <d64af7390904260038i3831ccd1u8e43f8b5aab0f2c0@mail.gmail.com>
+
+Hi Harald,
+
+On Sun, Apr 26, 2009 at 12:27 AM, Harald Hanche-Olsen
+<hanche at math.ntnu.no> wrote:
+
+> If you re-promote zeta, do things return to normal then?
+
+Super, that did the trick!
+
+Thanks much,
+Kireeti
+
+From david.reed at me.com  Mon Apr 27 19:17:21 2009
+From: david.reed at me.com (David Reed)
+Date: Mon, 27 Apr 2009 22:17:21 -0400
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <E586D6B1-CF41-4B70-90F4-6F96038EAD78@mac.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+	<94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+	<DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+	<49F0CA93.7000405@gmail.com>
+	<E586D6B1-CF41-4B70-90F4-6F96038EAD78@mac.com>
+Message-ID: <F9EC227E-6813-4E38-B01E-9E725B8119FE@me.com>
+
+Thanks for the suggestions.  Not wanting to be without a good reason  
+for the performance problem (especially given it's not clearly a disk/ 
+disk interface related problem because it's the same USB disk driver  
+for HFS+ and ZFS), I recompiled the source for zfs-119 with ZFS_DEBUG  
+turned on.
+
+I notice the following in the error logs when the "pause" occurs (as  
+best as I can tell based on occurrence count and lots of repeated  
+trials - doing a tail -f on syslog has a slight pause from "reality")...
+
+Apr 27 22:08:51 david kernel[0]: zvec_func[4]: error 17
+
+That ties back to a section of code in zfs_ioctl.c.  Any ideas on what  
+the error actually means?
+
+         /*
+          * Ensure that all pool/dataset names are valid before we  
+pass down to
+          * the lower layers.
+          */
+         if (error == 0) {
+                 zc->zc_name[sizeof (zc->zc_name) - 1] = '\0';
+                 switch (zfs_ioc_vec[vec].zvec_namecheck) {
+                 case POOL_NAME:
+                         if (pool_namecheck(zc->zc_name, NULL, NULL) ! 
+= 0)
+                                 error = EINVAL;
+                         break;
+
+                 case DATASET_NAME:
+                         if (dataset_namecheck(zc->zc_name, NULL,  
+NULL) != 0)
+                                 error = EINVAL;
+                         break;
+
+                 case NO_NAME:
+                         break;
+                 }
+         }
+
+         if (error == 0) {
+                 error = zfs_ioc_vec[vec].zvec_func(zc);
+                 if (error == 0) {
+                         if (zfs_ioc_vec[vec].zvec_his_log == B_TRUE)
+                                 zfs_log_history(zc);
+                 } else {
+#ifdef ZFS_DEBUG
+                         printf("zvec_func[%d]: error %d\n", vec,  
+error);
+#endif
+                 }
+         }
+
+
+On Apr 23, 2009, at 6:35 PM, David Reed wrote:
+
+> Thanks Richard.  Anyone have any idea if similar settings exist for  
+> the OS X implementation?  I ran a strings on the kernel extension  
+> and didn't see this one...
+>
+> -david
+>
+> On Apr 23, 2009, at 4:07 PM, Richard Elling  
+> <richard.elling at gmail.com> wrote:
+>
+>> David Reed wrote:
+>>> An update if it helps anyone with ideas....
+>>> Writing a different set of file sizes to the disks don't show the  
+>>> problem (at least not as acutely).   So if I'm copying lots of  
+>>> smaller files (< 1M) I don't see the hit.  It seems to be related  
+>>> (right now) to the file sizes.  Copying a lot of 2.8Mish files  
+>>> seems to show the worst behavior.
+>>>
+>>> Any ideas?
+>>
+>> I'd suspect buffer overrun on the disk side.  If so, then the  
+>> behaviour
+>> would be something like:
+>>  spit out some data
+>>  wait for a timeout
+>>  re-spit out data that was dropped by the storage
+>>
+>> On Solaris, you can change the zfs_vdev_max_pending which
+>> would allow finer control of this. Indeed, there are devices which
+>> require you to do this, or risk the porpoising behaviour I described.
+>> http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29
+>>
+>> -- richard
+>>
+
+
+From david.reed at me.com  Mon Apr 27 19:54:53 2009
+From: david.reed at me.com (David Reed)
+Date: Mon, 27 Apr 2009 22:54:53 -0400
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <F9EC227E-6813-4E38-B01E-9E725B8119FE@me.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+	<94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+	<DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+	<49F0CA93.7000405@gmail.com>
+	<E586D6B1-CF41-4B70-90F4-6F96038EAD78@mac.com>
+	<F9EC227E-6813-4E38-B01E-9E725B8119FE@me.com>
+Message-ID: <AF004D61-C6F3-45A9-9F58-B01CA91504E0@me.com>
+
+Sorry for all the updates but this is really driving me nuts.  I did  
+the same test with a file-based disk (mkfile 5g foo; zpool create test  
+foo).  I used the internal disk for this experiment.  No USB related  
+issues, no Firewire issues.   Same results.  I've traced the error  
+further through the code but am at a loss.  Anyone have any  
+suggestions for a guru to talk to?  The macforge code base is  
+different from the stock Sun code base so it's not correct for a Sun  
+bug report.
+
+On Apr 27, 2009, at 10:17 PM, David Reed wrote:
+
+> Thanks for the suggestions.  Not wanting to be without a good reason  
+> for the performance problem (especially given it's not clearly a  
+> disk/disk interface related problem because it's the same USB disk  
+> driver for HFS+ and ZFS), I recompiled the source for zfs-119 with  
+> ZFS_DEBUG turned on.
+>
+> I notice the following in the error logs when the "pause" occurs (as  
+> best as I can tell based on occurrence count and lots of repeated  
+> trials - doing a tail -f on syslog has a slight pause from  
+> "reality")...
+>
+> Apr 27 22:08:51 david kernel[0]: zvec_func[4]: error 17
+>
+> That ties back to a section of code in zfs_ioctl.c.  Any ideas on  
+> what the error actually means?
+>
+>        /*
+>         * Ensure that all pool/dataset names are valid before we  
+> pass down to
+>         * the lower layers.
+>         */
+>        if (error == 0) {
+>                zc->zc_name[sizeof (zc->zc_name) - 1] = '\0';
+>                switch (zfs_ioc_vec[vec].zvec_namecheck) {
+>                case POOL_NAME:
+>                        if (pool_namecheck(zc->zc_name, NULL, NULL) ! 
+> = 0)
+>                                error = EINVAL;
+>                        break;
+>
+>                case DATASET_NAME:
+>                        if (dataset_namecheck(zc->zc_name, NULL,  
+> NULL) != 0)
+>                                error = EINVAL;
+>                        break;
+>
+>                case NO_NAME:
+>                        break;
+>                }
+>        }
+>
+>        if (error == 0) {
+>                error = zfs_ioc_vec[vec].zvec_func(zc);
+>                if (error == 0) {
+>                        if (zfs_ioc_vec[vec].zvec_his_log == B_TRUE)
+>                                zfs_log_history(zc);
+>                } else {
+> #ifdef ZFS_DEBUG
+>                        printf("zvec_func[%d]: error %d\n", vec,  
+> error);
+> #endif
+>                }
+>        }
+>
+>
+> On Apr 23, 2009, at 6:35 PM, David Reed wrote:
+>
+>> Thanks Richard.  Anyone have any idea if similar settings exist for  
+>> the OS X implementation?  I ran a strings on the kernel extension  
+>> and didn't see this one...
+>>
+>> -david
+>>
+>> On Apr 23, 2009, at 4:07 PM, Richard Elling  
+>> <richard.elling at gmail.com> wrote:
+>>
+>>> David Reed wrote:
+>>>> An update if it helps anyone with ideas....
+>>>> Writing a different set of file sizes to the disks don't show the  
+>>>> problem (at least not as acutely).   So if I'm copying lots of  
+>>>> smaller files (< 1M) I don't see the hit.  It seems to be related  
+>>>> (right now) to the file sizes.  Copying a lot of 2.8Mish files  
+>>>> seems to show the worst behavior.
+>>>>
+>>>> Any ideas?
+>>>
+>>> I'd suspect buffer overrun on the disk side.  If so, then the  
+>>> behaviour
+>>> would be something like:
+>>> spit out some data
+>>> wait for a timeout
+>>> re-spit out data that was dropped by the storage
+>>>
+>>> On Solaris, you can change the zfs_vdev_max_pending which
+>>> would allow finer control of this. Indeed, there are devices which
+>>> require you to do this, or risk the porpoising behaviour I  
+>>> described.
+>>> http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29
+>>>
+>>> -- richard
+>>>
+>
+
+
+From alex.blewitt at gmail.com  Tue Apr 28 00:09:42 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Tue, 28 Apr 2009 08:09:42 +0100
+Subject: [zfs-discuss] USB and Firewire Performance Problem Question...
+In-Reply-To: <AF004D61-C6F3-45A9-9F58-B01CA91504E0@me.com>
+References: <61F561BF-0F44-4D81-A180-0316B23BD7E3@me.com>
+	<94A8EC9D-A1FC-4F9D-9DB3-89DC55955043@me.com>
+	<DA9815F9-0256-4C1A-927B-71AA5D5A67E0@me.com>
+	<49F0CA93.7000405@gmail.com>
+	<E586D6B1-CF41-4B70-90F4-6F96038EAD78@mac.com>
+	<F9EC227E-6813-4E38-B01E-9E725B8119FE@me.com>
+	<AF004D61-C6F3-45A9-9F58-B01CA91504E0@me.com>
+Message-ID: <36C0A571-21C3-4959-B9E8-288C15781FFE@gmail.com>
+
+This list is probably the best place to discuss, unfortunately. Note  
+that ZFS-119 is the latest build for 10.5 and there's unlikely to be  
+any further builds available - 10.6 will have an upgraded version of  
+ZFS which can't be back-ported to 10.5. You can hope that it's been  
+fixed in 10.6 but the chances of any changes happening to 10.5 are  
+pretty slim to non-existent.
+
+Is it possible that something else on your machine is causing the  
+pauses?
+
+Alex
+
+On 28 Apr 2009, at 03:54, David Reed wrote:
+
+> Sorry for all the updates but this is really driving me nuts.  I did  
+> the same test with a file-based disk (mkfile 5g foo; zpool create  
+> test foo).  I used the internal disk for this experiment.  No USB  
+> related issues, no Firewire issues.   Same results.  I've traced the  
+> error further through the code but am at a loss.  Anyone have any  
+> suggestions for a guru to talk to?  The macforge code base is  
+> different from the stock Sun code base so it's not correct for a Sun  
+> bug report.
+>
+> On Apr 27, 2009, at 10:17 PM, David Reed wrote:
+>
+>> Thanks for the suggestions.  Not wanting to be without a good  
+>> reason for the performance problem (especially given it's not  
+>> clearly a disk/disk interface related problem because it's the same  
+>> USB disk driver for HFS+ and ZFS), I recompiled the source for  
+>> zfs-119 with ZFS_DEBUG turned on.
+>>
+>> I notice the following in the error logs when the "pause" occurs  
+>> (as best as I can tell based on occurrence count and lots of  
+>> repeated trials - doing a tail -f on syslog has a slight pause from  
+>> "reality")...
+>>
+>> Apr 27 22:08:51 david kernel[0]: zvec_func[4]: error 17
+>>
+>> That ties back to a section of code in zfs_ioctl.c.  Any ideas on  
+>> what the error actually means?
+>>
+>>       /*
+>>        * Ensure that all pool/dataset names are valid before we  
+>> pass down to
+>>        * the lower layers.
+>>        */
+>>       if (error == 0) {
+>>               zc->zc_name[sizeof (zc->zc_name) - 1] = '\0';
+>>               switch (zfs_ioc_vec[vec].zvec_namecheck) {
+>>               case POOL_NAME:
+>>                       if (pool_namecheck(zc->zc_name, NULL, NULL) ! 
+>> = 0)
+>>                               error = EINVAL;
+>>                       break;
+>>
+>>               case DATASET_NAME:
+>>                       if (dataset_namecheck(zc->zc_name, NULL,  
+>> NULL) != 0)
+>>                               error = EINVAL;
+>>                       break;
+>>
+>>               case NO_NAME:
+>>                       break;
+>>               }
+>>       }
+>>
+>>       if (error == 0) {
+>>               error = zfs_ioc_vec[vec].zvec_func(zc);
+>>               if (error == 0) {
+>>                       if (zfs_ioc_vec[vec].zvec_his_log == B_TRUE)
+>>                               zfs_log_history(zc);
+>>               } else {
+>> #ifdef ZFS_DEBUG
+>>                       printf("zvec_func[%d]: error %d\n", vec,  
+>> error);
+>> #endif
+>>               }
+>>       }
+>>
+>>
+>> On Apr 23, 2009, at 6:35 PM, David Reed wrote:
+>>
+>>> Thanks Richard.  Anyone have any idea if similar settings exist  
+>>> for the OS X implementation?  I ran a strings on the kernel  
+>>> extension and didn't see this one...
+>>>
+>>> -david
+>>>
+>>> On Apr 23, 2009, at 4:07 PM, Richard Elling <richard.elling at gmail.com 
+>>> > wrote:
+>>>
+>>>> David Reed wrote:
+>>>>> An update if it helps anyone with ideas....
+>>>>> Writing a different set of file sizes to the disks don't show  
+>>>>> the problem (at least not as acutely).   So if I'm copying lots  
+>>>>> of smaller files (< 1M) I don't see the hit.  It seems to be  
+>>>>> related (right now) to the file sizes.  Copying a lot of 2.8Mish  
+>>>>> files seems to show the worst behavior.
+>>>>>
+>>>>> Any ideas?
+>>>>
+>>>> I'd suspect buffer overrun on the disk side.  If so, then the  
+>>>> behaviour
+>>>> would be something like:
+>>>> spit out some data
+>>>> wait for a timeout
+>>>> re-spit out data that was dropped by the storage
+>>>>
+>>>> On Solaris, you can change the zfs_vdev_max_pending which
+>>>> would allow finer control of this. Indeed, there are devices which
+>>>> require you to do this, or risk the porpoising behaviour I  
+>>>> described.
+>>>> http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide#Device_I.2FO_Queue_Size_.28I.2FO_Concurrency.29
+>>>>
+>>>> -- richard
+>>>>
+>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From koolcoy at gmail.com  Wed Apr 29 12:44:06 2009
+From: koolcoy at gmail.com (Teng Yao)
+Date: Thu, 30 Apr 2009 03:44:06 +0800
+Subject: [zfs-discuss] Oh, God, I lost every thing after a reboot !!!
+Message-ID: <5a175bf90904291244t5c8279e1m6ac3578ee774d5f4@mail.gmail.com>
+
+Hi,
+I downloaded zfs-119- binary from zfs.macforge.org, and installed as the how
+to said. I also rebooted. Mount, umount, create, destroy, everything seemed
+to be ok. So I moved all my data to the pool. But after another reboot,
+everything changed. I cannot mount my zfs file systems, and  "zpool list"
+says "no pools available".
+Is this a bug or I did something wrong? How can I get my data?
+btw: I have two hard drives, Mac is installed in /dev/disk1s2, Windows XP
+installed in /dev/disk1s1.  The pool was created with command "zpool create
+Pool /dev/disk0"
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090430/22967d3e/attachment.html>
+
+From alex.blewitt at gmail.com  Wed Apr 29 12:57:58 2009
+From: alex.blewitt at gmail.com (Alex Blewitt)
+Date: Wed, 29 Apr 2009 20:57:58 +0100
+Subject: [zfs-discuss] Oh, God, I lost every thing after a reboot !!!
+In-Reply-To: <5a175bf90904291244t5c8279e1m6ac3578ee774d5f4@mail.gmail.com>
+References: <5a175bf90904291244t5c8279e1m6ac3578ee774d5f4@mail.gmail.com>
+Message-ID: <636fd28e0904291257j75dad09fy6f8d7ff8e12ffee3@mail.gmail.com>
+
+On Wed, Apr 29, 2009 at 8:44 PM, Teng Yao <koolcoy at gmail.com> wrote> Hi,
+> I downloaded zfs-119- binary from zfs.macforge.org, and installed as the how
+> to said. I also rebooted. Mount, umount, create, destroy, everything seemed
+> to be ok. So I moved all my data to the pool. But after another reboot,
+> everything changed. I cannot mount my zfs file systems, and? "zpool list"
+> says "no pools available".
+> Is this a bug or I did something wrong? How can I get my data?
+> btw: I have two hard drives, Mac is installed in /dev/disk1s2, Windows XP
+> installed in /dev/disk1s1.? The pool was created with command "zpool create
+> Pool /dev/disk0"
+
+http://zfs.macosforge.org/trac/wiki/get_the_party_started
+
+The documentation suggested /dev/disk0s2 would have been better,
+rather than /dev/disk0, as otherwise ti doesn't mount on boot. That
+sounds like what's happened here.
+
+What does 'diskutil list' show?
+
+Alex
+

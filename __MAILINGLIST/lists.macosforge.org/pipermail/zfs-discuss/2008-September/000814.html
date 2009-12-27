@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS and Samba do not get along
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20and%20Samba%20do%20not%20get%20along&In-Reply-To=3FDE7512-BE6D-4E66-97A2-7A303A258914%40sun.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000821.html">
+   <LINK REL="Next"  HREF="000816.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS and Samba do not get along</H1>
+    <B>Trevor Talbot</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20and%20Samba%20do%20not%20get%20along&In-Reply-To=3FDE7512-BE6D-4E66-97A2-7A303A258914%40sun.com"
+       TITLE="[zfs-discuss] ZFS and Samba do not get along">quension at mac.com
+       </A><BR>
+    <I>Fri Sep  5 21:55:34 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000821.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+        <LI>Next message: <A HREF="000816.html">[zfs-discuss] zfs-discuss Digest, Vol 9, Issue 3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#814">[ date ]</a>
+              <a href="thread.html#814">[ thread ]</a>
+              <a href="subject.html#814">[ subject ]</a>
+              <a href="author.html#814">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Aug 30, 2008, at 4:08 AM, Jonathan Edwards wrote:
+
+&gt;<i> you need a more recent version of Samba, minimally 3.0.26 along with  
+</I>&gt;<i> the right build parameters to get the ZFS ACL support (ZFS uses a  
+</I>&gt;<i> variant of NFSv4 style ACLs)  .. we put this in around snv_70 in  
+</I>&gt;<i> opensolaris last year see:
+</I>&gt;<i> <A HREF="http://mail.opensolaris.org/pipermail/zfs-discuss/2007-September/042552.html">http://mail.opensolaris.org/pipermail/zfs-discuss/2007-September/042552.html</A>
+</I>
+I'm pretty sure it's failing while trying to copy named streams  
+(extended attributes), specifically the ones for HFS fork simulation  
+on NTFS. I haven't had time to confirm or investigate why, though I  
+have some vague notion that it didn't happen in 102A.
+
+Is that one of the symptoms of samba's misunderstanding of ZFS ACLs?  
+(It should be a little different on OS X, since the filesystem is  
+using the kernel's ACL engine for access checks, not ZFS's.)
+
+&gt;<i> On Aug 29, 2008, at 6:18 PM, Marko Milisavljevic wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> No idea how to fix it, but I can confirm the same problem form Vista.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Aug 27, 2008 at 5:19 PM, Alex P. Frangis &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">qapf at qapf.com</A>&gt;  
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;<i> Using the built in Samba sharing in OSX I have a folder shared on  
+</I>&gt;&gt;&gt;<i> a 3 Drive Raid-Z connected via firewire, and when accessing the  
+</I>&gt;&gt;&gt;<i> samba share from windows hosts I can not copy files, all file  
+</I>&gt;&gt;&gt;<i> copies end with a host is unreachable error after transfering 99%  
+</I>&gt;&gt;&gt;<i> of their content. You can open files, you can view files in  
+</I>&gt;&gt;&gt;<i> notepad, you can mount ISO's across the network, but copying a  
+</I>&gt;&gt;&gt;<i> file from point A to point B fails.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Anyone have any idea how to fix this one?
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000821.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+	<LI>Next message: <A HREF="000816.html">[zfs-discuss] zfs-discuss Digest, Vol 9, Issue 3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#814">[ date ]</a>
+              <a href="thread.html#814">[ thread ]</a>
+              <a href="subject.html#814">[ subject ]</a>
+              <a href="author.html#814">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

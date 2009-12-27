@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] panic doing rsync
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20doing%20rsync&In-Reply-To=7CFFEFCD-3229-430E-A2FA-1048DCA981CE%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000910.html">
+   <LINK REL="Next"  HREF="000912.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] panic doing rsync</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20panic%20doing%20rsync&In-Reply-To=7CFFEFCD-3229-430E-A2FA-1048DCA981CE%40mac.com"
+       TITLE="[zfs-discuss] panic doing rsync">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Wed Oct  1 08:09:01 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000910.html">[zfs-discuss] panic doing rsync
+</A></li>
+        <LI>Next message: <A HREF="000912.html">[zfs-discuss] can't delete from full volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#911">[ date ]</a>
+              <a href="thread.html#911">[ thread ]</a>
+              <a href="subject.html#911">[ subject ]</a>
+              <a href="author.html#911">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>unmounting the raidz just did the same :
+Wed Oct  1 17:07:07 2008
+panic(cpu 1 caller 0x00A12CD9): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c  
+line 1004: zp-&gt;z_dbuf_held == 0&quot;@/Volumes/pixie_dust/home/ndellofano/ 
+zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c:1004
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x8903fb48 : 0x12b0fa (0x459234 0x8903fb7c 0x133243 0x0)
+0x8903fb98 : 0xa12cd9 (0xa6c0ec 0xa6bc6c 0x3ec 0xa6bd3c)
+0x8903fbd8 : 0x9bd15b (0x8c47ab18 0x1 0x0 0x0)
+0x8903fc18 : 0x1f3f6a (0x8903fc34 0x202 0x8903fc3c 0x4f6f40)
+0x8903fc58 : 0x1db5ea (0x9d154d0 0xb009ec4 0x0 0x0)
+0x8903fca8 : 0x1db806 (0x9d154d0 0x1 0x8903fcd8 0x1d3cdb)
+0x8903fcf8 : 0x1de41d (0x0 0x1 0x0 0xb009ec4)
+0x8903fd58 : 0x1dfd65 (0x9375000 0x0 0x19 0x1f5ead)
+0x8903fda8 : 0x1e0067 (0x9375000 0x0 0x1 0xb009ec4)
+0x8903fdd8 : 0x1e020c (0x9375000 0x0 0xb009ec4 0x0)
+0x8903ff78 : 0x3ddd6e (0x9d787b0 0xb009dc0 0xb009e04 0x0)
+0x8903ffc8 : 0x19f3b3 (0xa273d40 0x0 0x1a20b5 0xa273d40)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffef58
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x9b5000-&gt;0xa80fff
+
+BSD process name corresponding to current thread: zfs
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacPro1,1 (Mac-F4208DC8)
+
+On 01 Oct 2008, at 17:01, Dirk Schelfhout wrote:
+
+&gt;<i> 2 times in a row.
+</I>&gt;<i> I'll do a scrub now.
+</I>&gt;<i> hmmmm. It seems I ran out off disk space on my zfs raidz.
+</I>&gt;<i> But that shouldn't give cause for a panic ?
+</I>&gt;<i> Dirk
+</I>&gt;<i>
+</I>&gt;<i> Wed Oct  1 16:57:22 2008
+</I>&gt;<i> panic(cpu 3 caller 0x00A12CD9): &quot;[ZFS]: assertion failed in /Volumes/
+</I>&gt;<i> pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c
+</I>&gt;<i> line 1004: zp-&gt;z_dbuf_held == 0&quot;@/Volumes/pixie_dust/home/ndellofano/
+</I>&gt;<i> zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c:1004
+</I>&gt;<i> Backtrace (CPU 3), Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x758e7578 : 0x12b0fa (0x459234 0x758e75ac 0x133243 0x0)
+</I>&gt;<i> 0x758e75c8 : 0xa12cd9 (0xa6c0ec 0xa6bc6c 0x3ec 0xa6bd3c)
+</I>&gt;<i> 0x758e7608 : 0x9bd15b (0x8900edc0 0x1 0x758e7658 0x141de3)
+</I>&gt;<i> 0x758e7648 : 0x1f3f6a (0x758e7664 0x206 0x758e766c 0x4f6f40)
+</I>&gt;<i> 0x758e7688 : 0x1db5ea (0x9fc00a0 0xb11f364 0x0 0x0)
+</I>&gt;<i> 0x758e76d8 : 0x1db806 (0x9fc00a0 0x1 0x758e7708 0x19d6a0)
+</I>&gt;<i> 0x758e7728 : 0x1dd3b8 (0x0 0x4f63c0 0x4049e261 0x0)
+</I>&gt;<i> 0x758e7798 : 0x31ea94 (0x0 0x34 0x758e77ec 0x8c05a2c)
+</I>&gt;<i> 0x758e7838 : 0x327009 (0x9538804 0x9eb4bd0 0x758e7f08 0x758e7968)
+</I>&gt;<i> 0x758e7998 : 0x1f2c9c (0x758e79b8 0x2 0x758e79e8 0x44fe1e)
+</I>&gt;<i> 0x758e79e8 : 0x1d47aa (0x9eb4bd0 0x758e7df4 0x758e7f08 0xb11f364)
+</I>&gt;<i> 0x758e7a78 : 0x1d552f (0x758e7ddc 0x100 0x758e7dfc 0x0)
+</I>&gt;<i> 0x758e7b38 : 0x1e413c (0x758e7ddc 0x0 0x0 0x0)
+</I>&gt;<i> 0x758e7d88 : 0x1e476b (0xbfffd7e0 0x0 0x0 0x0)
+</I>&gt;<i> 0x758e7f48 : 0x1e4804 (0xbfffd7e0 0x0 0x0 0x0)
+</I>&gt;<i> 0x758e7f78 : 0x3ddd6e (0x91b02b0 0xb11f260 0xb11f2a4 0x0)
+</I>&gt;<i> 	Backtrace continues...
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0x9b5000-&gt;0xa80fff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: rsync
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9F33
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+</I>&gt;<i> root:xnu-1228.7.58~1/RELEASE_I386
+</I>&gt;<i> System model name: MacPro1,1 (Mac-F4208DC8)
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000910.html">[zfs-discuss] panic doing rsync
+</A></li>
+	<LI>Next message: <A HREF="000912.html">[zfs-discuss] can't delete from full volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#911">[ date ]</a>
+              <a href="thread.html#911">[ thread ]</a>
+              <a href="subject.html#911">[ subject ]</a>
+              <a href="author.html#911">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

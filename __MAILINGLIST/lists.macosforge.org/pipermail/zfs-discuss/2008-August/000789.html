@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] case-insensitivity as a filesystem option?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20case-insensitivity%20as%20a%20filesystem%20option%3F&In-Reply-To=92FA8E1F-55BA-4D3B-AECE-0C6945F3816F%40electricteaparty.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000788.html">
+   <LINK REL="Next"  HREF="000792.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] case-insensitivity as a filesystem option?</H1>
+    <B>Christopher LILJENSTOLPE</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20case-insensitivity%20as%20a%20filesystem%20option%3F&In-Reply-To=92FA8E1F-55BA-4D3B-AECE-0C6945F3816F%40electricteaparty.net"
+       TITLE="[zfs-discuss] case-insensitivity as a filesystem option?">cdl at asgaard.org
+       </A><BR>
+    <I>Fri Aug 15 21:15:15 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000788.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+        <LI>Next message: <A HREF="000792.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#789">[ date ]</a>
+              <a href="thread.html#789">[ thread ]</a>
+              <a href="subject.html#789">[ subject ]</a>
+              <a href="author.html#789">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Adrian,
+
+	You hit the nail on the head - if you think that case insensitivity  
+is a UI improvement, then do it in the UI, NOT in the filesystem.  The  
+filesystem should maintain as much state as possible, and keep that  
+state as relevant as possible - once you throw something away, you  
+can't get it back.  It also means that a lot of FS activity which the  
+system depends on (but not the user) will be burdened by the  
+translations you want done.   If there is a win to what you want, do  
+it at the UI layer, and only take that burden for user filesystem  
+interactions (which are a small percentage of the overall filesystem  
+burden).
+
+	Also, if you make a file system case insensitive, then those of us  
+who want case sensitivity are screwed, as you have already turfed the  
+data that case sensitivity requires.  If it's a UI function, then the  
+data is there, and you can decide if you want it mangled, or straight  
+(i.e. a preference).
+
+	Chris
+
+On 15 Aug 2008, at 20.42, Adrian Thornton wrote:
+
+&gt;<i> Sorry, I originally meant to post to the list, not directly to Nathan.
+</I>&gt;<i> But thanks for the cross-post to the list!
+</I>&gt;<i>
+</I>&gt;<i> From a developer's point of view, I'm sure  that article is very
+</I>&gt;<i> valid. The adaptation of case-INsensitivity to various languages is no
+</I>&gt;<i> doubt a monumental problem. The author of the article also makes a
+</I>&gt;<i> number of points about layering violations. Please allow me to clarify
+</I>&gt;<i> my point of view, however, with a couple quotations:
+</I>&gt;<i>
+</I>&gt;<i> &quot;Any sufficiently advanced technology is indistinguishable from
+</I>&gt;<i> magic.&quot; - Arthur C. Clarke
+</I>&gt;<i> &quot;Any technology distinguishable from magic is insufficiently
+</I>&gt;<i> advanced.&quot; - Gehm's Corollary
+</I>&gt;<i>
+</I>&gt;<i> I would say that Gehm's Corollary is almost a mantra when it comes to
+</I>&gt;<i> Apple products. Apple makes products which are amazingly advanced, and
+</I>&gt;<i> therefore amazingly easy and almost pleasurable for the end-user to
+</I>&gt;<i> make use of - that's why many of us are Mac fans in the first place!
+</I>&gt;<i> As I mentioned, this sort of thing is no doubt a mammoth undertaking.
+</I>&gt;<i> Drew Thaler states in his article that &quot;Case-insensitivity adds
+</I>&gt;<i> complexity and provides no actual benefit.&quot; Who says it provides no
+</I>&gt;<i> actual benefit? The end-user sees a benefit. Ok, so it's a &quot;layering
+</I>&gt;<i> violation.&quot; Who defines these layers, and why are they so important?
+</I>&gt;<i> Did God send them down to us on stone tablets? What about FUSE? *nix
+</I>&gt;<i> geeks hate FUSE because it's a blatant &quot;layering violation.&quot; And so
+</I>&gt;<i> what? Isn't the end-goal of computers to provide a function we desire?
+</I>&gt;<i> Surely there are no rules about how this HAS to be done. The end-goal
+</I>&gt;<i> is to provide a user experience that will accomplish the job, and
+</I>&gt;<i> hopefully not be too painful in doing so. ZFS itself does away with
+</I>&gt;<i> such outdated paradigms as the separation of volumes and filesystems.
+</I>&gt;<i> Sometimes we need to ignore the &quot;rules&quot; when the spirit behind them is
+</I>&gt;<i> lost; rules only exist to lead the way to a better world for the
+</I>&gt;<i> populace. When they interfere with that, what purpose do they hold?
+</I>&gt;<i>
+</I>&gt;<i> To re-hash some things I've already mentioned: I'm not a developer. I
+</I>&gt;<i> don't FULLY understand the nuts and bolts of these things. Also, I do
+</I>&gt;<i> sympathize with the difficulties of writing a lot of code in a
+</I>&gt;<i> language computers understand, in order to shift the UI closer to
+</I>&gt;<i> something that HUMANS understand. I also understand from the countless
+</I>&gt;<i> days I've spent learning how to use various *nix systems that the
+</I>&gt;<i> developer intelligentsia doesn't have a lot of sympathy for us n00bs -
+</I>&gt;<i> ask a question, and they just say RTFM. One soon finds that &quot;TFM&quot; is
+</I>&gt;<i> written BY codies FOR codies, and is of little use to someone not in
+</I>&gt;<i> the know. Now, is the answer REALLY to tell end-users, &quot;no, we're not
+</I>&gt;<i> going to spend the time making a system that's easy to use; it's your
+</I>&gt;<i> responsibility to learn the technical arcana yourself&quot;? I don't think
+</I>&gt;<i> so. I think we should take a page from the Humane Interface folks and
+</I>&gt;<i> try to make computers interact with humans on a human level. It really
+</I>&gt;<i> is true that &quot;Any technology distinguishable from magic is
+</I>&gt;<i> insufficiently advanced.&quot;
+</I>&gt;<i>
+</I>&gt;<i> I'm sorry, developer folks. I know it's a tough pill to swallow. All I
+</I>&gt;<i> can say is that I really appreciate the work you do, and I hope you
+</I>&gt;<i> don't get too worn down trying to make these machines act the way that
+</I>&gt;<i> real humans do.
+</I>&gt;<i>
+</I>&gt;<i> - Adrian
+</I>&gt;<i>
+</I>&gt;<i> On 15-Aug-08, at 8:40 PM, Nathan wrote:
+</I>&gt;&gt;<i> On Fri, Aug 15, 2008 at 6:47 PM, Adrian Thornton
+</I>&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">canadrian at electricteaparty.net</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Nathan/No&#235;l,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> A brief break from lurking, and I was wondering what the issue is
+</I>&gt;&gt;&gt;<i> with
+</I>&gt;&gt;&gt;<i> case-insensitivity? I mean, from a non-developer's point of view
+</I>&gt;&gt;&gt;<i> (mine), I'm
+</I>&gt;&gt;&gt;<i> not sure I would even want case-sensitivity. To the average end- 
+</I>&gt;&gt;&gt;<i> user,
+</I>&gt;&gt;&gt;<i> FOLDER, folder, Folder, foldeR, folDer, ad nauseum, should all be
+</I>&gt;&gt;&gt;<i> the same
+</I>&gt;&gt;&gt;<i> folder. As a case example, imagine your grandmother is filing e-
+</I>&gt;&gt;&gt;<i> cards she
+</I>&gt;&gt;&gt;<i> has received at Christmas, and she created a folder in her
+</I>&gt;&gt;&gt;<i> Documents folder
+</I>&gt;&gt;&gt;<i> called &quot;Christmas Cards.&quot; The next year she creates one called
+</I>&gt;&gt;&gt;<i> &quot;Christmas
+</I>&gt;&gt;&gt;<i> cards&quot; without looking first. When she looks back in one of those
+</I>&gt;&gt;&gt;<i> folders,
+</I>&gt;&gt;&gt;<i> she's suddenly in a panic that she can't find one year's e-cards,
+</I>&gt;&gt;&gt;<i> freaking
+</I>&gt;&gt;&gt;<i> out that she's &quot;broken her computer&quot;, and next thing you know I
+</I>&gt;&gt;&gt;<i> have to go
+</I>&gt;&gt;&gt;<i> to Grandma's place to explain about case-sensitivity for like the
+</I>&gt;&gt;&gt;<i> eighteenth
+</I>&gt;&gt;&gt;<i> time. Doesn't this just add unnecessary complication?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Just hoping to have it explained, really. From my brief forays into
+</I>&gt;&gt;&gt;<i> the *nix
+</I>&gt;&gt;&gt;<i> world, I've noticed that the average Joe wants computers to be more
+</I>&gt;&gt;&gt;<i> human-like, developers want them to be more technical, and neither
+</I>&gt;&gt;&gt;<i> party is
+</I>&gt;&gt;&gt;<i> particularly fond of the other. Isn't there some middle ground?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (Okay, posting a third time, this time manually adding zfs- 
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">discuss at ...</A>
+</I>&gt;&gt;<i> to the addresses)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Good question.  I'll refer you to a good and complete answer:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://drewthaler.blogspot.com/2007/12/case-against-">http://drewthaler.blogspot.com/2007/12/case-against-</A> 
+</I>&gt;&gt;<i> insensitivity.html
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Note that your specific &quot;grandmother&quot; example (and Mr. Palmer's  
+</I>&gt;&gt;<i> stated
+</I>&gt;&gt;<i> example) is almost exactly replicated (and explained) under the 4th
+</I>&gt;&gt;<i> subheading titled &quot;Case-insensitivity is a layering violation.&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My intention was not to start a flamewar... and I encourage Mr.  
+</I>&gt;&gt;<i> Palmer
+</I>&gt;&gt;<i> to read the linked post above...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ~ Nathan
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+- ---
+&#26446;&#26607;&#30591;
+Check my PGP key here:
+<A HREF="http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B">http://pgp.mit.edu:11371/pks/lookup?op=get&amp;search=0xCB67593B</A>
+
+
+
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJIplRWAAoJEGmx2Mt/+Iw/SHQIAIdH7lstxoTz1rm9sPU8BjIk
+/rUFlhwhHwHc8jSunj6Gl4JVfgFJPh76pCaX6im2N2WKMJZEPHAhZfk+C46NGyqn
+rWY4WPy5FnxrDQHS2hnu6UrLuMjZQz6aXZVoAyshvJdg44iBQj9b/RP55SeV/Rju
+Exq4G1O4Q59JVl0m8xCPo6j8hT7gNJvXIDrk0ws6iZEQXpkfj4frz2yuKmT7/j47
+SQVTVqFwDjJ/zVSH6UAoaMSzNL/MYgfneLR/x2v5EaPClN8d0cW6+3uZmJryCmED
+8cLmOgIazeH0v2rvFRDVSnqC5ucc7DUMYPfEwLkG3z34lG/YjVdSf/Qd+Aip4lE=
+=Nzr3
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000788.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+	<LI>Next message: <A HREF="000792.html">[zfs-discuss] case-insensitivity as a filesystem option?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#789">[ date ]</a>
+              <a href="thread.html#789">[ thread ]</a>
+              <a href="subject.html#789">[ subject ]</a>
+              <a href="author.html#789">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

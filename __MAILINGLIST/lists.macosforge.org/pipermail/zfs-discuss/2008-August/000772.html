@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] another failure mode for zfs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20another%20failure%20mode%20for%20zfs&In-Reply-To=327b821f0808051247hcd371cfo542e026056d54d47%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000752.html">
+   <LINK REL="Next"  HREF="000762.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] another failure mode for zfs</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20another%20failure%20mode%20for%20zfs&In-Reply-To=327b821f0808051247hcd371cfo542e026056d54d47%40mail.gmail.com"
+       TITLE="[zfs-discuss] another failure mode for zfs">caronni at gmail.com
+       </A><BR>
+    <I>Tue Aug  5 13:55:09 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000752.html">[zfs-discuss] another failure mode for zfs
+</A></li>
+        <LI>Next message: <A HREF="000762.html">[zfs-discuss] another failure mode for zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#772">[ date ]</a>
+              <a href="thread.html#772">[ thread ]</a>
+              <a href="subject.html#772">[ subject ]</a>
+              <a href="author.html#772">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This may or may not help. After some more operations with my laptop I just
+tried to unmount the pool (which worked fine several times so far)
+
+So I typed 'diskutil unmount /Volumes/z'. The screen became grey, with a
+nice message in the middle, telling me to power down my machine. After
+restart, the following information was provided:
+
+Tue Aug  5 22:22:34 2008
+panic(cpu 1 caller 0x34A72BD7): &quot;[ZFS]: assertion failed in
+/Users/.../src/zfs-119/zfs_kext/zfs/dnode_sync.c line 397: pass &lt;
+100&quot;@/Users/.../src/zfs-119/zfs_kext/zfs/dnode_sync.c:397
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x35ab7b28 : 0x12b0fa (0x4592a4 0x35ab7b5c 0x133243 0x0)
+0x35ab7b78 : 0x34a72bd7 (0x34ada700 0x34ada0b4 0x18d 0x34ada6f4)
+0x35ab7c98 : 0x34a6b65d (0x67ba908 0x0 0x34addd74 0x0)
+0x35ab7cd8 : 0x34a48f9b (0x472b950 0x0 0x0 0x2eccf96b)
+0x35ab7d28 : 0x1f178b (0x4da3930 0x0 0x61ffb44 0x1d3f24)
+0x35ab7d58 : 0x1dffa4 (0x4da3930 0x0 0x61ffb44 0x1f60b3)
+0x35ab7da8 : 0x1e0278 (0x4da3930 0x0 0x1 0x61ffb44)
+0x35ab7dd8 : 0x1e041d (0x4da3930 0x0 0x61ffb44 0x0)
+0x35ab7f78 : 0x3ddde2 (0x448d250 0x61ffa40 0x61ffa84 0x0)
+0x35ab7fc8 : 0x19f2c3 (0x5c699e0 0x0 0x1a20b5 0x5c699e0)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbffffe98
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x34a47000-&gt;0x34b06fff
+
+BSD process name corresponding to current thread: umount
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: MacBookPro4,1 (Mac-F42C89C8)
+
+As I've recompiled the kext, I've attached the build with dsyms to this
+mail. It's as of yet unmodified, just a local compile. Maybe it helps...
+
+Germano
+
+2008/8/5 Germano Caronni &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">caronni at gmail.com</A>&gt;
+
+&gt;<i> Hi Noel, all,
+</I>&gt;<i>
+</I>&gt;<i> here another way to make a mac misbehave (besides the mknod thing in the
+</I>&gt;<i> other thread):
+</I>&gt;<i> I have a pool that if imported at the time of a restart or shutdown will
+</I>&gt;<i> hang the machine. You get the spinning sunburst symbol forever.
+</I>&gt;<i> A copy of the pool is found at <A HREF="http://olymp.dreamhosters.com/pool1.bz2">http://olymp.dreamhosters.com/pool1.bz2</A>
+</I>&gt;<i>
+</I>&gt;<i> An alternate way to create this pool:
+</I>&gt;<i> mkfile 100M /pool1
+</I>&gt;<i> sudo zpool
+</I>&gt;<i> zpool create z /pool1
+</I>&gt;<i> zfs set compression=on z
+</I>&gt;<i> zfs mount z
+</I>&gt;<i> copy in the attached c file
+</I>&gt;<i> export CFLAGS -g -Wall
+</I>&gt;<i> make maketree
+</I>&gt;<i> mkdir a
+</I>&gt;<i> cd a
+</I>&gt;<i> ../maketree 276000
+</I>&gt;<i> (actually i did a maketree 1000000 but had to ^C it because the pool was
+</I>&gt;<i> getting full)
+</I>&gt;<i> The 'foo' file should not matter.
+</I>&gt;<i>
+</I>&gt;<i> Now, irrespective of 'z' being mounted or not, as long as it is imported,
+</I>&gt;<i> the machine won't shut down.
+</I>&gt;<i> Once you manually export it before the shutdown, everything goes as
+</I>&gt;<i> expected.
+</I>&gt;<i>
+</I>&gt;<i> please tell me if you can repro, either with pool1 or with a freshly
+</I>&gt;<i> created pool.
+</I>&gt;<i>
+</I>&gt;<i> Germano
+</I>&gt;<i>
+</I>&gt;<i> p.s. the source is obviously write-only code. use at your own risk, yadda
+</I>&gt;<i> yadda.
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/c1c9d4ad/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/c1c9d4ad/attachment-0001.html</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Leopard_Release.tar.bz2
+Type: application/x-bzip2
+Size: 2428112 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/c1c9d4ad/attachment-0001.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/c1c9d4ad/attachment-0001.bin</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000752.html">[zfs-discuss] another failure mode for zfs
+</A></li>
+	<LI>Next message: <A HREF="000762.html">[zfs-discuss] another failure mode for zfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#772">[ date ]</a>
+              <a href="thread.html#772">[ thread ]</a>
+              <a href="subject.html#772">[ subject ]</a>
+              <a href="author.html#772">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

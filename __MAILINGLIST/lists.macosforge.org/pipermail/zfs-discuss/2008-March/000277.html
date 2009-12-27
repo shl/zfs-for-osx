@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] DTrace w/ OS X ZFS
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20DTrace%20w/%20OS%20X%20ZFS&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000276.html">
+   <LINK REL="Next"  HREF="000284.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] DTrace w/ OS X ZFS</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20DTrace%20w/%20OS%20X%20ZFS&In-Reply-To="
+       TITLE="[zfs-discuss] DTrace w/ OS X ZFS">jbsnyder at gmail.com
+       </A><BR>
+    <I>Thu Mar  6 10:59:53 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000276.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+        <LI>Next message: <A HREF="000284.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm curious about making use of the dtrace probes in ZFS on OS X.  I
+can see in the source release on macosforge that some of the probes
+are commented out and others, eat least in the code there, look as if
+they should be compiled in.  I don't however see them when I do a
+dtrace -l.  I've poked around at some documentation for adding probes
+to my own code, but I've still not 100% gotten a handle on how to
+enable them on ZFS.  It sounds to me from documents like this one
+(<A HREF="http://blogs.sun.com/tpenta/entry/dtrace_using_placing_sdt_probes">http://blogs.sun.com/tpenta/entry/dtrace_using_placing_sdt_probes</A>)
+that dtrace needs to be run on the generated binaries to embed the
+probes?
+
+I'm not sure that I'll actually do much debugging with it, but I
+thought I would play around with it to get a sense for what ZFS is
+doing while I'm working on top of it as well as getting a sense for
+how to use dtrace on other applications.
+
+Most of what I'm working with lately in terms of coding is in MATLAB,
+so I don't have much of an opportunity there to use probes :-)
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000276.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+	<LI>Next message: <A HREF="000284.html">[zfs-discuss] DTrace w/ OS X ZFS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

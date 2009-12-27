@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0808020025m5c51b20am2777ff5a8aad96c7%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000734.html">
+   <LINK REL="Next"  HREF="000739.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=327b821f0808020025m5c51b20am2777ff5a8aad96c7%40mail.gmail.com"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">caronni at gmail.com
+       </A><BR>
+    <I>Mon Aug  4 06:55:20 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000734.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+        <LI>Next message: <A HREF="000739.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#737">[ date ]</a>
+              <a href="thread.html#737">[ thread ]</a>
+              <a href="subject.html#737">[ subject ]</a>
+              <a href="author.html#737">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've now recompiled zfs-119 from source, re-intalled, and can still
+reproduce the issue.
+Would you have a dtrace program that might give you more useful information?
+
+Now the funny part. I was hoping to see where rsync gets stuck on by
+using dtruss.
+When running
+sudo dtruss -f -l rsync -aHPSvvvvvvvvvvvvvvvv /dev/  /Volumes/z/1/
+via an ssh login, it completes. The machine only dies about 1-3 seconds later.
+
+So, rsync does not per se hang, but causes something else (your guess
+is as good as mine) to break. Now, if I only had any clue on what
+kernel symbols to look for or how to debug leopard. MacOS is opaque to
+me ;-)
+
+Germano
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000734.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+	<LI>Next message: <A HREF="000739.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#737">[ date ]</a>
+              <a href="thread.html#737">[ thread ]</a>
+              <a href="subject.html#737">[ subject ]</a>
+              <a href="author.html#737">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

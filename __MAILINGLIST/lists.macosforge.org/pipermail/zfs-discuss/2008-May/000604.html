@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] the third
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20the%20third&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000605.html">
+   <LINK REL="Next"  HREF="000606.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] the third</H1>
+    <B>ruebezahl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20the%20third&In-Reply-To="
+       TITLE="[zfs-discuss] the third">franzschmalzl at spamfreemail.de
+       </A><BR>
+    <I>Wed May 21 07:56:59 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000605.html">[zfs-discuss] name
+</A></li>
+        <LI>Next message: <A HREF="000606.html">[zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#604">[ date ]</a>
+              <a href="thread.html#604">[ thread ]</a>
+              <a href="subject.html#604">[ subject ]</a>
+              <a href="author.html#604">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+to keep spamming at this list, i have another question :)
+
+
+   pool: raidtank
+  state: ONLINE
+status: One or more devices has experienced an unrecoverable error.  An
+	attempt was made to correct the error.  Applications are unaffected.
+action: Determine if the device needs to be replaced, and clear the  
+errors
+	using 'zpool clear' or replace the device with 'zpool replace'.
+    see: <A HREF="http://www.sun.com/msg/ZFS-8000-9P">http://www.sun.com/msg/ZFS-8000-9P</A>
+  scrub: scrub in progress, 2,89% done, 4h46m to go
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	raidtank     ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0    20
+
+
+i get these quite often lately...
+
+no I/O errors only checksum errors, and only on this disk
+
+what might this be? bit rot, faulty controller?
+
+any ideas?
+
+best regards
+
+franz
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJINDg7AAoJEP8ZopU3BhmtMH8IAIvoayOyvhFkHxLJlmblIJ46
+f+ZFmEckwh9EzBdFZO2xUHC6P85PDi541wJypyy8SwbaLWO6xBoeaGBCUtU7Y/9u
+lDuxOAK2tc2iY2na0INU3uACyMcGWsbM5SsvIo1KjbOTG7d4DVRT+Gvq8m4eqnOr
+LQ1/8fPmsepr597YVQGYz6GL4WbtnSd6FwwhYa0JEbgmuympboPSJH6+R3lbRT5P
+4hI7WGy/nA0qQqYArQeHAlsjYtVslLSJjOvMT9osa2dCbpLUIzbQKhXYvR9xCt2f
+pe/WJdNT2UjNWpHtvqiUVPLxQ1rzJMs4c0zhci8jNDLChdND13w00zhphTp/7cI=
+=iE+P
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000605.html">[zfs-discuss] name
+</A></li>
+	<LI>Next message: <A HREF="000606.html">[zfs-discuss] Anyone else observing ZFS transfers pausing briefly?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#604">[ date ]</a>
+              <a href="thread.html#604">[ thread ]</a>
+              <a href="subject.html#604">[ subject ]</a>
+              <a href="author.html#604">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Possible%20to%20use%20TimeMachine%20on%20a%20zfs%20pool%3F%20%28and%0A%09Home%20on%20ZFS/Spotlight%29&In-Reply-To=A55B9A74-141A-4225-B68A-D3FD5D474FC8%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000036.html">
+   <LINK REL="Next"  HREF="000039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)</H1>
+    <B>David Ritchie</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Possible%20to%20use%20TimeMachine%20on%20a%20zfs%20pool%3F%20%28and%0A%09Home%20on%20ZFS/Spotlight%29&In-Reply-To=A55B9A74-141A-4225-B68A-D3FD5D474FC8%40apple.com"
+       TITLE="[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)">david299792 at googlemail.com
+       </A><BR>
+    <I>Mon Jan 21 13:20:59 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000036.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+        <LI>Next message: <A HREF="000039.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#37">[ date ]</a>
+              <a href="thread.html#37">[ thread ]</a>
+              <a href="subject.html#37">[ subject ]</a>
+              <a href="author.html#37">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Wow - does that mean that Time Machine may soon be able to use ZFS  
+snapshots instead of HFS+ hard links? That would be awesome!
+
+When ZFS is working well enough (see below) I''m definitely planning  
+on using it for most of the information on my computer. It would have  
+been a shame not to have the Time Machine UI though.
+
+I wonder how this would work if you're storing things on ZFS directly  
+rather than working on an HFS+ volume and having Time Machine backup  
+to ZFS.
+
+---
+
+On a different note, do you have any idea when Spotlight might be  
+working on nested ZFS file systems? It seems that spotlight will index  
+the root FS/pool (albeit with some bugs apparently) but not any FSs  
+contained within that. Even if they're set to mount elsewhere.
+
+I tried moving my Home to a ZFS fs, and it mostly worked as far as I  
+can tell (only tried it last night), but I would miss having spotlight  
+for my home folder. I could search for Mail messages based on subject/ 
+from/to, but not the whole message :(. It was very useful to be able  
+to clone my User account in a matter of seconds to experiment.
+
+
+
+-- David
+
+On 21 Jan 2008, at 20:55, No&#235;l Dellofano wrote:
+
+&gt;<i> Currently no, it's not possible to make Time Machine use a zfs pool  
+</I>&gt;<i> to either backup, or backup to.  Getting this functionality to work,  
+</I>&gt;<i> and work properly, involves also getting .zfs up and running which  
+</I>&gt;<i> I'm currently working on and also will involve some changes to Time  
+</I>&gt;<i> Machine.  Getting .zfs will give everyone the ability to &quot;see&quot; and  
+</I>&gt;<i> browse your zfs snapshots individually and hence give Time Machine  
+</I>&gt;<i> the ability to display your ZFS snapshots for you in lovely GUI  
+</I>&gt;<i> form :)
+</I>&gt;<i>
+</I>&gt;<i> And no, in case anyone out there is wondering...  Time Machine will  
+</I>&gt;<i> not be doing it's current 'hardlink backups' on a ZFS volume.   
+</I>&gt;<i> That's why we have snapshots in the first place instead :)
+</I>&gt;<i>
+</I>&gt;<i> Snapshots, and all their related functionality currently work, with  
+</I>&gt;<i> the exception of the above mentioned browsing snapshots for  
+</I>&gt;<i> individual files.  A quick workaround for this that requires no  
+</I>&gt;<i> additional space is to do a 'zfs clone' of your snapshot.  I put  
+</I>&gt;<i> more details up on the ZFS Known Issues page.  Let me know if  
+</I>&gt;<i> something doesn't work for your or anyone has any questions :)
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Jan 20, 2008, at 5:33 PM, Mr. Zorg wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Is it possible to make TimeMachine use a zfs pool?  If not yet, do  
+</I>&gt;&gt;<i> any developers have an eta on the functionality?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i> -Mr. Zorg
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000036.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool?
+</A></li>
+	<LI>Next message: <A HREF="000039.html">[zfs-discuss] Possible to use TimeMachine on a zfs pool? (and
+	Home on ZFS/Spotlight)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#37">[ date ]</a>
+              <a href="thread.html#37">[ thread ]</a>
+              <a href="subject.html#37">[ subject ]</a>
+              <a href="author.html#37">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

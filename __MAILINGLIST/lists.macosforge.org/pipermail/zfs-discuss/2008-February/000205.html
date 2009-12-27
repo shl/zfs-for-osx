@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Macintouch comments on RAID-Z
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=EFD7A5CB-4B72-4847-9962-315645861CBA%40netgate.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000200.html">
+   <LINK REL="Next"  HREF="000206.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Macintouch comments on RAID-Z</H1>
+    <B>Brett Ault-McCoy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Macintouch%20comments%20on%20RAID-Z&In-Reply-To=EFD7A5CB-4B72-4847-9962-315645861CBA%40netgate.com"
+       TITLE="[zfs-discuss] Macintouch comments on RAID-Z">btm at pobox.com
+       </A><BR>
+    <I>Fri Feb 22 16:14:34 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000200.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+        <LI>Next message: <A HREF="000206.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#205">[ date ]</a>
+              <a href="thread.html#205">[ thread ]</a>
+              <a href="subject.html#205">[ subject ]</a>
+              <a href="author.html#205">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Feb 22, 2008 at 9:50 PM, Jim Thompson &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jim at netgate.com</A>&gt; wrote:
+
+&gt;<i> Is anyone @ Sun (or elsewhere) looking at using SSDs for the parity
+</I>&gt;<i> drive in a RAID-Z setup?
+</I>
+
+RAID-Z does not have a parity disk.  The parity is striped across the disks.
+ Each drive contains 1/N of the parity, where N is the drives in the RAID-Z
+set.  This is the same as with RAID-5.
+
+RAID-4 has disks dedicated to parity.  SSD might help there since it would
+be multiple times faster than a normal disk so would be able to handle
+parity updates for changes to multiple drives.
+
+++Brett;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080223/1b7c96e1/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080223/1b7c96e1/attachment.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000200.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+	<LI>Next message: <A HREF="000206.html">[zfs-discuss] Macintouch comments on RAID-Z
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#205">[ date ]</a>
+              <a href="thread.html#205">[ thread ]</a>
+              <a href="subject.html#205">[ subject ]</a>
+              <a href="author.html#205">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

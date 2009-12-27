@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs and kernel memory?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20and%20kernel%20memory%3F&In-Reply-To=%3C636fd28e0812011718t7b603df0mb6920e0b4a67837c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001124.html">
+   <LINK REL="Next"  HREF="001129.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs and kernel memory?</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20and%20kernel%20memory%3F&In-Reply-To=%3C636fd28e0812011718t7b603df0mb6920e0b4a67837c%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] zfs and kernel memory?">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Mon Dec  1 17:18:21 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001124.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+        <LI>Next message: <A HREF="001129.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1125">[ date ]</a>
+              <a href="thread.html#1125">[ thread ]</a>
+              <a href="subject.html#1125">[ subject ]</a>
+              <a href="author.html#1125">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Dec 1, 2008 at 10:28 PM, Harald Hanche-Olsen
+&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hanche at math.ntnu.no</A>&gt; wrote:
+&gt;<i> + Harald Hanche-Olsen &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">hanche at math.ntnu.no</A>&gt;:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'm wondering if the 119 zfs release uses (much) more kernel memory
+</I>&gt;&gt;<i> than the original leopard one?
+</I>
+I had a look for tuning parameters in the ZFS 119 release, and
+couldn't find any. There's a bunch of parameters
+(<A HREF="http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide">http://www.solarisinternals.com/wiki/index.php/ZFS_Evil_Tuning_Guide</A>)
+that are available for Solaris, but the general gist for ZFS is that
+it should manage itself in terms of size.
+
+One thing that's probably obvious is the size of the memory is almost
+certainly relative to the amount of files loaded and processed. So, if
+you just downgrade and start again, it'll probably use less memory
+than for a ZFS pool that's been used for some time. I found when
+copying a large amount of files to my ZFS pool in the first place that
+it was taking 1.5G of memory and there was very little free memory
+available (and that most of it seemed to be wired rather than
+pageable). There's supposed to be some logic that says if the ARC
+cache is experiencing memory constraints to let some memory go (at
+least in some version of Solaris ZFS - don't know how well that
+translates to OSX's port) but I seem to recall that if you have less
+than 1G of memory, the ARC doesn't get used.
+
+Anyway, I'd have a gut feeling that 640M is probably too small for a
+ZFS system. You can throw $50 at the problem to increase it to 1280m
+(assuming this is the right model) which would probably help.
+
+<A HREF="http://www.crucial.com/store/listparts.aspx?model=PowerBook%20G4%201.33GHz%20%2812-inch%20Display%29">http://www.crucial.com/store/listparts.aspx?model=PowerBook%20G4%201.33GHz%20%2812-inch%20Display%29</A>
+
+Alex
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001124.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+	<LI>Next message: <A HREF="001129.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1125">[ date ]</a>
+              <a href="thread.html#1125">[ thread ]</a>
+              <a href="subject.html#1125">[ subject ]</a>
+              <a href="author.html#1125">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

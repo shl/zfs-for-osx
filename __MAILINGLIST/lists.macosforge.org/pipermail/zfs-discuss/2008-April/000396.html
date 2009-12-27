@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Status of ZFS on Mac OS X?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=47F80FA0.2000604%40loveturtle.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000395.html">
+   <LINK REL="Next"  HREF="000430.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Status of ZFS on Mac OS X?</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Status%20of%20ZFS%20on%20Mac%20OS%20X%3F&In-Reply-To=47F80FA0.2000604%40loveturtle.net"
+       TITLE="[zfs-discuss] Status of ZFS on Mac OS X?">jbsnyder at gmail.com
+       </A><BR>
+    <I>Sat Apr  5 17:03:08 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000395.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+        <LI>Next message: <A HREF="000430.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#396">[ date ]</a>
+              <a href="thread.html#396">[ thread ]</a>
+              <a href="subject.html#396">[ subject ]</a>
+              <a href="author.html#396">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'll chime in on a similar note.  Aside from the known issues with
+having to empty trash by rm'ing and not being able to use spotlight,
+it has been good to me on my single-disk MacBook.  I have 60 GB for
+applications and boot on HFS+ and 100GB home dir on ZFS, and it has
+not given me any panics except for just after getting started with it.
+ After some initial stability issues everything seems pretty happy.
+I'm even running a bunch of applications out of ~/Applications and
+most of those seem fine as well, with the exception that installing
+firefox add-ons doesn't seem to work correctly for some reason.
+
+I've been using zetaback (adjusted slightly for my own usage) for
+snapshots to one machine, and rsync 3 to another machine for
+additional backups, with no real trouble.
+
+Keep in mind that it is case sensitive, as well, and you should be
+mostly fine, I think.  I've not lost any data on it aside from things
+that haven't been written to disk at the time of panics.  I've not had
+any corruption that I know of.
+
+One thing I might stay away from, at the moment, is attaching and
+detaching disks a lot from mirrors (like if you want to do something
+like this with a memory stick or external drive:
+<A HREF="http://solarisdesktop.blogspot.com/2007/02/stick-to-zfs-or-laptop-with-mirrored.html">http://solarisdesktop.blogspot.com/2007/02/stick-to-zfs-or-laptop-with-mirrored.html</A>).
+  From my recollection it can be possible to trigger some panics
+there.
+
+I'm not sure how I would rate it in comparison to the FreeBSD port.
+That one is relatively stable as well, though there are the known
+memory issues and some deadlocks there that I don't think I've seen on
+OS X.
+
+On Sat, Apr 5, 2008 at 6:47 PM, Dillon Kass &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">lists at loveturtle.net</A>&gt; wrote:
+&gt;<i> Hi, I'm not from the mothership and this isn't an answer but I just wanted
+</I>&gt;<i> to comment.
+</I>&gt;<i>
+</I>&gt;<i>  &quot;I'm willing to start using zfs on osx (and sharemy experience here) as
+</I>&gt;<i> soon as it gets stable enough for daily usage (ok. maybe a tech-aware
+</I>&gt;<i> usage).&quot;
+</I>&gt;<i>
+</I>&gt;<i>  It's already there. Your own mileage may vary, I have a two disk zpool in
+</I>&gt;<i> my mac pro for my home dir, /opt, and storage.
+</I>&gt;<i>  Other than the finder weirdness I have no serious problems. No panics
+</I>&gt;<i> triggered by anything I do on a daily basis. I haven't had a single panic on
+</I>&gt;<i> the mac pro since I started using the current build. That's not to say that
+</I>&gt;<i> it's perfect, just that nothing I do triggers it.  Depending on your needs
+</I>&gt;<i> and configuration it may be just fine for what you do, or it may not.
+</I>&gt;<i>
+</I>&gt;<i>  So I would tell you what I'd tell anyone. Give it a shot.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  Lorenzo Perone wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm looking forward on deploying ZFS fileystems on Mac OS X 10.5
+</I>&gt;<i> &gt; environments (both client and server), as I've already done with Solaris
+</I>&gt;<i> &gt; and FreeBSD (the latter on development systems).
+</I>&gt;<i> &gt; There's no doubt to me that ZFS is a great idea and a huge leap forward in
+</I>&gt;<i> &gt; Mac OS X filesystems, and I'm willing to start using zfs on osx (and share
+</I>&gt;<i> &gt; my experience here) as soon as it gets stable enough for daily usage (ok.
+</I>&gt;<i> &gt; maybe a tech-aware usage).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Since there's nothing on the website about a timeline or a roadmap, and
+</I>&gt;<i> &gt; since the current open bugs on trac are anything but encouraging, I'd like
+</I>&gt;<i> &gt; to dare making one question here: is there anybody on this list from the
+</I>&gt;<i> &gt; &quot;mothership&quot; allowed to make statements on the progress/current status on
+</I>&gt;<i> &gt; those bugs and on zfs on Mac OS X in general?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Regards,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Lorenzo
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>  _______________________________________________
+</I>&gt;<i>  zfs-discuss mailing list
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000395.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+	<LI>Next message: <A HREF="000430.html">[zfs-discuss] Status of ZFS on Mac OS X?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#396">[ date ]</a>
+              <a href="thread.html#396">[ thread ]</a>
+              <a href="subject.html#396">[ subject ]</a>
+              <a href="author.html#396">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

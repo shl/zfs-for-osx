@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs filesystems
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20filesystems&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000770.html">
+   <LINK REL="Next"  HREF="000773.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs filesystems</H1>
+    <B>John McAdams</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20filesystems&In-Reply-To="
+       TITLE="[zfs-discuss] zfs filesystems">johnm at tekserve.com
+       </A><BR>
+    <I>Tue Aug 12 13:12:52 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000770.html">[zfs-discuss] Panic when using zpool status
+</A></li>
+        <LI>Next message: <A HREF="000773.html">[zfs-discuss] zfs filesystems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#771">[ date ]</a>
+              <a href="thread.html#771">[ thread ]</a>
+              <a href="subject.html#771">[ subject ]</a>
+              <a href="author.html#771">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm trying to grasp the implementation of multiple filesystems in OS X.
+
+For example &lt;<A HREF="http://flux.org.uk/howto/solaris/zfs_tutorial_02">http://flux.org.uk/howto/solaris/zfs_tutorial_02</A>&gt; creates a bunch of home folders for users:
+
+# zfs create salmon/kent
+# zfs create salmon/dennisr
+# zfs create salmon/billj
+
+If I attempt something similar in OS X nothing happens. But what would the result be?
+
+When the pool is created
+
+zpool create tank mirror disk2s2 disk3s2 
+
+I end up with a /Volumes/mirror and mirror on the Desktop. If I run zfs create mirror/user1 wouldn't that create, or try to create, a volume at /Volumes/mirror/user1?
+
+It would be great to create a filesystem for every user and then put quotas on them. Is that possible with the current (119) version of ZFS on Mac OS?
+
+Thanks,
+-- jmca
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000770.html">[zfs-discuss] Panic when using zpool status
+</A></li>
+	<LI>Next message: <A HREF="000773.html">[zfs-discuss] zfs filesystems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#771">[ date ]</a>
+              <a href="thread.html#771">[ thread ]</a>
+              <a href="subject.html#771">[ subject ]</a>
+              <a href="author.html#771">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

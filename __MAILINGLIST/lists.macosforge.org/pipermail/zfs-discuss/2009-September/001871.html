@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Disk speeds
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3C098EA756-3D36-485B-87A0-309A5D8F5B6D%40avoidant.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001869.html">
+   <LINK REL="Next"  HREF="001873.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Disk speeds</H1>
+    <B>sammy ominsky</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Disk%20speeds&In-Reply-To=%3C098EA756-3D36-485B-87A0-309A5D8F5B6D%40avoidant.org%3E"
+       TITLE="[zfs-discuss] Disk speeds">s at avoidant.org
+       </A><BR>
+    <I>Sun Sep 20 23:35:24 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001869.html">[zfs-discuss] Disk speeds
+</A></li>
+        <LI>Next message: <A HREF="001873.html">[zfs-discuss] Disk speeds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1871">[ date ]</a>
+              <a href="thread.html#1871">[ thread ]</a>
+              <a href="subject.html#1871">[ subject ]</a>
+              <a href="author.html#1871">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 21/09/2009, at 03:50, Christian Kendi wrote:
+
+&gt;<i> I did not get the part which one about the second kext. I never  
+</I>&gt;<i> pusblished the code fixed kext. Therefore you where running the same  
+</I>&gt;<i> test twice.
+</I>
+Interesting.  I think then, that I ran the first test with the stock  
+119, and the second with your kext.
+
+&gt;<i> Here is the link to the code patched one. This one actually fixed  
+</I>&gt;<i> the bug and does not disable the prefetch routing:
+</I>&gt;<i> <A HREF="http://www.ironsoftware.de/public/ksh_zfs_cp.kext.tgz">http://www.ironsoftware.de/public/ksh_zfs_cp.kext.tgz</A>
+</I>
+Running that one now.
+
+
+&gt;<i> My question was rather concerning the zfs-10a286 bits. But good to  
+</I>&gt;<i> know that my zfs-119 once work with 10.6.
+</I>
+I gave up on 10a286 because it does this:
+
+zefat:~ sambo$ zpool import -f geniza
+Assertion failed: (nvlist_lookup_uint64(zhp-&gt;zpool_config,  
+&quot;pool_guid&quot;, &amp;theguid) == 0), function pool_active, file /SourceCache/ 
+zfs/zfs-154/src/lib/libzfs/common/libzfs_import.c, line 371.
+Abort trap
+
+Thoughts?  The advice here on the list was to go back to 119.
+
+&gt;<i> The major failure you did here was to use only 60 8MB files. You  
+</I>&gt;<i> have a 4GB RAM. To trigger the bug you should use at least use 512  
+</I>&gt;<i> files.
+</I>&gt;<i> I suggest you just use 2000 files and test it again with the 10a286  
+</I>&gt;<i> bits. In order to verify the bug you have to use the original  
+</I>&gt;<i> zfs.kext first and afterwards
+</I>&gt;<i> my modifications.
+</I>
+This is with 2000 8MB files:
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+32768355 blocks
+real	4m57.183s
+user	0m3.919s
+sys	0m33.403s
+
+and your kext:
+zefat:zfscachetest sambo$ time (find . | cpio -C 32256 -o &gt; /dev/null)
+32768355 blocks
+real	2m45.003s
+user	0m2.926s
+sys	0m20.218s
+
+HOWEVER!  The first one took a very long time to actually produce that  
+result!  It sat and sat and sat, until I went to bed, and when I woke  
+up this morning it said it had taken 4m57.183.  Yours was actual  
+time.  Both were done right after a fresh reboot.
+
+Also, fresh disk speed test.  On the left is stock 119, on the right  
+is yours:
+
+<A HREF="http://avoidant.org/ckext.png">http://avoidant.org/ckext.png</A>
+
+--sambo
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001869.html">[zfs-discuss] Disk speeds
+</A></li>
+	<LI>Next message: <A HREF="001873.html">[zfs-discuss] Disk speeds
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1871">[ date ]</a>
+              <a href="thread.html#1871">[ thread ]</a>
+              <a href="subject.html#1871">[ subject ]</a>
+              <a href="author.html#1871">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

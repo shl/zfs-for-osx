@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] bug: strange sync issues
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20bug%3A%20strange%20sync%20issues&In-Reply-To=%3C3BA55FF4-64E3-4B76-8F13-95810CD13B94%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001082.html">
+   <LINK REL="Next"  HREF="001066.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] bug: strange sync issues</H1>
+    <B>Kona Blend</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20bug%3A%20strange%20sync%20issues&In-Reply-To=%3C3BA55FF4-64E3-4B76-8F13-95810CD13B94%40gmail.com%3E"
+       TITLE="[zfs-discuss] bug: strange sync issues">kona8lend at gmail.com
+       </A><BR>
+    <I>Sun Nov 16 23:56:08 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001082.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+        <LI>Next message: <A HREF="001066.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1064">[ date ]</a>
+              <a href="thread.html#1064">[ thread ]</a>
+              <a href="subject.html#1064">[ subject ]</a>
+              <a href="author.html#1064">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello fellow ZFS enthusiasts,
+
+I'd like to report a bug that for quite some time shown its face on my  
+system. First, it's the latest zfs119 bits, on Mac OS X 10.5.5, Mac  
+Pro system, 10GB RAM. Maybe this is the same bug which is effecting  
+Chris (see appended email re: Xcode issue).
+
+DESCRIPTION
+
+The filesystem becomes confused after an undefined period of time on  
+the order of things. Creating a directory, then doing an operation  
+that requires the directory (such as using it as a destination for  
+copy) results in an error indicating the directory does not exist.
+
+By the time the error is reported, the script is stopped, the  
+directory does exist. This script exposes the bug. The strange thing  
+is the script does not expose the bug immediately, but rather some  
+after running for say 5 or 10 seconds (but never more than 30 seconds)  
+and ends with error &quot;mydir does not exist&quot; or similar.
+
+#!/bin/sh -e
+#
+while true;
+do
+     mkdir mydir
+     cp /etc/hosts mydir
+     rm -fr mydir
+done
+
+WORKAROUND
+
+Reboot system, things stay good for an undefined amount of time. Can  
+be a few days, sometimes as many as 5 or 6 days, but never more than a  
+week; at which time the bug presents again and reboot is required.
+
+SPECULATION
+
+The situation sounds like whenever the system enters &quot;bug state&quot; then  
+the filesystem behaves as though some operations are now a race  
+condition (asynchronous?).
+
+I'm sorry that I cannot narrow the bug down further. It's been with me  
+for months now, and I've seen no pattern with open applications, or my  
+activity which may narrow things further.
+
+-KB
+
+On 16-Nov-08, at 9:36 PM, Chris Suter wrote:
+
+&gt;<i> 1. I use Xcode a lot and it will often tell me a file has been changed
+</I>&gt;<i> when it hasn't actually.
+</I>&gt;<i>
+</I>&gt;<i> -- Chris
+</I></PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001082.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+	<LI>Next message: <A HREF="001066.html">[zfs-discuss] ZFS Ready for my data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1064">[ date ]</a>
+              <a href="thread.html#1064">[ thread ]</a>
+              <a href="subject.html#1064">[ subject ]</a>
+              <a href="author.html#1064">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

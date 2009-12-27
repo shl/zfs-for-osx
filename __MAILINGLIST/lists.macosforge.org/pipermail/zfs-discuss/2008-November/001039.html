@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic on importing a pool from the filesystem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20on%20importing%20a%20pool%20from%20the%20filesystem&In-Reply-To=%3C20081106132341.GA25138%40cl.cam.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001038.html">
+   <LINK REL="Next"  HREF="001040.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic on importing a pool from the filesystem</H1>
+    <B>David Evans</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20on%20importing%20a%20pool%20from%20the%20filesystem&In-Reply-To=%3C20081106132341.GA25138%40cl.cam.ac.uk%3E"
+       TITLE="[zfs-discuss] Panic on importing a pool from the filesystem">David.Evans at cl.cam.ac.uk
+       </A><BR>
+    <I>Thu Nov  6 05:23:41 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001038.html">[zfs-discuss] Binary installer for ZFS-119
+</A></li>
+        <LI>Next message: <A HREF="001040.html">[zfs-discuss] Possible mmap problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1039">[ date ]</a>
+              <a href="thread.html#1039">[ thread ]</a>
+              <a href="subject.html#1039">[ subject ]</a>
+              <a href="author.html#1039">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>  Hi, all.
+
+  Have a Solaris 10 VM; its disks live on an HFS+ filesystem.  It can happily
+deal with pools created on and exported from OS X...yay!  But I get a
+panic when running
+
+zpool import -d /the/path/to/thhe/vmwarevm/directory
+
+I'd expect it to just complain rather than completely explode.  This is
+the binary distribution of 119.
+
+  Panic log:
+
+Thu Nov  6 08:38:29 2008
+panic(cpu 0 caller 0x001DBECE): &quot;vnode_rele_ext: vp 0x8492880 kusecount
+-ve : -1&quot;@/SourceCache/xnu/xnu-1228.7.58/bsd/vfs/vfs_subr.c:1621
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x365bb998 : 0x12b0fa (0x459234 0x365bb9cc 0x133243 0x0) 
+0x365bb9e8 : 0x1dbece (0x4675d0 0x8492880 0xffffffff 0x1f6513) 
+0x365bba28 : 0x1dc03e (0x8492880 0xb72ea40 0x0 0x0) 
+0x365bba48 : 0x1eb8d1 (0x8492880 0xb72ea40 0x0 0x12fc48) 
+0x365bba98 : 0x1dbdca (0x8492880 0xb72ea40 0xb72ea40 0xb72ea40) 
+0x365bbab8 : 0x35484e56 (0x8492880 0xb72ea40 0xb72ea40 0x0) 
+0x365bbb18 : 0x3547f370 (0xb0a2400 0x365bbb58 0x365bbb50 0x0) 
+0x365bbb78 : 0x3547bc90 (0xb0a2400 0x216 0x365bbbc8 0x35458800) 
+0x365bbbb8 : 0x3547f370 (0x3f5a800 0x365bbbf8 0x365bbbf0 0x35458875) 
+0x365bbc18 : 0x3547316a (0x3f5a800 0x354d60dc 0x0 0x0) 
+0x365bbcb8 : 0x35473b33 (0x1 0x0 0x365bbce0 0x3f5a800) 
+0x365bbcf8 : 0x3548939b (0xb30fe60 0x17c8418c 0xb4f0400 0x0) 
+0x365bbd38 : 0x3548ba23 (0xb4f0000 0x0 0x0 0x7d384000) 
+0x365bbd78 : 0x202e0c (0x1f000000 0xcf1c5a06 0xb4f0000 0x3) 
+0x365bbdb8 : 0x1f619c (0x365bbde8 0x246 0x365bbe18 0x1da35d) 
+0x365bbe18 : 0x1ec476 (0x5ea21c0 0xcf1c5a06 0xb4f0000 0x3) 
+	Backtrace continues...
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x35428000-&gt;0x354f3fff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBookAir1,1 (Mac-F42C8CC8)
+
+  Cheers!
+
+-- 
+David Evans                                     <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">David.Evans at cl.cam.ac.uk</A>
+Research Associate                        <A HREF="http://www.cl.cam.ac.uk/~de239">http://www.cl.cam.ac.uk/~de239</A>
+Computer Laboratory, University of Cambridge
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001038.html">[zfs-discuss] Binary installer for ZFS-119
+</A></li>
+	<LI>Next message: <A HREF="001040.html">[zfs-discuss] Possible mmap problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1039">[ date ]</a>
+              <a href="thread.html#1039">[ thread ]</a>
+              <a href="subject.html#1039">[ subject ]</a>
+              <a href="author.html#1039">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

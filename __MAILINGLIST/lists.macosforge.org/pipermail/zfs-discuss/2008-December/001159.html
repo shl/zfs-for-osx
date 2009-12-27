@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Coding around: Steps to userland tools
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Coding%20around%3A%20Steps%20to%20userland%20tools&In-Reply-To=%3C9CE4BA75-F0C0-4057-9604-084EF2651D5F%40macnews.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001236.html">
+   <LINK REL="Next"  HREF="001160.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Coding around: Steps to userland tools</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Coding%20around%3A%20Steps%20to%20userland%20tools&In-Reply-To=%3C9CE4BA75-F0C0-4057-9604-084EF2651D5F%40macnews.de%3E"
+       TITLE="[zfs-discuss] Coding around: Steps to userland tools">i_see at macnews.de
+       </A><BR>
+    <I>Sat Dec 13 15:47:32 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001236.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+        <LI>Next message: <A HREF="001160.html">[zfs-discuss] Coding around: Steps to userland tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1159">[ date ]</a>
+              <a href="thread.html#1159">[ thread ]</a>
+              <a href="subject.html#1159">[ subject ]</a>
+              <a href="author.html#1159">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi list,
+
+for no apparent reason ZFS refuses to recognize the label on one of my  
+partitions and thus to import the pool. As I would like to access the  
+data in the pool it would be nice to be able and debug what is wrong  
+during the label detection.
+I only need a few files from the backup of that pool so I'd probably  
+like to code something like zcp of zfscp where the user can specify a  
+pool and filenames and copy them from the pool. Like in the first  
+Leopard ZFS &quot;release&quot;, I would prefer to disable any modification of  
+data on disks.
+
+Having a small toolchain in a userland process would allow debugging,  
+could be portable (Tiger Macs or a Windows client would be nice, just  
+to get some data out of that pool).
+
+Has anyone dug around in the code enough to sketch the steps necessary  
+to create such a tool or does anyone know if something like this has  
+already be done.
+(maybe I'll need to cross-post to the ZFS-FUSE-Guys or the solaris- 
+list, but for now, Mac specific hints would be very welcome)
+
+Cheers,
+	ralf 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001236.html">[zfs-discuss] rsync backups to ZFS volume
+</A></li>
+	<LI>Next message: <A HREF="001160.html">[zfs-discuss] Coding around: Steps to userland tools
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1159">[ date ]</a>
+              <a href="thread.html#1159">[ thread ]</a>
+              <a href="subject.html#1159">[ subject ]</a>
+              <a href="author.html#1159">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

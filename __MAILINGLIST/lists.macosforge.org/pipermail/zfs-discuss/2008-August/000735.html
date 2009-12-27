@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=924BAD42-F7DA-47DE-84B0-3E53E1183B51%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000755.html">
+   <LINK REL="Next"  HREF="000736.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>Andrew Webber</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=924BAD42-F7DA-47DE-84B0-3E53E1183B51%40apple.com"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">andy at aligature.com
+       </A><BR>
+    <I>Sat Aug  2 08:02:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000755.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+        <LI>Next message: <A HREF="000736.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#735">[ date ]</a>
+              <a href="thread.html#735">[ thread ]</a>
+              <a href="subject.html#735">[ subject ]</a>
+              <a href="author.html#735">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have yet to have a serious problem in my day-to-day use of ZFS.  However,
+running the listed procedure did cause my system to hang indefinitely.  I
+don't have an actual keyboard and mouse hooked up to the machine, but the
+VNC behavior that I saw indicated that the machine was frozen.  Also, it
+stopped responding to pings after a little while.  After a reboot everything
+was ok, but I have yet to try the procedure again.
+
+Here are my stats:
+Mac pro running 10.5.4
+1x quad core xeon 2.8 GHz
+4Gb ram 800 MHz DDR2
+2x SATA drives in a mirror in my pool
+
+/dev/disk1
+   #:                       TYPE NAME                    SIZE
+IDENTIFIER
+   0:      GUID_partition_scheme                        *698.6 Gi   disk1
+   1:                        EFI                         200.0 Mi   disk1s1
+   2:                        ZFS lake                    698.3 Gi   disk1s2
+/dev/disk2
+   #:                       TYPE NAME                    SIZE
+IDENTIFIER
+   0:      GUID_partition_scheme                        *698.6 Gi   disk2
+   1:                        EFI                         200.0 Mi   disk2s1
+   2:                        ZFS lake                    698.3 Gi   disk2s2
+
+Would any other information be helpful?  If you absolutely can't recreate
+the problem, it could be possible to setup a remote ssh to my machine for a
+test, if you could get some diagnostics.  Also, I would be happy to get you
+any output of any test that I'm capable of running.
+
+
+
+On Thu, Jul 31, 2008 at 5:46 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;wrote:
+
+&gt;<i> Hey all,
+</I>&gt;<i> I need some help.  Neither Don nor I are able to recreate this bug, with
+</I>&gt;<i> both of us trying different scenarios on different machines.
+</I>&gt;<i>
+</I>&gt;<i> We're using Germano's instructions:
+</I>&gt;<i>
+</I>&gt;<i> mkfile 20g /foo
+</I>&gt;<i> zpool create z /foo
+</I>&gt;<i> zfs create z/crashfs
+</I>&gt;<i> sudo rsync -aHPSv /dev /etc /usr /Volumes/z/crashfs/1
+</I>&gt;<i> [watch the spinning ball of death]
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I also tried using a disk drive instead of a file as a vdev.  Additionally
+</I>&gt;<i> tried rsyncing into a top level pool, as well as child filesystems like the
+</I>&gt;<i> one above.  I'm running  Leopard 9E17 on my Mac Pro, with zfs-119.  Is that
+</I>&gt;<i> what everyone else is running that is seeing this?  I can't get a hang.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ideas or suggestions?  Am i missing a step?
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Jul 22, 2008, at 4:37 PM, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;<i> For those interested or keeping track, I just filed this bug in Radar to
+</I>&gt;<i> track Germano's bug:
+</I>&gt;<i> 6094713:    rsync /dev to a ZFS volume hangs
+</I>&gt;<i>
+</I>&gt;<i> I'll try and get it fixed asap.  Thanks for finding this Germano!
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Jul 22, 2008, at 4:29 PM, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;<i> So currently there is no way for me to sync the public bug tracker with
+</I>&gt;<i> Radar, our main bug track facility in house.  I have to go through the bugs
+</I>&gt;<i> manually and file them into our internal system which I just don't have the
+</I>&gt;<i> time or resources to do.  Hence the best way to alert me of an issue is just
+</I>&gt;<i> send it out on the list like this.  I try and keep up as much as possible,
+</I>&gt;<i> then I can just file the bug into radar as it comes up.  And I also have a
+</I>&gt;<i> contact for you if I need help reproducing it :)
+</I>&gt;<i> So, while it's not the best system, it works and is all I have.  So just
+</I>&gt;<i> send an email, or if you have private information just send me an email.
+</I>&gt;<i>  However, when at all possible, send it to the list so then everyone is
+</I>&gt;<i> alerted to it like below.
+</I>&gt;<i>
+</I>&gt;<i> thanks!
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Jul 22, 2008, at 1:37 PM, Germano Caronni wrote:
+</I>&gt;<i>
+</I>&gt;<i> Thank you for validating this issue.  ;-)
+</I>&gt;<i>
+</I>&gt;<i> For bugtracking, there is <A HREF="http://zfs.macosforge.org/trac/report">http://zfs.macosforge.org/trac/report</A> -- but I
+</I>&gt;<i> am not sure if / how this is used.
+</I>&gt;<i>
+</I>&gt;<i> Germano
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jul 22, 2008 at 13:27, Jonathan Edwards &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Jonathan.Edwards at sun.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> i was able to reproduce a hard hang on a much smaller system config ..
+</I>&gt;&gt;<i> just 4 x 64MB files here for my test pool .. compression doesn't matter:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> bash-3.2# zpool status -v
+</I>&gt;&gt;<i>   pool: tpool
+</I>&gt;&gt;<i>  state: ONLINE
+</I>&gt;&gt;<i>  scrub: none requested
+</I>&gt;&gt;<i> config:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        NAME              STATE     READ WRITE CKSUM
+</I>&gt;&gt;<i>        tpool             ONLINE       0     0     0
+</I>&gt;&gt;<i>          /var/tmp/file1  ONLINE       0     0     0
+</I>&gt;&gt;<i>          /var/tmp/file2  ONLINE       0     0     0
+</I>&gt;&gt;<i>          /var/tmp/file3  ONLINE       0     0     0
+</I>&gt;&gt;<i>          /var/tmp/file4  ONLINE       0     0     0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> errors: No known data errors
+</I>&gt;&gt;<i> bash-3.2# rsync --version
+</I>&gt;&gt;<i> rsync  version 2.6.3  protocol version 28
+</I>&gt;&gt;<i> Copyright (C) 1996-2004 by Andrew Tridgell and others
+</I>&gt;&gt;<i> &lt;<A HREF="http://rsync.samba.org/">http://rsync.samba.org/</A>&gt;
+</I>&gt;&gt;<i> Capabilities: 64-bit files, socketpairs, hard links, symlinks,
+</I>&gt;&gt;<i> batchfiles,
+</I>&gt;&gt;<i>               inplace, IPv6, 32-bit system inums, 64-bit internal inums
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ---
+</I>&gt;&gt;<i> i'll have to figure out how to do a kdb equiv to get a backtrace here
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> of note .. i also saw a vfs error last night on shutdown that also
+</I>&gt;&gt;<i> resulted in a hard hang:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Tue Jul 22 01:17:08 2008
+</I>&gt;&gt;<i> panic(cpu 1 caller 0x001DBC3D): &quot;vnode_put(0x529dc70): iocount &lt; 1&quot;@/
+</I>&gt;&gt;<i> SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+</I>&gt;&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;&gt;<i> 0x475dfd78 : 0x12b0fa (0x4592a4 0x475dfdac 0x133243 0x0)
+</I>&gt;&gt;<i> 0x475dfdc8 : 0x1dbc3d (0x467410 0x529dc70 0x475dfe08 0x4792d532)
+</I>&gt;&gt;<i> 0x475dfde8 : 0x1dbcee (0x529dc70 0x6f17220 0xf9bdf8ae 0x1064f140)
+</I>&gt;&gt;<i> 0x475dfe08 : 0x478fd30b (0x529dc70 0x479602e4 0x0 0x0)
+</I>&gt;&gt;<i> 0x475dff58 : 0x478e60a2 (0x1064f000 0xc81d 0x0 0x0)
+</I>&gt;&gt;<i> 0x475dffc8 : 0x19ebdc (0x1023d200 0x0 0x1a20b5 0x5a8f3c8)
+</I>&gt;&gt;<i> Backtrace terminated-invalid frame pointer 0
+</I>&gt;&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;&gt;<i>          com.apple.filesystems.zfs(8.0)@0x478b5000-&gt;0x47980fff
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Mac OS version:
+</I>&gt;&gt;<i> 9E17
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kernel version:
+</I>&gt;&gt;<i> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+</I>&gt;&gt;<i> root:xnu-1228.5.20~1/RELEASE_I386
+</I>&gt;&gt;<i> System model name: MacBookPro2,2 (Mac-F42187C8)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ----
+</I>&gt;&gt;<i> also could we up the version number in the zfs module plist to track
+</I>&gt;&gt;<i> version problems a little better?
+</I>&gt;&gt;<i> methinks (8.0) is the default template for a kext
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> would also be nice to get some sort of web bugtraq in place so we can
+</I>&gt;&gt;<i> just file 'em
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ---
+</I>&gt;&gt;<i> .je
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jul 22, 2008, at 3:23 PM, No&#235;l Dellofano wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; Neat!  I haven't seen this issue since fixing the memory scaling bug a
+</I>&gt;&gt;<i> &gt; while ago.  Sorry to hear it's giving you troubles.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Germano,
+</I>&gt;&gt;<i> &gt; if it reproduces, then the snapshot would be awesome!  As my biggest
+</I>&gt;&gt;<i> &gt; issue is getting stuff like that to reproduce in house.  So you're
+</I>&gt;&gt;<i> &gt; just using standard leopard shipped rsync right?  If so, since he's
+</I>&gt;&gt;<i> &gt; the fatty that tries to shove everything in memory I wonder if we're
+</I>&gt;&gt;<i> &gt; stuck sleeping waiting for someone to give up some memory possibly and
+</I>&gt;&gt;<i> &gt; are wedged...
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; as usual you guys are the best test team a girl can have :)  If your
+</I>&gt;&gt;<i> &gt; snapshot works send it over.  Otherwise I'll do my best to mimic your
+</I>&gt;&gt;<i> &gt; system and see if I can get a recreate..
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; thanks!
+</I>&gt;&gt;<i> &gt; Noel
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt;&gt; If I do a recursive diff on some of these trees, or a find and a
+</I>&gt;&gt;<i> &gt;&gt;&gt; following md5 sum on, say, 100'000+ files, the machine will die the
+</I>&gt;&gt;<i> &gt;&gt;&gt; same silent death as reported for excessive rsync before
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Interesting!
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; I'm not seeing that problem any more, but I've been using rsync
+</I>&gt;&gt;<i> &gt;&gt; 3.0.4,
+</I>&gt;&gt;<i> &gt;&gt; built from source, 64-bit... it's dramatically improved over the
+</I>&gt;&gt;<i> &gt;&gt; version that ships with Leopard.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; I wonder if there's a memory leak in the VFS layer.  (wow, that
+</I>&gt;&gt;<i> &gt;&gt; almost
+</I>&gt;&gt;<i> &gt;&gt; sounds like I know what I'm talking about, but really I don't)
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;&gt;<i> &gt;&gt; zfs-discuss mailing list
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080802/9d8611b5/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080802/9d8611b5/attachment-0001.html</A> 
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000755.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+	<LI>Next message: <A HREF="000736.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#735">[ date ]</a>
+              <a href="thread.html#735">[ thread ]</a>
+              <a href="subject.html#735">[ subject ]</a>
+              <a href="author.html#735">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

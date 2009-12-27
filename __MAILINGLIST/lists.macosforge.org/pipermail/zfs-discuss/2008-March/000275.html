@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] how to emulate zfs send | zfs recv
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20how%20to%20emulate%20zfs%20send%20%7C%20zfs%20recv&In-Reply-To=7bccd8dc0803060439j5ed8bd36rb960a9ec9337e18a%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000274.html">
+   <LINK REL="Next"  HREF="000276.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] how to emulate zfs send | zfs recv</H1>
+    <B>Ilya Tyshchenko</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20how%20to%20emulate%20zfs%20send%20%7C%20zfs%20recv&In-Reply-To=7bccd8dc0803060439j5ed8bd36rb960a9ec9337e18a%40mail.gmail.com"
+       TITLE="[zfs-discuss] how to emulate zfs send | zfs recv">ilyxascrat at gmail.com
+       </A><BR>
+    <I>Thu Mar  6 04:51:35 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000274.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+        <LI>Next message: <A HREF="000276.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#275">[ date ]</a>
+              <a href="thread.html#275">[ thread ]</a>
+              <a href="subject.html#275">[ subject ]</a>
+              <a href="author.html#275">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks ! Never think about !
+
+It could be an interesting solution .
+
+06.03.2008, &#1074; 15:39, Brett Ault-McCoy &#1085;&#1072;&#1087;&#1080;&#1089;&#1072;&#1083;(&#1072;):
+
+&gt;<i> One thing I would really, really like to have in zfs for Mac OS X is  
+</I>&gt;<i> the ability to pipe the output of zfs send to zfs recv.  Having to  
+</I>&gt;<i> write it to a file and then read from that file is painful.  It's  
+</I>&gt;<i> okay for small incremental snapshots, but is painful for full  
+</I>&gt;<i> filesystem copies.  So, a workaround until the support is there is  
+</I>&gt;<i> to use a fifo.  If you do something like:
+</I>&gt;<i>
+</I>&gt;<i>   mkfifo /tmp/zfsfifo
+</I>&gt;<i>   zfs recv -v -d NewPool &lt; /tmp/zfsfifo
+</I>&gt;<i>   zfs send OldPool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Filesystem at snapshot</A> &gt; /tmp/zfsfifo
+</I>&gt;<i>
+</I>&gt;<i> the output from send will be piped into the input to recv.  You'll  
+</I>&gt;<i> need to run the two commands in different windows, or run the recv  
+</I>&gt;<i> in the background.  I'm thinking of writing a wrapper script of some  
+</I>&gt;<i> sort to handle creating the fifo and running the send and recv  
+</I>&gt;<i> commands to make this easy.  Something like:
+</I>&gt;<i>
+</I>&gt;<i>    zsr [-vi] OldPool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Filesystem at snapshot</A> NewPool[/Filesystem])
+</I>&gt;<i>
+</I>&gt;<i> If anyone already knows of something similar I'd love to hear about  
+</I>&gt;<i> it.  Bonus points for making it work via an ssh pipe (ie. connecting  
+</I>&gt;<i> the read side of the fifo to an ssh process that sends the data to a  
+</I>&gt;<i> fifo on a remote machine and runs a zfs recv command on it to read  
+</I>&gt;<i> from the fifo to make it easy to copy snapshots to a remote host.
+</I>&gt;<i>
+</I>&gt;<i> ++brett;
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000274.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+	<LI>Next message: <A HREF="000276.html">[zfs-discuss] how to emulate zfs send | zfs recv
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#275">[ date ]</a>
+              <a href="thread.html#275">[ thread ]</a>
+              <a href="subject.html#275">[ subject ]</a>
+              <a href="author.html#275">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

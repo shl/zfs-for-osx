@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] copies=2 striped pool. one disk died. rescue	possible?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20copies%3D2%20striped%20pool.%20one%20disk%20died.%20rescue%0A%09possible%3F&In-Reply-To=66f535320809110545l587a5119h577c59d12d25b039%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000831.html">
+   <LINK REL="Next"  HREF="000833.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] copies=2 striped pool. one disk died. rescue	possible?</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20copies%3D2%20striped%20pool.%20one%20disk%20died.%20rescue%0A%09possible%3F&In-Reply-To=66f535320809110545l587a5119h577c59d12d25b039%40mail.gmail.com"
+       TITLE="[zfs-discuss] copies=2 striped pool. one disk died. rescue	possible?">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Thu Sep 11 05:57:54 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000831.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue possible?
+</A></li>
+        <LI>Next message: <A HREF="000833.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue	possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#832">[ date ]</a>
+              <a href="thread.html#832">[ thread ]</a>
+              <a href="subject.html#832">[ subject ]</a>
+              <a href="author.html#832">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Probably not. You're much better off, with two disks, creating a
+mirror of the pool and using that. That way, you don't need to set
+copies=2 for the file system.
+
+Consider a big file, striped across A and B:
+
+ABABABABA
+
+If you write this twice you get:
+
+ABABABABA
+ABABABABA
+
+So if you lose A, you lose exactly half of your file, despite still
+having two copies of the B bits.
+
+On the other hand, if you have a mirror, you get:
+AAAAAAAAA AAAAAAAAA
+
+So if you lose one disk, you're still good to go. Note that the amount
+of space taken up is the same (roughly) if all file systems have pools
+on.
+
+If you want mixed (i.e. some striped, some mirrored) you can always
+partition your disks and have one partition mirrored and the other
+striped.
+
+Alex
+
+On Thu, Sep 11, 2008 at 1:45 PM, Oliver Oli &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">oliver.oli+0815 at gmail.com</A>&gt; wrote:
+&gt;<i> Luckily I had not experienced any data loss with ZFS, but sooner or
+</I>&gt;<i> later hard disks die and I would like to be prepared.
+</I>&gt;<i>
+</I>&gt;<i> My question is:
+</I>&gt;<i>
+</I>&gt;<i> I have a striped pool
+</I>&gt;<i>
+</I>&gt;<i> zpool create Tank disk1 disk2
+</I>&gt;<i>
+</I>&gt;<i> then created a filesystem with the copies=2 option
+</I>&gt;<i>
+</I>&gt;<i> zfs create -o copies=2 Tank/safedir
+</I>&gt;<i>
+</I>&gt;<i> When one of the disks dies, can I recover the files in Tank/safedir?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000831.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue possible?
+</A></li>
+	<LI>Next message: <A HREF="000833.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue	possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#832">[ date ]</a>
+              <a href="thread.html#832">[ thread ]</a>
+              <a href="subject.html#832">[ subject ]</a>
+              <a href="author.html#832">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

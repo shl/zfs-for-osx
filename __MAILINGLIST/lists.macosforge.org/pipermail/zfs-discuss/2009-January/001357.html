@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] I lost 500GB of backup data in zfs!!!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C0556B37F-140C-4C69-9BED-4A94CF507E6C%40Sun.COM%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001356.html">
+   <LINK REL="Next"  HREF="001358.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] I lost 500GB of backup data in zfs!!!</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C0556B37F-140C-4C69-9BED-4A94CF507E6C%40Sun.COM%3E"
+       TITLE="[zfs-discuss] I lost 500GB of backup data in zfs!!!">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Thu Jan 22 16:50:27 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001356.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+        <LI>Next message: <A HREF="001358.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1357">[ date ]</a>
+              <a href="thread.html#1357">[ thread ]</a>
+              <a href="subject.html#1357">[ subject ]</a>
+              <a href="author.html#1357">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>you might be okay .. it really depends on where the zfs label is on  
+the drive:
+
+1) make sure the zfs kext is loaded
+# kextstat | grep zfs
+2) check to see if you can see your pools
+# zpool list
+3) check to see if you can import your pools
+# sudo import [-f] &lt;pool&gt;
+
+btw - if you have an existing unmirrored single disk pool (eg: mypool  
+say on disk3) you can make it a mirrored pool (to say disk4) with  
+something like:
+# zpool attach mypool disk3 disk4
+
+hth
+Jonathan
+
+On Jan 22, 2009, at 7:09 PM, Mr. Zorg wrote:
+
+&gt;<i> At steps 1 and 4, did you format the disks EXACTLY as described in  
+</I>&gt;<i> the wiki?  If not, that's likely the cause of your woes.
+</I>&gt;<i>
+</I>&gt;<i> On Jan 22, 2009, at 4:02 PM, Sterling Garwood  
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">slgarwood at charter.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I am running the currently available Mac zfs drop from the mac  
+</I>&gt;&gt;<i> developers site - says its 119.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The sequence of events across the whole day is
+</I>&gt;&gt;<i> (I already had a pool with 2 internal drives in it called 'mypool')
+</I>&gt;&gt;<i> 1. create pool on 1st Firewire 500 GB drive called zfsstg.. worked ok
+</I>&gt;&gt;<i> 2. Copied all 500 GB data from a HFS+ drive to the above pool -  
+</I>&gt;&gt;<i> worked ok
+</I>&gt;&gt;<i> 3. Reformatted the HFS+ Firewire drive and add it as 2nd Firewire  
+</I>&gt;&gt;<i> 500 GB drive to zfsstg pool (what I really wanted to do was create  
+</I>&gt;&gt;<i> a mirror but I forgot the magic 'mirror' word :-)
+</I>&gt;&gt;<i> 4. create another pool called 'remove' on another external (USB)  
+</I>&gt;&gt;<i> 500GB drive.
+</I>&gt;&gt;<i> 5. copied zfsstg to remove  ... copy worked ok. DId several 'ls - 
+</I>&gt;&gt;<i> al' to check ... same number of files etc....
+</I>&gt;&gt;<i> 6. then noticed a software update was pending so since I was gonna  
+</I>&gt;&gt;<i> reboot anyway let it install.
+</I>&gt;&gt;<i> I was planning on powering down both Firewire drives, rebooting,  
+</I>&gt;&gt;<i> powering them up 1 at a time and reformatting, then creating a zfs  
+</I>&gt;&gt;<i> mirror. I then planned on copying pool 'remove' to the new mirror.
+</I>&gt;&gt;<i> 7. upon reboot got error messages that all zfs pool drives were  
+</I>&gt;&gt;<i> 'unknown format' including the 2 internal drives in the pool I  
+</I>&gt;&gt;<i> hadn't touched all day.... &lt;sigh&gt;
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001356.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+	<LI>Next message: <A HREF="001358.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1357">[ date ]</a>
+              <a href="thread.html#1357">[ thread ]</a>
+              <a href="subject.html#1357">[ subject ]</a>
+              <a href="author.html#1357">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

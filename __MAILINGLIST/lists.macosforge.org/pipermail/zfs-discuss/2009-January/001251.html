@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] 2x panic()
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%202x%20panic%28%29&In-Reply-To=%3C1BAFA205-02B6-4053-B231-30AC64F0785C%40ironsoftware.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001250.html">
+   <LINK REL="Next"  HREF="001260.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] 2x panic()</H1>
+    <B>Christian Kendi</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%202x%20panic%28%29&In-Reply-To=%3C1BAFA205-02B6-4053-B231-30AC64F0785C%40ironsoftware.de%3E"
+       TITLE="[zfs-discuss] 2x panic()">ksh at ironsoftware.de
+       </A><BR>
+    <I>Sat Jan  3 10:32:40 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001250.html">[zfs-discuss] ACE Inheritance problems
+</A></li>
+        <LI>Next message: <A HREF="001260.html">[zfs-discuss] 2x panic()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1251">[ date ]</a>
+              <a href="thread.html#1251">[ thread ]</a>
+              <a href="subject.html#1251">[ subject ]</a>
+              <a href="author.html#1251">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+
+Happy new year.
+
+Some bug reports:
+
+Fri Jan  2 14:12:10 2009
+panic(cpu 1 caller 0x34506CD9): &quot;[ZFS]: assertion failed in /Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c  
+line 1004: zp-&gt;z_dbuf_held == 0&quot;@/Volumes/pixie_dust/home/ndellofano/ 
+zfs-work/zfs-119/zfs_kext/zfs/zfs_znode.c:1004
+Backtrace (CPU 1), Frame : Return Address (4 potential args on stack)
+0x35dc3568 : 0x12b4f3 (0x45b13c 0x35dc359c 0x1335e4 0x0)
+0x35dc35b8 : 0x34506cd9 (0x345600ec 0x3455fc6c 0x3ec 0x3455fd3c)
+0x35dc35f8 : 0x344b115b (0x34447a60 0x1 0x35dc3648 0x142198)
+0x35dc3638 : 0x1f3f4b (0x35dc3654 0x212 0x35dc365c 0x4f9f40)
+0x35dc3678 : 0x1db4b5 (0x9ff6f80 0x47d95e4 0x0 0x0)
+0x35dc36c8 : 0x1db6d1 (0x9ff6f80 0x1 0x35dc36f8 0x19eb5b)
+0x35dc3718 : 0x1dd283 (0x0 0x4f93c0 0x45b0e290 0x0)
+0x35dc3788 : 0x31f7f6 (0x0 0x34 0x35dc37dc 0xb254e4c)
+0x35dc3828 : 0x327dec (0x3ea9804 0x57ecb50 0x35dc3f08 0x35dc3968)
+0x35dc3998 : 0x1f2c7d (0x35dc39b8 0x2 0x35dc39e8 0x451c8a)
+0x35dc39e8 : 0x1d464c (0x57ecb50 0x35dc3df4 0x35dc3f08 0x47d95e4)
+0x35dc3a78 : 0x1d53d1 (0x35dc3ddc 0x100 0x35dc3dfc 0x0)
+0x35dc3b38 : 0x1e4060 (0x35dc3ddc 0x0 0x0 0x0)
+0x35dc3d88 : 0x1e468f (0xb0080648 0x0 0x0 0x0)
+0x35dc3f48 : 0x1e4772 (0xb0080648 0x0 0x0 0x0)
+0x35dc3f78 : 0x3df460 (0x47790e4 0x47d94e0 0x47d9524 0x0)
+	Backtrace continues...
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x344a9000-&gt;0x34574fff
+
+BSD process name corresponding to current thread: mdworker
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_I386
+System model name: MacBook1,1 (Mac-F4208CC8)
+
+
+
+Fri Jan  2 16:35:14 2009
+panic(cpu 0 caller 0x46234D21): &quot;ZFS: I/O failure (write on &lt;unknown&gt;  
+off 0: zio 0x536f018 [L0 ZFS plain file] e400L/e400P  
+DVA[0]=&lt;0:140e690800:e400&gt; fletcher2 uncompressed LE contiguous  
+birth=136477 fill=1  
+cksum 
+=26480848a9950102:75a84d27a14d1500:c7913a1e15fb05f2:82b8944c975b836d):  
+error &quot; &quot;5&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/ 
+zfs_kext/zfs/zio.c:918
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x4781be38 : 0x12b4f3 (0x45b13c 0x4781be6c 0x1335e4 0x0)
+0x4781be88 : 0x46234d21 (0x462a46b0 0x462a46a4 0x462a0400 0x462d1670)
+0x4781bf08 : 0x462313fb (0x536f018 0x590 0x4781bf28 0x4627818a)
+0x4781bf48 : 0x462904a6 (0x536f018 0x4e18080 0x9e70f 0x462b95f4)
+0x4781bfc8 : 0x1a017c (0x47d6470 0x0 0x1a30b5 0x829f2e8)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x4621d000-&gt;0x462e8fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9G55
+
+Kernel version:
+Darwin Kernel Version 9.6.0: Mon Nov 24 17:37:00 PST 2008;  
+root:xnu-1228.9.59~1/RELEASE_I386
+System model name: MacBook1,1 (Mac-F4208CC8)
+
+
+
+Chris.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFJX69Ip+9ff145KVIRApBRAKCYy7YDWlxn9Lpe+ezQY4saZzKGIwCglpBT
+niAj8UaYdEQNXSmsf1vXJ98=
+=GcIS
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001250.html">[zfs-discuss] ACE Inheritance problems
+</A></li>
+	<LI>Next message: <A HREF="001260.html">[zfs-discuss] 2x panic()
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1251">[ date ]</a>
+              <a href="thread.html#1251">[ thread ]</a>
+              <a href="subject.html#1251">[ subject ]</a>
+              <a href="author.html#1251">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] nfs on top of zfs does not work?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nfs%20on%20top%20of%20zfs%20does%20not%20work%3F&In-Reply-To=%3C680687.34065.qm%40web50102.mail.re2.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001421.html">
+   <LINK REL="Next"  HREF="001431.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] nfs on top of zfs does not work?</H1>
+    <B>sjeanpluv</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nfs%20on%20top%20of%20zfs%20does%20not%20work%3F&In-Reply-To=%3C680687.34065.qm%40web50102.mail.re2.yahoo.com%3E"
+       TITLE="[zfs-discuss] nfs on top of zfs does not work?">sjeanpluv at yahoo.com
+       </A><BR>
+    <I>Wed Feb 18 14:35:26 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001421.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+        <LI>Next message: <A HREF="001431.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1427">[ date ]</a>
+              <a href="thread.html#1427">[ thread ]</a>
+              <a href="subject.html#1427">[ subject ]</a>
+              <a href="author.html#1427">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Got it. Thanks
+Hopefully NFS support is in a future release.   
+
+--- On Wed, 2/18/09, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+
+&gt;<i> From: No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt;
+</I>&gt;<i> Subject: Re: [zfs-discuss] nfs on top of zfs does not work?
+</I>&gt;<i> To: &quot;Franz Schmalzl&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs at sbod.at</A>&gt;
+</I>&gt;<i> Cc: &quot;ZFS on OSX mailing list mailing list&quot; &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Date: Wednesday, February 18, 2009, 4:37 PM
+</I>&gt;<i> correct.&#160; we don't support
+</I>&gt;<i> sharenfs in osx
+</I>&gt;<i> 
+</I>&gt;<i> Noel
+</I>&gt;<i> On Feb 18, 2009, at 1:14 PM, Franz Schmalzl wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On 18.02.2009, at 22:10, Richard McClellan wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt; On Solaris' implementation of ZFS you configure
+</I>&gt;<i> NFS through ZFS: zfs set sharenfs=...&#160; It's probably
+</I>&gt;<i> the same with Apple's implementation.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Doesn&#180;t work in osx I think
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; ...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt; Check out Sun's excellent documentation for the
+</I>&gt;<i> details.
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt;&#160; &#160; &#160; &#160; &#160; &#160; &#160;
+</I>&gt;<i> &#160; Rich
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; On Feb 18, 2009, at 11:38, sjeanpluv &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">sjeanpluv at yahoo.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; Hi,
+</I>&gt;<i> &gt;&gt;&gt;&#160;&#160;&#160;I recently moved my home
+</I>&gt;<i> directory HFS to ZFS.
+</I>&gt;<i> &gt;&gt;&gt; Prior, I had NFS enabled to share my home
+</I>&gt;<i> directory so that it is accessible on my
+</I>&gt;<i> &gt;&gt;&gt; network by other UNIX systems.
+</I>&gt;<i> &gt;&gt;&gt; With ZFS, I am still able to nfs mount my home
+</I>&gt;<i> directory on the UNIX clients, but
+</I>&gt;<i> &gt;&gt;&gt; see nothing.
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; Feedbacks appreciated, thank you.
+</I>&gt;<i> &gt;&gt;&gt; -Stephane
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt; zfs-discuss mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; zfs-discuss mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt;&gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i> 
+</I>
+
+      
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001421.html">[zfs-discuss] One big pool / Several ones ?
+</A></li>
+	<LI>Next message: <A HREF="001431.html">[zfs-discuss] setting up zfs for solaris + mac ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1427">[ date ]</a>
+              <a href="thread.html#1427">[ thread ]</a>
+              <a href="subject.html#1427">[ subject ]</a>
+              <a href="author.html#1427">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

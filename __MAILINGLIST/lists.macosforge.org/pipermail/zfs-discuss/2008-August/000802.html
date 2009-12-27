@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] KP after plugging in drive.
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20KP%20after%20plugging%20in%20drive.&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000800.html">
+   <LINK REL="Next"  HREF="000803.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] KP after plugging in drive.</H1>
+    <B>Sean Hafeez</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20KP%20after%20plugging%20in%20drive.&In-Reply-To="
+       TITLE="[zfs-discuss] KP after plugging in drive.">sah.list at gmail.com
+       </A><BR>
+    <I>Wed Aug 20 13:33:56 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000800.html">[zfs-discuss] An interesting crash..
+</A></li>
+        <LI>Next message: <A HREF="000803.html">[zfs-discuss] Setting Tunables
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#802">[ date ]</a>
+              <a href="thread.html#802">[ thread ]</a>
+              <a href="subject.html#802">[ subject ]</a>
+              <a href="author.html#802">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Plugged in and powered on external ZFS volume. System Kernel Panic.
+
+
+Wed Aug 20 13:21:16 2008
+panic(cpu 0 caller 0x354F8D21): &quot;ZFS: I/O failure (write on &lt;unknown&gt;  
+off 0: zio 0x784ddd8 [L0 persistent error log] 4000L/400P  
+DVA[0]=&lt;0:6200064c00:400&gt; DVA[1]=&lt;0:1600054c00:400&gt;  
+DVA[2]=&lt;0:3100036800:400&gt; fletcher4 lzjb LE contiguous birth=17307  
+fill=1 cksum=5dba230ace:3ee5e235caf5:16deb8a9804f64:5e70846d445e8c8):  
+error &quot; &quot;6&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/ 
+zfs_kext/zfs/zio.c:918
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x352cfe38 : 0x12b0fa (0x4592a4 0x352cfe6c 0x133243 0x0)
+0x352cfe88 : 0x354f8d21 (0x355686b0 0x355686a4 0x35564400 0x35595670)
+0x352cff08 : 0x354f53fb (0x784ddd8 0x2f0 0x352cff28 0x3553c18a)
+0x352cff48 : 0x355544a6 (0x784ddd8 0x507c080 0x5573e4 0x3557d5f4)
+0x352cffc8 : 0x19ebdc (0x616e620 0x0 0x1a20b5 0x434e8b8)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x354e1000-&gt;0x355acfff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;  
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: MacBookPro3,1 (Mac-F4238BC8)
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000800.html">[zfs-discuss] An interesting crash..
+</A></li>
+	<LI>Next message: <A HREF="000803.html">[zfs-discuss] Setting Tunables
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#802">[ date ]</a>
+              <a href="thread.html#802">[ thread ]</a>
+              <a href="subject.html#802">[ subject ]</a>
+              <a href="author.html#802">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

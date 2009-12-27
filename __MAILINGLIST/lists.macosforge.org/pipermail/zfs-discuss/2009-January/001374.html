@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] adding a disk to raidz
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20a%20disk%20to%20raidz&In-Reply-To=%3CE416616D-50CE-452F-8F7E-E0B2722D23A5%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001375.html">
+   <LINK REL="Next"  HREF="001376.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] adding a disk to raidz</H1>
+    <B>Dirk Schelfhout</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20a%20disk%20to%20raidz&In-Reply-To=%3CE416616D-50CE-452F-8F7E-E0B2722D23A5%40mac.com%3E"
+       TITLE="[zfs-discuss] adding a disk to raidz">dirkschelfhout at mac.com
+       </A><BR>
+    <I>Wed Jan 28 21:20:44 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001375.html">[zfs-discuss] iMovie 09 and ZFS problem
+</A></li>
+        <LI>Next message: <A HREF="001376.html">[zfs-discuss] do you upgrade your pools?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1374">[ date ]</a>
+              <a href="thread.html#1374">[ thread ]</a>
+              <a href="subject.html#1374">[ subject ]</a>
+              <a href="author.html#1374">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+This could be usefull for somebody........
+( I have 5 disks in the macpro. hfsplus to boot from sitting in the  
+extra cd tray.
+3 for raidz. 1 for backup off the boot disk plus windowsxp ( for games  
+only...... , ge us some games steve !!!!! ) )
+
+I needed some more disk space for windows on my macpro,
+so I bought a WD10EADS with the plan to use about 500 gigs of it to  
+add to my raidz.
+
+This is about what I did :
+1) remove the old disk ( windows xp and some other stuff ), replace  
+with the new disk
+2) create a zfs mirror on the new disk.
+3) send a snapshot from raidz to the mirror
+4) create a ufs file system on a usb stick, put a 500 gig sparse file  
+on it.
+5) destroy the raidz pool
+6) create a new raidz with the 3 disks plus the sparse file on the ufs  
+file system
+( system crashed on this , upon reboot the ufs file was unavailable  
+( no problem see below ) )
+( my plan was to put the ufs file offline , but didn't need to do that )
+7) send the snapshot from the mirror to the raidz
+8 ) destroy the mirror pool
+9 ) replace the ufs file with 1 of the zfs partitions from the new disk
+10 ) let it resilver
+11) split the other zfs partition on the new disk in a few
+12 ) now running winclone to put xp on that disk .....
+
+Only problem is that all my files are sitting in : /Volumes/backup/ 
+backup
+instead of /Volumes/backup
+Maybe I should have done something different, I will just move the  
+files later.
+
+I attach what I did on the terminal to this mail ( except the non zfs  
+stuff at the end )
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: recreate zfs raidz.rtf
+Type: text/rtf
+Size: 10153 bytes
+Desc: not available
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090129/d8997efa/attachment.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090129/d8997efa/attachment.bin</A>&gt;
+-------------- next part --------------
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001375.html">[zfs-discuss] iMovie 09 and ZFS problem
+</A></li>
+	<LI>Next message: <A HREF="001376.html">[zfs-discuss] do you upgrade your pools?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1374">[ date ]</a>
+              <a href="thread.html#1374">[ thread ]</a>
+              <a href="subject.html#1374">[ subject ]</a>
+              <a href="author.html#1374">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

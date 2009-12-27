@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Performance and Spare...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Performance%20and%20Spare...&In-Reply-To=%3C49DD76FA.8050102%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001489.html">
+   <LINK REL="Next"  HREF="001491.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Performance and Spare...</H1>
+    <B>Richard Elling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Performance%20and%20Spare...&In-Reply-To=%3C49DD76FA.8050102%40gmail.com%3E"
+       TITLE="[zfs-discuss] Performance and Spare...">richard.elling at gmail.com
+       </A><BR>
+    <I>Wed Apr  8 21:18:02 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001489.html">[zfs-discuss] Performance and Spare...
+</A></li>
+        <LI>Next message: <A HREF="001491.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1490">[ date ]</a>
+              <a href="thread.html#1490">[ thread ]</a>
+              <a href="subject.html#1490">[ subject ]</a>
+              <a href="author.html#1490">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ted Simbajon wrote:
+&gt;<i> Hey guys, I know its a bit normal for a Raidz2 (raid6) to have a little bit
+</I>&gt;<i> of penalty plus+ the checksum zfs does on the background.
+</I>&gt;<i>   
+</I>
+Yes, but there are also configurations which are worse than others.
+For example, having more than about 9-10 vdevs in a raidz2 set
+is likely to be a bad idea for someone expecting decent performance.
+
+&gt;<i> As I new ZFS user, I want to cover all aspect of this filesystem since im
+</I>&gt;<i> Loving it!. 
+</I>&gt;<i>   
+</I>
+cool!
+
+&gt;<i> Does this look normal?
+</I>
+No.  Most folks would not put so many vdevs in a raidz[12] set.
+We've tried to make this known in both the man page and ZFS
+best practices guide, but it is possible to do, so people do it.
+
+&gt;<i>  Is disk10s2 &amp; disk157s2 out of the raidz2 (Array)?
+</I>&gt;<i>   
+</I>
+Yes.  Did you &quot;zpool add&quot; these later?  The data therein is not
+protected.  Unfortunately, there is no way to &quot;unadd&quot; these.
+So you have two choices, if you value the data:
+    1. destroy the pool and rebuild
+    2. &quot;zpool attach&quot; vdevs to the singletons to protect the data
+
+&gt;<i> And is it pretty normal to have a max write speed of about 25MBps?
+</I>&gt;<i>   
+</I>
+I don't see any data on the max write speed.  A plain &quot;zpool iostat&quot;
+will show the bandwidth since the pool was imported.  If you wait
+a little while and try it again, the number will decrease.  If you want
+to look at IO bandwidth under load, then you'll want to add the
+time interval option, something like &quot;zpool iostat 10&quot;
+ -- richard
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001489.html">[zfs-discuss] Performance and Spare...
+</A></li>
+	<LI>Next message: <A HREF="001491.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1490">[ date ]</a>
+              <a href="thread.html#1490">[ thread ]</a>
+              <a href="subject.html#1490">[ subject ]</a>
+              <a href="author.html#1490">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

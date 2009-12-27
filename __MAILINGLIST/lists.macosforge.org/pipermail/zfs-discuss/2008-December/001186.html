@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Panic On Simple Read Ops
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20On%20Simple%20Read%20Ops&In-Reply-To=%3C251E440E-4543-4FEF-BAE2-06DA518BC911%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001242.html">
+   <LINK REL="Next"  HREF="001191.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Panic On Simple Read Ops</H1>
+    <B>Maarten Billemont</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Panic%20On%20Simple%20Read%20Ops&In-Reply-To=%3C251E440E-4543-4FEF-BAE2-06DA518BC911%40gmail.com%3E"
+       TITLE="[zfs-discuss] Panic On Simple Read Ops">lhunath at gmail.com
+       </A><BR>
+    <I>Sat Dec 20 03:36:00 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001242.html">[zfs-discuss] snapshots
+</A></li>
+        <LI>Next message: <A HREF="001191.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1186">[ date ]</a>
+              <a href="thread.html#1186">[ thread ]</a>
+              <a href="subject.html#1186">[ subject ]</a>
+              <a href="author.html#1186">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+While Jaikoz was fingerprinting my music collection; the following  
+panic occurred:
+
+Sat Dec 20 12:32:10 2008
+panic(cpu 0 caller 0x34D0BDD9): &quot;zap-&gt;zap_u.zap_fat.zap_phys- 
+ &gt;zap_magic == 0x2F52AB2ABULL failed, 0 == -181751125&quot;@/Volumes/ 
+pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/zfs/zap.c:569
+Backtrace (CPU 0), Frame : Return Address (4 potential args on stack)
+0x344b35d8 : 0x12b0fa (0x459234 0x344b360c 0x133243 0x0)
+0x344b3628 : 0x34d0bdd9 (0x34d72a28 0x34d729ec 0x0 0x34d49d7c)
+0x344b3688 : 0x34d0c1cf (0x0 0x1 0x344b37e8 0x34d09f65)
+0x344b3708 : 0x34d0aede (0x10529700 0x344b37e0 0x9505e00 0x0)
+0x344b37a8 : 0x34d0c0e6 (0x344b37e0 0x9505e00 0x3c042 0x0)
+0x344b3818 : 0x34cd2e0b (0xc1fa9b0 0x3c042 0x0 0x3add1)
+0x344b38a8 : 0x1f2844 (0x344b38cc 0x77487e0 0x344b38e8 0x426a004)
+0x344b38f8 : 0x1f5296 (0x7070f40 0x344b3d20 0x87bf784 0x12fa53)
+0x344b3958 : 0x1c4f47 (0x7070f40 0x344b3d20 0x87bf784 0x87bf784)
+0x344b3f78 : 0x3ddd6e (0x59609d0 0x87bf680 0x87bf6c4 0xbfffec04)
+0x344b3fc8 : 0x19f3b3 (0x6507360 0x0 0x1a20b5 0xba867a0)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffd1b8
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x34ccd000-&gt;0x34d98fff
+
+BSD process name corresponding to current thread: mipcore
+
+Mac OS version:
+9F33
+
+Kernel version:
+Darwin Kernel Version 9.5.0: Wed Sep  3 11:29:43 PDT 2008;  
+root:xnu-1228.7.58~1/RELEASE_I386
+System model name: MacBookPro3,1 (Mac-F4238BC8)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (Darwin)
+
+iEYEARECAAYFAklM2KMACgkQKjXvaR+/rRvhYwCgnxYP4QYm4yD79aqm/jZWM+57
+n3EAoMpUe5FPRGaVucQJuWAPUgAL/naE
+=KCYD
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001242.html">[zfs-discuss] snapshots
+</A></li>
+	<LI>Next message: <A HREF="001191.html">[zfs-discuss] snapshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1186">[ date ]</a>
+              <a href="thread.html#1186">[ thread ]</a>
+              <a href="subject.html#1186">[ subject ]</a>
+              <a href="author.html#1186">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

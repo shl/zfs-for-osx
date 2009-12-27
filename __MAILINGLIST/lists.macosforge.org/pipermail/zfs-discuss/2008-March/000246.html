@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] My 2 cents on zraid random read performance
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20My%202%20cents%20on%20zraid%20random%20read%20performance&In-Reply-To=mailman.415.1204403662.11791.zfs-discuss%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000245.html">
+   <LINK REL="Next"  HREF="000247.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] My 2 cents on zraid random read performance</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20My%202%20cents%20on%20zraid%20random%20read%20performance&In-Reply-To=mailman.415.1204403662.11791.zfs-discuss%40lists.macosforge.org"
+       TITLE="[zfs-discuss] My 2 cents on zraid random read performance">i_see at macnews.de
+       </A><BR>
+    <I>Sun Mar  2 01:53:07 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000245.html">[zfs-discuss] creating a zpool changes disk partition label
+</A></li>
+        <LI>Next message: <A HREF="000247.html">[zfs-discuss] Behaviour on bad sectors?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#246">[ date ]</a>
+              <a href="thread.html#246">[ thread ]</a>
+              <a href="subject.html#246">[ subject ]</a>
+              <a href="author.html#246">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+there has been some discussion recently about the random-read- 
+performance of zraid compared to mirrored disks and raid5.
+Although I am a bit late to join this party, I want to add what i  
+think are the theoretical implications of the COW-design on the issue.
+I have not checked the code how much the things I discuss are  
+fundamental design decisions that would force big changes to  
+implement, I am just hoping to get the reasoning correct.
+
+1. Full read
+The fact that ZFS always writes data in full striped across all disks  
+does NOT imply it always has to read data in full stripes.
+If it is only interested in a particular byte, it would &quot;know&quot; on  
+which disks that byte had been written and access just that disk.
+The real question is HOW does zraid distribute the data and is it does  
+this prevent accessing data that happens to be on individual drives.
+If it can only access all disks at once then it is not reading data  
+slower, it is just reading unnecessary data.
+This is however not implied by the COW design or the wasted space/ 
+redundancy ratio, but only by the way low levels of zfs process read  
+requests.
+ From benchmark it seems, zfs is indeed reading from all disks (except  
+for the parity drive), so the situation could improve a lot.
+
+2. Performance of Mirroring vs. RAID-Z
+This is a question of read vs. write performance.
+a) Mirrored disks generally have the write performance of the slowest  
+disk in the array.
+b) raid-z will do sequential writes most of the time thereby achieving  
+the performance of the slowest disk * (raid width - redundancy level)
+(Note that zfs cannot completely avoid random access for random  
+writes, it just moves part of it to the time the data is read, which  
+might hurt some benchmarks, as you get more random reads this way).
+c) streaming read performance and random read performance (if  
+saturated with requests) for mirrors is the sum of all the performance  
+of all disks.
+d) streaming read performance for raid-z is the performance of the  
+slowest disk * (raid width - redundancy level)
+e) random read performance for raid-z could be the performance of the  
+slowest disk * (raid width - redundancy level)
+This is because raid-z can not freely choose the disk to read from, so  
+chances are requests will pile up for the slowest disk and all other  
+requests have to wait for that. If, infact just one disk is much  
+slower to fulfill a request, the data on that disk could as well be  
+recomputed from the data on all other disks. This improvement would  
+have some catches, as it is unlikely and would not detect silent data  
+corruption on that slow disk. Having said that, silent data corruption  
+will also be undetected on mirrored drives for all drives that are no  
+actively used to fulfill the request. The only way to be sure in that  
+area is regular scrubbing
+
+3. Performance implications of zfs COPIES=n
+Since for many scenarios random reads occur for large number of small  
+files that occupy little disk-space, it might be worthwhile placing  
+extra copies of small files onto the array. This improves the chances  
+that random reads are on in fact sequential for one of the copies and  
+minimizes necessary head movements while also allowing to choose the  
+fastest drive that has holds the requested data.
+I do not know is ZFS will always try the first copy first, and the  
+other ones only in case of failure, but not doing so might be a  
+worthwhile idea.
+This would still not help in all situations, like database serves,  
+that have big files in which random reads may occur frequently.
+If zfs would try to group small files and/or additional copies  
+together, it could also help statistical behaviour significantly.
+This works best if you have more than one vdev in your pool.
+
+To sum it up, situation is not as grim as it seems for raid-z
+raid-z can offer much better write performance combined with better  
+space utilization. If things are done well, read performance is only  
+slightly lower, so for many use-cases raid-z would be preferable,  
+especially if you keep in mind that starting with groups of four  
+disks, raidz2 offers far better fault-tolerance at the same disk- 
+utilization level. As of now, this is all quite theoretic as for  
+implementation details. Maybe someone who knows more of the source  
+code than me can shed some light on those ideas.
+
+--
+ralf bertling
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000245.html">[zfs-discuss] creating a zpool changes disk partition label
+</A></li>
+	<LI>Next message: <A HREF="000247.html">[zfs-discuss] Behaviour on bad sectors?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#246">[ date ]</a>
+              <a href="thread.html#246">[ thread ]</a>
+              <a href="subject.html#246">[ subject ]</a>
+              <a href="author.html#246">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

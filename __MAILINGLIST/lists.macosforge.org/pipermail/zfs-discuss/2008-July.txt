@@ -1,0 +1,4210 @@
+From franzschmalzl at spamfreemail.de  Tue Jul  1 16:26:06 2008
+From: franzschmalzl at spamfreemail.de (ruebezahl)
+Date: Wed, 2 Jul 2008 01:26:06 +0200
+Subject: [zfs-discuss] half frozen
+Message-ID: <59424EB7-1825-48B6-B1C8-3043C7DDF339@spamfreemail.de>
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+
+
+Dear list!
+
+I came across a serious issue the last days...
+
+When performing heavy r/w operations on my zpool, after an hour or so,  
+my system goes into an weird "half-frozen" state.
+
+Let me explain:
+Mouse and keyboard completely work and already open applications work  
+nice but it is not possible to open new ones. They just do not fire  
+up, not even a new shell, just a forever bouncing icon in the dock.
+Re-opening the finder renders my system "gui less"
+Diskutility opens but loops in getting it's disk info.
+Control-C an open task in Terminal neither works, nor does a shutdown  
+and of course the transfer ( i tried rsync, ditto, cp, and normal  
+finder)  to/from my zpool completely stops.
+
+I tried writing an empty folder to the root of my pool, which did to  
+my confusion still work.
+
+I also noticed this during a resilver since one of my harddrives got  
+replaced. I had to to a hard reset and start from the beginning.
+
+I experienced this on OS X Server and "normal" 10.5.0/3/4
+
+My zfs configuration looks like this:
+
+   pool: raidtank
+  state: ONLINE
+  scrub: resilver completed with 0 errors on Wed Jul  2 00:14:30 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	raidtank     ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk4s2  ONLINE       0     0     0
+	    disk5s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+3 Firewire 800 Drives in a daisy chain
+
+I think a hardware problem is very unlikely the case.
+I did not find any valuable log file entries, maybe someone can give  
+me a hint where to look ( Noel! )
+
+I did only experience this using the latest zfs-bits.
+
+Best regards
+
+franz
+
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.8 (Darwin)
+
+iQEcBAEBAgAGBQJIar0OAAoJEP8ZopU3BhmthWYH/Rrw7y4wWSNMsvxTDt3waWyN
+G7H1FwDHmIr9AJ4OtZ9DTxNiiNfd8/kYyAkvElvP1Uz24BzvI0dfLN0hsvW1MWOK
+12Imz0mcCpN+nWPs5bv6ZtxUnKvIxagdMXdJ/xU88AMHz/SsEl7M5Fo8gTd4aTym
+f4N86WwxHATHu2X9tYkuND/lV/xnhe6gyuHHTcwb3N9Mq4V3j+6fRjsL5UcW1Aq9
+Q3Vc45opLO3BHaToNANMzMEXKOUJKfLALcfgN1x0AeQlLgu5+fGrAbfpX22it9J1
+yzeMR9wXJE8HOU9o4qwonZ2B8ruzI1TptUXVm9yj10AHhUZJvGrHu47wFKg0c+I=
+=rIlU
+-----END PGP SIGNATURE-----
+
+From caronni at gmail.com  Wed Jul  2 00:23:54 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Wed, 2 Jul 2008 09:23:54 +0200
+Subject: [zfs-discuss] zfs silent death
+In-Reply-To: <327b821f0807010253n4f2ca9c1re50f57a41c5a73a4@mail.gmail.com>
+References: <327b821f0807010253n4f2ca9c1re50f57a41c5a73a4@mail.gmail.com>
+Message-ID: <327b821f0807020023v3f4793a9k7e0e9ceb3098d15a@mail.gmail.com>
+
+This also reminds me of Ruebzahl's issue from just now.
+(re-posting this because the other post seems to be in moderator limbo)
+
+On Tue, Jul 1, 2008 at 11:53, Germano Caronni <caronni at gmail.com> wrote:
+
+> I recently installed zfs-117 on a brand new, fully patched MacPro. Then I
+> created 3 100GB files on the native file system, and put them into a simple
+> zpool. Finally I instantiated zfs on it, with compression enabled. So far so
+> good.
+>
+> My next operation was an rsync --archive -H --sparse from a remote machine.
+> This was supposed to copy in about 260GB of data in ca. 900'000 files,
+> however the machine stopped responding after copying in about 70GB. When I
+> say 'stopped responding' I mean that all applications became unresponsive
+> (spinning color ball). Mouse still active. Pressing the power button and
+> waiting a minute or two would yield a suspended mac. After resume, all
+> applications would still be dead.
+>
+> I power-cycled the mac, and restarted the rsync process. This time, it was
+> able to go through a very few files, before dying again. Again, the entire
+> machine was stuck.
+>
+> No log messages, no kernel messages, no dump -- the machine just being
+> unresponsive. This was reproducable several times.
+>
+> Fine, I thought. Let's try a real disk instead of files. Took a 1TB disk
+> (internal), nuked everything on it, and used diskutil to create a zpool on
+> with the disk in it, and then a zfs file system.
+>
+> Same operation, same behaviour. After the third or fourth try, the system
+> would not reboot anymore, instead getting stuck on a light-blue display.
+> Frustrated, I booted from DVD, and nuked the ZFS experiment, giving up for
+> now.
+>
+>
+> Any recommendations on how to proceed with this issue? Should I file a
+> ticket in http://zfs.macosforge.org/trac/newticket ? Is this a known issue
+> (I think not?), or is there a way I can gather more information for
+> debugging purposes? I understand this incarnation of ZFS is work in progress
+> -- and if I can help by providing useful information I'll gladly do so.
+>
+> Germano
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080702/3e45d617/attachment.html 
+
+From lee+zfs at ourstage.com  Wed Jul  2 18:06:32 2008
+From: lee+zfs at ourstage.com (Lee Fyock)
+Date: Wed, 2 Jul 2008 21:06:32 -0400
+Subject: [zfs-discuss] Fubar'd array
+Message-ID: <A9E688DA-68A9-45E9-AD57-8B732AFE0E9F@ourstage.com>
+
+Hi--
+
+Is there any way to recover a pool?
+
+Here's the scoop, in probably too much detail:
+
+I'm a sucker for new filesystems and new tech in general. For you old- 
+timers, I installed Sequoia when it was first seeded, and had to  
+reformat my drive several times as it grew to the final release. I  
+flipped the "journaled" flag before I even knew what it meant. I  
+installed the pre-Leopard ZFS seed and have been using it for, what, a  
+year?
+
+So, I started with two 500 GB drives in a single pool, not mirrored. I  
+bought a 1 TB drive and added it to the pool. I bought another 1 TB  
+drive, and finally had enough storage (~1.5 TB) to mirror my disks and  
+be all set for the foreseeable future.
+
+In order to migrate my data from a single pool of 500 GB + 500 GB + 1  
+TB to a mirrored 500GB/500GB + 1TB/1TB pool, I was planning on doing  
+this:
+
+1) Copy everything to the New 1 TB drive (slopping what wouldn't fit  
+onto another spare drive)
+2) Upgrade to the latest ZFS for Mac release (117)
+3) Destroy the existing pool
+4) Create a pool with the two 500 GB drives
+5) Copy everything from the New drive to the 500 GB x 2 pool
+6) Create a mirrored pool with the two 1 TB drives
+7) Copy everything from the 500 GB x 2 pool to the mirrored 1 TB pool
+8) Destroy the 500 GB x 2 pool, and create it as a 500GB/500GB  
+mirrored pair and add it to the 1TB/1TB pool
+
+During step 7, while I was at work, the power failed at home,  
+apparently long enough to drain my UPS.
+
+When I rebooted my machine, both pools refused to mount: the 500+500  
+pool and the 1TB/1TB mirrored pool. Just about all my data is lost.  
+This was my media server containing my DVD rips, so everything is  
+recoverable in that I can re-rip 1+TB, but I'd rather not.
+
+"diskutil list" says this:
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *465.8 Gi    
+disk1
+    1:                                                    465.8 Gi    
+disk1s1
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *465.8 Gi    
+disk2
+    1:                                                    465.8 Gi    
+disk2s1
+/dev/disk3
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *931.5 Gi    
+disk3
+    1:                                                    931.5 Gi    
+disk3s1
+/dev/disk4
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     FDisk_partition_scheme                        *931.5 Gi    
+disk4
+    1:                                                    931.5 Gi    
+disk4s1
+
+During step 2, I created the pools using "zpool create media mirror / 
+dev/disk3 /dev/disk4" then "zpool upgrade", since I got warnings that  
+the filesystem version was out of date. Note that I created zpools  
+referring to the entire disk, not just a slice.
+
+Googling for "FDisk_partition_scheme" yields <http://lists.macosforge.org/pipermail/zfs-discuss/2008-March/000240.html 
+ >, among other things, but no hint of where to go from here.
+
+"zpool import -D" reports "no pools available to import".
+
+All of this is on a Mac Mini running Mac OS X 10.5.3, BTW.
+
+So, is the data recoverable?
+
+Thanks!
+Lee
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080702/7b5e208b/attachment.html 
+
+From divie10069 at gmail.com  Sun Jul  6 01:20:02 2008
+From: divie10069 at gmail.com (Dirk Vietzke)
+Date: Sun, 6 Jul 2008 16:20:02 +0800
+Subject: [zfs-discuss] Trash cannot be cleaned under ZFS
+Message-ID: <BD2CF009-E6F2-4F06-A9BB-52F68878285E@gmail.com>
+
+Hi,
+I followed the discussion about the cleaning of the trash. I did some  
+trials with it. It seems the rm -rf or "secure empty trash" actually  
+do empty the trash. When I used an earlier version of ZFS it worked as  
+well and the "usable" volume went up. If I do this after installing  
+V117, I can still clean the trash but volume doesn't go up. Now let me  
+wonder, is this a feature or a bug of ZFS? I have 3x 500Gb hard disk  
+in a raidz1 config. I already used 400+ Gb and tried a major cleanup  
+but nothing happened. The files are gone out of the trash and  
+the .Trashes but the disk space is still the same ... Any idea?
+Thanks,
+D.
+
+From occamsrazor at bpcurtis.com  Sun Jul  6 04:00:42 2008
+From: occamsrazor at bpcurtis.com (Occamsrazor)
+Date: Sun, 6 Jul 2008 14:00:42 +0300
+Subject: [zfs-discuss] External enclosure for ZFS use - Newbie help
+Message-ID: <000301c8df57$8b0fdac0$a12f9040$@com>
+
+Hi,
+
+I've been playing with ZFS on an external 2-drive JBOD USB enclosure,
+connected to a MacMini, just because it was what I had lying around and I
+wanted something to test with.
+
+Eventually I would like to try to build a ZFS photo archive (1TB+ of photos)
+because of the integrity/checksumming features of ZFS. I'm not convinced ZFS
+on Mac OS X is quite there yet, or at least I don't feel confident myself in
+using it for that purpose, but I am sure it will be soon. I'm currently
+storing them in a RAID-1 + Backup setup which works OK, though I have
+discovered occasional corruption of images, and this concerns me.
+
+What I would like to ask is what kind of external enclosures or other
+hardware people are using for ZFS setups? I currently need to buy an
+external 4 or 5-drive enclosure which I will run in JBOD or RAID, but I
+would like the model I buy to be suitable for ZFS use later. One aspect I am
+wondering about is the use of port-multiplier connections under ZFS in OS X.
+I'm looking at maybe buying this model, which comes in both 4 x eSATA, and 1
+x Port-Multiplier eSATA, versions. What do you think?
+
+http://www.raidsonic.de/en/pages/products/external_cases.php?we_objectID=458
+5
+
+http://www.raidsonic.de/en/pages/products/external_cases.php?we_objectID=508
+7
+
+They also do a firewire version:
+
+http://www.raidsonic.de/en/pages/products/external_cases.php?we_objectID=474
+7
+
+I currently own a PPC Mac Mini, and a Quicksilver G4 w/eSATA, but aim to
+change the G4 for a MacPro sometime this year.
+
+Many thanks,
+
+Ben
+
+
+
+
+From hanche at math.ntnu.no  Sun Jul  6 08:28:43 2008
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Sun, 06 Jul 2008 10:28:43 -0500 (CDT)
+Subject: [zfs-discuss] Trash cannot be cleaned under ZFS
+In-Reply-To: <BD2CF009-E6F2-4F06-A9BB-52F68878285E@gmail.com>
+References: <BD2CF009-E6F2-4F06-A9BB-52F68878285E@gmail.com>
+Message-ID: <20080706.102843.205948214.hanche@math.ntnu.no>
+
++ Dirk Vietzke <divie10069 at gmail.com>:
+
+> If I do this after installing V117, I can still clean the trash but
+> volume doesn't go up. Now let me wonder, is this a feature or a bug
+> of ZFS? I have 3x 500Gb hard disk in a raidz1 config. I already used
+> 400+ Gb and tried a major cleanup but nothing happened. The files
+> are gone out of the trash and the .Trashes but the disk space is
+> still the same ... Any idea?
+
+If the files are still present in a clone or snapshot of the file
+system then removing them won't free up any space.
+
+- Harald
+
+From bwaters at nrao.edu  Mon Jul  7 18:02:38 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Mon, 7 Jul 2008 19:02:38 -0600
+Subject: [zfs-discuss] thanks, ZFS!
+Message-ID: <2F8B683E-F7A8-4E89-8EBF-255A79942F40@nrao.edu>
+
+OK, time to go home:
+
+Just now I managed to do this:
+
+$ mv ~/Desktop/ work/gcc42-4.2.4.pkg/
+
+
+can you spot the error? oops.
+
+It gets better. Realizing my mistake, I did this:
+
+$ cd work/gcc42-4.2.4.pkg/
+$ rm -rf Desktop/
+
+Bye-bye, Desktop!
+
+This really happened. Yes, I am that stupid.
+
+
+Fortunately, my home directory has been on a ZFS pool for a few months  
+now... while I don't maintain automatic snapshots, I did have a sort- 
+of-recent snapshot lying around:
+
+# sudo zfs clone 'pool/bwaters at 2008-06-27T16:11:45' pool/ 
+bwaters_lastsnap
+$ /usr/local/bin/rsync -aSHADXx /Volumes/pool/bwaters_lastsnap/ 
+Desktop/ ./Desktop/
+
+
+Some oddities:
+a) The Finder still had a "Desktop" location in the Finder location  
+side-bar, but it was pointing to a random test file. I had to  
+explicitly remove that location and drag the restored Desktop into the  
+sidebar.
+
+  The Finder doesn't like it if you delete the Desktop...
+
+b) I kept getting a "File Exists" error from the command line when I  
+tried to re-create the ${HOME}/Desktop folder. eventually it showed up  
+and I was able to run my restore via rsync (you could use ditto or cp - 
+r).
+
+
+Once I got it restored, I created another snapshot right away!
+
+$ zfs snapshot pool/$(whoami)@$(date +%FT%T)
+
+
+
+
+From caronni at gmail.com  Tue Jul  1 02:53:15 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 1 Jul 2008 11:53:15 +0200
+Subject: [zfs-discuss] zfs silent death
+Message-ID: <327b821f0807010253n4f2ca9c1re50f57a41c5a73a4@mail.gmail.com>
+
+I recently installed zfs-117 on a brand new, fully patched MacPro. Then I
+created 3 100GB files on the native file system, and put them into a simple
+zpool. Finally I instantiated zfs on it, with compression enabled. So far so
+good.
+
+My next operation was an rsync --archive -H --sparse from a remote machine.
+This was supposed to copy in about 260GB of data in ca. 900'000 files,
+however the machine stopped responding after copying in about 70GB. When I
+say 'stopped responding' I mean that all applications became unresponsive
+(spinning color ball). Mouse still active. Pressing the power button and
+waiting a minute or two would yield a suspended mac. After resume, all
+applications would still be dead.
+
+I power-cycled the mac, and restarted the rsync process. This time, it was
+able to go through a very few files, before dying again. Again, the entire
+machine was stuck.
+
+No log messages, no kernel messages, no dump -- the machine just being
+unresponsive. This was reproducable several times.
+
+Fine, I thought. Let's try a real disk instead of files. Took a 1TB disk
+(internal), nuked everything on it, and used diskutil to create a zpool on
+with the disk in it, and then a zfs file system.
+
+Same operation, same behaviour. After the third or fourth try, the system
+would not reboot anymore, instead getting stuck on a light-blue display.
+Frustrated, I booted from DVD, and nuked the ZFS experiment, giving up for
+now.
+
+
+Any recommendations on how to proceed with this issue? Should I file a
+ticket in http://zfs.macosforge.org/trac/newticket ? Is this a known issue
+(I think not?), or is there a way I can gather more information for
+debugging purposes? I understand this incarnation of ZFS is work in progress
+-- and if I can help by providing useful information I'll gladly do so.
+
+Germano
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080701/d041368a/attachment.html 
+
+From canadrian at electricteaparty.net  Mon Jul 14 14:21:04 2008
+From: canadrian at electricteaparty.net (Adrian Thornton)
+Date: Mon, 14 Jul 2008 15:21:04 -0600
+Subject: [zfs-discuss] Anyone else observing ZFS transfers pausing
+	briefly?
+In-Reply-To: <8FCD4B5C-2157-48B2-A4C7-D8A896961C17@spamfreemail.de>
+References: <50348.124.168.74.59.1210257018.squirrel@webmail.amsi.org.au>
+	<50090.124.168.8.132.1210860290.squirrel@webmail.amsi.org.au>
+	<8FCD4B5C-2157-48B2-A4C7-D8A896961C17@spamfreemail.de>
+Message-ID: <4479C501-9B37-45BF-97EE-192EC406FF55@electricteaparty.net>
+
+Not sure if this is the same issue, but it appears related: I am  
+noticing something similar when playing video off my raidz1 array.  
+Even though I can copy 2 hours of h.264 or divx compressed video from  
+the raidz1 to the OS drive in just a couple minutes, if I actually  
+play said files in VLC (or quicktime player etc.) FROM the array, it  
+stutters and jumps frequently. It makes playback of media from the  
+array almost impossible, which somewhat limits its usefulness for my  
+purposes. I have tested the same files by playing them from the HFS+  
+OS drive, and there are no stutter issues there.
+
+- Adrian
+
+On Jun 25, 2008, at 01:39 , ruebezahl wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>
+>
+>
+>
+> I have got the exact same thing here...
+>
+>
+> On 15.05.2008, at 16:04, raoul at amsi.org.au wrote:
+>
+>>
+>> Hi Noel,
+>>
+>> Thank you for the zpool iostats command.  Very nice to see what's
+>> actually
+>> going on.
+>> I ran the command, but it has raised another question that I'm
+>> scratching
+>> my head over, here is some sample output of iostat.
+>>
+>>
+>> #sudo zpool iostat bigboxraidz 1
+>>
+>>               capacity     operations    bandwidth
+>> pool          used  avail   read  write   read  write
+>> -----------  -----  -----  -----  -----  -----  -----
+>> bigboxraidz   880G   980G      6     19   601K  1.43M
+>> bigboxraidz   880G   980G    320      0  39.8M      0
+>> bigboxraidz   880G   980G    269      0  33.4M      0
+>> bigboxraidz   880G   980G    254    116  30.3M  1.52M
+>> bigboxraidz   880G   980G    274      0  33.9M      0
+>> bigboxraidz   880G   980G    339      0  41.9M      0
+>> bigboxraidz   880G   980G    304      0  37.5M      0
+>> bigboxraidz   880G   980G    330      0  40.5M      0
+>> bigboxraidz   880G   980G    247    137  30.1M  1.22M
+>> bigboxraidz   880G   980G    320      0  39.8M      0
+>> bigboxraidz   880G   980G    312      0  38.5M      0
+>> bigboxraidz   880G   980G    330      0  41.0M      0
+>> bigboxraidz   880G   980G    313      0  38.7M      0
+>> bigboxraidz   880G   980G    207    209  24.6M  2.14M
+>>
+>> Using a MacPro, the stats above were observed by mounting the share
+>> "LoungeRoomMac" which resides on the bigboxraidz pool via Appleshare
+>> (gigabit).
+>>
+>> So, I understand that the zpool is being read at an average of around
+>> 30MB/sec...
+>>
+>> But when I look at actual network transfer speeds via MenuMeters for
+>> example, it only shows a transfer speed of approximately 3-5MB/sec..
+>>
+>> This I don't understand.
+>>
+>> iostat is saying 30MB/sec reads, but Menumeters is only showing 5Mb/
+>> sec
+>> maximum. (the 5Mb/sec is about right when calculating the time it
+>> took to
+>> transfer a 1GB VOB file)
+>>
+>> I have a screenshot of this at: http://homepage.mac.com/tangles/zfs.html
+>>
+>> Cheers,
+>>
+>> Raoul
+>>
+>>
+>>
+>>> It could be that what you're witnessing is ZFS's transactional IO
+>>> syncing.  Basically we write to disk (ie sync a transaction group)
+>>> every five seconds, hence this likely explains your crazy drive  
+>>> light
+>>> issue.
+>>>
+>>> To actually see what's going on down there, I'd recommend running
+>>> this
+>>> on the command line in a terminal window:
+>>>
+>>> #sudo zpool iostat bigboxraidz 1
+>>>
+>>>
+>>> This will give you all the specs on what I/O ZFS is doing every
+>>> second.  How many reads, how many writes, and the size of each
+>>> respectively. And will keep going until you ctl-C it.
+>>>
+>>> Noel
+>>
+>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.8 (Darwin)
+>
+> iQEcBAEBAgAGBQJIYfYgAAoJEP8ZopU3BhmtfucIAMuWt3bXU9eTjfVcBNs+PilR
+> fmQ6MCMXVmiJKOs+jCABXx+gD4viyyxQuUbow8VU4Vcz85szQT+4XVyXpz84mbj1
+> +4RpfJOi8ZBkw+KaSsLivkeumHauoOcI+9cFLARlBSoAXCT8cFUzs+Gess+cR1B4
+> yqjmJF0HgMwhz9v/FYsIFviJ+RDIaAFevDMNYYYuKHtI6a9e6xlpS2MTYsXIo9GL
+> 1zKYkgUa8kph/9BxGDWfut9hnF5L+faYHA/i4FtQ0QGS3qs93P9Yj384rEY7t2ip
+> PStG0OrFfmtVAziTqZxCuFA61RAugzGLPJC5IwL4kB1SaNYajH5VAAZuhZwzRzI=
+> =78UC
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From macrbg at mac.com  Mon Jul 14 15:18:27 2008
+From: macrbg at mac.com (Robert Gordon)
+Date: Mon, 14 Jul 2008 17:18:27 -0500
+Subject: [zfs-discuss] zfs silent death
+In-Reply-To: <327b821f0807010253n4f2ca9c1re50f57a41c5a73a4@mail.gmail.com>
+References: <327b821f0807010253n4f2ca9c1re50f57a41c5a73a4@mail.gmail.com>
+Message-ID: <826D52AF-5198-4869-A2A7-55D8CD89C1E0@mac.com>
+
+
+On Jul 1, 2008, at 4:53 AM, Germano Caronni wrote:
+
+> I understand this incarnation of ZFS is work in progress
+> -- and if I can help by providing useful information I'll gladly do  
+> so.
+>
+> Germano
+
+I'd be inclined to execute: vm_stat 2
+and review the memory usage..
+
+Robert.
+
+From macrbg at mac.com  Mon Jul 14 15:24:30 2008
+From: macrbg at mac.com (Robert Gordon)
+Date: Mon, 14 Jul 2008 17:24:30 -0500
+Subject: [zfs-discuss] Anyone else observing ZFS transfers
+	pausing	briefly?
+In-Reply-To: <4479C501-9B37-45BF-97EE-192EC406FF55@electricteaparty.net>
+References: <50348.124.168.74.59.1210257018.squirrel@webmail.amsi.org.au>
+	<50090.124.168.8.132.1210860290.squirrel@webmail.amsi.org.au>
+	<8FCD4B5C-2157-48B2-A4C7-D8A896961C17@spamfreemail.de>
+	<4479C501-9B37-45BF-97EE-192EC406FF55@electricteaparty.net>
+Message-ID: <47D91C87-CEEA-4CAA-864C-4FFBE09EA48C@mac.com>
+
+
+ From your description it looks like this was the iostat at the
+server.. so, it is showing you disk IO stats..
+
+On Jul 14, 2008, at 4:21 PM, Adrian Thornton wrote:
+
+>>> #sudo zpool iostat bigboxraidz 1
+>>>
+>>>              capacity     operations    bandwidth
+>>> pool          used  avail   read  write   read  write
+>>> -----------  -----  -----  -----  -----  -----  -----
+>>> bigboxraidz   880G   980G      6     19   601K  1.43M
+>>> bigboxraidz   880G   980G    320      0  39.8M      0
+>>> bigboxraidz   880G   980G    269      0  33.4M      0
+>>> bigboxraidz   880G   980G    254    116  30.3M  1.52M
+>>> bigboxraidz   880G   980G    274      0  33.9M      0
+
+
+From divie10069 at gmail.com  Tue Jul 15 07:50:26 2008
+From: divie10069 at gmail.com (Dirk Vietzke)
+Date: Tue, 15 Jul 2008 22:50:26 +0800
+Subject: [zfs-discuss] Trash cannot be cleaned under ZFS
+In-Reply-To: <20080706.102843.205948214.hanche@math.ntnu.no>
+References: <BD2CF009-E6F2-4F06-A9BB-52F68878285E@gmail.com>
+	<20080706.102843.205948214.hanche@math.ntnu.no>
+Message-ID: <1015A838-11A4-46FD-9DD3-636A4197F29B@gmail.com>
+
+Yep, it was the snapshots blocking the space. That made me write a  
+script to delete them all. Thanks. D.
+
+On Jul 6, 2008, at 23:28, Harald Hanche-Olsen <hanche at math.ntnu.no>  
+wrote:
+
+> + Dirk Vietzke <divie10069 at gmail.com>:
+>
+>> If I do this after installing V117, I can still clean the trash but
+>> volume doesn't go up. Now let me wonder, is this a feature or a bug
+>> of ZFS? I have 3x 500Gb hard disk in a raidz1 config. I already used
+>> 400+ Gb and tried a major cleanup but nothing happened. The files
+>> are gone out of the trash and the .Trashes but the disk space is
+>> still the same ... Any idea?
+>
+> If the files are still present in a clone or snapshot of the file
+> system then removing them won't free up any space.
+>
+> - Harald
+
+From dorofeev at gmail.com  Tue Jul 15 16:37:58 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Tue, 15 Jul 2008 16:37:58 -0700
+Subject: [zfs-discuss] ZFS panic on shutdown
+Message-ID: <a782ada90807151637g2a024ccejb29e39a6b0bf95b@mail.gmail.com>
+
+Hi,
+
+Since upgrading to latest zfs-117 bits my system
+panics when I shut it down.  This have already happened
+two times and I believe can be easily reproduced if
+necessary.  Here's a stacktrace from the latest case:
+
+Tue Jul 15 16:31:52 2008
+panic(cpu 0 caller 0x001DBC3D): "vnode_put(0xbc10c70): iocount <
+1"@/SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x84503d78 : 0x12b0fa (0x4592a4 0x84503dac 0x133243 0x0)
+0x84503dc8 : 0x1dbc3d (0x467410 0xbc10c70 0x84503e08 0x932fe532)
+0x84503de8 : 0x1dbcee (0xbc10c70 0xc6a24e0 0x61875ea6 0xbd5c140)
+0x84503e08 : 0x932ce30b (0xbc10c70 0x933312e4 0x0 0x0)
+0x84503f58 : 0x932b70a2 (0xbd5c000 0x121d39 0x0 0xce393c8)
+0x84503fc8 : 0x19ebdc (0xce73400 0x0 0x1a20b5 0xb6ee998)
+Backtrace terminated-invalid frame pointer 0
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x93286000->0x93351fff
+BSD process name corresponding to current thread: kernel_task
+Mac OS version:
+9E17
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: MacPro3,1 (Mac-F42C88C8)
+
+Is this a known problem?  Is there any information you guys
+want to see that I could provide to help with this problem?
+
+Thanks,
+-Andrei
+
+From ndellofano at apple.com  Tue Jul 15 16:49:58 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 15 Jul 2008 16:49:58 -0700
+Subject: [zfs-discuss] ZFS panic on shutdown
+In-Reply-To: <a782ada90807151637g2a024ccejb29e39a6b0bf95b@mail.gmail.com>
+References: <a782ada90807151637g2a024ccejb29e39a6b0bf95b@mail.gmail.com>
+Message-ID: <B931FE94-16F0-4AA0-86BF-0265BE4DBCEC@apple.com>
+
+I have a fix for this and also another one too for a race condition  
+that was causing intermittent hangs on the machine under load.  I'll  
+update the bits on the website asap and send out an announcement to  
+the list.
+
+thanks!
+Noel
+
+On Jul 15, 2008, at 4:37 PM, Andrei Dorofeev wrote:
+
+> Hi,
+>
+> Since upgrading to latest zfs-117 bits my system
+> panics when I shut it down.  This have already happened
+> two times and I believe can be easily reproduced if
+> necessary.  Here's a stacktrace from the latest case:
+>
+> Tue Jul 15 16:31:52 2008
+> panic(cpu 0 caller 0x001DBC3D): "vnode_put(0xbc10c70): iocount <
+> 1"@/SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x84503d78 : 0x12b0fa (0x4592a4 0x84503dac 0x133243 0x0)
+> 0x84503dc8 : 0x1dbc3d (0x467410 0xbc10c70 0x84503e08 0x932fe532)
+> 0x84503de8 : 0x1dbcee (0xbc10c70 0xc6a24e0 0x61875ea6 0xbd5c140)
+> 0x84503e08 : 0x932ce30b (0xbc10c70 0x933312e4 0x0 0x0)
+> 0x84503f58 : 0x932b70a2 (0xbd5c000 0x121d39 0x0 0xce393c8)
+> 0x84503fc8 : 0x19ebdc (0xce73400 0x0 0x1a20b5 0xb6ee998)
+> Backtrace terminated-invalid frame pointer 0
+>      Kernel loadable modules in backtrace (with dependencies):
+>         com.apple.filesystems.zfs(8.0)@0x93286000->0x93351fff
+> BSD process name corresponding to current thread: kernel_task
+> Mac OS version:
+> 9E17
+> Kernel version:
+> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+> root:xnu-1228.5.20~1/RELEASE_I386
+> System model name: MacPro3,1 (Mac-F42C88C8)
+>
+> Is this a known problem?  Is there any information you guys
+> want to see that I could provide to help with this problem?
+>
+> Thanks,
+> -Andrei
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From bwaters at nrao.edu  Tue Jul 15 17:01:27 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Tue, 15 Jul 2008 18:01:27 -0600
+Subject: [zfs-discuss] ZFS panic on shutdown
+In-Reply-To: <B931FE94-16F0-4AA0-86BF-0265BE4DBCEC@apple.com>
+References: <a782ada90807151637g2a024ccejb29e39a6b0bf95b@mail.gmail.com>
+	<B931FE94-16F0-4AA0-86BF-0265BE4DBCEC@apple.com>
+Message-ID: <0F7B2CDB-72A1-43C6-A8A7-7FDA422CE331@nrao.edu>
+
+
+On Jul 15, 2008, at 5:49 PM, No?l Dellofano wrote:
+
+> I'll update the bits on the website asap and send out an  
+> announcement to the list.
+
+Great!
+
+When that resolves the ZFS-shutdown crasher I'll close my Radar bug...
+
+
+From ndellofano at apple.com  Wed Jul 16 15:43:36 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 16 Jul 2008 15:43:36 -0700
+Subject: [zfs-discuss] new bits available:  zfs-119!
+Message-ID: <0D0E73F8-314B-43EA-98A0-A9944C570376@apple.com>
+
+Hey everyone,
+
+Just a quick heads up to say that new zfs bits and source are  
+available on the zfs macosforge site.  The new bits fix these (really  
+annoying) issues:
+
+
+6018669 cpanic(cpu 0 caller 0x001DBC35): "vnode_put(0x704cc70):  
+iocount < 1"@/
+5989423 Phantom folders/directories (unexpected ENOENT errors)
+6035783 ZFS hang during rename/open
+
+
+  There should be no more weirdo phantom folders and directories  
+hanging around.  Don found the issue was with the negative caching we  
+were using for the name cache.  Also, fixed a hang we had under load.   
+So if you had a hang while doing ditto, cp, or anything else with a  
+lot of load, please retry as that issue should also be fixed now.  And  
+hooray hooray, you shouldn't vnode panic on shutdown anymore.
+
+As always let me know what you like/don't like and what is just plain  
+busted :)
+
+thanks for all your feedback and for using ZFS!!!
+Noel 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080716/630509d4/attachment.html 
+
+From dorofeev at gmail.com  Wed Jul 16 16:01:13 2008
+From: dorofeev at gmail.com (Andrei Dorofeev)
+Date: Wed, 16 Jul 2008 16:01:13 -0700
+Subject: [zfs-discuss] new bits available: zfs-119!
+In-Reply-To: <0D0E73F8-314B-43EA-98A0-A9944C570376@apple.com>
+References: <0D0E73F8-314B-43EA-98A0-A9944C570376@apple.com>
+Message-ID: <a782ada90807161601s5bcc74f1h4cc24b5bc3a3c2a0@mail.gmail.com>
+
+I noticed a few new files and directories in this new archive.
+
+build/Leopard_Release/zfs.util
+build/Leopard_Release/zfs.util.dSYM/
+build/Leopard_Release/zoink
+build/Leopard_Release/zoink.dSYM/...
+
+What are we supposed to copy these to?  Could you please update
+installation instructions?
+
+Thank you!
+-Andrei
+
+On Wed, Jul 16, 2008 at 3:43 PM, No?l Dellofano <ndellofano at apple.com> wrote:
+> Hey everyone,
+> Just a quick heads up to say that new zfs bits and source are available on
+> the zfs macosforge site.  The new bits fix these (really annoying) issues:
+>
+> 6018669 cpanic(cpu 0 caller 0x001DBC35): "vnode_put(0x704cc70): iocount <
+> 1"@/
+> 5989423 Phantom folders/directories (unexpected ENOENT errors)
+> 6035783 ZFS hang during rename/open
+>
+>  There should be no more weirdo phantom folders and directories hanging
+> around.  Don found the issue was with the negative caching we were using for
+> the name cache.  Also, fixed a hang we had under load.  So if you had a hang
+> while doing ditto, cp, or anything else with a lot of load, please retry as
+> that issue should also be fixed now.  And hooray hooray, you shouldn't vnode
+> panic on shutdown anymore.
+> As always let me know what you like/don't like and what is just plain busted
+> :)
+> thanks for all your feedback and for using ZFS!!!
+> Noel
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+>
+
+From hdfdisk at gmail.com  Wed Jul 16 18:35:11 2008
+From: hdfdisk at gmail.com (Freeleader Phoenix)
+Date: Thu, 17 Jul 2008 09:35:11 +0800
+Subject: [zfs-discuss] ZFS panic on shutdown
+Message-ID: <73C7FF4A-2635-4F9A-9BE7-F52D71FB033F@gmail.com>
+
+Do you have more than one pool? I got this panic too when I imported  
+more than 1 pool.
+The way that can fix it is only use one pool at one time.
+
+From info at martin-hauser.net  Thu Jul 17 00:32:22 2008
+From: info at martin-hauser.net (Martin Hauser)
+Date: Thu, 17 Jul 2008 09:32:22 +0200
+Subject: [zfs-discuss] new bits available: zfs-119!
+In-Reply-To: <a782ada90807161601s5bcc74f1h4cc24b5bc3a3c2a0@mail.gmail.com>
+References: <0D0E73F8-314B-43EA-98A0-A9944C570376@apple.com>
+	<a782ada90807161601s5bcc74f1h4cc24b5bc3a3c2a0@mail.gmail.com>
+Message-ID: <FE8C41DB-94F2-44CF-86A3-8FB3976C00C2@martin-hauser.net>
+
+the .dSYM directories are just debug information... you can safely  
+ignore those.
+not sure about zoink and zfs.util in general
+
+Martin
+
+On Jul 17, 2008, at 01:01 AM, Andrei Dorofeev wrote:
+
+> I noticed a few new files and directories in this new archive.
+>
+> build/Leopard_Release/zfs.util
+> build/Leopard_Release/zfs.util.dSYM/
+> build/Leopard_Release/zoink
+> build/Leopard_Release/zoink.dSYM/...
+>
+> What are we supposed to copy these to?  Could you please update
+> installation instructions?
+>
+> Thank you!
+> -Andrei
+>
+> On Wed, Jul 16, 2008 at 3:43 PM, No?l Dellofano  
+> <ndellofano at apple.com> wrote:
+>> Hey everyone,
+>> Just a quick heads up to say that new zfs bits and source are  
+>> available on
+>> the zfs macosforge site.  The new bits fix these (really annoying)  
+>> issues:
+>>
+>> 6018669 cpanic(cpu 0 caller 0x001DBC35): "vnode_put(0x704cc70):  
+>> iocount <
+>> 1"@/
+>> 5989423 Phantom folders/directories (unexpected ENOENT errors)
+>> 6035783 ZFS hang during rename/open
+>>
+>> There should be no more weirdo phantom folders and directories  
+>> hanging
+>> around.  Don found the issue was with the negative caching we were  
+>> using for
+>> the name cache.  Also, fixed a hang we had under load.  So if you  
+>> had a hang
+>> while doing ditto, cp, or anything else with a lot of load, please  
+>> retry as
+>> that issue should also be fixed now.  And hooray hooray, you  
+>> shouldn't vnode
+>> panic on shutdown anymore.
+>> As always let me know what you like/don't like and what is just  
+>> plain busted
+>> :)
+>> thanks for all your feedback and for using ZFS!!!
+>> Noel
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080717/65c2f8d0/attachment.bin 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080717/65c2f8d0/attachment-0001.bin 
+
+From ndellofano at apple.com  Thu Jul 17 09:29:21 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 17 Jul 2008 09:29:21 -0700
+Subject: [zfs-discuss] new bits available: zfs-119!
+In-Reply-To: <FE8C41DB-94F2-44CF-86A3-8FB3976C00C2@martin-hauser.net>
+References: <0D0E73F8-314B-43EA-98A0-A9944C570376@apple.com>
+	<a782ada90807161601s5bcc74f1h4cc24b5bc3a3c2a0@mail.gmail.com>
+	<FE8C41DB-94F2-44CF-86A3-8FB3976C00C2@martin-hauser.net>
+Message-ID: <1E7FA90B-6275-4E4A-BCA3-30D4F5E3A45D@apple.com>
+
+None of the installation instructions are different.  As Martin  
+mentions below, all the .dSym directories are just debug symbols.  The  
+zfs.util directory can also be ignored as our project doesn't require  
+it, but it's built automatically.
+zoink, is a userland program you can use to observe ZFS's current  
+memory usage on the system. It runs until you cntl-C out of it.
+
+For example:
+%zoink
+
+ZFS footprint:  281M used,  281M peak,  303M goal                31  
+threads
+  ARC footprint:  227M used,  228M peak,  227M goal
+
+                         obj      slab    active     total       
+peak    total
+  kmem_cache name       size      size      objs      objs       
+objs      mem
+-----------------------------------------------------------------------------
+  kmem_magazine_1          8      4096      1354      1524       
+1524      11K
+  kmem_magazine_3         16      4096      1627      1778       
+1778      27K
+  kmem_magazine_7         32      4096       593       635        
+635      19K
+  kmem_magazine_15        64      4096       396       441        
+441      27K
+  kmem_slab_cache         28      4096      8915      9017       
+9017     246K
+  kmem_bufctl_cache       12      4096     51386     51562      
+51562     604K
+  taskq_ent_cache         48      4096       414       672        
+672      31K
+  taskq_cache            204      4096        13        19         
+19       3K
+  zfs_znode_cache        212     32768     10601     12986      
+12986    2688K
+  zio_bufs 540           540      8192     18131     21291      
+21291     798K
+  zio_bufs 512           512     32768     19217     20864      
+20864    9888K
+  zio_bufs 1024         1024     16384        89       320        
+704     176K
+  zio_bufs 1536         1536     12288        59       216        
+224     108K
+  zio_bufs 2048         2048      4096        72       138        
+156      60K
+  zio_bufs 2560         2560     20480        74       160        
+160     100K
+  zio_bufs 3072         3072     12288        52       132        
+132     180K
+  zio_bufs 3584         3584     28672        56       144        
+152     168K
+  zio_bufs 4096         4096      4096        75       207        
+246     592K
+  zio_bufs 5120         5120     20480        95       152        
+164     100K
+  zio_bufs 6144         6144     12288        81        94        
+104      48K
+  zio_bufs 7168         7168     28672        50        72         
+76      56K
+  zio_bufs 8192         8192      8192        36        45         
+53      64K
+  zio_bufs 10240       10240     20480        55        86         
+96      80K
+  zio_bufs 12288       12288     12288        33        52         
+73      72K
+  zio_bufs 14336       14336     28672        31       240        
+242    2716K
+  zio_bufs 16384       16384     16384      2289      2624      3296    
+41536K
+  zio_bufs 20480       20480     20480        45        68         
+88      80K
+  zio_bufs 24576       24576     24576        17        30         
+39      72K
+  zio_bufs 28672       28672     28672        33        64         
+85      56K
+  zio_bufs 32768       32768     32768         9        27         
+35      96K
+  zio_bufs 36864       36864     36864        17        33         
+39     108K
+  zio_bufs 40960       40960     40960         5        15         
+23      80K
+  zio_bufs 45056       45056     45056         8        21         
+24      88K
+  zio_bufs 49152       49152     49152         7        14         
+17      96K
+  zio_bufs 53248       53248     53248        14        22         
+22     104K
+  zio_bufs 57344       57344     57344        13        24         
+30     112K
+  zio_bufs 61440       61440     61440         9        17         
+19     120K
+  zio_bufs 65536       65536     65536       172       180       181    
+10496K
+  zio_bufs 69632       69632     69632         4        13         
+14     136K
+  zio_bufs 73728       73728     73728         3         6          
+6     144K
+  zio_bufs 77824       77824     77824         8        10         
+11     152K
+  zio_bufs 81920       81920     81920         5         7          
+7     160K
+  zio_bufs 86016       86016     86016         1         8          
+9     168K
+
+
+
+Noel
+
+On Jul 17, 2008, at 12:32 AM, Martin Hauser wrote:
+
+> the .dSYM directories are just debug information... you can safely  
+> ignore those.
+> not sure about zoink and zfs.util in general
+>
+> Martin
+>
+> On Jul 17, 2008, at 01:01 AM, Andrei Dorofeev wrote:
+>
+>> I noticed a few new files and directories in this new archive.
+>>
+>> build/Leopard_Release/zfs.util
+>> build/Leopard_Release/zfs.util.dSYM/
+>> build/Leopard_Release/zoink
+>> build/Leopard_Release/zoink.dSYM/...
+>>
+>> What are we supposed to copy these to?  Could you please update
+>> installation instructions?
+>>
+>> Thank you!
+>> -Andrei
+>>
+>> On Wed, Jul 16, 2008 at 3:43 PM, No?l Dellofano  
+>> <ndellofano at apple.com> wrote:
+>>> Hey everyone,
+>>> Just a quick heads up to say that new zfs bits and source are  
+>>> available on
+>>> the zfs macosforge site.  The new bits fix these (really annoying)  
+>>> issues:
+>>>
+>>> 6018669 cpanic(cpu 0 caller 0x001DBC35): "vnode_put(0x704cc70):  
+>>> iocount <
+>>> 1"@/
+>>> 5989423 Phantom folders/directories (unexpected ENOENT errors)
+>>> 6035783 ZFS hang during rename/open
+>>>
+>>> There should be no more weirdo phantom folders and directories  
+>>> hanging
+>>> around.  Don found the issue was with the negative caching we were  
+>>> using for
+>>> the name cache.  Also, fixed a hang we had under load.  So if you  
+>>> had a hang
+>>> while doing ditto, cp, or anything else with a lot of load, please  
+>>> retry as
+>>> that issue should also be fixed now.  And hooray hooray, you  
+>>> shouldn't vnode
+>>> panic on shutdown anymore.
+>>> As always let me know what you like/don't like and what is just  
+>>> plain busted
+>>> :)
+>>> thanks for all your feedback and for using ZFS!!!
+>>> Noel
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+
+From ndellofano at apple.com  Thu Jul 17 16:36:07 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 17 Jul 2008 16:36:07 -0700
+Subject: [zfs-discuss] Anyone else observing ZFS transfers
+	pausing	briefly?
+In-Reply-To: <4479C501-9B37-45BF-97EE-192EC406FF55@electricteaparty.net>
+References: <50348.124.168.74.59.1210257018.squirrel@webmail.amsi.org.au>
+	<50090.124.168.8.132.1210860290.squirrel@webmail.amsi.org.au>
+	<8FCD4B5C-2157-48B2-A4C7-D8A896961C17@spamfreemail.de>
+	<4479C501-9B37-45BF-97EE-192EC406FF55@electricteaparty.net>
+Message-ID: <C7225A20-2F28-4832-A46E-E91690290522@apple.com>
+
+oh yikes.  Not cool.
+Adrian is this always reproducible for you?  Can you tell me what your  
+set up is (machine type, memory, pool set up, etc)?
+I'll open a bug and see if I can reproduce and figure out what the  
+slow down is.....
+
+thanks!
+Noel
+
+On Jul 14, 2008, at 2:21 PM, Adrian Thornton wrote:
+
+> Not sure if this is the same issue, but it appears related: I am
+> noticing something similar when playing video off my raidz1 array.
+> Even though I can copy 2 hours of h.264 or divx compressed video from
+> the raidz1 to the OS drive in just a couple minutes, if I actually
+> play said files in VLC (or quicktime player etc.) FROM the array, it
+> stutters and jumps frequently. It makes playback of media from the
+> array almost impossible, which somewhat limits its usefulness for my
+> purposes. I have tested the same files by playing them from the HFS+
+> OS drive, and there are no stutter issues there.
+>
+> - Adrian
+>
+> On Jun 25, 2008, at 01:39 , ruebezahl wrote:
+>
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>>
+>>
+>>
+>>
+>> I have got the exact same thing here...
+>>
+>>
+>> On 15.05.2008, at 16:04, raoul at amsi.org.au wrote:
+>>
+>>>
+>>> Hi Noel,
+>>>
+>>> Thank you for the zpool iostats command.  Very nice to see what's
+>>> actually
+>>> going on.
+>>> I ran the command, but it has raised another question that I'm
+>>> scratching
+>>> my head over, here is some sample output of iostat.
+>>>
+>>>
+>>> #sudo zpool iostat bigboxraidz 1
+>>>
+>>>              capacity     operations    bandwidth
+>>> pool          used  avail   read  write   read  write
+>>> -----------  -----  -----  -----  -----  -----  -----
+>>> bigboxraidz   880G   980G      6     19   601K  1.43M
+>>> bigboxraidz   880G   980G    320      0  39.8M      0
+>>> bigboxraidz   880G   980G    269      0  33.4M      0
+>>> bigboxraidz   880G   980G    254    116  30.3M  1.52M
+>>> bigboxraidz   880G   980G    274      0  33.9M      0
+>>> bigboxraidz   880G   980G    339      0  41.9M      0
+>>> bigboxraidz   880G   980G    304      0  37.5M      0
+>>> bigboxraidz   880G   980G    330      0  40.5M      0
+>>> bigboxraidz   880G   980G    247    137  30.1M  1.22M
+>>> bigboxraidz   880G   980G    320      0  39.8M      0
+>>> bigboxraidz   880G   980G    312      0  38.5M      0
+>>> bigboxraidz   880G   980G    330      0  41.0M      0
+>>> bigboxraidz   880G   980G    313      0  38.7M      0
+>>> bigboxraidz   880G   980G    207    209  24.6M  2.14M
+>>>
+>>> Using a MacPro, the stats above were observed by mounting the share
+>>> "LoungeRoomMac" which resides on the bigboxraidz pool via Appleshare
+>>> (gigabit).
+>>>
+>>> So, I understand that the zpool is being read at an average of  
+>>> around
+>>> 30MB/sec...
+>>>
+>>> But when I look at actual network transfer speeds via MenuMeters for
+>>> example, it only shows a transfer speed of approximately 3-5MB/sec..
+>>>
+>>> This I don't understand.
+>>>
+>>> iostat is saying 30MB/sec reads, but Menumeters is only showing 5Mb/
+>>> sec
+>>> maximum. (the 5Mb/sec is about right when calculating the time it
+>>> took to
+>>> transfer a 1GB VOB file)
+>>>
+>>> I have a screenshot of this at: http://homepage.mac.com/tangles/zfs.html
+>>>
+>>> Cheers,
+>>>
+>>> Raoul
+>>>
+>>>
+>>>
+>>>> It could be that what you're witnessing is ZFS's transactional IO
+>>>> syncing.  Basically we write to disk (ie sync a transaction group)
+>>>> every five seconds, hence this likely explains your crazy drive
+>>>> light
+>>>> issue.
+>>>>
+>>>> To actually see what's going on down there, I'd recommend running
+>>>> this
+>>>> on the command line in a terminal window:
+>>>>
+>>>> #sudo zpool iostat bigboxraidz 1
+>>>>
+>>>>
+>>>> This will give you all the specs on what I/O ZFS is doing every
+>>>> second.  How many reads, how many writes, and the size of each
+>>>> respectively. And will keep going until you ctl-C it.
+>>>>
+>>>> Noel
+>>>
+>>>
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>> -----BEGIN PGP SIGNATURE-----
+>> Version: GnuPG v1.4.8 (Darwin)
+>>
+>> iQEcBAEBAgAGBQJIYfYgAAoJEP8ZopU3BhmtfucIAMuWt3bXU9eTjfVcBNs+PilR
+>> fmQ6MCMXVmiJKOs+jCABXx+gD4viyyxQuUbow8VU4Vcz85szQT+4XVyXpz84mbj1
+>> +4RpfJOi8ZBkw+KaSsLivkeumHauoOcI+9cFLARlBSoAXCT8cFUzs+Gess+cR1B4
+>> yqjmJF0HgMwhz9v/FYsIFviJ+RDIaAFevDMNYYYuKHtI6a9e6xlpS2MTYsXIo9GL
+>> 1zKYkgUa8kph/9BxGDWfut9hnF5L+faYHA/i4FtQ0QGS3qs93P9Yj384rEY7t2ip
+>> PStG0OrFfmtVAziTqZxCuFA61RAugzGLPJC5IwL4kB1SaNYajH5VAAZuhZwzRzI=
+>> =78UC
+>> -----END PGP SIGNATURE-----
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ndellofano at apple.com  Thu Jul 17 16:48:40 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 17 Jul 2008 16:48:40 -0700
+Subject: [zfs-discuss] zfs silent death
+In-Reply-To: <327b821f0807020023v3f4793a9k7e0e9ceb3098d15a@mail.gmail.com>
+References: <327b821f0807010253n4f2ca9c1re50f57a41c5a73a4@mail.gmail.com>
+	<327b821f0807020023v3f4793a9k7e0e9ceb3098d15a@mail.gmail.com>
+Message-ID: <C5EF5F24-78A2-42D7-B7A4-F1EA8B066248@apple.com>
+
+> This also reminds me of Ruebzahl's issue from just now.
+> (re-posting this because the other post seems to be in moderator  
+> limbo)
+
+Sorry for the delay, this was me.  The moderator(a.k.a. me) was on  
+vacation :)  I'm just now getting caught up on email.
+
+As to the issue.  I believe this is actually a known bug that we just  
+fixed.  Due to this bug:
+6035783 ZFS hang during rename/open
+
+I'll spare you the gory details, but basically when the machine was  
+under heavy load, a.k.a. a lot of creates, we'd get into a hung  
+situation since we were waiting for a recycled vnode with an open zfs  
+transaction, and waiting for that vnode from the VFS.  The rest of the  
+system is blocked on that transaction commiting, and it's stuck  
+waiting for a vnode it's not going to get because the system is  
+deadlocked.
+
+anyway, if you want gory details let me know :)  But can you give  
+zfs-119 a try? (I just posted it yesterday on the zfs.macosforge site)  
+We just fixed this issue and the fix is in those bits.  If you still  
+get a hang, please let me know.
+
+thanks!!
+Noel
+
+
+
+On Jul 2, 2008, at 12:23 AM, Germano Caronni wrote:
+
+> This also reminds me of Ruebzahl's issue from just now.
+> (re-posting this because the other post seems to be in moderator  
+> limbo)
+>
+> On Tue, Jul 1, 2008 at 11:53, Germano Caronni <caronni at gmail.com>  
+> wrote:
+> I recently installed zfs-117 on a brand new, fully patched MacPro.  
+> Then I created 3 100GB files on the native file system, and put them  
+> into a simple zpool. Finally I instantiated zfs on it, with  
+> compression enabled. So far so good.
+>
+> My next operation was an rsync --archive -H --sparse from a remote  
+> machine. This was supposed to copy in about 260GB of data in ca.  
+> 900'000 files, however the machine stopped responding after copying  
+> in about 70GB. When I say 'stopped responding' I mean that all  
+> applications became unresponsive (spinning color ball). Mouse still  
+> active. Pressing the power button and waiting a minute or two would  
+> yield a suspended mac. After resume, all applications would still be  
+> dead.
+>
+> I power-cycled the mac, and restarted the rsync process. This time,  
+> it was able to go through a very few files, before dying again.  
+> Again, the entire machine was stuck.
+>
+> No log messages, no kernel messages, no dump -- the machine just  
+> being unresponsive. This was reproducable several times.
+>
+> Fine, I thought. Let's try a real disk instead of files. Took a 1TB  
+> disk (internal), nuked everything on it, and used diskutil to create  
+> a zpool on with the disk in it, and then a zfs file system.
+>
+> Same operation, same behaviour. After the third or fourth try, the  
+> system would not reboot anymore, instead getting stuck on a light- 
+> blue display. Frustrated, I booted from DVD, and nuked the ZFS  
+> experiment, giving up for now.
+>
+>
+> Any recommendations on how to proceed with this issue? Should I file  
+> a ticket in http://zfs.macosforge.org/trac/newticket ? Is this a  
+> known issue (I think not?), or is there a way I can gather more  
+> information for debugging purposes? I understand this incarnation of  
+> ZFS is work in progress -- and if I can help by providing useful  
+> information I'll gladly do so.
+>
+> Germano
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080717/dc2d906e/attachment.html 
+
+From ndellofano at apple.com  Thu Jul 17 16:53:27 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 17 Jul 2008 16:53:27 -0700
+Subject: [zfs-discuss] how to avoid one ZFS Kernel Panic
+In-Reply-To: <A2614430-855E-4B18-B1CD-8BF319900DED@h3q.com>
+References: <A2614430-855E-4B18-B1CD-8BF319900DED@h3q.com>
+Message-ID: <EA05F6C7-1421-471D-8C3B-49C04B21BC07@apple.com>
+
+Yeah, sorry for this.  So we're in the process of changing the  
+behavior such that when you eject a ZFS drive, it really needs to do a  
+zpool export under the covers instead of a zfs unmount. Normally,  
+diskutil calls unmount when an eject action is registered.    
+Unmounting a zfs filesystem however doesn't take it out of the  
+namespace or destroy it, it just unmounts it, but ZFS knows it is  
+still there.  So when we try and update the label on a drive that  
+isn't there, we IO panic since it's a write failure (the drive is MIA,  
+we can't write to it).
+
+For the meantime keep doing what you're doing.  Soon when you drag the  
+volume to eject it, the export will happen for you automatically.
+
+
+Noel
+
+
+On Jun 30, 2008, at 12:15 PM, Denis Ahrens wrote:
+
+> Hi
+>
+> Iam using ZFS on OSX for a long time now. One thing I noticed how
+> I can avoid a kernel panic is to manually export the pool after
+> ejecting the pool with the Finder.
+>
+> here is the panic:
+>
+> panic(cpu 1 caller 0x35BD0C5C): "ZFS: I/O failure (write on <unknown>
+> off 0: zio 0x3dcf440 [L0 DMU dnode] 4000L/1000P
+> DVA[0]=<0:aa0065000:1000> DVA[1]=<0:5c6343000:1000> fletcher4 lzjb LE
+> contiguous birth=138888 fill=32
+> cksum=f9b62d0293:21d432c88ba63:2d53dbff0531543:d3661c48cad68729):
+> error " "6"@/Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-117/
+> zfs_kext/zfs/zio.c:918
+>
+> I have an external disk with a zpool. When I restart my machine
+> and unplug the drive while restarting most of the time the
+> kernel panics. But when I manually export the pool after ejecting
+> I don't see a panic.
+>
+> Denis
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ndellofano at apple.com  Thu Jul 17 17:37:00 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 17 Jul 2008 17:37:00 -0700
+Subject: [zfs-discuss] weird device identifier
+In-Reply-To: <86CD8D5D-C020-475C-B291-85436345A768@spamfreemail.de>
+References: <86CD8D5D-C020-475C-B291-85436345A768@spamfreemail.de>
+Message-ID: <DC296DE7-F9A3-4D38-B1B4-CCE854FB6E12@apple.com>
+
+Sorry, just got back, hopefully your setup is still ok.
+
+So for the replace (assuming you have taken out the failing disk and  
+put in your new disk), I usually do a diskutil list first to figure  
+out what diskutility has decided to name my new disk i just stuck in  
+there.  Once you know that, lets say for example you stuck in your new  
+drive and diskutil brings it in as disk3, then you need to format that  
+disk for ZFS, ala
+
+%diskutil partitionDisk disk3 GPTFormat ZFS %noformat% myraiddrive 100%
+
+Then after the drive is formatted, you can issue the replace:
+
+%sudo zpool replace raidtank 5723000294216582652 disk3s2
+
+The crazy number you see is the disk's guuid id which we use only when  
+the drive is in a failed state.  Libzfs should recognize this number  
+and replace it with your new drive, at which point a resilver should  
+automatically kick off to bring your new disk up to speed.
+
+let me know if you have any issues or questions with this,
+Noel
+
+
+
+On Jun 30, 2008, at 11:25 AM, ruebezahl wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>
+>
+> i'm facing a little problem here
+>
+>
+> status: One or more devices could not be used because the label is
+> missing or
+> 	invalid.  Sufficient replicas exist for the pool to continue
+> 	functioning in a degraded state.
+> action: Replace the device using 'zpool replace'.
+>    see: http://www.sun.com/msg/ZFS-8000-4J
+>  scrub: resilver completed with 0 errors on Mon Jun 30 19:58:54 2008
+> config:
+>
+> 	NAME                     STATE     READ WRITE CKSUM
+> 	raidtank                 DEGRADED     0     0     0
+> 	  raidz1                 DEGRADED     0     0     0
+> 	    disk2s2              ONLINE       0     0     0
+> 	    disk4s2              ONLINE       0     0     0
+> 	    5723000294216582652  FAULTED      0     0     0  was /dev/disk4s2
+>
+>
+> the third disk died and i got a replacement today, but i don't know
+> how to tell zfs to replace the disk since 5723000294216582652 isn't
+> being accepted
+>
+> any ideas on this ?
+>
+>
+> best regards
+>
+> franz
+>
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.8 (Darwin)
+>
+> iQEcBAEBAgAGBQJIaSUoAAoJEP8ZopU3Bhmtu8AH/Rs5d39KegWKM92J7Xy7YTMZ
+> Ez7JrvNFrjuMHp+Eml7PGbahB5apv0HpYQ8NXeYAT1dOg0Niocg+bSmqHgyX3iFE
+> 7mQfAUBW0Lqn+Zoq1FNd/e/p9a/mvxQjNhgSl3lCk0NmUiSR666j55Izoi0SKVFE
+> 9dhKYDX/4KTZJvh4gVCGFaHWSs70B7clOdrfZA9F05ErU07QpQsTndfOzghafr8f
+> rxeCw9sGLi8yLcWhDOxS4Xj/xz1LwaigxguMQVU5RsSLFYvJlbQKb84k6FJKLA8J
+> 4fCf01uZ2JdhmeFSbSGp1fS0H0RDGIuRSNjhG+bkblHaGWAIv4EWAGxsFcVlB28=
+> =U/zP
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ndellofano at apple.com  Thu Jul 17 17:55:03 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 17 Jul 2008 17:55:03 -0700
+Subject: [zfs-discuss] the third
+In-Reply-To: <974D1846-8036-44AC-94DE-FE116E19FB3F@spamfreemail.de>
+References: <974D1846-8036-44AC-94DE-FE116E19FB3F@spamfreemail.de>
+Message-ID: <36082CA6-49CC-4D4D-B765-B4BFB7FAFA36@apple.com>
+
+Most likely the disk is dying/going bad.  I'm not sure if just from  
+the checksum errors it can be surmised if it's necessarily the  
+controller or not.  And since you're getting a large number of them  
+often, I'm guessing it's not bit rot either.  Likely a sign perhaps a  
+section of the disk might be going bad.
+
+Noel
+
+On May 21, 2008, at 7:56 AM, ruebezahl wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> to keep spamming at this list, i have another question :)
+>
+>
+>   pool: raidtank
+>  state: ONLINE
+> status: One or more devices has experienced an unrecoverable error.   
+> An
+> 	attempt was made to correct the error.  Applications are unaffected.
+> action: Determine if the device needs to be replaced, and clear the
+> errors
+> 	using 'zpool clear' or replace the device with 'zpool replace'.
+>    see: http://www.sun.com/msg/ZFS-8000-9P
+>  scrub: scrub in progress, 2,89% done, 4h46m to go
+> config:
+>
+> 	NAME         STATE     READ WRITE CKSUM
+> 	raidtank     ONLINE       0     0     0
+> 	  raidz1     ONLINE       0     0     0
+> 	    disk2s2  ONLINE       0     0     0
+> 	    disk3s2  ONLINE       0     0     0
+> 	    disk4s2  ONLINE       0     0    20
+>
+>
+> i get these quite often lately...
+>
+> no I/O errors only checksum errors, and only on this disk
+>
+> what might this be? bit rot, faulty controller?
+>
+> any ideas?
+>
+> best regards
+>
+> franz
+>
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.8 (Darwin)
+>
+> iQEcBAEBAgAGBQJINDg7AAoJEP8ZopU3BhmtMH8IAIvoayOyvhFkHxLJlmblIJ46
+> f+ZFmEckwh9EzBdFZO2xUHC6P85PDi541wJypyy8SwbaLWO6xBoeaGBCUtU7Y/9u
+> lDuxOAK2tc2iY2na0INU3uACyMcGWsbM5SsvIo1KjbOTG7d4DVRT+Gvq8m4eqnOr
+> LQ1/8fPmsepr597YVQGYz6GL4WbtnSd6FwwhYa0JEbgmuympboPSJH6+R3lbRT5P
+> 4hI7WGy/nA0qQqYArQeHAlsjYtVslLSJjOvMT9osa2dCbpLUIzbQKhXYvR9xCt2f
+> pe/WJdNT2UjNWpHtvqiUVPLxQ1rzJMs4c0zhci8jNDLChdND13w00zhphTp/7cI=
+> =iE+P
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ndellofano at apple.com  Thu Jul 17 18:19:40 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 17 Jul 2008 18:19:40 -0700
+Subject: [zfs-discuss] Sharing help
+In-Reply-To: <240FB794-EBAA-438E-B2A2-FBB653372208@asgaard.org>
+References: <240FB794-EBAA-438E-B2A2-FBB653372208@asgaard.org>
+Message-ID: <EFEBF4EB-139B-48DC-8B47-5A6C274C05D7@apple.com>
+
+Hmm... I have an open bug on this since as you mentioned, it's a  
+problem that a number of people have seen.
+I'm not sure how you seemed to have gotten it to work, since to my  
+knowledge it's always been broken :(
+Sorry I can't be of more help, it's a high priority bug we're working  
+on, but don't have a fix yet.
+
+i'll keep you posted though if I find anything,
+Noel
+
+
+On Jun 6, 2008, at 10:05 PM, Christopher LILJENSTOLPE wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Greetings,
+>
+> 	Ok - I seem to have forgotten something, or something has changed
+> between 10.5.2 server and 10.5.3 server (and 111 and 117).  On my
+> server at home, I have exported a ZFS filesystem via AFS.  That was
+> setup under 10.5.2 and 111.  I now have a new filesystem (in the same
+> tank) that I want to export.  The system is now at 10.5.3 and 117.
+> However, I am experiencing the same problem that others have
+> mentioned.  I can't browse to the ZFS tank in the sharing
+> configuration for server.  If I add it via the sharing cli, it shows
+> up in the sharing configuration on ServerAdmin, but I can't select it
+> (when I try, another share gets selected).  Any ideas on how I might
+> have done it before?  I can't find my notes :(
+>
+> 	Chris
+>
+> - ---
+> ???
+> Check my PGP key here:
+> http://pgp.mit.edu:11371/pks/lookup?op=get&search=0xCB67593B
+>
+>
+>
+>
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQEcBAEBAgAGBQJIShcVAAoJEGmx2Mt/+Iw/r7sH/1dWN77vCK0khI5GNSpnJO0C
+> rOPwae40hJvFgD3sjaQLekbgMZt0YOSufDmAWb+APxVX8WZCm73EkUKY11uR8Lx7
+> /xmYS6nx8zwLN7YWK/9lFA96PIQOv34/UFJIiyXwgh/drmWUpWNIW1JJETDehQqi
+> ep9ygtfqnnIkn3V34mP13tTM6nDpLrH7YSn9cSbggdM8uy7NVDD5p1k5LJ9YO9N/
+> s2TwTjUxqSAIYGYnYjaMHM1p6jLvjT3cwtBexFODjHE5oOB5bc6fIL0zGN1ZeR35
+> Iw4AooN4dft2hng2tC+deMAvTF5CXeVWsDHr6H9m1SLR5oeoZzp/BrsCCfEjXHo=
+> =s4wu
+> -----END PGP SIGNATURE-----
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From caronni at gmail.com  Fri Jul 18 06:57:14 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Fri, 18 Jul 2008 15:57:14 +0200
+Subject: [zfs-discuss] zfs silent death
+In-Reply-To: <C5EF5F24-78A2-42D7-B7A4-F1EA8B066248@apple.com>
+References: <327b821f0807010253n4f2ca9c1re50f57a41c5a73a4@mail.gmail.com>
+	<327b821f0807020023v3f4793a9k7e0e9ceb3098d15a@mail.gmail.com>
+	<C5EF5F24-78A2-42D7-B7A4-F1EA8B066248@apple.com>
+Message-ID: <327b821f0807180657h2af2fb00p68d32e477e3ec9a5@mail.gmail.com>
+
+On Fri, Jul 18, 2008 at 01:48, No?l Dellofano <ndellofano at apple.com> wrote:
+
+> This also reminds me of Ruebzahl's issue from just now.
+> (re-posting this because the other post seems to be in moderator limbo)
+>
+> Sorry for the delay, this was me.  The moderator(a.k.a. me) was on vacation
+> :)  I'm just now getting caught up on email.
+>
+
+No problem, and I hope you had a good vacation!
+
+
+> As to the issue.  I believe this is actually a known bug that we just
+> fixed.  Due to this bug:
+> 6035783 ZFS hang during rename/open
+>
+> I'll spare you the gory details, but basically when the machine was under
+> heavy load, a.k.a. a lot of creates, we'd get into a hung situation since we
+> were waiting for a recycled vnode with an open zfs transaction, and waiting
+> for that vnode from the VFS.  The rest of the system is blocked on that
+> transaction commiting, and it's stuck waiting for a vnode it's not going to
+> get because the system is deadlocked.
+>
+
+Classic ;-)
+
+During the last 24 hours I've tested build-119 under heavy load with a
+simple pool both residing in files, and on a 1TB disk, and was unable to
+reproduce the deadlock (or, in fact, any failure). So, your fix fixed things
+for me -- and thank you very much for pushing it out!
+
+On a side note, thanks to zoink, a data point: Doing things on a zfs with
+ca. 750'000 files will consume about 1GB of kernel memory in the module
+(e.g. ls -lR >/dev/null). I'll try this with insane amounts of files next,
+to see how well-behaved the kext is when memory gets scarce on a 4GB system.
+Unmounting and exporting the pool will make things drop down to 3MB for ZFS,
+and ca. 30MB for ARC. Nice ;-) Unloading the kernel module does not seem to
+be possible.
+
+Germano
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080718/8c05b06f/attachment.html 
+
+From kane at inius.com  Fri Jul 18 08:36:38 2008
+From: kane at inius.com (Kane Dijkman)
+Date: Fri, 18 Jul 2008 08:36:38 -0700
+Subject: [zfs-discuss] No space left on device
+Message-ID: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+
+Here is my zpool
+
+NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+zMirror                1.91T   1.88T   30.5G    98%  ONLINE     -
+
+
+	NAME          STATE     READ WRITE CKSUM
+	zMirror       ONLINE       0     0     0
+	  raidz1      ONLINE       0     0     0
+	    disk7s2   ONLINE       0     0     9
+	    disk8s2   ONLINE       0     0     7
+	    disk5s2   ONLINE       0     0    13
+	  raidz1      ONLINE       0     0     0
+	    disk9s2   ONLINE       0     0    13
+	    disk6s2   ONLINE       0     0    16
+	    disk10s2  ONLINE       0     0     4
+
+
+Everything is online and working fine according tot he above. It also  
+says I have about 30 gig available.
+
+However I am getting the "No space left on device" error when I try to  
+copy anything new on to the drive.
+
+And more importantly I am also getting this when I try and delete (rm - 
+rf) anything off the drive to make more room.
+
+Here is an example:
+
+rm -rf games
+
+rm: games/American McGee's Alice?/American McGee's Alice?/ 
+Contents/.DS_Store: No space left on device
+rm: games/American McGee's Alice?/American McGee's Alice?/Contents/ 
+MacOSClassic/.DS_Store: No space left on device
+rm: games/American McGee's Alice?/American McGee's Alice?/Contents/ 
+MacOSClassic/American McGee's Alice?: No space left on device
+rm: games/American McGee's Alice?/American McGee's Alice?/Contents/ 
+MacOSClassic: No space left on device
+
+and so on for every file.
+
+I first got this with 117, and was going to email the list when I saw  
+119 was out. So I updated to 119 and did a scrub and am still getting  
+this error right afterwards.
+
+Anyone have any ideas what is up?
+
+From jamesblackburn at gmail.com  Fri Jul 18 12:31:53 2008
+From: jamesblackburn at gmail.com (James Blackburn)
+Date: Fri, 18 Jul 2008 20:31:53 +0100
+Subject: [zfs-discuss] No space left on device
+In-Reply-To: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+References: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+Message-ID: <5f0d46fb0807181231l6aef83c1yc11f39063a2e0431@mail.gmail.com>
+
+> Everything is online and working fine according tot he above. It also
+> says I have about 30 gig available.
+
+It's likely that the disk usage listing is out of sync with what's
+actually stored.  If you do a du of the disk, you'd probably find that
+the space was accounted for.
+
+> However I am getting the "No space left on device" error when I try to
+> copy anything new on to the drive.
+>
+> And more importantly I am also getting this when I try and delete (rm -
+> rf) anything off the drive to make more room.
+
+So I believe this is one of the fun features of ZFS.  As it's
+copy-on-write, it writes new bits of tree before dereferencing all
+bits.  Deleting therefore requires some space available...  What you
+could do is to open one of your game files delete all the content,
+save, then perform your rm -r.
+
+Cheers,
+
+James
+
+From lists at loveturtle.net  Fri Jul 18 12:42:19 2008
+From: lists at loveturtle.net (Dillon Kass)
+Date: Fri, 18 Jul 2008 15:42:19 -0400
+Subject: [zfs-discuss] No space left on device
+In-Reply-To: <5f0d46fb0807181231l6aef83c1yc11f39063a2e0431@mail.gmail.com>
+References: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+	<5f0d46fb0807181231l6aef83c1yc11f39063a2e0431@mail.gmail.com>
+Message-ID: <4880F21B.5080700@loveturtle.net>
+
+one workaround is to find a file that is not super small. lets say somefile
+
+echo > somefile
+
+now you should have enough space to delete things.
+
+
+James Blackburn wrote:
+>> Everything is online and working fine according tot he above. It also
+>> says I have about 30 gig available.
+>>     
+>
+> It's likely that the disk usage listing is out of sync with what's
+> actually stored.  If you do a du of the disk, you'd probably find that
+> the space was accounted for.
+>
+>   
+>> However I am getting the "No space left on device" error when I try to
+>> copy anything new on to the drive.
+>>
+>> And more importantly I am also getting this when I try and delete (rm -
+>> rf) anything off the drive to make more room.
+>>     
+>
+> So I believe this is one of the fun features of ZFS.  As it's
+> copy-on-write, it writes new bits of tree before dereferencing all
+> bits.  Deleting therefore requires some space available...  What you
+> could do is to open one of your game files delete all the content,
+> save, then perform your rm -r.
+>
+> Cheers,
+>
+> James
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>   
+
+
+From Jonathan.Edwards at Sun.COM  Fri Jul 18 12:59:59 2008
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Fri, 18 Jul 2008 15:59:59 -0400
+Subject: [zfs-discuss] No space left on device
+In-Reply-To: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+References: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+Message-ID: <41107415-9D92-4468-84A9-5F2F2277B5B6@sun.com>
+
+use zfs list to check filesystem capacities .. i don't think db has  
+been ported
+which can show you how much overhead space is being consumed
+
+but for deleting:
+sounds like you may need to delete your snapshots first ..
+(send them somewhere with enough space if you want to keep them)
+there's no space left in the pool to CoW the changes
+
+On Jul 18, 2008, at 11:36 AM, Kane Dijkman wrote:
+
+> Here is my zpool
+>
+> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+> ALTROOT
+> zMirror                1.91T   1.88T   30.5G    98%  ONLINE     -
+>
+>
+> 	NAME          STATE     READ WRITE CKSUM
+> 	zMirror       ONLINE       0     0     0
+> 	  raidz1      ONLINE       0     0     0
+> 	    disk7s2   ONLINE       0     0     9
+> 	    disk8s2   ONLINE       0     0     7
+> 	    disk5s2   ONLINE       0     0    13
+> 	  raidz1      ONLINE       0     0     0
+> 	    disk9s2   ONLINE       0     0    13
+> 	    disk6s2   ONLINE       0     0    16
+> 	    disk10s2  ONLINE       0     0     4
+>
+>
+> Everything is online and working fine according tot he above. It also
+> says I have about 30 gig available.
+>
+> However I am getting the "No space left on device" error when I try to
+> copy anything new on to the drive.
+>
+> And more importantly I am also getting this when I try and delete  
+> (rm -
+> rf) anything off the drive to make more room.
+>
+> Here is an example:
+>
+> rm -rf games
+>
+> rm: games/American McGee's Alice?/American McGee's Alice?/
+> Contents/.DS_Store: No space left on device
+> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+> MacOSClassic/.DS_Store: No space left on device
+> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+> MacOSClassic/American McGee's Alice?: No space left on device
+> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+> MacOSClassic: No space left on device
+>
+> and so on for every file.
+>
+> I first got this with 117, and was going to email the list when I saw
+> 119 was out. So I updated to 119 and did a scrub and am still getting
+> this error right afterwards.
+>
+> Anyone have any ideas what is up?
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From mattsnow at gmail.com  Sat Jul 19 11:55:03 2008
+From: mattsnow at gmail.com (Matt Snow)
+Date: Sat, 19 Jul 2008 11:55:03 -0700
+Subject: [zfs-discuss] No space left on device
+In-Reply-To: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+References: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+Message-ID: <6879ebc80807191155v4c8c1a58se51b13b8a9c7c747@mail.gmail.com>
+
+I encourage you to check the S.M.A.R.T. information for bad sectors.
+The checksum collumn should always be zero. also verify that
+checksuming is enabled with `zfs get checksum`.
+
+..Matt Snow
+
+On Fri, Jul 18, 2008 at 8:36 AM, Kane Dijkman <kane at inius.com> wrote:
+> Here is my zpool
+>
+> NAME                    SIZE    USED   AVAIL    CAP  HEALTH     ALTROOT
+> zMirror                1.91T   1.88T   30.5G    98%  ONLINE     -
+>
+>
+>        NAME          STATE     READ WRITE CKSUM
+>        zMirror       ONLINE       0     0     0
+>          raidz1      ONLINE       0     0     0
+>            disk7s2   ONLINE       0     0     9
+>            disk8s2   ONLINE       0     0     7
+>            disk5s2   ONLINE       0     0    13
+>          raidz1      ONLINE       0     0     0
+>            disk9s2   ONLINE       0     0    13
+>            disk6s2   ONLINE       0     0    16
+>            disk10s2  ONLINE       0     0     4
+>
+>
+> Everything is online and working fine according tot he above. It also
+> says I have about 30 gig available.
+>
+> However I am getting the "No space left on device" error when I try to
+> copy anything new on to the drive.
+>
+> And more importantly I am also getting this when I try and delete (rm -
+> rf) anything off the drive to make more room.
+>
+> Here is an example:
+>
+> rm -rf games
+>
+> rm: games/American McGee's Alice?/American McGee's Alice?/
+> Contents/.DS_Store: No space left on device
+> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+> MacOSClassic/.DS_Store: No space left on device
+> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+> MacOSClassic/American McGee's Alice?: No space left on device
+> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+> MacOSClassic: No space left on device
+>
+> and so on for every file.
+>
+> I first got this with 117, and was going to email the list when I saw
+> 119 was out. So I updated to 119 and did a scrub and am still getting
+> this error right afterwards.
+>
+> Anyone have any ideas what is up?
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From kane at inius.com  Sun Jul 20 01:18:39 2008
+From: kane at inius.com (Kane Dijkman)
+Date: Sun, 20 Jul 2008 01:18:39 -0700
+Subject: [zfs-discuss] No space left on device
+In-Reply-To: <41107415-9D92-4468-84A9-5F2F2277B5B6@sun.com>
+References: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+	<41107415-9D92-4468-84A9-5F2F2277B5B6@sun.com>
+Message-ID: <B0EC1088-6CDF-4845-BB91-AF592F194319@inius.com>
+
+Why are these numbers so different for zfs list and zpool list?
+
+NAME USED AVAIL REFER MOUNTPOINT
+zMirror 1.24T 12.3G 1.24T /Volumes/zMirror
+NAME SIZE USED AVAIL CAP HEALTH ALTROOT
+zMirror 1.91T 1.86T 49.1G 97% ONLINE -
+
+Shouldnt they be the same?
+
+
+Also, Dillon Kass' echo > somefile suggestion worked and I was able to  
+delete files again.
+
+Thanks,
+Kane
+
+
+On Jul 18, 2008, at 12:59 PM, Jonathan Edwards wrote:
+
+> use zfs list to check filesystem capacities .. i don't think db has  
+> been ported
+> which can show you how much overhead space is being consumed
+>
+> but for deleting:
+> sounds like you may need to delete your snapshots first ..
+> (send them somewhere with enough space if you want to keep them)
+> there's no space left in the pool to CoW the changes
+>
+> On Jul 18, 2008, at 11:36 AM, Kane Dijkman wrote:
+>
+>> Here is my zpool
+>>
+>> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+>> ALTROOT
+>> zMirror                1.91T   1.88T   30.5G    98%  ONLINE     -
+>>
+>>
+>> 	NAME          STATE     READ WRITE CKSUM
+>> 	zMirror       ONLINE       0     0     0
+>> 	  raidz1      ONLINE       0     0     0
+>> 	    disk7s2   ONLINE       0     0     9
+>> 	    disk8s2   ONLINE       0     0     7
+>> 	    disk5s2   ONLINE       0     0    13
+>> 	  raidz1      ONLINE       0     0     0
+>> 	    disk9s2   ONLINE       0     0    13
+>> 	    disk6s2   ONLINE       0     0    16
+>> 	    disk10s2  ONLINE       0     0     4
+>>
+>>
+>> Everything is online and working fine according tot he above. It also
+>> says I have about 30 gig available.
+>>
+>> However I am getting the "No space left on device" error when I try  
+>> to
+>> copy anything new on to the drive.
+>>
+>> And more importantly I am also getting this when I try and delete  
+>> (rm -
+>> rf) anything off the drive to make more room.
+>>
+>> Here is an example:
+>>
+>> rm -rf games
+>>
+>> rm: games/American McGee's Alice?/American McGee's Alice?/
+>> Contents/.DS_Store: No space left on device
+>> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+>> MacOSClassic/.DS_Store: No space left on device
+>> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+>> MacOSClassic/American McGee's Alice?: No space left on device
+>> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+>> MacOSClassic: No space left on device
+>>
+>> and so on for every file.
+>>
+>> I first got this with 117, and was going to email the list when I saw
+>> 119 was out. So I updated to 119 and did a scrub and am still getting
+>> this error right afterwards.
+>>
+>> Anyone have any ideas what is up?
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+
+-------------------------------------------------------------------
+Today's mighty oak is just yesterday's nut that held its ground
+
+
+From mattsnow at gmail.com  Sun Jul 20 11:51:58 2008
+From: mattsnow at gmail.com (Matt Snow)
+Date: Sun, 20 Jul 2008 11:51:58 -0700
+Subject: [zfs-discuss] No space left on device
+In-Reply-To: <B0EC1088-6CDF-4845-BB91-AF592F194319@inius.com>
+References: <F47F4460-E7BF-44A3-A70A-DA9354212EEC@inius.com>
+	<41107415-9D92-4468-84A9-5F2F2277B5B6@sun.com>
+	<B0EC1088-6CDF-4845-BB91-AF592F194319@inius.com>
+Message-ID: <6879ebc80807201151k6f219e57n46d06c670c0bb3c@mail.gmail.com>
+
+Kane,
+I believe this is actual vs physical. with raidz(ZFS raid 5) you lose
+1 disk for parity.
+
+..Matt
+
+On Sun, Jul 20, 2008 at 1:18 AM, Kane Dijkman <kane at inius.com> wrote:
+> Why are these numbers so different for zfs list and zpool list?
+>
+> NAME USED AVAIL REFER MOUNTPOINT
+> zMirror 1.24T 12.3G 1.24T /Volumes/zMirror
+> NAME SIZE USED AVAIL CAP HEALTH ALTROOT
+> zMirror 1.91T 1.86T 49.1G 97% ONLINE -
+>
+> Shouldnt they be the same?
+>
+>
+> Also, Dillon Kass' echo > somefile suggestion worked and I was able to
+> delete files again.
+>
+> Thanks,
+> Kane
+>
+>
+> On Jul 18, 2008, at 12:59 PM, Jonathan Edwards wrote:
+>
+>> use zfs list to check filesystem capacities .. i don't think db has
+>> been ported
+>> which can show you how much overhead space is being consumed
+>>
+>> but for deleting:
+>> sounds like you may need to delete your snapshots first ..
+>> (send them somewhere with enough space if you want to keep them)
+>> there's no space left in the pool to CoW the changes
+>>
+>> On Jul 18, 2008, at 11:36 AM, Kane Dijkman wrote:
+>>
+>>> Here is my zpool
+>>>
+>>> NAME                    SIZE    USED   AVAIL    CAP  HEALTH
+>>> ALTROOT
+>>> zMirror                1.91T   1.88T   30.5G    98%  ONLINE     -
+>>>
+>>>
+>>>      NAME          STATE     READ WRITE CKSUM
+>>>      zMirror       ONLINE       0     0     0
+>>>        raidz1      ONLINE       0     0     0
+>>>          disk7s2   ONLINE       0     0     9
+>>>          disk8s2   ONLINE       0     0     7
+>>>          disk5s2   ONLINE       0     0    13
+>>>        raidz1      ONLINE       0     0     0
+>>>          disk9s2   ONLINE       0     0    13
+>>>          disk6s2   ONLINE       0     0    16
+>>>          disk10s2  ONLINE       0     0     4
+>>>
+>>>
+>>> Everything is online and working fine according tot he above. It also
+>>> says I have about 30 gig available.
+>>>
+>>> However I am getting the "No space left on device" error when I try
+>>> to
+>>> copy anything new on to the drive.
+>>>
+>>> And more importantly I am also getting this when I try and delete
+>>> (rm -
+>>> rf) anything off the drive to make more room.
+>>>
+>>> Here is an example:
+>>>
+>>> rm -rf games
+>>>
+>>> rm: games/American McGee's Alice?/American McGee's Alice?/
+>>> Contents/.DS_Store: No space left on device
+>>> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+>>> MacOSClassic/.DS_Store: No space left on device
+>>> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+>>> MacOSClassic/American McGee's Alice?: No space left on device
+>>> rm: games/American McGee's Alice?/American McGee's Alice?/Contents/
+>>> MacOSClassic: No space left on device
+>>>
+>>> and so on for every file.
+>>>
+>>> I first got this with 117, and was going to email the list when I saw
+>>> 119 was out. So I updated to 119 and did a scrub and am still getting
+>>> this error right afterwards.
+>>>
+>>> Anyone have any ideas what is up?
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+>
+> -------------------------------------------------------------------
+> Today's mighty oak is just yesterday's nut that held its ground
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+From brad.allred at foreverybody.com  Mon Jul 21 11:57:19 2008
+From: brad.allred at foreverybody.com (Brad Allred)
+Date: Mon, 21 Jul 2008 12:57:19 -0600
+Subject: [zfs-discuss] Mac OS X server ZFS volume ACLs not being applied to
+	new items...
+Message-ID: <262B3130-8BB3-456D-9E3E-BA6EFD765204@foreverybody.com>
+
+I searched the list for any known ZFS ACL issues, but came up dry. We  
+have a mac OS X server (both OS and ZFS are the latest builds; 10.5.4  
+and 119.) and we are sharing a raid-z over AFP and are trying to use  
+ACLs to control permissions on the raid, but whenever somebody (local  
+admin, domain user, anybody) creates a new folder/file the ACL for the  
+parent is not applied to the new item. We can propagate the  
+permissions from server admin and that "fixes" the permissions, but  
+does not resolve the issue. We have no problem using ACLs for the HFS  
+volumes on the same server.
+
+Is this a known issue with ZFS? is anybody reading this able to get  
+ACLs to work properly with a RAID-Z?
+
+From caronni at gmail.com  Tue Jul 22 10:02:25 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 22 Jul 2008 10:02:25 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+Message-ID: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+
+Scenario:
+I have a large data set which basically contains half a dozen rsync's from
+complete linux installations.
+If I do a recursive diff on some of these trees, or a find and a following
+md5 sum on, say, 100'000+ files, the machine will die the same silent death
+as reported for excessive rsync before. This again happens both for a pool
+derived from a large file, or for a pool mapped to a 1TB disk partition.
+
+I'll try to clone the file system, replace all file names and contents with
+dummy values, and see if the issue remains reproducible that way. If yes,
+you'll get a snapshot to play with.
+
+Germano
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/1a375e83/attachment.html 
+
+From bwaters at nrao.edu  Tue Jul 22 12:08:15 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Tue, 22 Jul 2008 13:08:15 -0600
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+Message-ID: <948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+
+
+On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+
+> If I do a recursive diff on some of these trees, or a find and a  
+> following md5 sum on, say, 100'000+ files, the machine will die the  
+> same silent death as reported for excessive rsync before
+
+Interesting!
+
+I'm not seeing that problem any more, but I've been using rsync 3.0.4,  
+built from source, 64-bit... it's dramatically improved over the  
+version that ships with Leopard.
+
+I wonder if there's a memory leak in the VFS layer.  (wow, that almost  
+sounds like I know what I'm talking about, but really I don't)
+
+
+
+From caronni at gmail.com  Tue Jul 22 12:10:53 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 22 Jul 2008 12:10:53 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+Message-ID: <327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+
+A simple way to crash your mac:
+
+mkfile 20g /foo
+sudo zpool (to get the module loaded)
+zpool create z /foo
+zfs set compression=on z (probably not needed, but that's what I have)
+zfs create z/crashfs
+sudo rsync -aHPSv /dev /etc /usr /Volumes/z/crashfs/1
+[watch the spinning ball of death]
+
+Do others on this list also see this crash when trying to replicate the /dev
+tree? This does not crash when the target is on HFS+ instead of ZFS, or if
+you leave out /dev. Also, this is not the original crash mode that I
+described below (which implied traversing lots of directories and reading
+lots of files), but it may be related.
+
+Germano
+
+
+On Tue, Jul 22, 2008 at 10:02, Germano Caronni <caronni at gmail.com> wrote:
+
+> Scenario:
+> I have a large data set which basically contains half a dozen rsync's from
+> complete linux installations.
+> If I do a recursive diff on some of these trees, or a find and a following
+> md5 sum on, say, 100'000+ files, the machine will die the same silent death
+> as reported for excessive rsync before. This again happens both for a pool
+> derived from a large file, or for a pool mapped to a 1TB disk partition.
+>
+> I'll try to clone the file system, replace all file names and contents with
+> dummy values, and see if the issue remains reproducible that way. If yes,
+> you'll get a snapshot to play with.
+>
+> Germano
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/4004c31d/attachment.html 
+
+From info at martin-hauser.net  Tue Jul 22 12:15:04 2008
+From: info at martin-hauser.net (Martin Hauser)
+Date: Tue, 22 Jul 2008 21:15:04 +0200
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+Message-ID: <20CA6715-3621-410B-9221-0D19665F55A6@martin-hauser.net>
+
+Hi,
+
+Ehm... I'm not quite sure about Mac Os X and rsync, but touching the / 
+dev is always been a bad idea.... depending on how the file is copied  
+and how well rsync handles special device files you could end up with  
+real read calls to the files in /dev which would get you the contents  
+of your hard-disks ... which would be _lots_ of data, more then you'll  
+ever have space for. That's just my 2cc on that though, I'd never  
+expect anything to sync /dev correctly.
+
+Kind Regards
+
+Martin
+
+On Jul 22, 2008, at 21:10 PM, Germano Caronni wrote:
+
+> A simple way to crash your mac:
+>
+> mkfile 20g /foo
+> sudo zpool (to get the module loaded)
+> zpool create z /foo
+> zfs set compression=on z (probably not needed, but that's what I have)
+> zfs create z/crashfs
+> sudo rsync -aHPSv /dev /etc /usr /Volumes/z/crashfs/1
+> [watch the spinning ball of death]
+>
+> Do others on this list also see this crash when trying to replicate  
+> the /dev
+> tree? This does not crash when the target is on HFS+ instead of ZFS,  
+> or if
+> you leave out /dev. Also, this is not the original crash mode that I
+> described below (which implied traversing lots of directories and  
+> reading
+> lots of files), but it may be related.
+>
+> Germano
+>
+>
+> On Tue, Jul 22, 2008 at 10:02, Germano Caronni <caronni at gmail.com>  
+> wrote:
+>
+>> Scenario:
+>> I have a large data set which basically contains half a dozen  
+>> rsync's from
+>> complete linux installations.
+>> If I do a recursive diff on some of these trees, or a find and a  
+>> following
+>> md5 sum on, say, 100'000+ files, the machine will die the same  
+>> silent death
+>> as reported for excessive rsync before. This again happens both for  
+>> a pool
+>> derived from a large file, or for a pool mapped to a 1TB disk  
+>> partition.
+>>
+>> I'll try to clone the file system, replace all file names and  
+>> contents with
+>> dummy values, and see if the issue remains reproducible that way.  
+>> If yes,
+>> you'll get a snapshot to play with.
+>>
+>> Germano
+>>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/052ce5a7/attachment.bin 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/052ce5a7/attachment-0001.bin 
+
+From caronni at gmail.com  Tue Jul 22 12:15:55 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 22 Jul 2008 12:15:55 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+Message-ID: <327b821f0807221215n1c139e5dq1aed79543908f802@mail.gmail.com>
+
+> I wonder if there's a memory leak in the VFS layer.  (wow, that almost sounds like I know what I'm talking about, but really I don't)
+
+hah! Hard to tell, but given Noel's explanation on the last issue, and
+the similar behavior, my guesstimate is a deadlock. No idea how to
+better diagnose that. Unless there is a simple way to run the kernel
+in a debugger (or get a deadlocked kernel to crashdump itself), and
+then see what's going on ;-)
+
+Germano
+
+From caronni at gmail.com  Tue Jul 22 12:18:23 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 22 Jul 2008 12:18:23 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <20CA6715-3621-410B-9221-0D19665F55A6@martin-hauser.net>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+	<20CA6715-3621-410B-9221-0D19665F55A6@martin-hauser.net>
+Message-ID: <327b821f0807221218y2d9f31c4we250fd055f585445@mail.gmail.com>
+
+rsync is specifically made to create faithful copies of named pipes,
+AF_UNIX sockets, devices, whatever by looking at the inode type and
+recreating that. The sync from HFS to HFS works perfectly. To ZFS
+fails spectacularly...;-)
+
+
+On Tue, Jul 22, 2008 at 12:15, Martin Hauser <info at martin-hauser.net> wrote:
+> Ehm... I'm not quite sure about Mac Os X and rsync, but touching the /dev is
+> always been a bad idea.... depending on how the file is copied and how well
+> rsync handles special device files you could end up with real read calls to
+> the files in /dev which would get you the contents of your hard-disks ...
+> which would be _lots_ of data, more then you'll ever have space for. That's
+> just my 2cc on that though, I'd never expect anything to sync /dev
+> correctly.
+
+From bwaters at nrao.edu  Tue Jul 22 12:21:22 2008
+From: bwaters at nrao.edu (Boyd Waters)
+Date: Tue, 22 Jul 2008 13:21:22 -0600
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+Message-ID: <4BC7E69F-0F1F-4A3E-842B-E757F5AB321A@nrao.edu>
+
+
+On Jul 22, 2008, at 1:10 PM, Germano Caronni wrote:
+
+> mkfile 20g /foo
+> sudo zpool (to get the module loaded)
+> zpool create z /foo
+> zfs set compression=on z (probably not needed, but that's what I have)
+> zfs create z/crashfs
+> sudo rsync -aHPSv /dev /etc /usr /Volumes/z/crashfs/1
+> [watch the spinning ball of death]
+
+
+nice test case!
+
+I'll try to reproduce here when I am set up to crash the Mac.
+
+what does 'rsync --version' say?
+
+
+
+From ndellofano at apple.com  Tue Jul 22 12:23:32 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 22 Jul 2008 12:23:32 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+Message-ID: <7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+
+Neat!  I haven't seen this issue since fixing the memory scaling bug a  
+while ago.  Sorry to hear it's giving you troubles.
+
+Germano,
+if it reproduces, then the snapshot would be awesome!  As my biggest  
+issue is getting stuff like that to reproduce in house.  So you're  
+just using standard leopard shipped rsync right?  If so, since he's  
+the fatty that tries to shove everything in memory I wonder if we're  
+stuck sleeping waiting for someone to give up some memory possibly and  
+are wedged...
+
+as usual you guys are the best test team a girl can have :)  If your  
+snapshot works send it over.  Otherwise I'll do my best to mimic your  
+system and see if I can get a recreate..
+
+thanks!
+Noel
+
+On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+
+>
+> On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+>
+>> If I do a recursive diff on some of these trees, or a find and a
+>> following md5 sum on, say, 100'000+ files, the machine will die the
+>> same silent death as reported for excessive rsync before
+>
+> Interesting!
+>
+> I'm not seeing that problem any more, but I've been using rsync 3.0.4,
+> built from source, 64-bit... it's dramatically improved over the
+> version that ships with Leopard.
+>
+> I wonder if there's a memory leak in the VFS layer.  (wow, that almost
+> sounds like I know what I'm talking about, but really I don't)
+>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From info at martin-hauser.net  Tue Jul 22 12:23:36 2008
+From: info at martin-hauser.net (Martin Hauser)
+Date: Tue, 22 Jul 2008 21:23:36 +0200
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <327b821f0807221218y2d9f31c4we250fd055f585445@mail.gmail.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+	<20CA6715-3621-410B-9221-0D19665F55A6@martin-hauser.net>
+	<327b821f0807221218y2d9f31c4we250fd055f585445@mail.gmail.com>
+Message-ID: <2A468659-58B3-4BAA-8DE5-2234331F6A15@martin-hauser.net>
+
+I am aware that rsync probably handles them correctly, what I wanted  
+to get through was that this is bad practise in my eyes... it's still  
+a bug and should be addressed but I shiver on trying o sync /dev/ 
+random without rsync completely knowing how to create the device nodes  
+on the target system ...  I'm also not worried about unix sockets,  
+named pipes (fifo's) and any other special file you might come  
+across... it's the block and character devices that get me scared on....
+
+Martin
+
+On Jul 22, 2008, at 21:18 PM, Germano Caronni wrote:
+
+> rsync is specifically made to create faithful copies of named pipes,
+> AF_UNIX sockets, devices, whatever by looking at the inode type and
+> recreating that. The sync from HFS to HFS works perfectly. To ZFS
+> fails spectacularly...;-)
+>
+>
+> On Tue, Jul 22, 2008 at 12:15, Martin Hauser <info at martin- 
+> hauser.net> wrote:
+>> Ehm... I'm not quite sure about Mac Os X and rsync, but touching  
+>> the /dev is
+>> always been a bad idea.... depending on how the file is copied and  
+>> how well
+>> rsync handles special device files you could end up with real read  
+>> calls to
+>> the files in /dev which would get you the contents of your hard- 
+>> disks ...
+>> which would be _lots_ of data, more then you'll ever have space  
+>> for. That's
+>> just my 2cc on that though, I'd never expect anything to sync /dev
+>> correctly.
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/c2aa5ceb/attachment.bin 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/c2aa5ceb/attachment-0001.bin 
+
+From fyleow at gmail.com  Tue Jul 22 13:11:12 2008
+From: fyleow at gmail.com (Fu Leow)
+Date: Tue, 22 Jul 2008 13:11:12 -0700
+Subject: [zfs-discuss] Can pools be imported on to other systems?
+Message-ID: <1a2b9650807221311k1ca37e35m94a4a82483bc23af@mail.gmail.com>
+
+Hi,
+
+Can the ZFS pools created on OS X be put into other systems such as
+Solaris and FreeBSD to be reimported? I'm considering setting up a 3TB
+RAIDZ file server with ZFS and I'm looking at the different options.
+Not really bothered by the quirks on OS X as long as nothing causes
+data loss. Being able to move the drives to another OS with minimal
+effort would be a nice bonus though.
+
+From Jonathan.Edwards at Sun.COM  Tue Jul 22 13:27:49 2008
+From: Jonathan.Edwards at Sun.COM (Jonathan Edwards)
+Date: Tue, 22 Jul 2008 16:27:49 -0400
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+	<7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+Message-ID: <B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+
+i was able to reproduce a hard hang on a much smaller system config ..
+just 4 x 64MB files here for my test pool .. compression doesn't matter:
+
+bash-3.2# zpool status -v
+   pool: tpool
+  state: ONLINE
+  scrub: none requested
+config:
+
+	NAME              STATE     READ WRITE CKSUM
+	tpool             ONLINE       0     0     0
+	  /var/tmp/file1  ONLINE       0     0     0
+	  /var/tmp/file2  ONLINE       0     0     0
+	  /var/tmp/file3  ONLINE       0     0     0
+	  /var/tmp/file4  ONLINE       0     0     0
+
+errors: No known data errors
+bash-3.2# rsync --version
+rsync  version 2.6.3  protocol version 28
+Copyright (C) 1996-2004 by Andrew Tridgell and others
+<http://rsync.samba.org/>
+Capabilities: 64-bit files, socketpairs, hard links, symlinks,  
+batchfiles,
+               inplace, IPv6, 32-bit system inums, 64-bit internal inums
+
+---
+i'll have to figure out how to do a kdb equiv to get a backtrace here
+
+of note .. i also saw a vfs error last night on shutdown that also  
+resulted in a hard hang:
+
+Tue Jul 22 01:17:08 2008
+panic(cpu 1 caller 0x001DBC3D): "vnode_put(0x529dc70): iocount < 1"@/ 
+SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x475dfd78 : 0x12b0fa (0x4592a4 0x475dfdac 0x133243 0x0)
+0x475dfdc8 : 0x1dbc3d (0x467410 0x529dc70 0x475dfe08 0x4792d532)
+0x475dfde8 : 0x1dbcee (0x529dc70 0x6f17220 0xf9bdf8ae 0x1064f140)
+0x475dfe08 : 0x478fd30b (0x529dc70 0x479602e4 0x0 0x0)
+0x475dff58 : 0x478e60a2 (0x1064f000 0xc81d 0x0 0x0)
+0x475dffc8 : 0x19ebdc (0x1023d200 0x0 0x1a20b5 0x5a8f3c8)
+Backtrace terminated-invalid frame pointer 0
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x478b5000->0x47980fff
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;  
+root:xnu-1228.5.20~1/RELEASE_I386
+System model name: MacBookPro2,2 (Mac-F42187C8)
+
+----
+also could we up the version number in the zfs module plist to track  
+version problems a little better?
+methinks (8.0) is the default template for a kext
+
+would also be nice to get some sort of web bugtraq in place so we can  
+just file 'em
+
+---
+.je
+
+On Jul 22, 2008, at 3:23 PM, No?l Dellofano wrote:
+
+> Neat!  I haven't seen this issue since fixing the memory scaling bug a
+> while ago.  Sorry to hear it's giving you troubles.
+>
+> Germano,
+> if it reproduces, then the snapshot would be awesome!  As my biggest
+> issue is getting stuff like that to reproduce in house.  So you're
+> just using standard leopard shipped rsync right?  If so, since he's
+> the fatty that tries to shove everything in memory I wonder if we're
+> stuck sleeping waiting for someone to give up some memory possibly and
+> are wedged...
+>
+> as usual you guys are the best test team a girl can have :)  If your
+> snapshot works send it over.  Otherwise I'll do my best to mimic your
+> system and see if I can get a recreate..
+>
+> thanks!
+> Noel
+>
+> On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+>
+>>
+>> On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+>>
+>>> If I do a recursive diff on some of these trees, or a find and a
+>>> following md5 sum on, say, 100'000+ files, the machine will die the
+>>> same silent death as reported for excessive rsync before
+>>
+>> Interesting!
+>>
+>> I'm not seeing that problem any more, but I've been using rsync  
+>> 3.0.4,
+>> built from source, 64-bit... it's dramatically improved over the
+>> version that ships with Leopard.
+>>
+>> I wonder if there's a memory leak in the VFS layer.  (wow, that  
+>> almost
+>> sounds like I know what I'm talking about, but really I don't)
+>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From caronni at gmail.com  Tue Jul 22 13:35:29 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 22 Jul 2008 13:35:29 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <2A468659-58B3-4BAA-8DE5-2234331F6A15@martin-hauser.net>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<327b821f0807221210m5fdc684cy1605c6a8ba035d64@mail.gmail.com>
+	<20CA6715-3621-410B-9221-0D19665F55A6@martin-hauser.net>
+	<327b821f0807221218y2d9f31c4we250fd055f585445@mail.gmail.com>
+	<2A468659-58B3-4BAA-8DE5-2234331F6A15@martin-hauser.net>
+Message-ID: <327b821f0807221335n264dbbbai464467d8f7b0afc8@mail.gmail.com>
+
+Don't get me wrong Martin, but as I said, rsync is made for this. Or where
+are you concerned about e.g generator.c:1627 as found on
+http://rsync.samba.org/ftp/unpacked/rsync/generator.c ? I agree with you hat
+device node identifiers (ie major / minor) may not make sense on target
+machines when you rsync between OSes -- but that's not an issue here.
+
+Germano
+
+
+On Tue, Jul 22, 2008 at 12:23, Martin Hauser <info at martin-hauser.net> wrote:
+
+> I am aware that rsync probably handles them correctly, what I wanted to get
+> through was that this is bad practise in my eyes... it's still a bug and
+> should be addressed but I shiver on trying o sync /dev/random without rsync
+> completely knowing how to create the device nodes on the target system ...
+>  I'm also not worried about unix sockets, named pipes (fifo's) and any other
+> special file you might come across... it's the block and character devices
+> that get me scared on....
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/4dffef9d/attachment.html 
+
+From info at martin-hauser.net  Tue Jul 22 13:36:06 2008
+From: info at martin-hauser.net (Martin Hauser)
+Date: Tue, 22 Jul 2008 22:36:06 +0200
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+	<7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+	<B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+Message-ID: <344DDEFF-3977-4595-AE97-BE65CEB40DE3@martin-hauser.net>
+
+
+Hmm, I see you have tried this with rsync 2.6.x, which, if I remember  
+correctly has some issues with zfs in general. CAn you try with a more  
+recent version (like 3.0.0 ? ) and see if the problem persists.
+
+@noel I guess a web bugtracker would be really handy, are there any  
+chance that we get access to such  without causing you and your team  
+too much trouble and keeping you from working on zfs? Maybe there  
+could be some sort of syncing between apples zfs part of rdar (which  
+is internal only as far as I've found out) and the public trac bug- 
+tracker on-site? I'd opt in to try to script something like this, but  
+I have no access to apple's rdar nor do I have the resources at the  
+moment...
+
+kind regards
+
+Martin
+
+On Jul 22, 2008, at 22:27 PM, Jonathan Edwards wrote:
+
+> i was able to reproduce a hard hang on a much smaller system config ..
+> just 4 x 64MB files here for my test pool .. compression doesn't  
+> matter:
+>
+> bash-3.2# zpool status -v
+>   pool: tpool
+>  state: ONLINE
+>  scrub: none requested
+> config:
+>
+> 	NAME              STATE     READ WRITE CKSUM
+> 	tpool             ONLINE       0     0     0
+> 	  /var/tmp/file1  ONLINE       0     0     0
+> 	  /var/tmp/file2  ONLINE       0     0     0
+> 	  /var/tmp/file3  ONLINE       0     0     0
+> 	  /var/tmp/file4  ONLINE       0     0     0
+>
+> errors: No known data errors
+> bash-3.2# rsync --version
+> rsync  version 2.6.3  protocol version 28
+> Copyright (C) 1996-2004 by Andrew Tridgell and others
+> <http://rsync.samba.org/>
+> Capabilities: 64-bit files, socketpairs, hard links, symlinks,
+> batchfiles,
+>               inplace, IPv6, 32-bit system inums, 64-bit internal  
+> inums
+>
+> ---
+> i'll have to figure out how to do a kdb equiv to get a backtrace here
+>
+> of note .. i also saw a vfs error last night on shutdown that also
+> resulted in a hard hang:
+>
+> Tue Jul 22 01:17:08 2008
+> panic(cpu 1 caller 0x001DBC3D): "vnode_put(0x529dc70): iocount < 1"@/
+> SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x475dfd78 : 0x12b0fa (0x4592a4 0x475dfdac 0x133243 0x0)
+> 0x475dfdc8 : 0x1dbc3d (0x467410 0x529dc70 0x475dfe08 0x4792d532)
+> 0x475dfde8 : 0x1dbcee (0x529dc70 0x6f17220 0xf9bdf8ae 0x1064f140)
+> 0x475dfe08 : 0x478fd30b (0x529dc70 0x479602e4 0x0 0x0)
+> 0x475dff58 : 0x478e60a2 (0x1064f000 0xc81d 0x0 0x0)
+> 0x475dffc8 : 0x19ebdc (0x1023d200 0x0 0x1a20b5 0x5a8f3c8)
+> Backtrace terminated-invalid frame pointer 0
+>       Kernel loadable modules in backtrace (with dependencies):
+>          com.apple.filesystems.zfs(8.0)@0x478b5000->0x47980fff
+>
+> BSD process name corresponding to current thread: kernel_task
+>
+> Mac OS version:
+> 9E17
+>
+> Kernel version:
+> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+> root:xnu-1228.5.20~1/RELEASE_I386
+> System model name: MacBookPro2,2 (Mac-F42187C8)
+>
+> ----
+> also could we up the version number in the zfs module plist to track
+> version problems a little better?
+> methinks (8.0) is the default template for a kext
+>
+> would also be nice to get some sort of web bugtraq in place so we can
+> just file 'em
+>
+> ---
+> .je
+>
+> On Jul 22, 2008, at 3:23 PM, No?l Dellofano wrote:
+>
+>> Neat!  I haven't seen this issue since fixing the memory scaling  
+>> bug a
+>> while ago.  Sorry to hear it's giving you troubles.
+>>
+>> Germano,
+>> if it reproduces, then the snapshot would be awesome!  As my biggest
+>> issue is getting stuff like that to reproduce in house.  So you're
+>> just using standard leopard shipped rsync right?  If so, since he's
+>> the fatty that tries to shove everything in memory I wonder if we're
+>> stuck sleeping waiting for someone to give up some memory possibly  
+>> and
+>> are wedged...
+>>
+>> as usual you guys are the best test team a girl can have :)  If your
+>> snapshot works send it over.  Otherwise I'll do my best to mimic your
+>> system and see if I can get a recreate..
+>>
+>> thanks!
+>> Noel
+>>
+>> On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+>>
+>>>
+>>> On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+>>>
+>>>> If I do a recursive diff on some of these trees, or a find and a
+>>>> following md5 sum on, say, 100'000+ files, the machine will die the
+>>>> same silent death as reported for excessive rsync before
+>>>
+>>> Interesting!
+>>>
+>>> I'm not seeing that problem any more, but I've been using rsync
+>>> 3.0.4,
+>>> built from source, 64-bit... it's dramatically improved over the
+>>> version that ships with Leopard.
+>>>
+>>> I wonder if there's a memory leak in the VFS layer.  (wow, that
+>>> almost
+>>> sounds like I know what I'm talking about, but really I don't)
+>>>
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2272 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/6ede66b5/attachment-0002.bin 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/6ede66b5/attachment-0003.bin 
+
+From hanche at math.ntnu.no  Tue Jul 22 13:36:56 2008
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Tue, 22 Jul 2008 22:36:56 +0200 (CEST)
+Subject: [zfs-discuss] Can pools be imported on to other systems?
+In-Reply-To: <1a2b9650807221311k1ca37e35m94a4a82483bc23af@mail.gmail.com>
+References: <1a2b9650807221311k1ca37e35m94a4a82483bc23af@mail.gmail.com>
+Message-ID: <20080722.223656.255362151.hanche@math.ntnu.no>
+
++ "Fu Leow" <fyleow at gmail.com>:
+
+> Can the ZFS pools created on OS X be put into other systems such as
+> Solaris and FreeBSD to be reimported?
+
+Yes! But beware of versioning: FreeBSD currently supports only zfs
+version 6 I believe, which is what the Mac zfs creates by default.
+Don't upgrade your filesystems to version 8 if you want to read them
+on FreeBSD.
+
+While playing around with zfs on a memory stick, however, I found it
+worked better to partition and create pools on the FreeBSD side.
+(FreeBSD really wants a GUID partition table on disks to be used for
+ZFS.) I had some success with this procedure on FreeBSD:
+
+#; gpt create -f da2
+#; gpt add -t 6a898cc3-1dd2-11b2-99a6-080020736631 da2
+#; zpool create POOL da2p1
+
+But my troubles from doing it on the mac side may be just due to
+finger trouble and lack of knowledge. (I learned that very long UUID
+by examining a zfs file system created on the mac using gpt on
+FreeBSD: The gpt command there does not currently know an alias for
+this UUID.)
+
+One nice thing about zfs is it doesn't care much about endianness:
+Data can be written to disk with either endianness, with a flag
+indicating which one written along with the data. So any
+implementation will typically write data using its native endianness,
+while a reader using the opposite endianness will have to do the
+conversion.
+
+- Harald
+
+From caronni at gmail.com  Tue Jul 22 13:37:12 2008
+From: caronni at gmail.com (Germano Caronni)
+Date: Tue, 22 Jul 2008 13:37:12 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+	<7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+	<B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+Message-ID: <327b821f0807221337v766304aby5dc6a56a54c68455@mail.gmail.com>
+
+Thank you for validating this issue.  ;-)
+
+For bugtracking, there is http://zfs.macosforge.org/trac/report -- but I am
+not sure if / how this is used.
+
+Germano
+
+On Tue, Jul 22, 2008 at 13:27, Jonathan Edwards <Jonathan.Edwards at sun.com>wrote:
+
+> i was able to reproduce a hard hang on a much smaller system config ..
+> just 4 x 64MB files here for my test pool .. compression doesn't matter:
+>
+> bash-3.2# zpool status -v
+>   pool: tpool
+>  state: ONLINE
+>  scrub: none requested
+> config:
+>
+>        NAME              STATE     READ WRITE CKSUM
+>        tpool             ONLINE       0     0     0
+>          /var/tmp/file1  ONLINE       0     0     0
+>          /var/tmp/file2  ONLINE       0     0     0
+>          /var/tmp/file3  ONLINE       0     0     0
+>          /var/tmp/file4  ONLINE       0     0     0
+>
+> errors: No known data errors
+> bash-3.2# rsync --version
+> rsync  version 2.6.3  protocol version 28
+> Copyright (C) 1996-2004 by Andrew Tridgell and others
+> <http://rsync.samba.org/>
+> Capabilities: 64-bit files, socketpairs, hard links, symlinks,
+> batchfiles,
+>               inplace, IPv6, 32-bit system inums, 64-bit internal inums
+>
+> ---
+> i'll have to figure out how to do a kdb equiv to get a backtrace here
+>
+> of note .. i also saw a vfs error last night on shutdown that also
+> resulted in a hard hang:
+>
+> Tue Jul 22 01:17:08 2008
+> panic(cpu 1 caller 0x001DBC3D): "vnode_put(0x529dc70): iocount < 1"@/
+> SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x475dfd78 : 0x12b0fa (0x4592a4 0x475dfdac 0x133243 0x0)
+> 0x475dfdc8 : 0x1dbc3d (0x467410 0x529dc70 0x475dfe08 0x4792d532)
+> 0x475dfde8 : 0x1dbcee (0x529dc70 0x6f17220 0xf9bdf8ae 0x1064f140)
+> 0x475dfe08 : 0x478fd30b (0x529dc70 0x479602e4 0x0 0x0)
+> 0x475dff58 : 0x478e60a2 (0x1064f000 0xc81d 0x0 0x0)
+> 0x475dffc8 : 0x19ebdc (0x1023d200 0x0 0x1a20b5 0x5a8f3c8)
+> Backtrace terminated-invalid frame pointer 0
+>       Kernel loadable modules in backtrace (with dependencies):
+>          com.apple.filesystems.zfs(8.0)@0x478b5000->0x47980fff
+>
+> BSD process name corresponding to current thread: kernel_task
+>
+> Mac OS version:
+> 9E17
+>
+> Kernel version:
+> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+> root:xnu-1228.5.20~1/RELEASE_I386
+> System model name: MacBookPro2,2 (Mac-F42187C8)
+>
+> ----
+> also could we up the version number in the zfs module plist to track
+> version problems a little better?
+> methinks (8.0) is the default template for a kext
+>
+> would also be nice to get some sort of web bugtraq in place so we can
+> just file 'em
+>
+> ---
+> .je
+>
+> On Jul 22, 2008, at 3:23 PM, No?l Dellofano wrote:
+>
+> > Neat!  I haven't seen this issue since fixing the memory scaling bug a
+> > while ago.  Sorry to hear it's giving you troubles.
+> >
+> > Germano,
+> > if it reproduces, then the snapshot would be awesome!  As my biggest
+> > issue is getting stuff like that to reproduce in house.  So you're
+> > just using standard leopard shipped rsync right?  If so, since he's
+> > the fatty that tries to shove everything in memory I wonder if we're
+> > stuck sleeping waiting for someone to give up some memory possibly and
+> > are wedged...
+> >
+> > as usual you guys are the best test team a girl can have :)  If your
+> > snapshot works send it over.  Otherwise I'll do my best to mimic your
+> > system and see if I can get a recreate..
+> >
+> > thanks!
+> > Noel
+> >
+> > On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+> >
+> >>
+> >> On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+> >>
+> >>> If I do a recursive diff on some of these trees, or a find and a
+> >>> following md5 sum on, say, 100'000+ files, the machine will die the
+> >>> same silent death as reported for excessive rsync before
+> >>
+> >> Interesting!
+> >>
+> >> I'm not seeing that problem any more, but I've been using rsync
+> >> 3.0.4,
+> >> built from source, 64-bit... it's dramatically improved over the
+> >> version that ships with Leopard.
+> >>
+> >> I wonder if there's a memory leak in the VFS layer.  (wow, that
+> >> almost
+> >> sounds like I know what I'm talking about, but really I don't)
+> >>
+> >>
+> >> _______________________________________________
+> >> zfs-discuss mailing list
+> >> zfs-discuss at lists.macosforge.org
+> >> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> >
+> > _______________________________________________
+> > zfs-discuss mailing list
+> > zfs-discuss at lists.macosforge.org
+> > http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/7b2a7801/attachment.html 
+
+From macrbg at mac.com  Tue Jul 22 15:43:33 2008
+From: macrbg at mac.com (Robert Gordon)
+Date: Tue, 22 Jul 2008 17:43:33 -0500
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <327b821f0807221337v766304aby5dc6a56a54c68455@mail.gmail.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+	<7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+	<B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+	<327b821f0807221337v766304aby5dc6a56a54c68455@mail.gmail.com>
+Message-ID: <571C59B7-4894-4BF2-B2E1-FE327A5E8DE8@mac.com>
+
+https://zfs.macosforge.org/auth/register
+
+then i guess you can file reports ;-)
+
+Robert.
+
+On Jul 22, 2008, at 3:37 PM, Germano Caronni wrote:
+
+> Thank you for validating this issue.  ;-)
+>
+> For bugtracking, there is http://zfs.macosforge.org/trac/report --  
+> but I am not sure if / how this is used.
+>
+> Germano
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/5e3fb6c0/attachment.html 
+
+From ndellofano at apple.com  Tue Jul 22 16:29:33 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 22 Jul 2008 16:29:33 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <327b821f0807221337v766304aby5dc6a56a54c68455@mail.gmail.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+	<7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+	<B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+	<327b821f0807221337v766304aby5dc6a56a54c68455@mail.gmail.com>
+Message-ID: <4C84237B-12F7-4389-963C-85D481EB21FD@apple.com>
+
+So currently there is no way for me to sync the public bug tracker  
+with Radar, our main bug track facility in house.  I have to go  
+through the bugs manually and file them into our internal system which  
+I just don't have the time or resources to do.  Hence the best way to  
+alert me of an issue is just send it out on the list like this.  I try  
+and keep up as much as possible, then I can just file the bug into  
+radar as it comes up.  And I also have a contact for you if I need  
+help reproducing it :)
+
+So, while it's not the best system, it works and is all I have.  So  
+just send an email, or if you have private information just send me an  
+email.  However, when at all possible, send it to the list so then  
+everyone is alerted to it like below.
+
+thanks!
+Noel
+
+On Jul 22, 2008, at 1:37 PM, Germano Caronni wrote:
+
+> Thank you for validating this issue.  ;-)
+>
+> For bugtracking, there is http://zfs.macosforge.org/trac/report --  
+> but I am not sure if / how this is used.
+>
+> Germano
+>
+> On Tue, Jul 22, 2008 at 13:27, Jonathan Edwards <Jonathan.Edwards at sun.com 
+> > wrote:
+> i was able to reproduce a hard hang on a much smaller system config ..
+> just 4 x 64MB files here for my test pool .. compression doesn't  
+> matter:
+>
+> bash-3.2# zpool status -v
+>   pool: tpool
+>  state: ONLINE
+>  scrub: none requested
+> config:
+>
+>        NAME              STATE     READ WRITE CKSUM
+>        tpool             ONLINE       0     0     0
+>          /var/tmp/file1  ONLINE       0     0     0
+>          /var/tmp/file2  ONLINE       0     0     0
+>          /var/tmp/file3  ONLINE       0     0     0
+>          /var/tmp/file4  ONLINE       0     0     0
+>
+> errors: No known data errors
+> bash-3.2# rsync --version
+> rsync  version 2.6.3  protocol version 28
+> Copyright (C) 1996-2004 by Andrew Tridgell and others
+> <http://rsync.samba.org/>
+> Capabilities: 64-bit files, socketpairs, hard links, symlinks,
+> batchfiles,
+>               inplace, IPv6, 32-bit system inums, 64-bit internal  
+> inums
+>
+> ---
+> i'll have to figure out how to do a kdb equiv to get a backtrace here
+>
+> of note .. i also saw a vfs error last night on shutdown that also
+> resulted in a hard hang:
+>
+> Tue Jul 22 01:17:08 2008
+> panic(cpu 1 caller 0x001DBC3D): "vnode_put(0x529dc70): iocount < 1"@/
+> SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+> 0x475dfd78 : 0x12b0fa (0x4592a4 0x475dfdac 0x133243 0x0)
+> 0x475dfdc8 : 0x1dbc3d (0x467410 0x529dc70 0x475dfe08 0x4792d532)
+> 0x475dfde8 : 0x1dbcee (0x529dc70 0x6f17220 0xf9bdf8ae 0x1064f140)
+> 0x475dfe08 : 0x478fd30b (0x529dc70 0x479602e4 0x0 0x0)
+> 0x475dff58 : 0x478e60a2 (0x1064f000 0xc81d 0x0 0x0)
+> 0x475dffc8 : 0x19ebdc (0x1023d200 0x0 0x1a20b5 0x5a8f3c8)
+> Backtrace terminated-invalid frame pointer 0
+>       Kernel loadable modules in backtrace (with dependencies):
+>          com.apple.filesystems.zfs(8.0)@0x478b5000->0x47980fff
+>
+> BSD process name corresponding to current thread: kernel_task
+>
+> Mac OS version:
+> 9E17
+>
+> Kernel version:
+> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+> root:xnu-1228.5.20~1/RELEASE_I386
+> System model name: MacBookPro2,2 (Mac-F42187C8)
+>
+> ----
+> also could we up the version number in the zfs module plist to track
+> version problems a little better?
+> methinks (8.0) is the default template for a kext
+>
+> would also be nice to get some sort of web bugtraq in place so we can
+> just file 'em
+>
+> ---
+> .je
+>
+> On Jul 22, 2008, at 3:23 PM, No?l Dellofano wrote:
+>
+> > Neat!  I haven't seen this issue since fixing the memory scaling  
+> bug a
+> > while ago.  Sorry to hear it's giving you troubles.
+> >
+> > Germano,
+> > if it reproduces, then the snapshot would be awesome!  As my biggest
+> > issue is getting stuff like that to reproduce in house.  So you're
+> > just using standard leopard shipped rsync right?  If so, since he's
+> > the fatty that tries to shove everything in memory I wonder if we're
+> > stuck sleeping waiting for someone to give up some memory possibly  
+> and
+> > are wedged...
+> >
+> > as usual you guys are the best test team a girl can have :)  If your
+> > snapshot works send it over.  Otherwise I'll do my best to mimic  
+> your
+> > system and see if I can get a recreate..
+> >
+> > thanks!
+> > Noel
+> >
+> > On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+> >
+> >>
+> >> On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+> >>
+> >>> If I do a recursive diff on some of these trees, or a find and a
+> >>> following md5 sum on, say, 100'000+ files, the machine will die  
+> the
+> >>> same silent death as reported for excessive rsync before
+> >>
+> >> Interesting!
+> >>
+> >> I'm not seeing that problem any more, but I've been using rsync
+> >> 3.0.4,
+> >> built from source, 64-bit... it's dramatically improved over the
+> >> version that ships with Leopard.
+> >>
+> >> I wonder if there's a memory leak in the VFS layer.  (wow, that
+> >> almost
+> >> sounds like I know what I'm talking about, but really I don't)
+> >>
+> >>
+> >> _______________________________________________
+> >> zfs-discuss mailing list
+> >> zfs-discuss at lists.macosforge.org
+> >> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+> >
+> > _______________________________________________
+> > zfs-discuss mailing list
+> > zfs-discuss at lists.macosforge.org
+> > http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/051932bd/attachment-0001.html 
+
+From ndellofano at apple.com  Tue Jul 22 16:35:26 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 22 Jul 2008 16:35:26 -0700
+Subject: [zfs-discuss] Can pools be imported on to other systems?
+In-Reply-To: <20080722.223656.255362151.hanche@math.ntnu.no>
+References: <1a2b9650807221311k1ca37e35m94a4a82483bc23af@mail.gmail.com>
+	<20080722.223656.255362151.hanche@math.ntnu.no>
+Message-ID: <79303B95-DB00-438D-972F-F37384EB1136@apple.com>
+
+ZFS on Mac OSX also relies on having a GPT partition table on the disk  
+that you are using for your ZFS pool.  However, generally we use  
+diskutil in order to do such, not the gpt command.  So to ready a disk  
+for ZFS you need to do:
+
+%diskutil partitionDisk disk0 GPTFormat ZFS %noformat% 100%
+then you can create your pool,
+
+%sudo zpool create panda disk0s2
+
+I haven't tested on Free bsd, but we're striving to keep compliant  
+with the Solaris ZFS so you should be able to take them back and forth  
+with no issues.  One exception would be gzip.  We don't have gzip  
+hooked up yet on OS X so if you have a Solaris gzipped filesystem then  
+ZFS on OSX won't be able to import it.
+
+Noel
+
+On Jul 22, 2008, at 1:36 PM, Harald Hanche-Olsen wrote:
+
+> + "Fu Leow" <fyleow at gmail.com>:
+>
+>> Can the ZFS pools created on OS X be put into other systems such as
+>> Solaris and FreeBSD to be reimported?
+>
+> Yes! But beware of versioning: FreeBSD currently supports only zfs
+> version 6 I believe, which is what the Mac zfs creates by default.
+> Don't upgrade your filesystems to version 8 if you want to read them
+> on FreeBSD.
+>
+> While playing around with zfs on a memory stick, however, I found it
+> worked better to partition and create pools on the FreeBSD side.
+> (FreeBSD really wants a GUID partition table on disks to be used for
+> ZFS.) I had some success with this procedure on FreeBSD:
+>
+> #; gpt create -f da2
+> #; gpt add -t 6a898cc3-1dd2-11b2-99a6-080020736631 da2
+> #; zpool create POOL da2p1
+>
+> But my troubles from doing it on the mac side may be just due to
+> finger trouble and lack of knowledge. (I learned that very long UUID
+> by examining a zfs file system created on the mac using gpt on
+> FreeBSD: The gpt command there does not currently know an alias for
+> this UUID.)
+>
+> One nice thing about zfs is it doesn't care much about endianness:
+> Data can be written to disk with either endianness, with a flag
+> indicating which one written along with the data. So any
+> implementation will typically write data using its native endianness,
+> while a reader using the opposite endianness will have to do the
+> conversion.
+>
+> - Harald
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From ndellofano at apple.com  Tue Jul 22 16:37:23 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 22 Jul 2008 16:37:23 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <4C84237B-12F7-4389-963C-85D481EB21FD@apple.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+	<7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+	<B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+	<327b821f0807221337v766304aby5dc6a56a54c68455@mail.gmail.com>
+	<4C84237B-12F7-4389-963C-85D481EB21FD@apple.com>
+Message-ID: <CC4E6330-D189-4184-8E00-3742938B1925@apple.com>
+
+For those interested or keeping track, I just filed this bug in Radar  
+to track Germano's bug:
+
+6094713:    rsync /dev to a ZFS volume hangs
+
+I'll try and get it fixed asap.  Thanks for finding this Germano!
+
+Noel
+
+On Jul 22, 2008, at 4:29 PM, No?l Dellofano wrote:
+
+> So currently there is no way for me to sync the public bug tracker  
+> with Radar, our main bug track facility in house.  I have to go  
+> through the bugs manually and file them into our internal system  
+> which I just don't have the time or resources to do.  Hence the best  
+> way to alert me of an issue is just send it out on the list like  
+> this.  I try and keep up as much as possible, then I can just file  
+> the bug into radar as it comes up.  And I also have a contact for  
+> you if I need help reproducing it :)
+>
+> So, while it's not the best system, it works and is all I have.  So  
+> just send an email, or if you have private information just send me  
+> an email.  However, when at all possible, send it to the list so  
+> then everyone is alerted to it like below.
+>
+> thanks!
+> Noel
+>
+> On Jul 22, 2008, at 1:37 PM, Germano Caronni wrote:
+>
+>> Thank you for validating this issue.  ;-)
+>>
+>> For bugtracking, there is http://zfs.macosforge.org/trac/report --  
+>> but I am not sure if / how this is used.
+>>
+>> Germano
+>>
+>> On Tue, Jul 22, 2008 at 13:27, Jonathan Edwards <Jonathan.Edwards at sun.com 
+>> > wrote:
+>> i was able to reproduce a hard hang on a much smaller system  
+>> config ..
+>> just 4 x 64MB files here for my test pool .. compression doesn't  
+>> matter:
+>>
+>> bash-3.2# zpool status -v
+>>   pool: tpool
+>>  state: ONLINE
+>>  scrub: none requested
+>> config:
+>>
+>>        NAME              STATE     READ WRITE CKSUM
+>>        tpool             ONLINE       0     0     0
+>>          /var/tmp/file1  ONLINE       0     0     0
+>>          /var/tmp/file2  ONLINE       0     0     0
+>>          /var/tmp/file3  ONLINE       0     0     0
+>>          /var/tmp/file4  ONLINE       0     0     0
+>>
+>> errors: No known data errors
+>> bash-3.2# rsync --version
+>> rsync  version 2.6.3  protocol version 28
+>> Copyright (C) 1996-2004 by Andrew Tridgell and others
+>> <http://rsync.samba.org/>
+>> Capabilities: 64-bit files, socketpairs, hard links, symlinks,
+>> batchfiles,
+>>               inplace, IPv6, 32-bit system inums, 64-bit internal  
+>> inums
+>>
+>> ---
+>> i'll have to figure out how to do a kdb equiv to get a backtrace here
+>>
+>> of note .. i also saw a vfs error last night on shutdown that also
+>> resulted in a hard hang:
+>>
+>> Tue Jul 22 01:17:08 2008
+>> panic(cpu 1 caller 0x001DBC3D): "vnode_put(0x529dc70): iocount < 1"@/
+>> SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+>> Backtrace, Format - Frame : Return Address (4 potential args on  
+>> stack)
+>> 0x475dfd78 : 0x12b0fa (0x4592a4 0x475dfdac 0x133243 0x0)
+>> 0x475dfdc8 : 0x1dbc3d (0x467410 0x529dc70 0x475dfe08 0x4792d532)
+>> 0x475dfde8 : 0x1dbcee (0x529dc70 0x6f17220 0xf9bdf8ae 0x1064f140)
+>> 0x475dfe08 : 0x478fd30b (0x529dc70 0x479602e4 0x0 0x0)
+>> 0x475dff58 : 0x478e60a2 (0x1064f000 0xc81d 0x0 0x0)
+>> 0x475dffc8 : 0x19ebdc (0x1023d200 0x0 0x1a20b5 0x5a8f3c8)
+>> Backtrace terminated-invalid frame pointer 0
+>>       Kernel loadable modules in backtrace (with dependencies):
+>>          com.apple.filesystems.zfs(8.0)@0x478b5000->0x47980fff
+>>
+>> BSD process name corresponding to current thread: kernel_task
+>>
+>> Mac OS version:
+>> 9E17
+>>
+>> Kernel version:
+>> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+>> root:xnu-1228.5.20~1/RELEASE_I386
+>> System model name: MacBookPro2,2 (Mac-F42187C8)
+>>
+>> ----
+>> also could we up the version number in the zfs module plist to track
+>> version problems a little better?
+>> methinks (8.0) is the default template for a kext
+>>
+>> would also be nice to get some sort of web bugtraq in place so we can
+>> just file 'em
+>>
+>> ---
+>> .je
+>>
+>> On Jul 22, 2008, at 3:23 PM, No?l Dellofano wrote:
+>>
+>> > Neat!  I haven't seen this issue since fixing the memory scaling  
+>> bug a
+>> > while ago.  Sorry to hear it's giving you troubles.
+>> >
+>> > Germano,
+>> > if it reproduces, then the snapshot would be awesome!  As my  
+>> biggest
+>> > issue is getting stuff like that to reproduce in house.  So you're
+>> > just using standard leopard shipped rsync right?  If so, since he's
+>> > the fatty that tries to shove everything in memory I wonder if  
+>> we're
+>> > stuck sleeping waiting for someone to give up some memory  
+>> possibly and
+>> > are wedged...
+>> >
+>> > as usual you guys are the best test team a girl can have :)  If  
+>> your
+>> > snapshot works send it over.  Otherwise I'll do my best to mimic  
+>> your
+>> > system and see if I can get a recreate..
+>> >
+>> > thanks!
+>> > Noel
+>> >
+>> > On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+>> >
+>> >>
+>> >> On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+>> >>
+>> >>> If I do a recursive diff on some of these trees, or a find and a
+>> >>> following md5 sum on, say, 100'000+ files, the machine will die  
+>> the
+>> >>> same silent death as reported for excessive rsync before
+>> >>
+>> >> Interesting!
+>> >>
+>> >> I'm not seeing that problem any more, but I've been using rsync
+>> >> 3.0.4,
+>> >> built from source, 64-bit... it's dramatically improved over the
+>> >> version that ships with Leopard.
+>> >>
+>> >> I wonder if there's a memory leak in the VFS layer.  (wow, that
+>> >> almost
+>> >> sounds like I know what I'm talking about, but really I don't)
+>> >>
+>> >>
+>> >> _______________________________________________
+>> >> zfs-discuss mailing list
+>> >> zfs-discuss at lists.macosforge.org
+>> >> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>> >
+>> > _______________________________________________
+>> > zfs-discuss mailing list
+>> > zfs-discuss at lists.macosforge.org
+>> > http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/d8190205/attachment.html 
+
+From johnemac at tekserve.com  Tue Jul 22 16:48:36 2008
+From: johnemac at tekserve.com (John McAdams)
+Date: Tue, 22 Jul 2008 19:48:36 -0400
+Subject: [zfs-discuss] what version
+Message-ID: <29232123-2755-42FA-ADED-125BE75B816B@tekserve.com>
+
+Sorry, dumb question but how do I find out what version number of ZFS  
+I'm running?
+
+Thanks,
+-- jmca
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2425 bytes
+Desc: not available
+Url : http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080722/0d589c0f/attachment.bin 
+
+From ndellofano at apple.com  Tue Jul 22 16:58:07 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Tue, 22 Jul 2008 16:58:07 -0700
+Subject: [zfs-discuss] what version
+In-Reply-To: <29232123-2755-42FA-ADED-125BE75B816B@tekserve.com>
+References: <29232123-2755-42FA-ADED-125BE75B816B@tekserve.com>
+Message-ID: <6892EBEF-5CD7-4D37-A52C-5A9B5BCDFE99@apple.com>
+
+depends on what you mean by version :)
+
+If you want the actual on disk ZFS version of your pool, then you can  
+do:
+
+%zpool upgrade
+
+with no arguments, zpool upgrade will just output what pools on your  
+system are running which ZFS on disk version.
+
+If you'd like to know which version of the code you're running,  
+(a.k.a. Did I install zfs-119 or am i still running zfs-117?)
+you can do:
+%strings /System/Library/Extensions/zfs.kext/Contents/MacOS/zfs
+
+Noel
+
+On Jul 22, 2008, at 4:48 PM, John McAdams wrote:
+
+> Sorry, dumb question but how do I find out what version number of  
+> ZFS I'm running?
+>
+> Thanks,
+> -- jmca_______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From lists at loveturtle.net  Tue Jul 22 19:11:21 2008
+From: lists at loveturtle.net (Dillon Kass)
+Date: Tue, 22 Jul 2008 22:11:21 -0400
+Subject: [zfs-discuss] Can pools be imported on to other systems?
+In-Reply-To: <79303B95-DB00-438D-972F-F37384EB1136@apple.com>
+References: <1a2b9650807221311k1ca37e35m94a4a82483bc23af@mail.gmail.com>	<20080722.223656.255362151.hanche@math.ntnu.no>
+	<79303B95-DB00-438D-972F-F37384EB1136@apple.com>
+Message-ID: <48869349.9090706@loveturtle.net>
+
+I've imported a pool I created on OSX to FreeBSD and vice versa and it 
+works just fine. As long as it's version 6 or lower.
+
+No?l Dellofano wrote:
+> ZFS on Mac OSX also relies on having a GPT partition table on the disk  
+> that you are using for your ZFS pool.  However, generally we use  
+> diskutil in order to do such, not the gpt command.  So to ready a disk  
+> for ZFS you need to do:
+>
+> %diskutil partitionDisk disk0 GPTFormat ZFS %noformat% 100%
+> then you can create your pool,
+>
+> %sudo zpool create panda disk0s2
+>
+> I haven't tested on Free bsd, but we're striving to keep compliant  
+> with the Solaris ZFS so you should be able to take them back and forth  
+> with no issues.  One exception would be gzip.  We don't have gzip  
+> hooked up yet on OS X so if you have a Solaris gzipped filesystem then  
+> ZFS on OSX won't be able to import it.
+>
+> Noel
+>
+> On Jul 22, 2008, at 1:36 PM, Harald Hanche-Olsen wrote:
+>
+>   
+>> + "Fu Leow" <fyleow at gmail.com>:
+>>
+>>     
+>>> Can the ZFS pools created on OS X be put into other systems such as
+>>> Solaris and FreeBSD to be reimported?
+>>>       
+>> Yes! But beware of versioning: FreeBSD currently supports only zfs
+>> version 6 I believe, which is what the Mac zfs creates by default.
+>> Don't upgrade your filesystems to version 8 if you want to read them
+>> on FreeBSD.
+>>
+>> While playing around with zfs on a memory stick, however, I found it
+>> worked better to partition and create pools on the FreeBSD side.
+>> (FreeBSD really wants a GUID partition table on disks to be used for
+>> ZFS.) I had some success with this procedure on FreeBSD:
+>>
+>> #; gpt create -f da2
+>> #; gpt add -t 6a898cc3-1dd2-11b2-99a6-080020736631 da2
+>> #; zpool create POOL da2p1
+>>
+>> But my troubles from doing it on the mac side may be just due to
+>> finger trouble and lack of knowledge. (I learned that very long UUID
+>> by examining a zfs file system created on the mac using gpt on
+>> FreeBSD: The gpt command there does not currently know an alias for
+>> this UUID.)
+>>
+>> One nice thing about zfs is it doesn't care much about endianness:
+>> Data can be written to disk with either endianness, with a flag
+>> indicating which one written along with the data. So any
+>> implementation will typically write data using its native endianness,
+>> while a reader using the opposite endianness will have to do the
+>> conversion.
+>>
+>> - Harald
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>     
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>   
+
+
+From macrbg at mac.com  Tue Jul 22 15:53:03 2008
+From: macrbg at mac.com (Robert Gordon)
+Date: Tue, 22 Jul 2008 17:53:03 -0500
+Subject: [zfs-discuss] crusty source...
+Message-ID: <83326887-301F-4D3E-B026-653536C9EBB5@mac.com>
+
+
+I noticed while i was looking at the registration process
+for trac, that the "TracBrowser" source code was a tad
+dry and crusty, and in need for a dust off ...
+
+http://zfs.macosforge.org/trac/browser
+
+Robert.
+
+From hanche at math.ntnu.no  Tue Jul 22 23:56:22 2008
+From: hanche at math.ntnu.no (Harald Hanche-Olsen)
+Date: Wed, 23 Jul 2008 08:56:22 +0200 (CEST)
+Subject: [zfs-discuss] Can pools be imported on to other systems?
+In-Reply-To: <79303B95-DB00-438D-972F-F37384EB1136@apple.com>
+References: <1a2b9650807221311k1ca37e35m94a4a82483bc23af@mail.gmail.com>
+	<20080722.223656.255362151.hanche@math.ntnu.no>
+	<79303B95-DB00-438D-972F-F37384EB1136@apple.com>
+Message-ID: <20080723.085622.163638616.hanche@math.ntnu.no>
+
++ No?l Dellofano <ndellofano at apple.com>:
+
+> ZFS on Mac OSX also relies on having a GPT partition table on the
+> disk that you are using for your ZFS pool.  However, generally we
+> use diskutil in order to do such, not the gpt command.  So to ready
+> a disk for ZFS you need to do:
+> 
+> %diskutil partitionDisk disk0 GPTFormat ZFS %noformat% 100%
+
+Ah, now I remember a bit more about my finger troubles: I think I had
+the story partly the wrong way round ... IIRC, FreeBSD does not
+actually require a GPT for ZFS to work; I had tried making a ZFS pool
+on FreeBSD not realizing this, and macosx failed to recognize it.
+
+Then when I did the diskutil thing, I found that it puts a EFI
+partition the disk even if I don't specify it. For a large disk it
+probably doesn't matter if you lose a couple hundred MB that way, but
+on a memory stick it's a different story, which is why I ended up
+using gpt on FreeBSD instead.
+
+- Harald
+
+From ndellofano at apple.com  Wed Jul 23 18:22:11 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 23 Jul 2008 18:22:11 -0700
+Subject: [zfs-discuss] crusty source...
+In-Reply-To: <83326887-301F-4D3E-B026-653536C9EBB5@mac.com>
+References: <83326887-301F-4D3E-B026-653536C9EBB5@mac.com>
+Message-ID: <73644F5D-E33E-40A0-813B-B5BBDCD75D5B@apple.com>
+
+fixed.
+
+Noel :)
+
+On Jul 22, 2008, at 3:53 PM, Robert Gordon wrote:
+
+>
+> I noticed while i was looking at the registration process
+> for trac, that the "TracBrowser" source code was a tad
+> dry and crusty, and in need for a dust off ...
+>
+> http://zfs.macosforge.org/trac/browser
+>
+> Robert.
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From bplist at thinkpink.com  Tue Jul 29 10:58:50 2008
+From: bplist at thinkpink.com (Brian Pinkerton)
+Date: Tue, 29 Jul 2008 10:58:50 -0700
+Subject: [zfs-discuss] panic on zfs-119
+Message-ID: <EE7C13B5-978B-4056-A431-3FA2EF67083C@thinkpink.com>
+
+Just got the following panic doing a copy of a lot of files from a ZFS  
+file system to an HFS one.  I used a back-to-back tar instead of using  
+rsync, so we can rule out rsync in this case. :)
+
+bri
+
+Tue Jul 29 10:13:08 2008
+panic(cpu 0 caller 0x007EE1E0): "kernel heap corruption detected"@/ 
+Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/os/kmem.c: 
+437
+Latest stack backtrace for cpu 0:
+       Backtrace:
+          0x0009B498 0x0009BE3C 0x00029DD8 0x007EE1E0 0x007EE538  
+0x007EE68C 0x007E9CD0 0x000B05D4
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x75a000->0x843fff
+Proceeding back via exception chain:
+    Exception state (sv=0x6b2ce780)
+       PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;  
+DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000 (Unknown)
+
+BSD process name corresponding to current thread: kernel_task
+
+Mac OS version:
+9E17
+
+Kernel version:
+Darwin Kernel Version 9.4.0: Mon Jun  9 19:36:17 PDT 2008;  
+root:xnu-1228.5.20~1/RELEASE_PPC
+System model name: PowerMac11,2
+
+
+From ndellofano at apple.com  Wed Jul 30 11:19:32 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Wed, 30 Jul 2008 11:19:32 -0700
+Subject: [zfs-discuss] panic on zfs-119
+In-Reply-To: <EE7C13B5-978B-4056-A431-3FA2EF67083C@thinkpink.com>
+References: <EE7C13B5-978B-4056-A431-3FA2EF67083C@thinkpink.com>
+Message-ID: <149ABB55-44DA-4FB3-A630-47924A6172EF@apple.com>
+
+oh grosse, kernel heap corruption.  I'll open a bug on this right away.
+Can you send me a 'zpool history' of your pool?  Out of curiosity how  
+much RAM do you have?
+
+Noel
+
+On Jul 29, 2008, at 10:58 AM, Brian Pinkerton wrote:
+
+> Just got the following panic doing a copy of a lot of files from a ZFS
+> file system to an HFS one.  I used a back-to-back tar instead of using
+> rsync, so we can rule out rsync in this case. :)
+>
+> bri
+>
+> Tue Jul 29 10:13:08 2008
+> panic(cpu 0 caller 0x007EE1E0): "kernel heap corruption detected"@/
+> Volumes/pixie_dust/home/ndellofano/zfs-work/zfs-119/zfs_kext/os/ 
+> kmem.c:
+> 437
+> Latest stack backtrace for cpu 0:
+>       Backtrace:
+>          0x0009B498 0x0009BE3C 0x00029DD8 0x007EE1E0 0x007EE538
+> 0x007EE68C 0x007E9CD0 0x000B05D4
+>       Kernel loadable modules in backtrace (with dependencies):
+>          com.apple.filesystems.zfs(8.0)@0x75a000->0x843fff
+> Proceeding back via exception chain:
+>    Exception state (sv=0x6b2ce780)
+>       PC=0x00000000; MSR=0x0000D030; DAR=0x00000000;
+> DSISR=0x00000000; LR=0x00000000; R1=0x00000000; XCP=0x00000000  
+> (Unknown)
+>
+> BSD process name corresponding to current thread: kernel_task
+>
+> Mac OS version:
+> 9E17
+>
+> Kernel version:
+> Darwin Kernel Version 9.4.0: Mon Jun  9 19:36:17 PDT 2008;
+> root:xnu-1228.5.20~1/RELEASE_PPC
+> System model name: PowerMac11,2
+>
+> _______________________________________________
+> zfs-discuss mailing list
+> zfs-discuss at lists.macosforge.org
+> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+
+
+From bplist at thinkpink.com  Wed Jul 30 12:17:26 2008
+From: bplist at thinkpink.com (Brian Pinkerton)
+Date: Wed, 30 Jul 2008 12:17:26 -0700
+Subject: [zfs-discuss] panic on zfs-119
+In-Reply-To: <149ABB55-44DA-4FB3-A630-47924A6172EF@apple.com>
+References: <EE7C13B5-978B-4056-A431-3FA2EF67083C@thinkpink.com>
+	<149ABB55-44DA-4FB3-A630-47924A6172EF@apple.com>
+Message-ID: <12BF3898-D02C-4136-A07F-BE5C58F3517B@thinkpink.com>
+
+This happened on a quad PM G5 with 4GB of RAM.  The array in question,  
+"max", has 8 disks (4 stripe x 2 mirror.)  I was having some problems  
+with one of the bays in my enclosure, which had resulted in a degraded  
+mirror.  I moved the disk from the bad bay into another enclosure and  
+had just completed a scrub.  I was in the process of doing another  
+backup when the panic occurred.  Instead of rsync, I used a back-to- 
+back tar, like:
+
+	gnutar cpf - Photos | (cd /Volumes/Backup2; gnutar xpvf -)
+
+The panic occurred just before the last zpool import in the history  
+below.
+
+thanks,
+bri
+
+History for 'max':
+2008-01-16.15:44:39 zpool create max mirror disk8s2 disk5s2 mirror  
+disk2s2 disk1s2 mirror disk3s2 disk6s2 mirror disk4s2 disk7s2
+2008-01-16.15:44:51 zpool upgrade max
+2008-01-16.15:55:57 zfs create max/Video
+2008-01-16.15:56:05 zfs create max/Photos
+2008-01-16.15:56:09 zfs create max/Music
+2008-01-16.15:56:18 zfs create max/Backups
+2008-01-16.20:24:18 zpool import -f 9029985489610784659
+2008-01-16.22:22:48 zpool import -f 9029985489610784659
+2008-01-19.21:56:08 zpool import -f 9029985489610784659
+2008-01-27.15:16:13 zpool import -f 9029985489610784659
+2008-02-12.13:26:51 zpool import -f 9029985489610784659
+2008-02-12.13:34:42 zpool import -f 9029985489610784659
+2008-03-02.14:31:56 zpool import -f 9029985489610784659
+2008-03-02.14:44:57 zpool import -f 9029985489610784659
+2008-03-05.21:44:14 zpool import -f 9029985489610784659
+2008-03-06.09:09:44 zpool import -f 9029985489610784659
+2008-03-06.10:41:32 zpool import -f 9029985489610784659
+2008-03-07.11:13:56 zpool import -f 9029985489610784659
+2008-03-07.11:34:55 zpool import -f 9029985489610784659
+2008-05-24.21:58:35 zpool scrub max
+2008-05-25.15:23:07 zpool import -f 9029985489610784659
+2008-05-25.16:43:32 zpool import -f 9029985489610784659
+2008-05-29.08:44:16 zpool import -f 9029985489610784659
+2008-06-11.15:37:46 zpool import -f 9029985489610784659
+2008-06-24.17:39:38 zpool import -f 9029985489610784659
+2008-07-24.21:54:46 zpool import -f 9029985489610784659
+2008-07-24.22:03:44 zpool import -f 9029985489610784659
+2008-07-24.22:43:27 zpool import -f 9029985489610784659
+2008-07-24.22:44:59 zpool scrub max
+2008-07-24.23:20:46 zpool scrub -s max
+2008-07-25.23:07:13 zpool import -f 9029985489610784659
+2008-07-27.15:47:46 zpool import -f 9029985489610784659
+2008-07-27.15:56:51 zpool clear max
+2008-07-27.20:25:43 zpool scrub max
+2008-07-28.01:13:58 zpool clear max
+2008-07-28.01:19:05 zpool scrub max
+2008-07-29.10:13:15 zpool import -f 9029985489610784659
+
+
+On Jul 30, 2008, at 11:19 AM, No?l Dellofano wrote:
+
+> oh grosse, kernel heap corruption.  I'll open a bug on this right  
+> away.
+> Can you send me a 'zpool history' of your pool?  Out of curiosity  
+> how much RAM do you have?
+>
+> Noel
+>
+
+
+From ndellofano at apple.com  Thu Jul 31 14:46:10 2008
+From: ndellofano at apple.com (=?ISO-8859-1?Q?No=EBl_Dellofano?=)
+Date: Thu, 31 Jul 2008 14:46:10 -0700
+Subject: [zfs-discuss] build-119 still dying a silent death
+In-Reply-To: <CC4E6330-D189-4184-8E00-3742938B1925@apple.com>
+References: <327b821f0807221002w25756393gc4879426f1a9a06c@mail.gmail.com>
+	<948DDB28-E0C0-41A2-BD4F-51016F7EB3A9@nrao.edu>
+	<7CE95A44-0635-4003-B009-B7D93209DC59@apple.com>
+	<B1BFF383-ECB9-4054-90A9-5A306AFCD47D@sun.com>
+	<327b821f0807221337v766304aby5dc6a56a54c68455@mail.gmail.com>
+	<4C84237B-12F7-4389-963C-85D481EB21FD@apple.com>
+	<CC4E6330-D189-4184-8E00-3742938B1925@apple.com>
+Message-ID: <924BAD42-F7DA-47DE-84B0-3E53E1183B51@apple.com>
+
+Hey all,
+
+I need some help.  Neither Don nor I are able to recreate this bug,  
+with both of us trying different scenarios on different machines.
+
+We're using Germano's instructions:
+
+mkfile 20g /foo
+zpool create z /foo
+zfs create z/crashfs
+sudo rsync -aHPSv /dev /etc /usr /Volumes/z/crashfs/1
+[watch the spinning ball of death]
+
+
+I also tried using a disk drive instead of a file as a vdev.   
+Additionally tried rsyncing into a top level pool, as well as child  
+filesystems like the one above.  I'm running  Leopard 9E17 on my Mac  
+Pro, with zfs-119.  Is that what everyone else is running that is  
+seeing this?  I can't get a hang.
+
+
+ideas or suggestions?  Am i missing a step?
+
+Noel
+
+
+
+On Jul 22, 2008, at 4:37 PM, No?l Dellofano wrote:
+
+> For those interested or keeping track, I just filed this bug in  
+> Radar to track Germano's bug:
+>
+> 6094713:    rsync /dev to a ZFS volume hangs
+>
+> I'll try and get it fixed asap.  Thanks for finding this Germano!
+>
+> Noel
+>
+> On Jul 22, 2008, at 4:29 PM, No?l Dellofano wrote:
+>
+>> So currently there is no way for me to sync the public bug tracker  
+>> with Radar, our main bug track facility in house.  I have to go  
+>> through the bugs manually and file them into our internal system  
+>> which I just don't have the time or resources to do.  Hence the  
+>> best way to alert me of an issue is just send it out on the list  
+>> like this.  I try and keep up as much as possible, then I can just  
+>> file the bug into radar as it comes up.  And I also have a contact  
+>> for you if I need help reproducing it :)
+>>
+>> So, while it's not the best system, it works and is all I have.  So  
+>> just send an email, or if you have private information just send me  
+>> an email.  However, when at all possible, send it to the list so  
+>> then everyone is alerted to it like below.
+>>
+>> thanks!
+>> Noel
+>>
+>> On Jul 22, 2008, at 1:37 PM, Germano Caronni wrote:
+>>
+>>> Thank you for validating this issue.  ;-)
+>>>
+>>> For bugtracking, there is http://zfs.macosforge.org/trac/report --  
+>>> but I am not sure if / how this is used.
+>>>
+>>> Germano
+>>>
+>>> On Tue, Jul 22, 2008 at 13:27, Jonathan Edwards <Jonathan.Edwards at sun.com 
+>>> > wrote:
+>>> i was able to reproduce a hard hang on a much smaller system  
+>>> config ..
+>>> just 4 x 64MB files here for my test pool .. compression doesn't  
+>>> matter:
+>>>
+>>> bash-3.2# zpool status -v
+>>>   pool: tpool
+>>>  state: ONLINE
+>>>  scrub: none requested
+>>> config:
+>>>
+>>>        NAME              STATE     READ WRITE CKSUM
+>>>        tpool             ONLINE       0     0     0
+>>>          /var/tmp/file1  ONLINE       0     0     0
+>>>          /var/tmp/file2  ONLINE       0     0     0
+>>>          /var/tmp/file3  ONLINE       0     0     0
+>>>          /var/tmp/file4  ONLINE       0     0     0
+>>>
+>>> errors: No known data errors
+>>> bash-3.2# rsync --version
+>>> rsync  version 2.6.3  protocol version 28
+>>> Copyright (C) 1996-2004 by Andrew Tridgell and others
+>>> <http://rsync.samba.org/>
+>>> Capabilities: 64-bit files, socketpairs, hard links, symlinks,
+>>> batchfiles,
+>>>               inplace, IPv6, 32-bit system inums, 64-bit internal  
+>>> inums
+>>>
+>>> ---
+>>> i'll have to figure out how to do a kdb equiv to get a backtrace  
+>>> here
+>>>
+>>> of note .. i also saw a vfs error last night on shutdown that also
+>>> resulted in a hard hang:
+>>>
+>>> Tue Jul 22 01:17:08 2008
+>>> panic(cpu 1 caller 0x001DBC3D): "vnode_put(0x529dc70): iocount <  
+>>> 1"@/
+>>> SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+>>> Backtrace, Format - Frame : Return Address (4 potential args on  
+>>> stack)
+>>> 0x475dfd78 : 0x12b0fa (0x4592a4 0x475dfdac 0x133243 0x0)
+>>> 0x475dfdc8 : 0x1dbc3d (0x467410 0x529dc70 0x475dfe08 0x4792d532)
+>>> 0x475dfde8 : 0x1dbcee (0x529dc70 0x6f17220 0xf9bdf8ae 0x1064f140)
+>>> 0x475dfe08 : 0x478fd30b (0x529dc70 0x479602e4 0x0 0x0)
+>>> 0x475dff58 : 0x478e60a2 (0x1064f000 0xc81d 0x0 0x0)
+>>> 0x475dffc8 : 0x19ebdc (0x1023d200 0x0 0x1a20b5 0x5a8f3c8)
+>>> Backtrace terminated-invalid frame pointer 0
+>>>       Kernel loadable modules in backtrace (with dependencies):
+>>>          com.apple.filesystems.zfs(8.0)@0x478b5000->0x47980fff
+>>>
+>>> BSD process name corresponding to current thread: kernel_task
+>>>
+>>> Mac OS version:
+>>> 9E17
+>>>
+>>> Kernel version:
+>>> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+>>> root:xnu-1228.5.20~1/RELEASE_I386
+>>> System model name: MacBookPro2,2 (Mac-F42187C8)
+>>>
+>>> ----
+>>> also could we up the version number in the zfs module plist to track
+>>> version problems a little better?
+>>> methinks (8.0) is the default template for a kext
+>>>
+>>> would also be nice to get some sort of web bugtraq in place so we  
+>>> can
+>>> just file 'em
+>>>
+>>> ---
+>>> .je
+>>>
+>>> On Jul 22, 2008, at 3:23 PM, No?l Dellofano wrote:
+>>>
+>>> > Neat!  I haven't seen this issue since fixing the memory scaling  
+>>> bug a
+>>> > while ago.  Sorry to hear it's giving you troubles.
+>>> >
+>>> > Germano,
+>>> > if it reproduces, then the snapshot would be awesome!  As my  
+>>> biggest
+>>> > issue is getting stuff like that to reproduce in house.  So you're
+>>> > just using standard leopard shipped rsync right?  If so, since  
+>>> he's
+>>> > the fatty that tries to shove everything in memory I wonder if  
+>>> we're
+>>> > stuck sleeping waiting for someone to give up some memory  
+>>> possibly and
+>>> > are wedged...
+>>> >
+>>> > as usual you guys are the best test team a girl can have :)  If  
+>>> your
+>>> > snapshot works send it over.  Otherwise I'll do my best to mimic  
+>>> your
+>>> > system and see if I can get a recreate..
+>>> >
+>>> > thanks!
+>>> > Noel
+>>> >
+>>> > On Jul 22, 2008, at 12:08 PM, Boyd Waters wrote:
+>>> >
+>>> >>
+>>> >> On Jul 22, 2008, at 11:02 AM, Germano Caronni wrote:
+>>> >>
+>>> >>> If I do a recursive diff on some of these trees, or a find and a
+>>> >>> following md5 sum on, say, 100'000+ files, the machine will  
+>>> die the
+>>> >>> same silent death as reported for excessive rsync before
+>>> >>
+>>> >> Interesting!
+>>> >>
+>>> >> I'm not seeing that problem any more, but I've been using rsync
+>>> >> 3.0.4,
+>>> >> built from source, 64-bit... it's dramatically improved over the
+>>> >> version that ships with Leopard.
+>>> >>
+>>> >> I wonder if there's a memory leak in the VFS layer.  (wow, that
+>>> >> almost
+>>> >> sounds like I know what I'm talking about, but really I don't)
+>>> >>
+>>> >>
+>>> >> _______________________________________________
+>>> >> zfs-discuss mailing list
+>>> >> zfs-discuss at lists.macosforge.org
+>>> >> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>> >
+>>> > _______________________________________________
+>>> > zfs-discuss mailing list
+>>> > zfs-discuss at lists.macosforge.org
+>>> > http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>>> _______________________________________________
+>>> zfs-discuss mailing list
+>>> zfs-discuss at lists.macosforge.org
+>>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>>>
+>>
+>> _______________________________________________
+>> zfs-discuss mailing list
+>> zfs-discuss at lists.macosforge.org
+>> http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss
+>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080731/26762756/attachment.html 
+

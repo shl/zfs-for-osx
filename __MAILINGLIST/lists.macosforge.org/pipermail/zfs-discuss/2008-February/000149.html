@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Abort trap
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Abort%20trap&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000145.html">
+   <LINK REL="Next"  HREF="000150.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Abort trap</H1>
+    <B>Bill Winnett</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Abort%20trap&In-Reply-To="
+       TITLE="[zfs-discuss] Abort trap">William.Winnett at Sun.COM
+       </A><BR>
+    <I>Mon Feb 11 18:51:56 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000145.html">[zfs-discuss] Workaround for send | recv bug
+</A></li>
+        <LI>Next message: <A HREF="000150.html">[zfs-discuss] Abort trap
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#149">[ date ]</a>
+              <a href="thread.html#149">[ thread ]</a>
+              <a href="subject.html#149">[ subject ]</a>
+              <a href="author.html#149">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>How do I root cause this tha &quot;Abort trap&quot;?
+/dev/disk2 is a Maxtor 1TB one touch III disk
+
+---
+Macintosh-2:~ billwinnett$ diskutil partitiondisk /dev/disk2 GPTFormat  
+ZFS %noformat% 100%
+Started partitioning on disk disk2
+Creating partition map
+[ + 0%..10%..20%..30%..40%..50%..60%..70%..80%..90%..100% ]
+Finished partitioning on disk disk2
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *931.5 Gi    
+disk2
+    1:                        EFI                         200.0 Mi    
+disk2s1
+    2:                        ZFS                         931.2 Gi    
+disk2s2
+Macintosh-2:~ billwinnett$ diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *298.1 Gi    
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS Machintosh              297.8 Gi    
+disk0s2
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:     Apple_partition_scheme                        *931.5 Gi    
+disk1
+    1:        Apple_partition_map                         31.5 Ki     
+disk1s1
+    2:             Apple_Driver43                         28.0 Ki     
+disk1s2
+    3:             Apple_Driver43                         28.0 Ki     
+disk1s3
+    4:           Apple_Driver_ATA                         28.0 Ki     
+disk1s4
+    5:           Apple_Driver_ATA                         28.0 Ki     
+disk1s5
+    6:             Apple_FWDriver                         256.0 Ki    
+disk1s6
+    7:         Apple_Driver_IOKit                         256.0 Ki    
+disk1s7
+    8:              Apple_Patches                         256.0 Ki    
+disk1s8
+    9:                  Apple_HFS untitled                931.4 Gi    
+disk1s10
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *931.5 Gi    
+disk2
+    1:                        EFI                         200.0 Mi    
+disk2s1
+    2:                        ZFS                         931.2 Gi    
+disk2s2
+Macintosh-2:~ billwinnett$ zpool create bfd /dev/disk2s2
+Abort trap
+Macintosh-2:~ billwinnett$
+----
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080211/d56da1fa/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080211/d56da1fa/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000145.html">[zfs-discuss] Workaround for send | recv bug
+</A></li>
+	<LI>Next message: <A HREF="000150.html">[zfs-discuss] Abort trap
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#149">[ date ]</a>
+              <a href="thread.html#149">[ thread ]</a>
+              <a href="subject.html#149">[ subject ]</a>
+              <a href="author.html#149">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] and another one...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20and%20another%20one...&In-Reply-To=B02ADB6B-5181-4434-9A2E-C0F425B55E86%40spamfreemail.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000294.html">
+   <LINK REL="Next"  HREF="000289.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] and another one...</H1>
+    <B>Brett Ault-McCoy</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20and%20another%20one...&In-Reply-To=B02ADB6B-5181-4434-9A2E-C0F425B55E86%40spamfreemail.de"
+       TITLE="[zfs-discuss] and another one...">btm at pobox.com
+       </A><BR>
+    <I>Sun Mar  9 13:16:05 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000294.html">[zfs-discuss] and another one...
+</A></li>
+        <LI>Next message: <A HREF="000289.html">[zfs-discuss] ZFS as AirDisk?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#295">[ date ]</a>
+              <a href="thread.html#295">[ thread ]</a>
+              <a href="subject.html#295">[ subject ]</a>
+              <a href="author.html#295">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>To do a zfs send/recv of incremental data you need to start with both the
+source and destination having the same snapshot on them, and it has to be
+the last snapshot on the destination.  No other snapshots are necessary.
+You then create a new snapshot on the source, do a &quot;zfs send -i <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">src at old</A>
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">src at new</A>&quot; on the source then 'zfs recv dest' to apply the incremental to the
+destination.  At that point you can delete all prior snapshots on both the
+dest and src.
+
+In short, an incremental send/recv has to be done using the last snapshot on
+the destination as the incremental reference.
+
+++Brett;
+
+
+On Sun, Mar 9, 2008 at 7:00 PM, Franz Schmalzl &lt;
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">franzschmalzl at spamfreemail.de</A>&gt; wrote:
+
+&gt;<i> ok just don't understand this
+</I>&gt;<i>
+</I>&gt;<i> to have incrementel backups via snapshots i think will have to keep
+</I>&gt;<i> all my snapshots, how is this supposed to work?
+</I>&gt;<i>
+</I>&gt;<i> i mean i created one incremental snapshot earlier and sent it to
+</I>&gt;<i> another disk, then i deleted the snapshots...
+</I>&gt;<i>
+</I>&gt;<i> to create another incremental backup now, i will need to recieve the
+</I>&gt;<i> first snapshot again, which means i will have to copy all of my data
+</I>&gt;<i> back from my backup disk and have it present twice in my pool...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> i think i'm getting it wrong, can please someone clarify ?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080309/055592d7/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080309/055592d7/attachment-0001.html</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000294.html">[zfs-discuss] and another one...
+</A></li>
+	<LI>Next message: <A HREF="000289.html">[zfs-discuss] ZFS as AirDisk?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#295">[ date ]</a>
+              <a href="thread.html#295">[ thread ]</a>
+              <a href="subject.html#295">[ subject ]</a>
+              <a href="author.html#295">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

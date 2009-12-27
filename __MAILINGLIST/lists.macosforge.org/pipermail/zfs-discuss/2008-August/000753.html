@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] build-119 still dying a silent death
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=F110148A-D906-454F-ABF7-509B90728EE6%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000751.html">
+   <LINK REL="Next"  HREF="000754.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] build-119 still dying a silent death</H1>
+    <B>Andrew Webber</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20build-119%20still%20dying%20a%20silent%20death&In-Reply-To=F110148A-D906-454F-ABF7-509B90728EE6%40apple.com"
+       TITLE="[zfs-discuss] build-119 still dying a silent death">andy at aligature.com
+       </A><BR>
+    <I>Tue Aug  5 12:48:14 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000751.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+        <LI>Next message: <A HREF="000754.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#753">[ date ]</a>
+              <a href="thread.html#753">[ thread ]</a>
+              <a href="subject.html#753">[ subject ]</a>
+              <a href="author.html#753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry if I wasn't clear.  In your post on 7/31 you listed out the
+theoretical instructions to reproduce the spinning beach ball.
+
+The &quot;mkfile 20g /foo&quot; portion creates a file on my HFS+ drive.  Then the
+&quot;zpool create z /foo&quot; portion creates a ZFS pool using that file.  So in the
+end I am running an rsync on a ZFS filesystem on a ZFS pool created out of a
+file on an HFS+ drive.
+
+Perhaps I misinterpreted the instructions.  What that the result that you
+were expecting?
+
+
+On Tue, Aug 5, 2008 at 3:37 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+
+&gt;<i> Sadly Dtrace doesn't help us here because it doesn't work on kexts.  So
+</I>&gt;<i> that's why no probes are listed and none are available even to add
+</I>&gt;<i> statically.
+</I>&gt;<i> Debugging remotely is also a problem since you have to have symbols and
+</I>&gt;<i> another machine and boot args and some magical incantations to get the
+</I>&gt;<i> symbols for zfs loaded.
+</I>&gt;<i>
+</I>&gt;<i> So first it would be easier and really helpful if you could get a sample of
+</I>&gt;<i> the rsync process.  Then I can get some idea of what's running.  Can you do
+</I>&gt;<i>
+</I>&gt;<i> #sudo sample &lt;pid&gt; 10 10 -file /tmp/mysample
+</I>&gt;<i>
+</I>&gt;<i> where &lt;pid&gt; is the pid of the rsync process?
+</I>&gt;<i>
+</I>&gt;<i> Also, Andrew did you say you get this problem on your HFS+ drive as well?
+</I>&gt;<i>  Or did I just misread that... I&quot;m still working on getting a reproduce
+</I>&gt;<i> and narrowing the scope... for whatever reason, I have no problems doing
+</I>&gt;<i> thins on my mac pros and it won't reproduce....
+</I>&gt;<i>
+</I>&gt;<i> Thanks for all your help and info!  I'm trying to pin it down :)
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Aug 4, 2008, at 9:01 AM, Germano Caronni wrote:
+</I>&gt;<i>
+</I>&gt;<i> Here some specifics on the silent death. This should be a lot of fun for
+</I>&gt;<i> you @ Apple ;-)
+</I>&gt;<i>
+</I>&gt;<i> rsync 3.0.3 also fails. Having interspersed lots of sync() and sleep() in
+</I>&gt;<i> that one, I finally got to see a partially copied dev tree. Funnily enough,
+</I>&gt;<i> the major numbers of all devices on zfs are zero. That certainly is a
+</I>&gt;<i> problem, and probably / hopefully it is related to the deadlock. The machine
+</I>&gt;<i> dies at disk0s2 (my root volume). Trying to reproduce this manually:
+</I>&gt;<i>
+</I>&gt;<i> bash-3.2# pwd
+</I>&gt;<i> /Volumes/z
+</I>&gt;<i> bash-3.2# mknod disk0 b 14 0
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# ls -al
+</I>&gt;<i> total 80
+</I>&gt;<i> [...]
+</I>&gt;<i> brw-r--r--  1 root     staff    0,   0 Aug  4 17:03 disk0
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# mknod disk0s1 b 14 1
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# ls -al
+</I>&gt;<i> total 81
+</I>&gt;<i> [...]
+</I>&gt;<i> brw-r--r--  1 root     staff    0,   0 Aug  4 17:03 disk0
+</I>&gt;<i> brw-r--r--  1 root     staff    0,   1 Aug  4 17:04 disk0s1
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> bash-3.2# mknod disk0s2 b 14 2
+</I>&gt;<i> bash-3.2# sync
+</I>&gt;<i> [the world comes to an end]
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The output of 'stat' agrees that the major is indeed 0. Checking back on my
+</I>&gt;<i> big repository confirms that all devices (char and block) in it now have a
+</I>&gt;<i> major of '0'. I'm so happy that I still have the originals ;-)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I hope this helps. I looked a bit at the source code to zfs_mknode and
+</I>&gt;<i> friends, but did not feel like poking randomly. Also, a pity that there are
+</I>&gt;<i> no zfs dtrace probes around (ie dtrace -l does not list any). Is there a
+</I>&gt;<i> good way to get them into the kernel? I'm guessing it would just involve
+</I>&gt;<i> using the 'Debug' target and copying things to the right location -- but
+</I>&gt;<i> maybe you can tell me? Obviously, what I wanted to do was dtrace on
+</I>&gt;<i> zfs_mknode and then print out the arguments to the function to see if the
+</I>&gt;<i> problem is above or below.
+</I>&gt;<i>
+</I>&gt;<i> Germano
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/47e9f33b/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080805/47e9f33b/attachment-0001.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000751.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+	<LI>Next message: <A HREF="000754.html">[zfs-discuss] build-119 still dying a silent death
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#753">[ date ]</a>
+              <a href="thread.html#753">[ thread ]</a>
+              <a href="subject.html#753">[ subject ]</a>
+              <a href="author.html#753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

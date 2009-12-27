@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Weird device identifier
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Weird%20device%20identifier&In-Reply-To=485183AF.6050805%40jasonrm.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000637.html">
+   <LINK REL="Next"  HREF="000639.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Weird device identifier</H1>
+    <B>Jon Moog</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Weird%20device%20identifier&In-Reply-To=485183AF.6050805%40jasonrm.net"
+       TITLE="[zfs-discuss] Weird device identifier">jonmoog at xtechllc.com
+       </A><BR>
+    <I>Thu Jun 12 14:10:32 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000637.html">[zfs-discuss] Weird device identifier
+</A></li>
+        <LI>Next message: <A HREF="000639.html">[zfs-discuss] Degraded pool because of missing or invalid label
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#638">[ date ]</a>
+              <a href="thread.html#638">[ thread ]</a>
+              <a href="subject.html#638">[ subject ]</a>
+              <a href="author.html#638">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Jun 12, 2008, at 3:14 PM, Jason R. McNeil wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: SHA1
+</I>&gt;<i>
+</I>&gt;<i> Jon Moog wrote:
+</I>&gt;<i> | I made a raidz out of 8 disks for testing. At some point one of the
+</I>&gt;<i> | disks went into a degraded state apparently getting confused with
+</I>&gt;<i> | another of the disks. The odd and from what i can tell invalid  
+</I>&gt;<i> device
+</I>&gt;<i> | name of 2357556960025778596 seems to prevent replacing the disk in  
+</I>&gt;<i> the
+</I>&gt;<i> | set. The reference says was /dev/disk9s2 but that device name is  
+</I>&gt;<i> in the
+</I>&gt;<i> | set and online probably after a reboot having been assigned a new  
+</I>&gt;<i> device
+</I>&gt;<i> | name.
+</I>&gt;<i> |
+</I>&gt;<i> | Has anyone seen this or can anyone suggest how to repair the  
+</I>&gt;<i> problem?
+</I>&gt;<i> |
+</I>&gt;<i>
+</I>&gt;<i> I don't know if this is the same thing I encountered just last night,
+</I>&gt;<i> hence the off list, but when you do a &quot;diskutil list&quot; does that drive
+</I>&gt;<i> show up still, and more importantly, does it still show there being a
+</I>&gt;<i> disk9s2 with the type ZFS?
+</I>&gt;<i>
+</I>
+The disk still shows up and is listed as having a ZFS partition at s2  
+as expected. OS X has a habit of changing the dev disk number across  
+reboots so it is hard to say which slice was really missing. As you  
+can see from the zpool status the missing disk9 is reported online in  
+another slice, but one of 8 is AWOL.
+
+&gt;<i> What I did was reformat doing the following...
+</I>&gt;<i> diskutil partitiondisk /dev/disk9 GPTFormat ZFS %noformat% 100%
+</I>&gt;<i> rebooted to make sure that everything saw the disk9s2 slice (for  
+</I>&gt;<i> lack of
+</I>&gt;<i> a better word right now), and let ZFS do a scrub, it had to rebuild a
+</I>&gt;<i> little of the drive, but it discovered quickly that the majority of  
+</I>&gt;<i> the
+</I>&gt;<i> data was still there.
+</I>&gt;<i>
+</I>
+I could partition the device that is an orphan however it doesn't help  
+me replace the slice in the raidz since it has a bogus identifier.
+
+&gt;<i> That was my case anyhow... wish you the best, cause it my case
+</I>&gt;<i> everything worked out great, but I was rather concerned for a while.
+</I>&gt;<i> Still not certain what caused it thou, maybe my HighPoint  
+</I>&gt;<i> controller, I
+</I>&gt;<i> don't really know...
+</I>
+The issue seems to be a bit more benign that I expected since after a  
+reboot everything was showing up again. I think it might be a race  
+condition with the devices showing up at various times on boot.  
+Sometimes the pool is degraded, sometimes it is okay. A scrub easily  
+updates the slice that was offline.
+
+&gt;<i>
+</I>&gt;<i> On another note, please don't think that I'm trying to tell you how to
+</I>&gt;<i> setup your system, but for more than 5 drives raidz2 is recommended,  
+</I>&gt;<i> so
+</I>&gt;<i> if you are already aware, then you know what you are doing and you can
+</I>&gt;<i> ignore me ;) I myself and running 5 raidz1, so i'm breaking the &quot;rule&quot;
+</I>&gt;<i> too, just not as much :)
+</I>
+In this case the 8 devices are each 10 TB raid 6 hardware devices. The  
+raidz of the raid 6 hardware devices gives a usable space of 70 TB  
+with better than average reliability. The issue with 8 devices in this  
+case is more than likely a performance one and not of particular  
+concern in this application. I would be happy to provide more  
+technical details if there is any interest.
+
+&gt;<i>
+</I>&gt;<i> Jason R. M.
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jason at jasonrm.net</A>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.9 (MingW32)
+</I>&gt;<i>
+</I>&gt;<i> iEYEARECAAYFAkhRg68ACgkQTtcjahlzEWYt2ACgsiKZTJy0cvLOJu8i52gASq8R
+</I>&gt;<i> hi0An2OPfX0J0Zub2xA61TfhSJynGp6a
+</I>&gt;<i> =4NdF
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i>
+</I>
+Thanks
+
+-Jon
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 1852 bytes
+Desc: not available
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080612/54b35726/attachment.p7s">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080612/54b35726/attachment.p7s</A> 
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000637.html">[zfs-discuss] Weird device identifier
+</A></li>
+	<LI>Next message: <A HREF="000639.html">[zfs-discuss] Degraded pool because of missing or invalid label
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#638">[ date ]</a>
+              <a href="thread.html#638">[ thread ]</a>
+              <a href="subject.html#638">[ subject ]</a>
+              <a href="author.html#638">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] cannot create snapshot: dataset is busy
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20create%20snapshot%3A%20dataset%20is%20busy&In-Reply-To=%3C20090410.123417.111329822.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001496.html">
+   <LINK REL="Next"  HREF="001499.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] cannot create snapshot: dataset is busy</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20cannot%20create%20snapshot%3A%20dataset%20is%20busy&In-Reply-To=%3C20090410.123417.111329822.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] cannot create snapshot: dataset is busy">hanche at math.ntnu.no
+       </A><BR>
+    <I>Fri Apr 10 03:34:17 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001496.html">[zfs-discuss] Performance and Spare...
+</A></li>
+        <LI>Next message: <A HREF="001499.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1498">[ date ]</a>
+              <a href="thread.html#1498">[ thread ]</a>
+              <a href="subject.html#1498">[ subject ]</a>
+              <a href="author.html#1498">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This one has reared its ugly head on the list a few times:
+
+; sudo zfs  snapshot wd320a/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">photo at 2009-04-10</A>
+cannot create snapshot 'wd320a/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">photo at 2009-04-10</A>': dataset is busy
+
+The usual workaround involves unmounting and remounting the filesystem. I can do that until I'm blue in the face, and it doesn't help. I think I should be able to snapshot a filesystem even while unmounted, but I get the same error then. Another poster (Boyd Waters, last December) reported that you get this error if the volume is mounted on a nonempty directory. Well, after I unmounted wd320a/photo there was indeed a directory /Volumes/wd320a/photo, but it was empty. I removed it anyway just to be sure. Didn't help.
+
+Finally, I resorted to importing the pool on a machine running FreeBSD 7.1 and doing the snapshot there. Worked like a charm. And not only that, afterwards I moved the pool back to my Mac, did various updates and made another snapshot. Again, it worked flawlessly.
+
+But before I did all that, I gathered the following information. Can anyone see anything here that might help explain the problem?
+
+- Harald
+
+
+; sudo zfs list -r wd320a
+NAME           USED  AVAIL  REFER  MOUNTPOINT
+wd320a         280G  13.5G  20.1G  /Volumes/wd320a
+wd320a/photo   260G  13.5G   260G  /Volumes/wd320a/photo
+
+; sudo lsof +D /Volumes/wd320a -x f
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+fseventsd  37 root    9u   REG  45,54        0  127 /Volumes/wd320a/.fseventsd/000000000e471a91
+
+; sudo zpool status wd320a
+  pool: wd320a
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+        still be used, but some features are unavailable.
+action: Upgrade the pool using 'zpool upgrade'.  Once this is done, the
+        pool will no longer be accessible on older software versions.
+ scrub: none requested
+config:
+
+        NAME        STATE     READ WRITE CKSUM
+        wd320a      ONLINE       0     0     0
+          disk2s1   ONLINE       0     0     0
+
+errors: No known data errors
+
+; sudo zfs get all wd320a
+NAME    PROPERTY       VALUE                  SOURCE
+wd320a  type           filesystem             -
+wd320a  creation       Wed Aug 27 10:41 2008  -
+wd320a  used           280G                   -
+wd320a  available      13.5G                  -
+wd320a  referenced     20.1G                  -
+wd320a  compressratio  1.00x                  -
+wd320a  mounted        yes                    -
+wd320a  quota          none                   default
+wd320a  reservation    none                   default
+wd320a  recordsize     128K                   default
+wd320a  mountpoint     /Volumes/wd320a        default
+wd320a  sharenfs       off                    default
+wd320a  checksum       on                     default
+wd320a  compression    off                    default
+wd320a  atime          on                     default
+wd320a  devices        on                     default
+wd320a  exec           on                     default
+wd320a  setuid         on                     default
+wd320a  readonly       off                    default
+wd320a  zoned          off                    default
+wd320a  snapdir        hidden                 default
+wd320a  aclmode        groupmask              default
+wd320a  aclinherit     secure                 default
+wd320a  canmount       on                     default
+wd320a  shareiscsi     off                    default
+wd320a  xattr          on                     default
+wd320a  copies         1                      default
+wd320a  version        1                      -
+
+; sudo zfs get all wd320a/photo
+NAME          PROPERTY       VALUE                  SOURCE
+wd320a/photo  type           filesystem             -
+wd320a/photo  creation       Wed Aug 27 10:42 2008  -
+wd320a/photo  used           260G                   -
+wd320a/photo  available      13.5G                  -
+wd320a/photo  referenced     260G                   -
+wd320a/photo  compressratio  1.00x                  -
+wd320a/photo  mounted        yes                    -
+wd320a/photo  quota          none                   default
+wd320a/photo  reservation    none                   default
+wd320a/photo  recordsize     128K                   default
+wd320a/photo  mountpoint     /Volumes/wd320a/photo  default
+wd320a/photo  sharenfs       off                    default
+wd320a/photo  checksum       on                     default
+wd320a/photo  compression    off                    default
+wd320a/photo  atime          on                     default
+wd320a/photo  devices        on                     default
+wd320a/photo  exec           on                     default
+wd320a/photo  setuid         on                     default
+wd320a/photo  readonly       off                    default
+wd320a/photo  zoned          off                    default
+wd320a/photo  snapdir        hidden                 default
+wd320a/photo  aclmode        groupmask              default
+wd320a/photo  aclinherit     secure                 default
+wd320a/photo  canmount       on                     default
+wd320a/photo  shareiscsi     off                    default
+wd320a/photo  xattr          on                     default
+wd320a/photo  copies         1                      default
+wd320a/photo  version        1                      -
+
+; sudo zpool history wd320a
+History for 'wd320a':
+2008-08-27.10:41:09 zpool create wd320a da0p1
+2008-08-27.10:42:11 zfs create wd320a/photo
+2008-08-27.18:02:54 zpool export wd320a
+2008-08-27.18:03:56 zpool import wd320a
+2008-08-27.18:57:12 zpool export wd320a
+2008-08-27.18:57:44 zpool import -f 17709161926253340618
+2008-08-27.19:10:55 zpool export wd320a
+2008-08-27.19:12:16 zpool import -f 17709161926253340618
+2008-08-27.19:12:52 zpool export wd320a
+2008-08-28.14:54:19 zpool import -f 17709161926253340618
+2008-08-28.14:57:01 zpool export wd320a
+2008-08-30.12:57:30 zpool import -f 17709161926253340618
+2008-08-30.13:52:55 zpool export wd320a
+2008-08-30.21:24:17 zpool import -f 17709161926253340618
+2008-08-31.06:57:49 zpool export wd320a
+2008-08-31.10:23:15 zpool import -f 17709161926253340618
+2008-08-31.11:11:49 zpool export wd320a
+2008-09-01.09:15:12 zpool import wd320a
+2008-09-01.09:16:45 zpool export wd320a
+2008-09-14.18:58:46 zpool import -f 17709161926253340618
+2008-09-14.19:19:16 zpool export wd320a
+2008-09-16.10:33:28 zpool import -f 17709161926253340618
+2008-09-16.11:12:23 zpool export wd320a
+2008-09-16.11:24:26 zpool import -f 17709161926253340618
+2008-09-16.11:29:55 zpool export wd320a
+2008-09-16.19:51:28 zpool import wd320a
+2008-09-16.19:57:38 zpool import -f 17709161926253340618
+2008-09-17.08:17:43 zpool export wd320a
+2008-09-17.09:58:33 zpool import -f 17709161926253340618
+2008-09-17.11:37:50 zpool export wd320a
+2008-09-17.21:11:40 zpool import -f 17709161926253340618
+2008-09-18.01:06:38 zpool export wd320a
+2008-09-18.01:11:38 zpool import -f 17709161926253340618
+2008-09-18.08:14:50 zpool export wd320a
+2008-09-18.09:42:50 zpool import -f 17709161926253340618
+2008-09-18.11:14:16 zpool export wd320a
+2008-09-18.15:43:28 zpool import -f 17709161926253340618
+2008-09-18.19:05:37 zpool export wd320a
+2008-09-18.23:19:54 zpool import -f 17709161926253340618
+2008-09-18.23:27:20 zpool export wd320a
+2008-09-29.06:15:51 zpool import -f 17709161926253340618
+2008-09-29.06:20:29 zpool export wd320a
+2008-10-01.08:15:28 zpool import -f 17709161926253340618
+2008-10-01.09:38:51 zpool export wd320a
+2008-11-20.15:58:57 zpool import -f 17709161926253340618
+2008-11-20.19:07:41 zpool export wd320a
+2008-11-30.19:53:30 zpool import -f 17709161926253340618
+2008-11-30.22:06:07 zpool export wd320a
+2008-12-26.16:53:10 zpool import -f 17709161926253340618
+2008-12-26.16:58:37 zpool export wd320a
+2008-12-30.18:09:48 zpool import -f 17709161926253340618
+2008-12-30.18:13:59 zpool export wd320a
+2008-12-30.18:15:15 zpool import -f 17709161926253340618
+2008-12-30.18:16:00 zpool export wd320a
+2009-01-08.17:41:20 zpool import -f 17709161926253340618
+2009-01-08.17:47:26 zpool export wd320a
+2009-01-09.16:03:05 zpool import -f 17709161926253340618
+2009-01-09.16:10:40 zpool export wd320a
+2009-01-11.14:55:31 zpool import -f 17709161926253340618
+2009-01-11.15:29:43 zpool export wd320a
+2009-01-20.14:40:53 zpool import -f 17709161926253340618
+2009-01-20.14:48:24 zpool export wd320a
+2009-01-20.19:03:35 zpool import wd320a
+2009-01-20.19:08:00 zpool export wd320a
+2009-02-13.20:17:14 zpool import -f 17709161926253340618
+2009-02-13.20:26:40 zpool export wd320a
+2009-02-13.20:28:27 zpool import wd320a
+2009-02-13.20:48:19 zpool export wd320a
+2009-03-02.14:04:33 zpool import -f 17709161926253340618
+2009-03-02.14:10:55 zpool export wd320a
+2009-03-02.14:12:25 zpool import wd320a
+2009-03-02.14:16:40 zpool export wd320a
+2009-03-02.14:17:04 zpool import -f 17709161926253340618
+2009-03-02.14:50:59 zpool export wd320a
+2009-03-02.16:52:01 zpool import -f 17709161926253340618
+2009-03-02.16:53:02 zpool export wd320a
+2009-03-12.12:20:54 zpool import -f 17709161926253340618
+2009-03-12.17:44:31 zpool export wd320a
+2009-03-13.17:27:11 zpool import -f 17709161926253340618
+2009-03-13.17:59:55 zpool export wd320a
+2009-03-21.16:05:03 zpool import -f 17709161926253340618
+2009-03-21.16:11:55 zpool export wd320a
+2009-03-21.22:06:20 zpool import -f 17709161926253340618
+2009-03-21.22:12:17 zpool export wd320a
+2009-03-22.10:10:59 zpool import -f 17709161926253340618
+2009-03-22.16:01:03 zpool export wd320a
+2009-03-22.18:05:02 zpool import -f 17709161926253340618
+2009-03-22.18:32:12 zpool export wd320a
+2009-04-10.11:21:19 zpool import -f 17709161926253340618
+2009-04-10.11:31:18 zpool export wd320a
+2009-04-10.11:31:27 zpool import wd320a
+2009-04-10.11:31:38 zpool export wd320a
+2009-04-10.11:31:43 zpool import wd320a
+2009-04-10.11:36:13 zpool export wd320a
+2009-04-10.11:45:38 zpool import wd320a
+2009-04-10.11:50:47 zpool export wd320a
+2009-04-10.11:50:52 zpool import wd320a
+2009-04-10.11:52:49 zpool export wd320a
+2009-04-10.11:53:36 zpool import -f 17709161926253340618
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001496.html">[zfs-discuss] Performance and Spare...
+</A></li>
+	<LI>Next message: <A HREF="001499.html">[zfs-discuss] Performance and Spare...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1498">[ date ]</a>
+              <a href="thread.html#1498">[ thread ]</a>
+              <a href="subject.html#1498">[ subject ]</a>
+              <a href="author.html#1498">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

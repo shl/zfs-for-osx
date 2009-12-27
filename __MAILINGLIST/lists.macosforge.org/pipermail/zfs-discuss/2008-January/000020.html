@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS volumes not showing up in Server Admin?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20volumes%20not%20showing%20up%20in%20Server%20Admin%3F&In-Reply-To=7ECC6B83-6DD5-401F-A269-ED6EAF702B8D%40googlemail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000019.html">
+   <LINK REL="Next"  HREF="000021.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS volumes not showing up in Server Admin?</H1>
+    <B>Brian Pinkerton</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20volumes%20not%20showing%20up%20in%20Server%20Admin%3F&In-Reply-To=7ECC6B83-6DD5-401F-A269-ED6EAF702B8D%40googlemail.com"
+       TITLE="[zfs-discuss] ZFS volumes not showing up in Server Admin?">bplist at thinkpink.com
+       </A><BR>
+    <I>Thu Jan 17 15:01:47 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000019.html">[zfs-discuss] ZFS volumes not showing up in Server Admin?
+</A></li>
+        <LI>Next message: <A HREF="000021.html">[zfs-discuss] ZFS volumes not showing up in Server Admin?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi David,
+
+I was specifically asking about the &quot;Server Admin&quot; application in OSXS  
+(it has a whole different application for specifying sharing).
+
+An update on that: I've found that if I specify the ZFS share points  
+on the command line using &quot;sharing -a /Volumes/a_pool/an_fs&quot; then I  
+can get them to show up in the UI.  The UI is buggy, but it is  
+possible to work with the ZFS share points in the UI.
+
+bri
+
+On Jan 17, 2008, at 2:25 PM, David Ritchie wrote:
+
+&gt;<i> Actually, scratch that. I just tried manually connecting to this  
+</I>&gt;<i> shared ZFS volume (this is shared from the client version of Mac OS  
+</I>&gt;<i> X) by selecting 'Connect to server' in the Finder and it now works  
+</I>&gt;<i> fine. I think there may be something else funny (and unrelated to  
+</I>&gt;<i> ZFS) going on.
+</I>&gt;<i>
+</I>&gt;<i> On 17 Jan 2008, at 22:07, David Ritchie wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I tried sharing a zfs volume via AFP. I dropped the root zfs volume  
+</I>&gt;&gt;<i> onto the sharing preferences pane and set it to read and write for  
+</I>&gt;&gt;<i> everyone, which seemed to work. When I accessed it from another  
+</I>&gt;&gt;<i> computer, though, I couldn't see any of the files on it or the  
+</I>&gt;&gt;<i> other nested volumes or write anything to it. Maybe there are some  
+</I>&gt;&gt;<i> issues there. I haven't investigated
+</I>&gt;&gt;<i> Much further yet.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- David
+</I>&gt;&gt;<i> On 17 Jan 2008, at 21:52, Brian Pinkerton &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">bplist at thinkpink.com</A>&gt;  
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> My ZFS file systems aren't showing up in the File Sharing pane of  
+</I>&gt;&gt;&gt;<i> Server Admin.  This makes administration a pain the neck when  
+</I>&gt;&gt;&gt;<i> coupled with the fact that the sharenfs property is not yet  
+</I>&gt;&gt;&gt;<i> supported.  Anyone else tried to get this to work?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> thanks,
+</I>&gt;&gt;&gt;<i> bri
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000019.html">[zfs-discuss] ZFS volumes not showing up in Server Admin?
+</A></li>
+	<LI>Next message: <A HREF="000021.html">[zfs-discuss] ZFS volumes not showing up in Server Admin?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#20">[ date ]</a>
+              <a href="thread.html#20">[ thread ]</a>
+              <a href="subject.html#20">[ subject ]</a>
+              <a href="author.html#20">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS-formatted sparsebundle as home directory
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS-formatted%20sparsebundle%20as%20home%20directory&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000946.html">
+   <LINK REL="Next"  HREF="000948.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS-formatted sparsebundle as home directory</H1>
+    <B>Christian He&#223;mann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS-formatted%20sparsebundle%20as%20home%20directory&In-Reply-To="
+       TITLE="[zfs-discuss] ZFS-formatted sparsebundle as home directory">zfs at hessmann.de
+       </A><BR>
+    <I>Wed Oct  8 13:20:30 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000946.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+        <LI>Next message: <A HREF="000948.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#947">[ date ]</a>
+              <a href="thread.html#947">[ thread ]</a>
+              <a href="subject.html#947">[ subject ]</a>
+              <a href="author.html#947">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello everybody,
+
+
+I'm thinking about moving my home directory to ZFS - just for the fun  
+of it.
+Since one of the reasons to get me acquainted with ZFS was to get rid  
+of partitions and their typical problems (not enough space on one, too  
+much on the other), I'm thinking about using a ZFS formatted  
+sparsebundle on my HFS+ formatted root as my home directory.
+
+I gave it a try with an AES encrypted ZFS sparsebundle on a test user,  
+which seemed to work quite fine, except for the inconvenience of  
+having to mount the image from a different user each time I reboot the  
+computer.
+One possible solution would be a login hook as documented by Mike  
+Bombich, which, at least AFAIK, will prevent me from encrypt the  
+sparsebundle - or does it?
+
+So, first of all: Bad idea or good idea to go with a sparsebundle?
+Second: Any chance to combine an encrypted ZFS-formatted sparsebundle  
+with an automatic mount on login? Tamper with Filevault, for example?
+
+Thanks.
+
+
+Best regards,
+
+Christian
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000946.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+	<LI>Next message: <A HREF="000948.html">[zfs-discuss] ZFS-formatted sparsebundle as home directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#947">[ date ]</a>
+              <a href="thread.html#947">[ thread ]</a>
+              <a href="subject.html#947">[ subject ]</a>
+              <a href="author.html#947">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

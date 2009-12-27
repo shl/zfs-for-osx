@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Cannot shut down with 117
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Cannot%20shut%20down%20with%20117&In-Reply-To=5F98E8D4-A454-448C-B8D3-E6096748DEA9%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000648.html">
+   <LINK REL="Next"  HREF="000650.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Cannot shut down with 117</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Cannot%20shut%20down%20with%20117&In-Reply-To=5F98E8D4-A454-448C-B8D3-E6096748DEA9%40mac.com"
+       TITLE="[zfs-discuss] Cannot shut down with 117">ndellofano at apple.com
+       </A><BR>
+    <I>Wed Jun 18 11:55:57 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000648.html">[zfs-discuss] Cannot shut down with 117
+</A></li>
+        <LI>Next message: <A HREF="000650.html">[zfs-discuss] Kernel Panic When Shutting Down
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#649">[ date ]</a>
+              <a href="thread.html#649">[ thread ]</a>
+              <a href="subject.html#649">[ subject ]</a>
+              <a href="author.html#649">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You are not alone.  A few other people at WWDC saw this too.   
+Curiously, we haven't changed any of the refcounting stuff in the past  
+few builds (since 111) so I'm not sure what's up.  I&quot;ve opened a bug  
+on this and am taking a look.
+
+thanks for the heads up, I&quot;ll try and fix it asap.
+
+Noel
+
+On Jun 17, 2008, at 8:44 PM, Byron Servies wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> After installing 117 binaries I was able to shut down, but over the
+</I>&gt;<i> weekend something changed and I can no longer shut the machine down.
+</I>&gt;<i> I left it for several hours without it coming unstuck and used the
+</I>&gt;<i> power button to turn the machine off, since it would not respond
+</I>&gt;<i> otherwise.  While I have sent the crash report in to Apple, I thought
+</I>&gt;<i> I would report it here as well (see below).
+</I>&gt;<i>
+</I>&gt;<i> Over the weekend I changed some networking settings, started some
+</I>&gt;<i> screen sharing for the first time, and shared a directory.  Though I
+</I>&gt;<i> have since turned the file sharing off and reset my network, I still
+</I>&gt;<i> cannot shut down.  The machine sleeps just fine, however.
+</I>&gt;<i>
+</I>&gt;<i> Hope this helps, and thanks for making ZFS available,
+</I>&gt;<i>
+</I>&gt;<i> Byron
+</I>&gt;<i>
+</I>&gt;<i> Sun Jun 15 06:26:25 2008
+</I>&gt;<i> panic(cpu 0 caller 0x001DBC35): &quot;vnode_put(0x704cc70): iocount &lt; 1&quot;@/
+</I>&gt;<i> SourceCache/xnu/xnu-1228.5.18/bsd/vfs/vfs_subr.c:3581
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x5c2dbd78 : 0x12b0fa (0x459294 0x5c2dbdac 0x133243 0x0)
+</I>&gt;<i> 0x5c2dbdc8 : 0x1dbc35 (0x467400 0x704cc70 0x5c2dbe08 0xbf8532)
+</I>&gt;<i> 0x5c2dbde8 : 0x1dbce6 (0x704cc70 0x7a189c0 0xfb4c322b 0x7dc5140)
+</I>&gt;<i> 0x5c2dbe08 : 0xbc830b (0x704cc70 0xc2b2e4 0x0 0x0)
+</I>&gt;<i> 0x5c2dbf58 : 0xbb10a2 (0x7dc5000 0x21d1a3 0x0 0x6dd2140)
+</I>&gt;<i> 0x5c2dbfc8 : 0x19ebdc (0x7dc6c00 0x0 0x1a20b5 0x7dcc7d8)
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0
+</I>&gt;<i>       Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>          com.apple.filesystems.zfs(8.0)@0xb80000-&gt;0xc4bfff
+</I>&gt;<i>
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i>
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9D34
+</I>&gt;<i>
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.3.0: Fri May 23 00:49:16 PDT 2008;
+</I>&gt;<i> root:xnu-1228.5.18~1/RELEASE_I386
+</I>&gt;<i> System model name: MacPro1,1 (Mac-F4208DC8)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000648.html">[zfs-discuss] Cannot shut down with 117
+</A></li>
+	<LI>Next message: <A HREF="000650.html">[zfs-discuss] Kernel Panic When Shutting Down
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#649">[ date ]</a>
+              <a href="thread.html#649">[ thread ]</a>
+              <a href="subject.html#649">[ subject ]</a>
+              <a href="author.html#649">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

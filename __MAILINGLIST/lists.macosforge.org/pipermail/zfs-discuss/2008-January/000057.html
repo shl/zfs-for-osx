@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=59537597-E328-4026-AC18-40F5F4D27562%40thinkpink.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000054.html">
+   <LINK REL="Next"  HREF="000059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Kernel%20Panic%20-%20can%27t%20allocate%20memory%20in%0A%09zfs_context.c&In-Reply-To=59537597-E328-4026-AC18-40F5F4D27562%40thinkpink.com"
+       TITLE="[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c">bwaters at nrao.edu
+       </A><BR>
+    <I>Tue Jan 22 11:18:05 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000054.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+        <LI>Next message: <A HREF="000059.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#57">[ date ]</a>
+              <a href="thread.html#57">[ thread ]</a>
+              <a href="subject.html#57">[ subject ]</a>
+              <a href="author.html#57">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, my crazy rysnc test is proceeding along with rsync 3.0pre8 (64- 
+bit) and combined with ZFS and snapshots I've achieved nerd-vana. It  
+just works.
+
+Of course, by saying this I risk the wrath of the kernel-panic  
+gremlins... nope, still cruising along! Great.
+
+So for what it's worth my recommendation for the use of rsync 3.0  
+rather than 2.{6,7,8} is hereby submitted.
+
+The standard source tree handles Mac OS X extended attributes just  
+fine, thank you -- the only files I have that still have resource  
+forks are Finder aliases, and those still retain their forks. Colors,  
+custom icons, ACLs, other extended attributes -- no problem so far.
+
+<A HREF="http://samba.anu.edu.au/rsync/">http://samba.anu.edu.au/rsync/</A>
+
+Yay.
+
+  - boyd
+
+
+
+On Jan 22, 2008, at 11:58 AM, Brian Pinkerton wrote:
+
+&gt;<i> I've gotten this same ZFS panic a number of times with current  
+</I>&gt;<i> software.  So far, I can say that it always coincides with doing  
+</I>&gt;<i> something that involves a lot of files -- either rsync, du, or tar.
+</I>&gt;<i>
+</I>&gt;<i> That said, the new rsync looks pretty great!  I'm looking forward to  
+</I>&gt;<i> trying it out.
+</I>&gt;<i>
+</I>&gt;<i> bri
+</I>&gt;<i>
+</I>&gt;<i> On Jan 21, 2008, at 10:05 PM, Boyd Waters wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 21, 2008, at 4:37 PM, No&#235;l Dellofano wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> yikes.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Can you try your crazy rsync tests with the new update?? It has a  
+</I>&gt;&gt;&gt;<i> lot of fixes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've just completed a round of my &quot;crazy rsync tests&quot; :-) with  
+</I>&gt;&gt;<i> rsync 3.0pre8 compiled for 64-bit and it seems to work _great_.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hmm!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://samba.anu.edu.au/rsync/">http://samba.anu.edu.au/rsync/</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ./configure CC=/usr/bin/gcc-4.2 CFLAGS=&quot;-Os -ftree-vectorize - 
+</I>&gt;&gt;<i> mtune=native -pipe -ffast-math -fPIC -arch x86_64 -Wl,-pie -fstack- 
+</I>&gt;&gt;<i> protector&quot;
+</I>&gt;&gt;<i> make
+</I>&gt;&gt;<i> sudo make install
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So I don't know if my kernel panic during heavy rsync load are  
+</I>&gt;&gt;<i> (primarily) ZFS problems. The problem I initially reported on this  
+</I>&gt;&gt;<i> list was indeed a kernel panic in ZFS. Probably rsync needs some  
+</I>&gt;&gt;<i> attention, too...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - boyd
+</I>&gt;&gt;<i> <A HREF="http://www.aoc.nrao.edu/~bwaters">http://www.aoc.nrao.edu/~bwaters</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000054.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+	<LI>Next message: <A HREF="000059.html">[zfs-discuss] Kernel Panic - can't allocate memory in
+	zfs_context.c
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#57">[ date ]</a>
+              <a href="thread.html#57">[ thread ]</a>
+              <a href="subject.html#57">[ subject ]</a>
+              <a href="author.html#57">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

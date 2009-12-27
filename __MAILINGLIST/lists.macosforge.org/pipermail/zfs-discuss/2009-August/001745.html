@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] About ZFS on MacOs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20About%20ZFS%20on%20MacOs&In-Reply-To=%3C67631ed30908191235m3688a754tf6aba40a20a4ef6c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001744.html">
+   <LINK REL="Next"  HREF="001736.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] About ZFS on MacOs</H1>
+    <B>Dev Lists</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20About%20ZFS%20on%20MacOs&In-Reply-To=%3C67631ed30908191235m3688a754tf6aba40a20a4ef6c%40mail.gmail.com%3E"
+       TITLE="[zfs-discuss] About ZFS on MacOs">dev-lists at thefloreas.com
+       </A><BR>
+    <I>Wed Aug 19 12:35:50 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001744.html">[zfs-discuss] About ZFS on MacOs
+</A></li>
+        <LI>Next message: <A HREF="001736.html">[zfs-discuss] About ZFS on MacOs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1745">[ date ]</a>
+              <a href="thread.html#1745">[ thread ]</a>
+              <a href="subject.html#1745">[ subject ]</a>
+              <a href="author.html#1745">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I forgot about the pending legal issues with NetApp.  Honestly, I hope that
+is the reason ZFS has been, according to earlier posters, pulled entirely
+from the client and server builds of OS X (including the read-only kext).
+ We know from earlier posts on this list by Apple employees that it was
+running on 10.6 and that it required backwards-incompatible changes to match
+changes in the 10.6 kernel (which means that the last released build, 119,
+probably won't run on 10.6, although I don't know anyone who has actually
+tried it), so it doesn't seem likely it is a technical issue.
+
+
+If it was pulled from 10.6 due to the legal questions, then I think it is
+likely the new bits will come out on MacOS forge.  If Sun were to lose its
+case or settle it in an unfavorable way, it could be very costly for Apple
+to have to remove ZFS support from a shipping product and potentially pay a
+licensing fee for every copy they've already sold.  However, simply having
+to pull it down from the macosforge.com website would be far simpler and
+(IANAL) I don't think they would have any legal responsibilities beyond
+that.
+
+
+The more I think about it, the more this makes sense.  Why else would Apple
+remove even read-only support, which has been in 10.5 since the initial
+release?  The only other reason I can think of is that in the switch to the
+10.6 kernel ZFS had taken a huge step backwards in stability, but that
+wasn't the impression various Apple employees (and earlier builds with it
+in, purportedly) had given us.
+
+
+Furthermore, the good news on the lawsuit is that, while it is a long
+process, it looks like Sun will prevail.  The most recent summary I could
+find on the suit is from back in October of 2008: NetApp faces Sun lawsuit
+loss &#8226; The Register&lt;<A HREF="http://www.theregister.co.uk/2008/10/07/sun_gets_netapp_patent_invalidated/">http://www.theregister.co.uk/2008/10/07/sun_gets_netapp_patent_invalidated/</A>&gt;.
+ According to Sun's page on the lawsuit, NetApp Patent Lawsuit Against ZFS
+Open Source Technology &lt;<A HREF="http://www.sun.com/lawsuit/zfs/">http://www.sun.com/lawsuit/zfs/</A>&gt;, as of 7/09 the
+last NetApp patent relating to the core ZFS technology, the &quot;292&quot; patent,
+has been rejected by the USPTO.  So it looks like this could be resolved
+later this year and that Sun will have an unqualified victory.  Which means
+ZFS would likely be added back into 10.6 in a point release.
+
+
+Of course, the other looming issue is Sun's pending sale to Oracle and their
+propensity for using the GPL as their preferred open source license (due to
+their support of Linux).  While they can't undo the current licensing, the
+GPL isn't compatible with OS X and Apple may decide to abandon it if they
+can't benefit from the heavy-lifting done in the future by others.  AFAIK,
+Apple hasn't contributed anything upstream, save perhaps some bug fixes or
+reports, but rather just ported the work of others to OS X.
+
+However, it's debatable ZFS would be of much value to Linux, as they've
+already got a lot of momentum behind their ZFS clone, btrfs (also
+developed/supported by Oracle), and Linux has a very strong Not Invented
+Here culture.  But I can see how from Apple's perspective it would be
+prudent to hold off on ZFS until the dust settles on the Oracle acquisition
+of Sun.
+
+
+So, there's a discussion of the non-technical reasons potentially behind
+ZFS' disappearance from 10.6.  It would be nice if we could get some input
+from Apple engineers.  I wonder if their silence has been because of 10.6 or
+because someone higher up at Apple finally read what they were writing.  I
+was always surprised at how open (for Apple) they were.  Almost like they
+intended to interact with the community.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090819/f514c853/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090819/f514c853/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001744.html">[zfs-discuss] About ZFS on MacOs
+</A></li>
+	<LI>Next message: <A HREF="001736.html">[zfs-discuss] About ZFS on MacOs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1745">[ date ]</a>
+              <a href="thread.html#1745">[ thread ]</a>
+              <a href="subject.html#1745">[ subject ]</a>
+              <a href="author.html#1745">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] new bits available: zfs-119!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20new%20bits%20available%3A%20zfs-119%21&In-Reply-To=FE8C41DB-94F2-44CF-86A3-8FB3976C00C2%40martin-hauser.net">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000688.html">
+   <LINK REL="Next"  HREF="000687.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] new bits available: zfs-119!</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20new%20bits%20available%3A%20zfs-119%21&In-Reply-To=FE8C41DB-94F2-44CF-86A3-8FB3976C00C2%40martin-hauser.net"
+       TITLE="[zfs-discuss] new bits available: zfs-119!">ndellofano at apple.com
+       </A><BR>
+    <I>Thu Jul 17 09:29:21 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000688.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+        <LI>Next message: <A HREF="000687.html">[zfs-discuss] ZFS panic on shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#689">[ date ]</a>
+              <a href="thread.html#689">[ thread ]</a>
+              <a href="subject.html#689">[ subject ]</a>
+              <a href="author.html#689">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>None of the installation instructions are different.  As Martin  
+mentions below, all the .dSym directories are just debug symbols.  The  
+zfs.util directory can also be ignored as our project doesn't require  
+it, but it's built automatically.
+zoink, is a userland program you can use to observe ZFS's current  
+memory usage on the system. It runs until you cntl-C out of it.
+
+For example:
+%zoink
+
+ZFS footprint:  281M used,  281M peak,  303M goal                31  
+threads
+  ARC footprint:  227M used,  228M peak,  227M goal
+
+                         obj      slab    active     total       
+peak    total
+  kmem_cache name       size      size      objs      objs       
+objs      mem
+-----------------------------------------------------------------------------
+  kmem_magazine_1          8      4096      1354      1524       
+1524      11K
+  kmem_magazine_3         16      4096      1627      1778       
+1778      27K
+  kmem_magazine_7         32      4096       593       635        
+635      19K
+  kmem_magazine_15        64      4096       396       441        
+441      27K
+  kmem_slab_cache         28      4096      8915      9017       
+9017     246K
+  kmem_bufctl_cache       12      4096     51386     51562      
+51562     604K
+  taskq_ent_cache         48      4096       414       672        
+672      31K
+  taskq_cache            204      4096        13        19         
+19       3K
+  zfs_znode_cache        212     32768     10601     12986      
+12986    2688K
+  zio_bufs 540           540      8192     18131     21291      
+21291     798K
+  zio_bufs 512           512     32768     19217     20864      
+20864    9888K
+  zio_bufs 1024         1024     16384        89       320        
+704     176K
+  zio_bufs 1536         1536     12288        59       216        
+224     108K
+  zio_bufs 2048         2048      4096        72       138        
+156      60K
+  zio_bufs 2560         2560     20480        74       160        
+160     100K
+  zio_bufs 3072         3072     12288        52       132        
+132     180K
+  zio_bufs 3584         3584     28672        56       144        
+152     168K
+  zio_bufs 4096         4096      4096        75       207        
+246     592K
+  zio_bufs 5120         5120     20480        95       152        
+164     100K
+  zio_bufs 6144         6144     12288        81        94        
+104      48K
+  zio_bufs 7168         7168     28672        50        72         
+76      56K
+  zio_bufs 8192         8192      8192        36        45         
+53      64K
+  zio_bufs 10240       10240     20480        55        86         
+96      80K
+  zio_bufs 12288       12288     12288        33        52         
+73      72K
+  zio_bufs 14336       14336     28672        31       240        
+242    2716K
+  zio_bufs 16384       16384     16384      2289      2624      3296    
+41536K
+  zio_bufs 20480       20480     20480        45        68         
+88      80K
+  zio_bufs 24576       24576     24576        17        30         
+39      72K
+  zio_bufs 28672       28672     28672        33        64         
+85      56K
+  zio_bufs 32768       32768     32768         9        27         
+35      96K
+  zio_bufs 36864       36864     36864        17        33         
+39     108K
+  zio_bufs 40960       40960     40960         5        15         
+23      80K
+  zio_bufs 45056       45056     45056         8        21         
+24      88K
+  zio_bufs 49152       49152     49152         7        14         
+17      96K
+  zio_bufs 53248       53248     53248        14        22         
+22     104K
+  zio_bufs 57344       57344     57344        13        24         
+30     112K
+  zio_bufs 61440       61440     61440         9        17         
+19     120K
+  zio_bufs 65536       65536     65536       172       180       181    
+10496K
+  zio_bufs 69632       69632     69632         4        13         
+14     136K
+  zio_bufs 73728       73728     73728         3         6          
+6     144K
+  zio_bufs 77824       77824     77824         8        10         
+11     152K
+  zio_bufs 81920       81920     81920         5         7          
+7     160K
+  zio_bufs 86016       86016     86016         1         8          
+9     168K
+
+
+
+Noel
+
+On Jul 17, 2008, at 12:32 AM, Martin Hauser wrote:
+
+&gt;<i> the .dSYM directories are just debug information... you can safely  
+</I>&gt;<i> ignore those.
+</I>&gt;<i> not sure about zoink and zfs.util in general
+</I>&gt;<i>
+</I>&gt;<i> Martin
+</I>&gt;<i>
+</I>&gt;<i> On Jul 17, 2008, at 01:01 AM, Andrei Dorofeev wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I noticed a few new files and directories in this new archive.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> build/Leopard_Release/zfs.util
+</I>&gt;&gt;<i> build/Leopard_Release/zfs.util.dSYM/
+</I>&gt;&gt;<i> build/Leopard_Release/zoink
+</I>&gt;&gt;<i> build/Leopard_Release/zoink.dSYM/...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What are we supposed to copy these to?  Could you please update
+</I>&gt;&gt;<i> installation instructions?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you!
+</I>&gt;&gt;<i> -Andrei
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Jul 16, 2008 at 3:43 PM, No&#235;l Dellofano  
+</I>&gt;&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Hey everyone,
+</I>&gt;&gt;&gt;<i> Just a quick heads up to say that new zfs bits and source are  
+</I>&gt;&gt;&gt;<i> available on
+</I>&gt;&gt;&gt;<i> the zfs macosforge site.  The new bits fix these (really annoying)  
+</I>&gt;&gt;&gt;<i> issues:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 6018669 cpanic(cpu 0 caller 0x001DBC35): &quot;vnode_put(0x704cc70):  
+</I>&gt;&gt;&gt;<i> iocount &lt;
+</I>&gt;&gt;&gt;<i> 1&quot;@/
+</I>&gt;&gt;&gt;<i> 5989423 Phantom folders/directories (unexpected ENOENT errors)
+</I>&gt;&gt;&gt;<i> 6035783 ZFS hang during rename/open
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> There should be no more weirdo phantom folders and directories  
+</I>&gt;&gt;&gt;<i> hanging
+</I>&gt;&gt;&gt;<i> around.  Don found the issue was with the negative caching we were  
+</I>&gt;&gt;&gt;<i> using for
+</I>&gt;&gt;&gt;<i> the name cache.  Also, fixed a hang we had under load.  So if you  
+</I>&gt;&gt;&gt;<i> had a hang
+</I>&gt;&gt;&gt;<i> while doing ditto, cp, or anything else with a lot of load, please  
+</I>&gt;&gt;&gt;<i> retry as
+</I>&gt;&gt;&gt;<i> that issue should also be fixed now.  And hooray hooray, you  
+</I>&gt;&gt;&gt;<i> shouldn't vnode
+</I>&gt;&gt;&gt;<i> panic on shutdown anymore.
+</I>&gt;&gt;&gt;<i> As always let me know what you like/don't like and what is just  
+</I>&gt;&gt;&gt;<i> plain busted
+</I>&gt;&gt;&gt;<i> :)
+</I>&gt;&gt;&gt;<i> thanks for all your feedback and for using ZFS!!!
+</I>&gt;&gt;&gt;<i> Noel
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000688.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+	<LI>Next message: <A HREF="000687.html">[zfs-discuss] ZFS panic on shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#689">[ date ]</a>
+              <a href="thread.html#689">[ thread ]</a>
+              <a href="subject.html#689">[ subject ]</a>
+              <a href="author.html#689">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

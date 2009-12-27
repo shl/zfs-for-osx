@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Behaviour on bad sectors?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Behaviour%20on%20bad%20sectors%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000246.html">
+   <LINK REL="Next"  HREF="000248.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Behaviour on bad sectors?</H1>
+    <B>Ralf Bertling</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Behaviour%20on%20bad%20sectors%3F&In-Reply-To="
+       TITLE="[zfs-discuss] Behaviour on bad sectors?">i_see at macnews.de
+       </A><BR>
+    <I>Sun Mar  2 05:51:44 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000246.html">[zfs-discuss] My 2 cents on zraid random read performance
+</A></li>
+        <LI>Next message: <A HREF="000248.html">[zfs-discuss] Feature request: bette utilization of mixed size	disks in ZRaid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#247">[ date ]</a>
+              <a href="thread.html#247">[ thread ]</a>
+              <a href="subject.html#247">[ subject ]</a>
+              <a href="author.html#247">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+during my adventures with zfs, I have also found that one of my old  
+disk has approximately 1700 bad sectors that don't respond well to  
+read requests. I know that other errors will probably follow, but for  
+the time being and for the sake of the argument, I wil be using this  
+setup.
+I am not sure how my experiences are influenced by zfs, mac os x and/ 
+or the firmware of the drive or the USB-enclosure i am using:
+
+When a bad sector is encountered, additional read attempts follow in  
+intervals of approx. 1 second for a while until the system finally  
+decides the read attempt failed, an I/O error is logged in the Mac's  
+system.log and the counter on read errors in increased.
+
+While the sector is still probed, the data rate of the ZFS-Raidz drops  
+to practically zero resulting in greatly increased scrub or data  
+access times.
+As far as I can tell, no attempt is made to:
+
+a) map out the sector so it is not used again. (I am not sure if the  
+repaired data is written by COW or by in-place updates)
+b) remember the number or identity of bad sectors across reboots (or  
+probably export/imports)
+c) delay the initial request after a sub-second-timeout and try to  
+compute the missing data from redundant information. (The request  
+could be re-issued later or be treated as an error depending on setup.)
+
+I don't know if zfs would automatically jump to a hot spare on the  
+first read-error, but if not, the behaviour of my system would  
+generally be recognised as &quot;server not responding&quot; by the normal and  
+user. For a single error, the system takes approx. 20 seconds to  
+notice. during which the pool does not respond at all and all  
+applications trying to access data will be &quot;beachballig&quot; i.e. be  
+stuck. In my situation, this results in minutes without throughput.
+
+As a result, I would suggest that the behaviour is changed to:
+- Try to avoid retries on I/O reads if they do not immediately succeed  
+(only possible if the retries come from the OS and not from the USB  
+enclosure)
+- faster error detection by cancelling requests that are unlikely to  
+return any meaningful data and flagging errors accordingly. (Of course  
+one needs to be careful not to report thousands of errors if a disk  
+has just chosen to spin down for energy saving or of the reasons (see  
+P.S.))
+- Add the ability to mark sectors that had problems as unavailable for  
+future use (I know in a professional setup you would simply throw that  
+disk away, but I'd rathe try to use it in an redundant configuration  
+than not using redundancy at all. Right now I know, I might loose some  
+data, if another disk breaks completely, but otherwise, I already have  
+much higher reliability than I used to have.
+- Store error information in the volume header of the Vdevs.
+I do have long uptimes for a home configuration, but still think after  
+a reboot I should see, if there have been disk errors.
+
+--
+ralf bertling
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000246.html">[zfs-discuss] My 2 cents on zraid random read performance
+</A></li>
+	<LI>Next message: <A HREF="000248.html">[zfs-discuss] Feature request: bette utilization of mixed size	disks in ZRaid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#247">[ date ]</a>
+              <a href="thread.html#247">[ thread ]</a>
+              <a href="subject.html#247">[ subject ]</a>
+              <a href="author.html#247">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

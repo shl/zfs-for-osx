@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS Binaries 102A fail with a dyld: lay
+	symbol	binding failed on Os X 10.5
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20Binaries%20102A%20fail%20with%20a%20dyld%3A%20lay%0A%09symbol%09binding%20failed%20on%20Os%20X%2010.5&In-Reply-To=7BABD495-0474-43B4-8C0A-759CAB31CD25%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000146.html">
+   <LINK REL="Next"  HREF="000148.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay
+	symbol	binding failed on Os X 10.5</H1>
+    <B>Martin Hauser</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20Binaries%20102A%20fail%20with%20a%20dyld%3A%20lay%0A%09symbol%09binding%20failed%20on%20Os%20X%2010.5&In-Reply-To=7BABD495-0474-43B4-8C0A-759CAB31CD25%40apple.com"
+       TITLE="[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay
+	symbol	binding failed on Os X 10.5">info at martin-hauser.net
+       </A><BR>
+    <I>Mon Feb 11 13:18:29 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000146.html">[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay
+	symbol	binding failed on Os X 10.5
+</A></li>
+        <LI>Next message: <A HREF="000148.html">[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay symbol
+	binding failed on Os X 10.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#147">[ date ]</a>
+              <a href="thread.html#147">[ thread ]</a>
+              <a href="subject.html#147">[ subject ]</a>
+              <a href="author.html#147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Noel,
+
+On Feb 11, 2008, at 19:56 PM, No&#235;l Dellofano wrote:
+
+&gt;<i> So you're seeing this bug trying to build the latest zfs source code  
+</I>&gt;<i> (102A) in Xcode in Leopard?  Can you tell me what version of Leopard  
+</I>&gt;<i> and Xcode you're using?
+</I>
+Xcode tells me :
+
+Xcode 3.0
+
+Component versions
+Xcode IDE: 921.0
+Xcode Core: 921.0
+ToolSupport: 893.0
+
+Leopard is 10.5.1 with all available updates installed. I have had  
+this both on an Imac 20&quot; and a first generation macbook, both being  
+intel based machines.
+
+The error itself happens if I download and install the binaries shared  
+on macosforge. I'm not quite sure if that happens if I'd be building  
+from source without the 'Use Seperate Strip' option enabled on the  
+libzfs subproject, cause I haven't tried that.
+
+As I got the error, I found some information on the net about some  
+other  project from which i extracted that apparently the 3.0 Version  
+of Xcode hat some problems with the internal strip and that would  
+result in this error. Using this information, I downloaded the source  
+code for zfs, applied the &quot;use seperate strip&quot; option to the libzfs  
+subbuild, built, installed and was happy.
+
+I merely posted it here to notion that the default downloadable  
+binaries won't run on intel based macintoshes on 10.5.1.
+
+If you need more Information, please let me know.
+
+kind Regards
+
+Martin Hauser
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PGP.sig
+Type: application/pgp-signature
+Size: 186 bytes
+Desc: This is a digitally signed message part
+Url : <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080211/0b104ead/PGP.bin">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080211/0b104ead/PGP.bin</A>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000146.html">[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay
+	symbol	binding failed on Os X 10.5
+</A></li>
+	<LI>Next message: <A HREF="000148.html">[zfs-discuss] ZFS Binaries 102A fail with a dyld: lay symbol
+	binding failed on Os X 10.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#147">[ date ]</a>
+              <a href="thread.html#147">[ thread ]</a>
+              <a href="subject.html#147">[ subject ]</a>
+              <a href="author.html#147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

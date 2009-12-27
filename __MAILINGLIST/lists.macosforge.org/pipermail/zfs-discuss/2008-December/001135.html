@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] nested filesystems, any problems?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nested%20filesystems%2C%20any%20problems%3F&In-Reply-To=%3C295CD6C2-334E-48BF-9D57-6241F1710813%40nrao.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001134.html">
+   <LINK REL="Next"  HREF="001136.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] nested filesystems, any problems?</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20nested%20filesystems%2C%20any%20problems%3F&In-Reply-To=%3C295CD6C2-334E-48BF-9D57-6241F1710813%40nrao.edu%3E"
+       TITLE="[zfs-discuss] nested filesystems, any problems?">bwaters at nrao.edu
+       </A><BR>
+    <I>Wed Dec  3 11:18:18 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001134.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+        <LI>Next message: <A HREF="001136.html">[zfs-discuss] nested filesystems, any problems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1135">[ date ]</a>
+              <a href="thread.html#1135">[ thread ]</a>
+              <a href="subject.html#1135">[ subject ]</a>
+              <a href="author.html#1135">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Is anyone really testing out nested filesystems?
+
+ZFS filesystems can contain other filesystems. Like a directory
+
+&quot;That's crazy talk. Why would you want to do that?&quot;
+
+I want to perform snapshots of a sub-directory independently of  
+snapshots on the parent.
+
+
+For example, my top-level pool is a mounted as a ZFS filesystem called  
+&quot;pool&quot;. I have a home directory under that called &quot;bwaters&quot; so that  
+filesystem is pool/bwaters ... I can have other filesystems under my  
+home directory...
+
+
+Everything is working OK over here with that setup. Except snapshots.
+
+cannot create snapshot 'pool/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">bwaters at 2008-12-03T12</A>:12:55': dataset is  
+busy
+
+
+I logged out, logged in as an admin user, performed a scrub of the  
+entire pool (this took about six hours), and there were no data errors  
+reported but I still cannot create snapshots.
+
+I used to create snapshots all the time.
+
+
+Back when I had only one pool attached... hmm... now I have an  
+external SATA enclosure with another raidz1 mounted.  That one is OK,  
+too. Why should it matter?
+
+# zpool status
+   pool: pool
+  state: ONLINE
+  scrub: scrub completed with 0 errors on Tue Dec  2 23:05:14 2008
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	pool         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk0s2  ONLINE       0     0     0
+	    disk3s2  ONLINE       0     0     0
+	    disk2s2  ONLINE       0     0     0
+	    disk1s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+   pool: tank
+  state: ONLINE
+  scrub: none requested
+config:
+
+	NAME         STATE     READ WRITE CKSUM
+	tank         ONLINE       0     0     0
+	  raidz1     ONLINE       0     0     0
+	    disk6s2  ONLINE       0     0     0
+	    disk9s2  ONLINE       0     0     0
+	    disk7s2  ONLINE       0     0     0
+	    disk8s2  ONLINE       0     0     0
+
+errors: No known data errors
+
+
+
+IS ANYONE RUNNING INTO THIS &quot;CANNOT CREATE SNAPSHOTS&quot; PROBLEM?
+ANY SUGGESTIONS TO FIX THIS?
+
+(the pool is 1.9 Terabytes at the moment. exporting/importing is do- 
+able, but I'll need to procure *even more* disk to do so... I'd  
+purchase 4x1.5T and that would set me back at least $350... any other  
+idea?)
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001134.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+	<LI>Next message: <A HREF="001136.html">[zfs-discuss] nested filesystems, any problems?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1135">[ date ]</a>
+              <a href="thread.html#1135">[ thread ]</a>
+              <a href="subject.html#1135">[ subject ]</a>
+              <a href="author.html#1135">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

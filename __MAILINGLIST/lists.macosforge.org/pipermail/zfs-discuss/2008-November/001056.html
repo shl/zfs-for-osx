@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] adding drives to a raidz volume
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3CE6B1B694-F5E0-4E69-AA9A-67D8BF1C9DA5%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001054.html">
+   <LINK REL="Next"  HREF="001065.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] adding drives to a raidz volume</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20adding%20drives%20to%20a%20raidz%20volume&In-Reply-To=%3CE6B1B694-F5E0-4E69-AA9A-67D8BF1C9DA5%40sun.com%3E"
+       TITLE="[zfs-discuss] adding drives to a raidz volume">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Sat Nov 15 19:36:45 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001054.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+        <LI>Next message: <A HREF="001065.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1056">[ date ]</a>
+              <a href="thread.html#1056">[ thread ]</a>
+              <a href="subject.html#1056">[ subject ]</a>
+              <a href="author.html#1056">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Nov 15, 2008, at 6:10 PM, Alex Blewitt wrote:
+
+&gt;<i> Note that it is fairly likely the way to upgrade a zfs pool for home  
+</I>&gt;<i> users is simply to buy another n drives that are (much) larger than  
+</I>&gt;<i> your current set of drives, and by a sequence of one-for-one  
+</I>&gt;<i> replacements increase your size that way. That can be done either  
+</I>&gt;<i> for a mirrored or raid set.
+</I>
+yep - that can work as you're also solving the problem of re-laying  
+out the data which is why it's not just trivial to just add a disk to  
+an existing raidz stripe .. your data layout and parity would be all  
+out of whack
+
+you can always just add more disks in separate stripe groups to the  
+pool which will also have the side effect of increasing the amount of  
+parity protection you have in the pool, but if you're going raidz -  
+adding a single disk isn't going to help you much in the pool unless  
+you're adding a spare.
+
+---
+.je
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001054.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+	<LI>Next message: <A HREF="001065.html">[zfs-discuss] adding drives to a raidz volume
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1056">[ date ]</a>
+              <a href="thread.html#1056">[ thread ]</a>
+              <a href="subject.html#1056">[ subject ]</a>
+              <a href="author.html#1056">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

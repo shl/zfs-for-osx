@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] USB and Firewire Performance Problem Question...
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C52A4DF1A-C0C5-4D53-9AF4-EFD8E0D4B5DD%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001536.html">
+   <LINK REL="Next"  HREF="001537.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] USB and Firewire Performance Problem Question...</H1>
+    <B>Alex Blewitt</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20USB%20and%20Firewire%20Performance%20Problem%20Question...&In-Reply-To=%3C52A4DF1A-C0C5-4D53-9AF4-EFD8E0D4B5DD%40gmail.com%3E"
+       TITLE="[zfs-discuss] USB and Firewire Performance Problem Question...">alex.blewitt at gmail.com
+       </A><BR>
+    <I>Fri Apr 24 01:35:42 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001536.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+        <LI>Next message: <A HREF="001537.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1538">[ date ]</a>
+              <a href="thread.html#1538">[ thread ]</a>
+              <a href="subject.html#1538">[ subject ]</a>
+              <a href="author.html#1538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I did some tests on an external drive enclosure, and my findings were  
+that HFS outperformed a single ZFS drive, but that ZFS was better when  
+set up for RAID.
+
+<A HREF="http://alblue.blogspot.com/2008/04/review-iomega-ultramax-and-hfz-vs-zfs.html">http://alblue.blogspot.com/2008/04/review-iomega-ultramax-and-hfz-vs-zfs.html</A>
+
+Bear in mind that ZFS may be writing to an intent log first, and then  
+replaying those to disk at a later time, so the pause may be it  
+writing out data.
+
+It's also worth noting that a ZFS partition has other features like  
+checksums which will affect the performance generally speaking. ZFS is  
+more CPU/memory intensive than HFS is.
+
+Having said that, the write log of 0 is particularly strange. ZFS will  
+wait (with 'sync' effectively) when writing and it may be that it's  
+just waiting for the buffers to the USB drive to report the data has  
+sync'd before continuing. HFS might just keep the buffer filled up.
+
+Alex
+
+On 23 Apr 2009, at 21:00, David Reed wrote:
+
+&gt;<i> An update if it helps anyone with ideas....
+</I>&gt;<i>
+</I>&gt;<i> Writing a different set of file sizes to the disks don't show the  
+</I>&gt;<i> problem (at least not as acutely).   So if I'm copying lots of  
+</I>&gt;<i> smaller files (&lt; 1M) I don't see the hit.  It seems to be related  
+</I>&gt;<i> (right now) to the file sizes.  Copying a lot of 2.8Mish files seems  
+</I>&gt;<i> to show the worst behavior.
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>&gt;<i> On Apr 23, 2009, at 10:18 AM, David Reed wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I apologize if this is already addressed somewhere in the list  
+</I>&gt;&gt;<i> archives.  I've spent time looking for an answer but haven't found  
+</I>&gt;&gt;<i> one.  I also apologize for the length of this post.  I'm trying to  
+</I>&gt;&gt;<i> include as many details as possible so I don't waste anyone's time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Summary:
+</I>&gt;&gt;<i> When I use an external USB attached drive with ZFS performance  
+</I>&gt;&gt;<i> drops to about 40% of an HFS+ partition.  The same is true for  
+</I>&gt;&gt;<i> Firewire attached drives.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Details:
+</I>&gt;&gt;<i> * I'm wanting to use an external ZFS drive to store data - photos  
+</I>&gt;&gt;<i> in particular.  So lots (100k+) of 1-12M files.
+</I>&gt;&gt;<i> * Downloaded and installed zfs-119 (on an MacBook Pro running 10.5.6)
+</I>&gt;&gt;<i> * I noticed when copying files to the drive that it would &quot;pause&quot;  
+</I>&gt;&gt;<i> every 3-5 seconds or so (I could hear the drive heads moving about  
+</I>&gt;&gt;<i> and then nothing for a second or two).
+</I>&gt;&gt;<i> * I switched to an &quot;rsync&quot; style copy (rsync -a --progress) so I  
+</I>&gt;&gt;<i> could see a little better what was happening.  Every 3-5 or so  
+</I>&gt;&gt;<i> seconds it would just &quot;stop&quot; in the middle of a copy for a few  
+</I>&gt;&gt;<i> seconds.
+</I>&gt;&gt;<i> * I stopped the copy, deleted the files from the ZFS drive, and  
+</I>&gt;&gt;<i> started again... This time running zpool iostat 1 in a different  
+</I>&gt;&gt;<i> shell window.  (Output attached below - depending on the sampling  
+</I>&gt;&gt;<i> and timing you can see either the &quot;0&quot; for write bandwidth during  
+</I>&gt;&gt;<i> the pauses or a small number typically occurring every 3-4 seconds).
+</I>&gt;&gt;<i> * I checked my CPU during the process - not CPU bound (max was  
+</I>&gt;&gt;<i> about 10% CPU usage including kernel)
+</I>&gt;&gt;<i> * The net impact of the pauses is to significantly slow down write  
+</I>&gt;&gt;<i> times.  To copy just 2.9GB of photos was taking about 3.5 to 4  
+</I>&gt;&gt;<i> minutes.
+</I>&gt;&gt;<i> * Thinking something was wrong with the drive, I tried another  
+</I>&gt;&gt;<i> external drive I have.  Same behavior... it &quot;pauses&quot; every so often.
+</I>&gt;&gt;<i> * Then thinking it must be the drive I was copying the files from I  
+</I>&gt;&gt;<i> tried copying from different drives.  Same behavior.
+</I>&gt;&gt;<i> * Then finally wondering if it was ZFS, I destroyed the ZFS  
+</I>&gt;&gt;<i> partition and recreated it (same spot on the physical disk) with HFS 
+</I>&gt;&gt;<i> +.  I re-ran the copy.  This time there were no &quot;pauses&quot; of the  
+</I>&gt;&gt;<i> disk head movement and the copy completed in slightly under 2  
+</I>&gt;&gt;<i> minutes.
+</I>&gt;&gt;<i> * I re-tried the HFS+ partition copy a few times and got the same  
+</I>&gt;&gt;<i> numbers plus/minus a few seconds.  Switching the partition back to  
+</I>&gt;&gt;<i> ZFS and re-doing the copy yet again I noticed the same performance  
+</I>&gt;&gt;<i> issues - about 4 minutes and frequent &quot;pauses&quot; in the copy process  
+</I>&gt;&gt;<i> (as evidenced by the iostat and listening to the drive head  
+</I>&gt;&gt;<i> movement).
+</I>&gt;&gt;<i> * Wondering if it was USB related somehow I switched to using a  
+</I>&gt;&gt;<i> Firewire drive and repeated the tests.  Same basic results.  ZFS  
+</I>&gt;&gt;<i> was &quot;pausing&quot; during the writes to the disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, any suggestions on what to try next?  Are there any &quot;tunables&quot;  
+</I>&gt;&gt;<i> I should be aware of?  Copies are set to &quot;1&quot; and compression is  
+</I>&gt;&gt;<i> &quot;off&quot; (see the zfs get all output below).  I know ZFS does more,  
+</I>&gt;&gt;<i> but somehow I doubt that Sun engineers would have made ZFS have  
+</I>&gt;&gt;<i> such bad performance which makes me wonder if it's my system, or  
+</I>&gt;&gt;<i> the zfs port or something else.  Any thoughts?  Suggestions?   Can  
+</I>&gt;&gt;<i> anyone recreate the problem?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Supporting Data:
+</I>&gt;&gt;<i> Data being copied for this test:
+</I>&gt;&gt;<i> * One directory with 7 sub-directories.
+</I>&gt;&gt;<i> * A total of 1065 files.  Average size for this batch of files  
+</I>&gt;&gt;<i> about 2.8M
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> zfs get all output
+</I>&gt;&gt;<i> $ zfs get all zfs-data
+</I>&gt;&gt;<i> NAME      PROPERTY       VALUE                  SOURCE
+</I>&gt;&gt;<i> zfs-data  type           filesystem             -
+</I>&gt;&gt;<i> zfs-data  creation       Thu Apr 23  8:58 2009  -
+</I>&gt;&gt;<i> zfs-data  used           2.94G                  -
+</I>&gt;&gt;<i> zfs-data  available      18.5G                  -
+</I>&gt;&gt;<i> zfs-data  referenced     2.94G                  -
+</I>&gt;&gt;<i> zfs-data  compressratio  1.00x                  -
+</I>&gt;&gt;<i> zfs-data  mounted        yes                    -
+</I>&gt;&gt;<i> zfs-data  quota          none                   default
+</I>&gt;&gt;<i> zfs-data  reservation    none                   default
+</I>&gt;&gt;<i> zfs-data  recordsize     128K                   local
+</I>&gt;&gt;<i> zfs-data  mountpoint     /Volumes/zfs-data      default
+</I>&gt;&gt;<i> zfs-data  sharenfs       off                    default
+</I>&gt;&gt;<i> zfs-data  checksum       on                     default
+</I>&gt;&gt;<i> zfs-data  compression    off                    default
+</I>&gt;&gt;<i> zfs-data  atime          on                     default
+</I>&gt;&gt;<i> zfs-data  devices        on                     default
+</I>&gt;&gt;<i> zfs-data  exec           on                     default
+</I>&gt;&gt;<i> zfs-data  setuid         on                     default
+</I>&gt;&gt;<i> zfs-data  readonly       off                    default
+</I>&gt;&gt;<i> zfs-data  zoned          off                    default
+</I>&gt;&gt;<i> zfs-data  snapdir        hidden                 default
+</I>&gt;&gt;<i> zfs-data  aclmode        groupmask              default
+</I>&gt;&gt;<i> zfs-data  aclinherit     secure                 default
+</I>&gt;&gt;<i> zfs-data  canmount       on                     default
+</I>&gt;&gt;<i> zfs-data  shareiscsi     off                    default
+</I>&gt;&gt;<i> zfs-data  xattr          on                     default
+</I>&gt;&gt;<i> zfs-data  copies         1                      default
+</I>&gt;&gt;<i> zfs-data  version        1                      -
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> zpool iostat 1 output when copying files across...
+</I>&gt;&gt;<i> $ zpool iostat 1
+</I>&gt;&gt;<i>                capacity     operations    bandwidth
+</I>&gt;&gt;<i> pool         used  avail   read  write   read  write
+</I>&gt;&gt;<i> ----------  -----  -----  -----  -----  -----  -----
+</I>&gt;&gt;<i> zfs-data     958M  20.8G      0    105  64.0K  2.76M
+</I>&gt;&gt;<i> zfs-data     958M  20.8G      0    117      0  12.4M
+</I>&gt;&gt;<i> zfs-data     958M  20.8G      0    217      0  27.2M
+</I>&gt;&gt;<i> zfs-data    1021M  20.8G      1    274   128K  24.0M
+</I>&gt;&gt;<i> zfs-data    1021M  20.8G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1021M  20.8G      0    140  64.0K  15.8M
+</I>&gt;&gt;<i> zfs-data    1021M  20.8G      0    217      0  27.2M
+</I>&gt;&gt;<i> zfs-data    1.06G  20.7G      0    262  64.0K  21.1M
+</I>&gt;&gt;<i> zfs-data    1.06G  20.7G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.06G  20.7G      0     17      0  1.39M
+</I>&gt;&gt;<i> zfs-data    1.06G  20.7G      0    221      0  26.8M
+</I>&gt;&gt;<i> zfs-data    1.06G  20.7G      0    215      0  27.0M
+</I>&gt;&gt;<i> zfs-data    1.12G  20.6G      0    157      0  8.99M
+</I>&gt;&gt;<i> zfs-data    1.12G  20.6G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.12G  20.6G      0     42      0  3.31M
+</I>&gt;&gt;<i> zfs-data    1.12G  20.6G      1    188  35.0K  23.6M
+</I>&gt;&gt;<i> zfs-data    1.12G  20.6G      0    218      0  27.3M
+</I>&gt;&gt;<i> zfs-data    1.18G  20.6G      0    173  64.0K  10.0M
+</I>&gt;&gt;<i> zfs-data    1.18G  20.6G      0     99      0  11.3M
+</I>&gt;&gt;<i> zfs-data    1.20G  20.5G      0    114      0  8.55M
+</I>&gt;&gt;<i> zfs-data    1.20G  20.5G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.20G  20.5G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.20G  20.5G      0     97      0  10.2M
+</I>&gt;&gt;<i> zfs-data    1.20G  20.5G      0    217      0  27.1M
+</I>&gt;&gt;<i> zfs-data    1.26G  20.5G      0    284      0  26.0M
+</I>&gt;&gt;<i> zfs-data    1.26G  20.5G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.26G  20.5G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.26G  20.5G      0     79   128K  7.18M
+</I>&gt;&gt;<i> zfs-data    1.26G  20.5G      0    207  64.0K  26.0M
+</I>&gt;&gt;<i> zfs-data    1.26G  20.5G      0    215      0  27.0M
+</I>&gt;&gt;<i> zfs-data    1.33G  20.4G      0    118      0  4.00M
+</I>&gt;&gt;<i> zfs-data    1.33G  20.4G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.33G  20.4G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.33G  20.4G      0     45   128K  3.78M
+</I>&gt;&gt;<i> zfs-data    1.33G  20.4G      0    221   127K  27.7M
+</I>&gt;&gt;<i> zfs-data    1.33G  20.4G      0    213      0  26.4M
+</I>&gt;&gt;<i> zfs-data    1.39G  20.4G      0    119      0  5.24M
+</I>&gt;&gt;<i> zfs-data    1.39G  20.4G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.39G  20.4G      0    107      0  11.9M
+</I>&gt;&gt;<i> zfs-data    1.39G  20.4G      0    222      0  27.9M
+</I>&gt;&gt;<i> zfs-data    1.45G  20.3G      0    271  64.0K  23.9M
+</I>&gt;&gt;<i> zfs-data    1.45G  20.3G      0      0      0      0
+</I>&gt;&gt;<i> zfs-data    1.45G  20.3G      1     24   228K  2.02M
+</I>&gt;&gt;<i> zfs-data    1.45G  20.3G      0    208      0  26.1M
+</I>&gt;&gt;<i> zfs-data    1.45G  20.3G      0    218      0  26.9M
+</I>&gt;&gt;<i> zfs-data    1.51G  20.2G      2    151   192K  9.21M
+</I>&gt;&gt;<i> zfs-data    1.51G  20.2G      0      0      0      0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090424/4e02600d/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20090424/4e02600d/attachment-0001.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001536.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+	<LI>Next message: <A HREF="001537.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1538">[ date ]</a>
+              <a href="thread.html#1538">[ thread ]</a>
+              <a href="subject.html#1538">[ subject ]</a>
+              <a href="author.html#1538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

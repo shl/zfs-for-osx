@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Where are my zfs filesystems?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%20are%20my%20zfs%20filesystems%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000808.html">
+   <LINK REL="Next"  HREF="000809.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Where are my zfs filesystems?</H1>
+    <B>Alan Knell</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Where%20are%20my%20zfs%20filesystems%3F&In-Reply-To="
+       TITLE="[zfs-discuss] Where are my zfs filesystems?">alan.knell at mastigo4.demon.co.uk
+       </A><BR>
+    <I>Wed Sep  3 09:59:11 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000808.html">[zfs-discuss] Kernel Panic after zpool status on (damaged) USB	stick
+</A></li>
+        <LI>Next message: <A HREF="000809.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#811">[ date ]</a>
+              <a href="thread.html#811">[ thread ]</a>
+              <a href="subject.html#811">[ subject ]</a>
+              <a href="author.html#811">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hallo. I'm a newcomer to zfs. I have a problem and I can't find the  
+answer.
+
+As su I created a 3 disk raidz [on my Intel MacPro]. I named the pool  
+Media.zfs.
+
+I then zfs created 3 file systems: Media.zfs/Audio, Media.zfs/Images,  
+and Media.zfs/Video. I set the mountpoints to be directories created  
+in my home fs: ~/Audio, ~/Images and ~/Video respectively. Mounted, I  
+checked ownership and permissions - all well.
+
+I copied files to the zfs filesystems, all well, everything worked  
+fine [and I was feeling pleased with myself].
+
+The pool mounted on /Volumes and showed up in the finder as expected.  
+My files were visible in the finder at the filesystem mountpoints in  
+my home directory, but no filesystems were visible under /Volumes/ 
+Media.zfs - normal behaviour, I think.
+
+Thinking it would be nice to make the files visible under Media.zfs,  
+and in the home directory, I made these changes.
+- I created directories Audio, Images and Video under /Volumes/ 
+Media.zfs.
+- I reset the mountpoints of the file systems to these new  
+directories, and remounted them: no problem.
+- I created symbolic links from my home directory, eg ~/Movies --&gt; / 
+Volumes/Media.zfs/Video.
+- I rechecked ownership and permissions - all as expected.
+
+Now I could access my files from home, and under /Volumes/Media.zfs.
+In the finder the mountpoints in /Volumes/Media.zfs showed as links -  
+normal behaviour, I believe.
+
+This happy state lasted several days and at least one reboot. Then  
+this morning I copied over some image files to Media.zfs images.
+The copy appeared to go as planned, but something changed.
+
+Now my files are not listed under the /Volumes/Media.zfs mountpoints,  
+nor under the symbolic links in my home directory.
+The Media.zfs directory mountpoints now appear in Finder with normal  
+directory icons - no longer as links.
+
+zfs get all shows the expected values - the filesystems and data are  
+still there.
+
+Attempts to reset the mountpoints, to unmount or remount, all end in  
+error messages, done as su or as myself.
+
+It may be I am in error naming the file systems the same as their  
+mountpoints - eg mounting Media.zfs/Audio on /Volumes/Media.zfs/Audio  
+- created with a mkdir command.
+
+I would much value comments and advice.
+Where did I go wrong?
+How can I recover my filesystems?
+
+TNX
+
+Alan
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000808.html">[zfs-discuss] Kernel Panic after zpool status on (damaged) USB	stick
+</A></li>
+	<LI>Next message: <A HREF="000809.html">[zfs-discuss] Problems with ZFS on Intel Mac Pro Copying Hundreds	of Files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#811">[ date ]</a>
+              <a href="thread.html#811">[ thread ]</a>
+              <a href="subject.html#811">[ subject ]</a>
+              <a href="author.html#811">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

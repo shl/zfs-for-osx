@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Firefox Plugin Install Related to Preallocation?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Firefox%20Plugin%20Install%20Related%20to%20Preallocation%3F&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000369.html">
+   <LINK REL="Next"  HREF="000325.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Firefox Plugin Install Related to Preallocation?</H1>
+    <B>James Snyder</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Firefox%20Plugin%20Install%20Related%20to%20Preallocation%3F&In-Reply-To="
+       TITLE="[zfs-discuss] Firefox Plugin Install Related to Preallocation?">jbsnyder at gmail.com
+       </A><BR>
+    <I>Thu Mar 13 08:27:28 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000369.html">[zfs-discuss] ZFS and DTrace
+</A></li>
+        <LI>Next message: <A HREF="000325.html">[zfs-discuss] Re: Firefox Plugin Install Related to Preallocation?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#320">[ date ]</a>
+              <a href="thread.html#320">[ thread ]</a>
+              <a href="subject.html#320">[ subject ]</a>
+              <a href="author.html#320">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Along the lines of the firefox addon installation issue, I've pked
+around with dtruss &amp; errinfo a little, and it seems like at least one
+error that is taking place at the time of plugin install on Firefox
+3b4 is the following:
+
+fcntl(0x2F, 0x2A, 0xFFFFFFFFBFFFBCF0)		 = -1 Err#45
+
+45 is operation unsupported, and 0x2A is F_PREALLOCATE.  I've not done
+much file IO work in C beyond the basics so I haven't made a test case
+for this.  I was wondering if perhaps this syscall, or perhaps one of
+the modes isn't implemented yet for ZFS?
+
+The firefox source itself doesn't seem to have any references to
+F_PREALLOCATE, so I suppose one if it's libraries might be using it?
+
+I also see in zfs_kext/zfs/zfs_vfsops.c:
+
+     * statvfs() should really be called statufs(), because it assumes
+     * static metadata.  ZFS doesn't preallocate files, so the best
+     * we can do is report the max that could possibly fit in f_files,
+     * and that minus the number actually used in f_ffree.
+
+I just thought I would see what I could dig up in a short amount of
+time with dtrace and a little grepping...
+
+On Wed, Mar 12, 2008 at 11:10 AM, James Snyder &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>&gt; wrote:
+&gt;<i> I've experienced the firefox issue as well.  I was going to submit a
+</I>&gt;<i>  report regarding it, and could do so still if few other people are
+</I>&gt;<i>  having this problem, but it sounds like I'm not the only one.
+</I>&gt;<i>
+</I>&gt;<i>  Regarding Flash sound, I'm NOT having this problem (Sound works in
+</I>&gt;<i>  Firefox &amp; Safari).  If it helps at all, here are my zfs mounts:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  NAME                       USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i>  Aquarium                  36.8G  60.7G  56.5K  none
+</I>&gt;<i>  Aquarium/jsnyder          35.4G  60.7G  23.1G  /Users/jsnyder
+</I>&gt;<i>  Aquarium/jsnyder/Sources  10.3G  60.7G  10.2G  /Users/jsnyder/Sources
+</I>&gt;<i>  Aquarium/opt              1.40G  60.7G  1.39G  /opt
+</I>&gt;<i>
+</I>&gt;<i>  My flash version is:
+</I>&gt;<i>  9,0,115,0
+</I>&gt;<i>
+</I>&gt;<i>  I'm working out of /Users/jsnyder...
+</I>&gt;<i>
+</I>&gt;<i>  Not to pester, but might there be another source or binary update
+</I>&gt;<i>  coming in the near future?  If not, I'm still quite happy with what
+</I>&gt;<i>  I've got :-)  I assume 102A is still the most current available.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  On Tue, Mar 11, 2008 at 6:58 PM, Franz Schmalzl
+</I>&gt;<i>  &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">franzschmalzl at spamfreemail.de</A>&gt; wrote:
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  &gt; not immediately, other then nested filesystems in zfs pools are
+</I>&gt;<i>  &gt;  &gt; still confusing Finder and the upper layers since they aren't really
+</I>&gt;<i>  &gt;  &gt; sure how to handle them.  My guess is this has somethign to do with
+</I>&gt;<i>  &gt;  &gt; that problem that upper layers where the flash is trying to run.  I
+</I>&gt;<i>  &gt;  &gt; will add this information to the bug I have tracking issues like
+</I>&gt;<i>  &gt;  &gt; this with userland and nested filesystems.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  yap, that was my first guess too..
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  it's not just flash by the way, firefox is confused to ( whon
+</I>&gt;<i>  &gt;  installing addons e.g.)
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  as you said.. osx doesn't handle it the best way at the moment
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt; apologies for the weirdnes.... still getting stuff like this
+</I>&gt;<i>  &gt;  &gt; hammered out..
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  no problem :)
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  kind regards
+</I>&gt;<i>  &gt;  franz
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;  &gt;&gt; Noel
+</I>&gt;<i>  &gt;  &gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt; On Mar 11, 2008, at 3:26 PM, Franz Schmalzl wrote:
+</I>&gt;<i>  &gt;  &gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; ok this is very odd, but i have got the solution
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; again my zfs setup
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; NAME                 USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; hometank            58,4G   302G  16,6M  /Users
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; hometank/ruebezahl  58,4G   302G  58,4G  /Users/ruebezahl
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; when my homefolder is storden in a zfs filesystem inside my zpool
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; flash sound is not working
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; when my homefolder is stored on the root of my zpool it works
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; ( i tried with a test user, first created his homefolder on the
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; root of hometank ---&gt; flash sound worked; then created another zfs
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; filesystem and created a new user inside ---&gt; sound was gone )
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt; noel, can you explain ?
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;&gt;
+</I>&gt;<i>  &gt;  &gt;&gt;
+</I>&gt;<i>  &gt;  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;  _______________________________________________
+</I>&gt;<i>  &gt;  zfs-discuss mailing list
+</I>&gt;<i>  &gt;  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  &gt;  <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  --
+</I>&gt;<i>  James Snyder
+</I>&gt;<i>  Biomedical Engineering
+</I>&gt;<i>  Northwestern University
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+James Snyder
+Biomedical Engineering
+Northwestern University
+<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">jbsnyder at gmail.com</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000369.html">[zfs-discuss] ZFS and DTrace
+</A></li>
+	<LI>Next message: <A HREF="000325.html">[zfs-discuss] Re: Firefox Plugin Install Related to Preallocation?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#320">[ date ]</a>
+              <a href="thread.html#320">[ thread ]</a>
+              <a href="subject.html#320">[ subject ]</a>
+              <a href="author.html#320">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

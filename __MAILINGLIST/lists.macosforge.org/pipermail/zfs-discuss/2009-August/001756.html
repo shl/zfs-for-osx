@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] The cat is out of the bag
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20The%20cat%20is%20out%20of%20the%20bag&In-Reply-To=%3C4A979617.8020506%40jrv.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001755.html">
+   <LINK REL="Next"  HREF="001764.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] The cat is out of the bag</H1>
+    <B>James R. Van Artsdalen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20The%20cat%20is%20out%20of%20the%20bag&In-Reply-To=%3C4A979617.8020506%40jrv.org%3E"
+       TITLE="[zfs-discuss] The cat is out of the bag">james-zfsosx at jrv.org
+       </A><BR>
+    <I>Fri Aug 28 01:32:23 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001755.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+        <LI>Next message: <A HREF="001764.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1756">[ date ]</a>
+              <a href="thread.html#1756">[ thread ]</a>
+              <a href="subject.html#1756">[ subject ]</a>
+              <a href="author.html#1756">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Alex Blewitt wrote:
+&gt;<i> So, Snow Leopard is out. The NDA is presumably lifted, or at least can
+</I>&gt;<i> be talked about without fear of a DMCA takedown (unless you're The
+</I>&gt;<i> Register*)
+</I>&gt;<i>
+</I>&gt;<i> So, what's going on with ZFS? Why was it unceremoniously yanked from
+</I>&gt;<i> Mac OS X, even the read only bit?
+</I>&gt;<i>
+</I>&gt;<i> I hope you're going to come back with some story about being
+</I>&gt;<i> not-quite-ready and that there'll be some fresh bits to download as
+</I>&gt;<i> otherwise I won't be upgrading.
+</I>&gt;<i>
+</I>&gt;<i> My bigger fear is that it's a licensing issue due to the Oracle
+</I>&gt;<i> takeover which would blow it out of the water completely at least in
+</I>&gt;<i> the Snow Leopard timeframe. (Whilst I know the source code is GPL,
+</I>&gt;<i> it's possibly covered by patents that may be questionable under
+</I>&gt;<i> Oracle's rule.)
+</I>&gt;<i>
+</I>&gt;<i> Since you're unlikely to be able to comment if it's legal related, but
+</I>&gt;<i> you will if it's technical, silence on the matter will indicate that
+</I>&gt;<i> ZFS on Mac is doomed ...
+</I>
+A take-down notice against a mailing list is an interesting concept.  In
+any case the NDA will say when it expires.
+
+ZFS is not licensed under GPL but rather a Sun license (CDDL?) which is
+why linux doesn't have ZFS.  I haven't read that license but presumably
+it grants rights to use patents within the terms of the license.  Oracle
+can't revoke a license retroactively except as provided by the original
+license at the time it was granted.
+
+The issue may be as simple as one of maintenance.  Right now Apple has
+one filesystem they maintain - HFS - and everything else is essentially
+imported with varying degrees of customization.  With the Sun/Oracle
+transition there is a likelihood that Apple would have to become the
+primary maintainer for their branch of ZFS, and that's a (cost) burden
+they may not be willing to take on unless they get serious with their
+server product.
+
+As to what Oracle will do - who knows?  BTRFS is being developed
+essentially with Oracle sponsorship under GPL so it's not guaranteed ZFS
+will be locked up.  It's not out of the question for Oracle to GPL ZFS
+so they can use it in their own linux based products, though corporate
+politics being what they are Oracle may stick with BTRFS in spite of the
+difference in maturity.
+
+I don't expect any official answers any time soon.  The best we can hope
+for is to have the existing ZFS/OSX code to get whatever updates may be
+needed to work on Snow Leopard.  Until then I'm staying with Leopard.
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001755.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+	<LI>Next message: <A HREF="001764.html">[zfs-discuss] The cat is out of the bag
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1756">[ date ]</a>
+              <a href="thread.html#1756">[ thread ]</a>
+              <a href="subject.html#1756">[ subject ]</a>
+              <a href="author.html#1756">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

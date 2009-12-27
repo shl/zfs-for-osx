@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Permissions are not enabled on the disk (-9973)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Permissions%20are%20not%20enabled%20on%20the%20disk%20%28-9973%29&In-Reply-To=%3C663122D5-97A0-4D9B-B16D-858A5A974423%40sbod.at%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001243.html">
+   <LINK REL="Next"  HREF="001301.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Permissions are not enabled on the disk (-9973)</H1>
+    <B>Franz Schmalzl</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Permissions%20are%20not%20enabled%20on%20the%20disk%20%28-9973%29&In-Reply-To=%3C663122D5-97A0-4D9B-B16D-858A5A974423%40sbod.at%3E"
+       TITLE="[zfs-discuss] Permissions are not enabled on the disk (-9973)">zfs at sbod.at
+       </A><BR>
+    <I>Tue Dec 30 04:57:40 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001243.html">[zfs-discuss] Permissions are not enabled on the disk (-9973)
+</A></li>
+        <LI>Next message: <A HREF="001301.html">[zfs-discuss] Question about ZFS status
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1244">[ date ]</a>
+              <a href="thread.html#1244">[ thread ]</a>
+              <a href="subject.html#1244">[ subject ]</a>
+              <a href="author.html#1244">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Permissions should be ok!
+
+Trying to repair permissions using diskutil only works with recipe  
+files which are created when something is installed via an installer  
+process.
+
+ From my point of view, you should be fine...
+
+
+
+franz
+
+
+
+
+
+
+On 30.12.2008, at 13:09, Charles Darwin wrote:
+
+&gt;<i> $ diskutil list |grep ZFS
+</I>&gt;<i>   3:                        ZFS neo                     81.3 Gi     
+</I>&gt;<i> disk0s3
+</I>&gt;<i> $ diskutil repairPermissions /dev/disk0s3
+</I>&gt;<i> Permissions are not enabled on the disk.
+</I>&gt;<i> Error encountered attempting to verify/repair permissions on disk0s3  
+</I>&gt;<i> neo: Permissions are not enabled on the disk (-9973)
+</I>&gt;<i>
+</I>&gt;<i> Any help is highly appreciated.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001243.html">[zfs-discuss] Permissions are not enabled on the disk (-9973)
+</A></li>
+	<LI>Next message: <A HREF="001301.html">[zfs-discuss] Question about ZFS status
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1244">[ date ]</a>
+              <a href="thread.html#1244">[ thread ]</a>
+              <a href="subject.html#1244">[ subject ]</a>
+              <a href="author.html#1244">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

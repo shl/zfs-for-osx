@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 28
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20zfs-discuss%20Digest%2C%20Vol%204%2C%20Issue%2028&In-Reply-To=20080420074357.3176D24B7F8%40lists.macosforge.org">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000575.html">
+   <LINK REL="Next"  HREF="000528.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 28</H1>
+    <B>Jeff Waddell</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Re%3A%20zfs-discuss%20Digest%2C%20Vol%204%2C%20Issue%2028&In-Reply-To=20080420074357.3176D24B7F8%40lists.macosforge.org"
+       TITLE="[zfs-discuss] Re: zfs-discuss Digest, Vol 4, Issue 28">jeff at jeffawaddell.com
+       </A><BR>
+    <I>Sun Apr 20 03:08:48 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000575.html">[zfs-discuss] RE: Time machine with ZFS backend
+</A></li>
+        <LI>Next message: <A HREF="000528.html">[zfs-discuss] zpool not imported automatically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#526">[ date ]</a>
+              <a href="thread.html#526">[ thread ]</a>
+              <a href="subject.html#526">[ subject ]</a>
+              <a href="author.html#526">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Christian,
+Your backup strategy sounds very similar to what I would like to implement,
+which is rsyncing my laptop out to a ZFS backup server, and then using
+snapshots for incrementals. Out of curiosity, how are you handling snapshot
+management? Do you have a script destroy snapshots after a certain period of
+time, or are you doing it manually? As I'm not programmatically adept enough
+to create my own scripts, I've been scouring the internet looking for a
+script that would accomplish this, similar to Tim Foster's excellent
+Automatic Snapshot Service for Solaris or Chris Gerhard's Rolling
+Incremental Backup and ZFS cleanup scripts (see links below), although I
+haven't found one that is compatible with OS X. Would you mind discussing a
+little more about your scripts, and possibly sharing them with the list? I'm
+sure others may find them helpful as well!
+
+<A HREF="http://blogs.sun.com/timf/entry/zfs_automatic_snapshots_0_10">http://blogs.sun.com/timf/entry/zfs_automatic_snapshots_0_10</A>
+<A HREF="http://blogs.sun.com/chrisg/entry/cleaning_up_zfs_snapshots">http://blogs.sun.com/chrisg/entry/cleaning_up_zfs_snapshots</A>
+<A HREF="http://blogs.sun.com/chrisg/entry/rolling_incremental_backups">http://blogs.sun.com/chrisg/entry/rolling_incremental_backups</A>
+
+For those looking for a Time Machine-like backup utility for ZFS, check out
+Tim Foster's Automatic Backup Service. It automatically creates ZFS backups
+to a USB drive upon connection to the system. Granted, it's built for
+Solaris and won't work on OS X, but I think something similar (if missing
+the GUI) could be accomplished through various scripts (
+<A HREF="http://blogs.sun.com/timf/entry/zfs_automatic_backup_0_1">http://blogs.sun.com/timf/entry/zfs_automatic_backup_0_1</A>)
+
+-Jeff Waddell
+
+On Sun, Apr 20, 2008 at 12:43 AM, &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss-request at lists.macosforge.org</A>&gt;
+wrote:
+
+&gt;<i>
+</I>&gt;<i> Date: Sun, 20 Apr 2008 09:22:11 +0200
+</I>&gt;<i> From: Christian He?mann &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs at hessmann.de</A>&gt;
+</I>&gt;<i> Subject: [zfs-discuss] Re: Time machine with ZFS backend
+</I>&gt;<i> To: ZFS on OSX mailing list mailing list
+</I>&gt;<i>        &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i> Message-ID: &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">867F0104-4003-461B-B7B5-C800D1548B39 at hessmann.de</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> Good morning,
+</I>&gt;<i>
+</I>&gt;<i> I was thinking about using TM on my RAID.Z, as well, but in the end
+</I>&gt;<i> decided against it, because I couldn't find a way to make use of the
+</I>&gt;<i> advantages ZFS gives me, especially with block based snapshots.
+</I>&gt;<i>
+</I>&gt;<i> My backup strategy (for 6 Macs) is now a simple perl script that uses
+</I>&gt;<i> rsync to copy the home directory of each computer into its file system
+</I>&gt;<i> on the RAID.Z (via ssh, 3 computers remote via ADSL). It overwrites or
+</I>&gt;<i> deletes every file which has changed or is no longer in the source,
+</I>&gt;<i> but makes a snapshot after every run.
+</I>&gt;<i>
+</I>&gt;<i> The script is scheduled to run every 3 hours, and most of the time, it
+</I>&gt;<i> even transmits huge files like the Parallels HD image (~15GB) -
+</I>&gt;<i> nonetheless, neither the transmission takes a long time (thanks to
+</I>&gt;<i> rsync) nor does it use a lot of space (thanks to ZFS) - most snapshots
+</I>&gt;<i> are within 100MB (considering the home dirs are about 60GB each).
+</I>&gt;<i>
+</I>&gt;<i> I am not yet ready to put the home directory on my notebooks on ZFS,
+</I>&gt;<i> but this (for me) is the next best thing.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Best regards,
+</I>&gt;<i>
+</I>&gt;<i> Christian
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080420/0ff2696e/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080420/0ff2696e/attachment.html</A>
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000575.html">[zfs-discuss] RE: Time machine with ZFS backend
+</A></li>
+	<LI>Next message: <A HREF="000528.html">[zfs-discuss] zpool not imported automatically
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#526">[ date ]</a>
+              <a href="thread.html#526">[ thread ]</a>
+              <a href="subject.html#526">[ subject ]</a>
+              <a href="author.html#526">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

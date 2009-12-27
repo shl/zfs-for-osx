@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] There is something very wrong with the MacOS ZFS	documentation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3C4C47E116-2F7C-464A-9C2D-1436DF8A821C%40designlifecycle.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001569.html">
+   <LINK REL="Next"  HREF="001573.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation</H1>
+    <B>Alex Bowden</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20There%20is%20something%20very%20wrong%20with%20the%20MacOS%20ZFS%0A%09documentation&In-Reply-To=%3C4C47E116-2F7C-464A-9C2D-1436DF8A821C%40designlifecycle.com%3E"
+       TITLE="[zfs-discuss] There is something very wrong with the MacOS ZFS	documentation">alex at designlifecycle.com
+       </A><BR>
+    <I>Wed May  6 08:06:39 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001569.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+        <LI>Next message: <A HREF="001573.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On 6 May 2009, at 15:44, Trevor Talbot wrote:
+
+&gt;<i> On May 6, 2009, at 7:14 AM, Alex Bowden wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> This makes it even less acceptable for MacOS ZFS to assume that it  
+</I>&gt;&gt;<i> owns the whole disk when it was really only given the second  
+</I>&gt;&gt;<i> partition.
+</I>&gt;<i>
+</I>&gt;<i> I think you're hung up on a misunderstanding. ZFS doesn't care  
+</I>&gt;<i> whether it owns the entire disk or not. It does care whether it has  
+</I>&gt;<i> exclusive access to the disk at this moment and can therefore fully  
+</I>&gt;<i> exploit the disk cache. It so happens that under OS X, it's been  
+</I>&gt;<i> taught to recognize a particular partition scheme as granting it  
+</I>&gt;<i> exclusive access in order to play nice with the rest of the system.
+</I>
+I agree that that is a fundamental issue.
+
+And while I would argue that it would have been better to indicate to  
+ZFS that is has such exclusive access by semanically giving it the  
+whole disk in the zpool command, one must accept that this isn't how  
+it was set up.
+
+On the other hand I have seen no valid argument supporting the  
+position that it would be unreasonable to give it the whole disk and  
+therefore anyone doing so is an idiot to be dismissed out of hand.
+
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001569.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+	<LI>Next message: <A HREF="001573.html">[zfs-discuss] There is something very wrong with the MacOS ZFS documentation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] export/import Pool based on files
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20export/import%20Pool%20based%20on%20files&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000870.html">
+   <LINK REL="Next"  HREF="000874.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] export/import Pool based on files</H1>
+    <B>Christian He&#223;mann</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20export/import%20Pool%20based%20on%20files&In-Reply-To="
+       TITLE="[zfs-discuss] export/import Pool based on files">zfs at hessmann.de
+       </A><BR>
+    <I>Wed Sep 24 10:03:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000870.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up	Mac OS
+</A></li>
+        <LI>Next message: <A HREF="000874.html">[zfs-discuss] export/import Pool based on files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#871">[ date ]</a>
+              <a href="thread.html#871">[ thread ]</a>
+              <a href="subject.html#871">[ subject ]</a>
+              <a href="author.html#871">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good evening,
+
+
+for fun, I created a Pool &quot;test&quot; with 2 RAID.Z virtual devices of 3  
+files each (mkfile 64m file0 ... file5).
+After playing around for some time, replacing devices/files with  
+bigger ones, I decided to export and import the Pool to make the  
+additional space available:
+
+=======
+Galahad:ZFS hessi$ zpool export -f test
+Galahad:ZFS hessi$ zpool import test
+cannot import 'test': no such pool available
+Galahad:ZFS hessi$ zpool import -f test
+cannot import 'test': no such pool available
+Galahad:ZFS hessi$ zpool import
+no pools available to import
+Galahad:ZFS hessi$ zpool import -D
+no pools available to import
+=======
+
+I understand that I have to format disks with ZFS to prevent errors  
+during import, but AFAIK I can't format files which I use as devices.  
+So what did I do wrong?
+
+
+Best regards,
+
+Christian
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000870.html">[zfs-discuss] changing iSCSI target info w/o reboot locks up	Mac OS
+</A></li>
+	<LI>Next message: <A HREF="000874.html">[zfs-discuss] export/import Pool based on files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#871">[ date ]</a>
+              <a href="thread.html#871">[ thread ]</a>
+              <a href="subject.html#871">[ subject ]</a>
+              <a href="author.html#871">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

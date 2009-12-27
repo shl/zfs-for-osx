@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS panic on shutdown
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20panic%20on%20shutdown&In-Reply-To=a782ada90807151637g2a024ccejb29e39a6b0bf95b%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000682.html">
+   <LINK REL="Next"  HREF="000684.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS panic on shutdown</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20panic%20on%20shutdown&In-Reply-To=a782ada90807151637g2a024ccejb29e39a6b0bf95b%40mail.gmail.com"
+       TITLE="[zfs-discuss] ZFS panic on shutdown">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Jul 15 16:49:58 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000682.html">[zfs-discuss] ZFS panic on shutdown
+</A></li>
+        <LI>Next message: <A HREF="000684.html">[zfs-discuss] ZFS panic on shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#683">[ date ]</a>
+              <a href="thread.html#683">[ thread ]</a>
+              <a href="subject.html#683">[ subject ]</a>
+              <a href="author.html#683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have a fix for this and also another one too for a race condition  
+that was causing intermittent hangs on the machine under load.  I'll  
+update the bits on the website asap and send out an announcement to  
+the list.
+
+thanks!
+Noel
+
+On Jul 15, 2008, at 4:37 PM, Andrei Dorofeev wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Since upgrading to latest zfs-117 bits my system
+</I>&gt;<i> panics when I shut it down.  This have already happened
+</I>&gt;<i> two times and I believe can be easily reproduced if
+</I>&gt;<i> necessary.  Here's a stacktrace from the latest case:
+</I>&gt;<i>
+</I>&gt;<i> Tue Jul 15 16:31:52 2008
+</I>&gt;<i> panic(cpu 0 caller 0x001DBC3D): &quot;vnode_put(0xbc10c70): iocount &lt;
+</I>&gt;<i> 1&quot;@/SourceCache/xnu/xnu-1228.5.20/bsd/vfs/vfs_subr.c:3581
+</I>&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on stack)
+</I>&gt;<i> 0x84503d78 : 0x12b0fa (0x4592a4 0x84503dac 0x133243 0x0)
+</I>&gt;<i> 0x84503dc8 : 0x1dbc3d (0x467410 0xbc10c70 0x84503e08 0x932fe532)
+</I>&gt;<i> 0x84503de8 : 0x1dbcee (0xbc10c70 0xc6a24e0 0x61875ea6 0xbd5c140)
+</I>&gt;<i> 0x84503e08 : 0x932ce30b (0xbc10c70 0x933312e4 0x0 0x0)
+</I>&gt;<i> 0x84503f58 : 0x932b70a2 (0xbd5c000 0x121d39 0x0 0xce393c8)
+</I>&gt;<i> 0x84503fc8 : 0x19ebdc (0xce73400 0x0 0x1a20b5 0xb6ee998)
+</I>&gt;<i> Backtrace terminated-invalid frame pointer 0
+</I>&gt;<i>      Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;<i>         com.apple.filesystems.zfs(8.0)@0x93286000-&gt;0x93351fff
+</I>&gt;<i> BSD process name corresponding to current thread: kernel_task
+</I>&gt;<i> Mac OS version:
+</I>&gt;<i> 9E17
+</I>&gt;<i> Kernel version:
+</I>&gt;<i> Darwin Kernel Version 9.4.0: Mon Jun  9 19:30:53 PDT 2008;
+</I>&gt;<i> root:xnu-1228.5.20~1/RELEASE_I386
+</I>&gt;<i> System model name: MacPro3,1 (Mac-F42C88C8)
+</I>&gt;<i>
+</I>&gt;<i> Is this a known problem?  Is there any information you guys
+</I>&gt;<i> want to see that I could provide to help with this problem?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -Andrei
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000682.html">[zfs-discuss] ZFS panic on shutdown
+</A></li>
+	<LI>Next message: <A HREF="000684.html">[zfs-discuss] ZFS panic on shutdown
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#683">[ date ]</a>
+              <a href="thread.html#683">[ thread ]</a>
+              <a href="subject.html#683">[ subject ]</a>
+              <a href="author.html#683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

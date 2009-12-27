@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Initialization of a pool during boot
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Initialization%20of%20a%20pool%20during%20boot&In-Reply-To=C681E1A8-F432-47D8-8370-EC5F95FADF56%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000849.html">
+   <LINK REL="Next"  HREF="000831.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Initialization of a pool during boot</H1>
+    <B>Werner Donn&#233;</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Initialization%20of%20a%20pool%20during%20boot&In-Reply-To=C681E1A8-F432-47D8-8370-EC5F95FADF56%40apple.com"
+       TITLE="[zfs-discuss] Initialization of a pool during boot">werner.donne at re.be
+       </A><BR>
+    <I>Tue Sep 16 00:07:11 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000849.html">[zfs-discuss] Initialization of a pool during boot
+</A></li>
+        <LI>Next message: <A HREF="000831.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#851">[ date ]</a>
+              <a href="thread.html#851">[ thread ]</a>
+              <a href="subject.html#851">[ subject ]</a>
+              <a href="author.html#851">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi No&#235;l,
+
+I did indeed. This is the output of diskutil:
+
+<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner at re-mac-4</A>&gt; diskutil list
+/dev/disk0
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *74.5 Gi     
+disk0
+    1:                        EFI                         200.0 Mi    
+disk0s1
+    2:                  Apple_HFS Macintosh HD            74.1 Gi     
+disk0s2
+/dev/disk1
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk1
+    1:                        EFI                         200.0 Mi    
+disk1s1
+    2:                        ZFS re                      465.4 Gi    
+disk1s2
+/dev/disk2
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk2
+    1:                        EFI                         200.0 Mi    
+disk2s1
+    2:                        ZFS re                      465.4 Gi    
+disk2s2
+/dev/disk3
+    #:                       TYPE NAME                    SIZE        
+IDENTIFIER
+    0:      GUID_partition_scheme                        *465.8 Gi    
+disk3
+    1:                        EFI                         200.0 Mi    
+disk3s1
+    2:                        ZFS re                      465.4 Gi    
+disk3s2
+
+The situation is getting worse. Now after the first boot I get a message
+box saying there is an uninitialized disk, with the proposal to  
+initialize,
+ignore or eject it. After that I got a few panics.
+
+After six or seven reboots, some of which with a power cycle, I get a  
+perfectly
+working zpool. The stages in between give me a degraded or a slow  
+pool. It is
+as if the pool is not mounted in time for some other initialization  
+parts.
+
+Best regards,
+
+Werner.
+
+On 16 Sep 2008, at 04:38, No&#235;l Dellofano wrote:
+
+&gt;<i> this sounds like the exact symptom of an unformatted disk.
+</I>&gt;<i>
+</I>&gt;<i> Did you use &quot;diskutil partitionDisk disk0 ....&quot; to format the disks  
+</I>&gt;<i> for ZFS before you created your ZFS pool with them?
+</I>&gt;<i>
+</I>&gt;<i> Noel
+</I>&gt;<i>
+</I>&gt;<i> On Sep 9, 2008, at 12:07 AM, Werner Donn&#233; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There is something strange about the initialization of a raidz pool  
+</I>&gt;&gt;<i> on
+</I>&gt;&gt;<i> a set of three USB disks. I use ZFS 119 on a Mac Mini with Mac OS X
+</I>&gt;&gt;<i> 10.5.4.
+</I>&gt;&gt;<i> During the boot sequence the disks go on and off several times. I
+</I>&gt;&gt;<i> usually
+</I>&gt;&gt;<i> have to boot two or three times before the pool works properly. In  
+</I>&gt;&gt;<i> most
+</I>&gt;&gt;<i> cases the pool is in a degraded state with one disk that is not
+</I>&gt;&gt;<i> available.
+</I>&gt;&gt;<i> Strangely enough it is not always the same disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In other cases the pool is completely online, but very slow. Normally
+</I>&gt;&gt;<i> there is always activity on all disks at the same time, but in this
+</I>&gt;&gt;<i> case when two of them are very active the third is not or much less  
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i> vice versa.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Once the pool is online in a normal way it is very fast and shows no
+</I>&gt;&gt;<i> problems for the rest of the day.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Best regards,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Werner.
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Werner Donn&#233;  --  Re                                     <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+</I>&gt;&gt;<i> Engelbeekstraat 8                                               <A HREF="http://www.re.be">http://www.re.be</A>
+</I>&gt;&gt;<i> BE-3300 Tienen
+</I>&gt;&gt;<i> tel: (+32) 486 425803	e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+--
+Werner Donn&#233;  --  Re                                     <A HREF="http://www.pincette.biz">http://www.pincette.biz</A>
+Engelbeekstraat 8                                               <A HREF="http://www.re.be">http://www.re.be</A>
+BE-3300 Tienen
+tel: (+32) 486 425803	e-mail: <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">werner.donne at re.be</A>
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000849.html">[zfs-discuss] Initialization of a pool during boot
+</A></li>
+	<LI>Next message: <A HREF="000831.html">[zfs-discuss] copies=2 striped pool. one disk died. rescue possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#851">[ date ]</a>
+              <a href="thread.html#851">[ thread ]</a>
+              <a href="subject.html#851">[ subject ]</a>
+              <a href="author.html#851">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

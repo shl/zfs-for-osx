@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] reporting bugs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20reporting%20bugs&In-Reply-To=">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000009.html">
+   <LINK REL="Next"  HREF="000010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] reporting bugs</H1>
+    <B>Brian Pinkerton</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20reporting%20bugs&In-Reply-To="
+       TITLE="[zfs-discuss] reporting bugs">bp at thinkpink.com
+       </A><BR>
+    <I>Thu Jan 17 00:09:28 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000009.html">[zfs-discuss] APM support
+</A></li>
+        <LI>Next message: <A HREF="000010.html">[zfs-discuss] reporting bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>What's the best way to submitting bugs for the ZFS project?  I tried  
+opening a ticket on macosforge.org, but it looks a bit rudimentary.
+
+I'm getting a panic (below) on a 10.5.1 OSX reader and a 10.5.1 OSXS  
+writer when running rsync.  If I --bwlimit the rsync to something slow  
+like 4MB/s then it runs fine, but if run it unlimited one of the  
+machines will panic.  The client just has a simple two-disk stripe,  
+while the server has an 8-disk RAID 10 setup.
+
+If this doesn't look familiar to anyone, I'll compile up a version  
+that prints out a bit more debugging (kmem_alloc can fail in a bunch  
+of ways!)
+
+thanks,
+bri
+
+
+Wed Jan 16 20:24:11 2008
+panic(cpu 3 caller 0x6D507974): &quot;zfs: vmem_alloc couldn't alloc 65536  
+bytes\n&quot;@/Volumes/pixie_dust/home/ndellofano/zfs-work/wiki/zfs-102A/ 
+zfs_kext/zfs/zfs_context.c:668
+Latest stack backtrace for cpu 3:
+       Backtrace:
+          0x0009AD18 0x0009B6BC 0x00029DC4 0x6D507974 0x6D528A3C  
+0x6D4ABC5C 0x6D4B8930 0x6D4B92A8
+          0x6D4BC708 0x6D4C0B1C 0x6D50563C 0x6D4C87DC 0x6D498C38  
+0x00108774 0x00100FF4 0x002AFC64
+          0x002AFF60 0x003091FC 0x000B24C8 0x00000000
+       Kernel loadable modules in backtrace (with dependencies):
+          com.apple.filesystems.zfs(8.0)@0x6d495000-&gt;0x6d57efff
+Proceeding back via exception chain:
+    Exception state (sv=0x5856c000)
+       PC=0x9496013C; MSR=0x0200F030; DAR=0xE0045000;  
+DSISR=0x42000000; LR=0x00018CE0; R1=0xBFFFD910; XCP=0x00000030 (0xC00  
+- System call)
+
+BSD process name corresponding to current thread: rsync
+
+Mac OS version:
+9B18
+
+Kernel version:
+Darwin Kernel Version 9.1.0: Wed Oct 31 17:48:21 PDT 2007;  
+root:xnu-1228.0.2~1/RELEASE_PPC
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000009.html">[zfs-discuss] APM support
+</A></li>
+	<LI>Next message: <A HREF="000010.html">[zfs-discuss] reporting bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] New filesystems won't mount
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20New%20filesystems%20won%27t%20mount&In-Reply-To=%3CE4FEF3DC-7802-46E8-A165-68D3FCCA7169%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001238.html">
+   <LINK REL="Next"  HREF="001120.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] New filesystems won't mount</H1>
+    <B>James Lindeman</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20New%20filesystems%20won%27t%20mount&In-Reply-To=%3CE4FEF3DC-7802-46E8-A165-68D3FCCA7169%40mac.com%3E"
+       TITLE="[zfs-discuss] New filesystems won't mount">nigelcat at mac.com
+       </A><BR>
+    <I>Sun Nov 30 18:01:23 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001238.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+        <LI>Next message: <A HREF="001120.html">[zfs-discuss] New filesystems won't mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1119">[ date ]</a>
+              <a href="thread.html#1119">[ thread ]</a>
+              <a href="subject.html#1119">[ subject ]</a>
+              <a href="author.html#1119">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've got a pool called &quot;main&quot; with filesystems I created &quot;archives&quot;  
+and &quot;updates&quot;, so:
+
+/main
+/main/archives
+/main/updates
+
+After rebooting, the filesystems /main/archives and /main/updates  
+won't mount. I suspect that it is because I didn't use &quot;sudo zfs  
+create&quot; to create those filesystems. My other problem is that I now  
+have these unmountable filesystems that I can't destroy because they  
+are kind of in limbo. They show up in &quot;zfs list&quot;, but if I try &quot;zfs  
+destroy&quot;,  I get an error that the folder /Volumes/main/archives&quot; does  
+not exist. Anyone have an idea how to destroy these?
+James Lindeman
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001238.html">[zfs-discuss] Mirror of a Stripe or raidz?
+</A></li>
+	<LI>Next message: <A HREF="001120.html">[zfs-discuss] New filesystems won't mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1119">[ date ]</a>
+              <a href="thread.html#1119">[ thread ]</a>
+              <a href="subject.html#1119">[ subject ]</a>
+              <a href="author.html#1119">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

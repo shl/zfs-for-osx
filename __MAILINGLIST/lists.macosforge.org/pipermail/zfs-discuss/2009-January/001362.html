@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] I lost 500GB of backup data in zfs!!!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C099E996A-9753-4A13-B569-CBEA66C3E4A1%40sun.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001361.html">
+   <LINK REL="Next"  HREF="001363.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] I lost 500GB of backup data in zfs!!!</H1>
+    <B>Jonathan Edwards</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20I%20lost%20500GB%20of%20backup%20data%20in%20zfs%21%21%21&In-Reply-To=%3C099E996A-9753-4A13-B569-CBEA66C3E4A1%40sun.com%3E"
+       TITLE="[zfs-discuss] I lost 500GB of backup data in zfs!!!">Jonathan.Edwards at Sun.COM
+       </A><BR>
+    <I>Thu Jan 22 19:43:56 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001361.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+        <LI>Next message: <A HREF="001363.html">[zfs-discuss] endless scrub
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1362">[ date ]</a>
+              <a href="thread.html#1362">[ thread ]</a>
+              <a href="subject.html#1362">[ subject ]</a>
+              <a href="author.html#1362">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> if you can .. you should be able to dd them to the right place after  
+</I>&gt;<i> a proper disk label .. provided you're careful and don't have data/ 
+</I>&gt;<i> label overlap you should be good to go ..
+</I>
+erm .. correction .. actually if it is pdisk or fdisk layout initially  
+- **don't format to GPT** .. the 16KB at the front and end of disk  
+will probably throw everything out of whack (wrong spacing between the  
+label and the data) - you should really just try to restore it to how  
+it was before to get to your data (if you can), and then work to zfs  
+snapshot/clone into a new filesystem/pool/disk properly formatted for  
+GPT
+
+Jonathan
+
+ps - sorry to reply to my own post .. i just realized what i wrote  
+here .. hopefully it's not a &quot;cut the red wire &lt;snip&gt; .. but first  
+disconnect the green wire&quot; sort of moment .. :P
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001361.html">[zfs-discuss] I lost 500GB of backup data in zfs!!!
+</A></li>
+	<LI>Next message: <A HREF="001363.html">[zfs-discuss] endless scrub
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1362">[ date ]</a>
+              <a href="thread.html#1362">[ thread ]</a>
+              <a href="subject.html#1362">[ subject ]</a>
+              <a href="author.html#1362">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

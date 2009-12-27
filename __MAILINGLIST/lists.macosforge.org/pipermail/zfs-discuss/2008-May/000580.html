@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] my first zfs panic
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=a782ada90805081441i701f05c7ma49bd229719285b2%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000579.html">
+   <LINK REL="Next"  HREF="000585.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] my first zfs panic</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20my%20first%20zfs%20panic&In-Reply-To=a782ada90805081441i701f05c7ma49bd229719285b2%40mail.gmail.com"
+       TITLE="[zfs-discuss] my first zfs panic">ndellofano at apple.com
+       </A><BR>
+    <I>Fri May  9 00:21:50 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000579.html">[zfs-discuss] my first zfs panic
+</A></li>
+        <LI>Next message: <A HREF="000585.html">[zfs-discuss] my first zfs panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#580">[ date ]</a>
+              <a href="thread.html#580">[ thread ]</a>
+              <a href="subject.html#580">[ subject ]</a>
+              <a href="author.html#580">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>yep, Jonathan gets the prize :)
+OSX kernel is in fact 32 bit so yeah, you're hitting the issue that  
+while you have 8GB of ram ZFS can use at most 4GB (32bit), and out of  
+that we're lucky if we can use 1 GB or so (we have to share with  
+everyone else that needs kernel space too).
+
+That being said though, panics suck and we need to tune the arc_max  
+limits more accordingly so all your kernel memory doesn't get eaten  
+up.  We haven't done too much testing on any machine over 2GB ram so  
+it's quite possible something is amiss in the code if your physmem &gt;  
+virtual mem.  I'm opening a bug on this.
+
+Sorry Andrei!  I&quot;ll go check it out, and get back to you with a  
+suitable workaround.
+
+Noel
+
+On May 8, 2008, at 2:41 PM, Andrei Dorofeev wrote:
+
+&gt;<i> Yeah, that was the bug that many people hit on Solaris at some point.
+</I>&gt;<i> I thought Mac OS X 10.5 kernel was 64-bit.
+</I>&gt;<i>
+</I>&gt;<i> - Andrei
+</I>&gt;<i>
+</I>&gt;<i> On Thu, May 8, 2008 at 2:31 PM, Jonathan Edwards
+</I>&gt;<i> &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">Jonathan.Edwards at sun.com</A>&gt; wrote:
+</I>&gt;&gt;<i> hrmm .. sounds suspiciously like a 32bit kmem_alloc() sort of problem
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On May 8, 2008, at 1:56 PM, Andrei Dorofeev wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi -
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I just started using ZFS on my MacPro today and created
+</I>&gt;&gt;&gt;<i> raidz pool with three 750G drives.  I hit the following panic
+</I>&gt;&gt;&gt;<i> while copying files onto one of the filesystems that were
+</I>&gt;&gt;&gt;<i> created on this pool.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----------------
+</I>&gt;&gt;&gt;<i> Thu May  8 13:47:42 2008
+</I>&gt;&gt;&gt;<i> panic(cpu 1 caller 0x87DC11CF): &quot;zfs: vmem_alloc couldn't alloc  
+</I>&gt;&gt;&gt;<i> 131072
+</I>&gt;&gt;&gt;<i> bytes\n&quot;@/Users/local/zfs-111/zfs_kext/zfs/zfs_context.c:670
+</I>&gt;&gt;&gt;<i> Backtrace, Format - Frame : Return Address (4 potential args on  
+</I>&gt;&gt;&gt;<i> stack)
+</I>&gt;&gt;&gt;<i> 0x943bb9c8 : 0x12b0f7 (0x4581f4 0x943bb9fc 0x133230 0x0)
+</I>&gt;&gt;&gt;<i> 0x943bba18 : 0x87dc11cf (0x87e0dbc0 0x20000 0x20000 0x87dbfefa)
+</I>&gt;&gt;&gt;<i> 0x943bba48 : 0x87ddbb1b (0x87e1fba0 0x20000 0x0 0x87dbff74)
+</I>&gt;&gt;&gt;<i> 0x943bbaa8 : 0x87d77c16 (0x1b1cc800 0x0 0x943bbaf8 0x8d41a828)
+</I>&gt;&gt;&gt;<i> 0x943bbac8 : 0x87d81e43 (0x20000 0x0 0x87e18c30 0x87dbfefa)
+</I>&gt;&gt;&gt;<i> 0x943bbb48 : 0x87d82696 (0x1b1cc000 0x0 0x943bbb78 0x87d9267c)
+</I>&gt;&gt;&gt;<i> 0x943bbb88 : 0x87d88796 (0xe248000 0x20000 0x8d41a828 0x0)
+</I>&gt;&gt;&gt;<i> 0x943bbbd8 : 0x87d8ecf9 (0x8d41a828 0x2151ef00 0x20000 0x0)
+</I>&gt;&gt;&gt;<i> 0x943bbc58 : 0x87d68848 (0xf7554f0 0x8cfa 0x0 0x943bbebc)
+</I>&gt;&gt;&gt;<i> 0x943bbd78 : 0x1f6131 (0x943bbdac 0x246 0x943bbdd8 0x1da207)
+</I>&gt;&gt;&gt;<i> 0x943bbdd8 : 0x1ec98f (0x1631fdd0 0x943bbebc 0x811 0x943bbf54)
+</I>&gt;&gt;&gt;<i> 0x943bbe68 : 0x38b3ca (0xc507840 0x943bbebc 0x1 0x943bbf54)
+</I>&gt;&gt;&gt;<i> 0x943bbf18 : 0x38b53b (0x943bbf54 0xc507840 0x19bec000 0x0)
+</I>&gt;&gt;&gt;<i> 0x943bbf78 : 0x3dcf13 (0xc528060 0x1a2d9a40 0x1a2d9a84 0x1a2dd998)
+</I>&gt;&gt;&gt;<i> 0x943bbfc8 : 0x19f1c3 (0xf742a20 0x0 0x1a20b5 0xc6bc7d8)
+</I>&gt;&gt;&gt;<i> 0xb04b9838 : 0xffffffff (0xffffffff 0xffb8b8b8 0xffc0c0c0  
+</I>&gt;&gt;&gt;<i> 0xffc8c8c8)
+</I>&gt;&gt;&gt;<i>       Backtrace continues...
+</I>&gt;&gt;&gt;<i>    Kernel loadable modules in backtrace (with dependencies):
+</I>&gt;&gt;&gt;<i>       com.apple.filesystems.zfs(8.0)@0x87d65000-&gt;0x87e20fff
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> BSD process name corresponding to current thread: Finder
+</I>&gt;&gt;&gt;<i> ----------------------
+</I>&gt;&gt;&gt;<i> I have 8G of RAM and kinda surprised that we couldn't allocate  
+</I>&gt;&gt;&gt;<i> just 128K.
+</I>&gt;&gt;&gt;<i> Hi Noel! :) Would you like to see the crashdump from this panic
+</I>&gt;&gt;&gt;<i> or is this a known problem already?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks,
+</I>&gt;&gt;&gt;<i> -Andrei
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000579.html">[zfs-discuss] my first zfs panic
+</A></li>
+	<LI>Next message: <A HREF="000585.html">[zfs-discuss] my first zfs panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#580">[ date ]</a>
+              <a href="thread.html#580">[ thread ]</a>
+              <a href="subject.html#580">[ subject ]</a>
+              <a href="author.html#580">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

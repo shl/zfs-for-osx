@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] 10a286 binaries on 10.6
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%2010a286%20binaries%20on%2010.6&In-Reply-To=%3CE53D320B-B79C-401B-9AD0-CE60B92D4C37%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001862.html">
+   <LINK REL="Next"  HREF="001864.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] 10a286 binaries on 10.6</H1>
+    <B>Ryan Walklin</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%2010a286%20binaries%20on%2010.6&In-Reply-To=%3CE53D320B-B79C-401B-9AD0-CE60B92D4C37%40gmail.com%3E"
+       TITLE="[zfs-discuss] 10a286 binaries on 10.6">ryanwalklin at gmail.com
+       </A><BR>
+    <I>Wed Sep 16 21:15:44 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001862.html">[zfs-discuss] 10a286 binaries on 10.6
+</A></li>
+        <LI>Next message: <A HREF="001864.html">[zfs-discuss] 10a286 binaries on 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1863">[ date ]</a>
+              <a href="thread.html#1863">[ thread ]</a>
+              <a href="subject.html#1863">[ subject ]</a>
+              <a href="author.html#1863">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>32-bit. There's a few missing symbols when run 64-bit, despite the  
+libs being compiled 64-bit. I wasn't too worried given that the  
+userspace is 64-bit.
+
+Ryan
+
+
+On 17/09/2009, at 4:07 PM, Kona Blend &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">kona8lend at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi Ryan,
+</I>&gt;<i>
+</I>&gt;<i> Can you confirm if this is 32-bit kernel or 64-bit kernel?
+</I>&gt;<i>
+</I>&gt;<i> --kb
+</I>&gt;<i>
+</I>&gt;<i> On Sep 16, 2009, at 11:57 PM, Ryan Walklin wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi All,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks to the efforts of this list, I've been able to get my RAID-Z  
+</I>&gt;&gt;<i> (4x500GB) up and running on Snow Leopard using the 10a286 ZFS  
+</I>&gt;&gt;<i> binaries. I needed to change the ownership of each of my  
+</I>&gt;&gt;<i> filesystems to ryan:staff as opposed to root:wheel, and use a  
+</I>&gt;&gt;<i> launchd plist to run the command &quot;zfs mount -a&quot; at boot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Looking forward to a formal solution from Apple (ie updated source  
+</I>&gt;&gt;<i> on macosforge etc, or at least an official statement of intent) but  
+</I>&gt;&gt;<i> in the meantime at least I have access to my data. And emptying the  
+</I>&gt;&gt;<i> trash works!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks again,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ryan
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> zfs-discuss mailing list
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001862.html">[zfs-discuss] 10a286 binaries on 10.6
+</A></li>
+	<LI>Next message: <A HREF="001864.html">[zfs-discuss] 10a286 binaries on 10.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1863">[ date ]</a>
+              <a href="thread.html#1863">[ thread ]</a>
+              <a href="subject.html#1863">[ subject ]</a>
+              <a href="author.html#1863">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

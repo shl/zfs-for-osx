@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss]  Apple's ZFS implementation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%20Apple%27s%20ZFS%20implementation&In-Reply-To=%3C6EAAC539-2A39-4E42-B5E5-BF3B6DDF7009%40thm-online.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001621.html">
+   <LINK REL="Next"  HREF="001624.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss]  Apple's ZFS implementation</H1>
+    <B>Thomas Maier</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%20Apple%27s%20ZFS%20implementation&In-Reply-To=%3C6EAAC539-2A39-4E42-B5E5-BF3B6DDF7009%40thm-online.org%3E"
+       TITLE="[zfs-discuss]  Apple's ZFS implementation">webmaster at thm-online.org
+       </A><BR>
+    <I>Wed Jun 10 08:38:00 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001621.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001624.html">[zfs-discuss] Apple's ZFS implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1622">[ date ]</a>
+              <a href="thread.html#1622">[ thread ]</a>
+              <a href="subject.html#1622">[ subject ]</a>
+              <a href="author.html#1622">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Does anyone know where Apple lost its implementation of ZFS in Mac OS  
+X 10.6 Server?
+
+
+
+Am 10.06.2009 um 17:31 schrieb Carl Magnuson:
+
+&gt;<i>
+</I>&gt;<i> On Jun 10, 2009, at 9:11 AM, Jonathan Edwards wrote:
+</I>&gt;&gt;&gt;<i> my guess is that disk8 is the faulted device which is still being  
+</I>&gt;&gt;&gt;<i> held by the pool or something else .. you can try doing a diskutil  
+</I>&gt;&gt;&gt;<i> eject /dev/disk8s2, but i'm guessing you'll have a problem here as  
+</I>&gt;&gt;&gt;<i> well ..
+</I>&gt;<i>
+</I>&gt;<i> It looks like it is ejecting the disks:
+</I>&gt;<i>
+</I>&gt;<i> g5:~ bobcat$ diskutil eject /dev/disk8s2
+</I>&gt;<i> Disk /dev/disk8s2 ejected
+</I>&gt;<i> g5:~ bobcat$ diskutil eject /dev/disk8
+</I>&gt;<i> Disk /dev/disk8 ejected
+</I>&gt;<i> g5:~ bobcat$ diskutil eject /dev/disk7
+</I>&gt;<i> Disk /dev/disk7 ejected
+</I>&gt;<i> g5:~ bobcat$ diskutil eject /dev/disk7s2
+</I>&gt;<i> Disk /dev/disk7s2 ejected
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> what about the other one?  can you do either a
+</I>&gt;&gt;<i> # zpool replace cpool disk8s2 disk7s2
+</I>&gt;&gt;<i> or
+</I>&gt;&gt;<i> # zpool replace cpool 13962824586312699565 disk7s2
+</I>&gt;&gt;<i> (for the one that was previously disk9s2)
+</I>&gt;<i>
+</I>&gt;<i> However when I try and replace them:
+</I>&gt;<i>
+</I>&gt;<i> g5:~ bobcat$ zpool replace cpool 13962824586312699565 disk7s2
+</I>&gt;<i> cannot replace 13962824586312699565 with disk7s2: disk7s2 is busy
+</I>&gt;<i> g5:~ bobcat$ zpool replace cpool 1751454142452109774 disk8s2
+</I>&gt;<i> cannot replace 1751454142452109774 with disk8s2: disk8s2 is busy
+</I>&gt;<i>
+</I>&gt;<i> Seems like I am having the same issue with both drives.
+</I>&gt;<i>
+</I>&gt;<i> Carl
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001621.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001624.html">[zfs-discuss] Apple's ZFS implementation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1622">[ date ]</a>
+              <a href="thread.html#1622">[ thread ]</a>
+              <a href="subject.html#1622">[ subject ]</a>
+              <a href="author.html#1622">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

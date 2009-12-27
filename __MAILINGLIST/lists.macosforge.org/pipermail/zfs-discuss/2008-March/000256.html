@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%20ZFS%3F&In-Reply-To=7bccd8dc0803040725i7a3e2061o8942cd9bfc4a1960%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000270.html">
+   <LINK REL="Next"  HREF="000257.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?</H1>
+    <B>Gautam Godse</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20What%20Portions%20of%20the%20OS%20X%20Tree%20Can%27t%20Be%20Put%20on%0A%20ZFS%3F&In-Reply-To=7bccd8dc0803040725i7a3e2061o8942cd9bfc4a1960%40mail.gmail.com"
+       TITLE="[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?">gagix at mac.com
+       </A><BR>
+    <I>Tue Mar  4 10:11:29 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000270.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?
+</A></li>
+        <LI>Next message: <A HREF="000257.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#256">[ date ]</a>
+              <a href="thread.html#256">[ thread ]</a>
+              <a href="subject.html#256">[ subject ]</a>
+              <a href="author.html#256">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You said the relevant thing: &quot;For the casual computer user&quot;. I think 
+majority of us would fall into that category - even among Mac users.
+Hence my indifference to using ZFS on Boot/User filesystems.
+
+To illustrate: I have'nt had a single file of any kind that got 
+corrupted on my Mac since I started using Mac OSX in  2001. I do have 
+backups on DVD for all important files and now TM backups also.. So for 
+a casual user ZFS seems overkill on the Boot/User filesystems.
+
+Makes perfect sense on external redundant disk arrays used for Media 
+storage/backup.
+
+Brett Ault-McCoy wrote:
+&gt;<i> TimeMachine != zfs snapshots.  A full scan of the filesystem has to be 
+</I>&gt;<i> done to find what's changed, and any file that's changed (even if only 
+</I>&gt;<i> a single byte has changed) has to be copied in full (which is a real 
+</I>&gt;<i> pain for bittorrent downloads).  Plus, it's not a single point in time 
+</I>&gt;<i> backup.  Files can be changed during the backup resulting 
+</I>&gt;<i> in inconsistencies if related files are modified at just the right 
+</I>&gt;<i> time.  The other thing ZFS guards against is bit rot.
+</I>&gt;<i>
+</I>&gt;<i> For the casual users' computer none of that probably matters much 
+</I>&gt;<i> (though my old G4 comes to a screeching halt every time TimeMachine 
+</I>&gt;<i> starts up), but ZFS has many advantages over HFS+ and TimeMachine.
+</I>&gt;<i>
+</I>&gt;<i> ++Brett;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Mar 4, 2008 at 3:04 PM, Gautam Godse &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">gagix at mac.com</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">gagix at mac.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     Frankly I have yet to be convinced that ZFS should be used for your
+</I>&gt;<i>     Boot / User file system.
+</I>&gt;<i>     The advantages of ZFS are only apparent (to me) when ZFS is deployed
+</I>&gt;<i>     in a redundant configuration (mirror/raid) and for backup, media file
+</I>&gt;<i>     storage, database storage or something similar.
+</I>&gt;<i>     The only advantage of ZFS on the Boot/User filesystem would be the
+</I>&gt;<i>     snapshot functionality and I think for now TimeMachine suffices.
+</I>&gt;<i>     Does anyone agree/disagree ?
+</I>&gt;<i>     --
+</I>&gt;<i>     Gautam
+</I>&gt;<i>
+</I>&gt;<i>     On Mar 4, 2008, at 6:58 AM, James Snyder wrote:
+</I>&gt;<i>
+</I>&gt;<i>     &gt; Hi -
+</I>&gt;<i>     &gt;
+</I>&gt;<i>     &gt; I was just thinking today about rolling more of my system over
+</I>&gt;<i>     to ZFS
+</I>&gt;<i>     &gt; since, with some exceptions, it seems to be fairly stable in
+</I>&gt;<i>     usage.  I
+</I>&gt;<i>     &gt; might Assume that Applications, Developer, maybe usr could
+</I>&gt;<i>     switch over
+</I>&gt;<i>     &gt; to ZFS, but I'm not exactly sure what portions of the filesystem are
+</I>&gt;<i>     &gt; required to bring up OS X.  /Library, /System likely need to be
+</I>&gt;<i>     on HFS
+</I>&gt;<i>     &gt; at this point I would assume, but what are the limitations, what
+</I>&gt;<i>     needs
+</I>&gt;<i>     &gt; to be on HFS to get things up to the login screen?
+</I>&gt;<i>     &gt;
+</I>&gt;<i>     &gt; Another question is:
+</I>&gt;<i>     &gt; Is it preferred to file bugs by using the Trac system?  Should
+</I>&gt;<i>     they go
+</I>&gt;<i>     &gt; on zfs-discuss here?  If one has a panic should that just go in
+</I>&gt;<i>     &gt; through the normal Apple reporting system?  I do not have a full ADC
+</I>&gt;<i>     &gt; membership so I cannot put anything on rdar as far as I know.
+</I>&gt;<i>     &gt;
+</I>&gt;<i>     &gt; Thanks!
+</I>&gt;<i>     &gt;
+</I>&gt;<i>     &gt;
+</I>&gt;<i>     &gt; --
+</I>&gt;<i>     &gt; James Snyder
+</I>&gt;<i>     &gt; Biomedical Engineering
+</I>&gt;<i>     &gt; Northwestern University
+</I>&gt;<i>     &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A> &lt;mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">jbsnyder at gmail.com</A>&gt;
+</I>&gt;<i>     &gt; _______________________________________________
+</I>&gt;<i>     &gt; zfs-discuss mailing list
+</I>&gt;<i>     &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i>     &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     zfs-discuss mailing list
+</I>&gt;<i>     <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>&gt;
+</I>&gt;<i>     <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080304/5317bc6d/attachment-0001.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080304/5317bc6d/attachment-0001.html</A> 
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000270.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on ZFS?
+</A></li>
+	<LI>Next message: <A HREF="000257.html">[zfs-discuss] What Portions of the OS X Tree Can't Be Put on	ZFS?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#256">[ date ]</a>
+              <a href="thread.html#256">[ thread ]</a>
+              <a href="subject.html#256">[ subject ]</a>
+              <a href="author.html#256">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

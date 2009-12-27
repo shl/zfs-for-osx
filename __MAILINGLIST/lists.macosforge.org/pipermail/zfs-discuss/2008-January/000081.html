@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Timing out
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Timing%20out&In-Reply-To=595E513F-F0A5-4B2C-B997-EFAF38594AC6%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000080.html">
+   <LINK REL="Next"  HREF="000082.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Timing out</H1>
+    <B>james sansbury</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Timing%20out&In-Reply-To=595E513F-F0A5-4B2C-B997-EFAF38594AC6%40apple.com"
+       TITLE="[zfs-discuss] Timing out">q0rban at gmail.com
+       </A><BR>
+    <I>Thu Jan 24 17:52:33 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000080.html">[zfs-discuss] Timing out
+</A></li>
+        <LI>Next message: <A HREF="000082.html">[zfs-discuss] Timing out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 24, 2008 7:14 PM, Barry Lustig &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">blustig at apple.com</A>&gt; wrote:
+
+&gt;<i> Hmm.  If you happen to recreate the hang, can you run a &quot;ps guax&quot; and
+</I>&gt;<i> see if the chmod command is in the &quot;E&quot; state?  This might be related
+</I>&gt;<i>
+</I>to a known bug.
+
+
+I'm not sure what any of this means, but after the hang, chown appears to be
+in U+ state:
+
+root      1079   0.0  0.0   599620    328 s000  U+    8:38PM   0:00.69 chown
+-Rv q0rban q0rban
+
+The only thing that is in the &quot;E&quot; state is &quot;(Locum)&quot;:
+
+root       633   0.0  0.0        0      0   ??   E    6:01PM   0:00.00(Locum)
+
+You should be able to run it on the command line via:
+&gt;<i>  &quot;/usr/libexec/stackshot -t -i&quot;.
+</I>&gt;<i>
+</I>
+Well, after running stackshot, a stackshot.log file did open, and was
+strangely empty.  But after perusing the console I noticed that about the
+same time that I tried to kill Finder after the hang on a Copy, I started
+receiving these errors:
+
+24.Jan.08 6:56:30 PM com.apple.launchd[107]
+([0x0-0x11011].com.apple.finder[123]) Exited: Terminated
+24.Jan.08 6:56:50 PM com.apple.launchd[107] (0x10c4f0.Locum[633]) Exit
+timeout elapsed (20 seconds). Killing.
+24.Jan.08 6:56:55 PM com.apple.launchd[107] (0x10c4f0.Locum[633]) Did not
+die after sending SIGKILL 5 seconds ago...
+24.Jan.08 6:57:00 PM com.apple.launchd[107] (0x10c4f0.Locum[633]) Did not
+die after sending SIGKILL 10 seconds ago...
+24.Jan.08 6:57:05 PM com.apple.launchd[107] (0x10c4f0.Locum[633]) Did not
+die after sending SIGKILL 15 seconds ago...
+24.Jan.08 6:57:10 PM com.apple.launchd[107] (0x10c4f0.Locum[633]) Did not
+die after sending SIGKILL 20 seconds ago...
+[and on and on and on]
+
+There's Locum again!
+
+Not sure if that's helpful at all, but it looked suspicious.
+
+-James
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080124/65e31edc/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080124/65e31edc/attachment.html</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000080.html">[zfs-discuss] Timing out
+</A></li>
+	<LI>Next message: <A HREF="000082.html">[zfs-discuss] Timing out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

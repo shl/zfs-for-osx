@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs and kernel memory?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20and%20kernel%20memory%3F&In-Reply-To=%3C20081201.101017.447857017412032666.hanche%40math.ntnu.no%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="001124.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs and kernel memory?</H1>
+    <B>Harald Hanche-Olsen</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20zfs%20and%20kernel%20memory%3F&In-Reply-To=%3C20081201.101017.447857017412032666.hanche%40math.ntnu.no%3E"
+       TITLE="[zfs-discuss] zfs and kernel memory?">hanche at math.ntnu.no
+       </A><BR>
+    <I>Mon Dec  1 01:10:17 PST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="001124.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1121">[ date ]</a>
+              <a href="thread.html#1121">[ thread ]</a>
+              <a href="subject.html#1121">[ subject ]</a>
+              <a href="author.html#1121">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm wondering if the 119 zfs release uses (much) more kernel memory
+than the original leopard one?
+
+The reason I am asking is this: I installed 119 on my wife's old 12
+inch powerbook (with 640 MB of RAM), since we have some removable
+disks with zfs on them. Since then, applications (notably, Firefox and
+Mail) have started dying from malloc errors.
+
+It doesn't make much sense since virtual memory is limited by free
+disk space, and there is over ten gigabytes of free space on the
+disk. Also, Activity Monitor shows plenty (~ 200 MB) of free memory.
+
+I know from experience on freebsd that zfs is quite hungry for kernel
+memory, and you need to do a bit of tuning to make it work reliably.
+Is something similar true on macosx? I see nothing about it the FAQ.
+Is using zfs on a 640 MB machine perhaps asking too much?
+
+- Harald
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="001124.html">[zfs-discuss] zfs and kernel memory?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1121">[ date ]</a>
+              <a href="thread.html#1121">[ thread ]</a>
+              <a href="subject.html#1121">[ subject ]</a>
+              <a href="author.html#1121">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

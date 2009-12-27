@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Filesystem operations hang
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Filesystem%20operations%20hang&In-Reply-To=6A98CA2C-9234-43BE-85B0-A2A0DA7B64EC%40cisco.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000938.html">
+   <LINK REL="Next"  HREF="000940.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Filesystem operations hang</H1>
+    <B>Wout Mertens</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Filesystem%20operations%20hang&In-Reply-To=6A98CA2C-9234-43BE-85B0-A2A0DA7B64EC%40cisco.com"
+       TITLE="[zfs-discuss] Filesystem operations hang">wmertens at cisco.com
+       </A><BR>
+    <I>Mon Oct  6 12:55:23 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000938.html">[zfs-discuss] Filesystem operations hang
+</A></li>
+        <LI>Next message: <A HREF="000940.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#939">[ date ]</a>
+              <a href="thread.html#939">[ thread ]</a>
+              <a href="subject.html#939">[ subject ]</a>
+              <a href="author.html#939">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update: removing the USB didn't do a thing. The only thing that  
+happened was that syslog now contains:
+
+Mon Oct  6 21:45:18 wmertens-mac-2 kernel[0] &lt;Debug&gt;: disk1s2: media  
+is not present.
+Mon Oct  6 21:45:18 wmertens-mac-2 kernel[0] &lt;Debug&gt;: disk1s2: media  
+is not present.
+Mon Oct  6 21:45:18 wmertens-mac-2 kernel[0] &lt;Debug&gt;: disk1s2: media  
+is not present.
+Mon Oct  6 21:45:18 wmertens-mac-2 kernel[0] &lt;Debug&gt;: disk1s2: media  
+is not present.
+
+zpool scrub hangs:
+Analysis of sampling zpool (pid 13265) every 1 millisecond
+Call graph:
+     2278 Thread_2503
+       2278 start
+         2278 main
+           2278 zpool_do_scrub
+             2278 for_each_pool
+               2278 pool_list_iter
+                 2278 scrub_callback
+                   2278 zpool_scrub
+                     2278 zfs_ioctl
+                       2278 ioctl
+                         2278 ioctl
+
+replugging the USB disk doesn't help either. Diskutil info disk1  
+doesn't work anymore.
+
+I've run out of options; rebooting.
+
+Wout.
+
+On Oct 6, 2008, at 9:29 PM, Wout Mertens wrote:
+
+&gt;<i> Heyhey,
+</I>&gt;<i>
+</I>&gt;<i> I just got a brand-spanking-new 1TB USB disk and I figured I needed
+</I>&gt;<i> ZFS on it. So I got the 119 binaries and created a pool as in the  
+</I>&gt;<i> wiki.
+</I>&gt;<i>
+</I>&gt;<i> I started to copy over my stuff to it using Finder, which went
+</I>&gt;<i> swimmingly (180GB), but after a while I noticed that things did not
+</I>&gt;<i> proceed at all. Currently finder is stuck at 90% of the copy and
+</I>&gt;<i> commands that call fstat() all hang. zpool status etc don't hang as
+</I>&gt;<i> you can see below. Reading the raw device with dd doesn't hang either,
+</I>&gt;<i> so it's somewhere above the device layer.
+</I>&gt;<i>
+</I>&gt;<i> Not a peep in syslog. Should I be doing something special for better
+</I>&gt;<i> logs?
+</I>&gt;<i>
+</I>&gt;<i> I tried doing a zpool export -f but that hung. I'll now disconnect the
+</I>&gt;<i> USB device and see what happens (I'm expecting a crash so I'm sending
+</I>&gt;<i> this before that ;-) )
+</I>&gt;<i>
+</I>&gt;<i> I just thought I'd throw the data point out there.
+</I>&gt;<i>
+</I>&gt;<i> Wout.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> wmertens-mac-2 ~ $ zpool list
+</I>&gt;<i> NAME                    SIZE    USED   AVAIL    CAP  HEALTH      
+</I>&gt;<i> ALTROOT
+</I>&gt;<i> Z                       931G    160G    771G    17%  ONLINE     -
+</I>&gt;<i>
+</I>&gt;<i> wmertens-mac-2 ~ $ zpool status
+</I>&gt;<i>   pool: Z
+</I>&gt;<i>  state: ONLINE
+</I>&gt;<i> status: The pool is formatted using an older on-disk format.  The pool
+</I>&gt;<i> can
+</I>&gt;<i> 	still be used, but some features are unavailable.
+</I>&gt;<i> action: Upgrade the pool using 'zpool upgrade'.  Once this is done,  
+</I>&gt;<i> the
+</I>&gt;<i> 	pool will no longer be accessible on older software versions.
+</I>&gt;<i>  scrub: none requested
+</I>&gt;<i> config:
+</I>&gt;<i>
+</I>&gt;<i> 	NAME        STATE     READ WRITE CKSUM
+</I>&gt;<i> 	Z           ONLINE       0     0     0
+</I>&gt;<i> 	  disk1s2   ONLINE       0     0     0
+</I>&gt;<i>
+</I>&gt;<i> errors: No known data errors
+</I>&gt;<i>
+</I>&gt;<i> wmertens-mac-2 ~ $ diskutil info disk1
+</I>&gt;<i>    Device Identifier:        disk1
+</I>&gt;<i>    Device Node:              /dev/disk1
+</I>&gt;<i>    Part Of Whole:            disk1
+</I>&gt;<i>    Device / Media Name:      WDC WD10 EAVS-00D7B0 Media
+</I>&gt;<i>
+</I>&gt;<i>    Volume Name:
+</I>&gt;<i>    Mount Point:
+</I>&gt;<i>
+</I>&gt;<i>    Partition Type:           GUID_partition_scheme
+</I>&gt;<i>    Bootable:                 Not bootable
+</I>&gt;<i>    Media Type:               Generic
+</I>&gt;<i>    Protocol:                 USB
+</I>&gt;<i>    SMART Status:             Not Supported
+</I>&gt;<i>
+</I>&gt;<i>    Total Size:               931.5 Gi (1000204886016 B) (1953525168
+</I>&gt;<i> 512-byte blocks)
+</I>&gt;<i>    Free Space:               0.0 B (0 B) (0 512-byte blocks)
+</I>&gt;<i>
+</I>&gt;<i>    Read Only:                No
+</I>&gt;<i>    Ejectable:                Yes
+</I>&gt;<i>    Whole:                    Yes
+</I>&gt;<i>    Internal:                 No
+</I>&gt;<i>    OS 9 Drivers:             No
+</I>&gt;<i>    Low Level Format:         Not Supported
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000938.html">[zfs-discuss] Filesystem operations hang
+</A></li>
+	<LI>Next message: <A HREF="000940.html">[zfs-discuss] chksum error on RAID.Z - severity?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#939">[ date ]</a>
+              <a href="thread.html#939">[ thread ]</a>
+              <a href="subject.html#939">[ subject ]</a>
+              <a href="author.html#939">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

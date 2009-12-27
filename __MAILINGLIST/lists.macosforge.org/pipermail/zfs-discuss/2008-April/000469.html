@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zpool status -v
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20status%20-v&In-Reply-To=AB3828E3-B960-4E58-8B64-979317C3BD53%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000440.html">
+   <LINK REL="Next"  HREF="000470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zpool status -v</H1>
+    <B>Riscky Abacus</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zpool%20status%20-v&In-Reply-To=AB3828E3-B960-4E58-8B64-979317C3BD53%40apple.com"
+       TITLE="[zfs-discuss] zpool status -v">riscky at gmail.com
+       </A><BR>
+    <I>Fri Apr 11 22:14:42 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000440.html">[zfs-discuss] zpool status -v
+</A></li>
+        <LI>Next message: <A HREF="000470.html">[zfs-discuss] zpool status -v
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#469">[ date ]</a>
+              <a href="thread.html#469">[ thread ]</a>
+              <a href="subject.html#469">[ subject ]</a>
+              <a href="author.html#469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You know I've seen this countless times on my iMac. I have to zfs
+&quot;drives&quot; and when one of these drives is attached zpool status throws
+a kernal panic... I posted a message about this last month... if I
+move this &quot;drive&quot; to another system and run zpool status the same
+panic ensues... with the drive is also attached and I issue other
+zpool commands sometimes I get strange results like tonight when I
+exported my other pool the WindowServer suddenly spiked to 99% cpu
+time for an extended amount of time (the drive held my iTMS files). A
+few other times kernel_task runs at 65% until I reboot the system...
+not sure if this just happens to happen then or if its related to
+zpool.
+
+Anyway the pool that cause this problem for me is actually a
+collection of 4 usb flash drives connected to one usb hub to create on
+large flash drive... oh and I scrubbed the zpool and found no
+issues... the only thing I think that might cause this problem is I
+have the the zpool root set to /src while the mount point is
+/Volumes/pool
+
+Here are two logs each from a different system:
+
+Sat Apr  5 17:21:22 2008
+panic(cpu 1 caller 0x001A8C8A): Kernel trap at 0x003618c1, type
+14=page fault, registers:
+CR0: 0x80010033, CR2: 0x0000000c, CR3: 0x00d07000, CR4: 0x000006e0
+EAX: 0x00000000, EBX: 0x35913de8, ECX: 0x1f000000, EDX: 0x00000000
+CR2: 0x0000000c, EBP: 0x35913d18, ESI: 0x00000200, EDI: 0x03a77000
+EFL: 0x00010202, EIP: 0x003618c1, CS:  0x00000004, DS:  0x1000000c
+Error code: 0x00000000
+
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x35913b88 : 0x12b0f7 (0x4581f4 0x35913bbc 0x133230 0x0)
+0x35913bd8 : 0x1a8c8a (0x461720 0x3618c1 0xe 0x460ed0)
+0x35913cb8 : 0x19ece5 (0x35913cd0 0x0 0x35913d18 0x3618c1)
+0x35913cc8 : 0x3618c1 (0xe 0x5630048 0x3591000c 0x20000c)
+0x35913d18 : 0x3fb9fff8 (0x0 0xfe972958 0x1 0x0)
+0x35913d38 : 0x3fba79dd (0x0 0x0 0x35913d88 0x1362ad)
+0x35913d78 : 0x202bea (0x1f000000 0xcf1c5a20 0x3a77000 0x3)
+0x35913db8 : 0x1f6039 (0x35913de8 0x246 0x35913e18 0x1da207)
+0x35913e18 : 0x1ec2f6 (0x485a680 0xcf1c5a20 0x3a77000 0x3)
+0x35913e78 : 0x3653a7 (0x4440c80 0xcf1c5a20 0x3a77000 0x35913f50)
+0x35913e98 : 0x38bd28 (0x4440c80 0xcf1c5a20 0x3a77000 0x35913f50)
+0x35913f78 : 0x3dcf13 (0x3e26530 0x4c3fee0 0x4c3ff24 0x0)
+0x35913fc8 : 0x19f1c3 (0x4c44bd4 0x0 0x4 0x456b97c)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffa7d8
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x3fb44000-&gt;0x3fc0ffff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9C7010
+
+Kernel version:
+Darwin Kernel Version 9.2.2: Tue Mar  4 21:17:34 PST 2008;
+root:xnu-1228.4.31~1/RELEASE_I386
+System model name: iMac4,1 (Mac-F42786C8)
+
+
+Mon Mar 10 00:06:34 2008
+panic(cpu 1 caller 0x001A8C8A): Kernel trap at 0x00361855, type
+14=page fault, registers:
+CR0: 0x80010033, CR2: 0x0000000c, CR3: 0x00cf2000, CR4: 0x00000660
+EAX: 0x00000000, EBX: 0x36f1fde8, ECX: 0x1f000000, EDX: 0x00000000
+CR2: 0x0000000c, EBP: 0x36f1fd18, ESI: 0x00000200, EDI: 0x03b56000
+EFL: 0x00010202, EIP: 0x00361855, CS:  0x00000008, DS:  0x03960010
+Error code: 0x00000000
+
+Backtrace, Format - Frame : Return Address (4 potential args on stack)
+0x36f1fb38 : 0x12b0f7 (0x458124 0x36f1fb6c 0x133230 0x0)
+0x36f1fb88 : 0x1a8c8a (0x461650 0x361855 0xe 0x460e00)
+0x36f1fc68 : 0x19ece5 (0x36f1fc80 0x3bc23c8 0x36f1fd18 0x361855)
+0x36f1fc78 : 0x361855 (0xe 0x48 0x10 0x190010)
+0x36f1fd18 : 0x35840ff8 (0x0 0x4ec63 0x3000 0x0)
+0x36f1fd38 : 0x358489dd (0x0 0x0 0x36f1fd58 0x1a236f)
+0x36f1fd78 : 0x202bea (0x1f000000 0xcf1c5a20 0x3b56000 0x3)
+0x36f1fdb8 : 0x1f6039 (0x36f1fde8 0x246 0x36f1fe18 0x1da207)
+0x36f1fe18 : 0x1ec2f6 (0x5a59e20 0xcf1c5a20 0x3b56000 0x3)
+0x36f1fe78 : 0x36533b (0x43cb2b0 0xcf1c5a20 0x3b56000 0x36f1ff50)
+0x36f1fe98 : 0x38bcbc (0x43cb2b0 0xcf1c5a20 0x3b56000 0x36f1ff50)
+0x36f1ff78 : 0x3dcea7 (0x445d2b0 0x4b8a220 0x4b8a264 0x0)
+0x36f1ffc8 : 0x19f1c3 (0x47d8040 0x0 0x1a20b5 0x47d8040)
+No mapping exists for frame pointer
+Backtrace terminated-invalid frame pointer 0xbfffa618
+      Kernel loadable modules in backtrace (with dependencies):
+         com.apple.filesystems.zfs(8.0)@0x357e5000-&gt;0x358b0fff
+
+BSD process name corresponding to current thread: zpool
+
+Mac OS version:
+9C2015
+
+Kernel version:
+Darwin Kernel Version 9.2.1: Tue Feb  5 23:08:45 PST 2008;
+root:xnu-1228.4.20~1/RELEASE_I386
+System model name: MacBook4,1 (Mac-F22788A9)
+
+
+
+
+On Wed, Apr 9, 2008 at 4:18 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+&gt;<i> yikes :(
+</I>&gt;<i>  What is your config?  Something huge?  what kind of system are you running
+</I>&gt;<i> on?  and is it only zpool status? or any zpool command freezes the system?
+</I>&gt;<i>
+</I>&gt;<i>  Noel
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  On Apr 9, 2008, at 9:39 AM, Franz Schmalzl wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; zpool status  -v gives me a complete system freeze....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; any ideas ?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; regards
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; franz schmalzl _______________________________________________
+</I>&gt;<i> &gt; zfs-discuss mailing list
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> &gt; <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>  _______________________________________________
+</I>&gt;<i>  zfs-discuss mailing list
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i>  <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000440.html">[zfs-discuss] zpool status -v
+</A></li>
+	<LI>Next message: <A HREF="000470.html">[zfs-discuss] zpool status -v
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#469">[ date ]</a>
+              <a href="thread.html#469">[ thread ]</a>
+              <a href="subject.html#469">[ subject ]</a>
+              <a href="author.html#469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

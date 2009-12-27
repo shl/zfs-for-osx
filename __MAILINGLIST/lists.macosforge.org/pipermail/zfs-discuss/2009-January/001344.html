@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] speed? nah....
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20speed%3F%20nah....&In-Reply-To=%3C588AAD3F-52B3-4842-A9C4-73FC0D6B9315%40charter.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001343.html">
+   <LINK REL="Next"  HREF="001345.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] speed? nah....</H1>
+    <B>Sterling Garwood</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20speed%3F%20nah....&In-Reply-To=%3C588AAD3F-52B3-4842-A9C4-73FC0D6B9315%40charter.net%3E"
+       TITLE="[zfs-discuss] speed? nah....">slgarwood at charter.net
+       </A><BR>
+    <I>Wed Jan 21 13:13:20 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001343.html">[zfs-discuss] strange behaviour
+</A></li>
+        <LI>Next message: <A HREF="001345.html">[zfs-discuss] speed? nah....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1344">[ date ]</a>
+              <a href="thread.html#1344">[ thread ]</a>
+              <a href="subject.html#1344">[ subject ]</a>
+              <a href="author.html#1344">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have been testing zfs on MacOSXLeopard (10.5.6) on a MDD (dual 1.25  
+Ghz ppc processors with 2 Gb memory).
+I have a pair of firewire 500GB drives that have been mirrored under  
+HFS+.
+I broke the mirror, used diskutil and zfs to create a zfs volume on  
+one of the two.
+I am now in the process of copying the HFS+ drive to the zfs drive.
+My plan is to then reformat the HFS drive and add it back as a mirror  
+drive.
+
+Only issue (outside of Finder weirdness with zfs) is a slow copy ---
+Finder drag and drop to copy says about 280,000 items for 417.16GB  
+will take 7 hours!!
+Thats slow.
+Its Firewire 400 but still ... thats only 60 GB an hour or a GB a  
+minute or less than 16 megabytes (128 megabits) per second on a 400  
+megabit channel...
+the drives are on separate firewire controllers so data movement in  
+the machine and file system overhead is the prime suspect.
+Any thoughts out there to speed it up?
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001343.html">[zfs-discuss] strange behaviour
+</A></li>
+	<LI>Next message: <A HREF="001345.html">[zfs-discuss] speed? nah....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1344">[ date ]</a>
+              <a href="thread.html#1344">[ thread ]</a>
+              <a href="subject.html#1344">[ subject ]</a>
+              <a href="author.html#1344">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

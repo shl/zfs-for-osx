@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] zfs filesystems
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20filesystems&In-Reply-To=20080812201252.52120225%40imap.tekserve.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000771.html">
+   <LINK REL="Next"  HREF="000774.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] zfs filesystems</H1>
+    <B>Germano Caronni</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20zfs%20filesystems&In-Reply-To=20080812201252.52120225%40imap.tekserve.com"
+       TITLE="[zfs-discuss] zfs filesystems">caronni at gmail.com
+       </A><BR>
+    <I>Tue Aug 12 16:44:36 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000771.html">[zfs-discuss] zfs filesystems
+</A></li>
+        <LI>Next message: <A HREF="000774.html">[zfs-discuss] zfs filesystems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#773">[ date ]</a>
+              <a href="thread.html#773">[ thread ]</a>
+              <a href="subject.html#773">[ subject ]</a>
+              <a href="author.html#773">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>the filesystem user1 will appear as a directory inside the mounted device
+'mirror'.
+you can see its path with 'zfs list', and it should be mounted automatically
+when you create it, otherwise try 'zfs mount mirror/user1'
+i believe quotas work on zfs-119. 'zfs set quota=10g mirror/user1'. You can
+try it out, and see if it does what you expect ;-)
+Germano
+
+
+On Tue, Aug 12, 2008 at 22:12, John McAdams &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">johnm at tekserve.com</A>&gt; wrote:
+
+&gt;<i> I'm trying to grasp the implementation of multiple filesystems in OS X.
+</I>&gt;<i>
+</I>&gt;<i> For example &lt;<A HREF="http://flux.org.uk/howto/solaris/zfs_tutorial_02">http://flux.org.uk/howto/solaris/zfs_tutorial_02</A>&gt; creates a
+</I>&gt;<i> bunch of home folders for users:
+</I>&gt;<i>
+</I>&gt;<i> # zfs create salmon/kent
+</I>&gt;<i> # zfs create salmon/dennisr
+</I>&gt;<i> # zfs create salmon/billj
+</I>&gt;<i>
+</I>&gt;<i> If I attempt something similar in OS X nothing happens. But what would the
+</I>&gt;<i> result be?
+</I>&gt;<i>
+</I>&gt;<i> When the pool is created
+</I>&gt;<i>
+</I>&gt;<i> zpool create tank mirror disk2s2 disk3s2
+</I>&gt;<i>
+</I>&gt;<i> I end up with a /Volumes/mirror and mirror on the Desktop. If I run zfs
+</I>&gt;<i> create mirror/user1 wouldn't that create, or try to create, a volume at
+</I>&gt;<i> /Volumes/mirror/user1?
+</I>&gt;<i>
+</I>&gt;<i> It would be great to create a filesystem for every user and then put quotas
+</I>&gt;<i> on them. Is that possible with the current (119) version of ZFS on Mac OS?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> -- jmca
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080813/9a78a54e/attachment.html">http://lists.macosforge.org/pipermail/zfs-discuss/attachments/20080813/9a78a54e/attachment.html</A> 
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000771.html">[zfs-discuss] zfs filesystems
+</A></li>
+	<LI>Next message: <A HREF="000774.html">[zfs-discuss] zfs filesystems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#773">[ date ]</a>
+              <a href="thread.html#773">[ thread ]</a>
+              <a href="subject.html#773">[ subject ]</a>
+              <a href="author.html#773">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

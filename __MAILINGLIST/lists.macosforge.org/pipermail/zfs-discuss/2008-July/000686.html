@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] new bits available: zfs-119!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20new%20bits%20available%3A%20zfs-119%21&In-Reply-To=0D0E73F8-314B-43EA-98A0-A9944C570376%40apple.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000685.html">
+   <LINK REL="Next"  HREF="000688.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] new bits available: zfs-119!</H1>
+    <B>Andrei Dorofeev</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20new%20bits%20available%3A%20zfs-119%21&In-Reply-To=0D0E73F8-314B-43EA-98A0-A9944C570376%40apple.com"
+       TITLE="[zfs-discuss] new bits available: zfs-119!">dorofeev at gmail.com
+       </A><BR>
+    <I>Wed Jul 16 16:01:13 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000685.html">[zfs-discuss] new bits available:  zfs-119!
+</A></li>
+        <LI>Next message: <A HREF="000688.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#686">[ date ]</a>
+              <a href="thread.html#686">[ thread ]</a>
+              <a href="subject.html#686">[ subject ]</a>
+              <a href="author.html#686">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I noticed a few new files and directories in this new archive.
+
+build/Leopard_Release/zfs.util
+build/Leopard_Release/zfs.util.dSYM/
+build/Leopard_Release/zoink
+build/Leopard_Release/zoink.dSYM/...
+
+What are we supposed to copy these to?  Could you please update
+installation instructions?
+
+Thank you!
+-Andrei
+
+On Wed, Jul 16, 2008 at 3:43 PM, No&#235;l Dellofano &lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">ndellofano at apple.com</A>&gt; wrote:
+&gt;<i> Hey everyone,
+</I>&gt;<i> Just a quick heads up to say that new zfs bits and source are available on
+</I>&gt;<i> the zfs macosforge site.  The new bits fix these (really annoying) issues:
+</I>&gt;<i>
+</I>&gt;<i> 6018669 cpanic(cpu 0 caller 0x001DBC35): &quot;vnode_put(0x704cc70): iocount &lt;
+</I>&gt;<i> 1&quot;@/
+</I>&gt;<i> 5989423 Phantom folders/directories (unexpected ENOENT errors)
+</I>&gt;<i> 6035783 ZFS hang during rename/open
+</I>&gt;<i>
+</I>&gt;<i>  There should be no more weirdo phantom folders and directories hanging
+</I>&gt;<i> around.  Don found the issue was with the negative caching we were using for
+</I>&gt;<i> the name cache.  Also, fixed a hang we had under load.  So if you had a hang
+</I>&gt;<i> while doing ditto, cp, or anything else with a lot of load, please retry as
+</I>&gt;<i> that issue should also be fixed now.  And hooray hooray, you shouldn't vnode
+</I>&gt;<i> panic on shutdown anymore.
+</I>&gt;<i> As always let me know what you like/don't like and what is just plain busted
+</I>&gt;<i> :)
+</I>&gt;<i> thanks for all your feedback and for using ZFS!!!
+</I>&gt;<i> Noel
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000685.html">[zfs-discuss] new bits available:  zfs-119!
+</A></li>
+	<LI>Next message: <A HREF="000688.html">[zfs-discuss] new bits available: zfs-119!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#686">[ date ]</a>
+              <a href="thread.html#686">[ thread ]</a>
+              <a href="subject.html#686">[ subject ]</a>
+              <a href="author.html#686">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

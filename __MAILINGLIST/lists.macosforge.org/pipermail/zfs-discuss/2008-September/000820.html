@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Help Please! /Volumes is completely gone!
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Help%20Please%21%20/Volumes%20is%20completely%20gone%21&In-Reply-To=ac78d4820809051939i57da9d03hcee29005b51f4a46%40mail.gmail.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000815.html">
+   <LINK REL="Next"  HREF="000821.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Help Please! /Volumes is completely gone!</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Help%20Please%21%20/Volumes%20is%20completely%20gone%21&In-Reply-To=ac78d4820809051939i57da9d03hcee29005b51f4a46%40mail.gmail.com"
+       TITLE="[zfs-discuss] Help Please! /Volumes is completely gone!">ndellofano at apple.com
+       </A><BR>
+    <I>Sun Sep  7 23:14:37 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000815.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+        <LI>Next message: <A HREF="000821.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#820">[ date ]</a>
+              <a href="thread.html#820">[ thread ]</a>
+              <a href="subject.html#820">[ subject ]</a>
+              <a href="author.html#820">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey Chris
+
+Can you send me a 'zpool history' for your pool?   what's an 'ls / 
+Volumes' give you?  Also what's the output of 'zfs mount'?  Once I get  
+a handle on where your machine is we can hopefully get it straightened  
+out :)
+
+Noel
+
+On Sep 5, 2008, at 7:39 PM, Chris Shuman wrote:
+
+&gt;<i> Machine 1.6Ghz G5 w/ 2GB
+</I>&gt;<i> 10.5 up to date running 119 bits.
+</I>&gt;<i>
+</I>&gt;<i> Changed 'canmount' property a while back on all my zfs filesystems.
+</I>&gt;<i> Decided to switch them back to the way they were. I messed up and this
+</I>&gt;<i> is what it looks like now.
+</I>&gt;<i>
+</I>&gt;<i> NAME                                  USED  AVAIL  REFER  MOUNTPOINT
+</I>&gt;<i> zdata                                 218G  5.37G  1.12M  /Volumes/ 
+</I>&gt;<i> zdata
+</I>&gt;<i> zdata/home                            218G  5.37G  49.5K  /Volumes/
+</I>&gt;<i> zdata/home/anika                      181M  5.37G   181M  /Volumes/
+</I>&gt;<i> zdata/home/chris                     4.00G  5.37G  4.00G  /Volumes/
+</I>&gt;<i> zdata/home/jaren                      216M  5.37G   216M  /Volumes/
+</I>&gt;<i> zdata/home/severin                    437M  5.37G   437M  /Volumes/
+</I>&gt;<i> zdata/home/test                       213G  5.37G  3.75M  /Volumes/
+</I>&gt;<i> zdata/home/test/Desktop              31.9M  5.37G  31.9M  /Volumes/
+</I>&gt;<i> zdata/home/test/Documents            4.13G  5.37G  4.13G  /Volumes/
+</I>&gt;<i> zdata/home/test/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Documents at 20080614a</A>   239K      -  4.13G  -
+</I>&gt;<i> zdata/home/test/Downloads              82K  5.37G    82K  /Volumes/
+</I>&gt;<i> zdata/home/test/Library              3.05G  5.37G  2.92G  /Volumes/
+</I>&gt;<i> zdata/home/test/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Library at 20080524a</A>     135M      -  2.57G  -
+</I>&gt;<i> zdata/home/test/Movies                184G  5.37G   184G  /Volumes/
+</I>&gt;<i> zdata/home/test/Music                31.9M  5.37G  31.9M  /Volumes/
+</I>&gt;<i> zdata/home/test/Pictures             22.1G  5.37G  22.0G  /Volumes/
+</I>&gt;<i> zdata/home/test/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Pictures at 20080524a</A>   18.2M      -  21.7G  -
+</I>&gt;<i> zdata/home/test/<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">Pictures at 20080614a</A>   31.7M      -  21.9G  -
+</I>&gt;<i> zdata/home/test/Public                 48K  5.37G    48K  /Volumes/
+</I>&gt;<i> zdata/home/test/Sites                  52K  5.37G    52K  /Volumes/
+</I>&gt;<i> zdata/junk                             19K  5.37G    19K  /Volumes/ 
+</I>&gt;<i> zdata/junk
+</I>&gt;<i> LeopardG5:~ root# zfs set mountpoint=/Volumes/ zdata/home/test/Sites
+</I>&gt;<i> cannot unmount '/Volumes': Resource busy
+</I>&gt;<i> LeopardG5:~ root# zfs set mountpoint=/Volumes/zdata/home/test/Sites
+</I>&gt;<i> zdata/home/test/Sites
+</I>&gt;<i> cannot unmount '/Volumes': Resource busy
+</I>&gt;<i> LeopardG5:~ root#
+</I>&gt;<i>
+</I>&gt;<i> As you can see I get a 'Resource busy' message when I try to fix it.
+</I>&gt;<i> At this point the only volume I have is my system volume. Not sure
+</I>&gt;<i> what to do to fix the issue. HFS volumes are gone as well as ZFS
+</I>&gt;<i> volumes.
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Chris
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000815.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+	<LI>Next message: <A HREF="000821.html">[zfs-discuss] Help Please! /Volumes is completely gone!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#820">[ date ]</a>
+              <a href="thread.html#820">[ thread ]</a>
+              <a href="subject.html#820">[ subject ]</a>
+              <a href="author.html#820">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Two questions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Two%20questions&In-Reply-To=38DD785E-3F30-4406-A3AE-0226F184CA41%40nrao.edu">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000056.html">
+   <LINK REL="Next"  HREF="000068.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Two questions</H1>
+    <B>No&#235;l Dellofano</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20Two%20questions&In-Reply-To=38DD785E-3F30-4406-A3AE-0226F184CA41%40nrao.edu"
+       TITLE="[zfs-discuss] Two questions">ndellofano at apple.com
+       </A><BR>
+    <I>Tue Jan 22 14:25:53 PST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000056.html">[zfs-discuss] Two questions
+</A></li>
+        <LI>Next message: <A HREF="000068.html">[zfs-discuss] Two questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ah, you make a really good point.  Mostly right now I'm not running  
+the 'ls' in a truly *large* hierarchy, I'm actually just running it on  
+the xnu source tree, which branches out quite a bit but each  
+individual directory isn't very large (at least by &quot;large&quot;  
+standards).  At this point I was doing it to see more from a user's  
+perspective &quot;am I waiting longer for my results than I would on HFS 
++&quot;.  Since we were just using it as a rough guideline.
+When we get into actual performance work though with real large  
+directories and or heirarchies (thousands) you have a really good  
+point which I'll definitely keep in mind, so thanks for the heads up.
+Likely we'll drop it all together since it's not really a true  
+benchmark in the first place.  Now that Filebench is open sourced, it  
+would be ideal to start using that to supplement perf work when we get  
+there.
+
+
+Noel
+
+On Jan 22, 2008, at 11:09 AM, Boyd Waters wrote:
+
+&gt;<i>
+</I>&gt;<i> On Jan 22, 2008, at 11:59 AM, No&#235;l Dellofano wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> timing certain commands (like a ls -lR of a large hierarchy for  
+</I>&gt;&gt;<i> example)
+</I>&gt;<i>
+</I>&gt;<i> Using the timing info for the GNU implementation of ls would be a  
+</I>&gt;<i> Bad Idea, because it tries to sort the output: it uses an awful^W  
+</I>&gt;<i> simple sorting method to do so, polynomial in time with the number  
+</I>&gt;<i> of elements.  If you try to ls a directory with 30,000 files in it,  
+</I>&gt;<i> you'll wait a while, that has nothing to do with the filesystem.
+</I>&gt;<i>
+</I>&gt;<i> I know that Darwin's implementation of ls isn't GNU's -- you've got  
+</I>&gt;<i> the Solaris-like -@ option (is that POSIX 2003?) -- but I still see  
+</I>&gt;<i> performance issues with ls.
+</I>&gt;<i>
+</I>&gt;<i> Since most filesystems return the result of a dir read call as a  
+</I>&gt;<i> sorted list, this is silly. There's a command-line option to disable  
+</I>&gt;<i> the ls-internal sorting, I think, but beware..
+</I>&gt;<i>
+</I>&gt;<i> - boyd
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">http://lists.macosforge.org/mailman/listinfo/zfs-discuss</A>
+</I>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000056.html">[zfs-discuss] Two questions
+</A></li>
+	<LI>Next message: <A HREF="000068.html">[zfs-discuss] Two questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

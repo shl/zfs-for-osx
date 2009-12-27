@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] ZFS and external enclosure
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20and%20external%20enclosure&In-Reply-To=3239.134.106.119.111.1205333109.squirrel%40webmail.uni-oldenburg.de">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000328.html">
+   <LINK REL="Next"  HREF="000315.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] ZFS and external enclosure</H1>
+    <B>Boyd Waters</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20ZFS%20and%20external%20enclosure&In-Reply-To=3239.134.106.119.111.1205333109.squirrel%40webmail.uni-oldenburg.de"
+       TITLE="[zfs-discuss] ZFS and external enclosure">bwaters at nrao.edu
+       </A><BR>
+    <I>Wed Mar 12 08:23:41 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000328.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+        <LI>Next message: <A HREF="000315.html">[zfs-discuss] ZFS and external enclosure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#313">[ date ]</a>
+              <a href="thread.html#313">[ thread ]</a>
+              <a href="subject.html#313">[ subject ]</a>
+              <a href="author.html#313">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+On Mar 12, 2008, at 8:45 AM, Carsten Engelberts wrote:
+
+&gt;<i> I want to do the same ZFS-Enclosure-thing ;-).
+</I>
+
+Great! We can share info!
+
+
+&gt;<i> I have an MBP with eSATA-Card (with SIL3132-Chip)
+</I>
+I have one too, it works great with the external enclosure (hardware  
+port multiplier)
+
+
+&gt;<i> I want to upgrade next year to 4x1TB drives Do you think &quot;your&quot;  
+</I>&gt;<i> enclosure (btw. thanks for the link) is capable of that?
+</I>
+Yes. I use Seagates. I had ordered two Western Digital &quot;green&quot; (low  
+power) drives, one worked after some nudging, the other never worked,  
+on three different computers, five different enclosures, three  
+operating systems. I don't know why. I send both back and got Seagate  
+7200.11 1 TB drives. Too bad, as I think those low-power Western  
+Digital drives would be a slam-dunk for me: low heat, power, single- 
+user.
+
+
+&gt;<i> Another question is , what is the difference between MST5X1PM and  
+</I>&gt;<i> MST5XHPM
+</I>
+Hmm, let's look at that link again:
+<A HREF="http://www.addonics.com/products/raid_system/mst4.asp">http://www.addonics.com/products/raid_system/mst4.asp</A>
+
+OK - the &quot;HPM&quot; can be set up to do the RAID on the *enclosure*, rather  
+than the *host computer*. You have to use a Sil3132 or 3134 controller  
+to set up the RAID; your eSATA Card should work (but I don't know  
+about RAID utilities for Mac OS X Leopard, you might need Windows via  
+Boot Camp to set it up).  Once the RAID is set up, however, the  
+enclosure will look like a single (large) drive, that you could use  
+with any computer.
+For ZFS, that's not what you want.
+You want ZFS to provision the raidz array for you. For that, the host  
+computer needs to see four individual drives.
+The MST5X1PM uses a Port Multiplier, too, but can't do RAID on the PM:  
+the host controller has one eSATA cable to the enclosure but sees four  
+drives. SATA controllers that don't implement the port-multiplier spec  
+will be confused and won't work. Your eSATA-Card should work fine.
+
+
+Last week I discovered this:
+<A HREF="http://www.newegg.com/Product/Product.aspx?Item=N82E16822204074">http://www.newegg.com/Product/Product.aspx?Item=N82E16822204074</A>
+Must... not... hit... purchase... button! (gasp)
+
+For $1000, you get four 1 TB SATA drives, the same port multiplier, a  
+better enclosure (backplane rather than cables, supports hot-swap I  
+think), the eSATA cable, and the PCIe host controller.  That's  
+stunning. That's going to be $400-$600 less than doing it yourself.
+But I haven't tested it yet, so I don't know. If someone wants to buy  
+me one, I'll be happy to test it! :-)
+
+- boyd
+
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000328.html">[zfs-discuss] Fwd: flash sound
+</A></li>
+	<LI>Next message: <A HREF="000315.html">[zfs-discuss] ZFS and external enclosure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#313">[ date ]</a>
+              <a href="thread.html#313">[ thread ]</a>
+              <a href="subject.html#313">[ subject ]</a>
+              <a href="author.html#313">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] late mount
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=20080930150928.f989f8f6.aorchid%40mac.com">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000895.html">
+   <LINK REL="Next"  HREF="000897.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] late mount</H1>
+    <B>Dillon Kass</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=%5Bzfs-discuss%5D%20late%20mount&In-Reply-To=20080930150928.f989f8f6.aorchid%40mac.com"
+       TITLE="[zfs-discuss] late mount">lists at loveturtle.net
+       </A><BR>
+    <I>Tue Sep 30 15:26:37 PDT 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000895.html">[zfs-discuss] late mount
+</A></li>
+        <LI>Next message: <A HREF="000897.html">[zfs-discuss] late mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#896">[ date ]</a>
+              <a href="thread.html#896">[ thread ]</a>
+              <a href="subject.html#896">[ subject ]</a>
+              <a href="author.html#896">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> From what I've seen on this list the &quot;not importing on boot&quot; is 
+generally because diskutil wasn't used first to prepare the disk before 
+adding it to your zpool. Even if you did use diskutil to prepare the 
+disk if you inserted the entire disk and not the s2 slice it would 
+probably act this way as well.
+
+note that you can also log in as the user &gt;console from loginwindow and 
+it will drop you to the command line. This is a little easier than 
+creating a second user.
+
+Aric Gregson wrote:
+&gt;<i> On Tue, 30 Sep 2008 15:44:07 -0500
+</I>&gt;<i> Augie Fackler&lt;<A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">lists at durin42.com</A>&gt;  wrote:
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>&gt;&gt;<i> I've got a ZFS partition on the internal in my MBP, and I can
+</I>&gt;&gt;<i> generally count on having to manually use zpool to import it when I
+</I>&gt;&gt;<i> reboot.
+</I>&gt;&gt;<i>      
+</I>&gt;<i>
+</I>&gt;<i> We are having a similar problem here on a MacPro. Our 'home' for the
+</I>&gt;<i> main user is on a ZFS (only) formatted, mirrored internal drive. When
+</I>&gt;<i> we reboot, we have to log in as another user on the HFS+ boot drive
+</I>&gt;<i> (created just for this purpose) and manually force import the ZFS
+</I>&gt;<i> pools. Every single time.
+</I>&gt;<i>
+</I>&gt;<i> I'd love to help debug this and figure out what the problem is. Not
+</I>&gt;<i> sure where to look, but will if pointed in the right direction....
+</I>&gt;<i>
+</I>&gt;<i> thanks, aric
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> zfs-discuss mailing list
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">zfs-discuss at lists.macosforge.org</A>
+</I>&gt;<i> <A HREF="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss</A>
+</I>&gt;<i>    
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000895.html">[zfs-discuss] late mount
+</A></li>
+	<LI>Next message: <A HREF="000897.html">[zfs-discuss] late mount
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#896">[ date ]</a>
+              <a href="thread.html#896">[ thread ]</a>
+              <a href="subject.html#896">[ subject ]</a>
+              <a href="author.html#896">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

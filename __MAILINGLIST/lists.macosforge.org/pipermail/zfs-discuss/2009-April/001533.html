@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] Kernel Panic and Missing Pool
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C3DB34638-44CA-49D9-A156-3FA016D6F6FD%40umn.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001531.html">
+   <LINK REL="Next"  HREF="001534.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] Kernel Panic and Missing Pool</H1>
+    <B>Carl Magnuson</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20Kernel%20Panic%20and%20Missing%20Pool&In-Reply-To=%3C3DB34638-44CA-49D9-A156-3FA016D6F6FD%40umn.edu%3E"
+       TITLE="[zfs-discuss] Kernel Panic and Missing Pool">magnu213 at umn.edu
+       </A><BR>
+    <I>Tue Apr 21 21:01:37 PDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001531.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+        <LI>Next message: <A HREF="001534.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1533">[ date ]</a>
+              <a href="thread.html#1533">[ thread ]</a>
+              <a href="subject.html#1533">[ subject ]</a>
+              <a href="author.html#1533">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You are right on all counts.  I am using two 5 disk enclosures with an  
+eSATA port multiplier.  After playing around I see that the indicator  
+lights on one of the enclosures aren't indicating as they should...  
+none of the 5 drives from that enclosure are showing up, but I can  
+pull one and put it elsewhere and it will indicating a problem with  
+the enclosure.
+
+Thanks for the help, sorry to bother everyone with a non ZFS problem,  
+it is appreciated.
+
+Carl
+
+
+
+
+On Apr 21, 2009, at 4:53 PM, James R. Van Artsdalen wrote:
+
+&gt;<i> Carl Magnuson wrote:
+</I>&gt;&gt;<i> diskutil list shows two of my pool disks as disk3 and disk4. There  
+</I>&gt;&gt;<i> is no
+</I>&gt;&gt;<i> disk7 listed (though it is shown in the &quot;zpool import&quot; error), and it
+</I>&gt;&gt;<i> looks like the pool disks 5 and 6 are missing and two of my other  
+</I>&gt;&gt;<i> disks
+</I>&gt;&gt;<i> took their place, though it is odd that no disk moved to disk2.  The
+</I>&gt;&gt;<i> complete output is shown below.
+</I>&gt;<i>
+</I>&gt;<i> Ignore the disk numbers output by zpool status: those are not  
+</I>&gt;<i> meaningful
+</I>&gt;<i> here.
+</I>&gt;<i>
+</I>&gt;<i> This isn't a ZFS error (yet).  Some disks in the pool simply aren't
+</I>&gt;<i> being seen by OSX for whatever reason.  If diskutil can't see them  
+</I>&gt;<i> then
+</I>&gt;<i> neither can higher layers of OSX such as ZFS.  Fix this first - make
+</I>&gt;<i> sure all pool members are visible to diskutil - then worry about ZFS.
+</I>&gt;<i>
+</I>&gt;<i> The number of disks missing is 5 - is there a 5-drive enclosure in  
+</I>&gt;<i> use?
+</I>&gt;<i> Check power &amp; data cables, maybe cycle its power, etc.
+</I>&gt;<i>
+</I>&gt;<i> disk7 &amp; disk8 look odd: are there a couple of eSATA port multiplier
+</I>&gt;<i> enclosures involved?
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001531.html">[zfs-discuss] Kernel Panic and Missing Pool
+</A></li>
+	<LI>Next message: <A HREF="001534.html">[zfs-discuss] USB and Firewire Performance Problem Question...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1533">[ date ]</a>
+              <a href="thread.html#1533">[ thread ]</a>
+              <a href="subject.html#1533">[ subject ]</a>
+              <a href="author.html#1533">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>

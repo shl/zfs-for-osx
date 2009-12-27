@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure	on zfs disks
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%5Bfollow-up%5DRe%3A%20DiskManagement%20setuid-tool%20failure%0A%09on%20zfs%20disks&In-Reply-To=%3C980A54B0-418E-456F-8948-4CE5F6E7D536%40thinkpink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001293.html">
+   <LINK REL="Next"  HREF="001295.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure	on zfs disks</H1>
+    <B>Brian Pinkerton</B> 
+    <A HREF="mailto:zfs-discuss%40lists.macosforge.org?Subject=Re%3A%20%5Bzfs-discuss%5D%20%5Bfollow-up%5DRe%3A%20DiskManagement%20setuid-tool%20failure%0A%09on%20zfs%20disks&In-Reply-To=%3C980A54B0-418E-456F-8948-4CE5F6E7D536%40thinkpink.com%3E"
+       TITLE="[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure	on zfs disks">bplist at thinkpink.com
+       </A><BR>
+    <I>Wed Jan 14 10:41:54 PST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001293.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+        <LI>Next message: <A HREF="001295.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1294">[ date ]</a>
+              <a href="thread.html#1294">[ thread ]</a>
+              <a href="subject.html#1294">[ subject ]</a>
+              <a href="author.html#1294">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Looks like a bug in gpt to me.  gpt is opening with O_EXCL | O_RDWR  
+(0x802), and the open is returning EBUSY (errno 16), which makes me  
+think that the device file system is allowing but one writer on the  
+device at a time.  In this case, gpt could clearly open with O_RDONLY  
+and succeed, regardless of which other processes have the device open.
+
+bri
+
+On Jan 14, 2009, at 8:34 AM, Dirk Schelfhout wrote:
+
+&gt;<i>   412/0xa03d048:  open(&quot;/dev/disk0\0&quot;, 0x802, 0x400)		 = -1 Err#16
+</I>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001293.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+	<LI>Next message: <A HREF="001295.html">[zfs-discuss] [follow-up]Re: DiskManagement setuid-tool failure on zfs disks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1294">[ date ]</a>
+              <a href="thread.html#1294">[ thread ]</a>
+              <a href="subject.html#1294">[ subject ]</a>
+              <a href="author.html#1294">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://lists.macosforge.org/mailman/listinfo.cgi/zfs-discuss">More information about the zfs-discuss
+mailing list</a><br>
+</body></html>
