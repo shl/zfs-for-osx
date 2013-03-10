@@ -9,7 +9,7 @@ to work with 10.6. You don’t want me to do that – I’m a
 horrible programmer! 
 
 Have a look at 
- * http://groups.google.com/group/zfs-macos
- * https://github.com/dustin/mac-zfs/
- * https://github.com/shl/zfs-for-osx/
+ * [http://groups.google.com/group/zfs-macos](Google Group zfs-macos)
+ * [https://github.com/dustin/mac-zfs/](Dustin's mac-zfs git)
+ * [https://github.com/shl/zfs-for-osx/](this page)
 for a version that runs on 10.6

@@ -1,0 +1,1 @@
+This is a dump of the old Mailing-List provided by Apple.
