@@ -9,8 +9,9 @@ to work with 10.6. You don’t want me to do that – I’m a
 horrible programmer! 
 
 Have a look at 
- * [Google Group zfs-macos](http://groups.google.com/group/zfs-macos)
- * [Dustin's mac-zfs repository](https://github.com/dustin/mac-zfs/)
- * [this page](https://github.com/shl/zfs-for-osx/)
+* [Google Group zfs-macos](http://groups.google.com/group/zfs-macos)
+* [Dustin's mac-zfs repository](https://github.com/dustin/mac-zfs/)
+* [this page](https://github.com/shl/zfs-for-osx/)
+* [my blog post about that topic](http://static.ociru.net/zfs-for-macos)
 
 for a version that runs on 10.6
