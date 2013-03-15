@@ -12,6 +12,6 @@ Have a look at
 * [Google Group zfs-macos](http://groups.google.com/group/zfs-macos)
 * [Dustin's mac-zfs repository](https://github.com/dustin/mac-zfs/)
 * [this page](https://github.com/shl/zfs-for-osx/)
-* [my blog post about that topic](http://blog.ociru.net/zfs-for-macos)
+* [my blog post](http://blog.ociru.net/zfs-on-macos)
 
 for a version that runs on 10.6
